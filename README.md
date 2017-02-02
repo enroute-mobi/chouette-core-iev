@@ -1,6 +1,6 @@
-# Chouette [![Build Status](https://travis-ci.org/afimb/chouette.png)](http://travis-ci.org/afimb/chouette?branch=master)[![Coverity Scan](https://img.shields.io/coverity/scan/5816.svg)](https://scan.coverity.com/projects/5816)
+# BOIV [![Build Status](https://travis-ci.org/afimb/chouette.png)](http://travis-ci.org/afimb/chouette?branch=master)[![Coverity Scan](https://img.shields.io/coverity/scan/5816.svg)](https://scan.coverity.com/projects/5816)
 
-Chouette is a java project for handling public transport (PT) data in different formats: Neptune, NeTEx, GTFS and provides 3 main services:
+BOIV is a java project for handling public transport (PT) data in different formats: Neptune, NeTEx, GTFS and provides 3 main services:
 
 * Import PT data files from Neptune, NeTEx and GTFS formats
 * Export PT data to Neptune, NeTEx, GTFS,  KML and GeoJson formats
@@ -8,24 +8,19 @@ Chouette is a java project for handling public transport (PT) data in different 
 
 The Import, Export and Validation services are provided as Web Services and performed asynchronously.
 
-The Chouette Web Service API is specified here :
-* [Interface Specification Document](./doc/interface/Chouette-API serveur IEV-1.0.pdf)
+The BOIV Web Service API is specified here :
+* [Interface Specification Document](./doc/interface/BOIV-API serveur IEV-1.0.pdf)
 * inputs and outputs data structures [Jobs](./doc/interface/Jobs.xsd), [Reports](./doc/interface/Reports.xsd)
 
-Chouette is used by : 
-* [Chouette2 ](https://github.com/afimb/chouette2), a standard-based PT planned data management web application.
+BOIV is used by : 
+* [BOIV2 ](https://github.com/afimb/chouette2), a standard-based PT planned data management web application.
 * [CVDTC ](https://gitub.com/afimb/cvdtc), a web platform for PT planned data conversion and validation 
 
 Format documentations are available for:
-* Neptune
- * [www.normes-donnees-tc.org](http://www.normes-donnees-tc.org/format-dechange/donnees-theoriques/neptune/)
 * NeTEx
  * [www.normes-donnees-tc.org](http://www.normes-donnees-tc.org/format-dechange/donnees-theoriques/netex/)
-* GTFS
- * [General Transit Feed Specification Reference](https://developers.google.com/transit/gtfs/reference)
- * [www.normes-donnees-tc.org](http://www.normes-donnees-tc.org/format-dechange/donnees-theoriques/gtfs-correspondance-avec-neptune-et-autres-normes/)
 
-The Chouette java project is split into modules :
+The BOIV java project is split into modules :
 
 * chouette-iev : **REST server (ear)**
 * mobi.chouette.command : **Command mode standalone program** (Conversion and Validation actions)
@@ -46,7 +41,7 @@ The Chouette java project is split into modules :
 * mobi.chouette.model.iev : JPA entities modelisation for iev jobs
 * mobi.chouette.persistence.hibernate : Hibernate specific tools
 * mobi.chouette.service : Job and tasks managment
-* mobi.chouette.schema.checker : Access control implementation for Chouette GUI
+* mobi.chouette.schema.checker : Access control implementation for BOIV GUI
 * mobi.chouette.ws : REST API implementation
 
 For more information see the [Architecture Documentation](http://www.chouette.mobi/developpeurs/) , in French.
@@ -55,7 +50,7 @@ Installation instructions for the **command line standalone program** are availa
 
 ## Release Notes
 
-The Chouette release notes (in French) can be found in [CHANGELOG](./CHANGELOG.md) file 
+The BOIV release notes (in French) can be found in [CHANGELOG](./CHANGELOG.md) file 
 
 ## Requirements
  
@@ -67,9 +62,9 @@ This code has been run and tested on [Travis](http://travis-ci.org/afimb/chouett
 * postgres 9.3 + postgis 2.1
 * wildfly 8.2.0
 
-## Chouette External Dependencies
+## BOIV External Dependencies
 
-Chouette V3.x requires Postgresql V9.3 or above
+BOIV V3.x requires Postgresql V9.3 or above
 
 On Debian/Ubuntu/Kubuntu OS : 
 ```sh
@@ -90,9 +85,9 @@ if ```apt-get update``` fails, modify file :
 /etc/apt/sources.list.d/natecarlson-maven3-trusty.list
 and replace ```trusty``` by ```precise``` 
 
-## Chouette Installation
+## BOIV Installation
 
-On Debian, **Chouette can also be installed as a package** : see [debian packages](http://packages.chouette.cityway.fr/debian/chouette)
+On Debian, **BOIV can also be installed as a package** : see [debian packages](http://packages.chouette.cityway.fr/debian/chouette)
 
 ### Prerequisite
  
@@ -155,7 +150,7 @@ An exhaustive technical documentation in French is avalailable [here](http://www
 
 ## License
  
-Chouette is licensed under the CeCILL-B license, a copy of which can be found in the [LICENSE](./LICENSE.md) file.
+BOIV is licensed under the CeCILL-B license, a copy of which can be found in the [LICENSE](./LICENSE.md) file.
 
  
 ## Support
