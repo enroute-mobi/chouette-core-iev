@@ -64,7 +64,6 @@ public class RouteParser implements Parser, Constant {
 				Route wayBackRoute = ObjectFactory.getRoute(referential, tmp);
 				if (wayBackRoute != null) {
 					wayBackRoute.setOppositeRoute(route);
-					route.setOppositeRoute(wayBackRoute);
 				}
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
