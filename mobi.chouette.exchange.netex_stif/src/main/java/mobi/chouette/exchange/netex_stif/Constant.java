@@ -16,9 +16,14 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String TEXT = "Text";
 	public static final String TYPE_OF_NOTICE_REF = "TypeOfNoticeRef";
 	public static final String SERVICE_JOURNEY_NOTICE = "ServiceJourneyNotice";
+	public static final String SERVICE_JOURNEY_PATTERN = "ServiceJourneyPattern";
 	public static final String PUBLIC_CODE = "PublicCode";
 	public static final String DIRECTION_OUTBOUND = "outbound";
 	public static final String DIRECTION_INBOUND = "inbound";
 	public static final String NETEX_STIF_OBJECT_FACTORY = "NetexStifObjectFactory";
+	public static final String DESTINATION_DISPLAY_REF = "DestinationDisplayRef";
+	public static final String POINTS_IN_SEQUENCE = "pointsInSequence";
+	public static final String SERVICE_JOURNEY_PATTERN_TYPE = "ServiceJourneyPatternType";
+	public static final String ROUTE_REF = "RouteRef";
 
 }
