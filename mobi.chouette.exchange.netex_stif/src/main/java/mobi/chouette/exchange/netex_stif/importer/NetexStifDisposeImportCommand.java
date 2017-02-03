@@ -11,6 +11,7 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.AbstractDisposeImportCommand;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
@@ -28,6 +29,10 @@ public class NetexStifDisposeImportCommand extends AbstractDisposeImportCommand 
 
 		try {
 			super.execute(context);
+			NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
+			if (factory!=null){
+				factory.dispose();
+			}
 			result = SUCCESS;
 
 		} catch (Exception e) {

@@ -14,5 +14,6 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String ROUTE = "Route";
 	public static final String DIRECTION_OUTBOUND = "outbound";
 	public static final String DIRECTION_INBOUND = "inbound";
+	public static final String NETEX_STIF_OBJECT_FACTORY = "NetexStifObjectFactory";
 
 }

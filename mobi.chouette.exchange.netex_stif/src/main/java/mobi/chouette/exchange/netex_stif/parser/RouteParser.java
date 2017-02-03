@@ -12,6 +12,8 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.model.Direction;
+import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.type.PTDirectionEnum;
@@ -52,6 +54,10 @@ public class RouteParser implements Parser, Constant {
 					// todo error 
 				}
 			} else if (xpp.getName().equals(DIRECTION_REF)) {
+				NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
+				String tmp = xpp.getAttributeValue(null, ID);
+				Direction direction  = factory.getDirection(tmp);
+				//route.setDirection 
 
 			} else if (xpp.getName().equals(INVERSE_ROUTE_REF)) {
 				String tmp = xpp.getAttributeValue(null, ID);

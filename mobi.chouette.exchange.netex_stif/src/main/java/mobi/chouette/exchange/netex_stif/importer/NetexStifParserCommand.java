@@ -19,6 +19,7 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.parser.NetexStifParser;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_ERROR_CODE;
@@ -65,12 +66,18 @@ public class NetexStifParserCommand implements Command, Constant {
 			}
 
 			InputStream input = new BOMInputStream(url.openStream());
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(input), 8192 * 10);
-			XmlPullParser xpp = XmlPullParserFactory.newInstance()
-					.newPullParser();
+			BufferedReader in = new BufferedReader(new InputStreamReader(input), 8192 * 10);
+			XmlPullParser xpp = XmlPullParserFactory.newInstance().newPullParser();
 			xpp.setInput(in);
 			context.put(PARSER, xpp);
+
+			NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+			if (factory == null) {
+				factory = new NetexStifObjectFactory();
+				context.put(NETEX_STIF_OBJECT_FACTORY, factory);
+			} else {
+				factory.clear();
+			}
 
 			Parser parser = ParserFactory.create(NetexStifParser.class.getName());
 			parser.parse(context);
@@ -97,7 +104,6 @@ public class NetexStifParserCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifParserCommand.class.getName(),
-				new DefaultCommandFactory());
+		CommandFactory.factories.put(NetexStifParserCommand.class.getName(), new DefaultCommandFactory());
 	}
 }
