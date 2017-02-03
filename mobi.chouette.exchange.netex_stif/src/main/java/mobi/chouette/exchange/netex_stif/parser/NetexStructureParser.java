@@ -7,8 +7,7 @@ public class NetexStructureParser implements Parser {
 
 	@Override
 	public void parse(Context context) throws Exception {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
