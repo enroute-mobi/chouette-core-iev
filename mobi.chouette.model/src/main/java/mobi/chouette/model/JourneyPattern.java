@@ -41,7 +41,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "journey_patterns")
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = { "route" })
-public class JourneyPattern extends NeptuneIdentifiedObject {
+public class JourneyPattern extends ChouetteIdentifiedObject {
 	private static final long serialVersionUID = 7895941111990419404L;
 
 	@Getter

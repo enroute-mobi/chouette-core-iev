@@ -47,7 +47,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "lines")
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "routingConstraints" })
-public class Line extends NeptuneIdentifiedObject implements ObjectIdTypes {
+public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private static final long serialVersionUID = -8086291270595894778L;
 
 	@Getter

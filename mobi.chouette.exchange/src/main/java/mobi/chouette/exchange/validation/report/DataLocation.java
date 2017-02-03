@@ -13,7 +13,7 @@ import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
@@ -30,7 +30,7 @@ public class DataLocation {
 	private int columnNumber = -1;
 	private String objectId = "";
 	private String name = "";
-	private NeptuneIdentifiedObject object;
+	private ChouetteIdentifiedObject object;
 	// private Line line;
 	private List<Path> path = new ArrayList<>();
 
@@ -77,14 +77,14 @@ public class DataLocation {
 		this.objectId = objectId;
 	}
 
-	public DataLocation(String fileName, int lineNumber, int columnNumber, NeptuneIdentifiedObject chouetteObject) {
+	public DataLocation(String fileName, int lineNumber, int columnNumber, ChouetteIdentifiedObject chouetteObject) {
 		this(chouetteObject);
 		this.filename = fileName;
 		this.lineNumber = lineNumber;
 		this.columnNumber = columnNumber;
 	}
 
-	public DataLocation(NeptuneIdentifiedObject chouetteObject) {
+	public DataLocation(ChouetteIdentifiedObject chouetteObject) {
 		this.objectId = chouetteObject.getObjectId();
 		this.object = chouetteObject;
 		this.name = buildName(chouetteObject);
@@ -133,7 +133,7 @@ public class DataLocation {
 
 	}
 
-	public static String buildName(NeptuneIdentifiedObject chouetteObject) {
+	public static String buildName(ChouetteIdentifiedObject chouetteObject) {
 		if (chouetteObject instanceof VehicleJourney) {
 			VehicleJourney object = (VehicleJourney) chouetteObject;
 			return NamingUtil.getName(object);
@@ -214,7 +214,7 @@ public class DataLocation {
 			this.objectId = objectId;
 		}
 
-		public Path(NeptuneIdentifiedObject object) {
+		public Path(ChouetteIdentifiedObject object) {
 			// protection from proxy class names
 			this(object.getClass().getSimpleName().split("_")[0], object.getObjectId());
 		}

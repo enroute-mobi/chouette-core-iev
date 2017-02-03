@@ -41,7 +41,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "access_links")
 @NoArgsConstructor
 @ToString
-public class AccessLink extends NeptuneIdentifiedObject {
+public class AccessLink extends ChouetteIdentifiedObject {
 
 	private static final long serialVersionUID = 7835556134861322471L;
 

@@ -11,7 +11,7 @@ import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
@@ -40,7 +40,7 @@ public class ModelTranslator
       return s.replaceAll(" ", "-");
    }
 
-   public String netexId(NeptuneIdentifiedObject model)
+   public String netexId(ChouetteIdentifiedObject model)
    {
       if (model == null)
          return null;
@@ -48,7 +48,7 @@ public class ModelTranslator
             + model.objectIdSuffix();
    }
 
-   public String netexMockId(NeptuneIdentifiedObject model, String mock)
+   public String netexMockId(ChouetteIdentifiedObject model, String mock)
    {
       if (model == null)
          return null;
@@ -72,7 +72,7 @@ public class ModelTranslator
       }
    }
 
-   public String netexModelName(NeptuneIdentifiedObject model)
+   public String netexModelName(ChouetteIdentifiedObject model)
    {
       if (model == null)
          return null;

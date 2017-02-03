@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import mobi.chouette.exchange.neptune.model.PTLink;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.NeptuneUtil;
@@ -24,7 +24,7 @@ public class NeptuneObjectUtil extends NeptuneUtil {
 		List<PTLink>   ptLinks = new ArrayList<PTLink>();
 		ptLinks.clear();
 		String baseId = route.getObjectId().split(":")[0] + ":"
-				+ NeptuneIdentifiedObject.PTLINK_KEY + ":";
+				+ ChouetteIdentifiedObject.PTLINK_KEY + ":";
 		List<StopPoint> points = new ArrayList<>(route.getStopPoints());
 		for (Iterator<StopPoint> iterator = points.iterator(); iterator.hasNext();) {
 			StopPoint stopPoint = iterator.next();

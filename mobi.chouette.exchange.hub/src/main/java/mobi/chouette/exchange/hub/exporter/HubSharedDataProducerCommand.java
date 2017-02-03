@@ -33,7 +33,7 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.Timetable;
@@ -257,9 +257,9 @@ public class HubSharedDataProducerCommand implements Command, Constant {
 
 	}
 
-	public class ObjectIdSorter implements Comparator<NeptuneIdentifiedObject> {
+	public class ObjectIdSorter implements Comparator<ChouetteIdentifiedObject> {
 		@Override
-		public int compare(NeptuneIdentifiedObject arg0, NeptuneIdentifiedObject arg1) {
+		public int compare(ChouetteIdentifiedObject arg0, ChouetteIdentifiedObject arg1) {
 
 			return arg0.objectIdSuffix().compareTo(arg1.objectIdSuffix());
 		}

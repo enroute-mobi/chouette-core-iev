@@ -12,7 +12,7 @@ import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
@@ -168,9 +168,9 @@ public class ValidationDataCollector {
 
 	}
 
-	private void updateId(NeptuneIdentifiedObject object, Map<String, ? extends NeptuneIdentifiedObject> map) {
+	private void updateId(ChouetteIdentifiedObject object, Map<String, ? extends ChouetteIdentifiedObject> map) {
 		if (object.getId() == null) {
-			NeptuneIdentifiedObject cached = map.get(object.getObjectId());
+			ChouetteIdentifiedObject cached = map.get(object.getObjectId());
 			if (cached != null)
 				object.setId(cached.getId());
 		}

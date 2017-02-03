@@ -12,7 +12,7 @@ import org.hibernate.annotations.Parameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 
 /**
  * Chouette TimeSlot a peroid for vehicleJourney with frequency
@@ -24,7 +24,7 @@ import mobi.chouette.model.NeptuneIdentifiedObject;
  * Gtfs mapping :none <br/>
  */
 @NoArgsConstructor
-public class TimeSlot extends NeptuneIdentifiedObject
+public class TimeSlot extends ChouetteIdentifiedObject
 {
    private static final long serialVersionUID = 7510494886757866590L;
 

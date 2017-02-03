@@ -28,8 +28,8 @@ import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.exchange.validation.parameters.ValidationParametersUtil;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
-import mobi.chouette.model.NeptuneIdentifiedObject;
-import mobi.chouette.model.NeptuneLocalizedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
+import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.type.LongLatTypeEnum;
 import mobi.chouette.model.util.NamingUtil;
@@ -48,7 +48,7 @@ import com.vividsolutions.jts.geom.PrecisionModel;
  * @author michel
  * 
  */
-public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> implements Constant {
+public abstract class AbstractValidation<T extends ChouetteIdentifiedObject> implements Constant {
 
 	public enum PATTERN_OPTION {
 		free, num, alpha, upper, lower
@@ -190,7 +190,7 @@ public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> impl
 	 * @param obj2
 	 * @return
 	 */
-	protected static double distance(NeptuneLocalizedObject obj1, NeptuneLocalizedObject obj2) {
+	protected static double distance(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
 		if (obj1.hasCoordinates() && obj2.hasCoordinates()) {
 			return computeHaversineFormula(obj1, obj2);
 		} else
@@ -205,7 +205,7 @@ public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> impl
 	 * @param obj2
 	 * @return
 	 */
-	protected static double quickDistance(NeptuneLocalizedObject obj1, NeptuneLocalizedObject obj2) {
+	protected static double quickDistance(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
 
 		double dlon = (obj2.getLongitude().doubleValue() - obj1.getLongitude().doubleValue()) * A;
 		dlon *= Math.cos((obj2.getLatitude().doubleValue() + obj1.getLatitude().doubleValue())* toRad/2.);
@@ -239,7 +239,7 @@ public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> impl
 	/**
 	 * @see http://mathforum.org/library/drmath/view/51879.html
 	 */
-	private static double computeHaversineFormula(NeptuneLocalizedObject obj1, NeptuneLocalizedObject obj2) {
+	private static double computeHaversineFormula(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
 
 		double lon1 = obj1.getLongitude().doubleValue() * toRad;
 		double lat1 = obj1.getLatitude().doubleValue() * toRad;
@@ -335,7 +335,7 @@ public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> impl
 		return geometryFactory;
 	}
 
-	protected Point buildPoint(NeptuneLocalizedObject obj) {
+	protected Point buildPoint(ChouetteLocalizedObject obj) {
 		double y1 = obj.getLatitude().doubleValue();
 		double x1 = obj.getLongitude().doubleValue();
 		Coordinate coordinate = new Coordinate(x1, y1);
@@ -352,7 +352,7 @@ public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> impl
 	 * @param testCode
 	 * @param resultCode
 	 */
-	protected void checkLinkSpeed(Context context, NeptuneIdentifiedObject object, Time duration, double distance,
+	protected void checkLinkSpeed(Context context, ChouetteIdentifiedObject object, Time duration, double distance,
 			int maxDefaultSpeed, String testCode, String resultCode) {
 		if (duration != null) {
 			long time = getTimeInSeconds(duration); // in seconds
@@ -628,7 +628,7 @@ public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> impl
 	 * @return
 	 * @throws Exception
 	 */
-	private Method findGetter(Class<? extends NeptuneIdentifiedObject> class1, String attribute) {
+	private Method findGetter(Class<? extends ChouetteIdentifiedObject> class1, String attribute) {
 		String methodName = "get" + attribute;
 		Method[] methods = class1.getMethods();
 		Method accessor = null;
@@ -654,7 +654,7 @@ public abstract class AbstractValidation<T extends NeptuneIdentifiedObject> impl
 		return val1.equals(val2);
 	}
 
-	protected DataLocation buildLocation(Context context, NeptuneIdentifiedObject object) {
+	protected DataLocation buildLocation(Context context, ChouetteIdentifiedObject object) {
 		if (object.getId() != null)
 			return new DataLocation(object);
 		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);

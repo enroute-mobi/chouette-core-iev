@@ -66,7 +66,7 @@ import org.hibernate.annotations.Parameter;
 @ToString(callSuper = true, exclude = { "accessLinks", "accessPoints",
 		"connectionEndLinks", "connectionStartLinks", "containedStopAreas",
 		"containedStopPoints", "routingConstraintAreas", "routingConstraintLines" })
-public class StopArea extends NeptuneLocalizedObject {
+public class StopArea extends ChouetteLocalizedObject {
 	private static final long serialVersionUID = 4548672479038099240L;
 
 	@Getter

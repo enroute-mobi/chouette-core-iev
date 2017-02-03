@@ -43,7 +43,7 @@ import org.hibernate.annotations.Parameter;
 @Cacheable
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "vehicleJourneys" })
-public class Timetable extends NeptuneIdentifiedObject {
+public class Timetable extends ChouetteIdentifiedObject {
 	private static final long serialVersionUID = -1598554061982685113L;
 	public static final long ONE_DAY = 3600000 * 24;
 

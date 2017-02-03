@@ -14,7 +14,7 @@ import mobi.chouette.exchange.validation.ValidatorFactory;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 
 public class JourneyPatternValidator extends AbstractValidator implements Validator<JourneyPattern> , Constant{
 
@@ -41,7 +41,7 @@ public class JourneyPatternValidator extends AbstractValidator implements Valida
 
 	}
 
-	public void addLocation(Context context, NeptuneIdentifiedObject object, int lineNumber, int columnNumber)
+	public void addLocation(Context context, ChouetteIdentifiedObject object, int lineNumber, int columnNumber)
 	{
 		addLocation( context,LOCAL_CONTEXT,  object,  lineNumber,  columnNumber);
 

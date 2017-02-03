@@ -31,7 +31,7 @@ import org.hibernate.annotations.NaturalId;
 @MappedSuperclass
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @ToString(callSuper = true)
-public abstract class NeptuneIdentifiedObject extends NeptuneObject implements
+public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 		ObjectIdTypes {
 
 	/**

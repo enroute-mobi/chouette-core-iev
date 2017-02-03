@@ -16,7 +16,7 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.type.AccessPointTypeEnum;
 import mobi.chouette.model.type.ChouetteAreaEnum;
@@ -48,7 +48,7 @@ public class AccessPointValidator extends AbstractValidator implements Validator
 
 	}
 
-	public void addLocation(Context context, NeptuneIdentifiedObject object, int lineNumber, int columnNumber)
+	public void addLocation(Context context, ChouetteIdentifiedObject object, int lineNumber, int columnNumber)
 	{
 		addLocation( context,LOCAL_CONTEXT,  object,  lineNumber,  columnNumber);
 

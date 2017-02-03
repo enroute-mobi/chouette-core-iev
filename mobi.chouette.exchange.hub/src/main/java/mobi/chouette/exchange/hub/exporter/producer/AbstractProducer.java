@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.exchange.hub.model.HubObject;
 import mobi.chouette.exchange.hub.model.exporter.HubExporterInterface;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 
 @Log4j
 public abstract class AbstractProducer {
@@ -25,7 +25,7 @@ public abstract class AbstractProducer {
 		this.exporter = exporter;
 	}
 
-	static protected String toHubId(NeptuneIdentifiedObject neptuneObject) {
+	static protected String toHubId(ChouetteIdentifiedObject neptuneObject) {
 		if (neptuneObject == null || neptuneObject.getObjectId() == null)
 			return null;
 		String[] tokens = neptuneObject.getObjectId().split(":");

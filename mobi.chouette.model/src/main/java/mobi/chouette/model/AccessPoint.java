@@ -39,7 +39,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "access_points")
 @NoArgsConstructor
 @ToString(exclude = { "containedIn", "accessLinks" })
-public class AccessPoint extends NeptuneLocalizedObject {
+public class AccessPoint extends ChouetteLocalizedObject {
 
 	private static final long serialVersionUID = 7520070228185917225L;
 

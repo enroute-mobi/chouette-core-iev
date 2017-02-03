@@ -13,7 +13,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Route;
 
 import org.apache.log4j.Logger;
@@ -21,7 +21,7 @@ import org.trident.schema.trident.ObjectFactory;
 import org.trident.schema.trident.RegistrationType;
 import org.trident.schema.trident.TridentObjectType;
 
-public abstract class AbstractJaxbNeptuneProducer<T extends TridentObjectType, U extends NeptuneIdentifiedObject>
+public abstract class AbstractJaxbNeptuneProducer<T extends TridentObjectType, U extends ChouetteIdentifiedObject>
 // implements IJaxbNeptuneProducer<T, U>
 {
 	public static DatatypeFactory typeFactory = null;
@@ -68,7 +68,7 @@ public abstract class AbstractJaxbNeptuneProducer<T extends TridentObjectType, U
 		return registration;
 	}
 
-	protected String getNonEmptyObjectId(NeptuneIdentifiedObject object) {
+	protected String getNonEmptyObjectId(ChouetteIdentifiedObject object) {
 		if (object == null)
 			return null;
 		return object.getObjectId();

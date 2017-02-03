@@ -36,7 +36,7 @@ import com.vividsolutions.jts.geom.LineString;
 @Table(name = "route_sections")
 @NoArgsConstructor
 @ToString
-public class RouteSection extends NeptuneIdentifiedObject {
+public class RouteSection extends ChouetteIdentifiedObject {
 	private static final long serialVersionUID = 8490105295077539089L;
 
 	@Getter

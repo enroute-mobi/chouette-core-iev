@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.extern.log4j.Log4j;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.type.TransportModeNameEnum;
 
 
@@ -19,7 +19,7 @@ public class ValidationParametersUtil {
 		fieldsMap.put(key,fields);
 	}
 	
-	public static List<String> getFields(NeptuneIdentifiedObject object)
+	public static List<String> getFields(ChouetteIdentifiedObject object)
 	{
 		return fieldsMap.get(object.getClass().getSimpleName());
 	}
@@ -52,7 +52,7 @@ public class ValidationParametersUtil {
 		return parameter.getModeOther();
 	}
 
-	public static boolean checkFieldParameters(ValidationParameters parameter, NeptuneIdentifiedObject object)
+	public static boolean checkFieldParameters(ValidationParameters parameter, ChouetteIdentifiedObject object)
 	{
 		String methodName = "getCheck"+object.getClass().getSimpleName();
 		try {
@@ -66,7 +66,7 @@ public class ValidationParametersUtil {
 	}
 
 	
-	public static FieldParameters getFieldParameters(ValidationParameters parameter, NeptuneIdentifiedObject object, String fieldName )
+	public static FieldParameters getFieldParameters(ValidationParameters parameter, ChouetteIdentifiedObject object, String fieldName )
 	{
 		Object objectParameters ;
 		String methodName = "get"+object.getClass().getSimpleName();

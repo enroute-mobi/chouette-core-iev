@@ -13,7 +13,7 @@ import mobi.chouette.exchange.validation.Validator;
 import mobi.chouette.exchange.validation.ValidatorFactory;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.util.Referential;
 
@@ -36,7 +36,7 @@ public class PTNetworkValidator extends AbstractValidator implements Validator<N
 		addItemToValidation(context, prefix, "Network", 2, "W", "W");
 	}
 
-	public void addLocation(Context context, NeptuneIdentifiedObject object, int lineNumber, int columnNumber)
+	public void addLocation(Context context, ChouetteIdentifiedObject object, int lineNumber, int columnNumber)
 	{
 		addLocation( context,LOCAL_CONTEXT,  object,  lineNumber,  columnNumber);
 		

@@ -12,7 +12,7 @@ import mobi.chouette.exchange.validation.ValidatorFactory;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.type.ChouetteAreaEnum;
 import mobi.chouette.model.util.Referential;
@@ -43,7 +43,7 @@ public class ITLValidator extends AbstractValidator implements Validator<StopAre
 
 	}
 
-	public void addLocation(Context context, NeptuneIdentifiedObject object, int lineNumber, int columnNumber)
+	public void addLocation(Context context, ChouetteIdentifiedObject object, int lineNumber, int columnNumber)
 	{
 		addLocation( context,LOCAL_CONTEXT,  object,  lineNumber,  columnNumber);
 

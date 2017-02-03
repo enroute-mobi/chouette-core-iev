@@ -32,7 +32,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "timebands")
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "journeyFrequencies" })
-public class Timeband extends NeptuneIdentifiedObject {
+public class Timeband extends ChouetteIdentifiedObject {
 
 	private static final long serialVersionUID = 3366941607519552650L;
 

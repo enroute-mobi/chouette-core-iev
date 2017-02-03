@@ -49,7 +49,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "routes")
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "line", "oppositeRoute" })
-public class Route extends NeptuneIdentifiedObject {
+public class Route extends ChouetteIdentifiedObject {
 
 	private static final long serialVersionUID = -2249654966081042738L;
 

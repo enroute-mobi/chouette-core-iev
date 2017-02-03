@@ -31,7 +31,7 @@ import org.hibernate.annotations.Parameter;
 @Cacheable
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = {"lines" })
-public class GroupOfLine extends NeptuneIdentifiedObject {
+public class GroupOfLine extends ChouetteIdentifiedObject {
 
 	private static final long serialVersionUID = 2900948915585746984L;
 

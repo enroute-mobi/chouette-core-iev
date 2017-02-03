@@ -24,7 +24,7 @@ import lombok.ToString;
 @MappedSuperclass
 @Access(AccessType.FIELD)
 @ToString
-public abstract class NeptuneObject implements Serializable {
+public abstract class ChouetteObject implements Serializable {
 
 	private static final long serialVersionUID = -1406542019260386319L;
 
@@ -76,7 +76,7 @@ public abstract class NeptuneObject implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		NeptuneObject other = (NeptuneObject) obj;
+		ChouetteObject other = (ChouetteObject) obj;
 		if (getId() == null)
 			return (other.getId() == null);
 		if (getId().equals(other.getId()))

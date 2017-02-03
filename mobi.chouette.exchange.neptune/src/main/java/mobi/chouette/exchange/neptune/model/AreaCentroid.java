@@ -3,7 +3,7 @@ package mobi.chouette.exchange.neptune.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mobi.chouette.model.NeptuneLocalizedObject;
+import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.StopArea;
 
 /**
@@ -17,7 +17,7 @@ import mobi.chouette.model.StopArea;
  * 
  */
 @NoArgsConstructor
-public class AreaCentroid extends NeptuneLocalizedObject
+public class AreaCentroid extends ChouetteLocalizedObject
 {
 
    /**

@@ -12,7 +12,7 @@ import lombok.Setter;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.ConnectionLink;
-import mobi.chouette.model.NeptuneLocalizedObject;
+import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 
@@ -73,22 +73,22 @@ public class KmlData {
 			extraData.put(key,valueOf(value));
 		}
 		
-		public void setPoint(NeptuneLocalizedObject object)
+		public void setPoint(ChouetteLocalizedObject object)
 		{
 			point = new KmlPoint(object);
 		}
 		
-		public void addPoint(NeptuneLocalizedObject object)
+		public void addPoint(ChouetteLocalizedObject object)
 		{
 			if (lineString == null) lineString = new ArrayList<>();
 			lineString.add(new KmlPoint(object));
 		}
-		public void addLineString(NeptuneLocalizedObject... objects)
+		public void addLineString(ChouetteLocalizedObject... objects)
 		{
 			if (multiLineString == null) multiLineString = new ArrayList<>();
 			List<KmlPoint> ls = new ArrayList<>();
 			multiLineString.add(ls);
-			for (NeptuneLocalizedObject object : objects) {
+			for (ChouetteLocalizedObject object : objects) {
 				ls.add(new KmlPoint(object));
 			}
 				
@@ -112,7 +112,7 @@ public class KmlData {
 		@Getter
 		public double longitude;
 		
-		public KmlPoint(NeptuneLocalizedObject object)
+		public KmlPoint(ChouetteLocalizedObject object)
 		{
 			this.latitude = object.getLatitude().doubleValue(); 
 			this.longitude = object.getLongitude().doubleValue(); 

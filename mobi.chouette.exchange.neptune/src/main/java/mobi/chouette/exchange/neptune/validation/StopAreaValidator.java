@@ -15,7 +15,7 @@ import mobi.chouette.exchange.validation.Validator;
 import mobi.chouette.exchange.validation.ValidatorFactory;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.ChouetteAreaEnum;
@@ -57,7 +57,7 @@ public class StopAreaValidator extends AbstractValidator implements Validator<St
 
 	}
 
-	public void addLocation(Context context, NeptuneIdentifiedObject object, int lineNumber, int columnNumber)
+	public void addLocation(Context context, ChouetteIdentifiedObject object, int lineNumber, int columnNumber)
 	{
 		if (object == null) throw new NullPointerException("null object");
 		addLocation( context,LOCAL_CONTEXT,  object,  lineNumber,  columnNumber);

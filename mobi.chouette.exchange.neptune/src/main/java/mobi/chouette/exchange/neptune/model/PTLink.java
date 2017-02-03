@@ -12,7 +12,7 @@ import org.hibernate.annotations.Parameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 
@@ -27,7 +27,7 @@ import mobi.chouette.model.StopPoint;
  * 
  */
 @NoArgsConstructor
-public class PTLink extends NeptuneIdentifiedObject
+public class PTLink extends ChouetteIdentifiedObject
 {
    private static final long serialVersionUID = -3089442100133439163L;
 

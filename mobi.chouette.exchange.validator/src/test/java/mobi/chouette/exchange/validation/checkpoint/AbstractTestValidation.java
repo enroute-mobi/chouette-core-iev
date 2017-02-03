@@ -44,7 +44,7 @@ import mobi.chouette.exchange.validator.JobDataTest;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneLocalizedObject;
+import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RouteSection;
 import mobi.chouette.model.StopArea;
@@ -246,8 +246,8 @@ public abstract class AbstractTestValidation  extends Arquillian implements Cons
 	 * @param obj2
 	 * @return
 	 */
-	public static double distance(NeptuneLocalizedObject obj1,
-			NeptuneLocalizedObject obj2)
+	public static double distance(ChouetteLocalizedObject obj1,
+			ChouetteLocalizedObject obj2)
 	{
 		double long1rad = Math.toRadians(obj1.getLongitude().doubleValue());
 		double lat1rad = Math.toRadians(obj1.getLatitude().doubleValue());

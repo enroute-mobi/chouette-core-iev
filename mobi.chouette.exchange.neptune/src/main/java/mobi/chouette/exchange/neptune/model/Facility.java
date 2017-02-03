@@ -15,7 +15,7 @@ import lombok.Setter;
 import mobi.chouette.exchange.neptune.model.facility.FacilityFeature;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneLocalizedObject;
+import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 
@@ -30,7 +30,7 @@ import mobi.chouette.model.StopPoint;
  */
 @NoArgsConstructor
 
-public class Facility extends NeptuneLocalizedObject
+public class Facility extends ChouetteLocalizedObject
 {
    private static final long serialVersionUID = -2150117548707325330L;
 

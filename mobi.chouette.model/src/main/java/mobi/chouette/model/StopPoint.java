@@ -34,7 +34,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "stop_points")
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = { "route" })
-public class StopPoint extends NeptuneIdentifiedObject {
+public class StopPoint extends ChouetteIdentifiedObject {
 
 	private static final long serialVersionUID = -4913573673645997423L;
 

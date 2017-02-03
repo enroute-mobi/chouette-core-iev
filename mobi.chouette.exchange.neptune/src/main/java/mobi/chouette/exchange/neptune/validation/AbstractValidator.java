@@ -12,7 +12,7 @@ import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.util.Referential;
 
 public abstract class AbstractValidator implements Constant {
@@ -116,7 +116,7 @@ public abstract class AbstractValidator implements Constant {
 		return null;
 	}
 
-	public abstract void addLocation(Context context, NeptuneIdentifiedObject object, int lineNumber, int columnNumber);
+	public abstract void addLocation(Context context, ChouetteIdentifiedObject object, int lineNumber, int columnNumber);
 
 	/**
 	 * add location for local validation (level 1 and 2) and for general
@@ -128,7 +128,7 @@ public abstract class AbstractValidator implements Constant {
 	 * @param lineNumber
 	 * @param columnNumber
 	 */
-	protected void addLocation(Context context, String localContext, NeptuneIdentifiedObject object, int lineNumber,
+	protected void addLocation(Context context, String localContext, ChouetteIdentifiedObject object, int lineNumber,
 			int columnNumber) {
 		String objectId = object.getObjectId();
 		Context objectContext = getObjectContext(context, localContext, objectId);

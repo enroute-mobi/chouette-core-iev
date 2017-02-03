@@ -34,7 +34,7 @@ import org.hibernate.annotations.Parameter;
 @Entity
 @Table(name = "footnotes")
 @NoArgsConstructor
-public class Footnote extends NeptuneObject {
+public class Footnote extends ChouetteObject {
 	/**
     * 
     */

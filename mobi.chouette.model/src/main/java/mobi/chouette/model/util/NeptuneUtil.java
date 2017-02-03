@@ -11,9 +11,9 @@ import java.util.Map;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.model.JourneyPattern;
-import mobi.chouette.model.NeptuneIdentifiedObject;
-import mobi.chouette.model.NeptuneLocalizedObject;
-import mobi.chouette.model.NeptuneObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
+import mobi.chouette.model.ChouetteLocalizedObject;
+import mobi.chouette.model.ChouetteObject;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
@@ -28,10 +28,10 @@ public abstract class NeptuneUtil {
 	 *            the list to parse
 	 * @return the object ids list
 	 */
-	public static List<String> extractObjectIds(Collection<? extends NeptuneIdentifiedObject> neptuneObjects) {
+	public static List<String> extractObjectIds(Collection<? extends ChouetteIdentifiedObject> neptuneObjects) {
 		List<String> objectIds = new ArrayList<String>();
 		if (neptuneObjects != null) {
-			for (NeptuneIdentifiedObject neptuneObject : neptuneObjects) {
+			for (ChouetteIdentifiedObject neptuneObject : neptuneObjects) {
 				if (neptuneObject != null) {
 					String objectId = neptuneObject.getObjectId();
 					if (objectId != null) {
@@ -51,7 +51,7 @@ public abstract class NeptuneUtil {
 	 *            the list to parse
 	 * @return the ids map
 	 */
-	public static <T extends NeptuneIdentifiedObject> Map<String, T> mapOnObjectIds(Collection<T> neptuneObjects) {
+	public static <T extends ChouetteIdentifiedObject> Map<String, T> mapOnObjectIds(Collection<T> neptuneObjects) {
 		Map<String, T> map = new HashMap<String, T>();
 		if (neptuneObjects != null) {
 			for (T neptuneObject : neptuneObjects) {
@@ -73,10 +73,10 @@ public abstract class NeptuneUtil {
 	 *            the list to parse
 	 * @return the ids list
 	 */
-	public static List<Long> extractIds(Collection<? extends NeptuneObject> neptuneObjects) {
+	public static List<Long> extractIds(Collection<? extends ChouetteObject> neptuneObjects) {
 		List<Long> ids = new ArrayList<Long>();
 		if (neptuneObjects != null) {
-			for (NeptuneObject neptuneObject : neptuneObjects) {
+			for (ChouetteObject neptuneObject : neptuneObjects) {
 				if (neptuneObject != null) {
 					Long id = neptuneObject.getId();
 					if (id != null) {
@@ -96,7 +96,7 @@ public abstract class NeptuneUtil {
 	 *            the list to parse
 	 * @return the ids map
 	 */
-	public static <T extends NeptuneObject> Map<Long, T> mapOnIds(Collection<T> neptuneObjects) {
+	public static <T extends ChouetteObject> Map<Long, T> mapOnIds(Collection<T> neptuneObjects) {
 		Map<Long, T> map = new HashMap<Long, T>();
 		if (neptuneObjects != null) {
 			for (T neptuneObject : neptuneObjects) {
@@ -118,7 +118,7 @@ public abstract class NeptuneUtil {
 	 * @param projectionType
 	 *            type of projection (EPSG:xxx)
 	 */
-	public static void toProjection(NeptuneLocalizedObject object, String projectionType) {
+	public static void toProjection(ChouetteLocalizedObject object, String projectionType) {
 		if (!object.hasCoordinates())
 			return;
 

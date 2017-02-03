@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 @SuppressWarnings("serial")
 @MappedSuperclass
 @ToString(callSuper=true)
-public abstract class NeptuneLocalizedObject extends NeptuneIdentifiedObject {
+public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 
 	/**
 	 * longitude in degrees

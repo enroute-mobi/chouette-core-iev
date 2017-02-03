@@ -8,7 +8,7 @@
 
 package mobi.chouette.exchange.neptune.exporter.producer;
 
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 
 import org.trident.schema.trident.TridentObjectType;
 
@@ -16,7 +16,7 @@ import org.trident.schema.trident.TridentObjectType;
  * @author michel
  * 
  */
-public interface IJaxbNeptuneProducer<T extends TridentObjectType, U extends NeptuneIdentifiedObject>
+public interface IJaxbNeptuneProducer<T extends TridentObjectType, U extends ChouetteIdentifiedObject>
 {
    T produce(U o, boolean addExtension);
 }

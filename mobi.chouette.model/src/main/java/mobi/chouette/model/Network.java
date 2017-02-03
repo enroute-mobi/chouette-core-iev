@@ -46,7 +46,7 @@ import org.hibernate.annotations.Parameter;
 @Cacheable
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = { "lines" })
-public class Network extends NeptuneIdentifiedObject {
+public class Network extends ChouetteIdentifiedObject {
 
 	private static final long serialVersionUID = -8986371268064619423L;
 

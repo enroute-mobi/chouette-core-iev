@@ -39,7 +39,7 @@ import org.hibernate.annotations.Parameter;
 @Cacheable
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = { "lines" })
-public class Company extends NeptuneIdentifiedObject {
+public class Company extends ChouetteIdentifiedObject {
 
 	private static final long serialVersionUID = -8086291270595894778L;
 

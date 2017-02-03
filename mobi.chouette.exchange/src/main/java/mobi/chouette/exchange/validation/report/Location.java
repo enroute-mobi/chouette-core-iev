@@ -21,7 +21,7 @@ import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.NeptuneIdentifiedObject;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
@@ -104,11 +104,11 @@ public class Location extends AbstractReport {
 		this.objectId = objectId;
 	}
 
-	public Location(NeptuneIdentifiedObject chouetteObject) {
+	public Location(ChouetteIdentifiedObject chouetteObject) {
 		init(chouetteObject);
 	}
 
-	private void init(NeptuneIdentifiedObject chouetteObject) {
+	private void init(ChouetteIdentifiedObject chouetteObject) {
 		this.objectId = chouetteObject.getObjectId();
 		this.name = buildName(chouetteObject);
 		if (chouetteObject instanceof VehicleJourney) {
@@ -173,7 +173,7 @@ public class Location extends AbstractReport {
 	// // addLineLocation(this, chouetteObject);
 	// }
 
-	public static String buildName(NeptuneIdentifiedObject chouetteObject) {
+	public static String buildName(ChouetteIdentifiedObject chouetteObject) {
 		if (chouetteObject instanceof VehicleJourney) {
 			VehicleJourney object = (VehicleJourney) chouetteObject;
 			return NamingUtil.getName(object);
