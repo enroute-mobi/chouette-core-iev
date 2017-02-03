@@ -23,8 +23,6 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class RouteParser implements Parser, Constant {
 
-	private Map<String, Properties> directions;
-
 	@Override
 	public void parse(Context context) throws Exception {
 
@@ -51,14 +49,13 @@ public class RouteParser implements Parser, Constant {
 				} else if (tmpDirType.equals(DIRECTION_OUTBOUND)) {
 					route.setDirection(PTDirectionEnum.A);
 				} else {
-					// todo error 
+					// todo error
 				}
 			} else if (xpp.getName().equals(DIRECTION_REF)) {
-				NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
+				NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 				String tmp = xpp.getAttributeValue(null, ID);
-				Direction direction  = factory.getDirection(tmp);
-				//route.setDirection 
-
+				Direction direction = factory.getDirection(tmp);
+				route.setPublishedName(direction.getName());
 			} else if (xpp.getName().equals(INVERSE_ROUTE_REF)) {
 				String tmp = xpp.getAttributeValue(null, ID);
 				Route wayBackRoute = ObjectFactory.getRoute(referential, tmp);
@@ -70,87 +67,6 @@ public class RouteParser implements Parser, Constant {
 			}
 		}
 		route.setFilled(true);
-	}
-
-	private void parseRoute(Context context) throws Exception {
-		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		Referential referential = (Referential) context.get(REFERENTIAL);
-
-		xpp.require(XmlPullParser.START_TAG, null, "Route");
-		context.put(COLUMN_NUMBER, xpp.getColumnNumber());
-		context.put(LINE_NUMBER, xpp.getLineNumber());
-
-		String id = xpp.getAttributeValue(null, ID);
-		Route route = ObjectFactory.getRoute(referential, id);
-
-		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
-		route.setObjectVersion(version != null ? version : 0);
-
-		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals("keyList")) {
-				parseKeyValues(context, route);
-			} else if (xpp.getName().equals("Name")) {
-				route.setName(xpp.nextText());
-			} else if (xpp.getName().equals("ShortName")) {
-				route.setPublishedName(xpp.nextText());
-			} else if (xpp.getName().equals("DirectionRef")) {
-				String ref = xpp.getAttributeValue(null, REF);
-				Properties properties = directions.get(ref);
-				if (properties != null) {
-
-					String directionName = properties.getProperty(NAME);
-					if (directionName != null) {
-						route.setDirection(NetexStifUtils.toPTDirectionType(directionName));
-					}
-					String directionType = properties.getProperty("DirectionType");
-					if (directionType != null) {
-						route.setWayBack((directionType.equals("outbound")) ? "A" : "R");
-					}
-				}
-				XPPUtil.skipSubTree(log, xpp);
-			} else if (xpp.getName().equals("InverseRouteRef")) {
-				String ref = xpp.getAttributeValue(null, REF);
-				Route wayBackRoute = ObjectFactory.getRoute(referential, ref);
-				if (wayBackRoute != null) {
-					wayBackRoute.setOppositeRoute(route);
-				}
-
-				XPPUtil.skipSubTree(log, xpp);
-			} else {
-				XPPUtil.skipSubTree(log, xpp);
-			}
-		}
-		route.setFilled(true);
-	}
-
-	private void parseKeyValues(Context context, Route route) throws Exception {
-		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-
-		xpp.require(XmlPullParser.START_TAG, null, "keyList");
-		context.put(COLUMN_NUMBER, xpp.getColumnNumber());
-		context.put(LINE_NUMBER, xpp.getLineNumber());
-
-		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals("KeyValue")) {
-				XmlPullUtil.nextStartTag(xpp, "Key");
-				String key = xpp.nextText();
-				if (key.equals("Comment")) {
-					XmlPullUtil.nextStartTag(xpp, "Value");
-					String value = xpp.nextText();
-					route.setComment(value);
-					XmlPullUtil.nextEndTag(xpp);
-				} else if (key.equals("Number")) {
-					XmlPullUtil.nextStartTag(xpp, "Value");
-					String value = xpp.nextText();
-					route.setNumber(value);
-					XmlPullUtil.nextEndTag(xpp);
-				} else {
-					XPPUtil.skipSubTree(log, xpp);
-				}
-			} else {
-				XPPUtil.skipSubTree(log, xpp);
-			}
-		}
 	}
 
 	static {
