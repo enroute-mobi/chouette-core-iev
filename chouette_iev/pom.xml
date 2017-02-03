@@ -133,55 +133,13 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>mobi.chouette.exchange.gtfs</artifactId>
-			<type>ejb</type>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>mobi.chouette.exchange.geojson</artifactId>
-			<type>ejb</type>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>mobi.chouette.exchange.netex</artifactId>
-			<type>ejb</type>			
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
 			<artifactId>mobi.chouette.exchange.netex_stif</artifactId>
 			<type>ejb</type>			
 			<version>${project.version}</version>
 		</dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.kml</artifactId>
-         <type>ejb</type>        
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.sig</artifactId>
-         <type>ejb</type>        
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.hub</artifactId>
-         <type>ejb</type>        
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
          <artifactId>mobi.chouette.exchange.validator</artifactId>
-         <type>ejb</type>        
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.converter</artifactId>
          <type>ejb</type>        
          <version>${project.version}</version>
       </dependency>
