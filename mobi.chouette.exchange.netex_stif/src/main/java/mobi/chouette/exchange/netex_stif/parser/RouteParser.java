@@ -1,10 +1,6 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
-import java.util.Map;
-import java.util.Properties;
-
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.util.XmlPullUtil;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
