@@ -811,6 +811,7 @@
 		<module>mobi.chouette.exchange</module>
 		<module>mobi.chouette.exchange.neptune</module>
 		<module>mobi.chouette.exchange.netex</module>
+		<module>mobi.chouette.exchange.netex_stif</module>
 		<module>mobi.chouette.exchange.kml</module>
       <module>mobi.chouette.exchange.geojson</module>
       <module>mobi.chouette.exchange.sig</module>
