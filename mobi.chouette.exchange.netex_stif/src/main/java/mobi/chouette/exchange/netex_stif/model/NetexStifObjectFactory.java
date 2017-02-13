@@ -9,11 +9,12 @@ import mobi.chouette.model.Footnote;
 
 public class NetexStifObjectFactory {
 
-	@Getter
-	@Setter
 	private Map<String, Direction> direction = new HashMap<>();
 
 	private Map<String, Footnote> footnote = new HashMap<>();
+	
+	private Map<String, DestinationDisplay> destinationDisplay = new HashMap<>();
+	
 
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);
@@ -31,6 +32,16 @@ public class NetexStifObjectFactory {
 			result = new Footnote();
 			result.setObjectId(objectId);
 			footnote.put(objectId, result);
+		}
+		return result;
+	}
+	
+	public DestinationDisplay getDestinationDisplay(String objectId){
+		DestinationDisplay result = destinationDisplay.get(objectId);
+		if (result == null){
+			result = new DestinationDisplay();
+			result.setObjectId(objectId);
+			destinationDisplay.put(objectId, result);
 		}
 		return result;
 	}
