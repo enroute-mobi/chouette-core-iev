@@ -11,9 +11,11 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String DIRECTION_TYPE = "DirectionType";
 	public static final String DIRECTION_REF = "DirectionRef";
 	public static final String INVERSE_ROUTE_REF = "InverseRouteRef";
+	public static final String STOP_POINT = "StopPoint";
 	public static final String ROUTE = "Route";
 	public static final String NOTICE = "Notice";
 	public static final String TEXT = "Text";
+	public static final String DAY_TYPE = "DayType";
 	public static final String TYPE_OF_NOTICE_REF = "TypeOfNoticeRef";
 	public static final String SERVICE_JOURNEY_NOTICE = "ServiceJourneyNotice";
 	public static final String SERVICE_JOURNEY_PATTERN = "ServiceJourneyPattern";
@@ -25,5 +27,6 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String POINTS_IN_SEQUENCE = "pointsInSequence";
 	public static final String SERVICE_JOURNEY_PATTERN_TYPE = "ServiceJourneyPatternType";
 	public static final String ROUTE_REF = "RouteRef";
+	public static final String PROPERTY_OF_DAY = "PropertyOfDay";
 
 }

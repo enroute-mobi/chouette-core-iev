@@ -86,9 +86,9 @@ public class NetexStifParser implements Parser, Constant {
 						.create(ConnectionLinkParser.class.getName());
 				connectionLinkarser.parse(context);
 			} else if (xpp.getName().equals("tariffZones")) {
-				Parser stopAreaParser = ParserFactory
-						.create(StopAreaParser.class.getName());
-				stopAreaParser.parse(context);
+//				Parser stopAreaParser = ParserFactory
+//						.create(StopAreaParser.class.getName());
+//				stopAreaParser.parse(context);
 			} else if (xpp.getName().equals("stopAssignments")) {
 				Parser routeParser = ParserFactory.create(RouteParser.class
 						.getName());
@@ -104,9 +104,9 @@ public class NetexStifParser implements Parser, Constant {
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals("stopPlaces")) {
-				Parser stopAreaParser = ParserFactory
-						.create(StopAreaParser.class.getName());
-				stopAreaParser.parse(context);
+//				Parser stopAreaParser = ParserFactory
+//						.create(StopAreaParser.class.getName());
+//				stopAreaParser.parse(context);
 			} else {
 				XPPUtil.skipSubTree(log,xpp);
 			}
