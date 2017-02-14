@@ -30,7 +30,7 @@ public class RouteParser implements Parser, Constant {
 		Integer version = (Integer) context.get(VERSION);
 				
 
-		xpp.require(XmlPullParser.START_TAG, null, ROUTE);
+		//xpp.require(XmlPullParser.START_TAG, null, ROUTE);
 		String id = xpp.getAttributeValue(null, ID);
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
