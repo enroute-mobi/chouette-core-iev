@@ -35,7 +35,7 @@ public class RouteParser implements Parser, Constant {
 			if (xpp.getName().equals(NAME)) {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(LINE_REF)) {
-				String tmp = xpp.getAttributeValue(null, ID);
+				String tmp = xpp.getAttributeValue(null, REF);
 				Line line = ObjectFactory.getLine(referential, tmp);
 				route.setLine(line);
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
@@ -49,11 +49,11 @@ public class RouteParser implements Parser, Constant {
 				}
 			} else if (xpp.getName().equals(DIRECTION_REF)) {
 				NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-				String tmp = xpp.getAttributeValue(null, ID);
+				String tmp = xpp.getAttributeValue(null, REF);
 				Direction direction = factory.getDirection(tmp);
 				route.setPublishedName(direction.getName());
 			} else if (xpp.getName().equals(INVERSE_ROUTE_REF)) {
-				String tmp = xpp.getAttributeValue(null, ID);
+				String tmp = xpp.getAttributeValue(null, REF);
 				Route wayBackRoute = ObjectFactory.getRoute(referential, tmp);
 				if (wayBackRoute != null) {
 					wayBackRoute.setOppositeRoute(route);
