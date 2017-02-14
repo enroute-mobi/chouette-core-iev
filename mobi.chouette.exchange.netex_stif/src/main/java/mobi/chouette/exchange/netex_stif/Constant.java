@@ -28,5 +28,10 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String SERVICE_JOURNEY_PATTERN_TYPE = "ServiceJourneyPatternType";
 	public static final String ROUTE_REF = "RouteRef";
 	public static final String PROPERTY_OF_DAY = "PropertyOfDay";
+	public static final String DATA_OBJECTS = "dataObjects";
+	public static final String PUBLICATION_TIMESTAMP = "PublicationTimestamp";
+	public static final String PARTICIPANT_REF= "ParticipantRef";
+	public static final String COMPOSITE_FRAME= "CompositeFrame";
+	
 
 }
