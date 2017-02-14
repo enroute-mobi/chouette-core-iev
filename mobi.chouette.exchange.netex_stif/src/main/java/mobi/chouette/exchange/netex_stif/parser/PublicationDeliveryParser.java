@@ -20,9 +20,11 @@ public class PublicationDeliveryParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		//Referential referential = (Referential) context.get(REFERENTIAL);
 		String version = xpp.getAttributeValue(null, VERSION);
-		// TODO que fait on de version 
+		// TODO vérifier que la version soit celle du stif
+	
+		
 		
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(DATA_OBJECTS)) {
@@ -32,11 +34,7 @@ public class PublicationDeliveryParser implements Parser, Constant {
 						compositeFrameParser.parse(context);
 					}
 				}
-			} else if (xpp.getName().equals(PUBLICATION_TIMESTAMP)) {
-
-			} else if (xpp.getName().equals(PARTICIPANT_REF)) {
-
-			} else {
+			}  else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
