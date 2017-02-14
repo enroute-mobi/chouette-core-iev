@@ -1,8 +1,12 @@
 package mobi.chouette.exchange.netex_stif.importer;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.naming.InitialContext;
+
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
@@ -19,9 +23,6 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.model.util.Referential;
 
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
-
 @Log4j
 public class NetexStifImporterCommand extends AbstractImporterCommand implements Command, Constant {
 
@@ -34,7 +35,10 @@ public class NetexStifImporterCommand extends AbstractImporterCommand implements
 
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-
+		Date date = new Date();
+		// TODO cast en attendant de voir comment on transforme la date en int ou si on met la version sur un long au lieu d'un int
+		int version = (int)date.getTime();
+		context.put(VERSION, version);
 		context.put(REFERENTIAL, new Referential());
 
 		// initialize reporting and progression
