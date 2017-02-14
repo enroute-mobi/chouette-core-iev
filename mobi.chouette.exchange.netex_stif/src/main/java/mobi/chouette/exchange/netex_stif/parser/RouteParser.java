@@ -24,12 +24,16 @@ public class RouteParser implements Parser, Constant {
 
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
+		// FLA −> MET
+		// est ce que l'on devrait pas faire un abstract parser
+		// on avait parlé d'un long, mais à priori la version est sur un integer
+		Integer version = (Integer) context.get(VERSION);
+				
 
 		xpp.require(XmlPullParser.START_TAG, null, ROUTE);
 		String id = xpp.getAttributeValue(null, ID);
 		Route route = ObjectFactory.getRoute(referential, id);
-		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
-		route.setObjectVersion(version != null ? version : 0);
+		route.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
