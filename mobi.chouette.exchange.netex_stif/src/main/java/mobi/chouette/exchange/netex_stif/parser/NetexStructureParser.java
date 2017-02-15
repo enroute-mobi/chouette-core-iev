@@ -16,24 +16,33 @@ public class NetexStructureParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_FRAME_REF)) {
-				if (xpp.nextText().equals(NETEX_STRUCTURE)){
-					// TODO dire que c'est valide ou à l'inverse que c'est invalide
+				if (xpp.nextText().equals(NETEX_STRUCTURE)) {
+					// TODO dire que c'est valide ou à l'inverse que c'est
+					// invalide
 				}
-			}else if (xpp.getName().equals(MEMBERS)) {
+			} else if (xpp.getName().equals(MEMBERS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(ROUTES)) {
 						while (xpp.nextTag() == XmlPullParser.START_TAG) {
 							if (xpp.getName().equals(ROUTE)) {
-								Parser routeParser= ParserFactory.create(RouteParser.class.getName());
+								Parser routeParser = ParserFactory.create(RouteParser.class.getName());
 								routeParser.parse(context);
 							}
 						}
-						
-					}else if (xpp.getName().equals(DIRECTIONS))  {
+
+					} else if (xpp.getName().equals(DIRECTIONS)) {
 						while (xpp.nextTag() == XmlPullParser.START_TAG) {
 							if (xpp.getName().equals(DIRECTION)) {
-								Parser directionParser= ParserFactory.create(DirectionParser.class.getName());
+								Parser directionParser = ParserFactory.create(DirectionParser.class.getName());
 								directionParser.parse(context);
+							}
+						}
+					} else if (xpp.getName().equals(SERVICE_JOURNEY_PATTERNS)) {
+						while (xpp.nextTag() == XmlPullParser.START_TAG) {
+							if (xpp.getName().equals(SERVICE_JOURNEY_PATTERN)) {
+								Parser serviceJourneyPatternParser = ParserFactory
+										.create(ServiceJourneyPatternParser.class.getName());
+								serviceJourneyPatternParser.parse(context);
 							}
 						}
 					}
