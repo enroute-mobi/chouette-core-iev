@@ -48,6 +48,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				}
 			} else if (xpp.getName().equals(SERVICE_JOURNEY_PATTERN_TYPE)) {
 				// Nothing to do ?
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(ROUTE_REF)) {
 				String routeRef = xpp.getAttributeValue(null, REF);
 				Route route = ObjectFactory.getRoute(referential, routeRef);
