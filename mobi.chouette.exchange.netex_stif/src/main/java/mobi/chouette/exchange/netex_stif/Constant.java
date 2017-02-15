@@ -47,5 +47,8 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String GENERAL_FRAME = "GeneralFrame";
 	public static final String NETEX_STRUCTURE = "NETEX_STRUCTURE";
 	public static final String MEMBERS = "members";
+	public static final String SCHEDULED_STOP_POINTS = "scheduledStopPoints";
+	public static final String SCHEDULED_STOP_POINT = "ScheduledStopPoint";
+	
 
 }
