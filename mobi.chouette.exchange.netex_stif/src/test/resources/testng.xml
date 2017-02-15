@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="exchangeNetexStif" verbose="5">
+   
+   
+   <test name="ImportNetexStif">
+       <packages>
+         <package name="mobi.chouette.exchange.netex_stif.importer" >
+         </package>
+       </packages>
+   </test>
+      
+</suite>
