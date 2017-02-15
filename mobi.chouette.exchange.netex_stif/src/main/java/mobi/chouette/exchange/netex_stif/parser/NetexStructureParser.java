@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
@@ -45,6 +46,16 @@ public class NetexStructureParser implements Parser, Constant {
 								serviceJourneyPatternParser.parse(context);
 							}
 						}
+					}else if (xpp.getName().equals(DESTINATION_DISPLAYS)){
+						while (xpp.nextTag() == XmlPullParser.START_TAG) {
+							if (xpp.getName().equals(DESTINATION_DISPLAY)) {
+								Parser destinationDisplayParser = ParserFactory
+										.create(DestinationDisplayParser.class.getName());
+								destinationDisplayParser.parse(context);
+							}
+						}
+					}else{
+						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
 			}
