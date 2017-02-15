@@ -14,7 +14,6 @@ public class NoticeParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		
-		xpp.require(XmlPullParser.START_TAG, null, NOTICE);
 		String id = xpp.getAttributeValue(null, ID);
 		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
 		NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
