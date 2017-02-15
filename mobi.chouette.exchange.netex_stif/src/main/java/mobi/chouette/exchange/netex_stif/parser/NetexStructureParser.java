@@ -46,7 +46,7 @@ public class NetexStructureParser implements Parser, Constant {
 								serviceJourneyPatternParser.parse(context);
 							}
 						}
-					}else if (xpp.getName().equals(DESTINATION_DISPLAYS)){
+					} else if (xpp.getName().equals(DESTINATION_DISPLAYS)) {
 						while (xpp.nextTag() == XmlPullParser.START_TAG) {
 							if (xpp.getName().equals(DESTINATION_DISPLAY)) {
 								Parser destinationDisplayParser = ParserFactory
@@ -54,7 +54,23 @@ public class NetexStructureParser implements Parser, Constant {
 								destinationDisplayParser.parse(context);
 							}
 						}
-					}else{
+					} else if (xpp.getName().equals(SCHEDULED_STOP_POINTS)) {
+						while (xpp.nextTag() == XmlPullParser.START_TAG) {
+							if (xpp.getName().equals(SCHEDULED_STOP_POINT)) {
+								Parser scheduledStopPointParser = ParserFactory
+										.create(ScheduledStopPointParser.class.getName());
+								scheduledStopPointParser.parse(context);
+							}
+						}
+					} else if (xpp.getName().equals(PASSENGER_STOP_ASSIGNEMENTS)) {
+						while (xpp.nextTag() == XmlPullParser.START_TAG) {
+							if (xpp.getName().equals(PASSENGER_STOP_ASSIGNEMENT)) {
+								Parser passengerStopAssignementParser = ParserFactory
+										.create(PassengerStopAssignementParser.class.getName());
+								passengerStopAssignementParser.parse(context);
+							}
+						}
+					} else {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}

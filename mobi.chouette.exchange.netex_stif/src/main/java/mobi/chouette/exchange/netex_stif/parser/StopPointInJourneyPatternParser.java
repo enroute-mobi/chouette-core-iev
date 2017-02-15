@@ -21,7 +21,6 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 
 		Integer version = (Integer) context.get(VERSION);
 
-		// xpp.require(XmlPullParser.START_TAG, null, ROUTE);
 		String id = xpp.getAttributeValue(null, ID);
 		String order = xpp.getAttributeValue(null, ORDER);
 		String objectId = id + ":" + order;
