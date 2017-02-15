@@ -50,7 +50,7 @@
                                     version="any"/>
                                 <netex:pointsInSequence>
                                     <netex:StopPointInJourneyPattern
-                                        id="CITYWAY:DestinationDisplay:1-1-1:LOC" order="1"
+                                        id="CITYWAY:StopPointInJourneyPattern:1-1-1:LOC" order="1"
                                         version="any">
                                         <netex:ScheduledStopPointRef
                                             ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
@@ -58,7 +58,7 @@
                                         <netex:ForBoarding>true</netex:ForBoarding>
                                     </netex:StopPointInJourneyPattern>
                                     <netex:StopPointInJourneyPattern
-                                        id="CITYWAY:DestinationDisplay:1-1-2:LOC" order="2"
+                                        id="CITYWAY:StopPointInJourneyPattern:1-1-2:LOC" order="2"
                                         version="any">
                                         <netex:ScheduledStopPointRef
                                             ref="CITYWAY:ScheduledStopPoint:1-2:LOC" version="any"/>
@@ -84,7 +84,7 @@
                                         <netex:ForBoarding>true</netex:ForBoarding>
                                     </netex:StopPointInJourneyPattern>
                                     <netex:StopPointInJourneyPattern
-                                        id="CITYWAY:DestinationDisplay:2-2-2:LOC" order="2"
+                                        id="CITYWAY:StopPointInJourneyPattern:2-2-2:LOC" order="2"
                                         version="any">
                                         <netex:ScheduledStopPointRef
                                             ref="CITYWAY:ScheduledStopPoint:2-2:LOC" version="any"/>
