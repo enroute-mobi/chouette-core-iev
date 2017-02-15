@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.exchange.importer.ParserUtils;
+import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
 import mobi.chouette.model.type.ConnectionLinkTypeEnum;
 import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.type.PTDirectionEnum;
@@ -197,4 +198,15 @@ public class NetexStifUtils extends ParserUtils {
 			return null;
 		}
 	}
+
+	public final static String ID_SEPARATOR = ":";
+
+	public static String genStopPointId(String id, String order) {
+		return id + ID_SEPARATOR + order;
+	}
+
+	public static String genStopPointId(ScheduledStopPoint scheduledStopPoint) {
+		return scheduledStopPoint.getId() + ID_SEPARATOR + scheduledStopPoint.getOrder();
+	}
+
 }

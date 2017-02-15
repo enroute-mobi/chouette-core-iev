@@ -25,7 +25,7 @@ public class ScheduledStopPointParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		String order = xpp.getAttributeValue(null, ORDER);
-		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, NetexStifParserUtils.genStopPointId(id, order));
+		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, NetexStifUtils.genStopPointId(id, order));
 		stopPoint.setObjectVersion(version);
 		// save ScheduledStopPoint to use it latter, call get to create the
 		// point if not exists

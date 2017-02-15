@@ -70,6 +70,14 @@ public class NetexStructureParser implements Parser, Constant {
 								passengerStopAssignementParser.parse(context);
 							}
 						}
+					} else if (xpp.getName().equals(ROUTING_CONSTRAINT_ZONES)) {
+						while (xpp.nextTag() == XmlPullParser.START_TAG) {
+							if (xpp.getName().equals(ROUTING_CONSTRAINT_ZONE)) {
+								Parser routingConstraintZoneParser = ParserFactory
+										.create(RoutingConstraintZoneParser.class.getName());
+								routingConstraintZoneParser.parse(context);
+							}
+						}
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
 					}

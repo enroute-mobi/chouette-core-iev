@@ -53,6 +53,8 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String PASSENGER_STOP_ASSIGNEMENTS = "passengerStopAssignements";
 	public static final String PASSENGER_STOP_ASSIGNEMENT = "PassengerStopAssignement";
 	public static final String QUAY_REF = "QuayRef";
+	public static final String ROUTING_CONSTRAINT_ZONE = "RoutingConstraintZone";
+	public static final String ROUTING_CONSTRAINT_ZONES = "routingConstraintZones";
 	
 
 }
