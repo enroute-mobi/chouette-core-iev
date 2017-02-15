@@ -49,6 +49,10 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String MEMBERS = "members";
 	public static final String SCHEDULED_STOP_POINTS = "scheduledStopPoints";
 	public static final String SCHEDULED_STOP_POINT = "ScheduledStopPoint";
+	public static final String SCHEDULED_STOP_POINT_REF = "ScheduledStopPointRef";
+	public static final String PASSENGER_STOP_ASSIGNEMENTS = "passengerStopAssignements";
+	public static final String PASSENGER_STOP_ASSIGNEMENT = "PassengerStopAssignement";
+	public static final String QUAY_REF = "QuayRef";
 	
 
 }

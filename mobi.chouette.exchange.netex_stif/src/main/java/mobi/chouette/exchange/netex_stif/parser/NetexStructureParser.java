@@ -57,8 +57,17 @@ public class NetexStructureParser implements Parser, Constant {
 					} else if (xpp.getName().equals(SCHEDULED_STOP_POINTS)) {
 						while (xpp.nextTag() == XmlPullParser.START_TAG) {
 							if (xpp.getName().equals(SCHEDULED_STOP_POINT)) {
-								Parser scheduledStopPointParser= ParserFactory.create(ScheduledStopPointParser.class.getName());
+								Parser scheduledStopPointParser = ParserFactory
+										.create(ScheduledStopPointParser.class.getName());
 								scheduledStopPointParser.parse(context);
+							}
+						}
+					} else if (xpp.getName().equals(PASSENGER_STOP_ASSIGNEMENTS)) {
+						while (xpp.nextTag() == XmlPullParser.START_TAG) {
+							if (xpp.getName().equals(PASSENGER_STOP_ASSIGNEMENT)) {
+								Parser passengerStopAssignementParser = ParserFactory
+										.create(PassengerStopAssignementParser.class.getName());
+								passengerStopAssignementParser.parse(context);
 							}
 						}
 					} else {
