@@ -77,7 +77,7 @@
                 <netex:operatingPeriods>
                     <netex:OperatingPeriod id="CITYWAY:OperatingPeriod:1:LOC" version="any" >
                         <netex:FromDate>2017-01-01</netex:FromDate>
-                        <netex:ToDate>2017-12-01</netex:ToDate>
+                        <netex:ToDate>2017-12-31</netex:ToDate>
                     </netex:OperatingPeriod>
                 </netex:operatingPeriods>
             </netex:members>

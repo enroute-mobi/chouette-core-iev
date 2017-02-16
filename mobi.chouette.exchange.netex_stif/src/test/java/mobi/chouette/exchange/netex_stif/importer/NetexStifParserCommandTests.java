@@ -24,19 +24,20 @@ import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.BasicConfigurator;
 import org.testng.Assert;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
-
-public class NetexStifParserCommandTests implements Constant, ReportConstant
-{
+public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private static final String path = "src/test/data/";
-	
-	protected static InitialContext initialContext;
-	
 
-	protected void init() {
+	protected static InitialContext initialContext;
+
+	@BeforeGroups(groups = { "Nominal" })
+	public void init() {
+		BasicConfigurator.configure();
 		Locale.setDefault(Locale.ENGLISH);
 		if (initialContext == null) {
 			try {
@@ -44,13 +45,11 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
-			
-			
+
 		}
 	}
-	
+
 	protected Context initImportContext() {
-		init();
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
@@ -67,8 +66,8 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant
 		configuration.setReferentialName("test");
 		JobDataTest test = new JobDataTest();
 		context.put(JOB_DATA, test);
-		
-		test.setPathName( "target/referential/test");
+
+		test.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
 			try {
@@ -77,8 +76,8 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant
 				e.printStackTrace();
 			}
 		f.mkdirs();
-		test.setReferential( "chouette_gui");
-		test.setAction( IMPORTER);
+		test.setReferential("chouette_gui");
+		test.setAction(IMPORTER);
 		test.setType("netex_stif");
 		context.put("testng", "true");
 		context.put(OPTIMIZED, Boolean.FALSE);
@@ -86,18 +85,17 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant
 
 	}
 
-@Test(groups = { "Nominal" }, description = "offre")
-   public void verifiyOfferParser () throws Exception
-   {
-      Context context = initImportContext();
-    		  
-      NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext, NetexStifParserCommand.class.getName());
-      File f = new File(path,"offre.xml");
-      parser.setFileURL("file://"+f.getAbsolutePath());
-      parser.execute(context);
+	@Test(groups = { "Nominal" }, description = "offre")
+	public void verifiyOfferParser() throws Exception {
+		Context context = initImportContext();
 
-      /// Assert.assertXXX();
-   }
+		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
+				NetexStifParserCommand.class.getName());
+		File f = new File(path, "offre.xml");
+		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.execute(context);
 
+		/// Assert.assertXXX();
+	}
 
 }
