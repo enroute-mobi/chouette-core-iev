@@ -19,7 +19,7 @@
                             <netex:Route id="CITYWAY:Route:1:LOC" version="any">
                                 <netex:Name>route 1</netex:Name>
                                 <netex:LineRef ref="STIF:CODIFLIGNE:Line:12234"
-                                    >version="any"</netex:LineRef>
+                                    version="any"></netex:LineRef>
                                 <netex:DirectionType>outbound</netex:DirectionType>
                                 <netex:DirectionRef ref="CITYWAY:Direction:1:LOC" version="any"/>
                                 <netex:InverseRouteRef ref="CITYWAY:Route:2:LOC" version="any"/>
@@ -27,7 +27,7 @@
                             <netex:Route id="CITYWAY:Route:2:LOC" version="any">
                                 <netex:Name>route 2</netex:Name>
                                 <netex:LineRef ref="STIF:CODIFLIGNE:Line:12234"
-                                    >version="any"</netex:LineRef>
+                                    version="any"></netex:LineRef>
                                 <netex:DirectionType>inbound</netex:DirectionType>
                                 <netex:DirectionRef ref="CITYWAY:Direction:2:LOC" version="any"/>
                                 <netex:InverseRouteRef ref="CITYWAY:Route:1:LOC" version="any"/>
@@ -122,25 +122,25 @@
                                 id="CITYWAY:PassengerStopAssignment:1-1:LOC" version="any">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
-                                <netex:QuayRef ref="code reflex 1">version="any"</netex:QuayRef>
+                                <netex:QuayRef ref="code reflex 1" version="any"></netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
                                 id="CITYWAY:PassengerStopAssignment:2-1:LOC" version="any">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:2-1:LOC" version="any"/>
-                                <netex:QuayRef ref="code reflex 2">version="any"</netex:QuayRef>
+                                <netex:QuayRef ref="code reflex 2" version="any"></netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
                                 id="CITYWAY:PassengerStopAssignment:1-2:LOC" version="any">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:1-2:LOC" version="any"/>
-                                <netex:QuayRef ref="code reflex 3">version="any"</netex:QuayRef>
+                                <netex:QuayRef ref="code reflex 3" version="any"></netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
                                 id="CITYWAY:PassengerStopAssignment:2-2:LOC" version="any">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:2-2:LOC" version="any"/>
-                                <netex:QuayRef ref="code reflex 4">version="any"</netex:QuayRef>
+                                <netex:QuayRef ref="code reflex 4" version="any"></netex:QuayRef>
                             </netex:PassengerStopAssignment>
                         </netex:passengerStopAssignments>
                         <netex:routingConstraintZones>
@@ -168,18 +168,18 @@
                                 <netex:noticeAssignments>
                                     <netex:NoticeAssignement>
                                         <netex:NoticeRef ref="CITYWAY:Notice:1234:LOC"
-                                            >version="any"</netex:NoticeRef>
+                                            version="any"></netex:NoticeRef>
                                     </netex:NoticeAssignement>
                                 </netex:noticeAssignments>
                                 <netex:DayTypeRef ref="CITYWAY:DayTypeRef:1:LOC"
-                                    >version="any"</netex:DayTypeRef>
+                                    version="any"></netex:DayTypeRef>
                                 <netex:JourneyPatternRef ref="CITYWAY:ServiceJourneyPattern:1:LOC"
                                     version="any"/>
                                 <netex:OperatorRef ref="STIF:CODIFLIGNE:Operator:1:LOC"
-                                    >version="any"</netex:OperatorRef>
+                                    version="any"></netex:OperatorRef>
                                 <netex:trainNumbers>
                                     <netex:TrainNumberRef ref="CITYWAY:TrainNumber:1234:LOC"
-                                        >version="any"</netex:TrainNumberRef>
+                                        version="any"></netex:TrainNumberRef>
                                 </netex:trainNumbers>
                                 <netex:passingTimes>
                                     <netex:TimetabledPassingTime version="any">
