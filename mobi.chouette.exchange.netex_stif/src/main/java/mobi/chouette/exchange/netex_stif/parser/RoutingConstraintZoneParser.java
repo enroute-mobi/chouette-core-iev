@@ -5,6 +5,7 @@ import org.xmlpull.v1.XmlPullParser;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.Parser;
+import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -20,16 +21,27 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 		String id = xpp.getAttributeValue(null, ID);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
-				
-			}else if (xpp.getName().equals(MEMBERS)){
+
+			} else if (xpp.getName().equals(MEMBERS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)){
-						
+					if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
+
 					}
 				}
 			}
 		}
-		
+
+	}
+
+	static {
+		ParserFactory.register(RoutingConstraintZoneParser.class.getName(), new ParserFactory() {
+			private RoutingConstraintZoneParser instance = new RoutingConstraintZoneParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
 	}
 
 }

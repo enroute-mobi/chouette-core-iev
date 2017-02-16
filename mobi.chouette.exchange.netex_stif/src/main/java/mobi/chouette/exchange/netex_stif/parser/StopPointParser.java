@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.Parser;
+import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.ObjectFactory;
@@ -21,6 +22,17 @@ public class StopPointParser implements Parser, Constant{
 		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
 		stopPoint.setObjectVersion(version != null ? version : 0);
 		
+	}
+	
+	static {
+		ParserFactory.register(StopPointParser.class.getName(), new ParserFactory() {
+			private StopPointParser instance = new StopPointParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
 	}
 
 }

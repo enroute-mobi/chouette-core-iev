@@ -39,5 +39,16 @@ public class PublicationDeliveryParser implements Parser, Constant {
 			}
 		}
 	}
+	
+	static {
+		ParserFactory.register(PublicationDeliveryParser.class.getName(), new ParserFactory() {
+			private PublicationDeliveryParser instance = new PublicationDeliveryParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
+	}
 
 }

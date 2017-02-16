@@ -9,6 +9,13 @@ import java.net.URL;
 
 import javax.naming.InitialContext;
 
+import org.apache.commons.io.input.BOMInputStream;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -20,18 +27,11 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.exchange.netex_stif.parser.NetexStifParser;
+import mobi.chouette.exchange.netex_stif.parser.PublicationDeliveryParser;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_ERROR_CODE;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.util.Referential;
-
-import org.apache.commons.io.input.BOMInputStream;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
 
 @Log4j
 public class NetexStifParserCommand implements Command, Constant {
@@ -79,7 +79,7 @@ public class NetexStifParserCommand implements Command, Constant {
 				factory.clear();
 			}
 
-			Parser parser = ParserFactory.create(NetexStifParser.class.getName());
+			Parser parser = ParserFactory.create(PublicationDeliveryParser.class.getName());
 			parser.parse(context);
 
 			result = SUCCESS;
