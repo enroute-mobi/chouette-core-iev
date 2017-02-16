@@ -37,6 +37,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	@BeforeGroups(groups = { "Nominal" })
 	public void init() {
+		BasicConfigurator.resetConfiguration();
 		BasicConfigurator.configure();
 		Locale.setDefault(Locale.ENGLISH);
 		if (initialContext == null) {
