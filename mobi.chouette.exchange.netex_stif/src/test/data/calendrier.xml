@@ -7,7 +7,7 @@
     <netex:PublicationTimestamp>2017-02-14T09:13:51.0</netex:PublicationTimestamp>
     <netex:ParticipantRef>CITYWAY</netex:ParticipantRef>
     <netex:dataObjects>
-        <netex:GeneralFrame id="CITYWAY:GeneralFrame:NETEX_CALENDRIER-20170214090012:LOC"
+        <netex:GeneralFrame id="CITYWAY:GeneralFrame:NETEX_CALENDRIER-1_20170214090012:LOC"
             version="any">
             <netex:TypeOfFrameRef ref="NETEX_CALENDRIER"/>
             <netex:ValidBetween>
@@ -64,12 +64,12 @@
                         <netex:DayTypeRef ref="CITYWAY:DayType:2:LOC" version="any"/>
                     </netex:DayTypeAssignment>
                     <netex:DayTypeAssignment version="any" >
-                        <netex:Date>2017-03-15</netex:Date>-->
+                        <netex:Date>2017-03-15</netex:Date>
                         <netex:DayTypeRef ref="CITYWAY:DayType:3:LOC" version="any"/>
                         <netex:isAvailable>true</netex:isAvailable> 
                     </netex:DayTypeAssignment>
                     <netex:DayTypeAssignment version="any" >
-                        <netex:Date>2017-03-15</netex:Date>-->
+                        <netex:Date>2017-03-15</netex:Date>
                         <netex:DayTypeRef ref="CITYWAY:DayType:4:LOC" version="any"/>
                         <netex:isAvailable>false</netex:isAvailable> 
                     </netex:DayTypeAssignment>
