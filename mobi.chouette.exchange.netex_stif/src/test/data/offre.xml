@@ -122,13 +122,13 @@
                                 id="CITYWAY:PassengerStopAssignment:1-1:LOC" version="any">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
-                                <netex:QuayRef ref="code reflex 1">version="any"</netex:QuayRef>
+                                <netex:QuayRef ref="code reflex 1" version="any"></netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
                                 id="CITYWAY:PassengerStopAssignment:2-1:LOC" version="any">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:2-1:LOC" version="any"/>
-                                <netex:QuayRef ref="code reflex 2">version="any"</netex:QuayRef>
+                                <netex:QuayRef ref="code reflex 2" version="any"></netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
                                 id="CITYWAY:PassengerStopAssignment:1-2:LOC" version="any">
