@@ -92,10 +92,15 @@ public class ParserUtils {
 
 	public static Time getSQLTime(String value) throws ParseException {
 		Time result = null;
-		assert value != null : "[DSU] invalid value : " + value;
+		assert value != null : "invalid value : " + value;
 
 		if (value != null) {
-			DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+			DateFormat TIME_FORMAT = null;
+			if (value.contains(".")){
+				TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.sss");
+			}else{
+				TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+			}
 			result = new Time(getDate(TIME_FORMAT, value).getTime());
 
 		}
