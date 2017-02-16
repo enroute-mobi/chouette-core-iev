@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
@@ -14,36 +15,37 @@ public class CompositeFrameParser implements Constant, Parser {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		
-		
+
+		boolean isTypeValid = false;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_FRAME_REF)) {
-				if (xpp.nextText().equals(NETEX_OFFRE_LIGNE)){
-					// TODO dire que c'est valide ou à l'inverse que c'est invalide
+				if (xpp.nextText().equals(NETEX_OFFRE_LIGNE)) {
+					isTypeValid = true;
 				}
-			}else if (xpp.getName().equals(FRAMES)) {
+			} else if (xpp.getName().equals(FRAMES) && isTypeValid) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(GENERAL_FRAME)) {
-						Parser netexStructureParser = ParserFactory.create(NetexStructureParser.class.getName());
-						netexStructureParser.parse(context);
-					}else{
-						
+						Parser parser = ParserFactory.create(GeneralFrameParser.class.getName());
+						parser.parse(context);
+					} else {
+						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
+			} else {
+				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
 	}
-	
-	static {
-		ParserFactory.register(CompositeFrameParser.class.getName(),
-				new ParserFactory() {
-					private CompositeFrameParser instance = new CompositeFrameParser();
 
-					@Override
-					protected Parser create() {
-						return instance;
-					}
-				});
+	static {
+		ParserFactory.register(CompositeFrameParser.class.getName(), new ParserFactory() {
+			private CompositeFrameParser instance = new CompositeFrameParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
 	}
 
 }

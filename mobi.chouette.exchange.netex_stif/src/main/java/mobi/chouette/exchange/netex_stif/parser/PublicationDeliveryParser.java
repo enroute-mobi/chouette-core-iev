@@ -15,17 +15,13 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class PublicationDeliveryParser implements Parser, Constant {
 
-	
-
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		//Referential referential = (Referential) context.get(REFERENTIAL);
+		// Referential referential = (Referential) context.get(REFERENTIAL);
 		String version = xpp.getAttributeValue(null, VERSION);
 		// TODO vérifier que la version soit celle du stif
-	
-		
-		
+
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(DATA_OBJECTS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -33,13 +29,19 @@ public class PublicationDeliveryParser implements Parser, Constant {
 						Parser compositeFrameParser = ParserFactory.create(CompositeFrameParser.class.getName());
 						compositeFrameParser.parse(context);
 					}
+					if (xpp.getName().equals(GENERAL_FRAME)) {
+						Parser parser = ParserFactory.create(GeneralFrameParser.class.getName());
+						parser.parse(context);
+					} else {
+						XPPUtil.skipSubTree(log, xpp);
+					}
 				}
-			}  else {
+			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
 	}
-	
+
 	static {
 		ParserFactory.register(PublicationDeliveryParser.class.getName(), new ParserFactory() {
 			private PublicationDeliveryParser instance = new PublicationDeliveryParser();
