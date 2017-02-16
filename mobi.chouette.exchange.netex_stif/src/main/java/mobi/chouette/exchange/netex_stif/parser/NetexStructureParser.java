@@ -80,4 +80,15 @@ public class NetexStructureParser implements Parser, Constant {
 		}
 	}
 
+	static {
+		ParserFactory.register(NetexStructureParser.class.getName(), new ParserFactory() {
+			private NetexStructureParser instance = new NetexStructureParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
+	}
+
 }

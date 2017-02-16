@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
+import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
@@ -30,6 +31,18 @@ public class DirectionParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+	}
+	
+	static {
+		ParserFactory.register(DirectionParser.class.getName(),
+				new ParserFactory() {
+					private DirectionParser instance = new DirectionParser();
+
+					@Override
+					protected Parser create() {
+						return instance;
+					}
+				});
 	}
 
 }

@@ -5,6 +5,7 @@ import org.xmlpull.v1.XmlPullParser;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
+import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.Timetable;
@@ -36,6 +37,18 @@ public class DayTypeParser implements Parser, Constant {
 				
 			}
 		}
+	}
+	
+	static {
+		ParserFactory.register(DayTypeParser.class.getName(),
+				new ParserFactory() {
+					private DayTypeParser instance = new DayTypeParser();
+
+					@Override
+					protected Parser create() {
+						return instance;
+					}
+				});
 	}
 
 }

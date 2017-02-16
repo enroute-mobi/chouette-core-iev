@@ -22,7 +22,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 
 		xpp.require(XmlPullParser.START_TAG, null, SERVICE_JOURNEY_PATTERN);
 		String id = xpp.getAttributeValue(null, ID);
@@ -38,7 +38,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				DestinationDisplay display = factory.getDestinationDisplay(tmp);
 				journeyPattern.setPublishedName(display.getFrontText());
 				journeyPattern.setRegistrationNumber(display.getPublicCode());
-			}  else if (xpp.getName().equals(POINTS_IN_SEQUENCE)) {
+			} else if (xpp.getName().equals(POINTS_IN_SEQUENCE)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(STOP_POINT_IN_JOURNEY_PATTERN)) {
 						Parser stopPointInJourneyPatternParser = ParserFactory
@@ -58,6 +58,17 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+	}
+
+	static {
+		ParserFactory.register(ServiceJourneyPatternParser.class.getName(), new ParserFactory() {
+			private ServiceJourneyPatternParser instance = new ServiceJourneyPatternParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
 	}
 
 }

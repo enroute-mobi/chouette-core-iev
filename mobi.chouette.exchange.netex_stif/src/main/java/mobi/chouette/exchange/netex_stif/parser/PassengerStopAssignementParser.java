@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
+import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
@@ -28,8 +29,7 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
 				ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(ref);
-				stopPoint = ObjectFactory.getStopPoint(referential,
-						NetexStifUtils.genStopPointId(scheduledStopPoint));
+				stopPoint = ObjectFactory.getStopPoint(referential, NetexStifUtils.genStopPointId(scheduledStopPoint));
 				if (quayRef != null) {
 					// stopPoint.setStopArea(quayRef);
 				}
@@ -43,6 +43,17 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 
 		XPPUtil.skipSubTree(log, xpp);
 
+	}
+
+	static {
+		ParserFactory.register(PassengerStopAssignementParser.class.getName(), new ParserFactory() {
+			private PassengerStopAssignementParser instance = new PassengerStopAssignementParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
 	}
 
 }

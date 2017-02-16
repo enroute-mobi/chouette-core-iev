@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
+import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
@@ -34,4 +35,14 @@ public class ScheduledStopPointParser implements Parser, Constant {
 		XPPUtil.skipSubTree(log, xpp);
 	}
 
+	static {
+		ParserFactory.register(ScheduledStopPointParser.class.getName(), new ParserFactory() {
+			private ScheduledStopPointParser instance = new ScheduledStopPointParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
+	}
 }
