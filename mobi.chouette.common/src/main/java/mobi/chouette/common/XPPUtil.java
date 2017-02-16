@@ -26,7 +26,7 @@ public class XPPUtil {
 	
 	public static void skipSubTree(Logger log, XmlPullParser xpp) throws XmlPullParserException, IOException {
 		if (log.isDebugEnabled()) {
-			log.debug("[DSU] skip " + xpp.getName());
+			log.debug("skip " + xpp.getName());
 		}
 		XmlPullUtil.skipSubTree(xpp);
 	}
