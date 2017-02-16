@@ -40,6 +40,7 @@ public class NetexStructureParser implements Parser, Constant {
 					if (xpp.getName().equals(elt)) {
 						String clazz = parsers.get(elt);
 						if (clazz != null) {
+							log.info("parse with " + clazz);
 							Parser parser = ParserFactory.create(clazz);
 							parser.parse(context);
 						} else {

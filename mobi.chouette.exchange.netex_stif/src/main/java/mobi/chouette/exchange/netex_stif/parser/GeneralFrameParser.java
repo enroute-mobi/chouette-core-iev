@@ -37,11 +37,13 @@ public class GeneralFrameParser implements Constant, Parser {
 		String type = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_FRAME_REF)) {
-				type = xpp.nextText();
+				type = xpp.getAttributeValue(null, REF);
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(MEMBERS)) {
 				if (type != null) {
 					String clazz = frameTypes.get(type);
 					if (clazz != null) {
+						log.info("Parse with "+ clazz);
 						Parser subParser = ParserFactory.create(clazz);
 						subParser.parse(context);
 					} else {

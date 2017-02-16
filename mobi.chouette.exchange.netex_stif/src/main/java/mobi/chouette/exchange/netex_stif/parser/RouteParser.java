@@ -25,11 +25,12 @@ public class RouteParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		Integer version = (Integer) context.get(VERSION);
+		xpp.require(XmlPullParser.START_TAG, null, ROUTE);
 				
 		String id = xpp.getAttributeValue(null, ID);
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
-
+				
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
 				route.setName(xpp.nextText());
@@ -37,7 +38,9 @@ public class RouteParser implements Parser, Constant {
 				String tmp = xpp.getAttributeValue(null, REF);
 				Line line = ObjectFactory.getLine(referential, tmp);
 				route.setLine(line);
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
+				
 				String tmpDirType = xpp.nextText();
 				if (tmpDirType.equals(DIRECTION_INBOUND)) {
 					route.setDirection(PTDirectionEnum.R);
