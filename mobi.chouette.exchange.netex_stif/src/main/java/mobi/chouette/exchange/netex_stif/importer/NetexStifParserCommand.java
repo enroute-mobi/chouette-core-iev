@@ -67,7 +67,9 @@ public class NetexStifParserCommand implements Command, Constant {
 
 			InputStream input = new BOMInputStream(url.openStream());
 			BufferedReader in = new BufferedReader(new InputStreamReader(input), 8192 * 10);
-			XmlPullParser xpp = XmlPullParserFactory.newInstance().newPullParser();
+			XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
+			xmlPullParserFactory.setNamespaceAware(true);
+			XmlPullParser xpp = xmlPullParserFactory.newPullParser();
 			xpp.setInput(in);
 			context.put(PARSER, xpp);
 

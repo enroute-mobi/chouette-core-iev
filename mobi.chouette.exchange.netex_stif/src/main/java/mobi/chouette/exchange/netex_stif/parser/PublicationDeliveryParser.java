@@ -18,6 +18,10 @@ public class PublicationDeliveryParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		
+		XPPUtil.nextStartTag(xpp, PUBLICATION_DELIVERY);
+
+		xpp.require(XmlPullParser.START_TAG, null, PUBLICATION_DELIVERY);
 		// Referential referential = (Referential) context.get(REFERENTIAL);
 		String version = xpp.getAttributeValue(null, VERSION);
 		// TODO vérifier que la version soit celle du stif
