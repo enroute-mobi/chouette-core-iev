@@ -2,18 +2,25 @@ package mobi.chouette.exchange.netex_stif.parser;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.ParserUtils;
+import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.type.ConnectionLinkTypeEnum;
 import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.type.PTNetworkSourceTypeEnum;
 import mobi.chouette.model.type.TransportModeNameEnum;
-
-import org.apache.commons.lang.StringUtils;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class NetexStifUtils extends ParserUtils {
@@ -209,4 +216,11 @@ public class NetexStifUtils extends ParserUtils {
 		return scheduledStopPoint.getId() + ID_SEPARATOR + scheduledStopPoint.getOrder();
 	}
 
+	public static void refreshJourneyPattern (Context context){
+		Referential referential = (Referential)context.get(Constant.REFERENTIAL);
+		Map<String, JourneyPattern> journeyPatterns= referential.getJourneyPatterns();
+		for (JourneyPattern pattern : journeyPatterns.values()){
+			//pattern.g
+		}
+	}
 }

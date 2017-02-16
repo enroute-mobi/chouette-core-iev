@@ -33,5 +33,17 @@ public class CompositeFrameParser implements Constant, Parser {
 			}
 		}
 	}
+	
+	static {
+		ParserFactory.register(CompositeFrameParser.class.getName(),
+				new ParserFactory() {
+					private CompositeFrameParser instance = new CompositeFrameParser();
+
+					@Override
+					protected Parser create() {
+						return instance;
+					}
+				});
+	}
 
 }
