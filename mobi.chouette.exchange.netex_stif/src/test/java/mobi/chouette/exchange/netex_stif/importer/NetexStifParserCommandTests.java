@@ -2,12 +2,14 @@ package mobi.chouette.exchange.netex_stif.importer;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.BasicConfigurator;
+import org.testng.annotations.Test;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.CommandFactory;
@@ -15,19 +17,9 @@ import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
-import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
-import mobi.chouette.exchange.validation.report.CheckPointReport;
-import mobi.chouette.exchange.validation.report.CheckPointReport.SEVERITY;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.exchange.validation.report.ValidationReporter.RESULT;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.BasicConfigurator;
-import org.testng.Assert;
-import org.testng.annotations.BeforeGroups;
-import org.testng.annotations.Test;
 
 public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
@@ -35,7 +27,6 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	protected static InitialContext initialContext;
 
-	@BeforeGroups(groups = { "Nominal" })
 	public void init() {
 		BasicConfigurator.resetConfiguration();
 		BasicConfigurator.configure();
@@ -51,6 +42,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	}
 
 	protected Context initImportContext() {
+		init();
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
