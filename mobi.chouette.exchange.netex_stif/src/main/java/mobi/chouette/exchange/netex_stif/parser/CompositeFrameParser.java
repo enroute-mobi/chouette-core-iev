@@ -24,6 +24,7 @@ public class CompositeFrameParser implements Constant, Parser {
 				if (val.equals(NETEX_OFFRE_LIGNE)) {
 					isTypeValid = true;
 				}
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(FRAMES) && isTypeValid) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(GENERAL_FRAME)) {
