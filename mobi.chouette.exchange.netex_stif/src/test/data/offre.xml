@@ -195,7 +195,6 @@
                                         <netex:DepartureDayOffset>0</netex:DepartureDayOffset>
                                     </netex:TimetabledPassingTime>
                                 </netex:passingTimes>
-                                <netex:ServiceJourneyPatternType>passenger</netex:ServiceJourneyPatternType>
                             </netex:ServiceJourney>
                         </netex:serviceJourneys>
                     </netex:members>
