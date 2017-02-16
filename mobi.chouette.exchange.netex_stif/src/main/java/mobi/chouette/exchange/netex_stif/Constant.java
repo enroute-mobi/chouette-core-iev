@@ -73,6 +73,7 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String ARRIVAL_DAY_OFFSET = "ArrivalDayOffset";
 	public static final String DEPARTURE_TIME = "DepartureTime";
 	public static final String DEPARTURE_DAY_OFFSET = "DepartureDayOffset";
+	public static final String PUBLICATION_DELIVERY = "PublicationDelivery";
 	
 	
 	

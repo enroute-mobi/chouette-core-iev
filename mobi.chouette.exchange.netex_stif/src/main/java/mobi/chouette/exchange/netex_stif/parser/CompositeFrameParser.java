@@ -15,11 +15,13 @@ public class CompositeFrameParser implements Constant, Parser {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		xpp.require(XmlPullParser.START_TAG, null, COMPOSITE_FRAME);
 
 		boolean isTypeValid = false;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_FRAME_REF)) {
-				if (xpp.nextText().equals(NETEX_OFFRE_LIGNE)) {
+				String val = xpp.getAttributeValue(null, REF);
+				if (val.equals(NETEX_OFFRE_LIGNE)) {
 					isTypeValid = true;
 				}
 			} else if (xpp.getName().equals(FRAMES) && isTypeValid) {
