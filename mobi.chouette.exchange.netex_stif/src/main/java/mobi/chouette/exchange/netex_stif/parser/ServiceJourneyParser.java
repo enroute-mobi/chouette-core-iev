@@ -7,12 +7,14 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
+import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.VehicleJourney;
+import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -48,19 +50,36 @@ public class ServiceJourneyParser implements Parser, Constant {
 			} else if (xpp.getName().equals(TRAIN_NUMBERS)) {
 				parseTrainNumber(xpp, context, vehicleJourney);
 			} else if (xpp.getName().equals(PASSING_TIMES)) {
-				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
-						Parser parser = ParserFactory.create(TimeTabledPassingTimeParser.class.getName());
-						parser.parse(context);
-					} else {
-						XPPUtil.skipSubTree(log, xpp);
-					}
-				}
+				parsePassingTimes(xpp, context, vehicleJourney);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
 
+	}
+
+	private void parsePassingTimes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney) throws Exception {
+		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
+				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
+				while (xpp.nextTag() == XmlPullParser.START_TAG) {
+					if (xpp.getName().equals(ARRIVAL_TIME)) {
+						vjas.setArrivalTime(ParserUtils.getSQLTime(xpp.nextText()));
+					} else if (xpp.getName().equals(ARRIVAL_DAY_OFFSET)) {
+						vjas.setArrivalDayOffset(Integer.parseInt(xpp.nextText()));
+					} else if (xpp.getName().equals(DEPARTURE_TIME)) {
+						vjas.setDepartureTime(ParserUtils.getSQLTime(xpp.nextText()));
+					} else if (xpp.getName().equals(DEPARTURE_DAY_OFFSET)) {
+						vjas.setDepartureDayOffset(Integer.parseInt(xpp.nextText()));
+					} else {
+						XPPUtil.skipSubTree(log, xpp);
+					}
+				}
+				vehicleJourney.getVehicleJourneyAtStops().add(vjas);
+			} else {
+				XPPUtil.skipSubTree(log, xpp);
+			}
+		}
 	}
 
 	private void parseTrainNumber(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney) throws Exception {
