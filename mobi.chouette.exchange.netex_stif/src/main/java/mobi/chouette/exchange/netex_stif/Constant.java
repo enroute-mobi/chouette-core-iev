@@ -58,6 +58,22 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String QUAY_REF = "QuayRef";
 	public static final String ROUTING_CONSTRAINT_ZONE = "RoutingConstraintZone";
 	public static final String ROUTING_CONSTRAINT_ZONES = "routingConstraintZones";
+	public static final String NOTICE_ASSIGNEMENTS = "noticeAssignements";
+	public static final String NOTICE_ASSIGNEMENT = "NoticeAssignement";
+	public static final String NOTICE_REF = "NoticeRef";
+	public static final String DAY_TYPE_REF = "DayTypeRef";
+	public static final String JOURNEY_PATTERN_REF = "JourneyPatternRef";
+	public static final String OPERATOR_REF = "OperatorRef";
+	public static final String TRAIN_NUMBERS = "trainNumbers";
+	public static final String TRAIN_NUMBER = "TrainNumbers";
+	public static final String TRAIN_NUMBER_REF = "TrainNumberRef";
+	public static final String PASSING_TIMES = "passingTimes";
+	public static final String TIMETABLED_PASSING_TIME = "TimetabledPassingTime";
+	public static final String ARRIVAL_TIME = "ArrivalTime";
+	public static final String ARRIVAL_DAY_OFFSET = "ArrivalDayOffset";
+	public static final String DEPARTURE_TIME = "DepartureTime";
+	public static final String DEPARTURE_DAY_OFFSET = "DepartureDayOffset";
+	
 	
 	
 
