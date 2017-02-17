@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
@@ -21,13 +22,17 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 		String id = xpp.getAttributeValue(null, ID);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
-
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(MEMBERS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
-
+						XPPUtil.skipSubTree(log, xpp);
+					}else{
+						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
+			}else{
+				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
 

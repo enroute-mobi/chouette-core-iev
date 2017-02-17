@@ -32,6 +32,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 		vehicleJourney.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			log.info("ServiceJourneyParser tag : "+ xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				vehicleJourney.setPublishedJourneyName(xpp.nextText());
 			} else if (xpp.getName().equals(NOTICE_ASSIGNEMENTS)) {
@@ -39,14 +40,17 @@ public class ServiceJourneyParser implements Parser, Constant {
 			} else if (xpp.getName().equals(DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
 				// TODO qu'en fait on
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(JOURNEY_PATTERN_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
 				JourneyPattern pattern = ObjectFactory.getJourneyPattern(referential, ref);
 				vehicleJourney.setJourneyPattern(pattern);
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
 				Company company = ObjectFactory.getCompany(referential, ref);
 				vehicleJourney.setCompany(company);
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(TRAIN_NUMBERS)) {
 				parseTrainNumber(xpp, context, vehicleJourney);
 			} else if (xpp.getName().equals(PASSING_TIMES)) {
@@ -94,6 +98,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				} else {
 					// TODO error
 				}
+				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
 	}
@@ -108,7 +113,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 						String ref = xpp.getAttributeValue(null, REF);
 						Footnote footnote = factory.getFootnote(ref);
 						vehicleJourney.getFootnotes().add(footnote);
-
+						XPPUtil.skipSubTree(log, xpp);
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
 					}
