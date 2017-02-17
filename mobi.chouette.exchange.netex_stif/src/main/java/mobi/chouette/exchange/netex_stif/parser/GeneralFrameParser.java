@@ -20,6 +20,8 @@ public class GeneralFrameParser implements Constant, Parser {
 	static {
 		frameTypes.put(NETEX_STRUCTURE, NetexStructureParser.class.getName());
 		frameTypes.put(NETEX_HORAIRE, NetexHoraireParser.class.getName());
+		frameTypes.put(NETEX_COMMUN, NetexCommunParser.class.getName());
+		frameTypes.put(NETEX_CALENDRIER, NetexCalendrierParser.class.getName());
 
 		ParserFactory.register(GeneralFrameParser.class.getName(), new ParserFactory() {
 			private GeneralFrameParser instance = new GeneralFrameParser();

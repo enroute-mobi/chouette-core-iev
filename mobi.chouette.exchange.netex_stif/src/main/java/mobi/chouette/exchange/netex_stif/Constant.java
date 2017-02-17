@@ -19,6 +19,7 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String ROUTE = "Route";
 	public static final String ROUTES = "routes";
 	public static final String NOTICE = "Notice";
+	public static final String NOTICES = "notices";
 	public static final String TEXT = "Text";
 	public static final String DAY_TYPE = "DayType";
 	public static final String TYPE_OF_NOTICE_REF = "TypeOfNoticeRef";
@@ -74,6 +75,8 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String DEPARTURE_TIME = "DepartureTime";
 	public static final String DEPARTURE_DAY_OFFSET = "DepartureDayOffset";
 	public static final String PUBLICATION_DELIVERY = "PublicationDelivery";
+	public static final String NETEX_COMMUN = "NETEX_COMMUN";
+	public static final String NETEX_CALENDRIER = "NETEX_CALENDRIER";
 	
 	
 	

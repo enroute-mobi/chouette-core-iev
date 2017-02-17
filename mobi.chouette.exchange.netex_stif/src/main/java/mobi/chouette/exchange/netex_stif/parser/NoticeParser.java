@@ -2,13 +2,16 @@ package mobi.chouette.exchange.netex_stif.parser;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.Footnote;
 
+@Log4j
 public class NoticeParser implements Parser, Constant {
 
 	@Override
@@ -18,14 +21,28 @@ public class NoticeParser implements Parser, Constant {
 		String id = xpp.getAttributeValue(null, ID);
 		Integer version = (Integer)context.get(VERSION);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-		// TODO : est ce que l'on récupère comme ça le type ou est ce que c'est
-		// une ref, et auquel cas, il faut aussi les typeOfNotice
-		String type = xpp.getAttributeValue(null, TYPE_OF_NOTICE_REF);
-		if (type.equals(SERVICE_JOURNEY_NOTICE)) {
+		String text = null;
+		String publicCode = null;
+		boolean validType = false;
+		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			if (xpp.getName().equals(TYPE_OF_NOTICE_REF)) {
+				String type = xpp.nextText();
+				if (type.equals(SERVICE_JOURNEY_NOTICE)) {
+					validType = true;					
+				}
+			}else if (xpp.getName().equals(TEXT)) {
+				text = xpp.nextText();
+			}else if (xpp.getName().equals(PUBLIC_CODE)) {
+				publicCode = xpp.nextText();
+			}else{
+				XPPUtil.skipSubTree(log, xpp);
+			}
+		}
+		if (validType){
 			Footnote footnote = factory.getFootnote(id);
 			footnote.setObjectVersion(version);
-			footnote.setLabel(xpp.getAttributeValue(null, TEXT));
-			footnote.setCode(xpp.getAttributeValue(null, PUBLIC_CODE));
+			footnote.setLabel(text);
+			footnote.setCode(publicCode);
 		}
 	}
 
