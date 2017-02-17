@@ -19,7 +19,7 @@ public class DestinationDisplayParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		xpp.require(XmlPullParser.START_TAG, null, DAY_TYPE);
+		xpp.require(XmlPullParser.START_TAG, null, DESTINATION_DISPLAY);
 		String id = xpp.getAttributeValue(null, ID);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		DestinationDisplay destinationDisplay = factory.getDestinationDisplay(id);

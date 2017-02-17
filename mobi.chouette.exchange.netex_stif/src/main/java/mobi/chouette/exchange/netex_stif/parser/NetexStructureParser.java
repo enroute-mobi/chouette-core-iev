@@ -73,7 +73,7 @@ public class NetexStructureParser implements Parser, Constant {
 		parsers.put(ROUTE, RouteParser.class.getName());
 		parsers.put(DIRECTION, DirectionParser.class.getName());
 		parsers.put(SERVICE_JOURNEY_PATTERN, ServiceJourneyPatternParser.class.getName());
-		parsers.put(DESTINATION_DISPLAY, DestinationDisplay.class.getName());
+		parsers.put(DESTINATION_DISPLAY, DestinationDisplayParser.class.getName());
 		parsers.put(SCHEDULED_STOP_POINT, ScheduledStopPointParser.class.getName());
 		parsers.put(PASSENGER_STOP_ASSIGNEMENT, PassengerStopAssignementParser.class.getName());
 		parsers.put(ROUTING_CONSTRAINT_ZONE, RoutingConstraintZoneParser.class.getName());
