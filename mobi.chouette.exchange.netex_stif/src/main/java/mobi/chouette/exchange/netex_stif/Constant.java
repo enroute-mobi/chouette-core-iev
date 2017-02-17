@@ -63,6 +63,9 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String NOTICE_ASSIGNEMENT = "NoticeAssignement";
 	public static final String NOTICE_REF = "NoticeRef";
 	public static final String DAY_TYPE_REF = "DayTypeRef";
+	public static final String DAY_TYPES = "dayTypes";
+	public static final String DAY_TYPE_ASSIGNEMENT = "DayTypeAssignement";
+	public static final String DAY_TYPE_ASSIGNEMENTS = "dayTypeAssignements";
 	public static final String JOURNEY_PATTERN_REF = "JourneyPatternRef";
 	public static final String OPERATOR_REF = "OperatorRef";
 	public static final String TRAIN_NUMBERS = "trainNumbers";
@@ -77,8 +80,9 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String PUBLICATION_DELIVERY = "PublicationDelivery";
 	public static final String NETEX_COMMUN = "NETEX_COMMUN";
 	public static final String NETEX_CALENDRIER = "NETEX_CALENDRIER";
-	
-	
-	
+	public static final String OPERATING_PERIOD = "OperatingPeriod";
+	public static final String OPERATING_PERIODS = "operatingPeriods";
+	public static final String PROPERTIES = "properties";
+	public static final String DAYS_OF_WEEK = "DaysOfWeek";
 
 }
