@@ -43,6 +43,7 @@ public class NoticeParser implements Parser, Constant {
 			footnote.setObjectVersion(version);
 			footnote.setLabel(text);
 			footnote.setCode(publicCode);
+			log.info("Footnote with : " + text + " code " + publicCode);
 		}
 	}
 

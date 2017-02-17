@@ -90,5 +90,18 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 		/// Assert.assertXXX();
 	}
+	
+	@Test(groups = { "Nominal" }, description = "commun")
+	public void verifiyCommunParser() throws Exception {
+		Context context = initImportContext();
+
+		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
+				NetexStifParserCommand.class.getName());
+		File f = new File(path, "commun.xml");
+		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.execute(context);
+
+		/// Assert.assertXXX();
+	}
 
 }

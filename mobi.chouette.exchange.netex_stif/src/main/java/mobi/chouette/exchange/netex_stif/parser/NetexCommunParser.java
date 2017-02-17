@@ -20,6 +20,7 @@ public class NetexCommunParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NOTICES)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
+					log.info("NetexCommunParser tag : " + xpp.getName());
 					if (xpp.getName().equals(NOTICE)) {
 						Parser parser = ParserFactory.create(NoticeParser.class.getName());
 						parser.parse(context);
