@@ -37,8 +37,10 @@ public class NetexStructureParser implements Parser, Constant {
 		if (elt != null) {
 			if (xpp.getName().equals(tag)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
+					log.info("NetexStructureParser: tag "+ xpp.getName());
 					if (xpp.getName().equals(elt)) {
 						String clazz = parsers.get(elt);
+						log.info("NetexStructure: tag "+ xpp.getName() + " use : " + clazz );
 						if (clazz != null) {
 							log.info("parse with " + clazz);
 							Parser parser = ParserFactory.create(clazz);

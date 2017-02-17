@@ -32,6 +32,7 @@ public class RouteParser implements Parser, Constant {
 		route.setObjectVersion(version);
 				
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			log.info("RouteParser  tag: " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(LINE_REF)) {
@@ -54,16 +55,19 @@ public class RouteParser implements Parser, Constant {
 				String tmp = xpp.getAttributeValue(null, REF);
 				Direction direction = factory.getDirection(tmp);
 				route.setPublishedName(direction.getName());
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(INVERSE_ROUTE_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);
 				Route wayBackRoute = ObjectFactory.getRoute(referential, tmp);
 				if (wayBackRoute != null) {
 					wayBackRoute.setOppositeRoute(route);
 				}
+				XPPUtil.skipSubTree(log, xpp);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		log.info("end of route");
 		route.setFilled(true);
 	}
 
