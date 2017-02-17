@@ -29,11 +29,12 @@ public class PublicationDeliveryParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(DATA_OBJECTS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
+					log.info("PublicationDeliveryParser tag : "  + xpp.getName());
 					if (xpp.getName().equals(COMPOSITE_FRAME)) {
 						Parser compositeFrameParser = ParserFactory.create(CompositeFrameParser.class.getName());
 						compositeFrameParser.parse(context);
 					}
-					if (xpp.getName().equals(GENERAL_FRAME)) {
+					else if (xpp.getName().equals(GENERAL_FRAME)) {
 						Parser parser = ParserFactory.create(GeneralFrameParser.class.getName());
 						parser.parse(context);
 					} else {
