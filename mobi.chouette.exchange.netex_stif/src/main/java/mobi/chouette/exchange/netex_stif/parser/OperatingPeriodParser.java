@@ -1,12 +1,16 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.model.util.Referential;
+import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.model.Period;
 
 @Log4j
 public class OperatingPeriodParser implements Parser, Constant {
@@ -14,17 +18,21 @@ public class OperatingPeriodParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		String id = xpp.getAttributeValue(null, ID);
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		Period period = factory.getOperatingPeriod(id);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		String from;
-		String to;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FROM_DATE)) {
-					from = xpp.nextText();	
-			}else if (xpp.getName().equals(TO_DATE)) {
-				to = xpp.nextText();
+				Date date = sdf.parse(xpp.nextText());
+				period.setStartDate(new java.sql.Date(date.getTime()));
+			} else if (xpp.getName().equals(TO_DATE)) {
+				Date date = sdf.parse(xpp.nextText());
+				period.setEndDate(new java.sql.Date(date.getTime()));
 			}
 		}
+
 	}
 
 }

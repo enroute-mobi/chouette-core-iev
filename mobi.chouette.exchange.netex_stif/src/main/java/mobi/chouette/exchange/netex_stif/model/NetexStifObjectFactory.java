@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mobi.chouette.model.Footnote;
+import mobi.chouette.model.Period;
 
 public class NetexStifObjectFactory {
 
@@ -14,6 +15,8 @@ public class NetexStifObjectFactory {
 	private Map<String, DestinationDisplay> destinationDisplay = new HashMap<>();
 
 	private Map<String, ScheduledStopPoint> scheduledStopPoint = new HashMap<>();
+	
+	private Map<String, Period> operatingPeriods = new HashMap<>();
 
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);
@@ -51,6 +54,15 @@ public class NetexStifObjectFactory {
 			result = new ScheduledStopPoint();
 			result.setObjectId(objectId);
 			scheduledStopPoint.put(objectId, result);
+		}
+		return result;
+	}
+	
+	public Period getOperatingPeriod(String objectId) {
+		Period result = operatingPeriods.get(objectId);
+		if (result == null) {
+			result = new Period();
+			operatingPeriods.put(objectId, result);
 		}
 		return result;
 	}

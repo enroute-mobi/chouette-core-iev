@@ -47,6 +47,7 @@ public class DayTypeParser implements Parser, Constant {
 					if (xpp.getName().equals(DAYS_OF_WEEK)) {
 						String day = xpp.nextText();
 						timetable.addDayType(DayTypeEnum.valueOf(day));
+						
 					}
 				}
 			}
