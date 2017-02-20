@@ -21,6 +21,9 @@ import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Footnote;
+import mobi.chouette.model.Line;
+import mobi.chouette.model.Route;
+import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
@@ -79,8 +82,15 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		test.setType("netex_stif");
 		context.put("testng", "true");
 		context.put(OPTIMIZED, Boolean.FALSE);
+		initLines(context);
 		return context;
 
+	}
+
+	private void initLines(Context context) {
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		Line line = ObjectFactory.getLine(referential, "STIF:CODIFLIGNE:Line:12234");
+		line.setObjectId("STIF:CODIFLIGNE:Line:12234");
 	}
 
 	@Test(groups = { "Nominal" }, description = "offre")
@@ -90,12 +100,25 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		File f = new File(path, "offre.xml");
+		Referential referential = (Referential) context.get(REFERENTIAL);
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
-
+		assertRoute(referential, "CITYWAY:Route:1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
+				"Par ici", "CITYWAY:Route:2:LOC");
 		/// Assert.assertXXX();
 	}
-	
+
+	private void assertRoute(Referential referential, String id, String name, String lineRef, PTDirectionEnum dir,
+			String publishedName, String inverse) {
+		Route route = ObjectFactory.getRoute(referential, id);
+		Assert.assertEquals(route.getName(), name);
+		Assert.assertEquals(route.getLine().getObjectId(), lineRef);
+		Assert.assertEquals(route.getDirection(), dir);
+		//Assert.assertEquals(route.getPublishedName(), publishedName);
+		Assert.assertEquals(route.getOppositeRoute().getObjectId(), inverse);
+
+	}
+
 	@Test(groups = { "Nominal" }, description = "commun")
 	public void verifiyCommunParser() throws Exception {
 		Context context = initImportContext();
@@ -106,18 +129,18 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-		
+
 		assertNotice(factory, "CITYWAY:Notice:1:LOC", "Notice 1", "1");
 		assertNotice(factory, "CITYWAY:Notice:2:LOC", "Notice 2", "2");
 		assertNotice(factory, "CITYWAY:Notice:3:LOC", "Notice 3", "3");
-		
+
 	}
-	
-	private void assertNotice (NetexStifObjectFactory nsof, String id, String text, String publicCode){
+
+	private void assertNotice(NetexStifObjectFactory nsof, String id, String text, String publicCode) {
 		Footnote fn = nsof.getFootnote(id);
 		Assert.assertEquals(fn.getLabel(), text);
 		Assert.assertEquals(fn.getCode(), publicCode);
-			
+
 	}
 
 	@Test(groups = { "Nominal" }, description = "calendrier")

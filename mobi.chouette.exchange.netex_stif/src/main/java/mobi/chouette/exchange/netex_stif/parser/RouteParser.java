@@ -43,6 +43,7 @@ public class RouteParser implements Parser, Constant {
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
 				
 				String tmpDirType = xpp.nextText();
+				log.info("RouteParser : dir " + tmpDirType);
 				if (tmpDirType.equals(DIRECTION_INBOUND)) {
 					route.setDirection(PTDirectionEnum.R);
 				} else if (tmpDirType.equals(DIRECTION_OUTBOUND)) {
