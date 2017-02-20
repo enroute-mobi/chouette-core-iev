@@ -46,27 +46,14 @@ public class DayTypeParser implements Parser, Constant {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(DAYS_OF_WEEK)) {
 						String day = xpp.nextText();
-						DayTypeEnum dayType = daytypes.get(day);
-						if (dayType != null) {
-							timetable.addDayType(dayType);
-						}
+						timetable.addDayType(DayTypeEnum.valueOf(day));
 					}
 				}
 			}
 		}
 	}
 
-	private static Map<String, DayTypeEnum> daytypes = new HashedMap();
-
 	static {
-		daytypes.put("Monday", DayTypeEnum.Monday);
-		daytypes.put("Tuesday", DayTypeEnum.Tuesday);
-		daytypes.put("Wednesday", DayTypeEnum.Wednesday);
-		daytypes.put("Thursday", DayTypeEnum.Thursday);
-		daytypes.put("Friday", DayTypeEnum.Friday);
-		daytypes.put("Saturday", DayTypeEnum.Saturday);
-		daytypes.put("Sunday", DayTypeEnum.Sunday);
-
 		ParserFactory.register(DayTypeParser.class.getName(), new ParserFactory() {
 			private DayTypeParser instance = new DayTypeParser();
 
