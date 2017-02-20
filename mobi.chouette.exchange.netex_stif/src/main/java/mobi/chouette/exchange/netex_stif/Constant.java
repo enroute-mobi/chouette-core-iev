@@ -81,8 +81,12 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String NETEX_COMMUN = "NETEX_COMMUN";
 	public static final String NETEX_CALENDRIER = "NETEX_CALENDRIER";
 	public static final String OPERATING_PERIOD = "OperatingPeriod";
+	public static final String OPERATING_PERIOD_REF = "OperatingPeriod";
 	public static final String OPERATING_PERIODS = "operatingPeriods";
 	public static final String PROPERTIES = "properties";
 	public static final String DAYS_OF_WEEK = "DaysOfWeek";
+	public static final String IS_AVAILABLE = "isAvailable";
+	public static final String FROM_DATE = "FromDate";
+	public static final String TO_DATE = "ToDate";
 
 }
