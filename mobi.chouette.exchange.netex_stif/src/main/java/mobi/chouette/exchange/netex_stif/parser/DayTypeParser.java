@@ -23,10 +23,11 @@ public class DayTypeParser implements Parser, Constant {
 		xpp.require(XmlPullParser.START_TAG, null, DAY_TYPE);
 		String id = xpp.getAttributeValue(null, ID);
 		Timetable timeTable = ObjectFactory.getTimetable(referential, id);
-		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
+		Integer version = (Integer)context.get(VERSION);
 		timeTable.setObjectVersion(version != null ? version : 0);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			log.info("DayTypeParser tag : "+ xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				timeTable.setComment(xpp.nextText());
 			} else if (xpp.getName().equals(PROPERTIES)) {

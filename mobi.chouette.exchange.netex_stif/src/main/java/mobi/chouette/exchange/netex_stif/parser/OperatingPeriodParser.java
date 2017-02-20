@@ -8,6 +8,7 @@ import org.xmlpull.v1.XmlPullParser;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.Parser;
+import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.Period;
@@ -24,6 +25,7 @@ public class OperatingPeriodParser implements Parser, Constant {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			log.info("OperatingPeriodParser tag : " + xpp.getName());
 			if (xpp.getName().equals(FROM_DATE)) {
 				Date date = sdf.parse(xpp.nextText());
 				period.setStartDate(new java.sql.Date(date.getTime()));
@@ -33,6 +35,18 @@ public class OperatingPeriodParser implements Parser, Constant {
 			}
 		}
 
+	}
+	
+	static {
+
+			ParserFactory.register(OperatingPeriodParser.class.getName(), new ParserFactory() {
+			private OperatingPeriodParser instance = new OperatingPeriodParser();
+
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
 	}
 
 }
