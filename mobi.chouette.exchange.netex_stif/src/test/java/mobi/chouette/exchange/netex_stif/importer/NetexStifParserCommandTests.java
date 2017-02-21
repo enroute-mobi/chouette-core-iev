@@ -21,6 +21,7 @@ import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Footnote;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.type.PTDirectionEnum;
@@ -105,7 +106,21 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		parser.execute(context);
 		assertRoute(referential, "CITYWAY:Route:1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
 				"Par ici", "CITYWAY:Route:2:LOC");
+		assertRoute(referential, "CITYWAY:Route:2:LOC", "route 2", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.R,
+				"Par là", "CITYWAY:Route:1:LOC");
+		//assertServiceJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1",
+		//		"1234", "CITYWAY:Route:1:LOC");
+		
 		/// Assert.assertXXX();
+	}
+
+	private void assertServiceJourneyPattern(Referential referential, String id, String name, String publishedName,
+			String registrationNumber, String routeId) {
+		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
+		Assert.assertEquals(journeyPattern.getName(), name);
+		Assert.assertEquals(journeyPattern.getPublishedName(), publishedName);
+		Assert.assertEquals(journeyPattern.getRegistrationNumber(), registrationNumber);
+		Assert.assertEquals(journeyPattern.getRoute().getObjectId(), routeId);
 	}
 
 	private void assertRoute(Referential referential, String id, String name, String lineRef, PTDirectionEnum dir,
@@ -114,7 +129,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		Assert.assertEquals(route.getName(), name);
 		Assert.assertEquals(route.getLine().getObjectId(), lineRef);
 		Assert.assertEquals(route.getDirection(), dir);
-		//Assert.assertEquals(route.getPublishedName(), publishedName);
+		Assert.assertEquals(route.getPublishedName(), publishedName);
 		Assert.assertEquals(route.getOppositeRoute().getObjectId(), inverse);
 
 	}

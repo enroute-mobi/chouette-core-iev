@@ -17,4 +17,6 @@ public class Direction extends ChouetteIdentifiedObject{
 	@Getter @Setter
 	private String name;
 
+	@Getter @Setter
+	private boolean filled = false;
 }

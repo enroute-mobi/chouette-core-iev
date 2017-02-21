@@ -11,7 +11,11 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
+import mobi.chouette.exchange.netex_stif.model.Direction;
+import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.model.Route;
+import mobi.chouette.model.util.ObjectFactory;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class NetexStructureParser implements Parser, Constant {
@@ -30,6 +34,7 @@ public class NetexStructureParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		updateDirectionsToRoute(context);
 	}
 
 	private void parseMember(String tag, XmlPullParser xpp, Context context) throws Exception {
@@ -37,10 +42,10 @@ public class NetexStructureParser implements Parser, Constant {
 		if (elt != null) {
 			if (xpp.getName().equals(tag)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					log.info("NetexStructureParser: tag "+ xpp.getName());
+					log.info("NetexStructureParser: tag " + xpp.getName());
 					if (xpp.getName().equals(elt)) {
 						String clazz = parsers.get(elt);
-						log.info("NetexStructure: tag "+ xpp.getName() + " use : " + clazz );
+						log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
 						if (clazz != null) {
 							log.info("parse with " + clazz);
 							Parser parser = ParserFactory.create(clazz);
@@ -54,6 +59,18 @@ public class NetexStructureParser implements Parser, Constant {
 		} else {
 			XPPUtil.skipSubTree(log, xpp);
 		}
+	}
+
+	private void updateDirectionsToRoute(Context context) {
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		Map<String, String> elts = factory.getRouteDirections();
+		for (Map.Entry<String, String> entry : elts.entrySet()) {
+			Route route = ObjectFactory.getRoute(referential, entry.getKey());
+			Direction direction = factory.getDirection(entry.getValue());
+			route.setPublishedName(direction.getName());
+		}
+
 	}
 
 	static Map<String, String> members = new HashMap<>();

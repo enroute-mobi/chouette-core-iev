@@ -26,11 +26,11 @@ public class RouteParser implements Parser, Constant {
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		Integer version = (Integer) context.get(VERSION);
 		xpp.require(XmlPullParser.START_TAG, null, ROUTE);
-				
+
 		String id = xpp.getAttributeValue(null, ID);
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
-				
+
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			log.info("RouteParser  tag: " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
@@ -41,7 +41,7 @@ public class RouteParser implements Parser, Constant {
 				route.setLine(line);
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
-				
+
 				String tmpDirType = xpp.nextText();
 				log.info("RouteParser : dir " + tmpDirType);
 				if (tmpDirType.equals(DIRECTION_INBOUND)) {
@@ -55,7 +55,11 @@ public class RouteParser implements Parser, Constant {
 				NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 				String tmp = xpp.getAttributeValue(null, REF);
 				Direction direction = factory.getDirection(tmp);
-				route.setPublishedName(direction.getName());
+				if (direction.isDetached()) {
+					route.setPublishedName(direction.getName());
+				} else {
+					factory.addRouteDirection(id, tmp);
+				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(INVERSE_ROUTE_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);

@@ -31,6 +31,7 @@ public class DirectionParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		direction.setFilled(true);
 	}
 	
 	static {

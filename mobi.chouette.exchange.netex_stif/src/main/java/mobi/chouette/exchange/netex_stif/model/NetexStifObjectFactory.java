@@ -3,6 +3,7 @@ package mobi.chouette.exchange.netex_stif.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.Period;
 
@@ -17,6 +18,9 @@ public class NetexStifObjectFactory {
 	private Map<String, ScheduledStopPoint> scheduledStopPoint = new HashMap<>();
 	
 	private Map<String, Period> operatingPeriods = new HashMap<>();
+	
+	@Getter
+	private Map<String, String> routeDirections = new HashMap<>();
 
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);
@@ -66,6 +70,13 @@ public class NetexStifObjectFactory {
 		}
 		return result;
 	}
+	
+	public void addRouteDirection(String routeId, String directionId){
+		this.routeDirections.put(routeId, directionId);
+	}
+	
+	
+	
 
 	public void clear() {
 		direction.clear();
