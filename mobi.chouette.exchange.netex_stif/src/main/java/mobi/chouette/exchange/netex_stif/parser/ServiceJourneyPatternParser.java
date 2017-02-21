@@ -36,8 +36,12 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			} else if (xpp.getName().equals(DESTINATION_DISPLAY_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);
 				DestinationDisplay display = factory.getDestinationDisplay(tmp);
+				if (display.isFilled()){
 				journeyPattern.setPublishedName(display.getFrontText());
 				journeyPattern.setRegistrationNumber(display.getPublicCode());
+				}else{
+					factory.addJourneyPatternDestination(id, tmp);
+				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(POINTS_IN_SEQUENCE)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {

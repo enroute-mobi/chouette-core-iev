@@ -11,8 +11,10 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -35,6 +37,7 @@ public class NetexStructureParser implements Parser, Constant {
 			}
 		}
 		updateDirectionsToRoute(context);
+		updateDestinationDisplayToJourneyPattern(context);
 	}
 
 	private void parseMember(String tag, XmlPullParser xpp, Context context) throws Exception {
@@ -61,6 +64,30 @@ public class NetexStructureParser implements Parser, Constant {
 		}
 	}
 
+	/**
+	 * This method is used top update JourneyPattern with destination display
+	 * information
+	 * 
+	 * @param context
+	 */
+	private void updateDestinationDisplayToJourneyPattern(Context context) {
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		Map<String, String> elts = factory.getJourneyPatternDestinations();
+		for (Map.Entry<String, String> entry : elts.entrySet()) {
+			JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, entry.getKey());
+			DestinationDisplay destinationDisplay = factory.getDestinationDisplay(entry.getValue());
+			journeyPattern.setPublishedName(destinationDisplay.getFrontText());
+			journeyPattern.setRegistrationNumber(destinationDisplay.getPublicCode());
+		}
+	}
+
+	/**
+	 * This method is used to update the Route with direction information,
+	 * because directions were not parsed at the moment route were parsed
+	 * 
+	 * @param context
+	 */
 	private void updateDirectionsToRoute(Context context) {
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		Referential referential = (Referential) context.get(REFERENTIAL);

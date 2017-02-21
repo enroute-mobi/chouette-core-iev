@@ -22,5 +22,8 @@ public class DestinationDisplay extends ChouetteIdentifiedObject {
 	
 	@Getter @Setter
 	private String publicCode;
+	
+	@Getter @Setter
+	private boolean filled=false;
 
 }

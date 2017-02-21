@@ -21,6 +21,9 @@ public class NetexStifObjectFactory {
 	
 	@Getter
 	private Map<String, String> routeDirections = new HashMap<>();
+	
+	@Getter
+	private Map<String, String> JourneyPatternDestinations = new HashMap<>();
 
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);
@@ -75,6 +78,9 @@ public class NetexStifObjectFactory {
 		this.routeDirections.put(routeId, directionId);
 	}
 	
+	public void addJourneyPatternDestination(String journeyPatternId, String destinationId){
+		this.JourneyPatternDestinations.put(journeyPatternId, destinationId);
+	}
 	
 	
 

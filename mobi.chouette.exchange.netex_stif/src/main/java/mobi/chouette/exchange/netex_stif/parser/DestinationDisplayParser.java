@@ -18,12 +18,12 @@ public class DestinationDisplayParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		Referential referential = (Referential) context.get(REFERENTIAL);
 		xpp.require(XmlPullParser.START_TAG, null, DESTINATION_DISPLAY);
 		String id = xpp.getAttributeValue(null, ID);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		DestinationDisplay destinationDisplay = factory.getDestinationDisplay(id);
-		String version = (String)context.get(VERSION);
+		Integer version = (Integer)context.get(VERSION);
+		destinationDisplay.setObjectVersion(version);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FRONT_TEXT)) {
 				destinationDisplay.setFrontText(xpp.nextText());
@@ -33,6 +33,8 @@ public class DestinationDisplayParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		destinationDisplay.setFilled(true);
+		
 	}
 	
 

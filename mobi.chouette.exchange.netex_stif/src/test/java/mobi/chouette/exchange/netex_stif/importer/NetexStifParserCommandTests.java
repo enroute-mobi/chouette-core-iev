@@ -108,8 +108,8 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				"Par ici", "CITYWAY:Route:2:LOC");
 		assertRoute(referential, "CITYWAY:Route:2:LOC", "route 2", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.R,
 				"Par là", "CITYWAY:Route:1:LOC");
-		//assertServiceJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1",
-		//		"1234", "CITYWAY:Route:1:LOC");
+		assertServiceJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1",
+				"1234", "CITYWAY:Route:1:LOC");
 		
 		/// Assert.assertXXX();
 	}
