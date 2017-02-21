@@ -14,8 +14,10 @@ import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -35,7 +37,7 @@ import org.hibernate.annotations.Parameter;
  */
 
 @Entity
-@Table(name = "companies")
+@Table(name = "companies",schema="public")
 @Cacheable
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = { "lines" })
@@ -45,11 +47,8 @@ public class Company extends ChouetteIdentifiedObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "companies_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", 
-		parameters = {
-			@Parameter(name = "sequence_name", value = "companies_id_seq"),
-			@Parameter(name = "increment_size", value = "10") })
-	@GeneratedValue(generator = "companies_id_seq")
+	@SequenceGenerator(name="companies_id_seq", sequenceName="public.companies_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="companies_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;

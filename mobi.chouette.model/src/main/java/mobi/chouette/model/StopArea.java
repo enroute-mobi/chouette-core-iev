@@ -11,12 +11,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -60,7 +62,7 @@ import org.hibernate.annotations.Parameter;
  * 
  */
 @Entity
-@Table(name = "stop_areas")
+@Table(name = "stop_areas",schema="public")
 @Cacheable
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "accessLinks", "accessPoints",
@@ -71,11 +73,8 @@ public class StopArea extends ChouetteLocalizedObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "stop_areas_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", 
-		parameters = {
-			@Parameter(name = "sequence_name", value = "stop_areas_id_seq"),
-			@Parameter(name = "increment_size", value = "100") })
-	@GeneratedValue(generator = "stop_areas_id_seq")
+	@SequenceGenerator(name="stop_areas_id_seq", sequenceName="public.stop_areas_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="stop_areas_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;

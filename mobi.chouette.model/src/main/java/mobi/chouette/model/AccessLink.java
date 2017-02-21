@@ -12,10 +12,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.apache.commons.lang.StringUtils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +30,6 @@ import mobi.chouette.model.type.ConnectionLinkTypeEnum;
 import mobi.chouette.model.type.LinkOrientationEnum;
 import mobi.chouette.model.type.UserNeedEnum;
 
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 /**
  * Chouette AccessLink : relation between an AccessPoint and a StopArea
  * <p/>
@@ -38,7 +38,7 @@ import org.hibernate.annotations.Parameter;
  * 
  */
 @Entity
-@Table(name = "access_links")
+@Table(name = "access_links",schema="public")
 @NoArgsConstructor
 @ToString
 public class AccessLink extends ChouetteIdentifiedObject {
@@ -48,11 +48,8 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	
 	@Getter
 	@Setter
-	@GenericGenerator(name = "access_links_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", 
-		parameters = {
-			@Parameter(name = "sequence_name", value = "access_links_id_seq"),
-			@Parameter(name = "increment_size", value = "100") })
-	@GeneratedValue(generator = "access_links_id_seq")
+	@SequenceGenerator(name="access_links_id_seq", sequenceName="public.access_links_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="access_links_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;

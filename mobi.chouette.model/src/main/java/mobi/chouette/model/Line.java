@@ -16,12 +16,14 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -44,7 +46,7 @@ import org.hibernate.annotations.Parameter;
  * Gtfs mapping : Line <br/>
  */
 @Entity
-@Table(name = "lines")
+@Table(name = "lines",schema="public")
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "routingConstraints" })
 public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
@@ -52,10 +54,8 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "lines_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "lines_id_seq"),
-			@Parameter(name = "increment_size", value = "10") })
-	@GeneratedValue(generator = "lines_id_seq")
+	@SequenceGenerator(name="lines_id_seq", sequenceName="public.lines_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="lines_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
@@ -182,7 +182,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	@Getter
 	@Setter
 	@Enumerated(EnumType.STRING)
-	@Column(name = "transport_mode_name")
+	@Column(name = "transport_mode")
 	private TransportModeNameEnum transportModeName = TransportModeNameEnum.Bus;
 
 	/**

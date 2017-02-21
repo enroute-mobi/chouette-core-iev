@@ -7,6 +7,9 @@
 	<persistence-unit name="public" transaction-type="JTA">
 
 		<jta-data-source>java:jboss/datasources/chouette</jta-data-source>
+		<class>mobi.chouette.model.Organisation</class>
+		<class>mobi.chouette.model.Referential</class>
+		<class>mobi.chouette.model.ReferentialMetadata</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<validation-mode>NONE</validation-mode>
 
@@ -23,6 +26,7 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.default_schema" value="public" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="javax.persistence.validation.mode" value="none" />
 		</properties>
 		
 		
@@ -34,19 +38,20 @@
 
 		<class>mobi.chouette.model.AccessLink</class>
 		<class>mobi.chouette.model.AccessPoint</class>
-		<class>mobi.chouette.model.CalendarDay</class>
 		<class>mobi.chouette.model.Company</class>
 		<class>mobi.chouette.model.ConnectionLink</class>
-      <class>mobi.chouette.model.Footnote</class>
 		<class>mobi.chouette.model.GroupOfLine</class>
+		<class>mobi.chouette.model.Line</class>
+		<class>mobi.chouette.model.Network</class>
+		<class>mobi.chouette.model.StopArea</class>
+		
+		<class>mobi.chouette.model.CalendarDay</class>
+      <class>mobi.chouette.model.Footnote</class>
 		<class>mobi.chouette.model.JourneyFrequency</class>
 		<class>mobi.chouette.model.JourneyPattern</class>
-		<class>mobi.chouette.model.Line</class>
 		<class>mobi.chouette.model.Period</class>
-		<class>mobi.chouette.model.Network</class>
 		<class>mobi.chouette.model.Route</class>
       <class>mobi.chouette.model.RouteSection</class>
-		<class>mobi.chouette.model.StopArea</class>
 		<class>mobi.chouette.model.StopPoint</class>
 		<class>mobi.chouette.model.Timeband</class>
 		<class>mobi.chouette.model.Timetable</class>

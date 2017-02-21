@@ -11,21 +11,21 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.apache.commons.lang.StringUtils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.type.AccessPointTypeEnum;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  * Chouette AccessPoint : relation between an AccessPoint and a StopArea
@@ -36,7 +36,7 @@ import org.hibernate.annotations.Parameter;
  */
 
 @Entity
-@Table(name = "access_points")
+@Table(name = "access_points",schema="public")
 @NoArgsConstructor
 @ToString(exclude = { "containedIn", "accessLinks" })
 public class AccessPoint extends ChouetteLocalizedObject {
@@ -45,13 +45,8 @@ public class AccessPoint extends ChouetteLocalizedObject {
 
 	@Getter
 	@Setter
-//	@SequenceGenerator(name="access_points_id_seq", sequenceName="access_points_id_seq", allocationSize=1)
-//    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="access_points_id_seq")
-	@GenericGenerator(name = "access_points_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", 
-		parameters = {
-			@Parameter(name = "sequence_name", value = "access_points_id_seq"),
-			@Parameter(name = "increment_size", value = "100") })
-	@GeneratedValue(generator = "access_points_id_seq")
+	@SequenceGenerator(name="access_points_id_seq", sequenceName="public.access_points_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="access_points_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
