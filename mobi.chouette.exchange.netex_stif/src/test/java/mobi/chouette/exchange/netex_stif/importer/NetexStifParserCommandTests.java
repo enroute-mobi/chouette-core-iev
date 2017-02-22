@@ -117,6 +117,11 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				"CITYWAY:Route:2:LOC");
 		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici",
 				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234");
+		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC");
+	}
+
+	private void assertVehicleJourneyAtStop(Referential referential, String vehicleJourneyId) {
+		
 	}
 
 	private void assertVehicleJourney(Referential referential, String id, String publishedName, String journeyPatternId,
@@ -128,6 +133,8 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		Assert.assertEquals(vehicleJourney.getPublishedJourneyIdentifier(), publishedJourneyIdentifier);
 
 	}
+	
+
 
 	private void assertJourneyPattern(Referential referential, String id, String name, String publishedName,
 			String registrationNumber, String routeId) {
