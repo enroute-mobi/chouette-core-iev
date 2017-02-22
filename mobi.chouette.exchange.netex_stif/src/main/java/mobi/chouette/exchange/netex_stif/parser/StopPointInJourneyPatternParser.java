@@ -29,6 +29,7 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 		Integer version = (Integer) context.get(VERSION);
 		String id = xpp.getAttributeValue(null, ID);
 		String order = xpp.getAttributeValue(null, ORDER);
+		log.info ("Order : " + order);
 		String objectId = NetexStifUtils.genStopPointId(id, order);
 		ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(id);
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
