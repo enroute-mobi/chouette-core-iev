@@ -30,15 +30,12 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 				String ref = xpp.getAttributeValue(null, REF);
 				ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(ref);
 				stopPoint = ObjectFactory.getStopPoint(referential, NetexStifUtils.genStopPointId(scheduledStopPoint));
-				if (quayRef != null) {
-					// stopPoint.setStopArea(quayRef);
-				}
 			} else if (xpp.getName().equals(QUAY_REF)) {
 				quayRef = xpp.nextText();
-				if (stopPoint != null) {
-					// stopPoint.setStopArea(quayRef);
-				}
 			}
+		}
+		if (quayRef != null && stopPoint!= null){
+			// stopPoint.setStopArea(quayRef);
 		}
 
 		XPPUtil.skipSubTree(log, xpp);

@@ -127,6 +127,10 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		
 	}
 
+	private void assertStopPoint(Referential referential, String id, String quayRef){
+		
+	}
+	
 	/// Warning FLA : on considère arriaval time unique pour un vehicleJourney
 	private void assertVehicleJourneyAtStop(Referential referential, String vehicleJourneyId, String arrivalTimeStr, int arrivalDayOffset, String departureTimeStr, int departureDayOffset) throws ParseException {
 		Time arrivalTime = ParserUtils.getSQLTime(arrivalTimeStr);
