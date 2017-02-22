@@ -90,5 +90,5 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String TO_DATE = "ToDate";
 	public static final String FOR_ALIGHTING = "ForAlighting";
 	public static final String FOR_BOARDING = "ForBoarding";
-	
+	public static final String ROUTE_FROM_SERVICE_JOURNEY_PATTERN = "RouteFromServiceJourneyPattern";
 }

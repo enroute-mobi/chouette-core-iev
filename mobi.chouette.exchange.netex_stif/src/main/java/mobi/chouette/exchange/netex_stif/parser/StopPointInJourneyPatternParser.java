@@ -10,6 +10,7 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
+import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
@@ -32,8 +33,11 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 		ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(id);
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
 		StopArea stopArea = new StopArea();
+		Route route = (Route)context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
 		stopArea.setName(scheduledStopPoint.getStopArea());
+		stopPoint.setContainedInStopArea(stopArea);
 		stopPoint.setObjectVersion(version);
+		stopPoint.setRoute(route);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FOR_ALIGHTING)) {
 				Boolean tmp = Boolean.parseBoolean(xpp.nextText());
@@ -45,8 +49,7 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		XPPUtil.skipSubTree(log, xpp);
-
+		
 	}
 
 	static {
