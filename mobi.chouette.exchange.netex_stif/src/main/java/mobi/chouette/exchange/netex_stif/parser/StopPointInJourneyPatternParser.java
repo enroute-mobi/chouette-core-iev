@@ -9,6 +9,8 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.type.AlightingPossibilityEnum;
+import mobi.chouette.model.type.BoardingPossibilityEnum;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -24,13 +26,24 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		String order = xpp.getAttributeValue(null, ORDER);
-		String objectId = id + ":" + order;
+		String objectId = NetexStifUtils.genStopPointId(id, order);
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
 		stopPoint.setObjectVersion(version);
+		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			if (xpp.getName().equals(FOR_ALIGHTING)) {
+				Boolean tmp = Boolean.parseBoolean(xpp.nextText());
+				stopPoint.setForAlighting(tmp ? AlightingPossibilityEnum.normal : AlightingPossibilityEnum.forbidden);
+			} else if (xpp.getName().equals(FOR_BOARDING)) {
+				Boolean tmp = Boolean.parseBoolean(xpp.nextText());
+				stopPoint.setForBoarding(tmp ? BoardingPossibilityEnum.normal : BoardingPossibilityEnum.forbidden);
+			} else {
+				XPPUtil.skipSubTree(log, xpp);
+			}
+		}
 		XPPUtil.skipSubTree(log, xpp);
 
 	}
-	
+
 	static {
 		ParserFactory.register(StopPointInJourneyPatternParser.class.getName(), new ParserFactory() {
 			private StopPointInJourneyPatternParser instance = new StopPointInJourneyPatternParser();
@@ -41,6 +54,5 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 			}
 		});
 	}
-	
 
 }
