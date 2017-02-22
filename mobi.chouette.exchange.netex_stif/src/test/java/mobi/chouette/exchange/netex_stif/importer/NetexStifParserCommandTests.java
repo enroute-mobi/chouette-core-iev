@@ -2,6 +2,9 @@ package mobi.chouette.exchange.netex_stif.importer;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
+import java.text.ParseException;
+import java.util.List;
 import java.util.Locale;
 
 import javax.naming.InitialContext;
@@ -14,6 +17,7 @@ import org.testng.annotations.Test;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
@@ -25,6 +29,7 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.VehicleJourney;
+import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -117,11 +122,27 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				"CITYWAY:Route:2:LOC");
 		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici",
 				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234");
-		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC");
+		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0,"01:01:00.000", 0);
+		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0,"01:05:00.000", 0);
+		
 	}
 
-	private void assertVehicleJourneyAtStop(Referential referential, String vehicleJourneyId) {
-		
+	/// Warning FLA : on considère arriaval time unique pour un vehicleJourney
+	private void assertVehicleJourneyAtStop(Referential referential, String vehicleJourneyId, String arrivalTimeStr, int arrivalDayOffset, String departureTimeStr, int departureDayOffset) throws ParseException {
+		Time arrivalTime = ParserUtils.getSQLTime(arrivalTimeStr);
+		Time departureTime = ParserUtils.getSQLTime(departureTimeStr);
+		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, vehicleJourneyId);
+		List<VehicleJourneyAtStop> list = vehicleJourney.getVehicleJourneyAtStops();
+		boolean treat = false;
+		for (VehicleJourneyAtStop vjas : list) {
+			if (vjas.getArrivalTime().equals(arrivalTime)){
+				Assert.assertEquals(vjas.getArrivalDayOffset(), arrivalDayOffset);
+				Assert.assertEquals(vjas.getDepartureDayOffset(), departureDayOffset);
+				Assert.assertTrue(vjas.getDepartureTime().equals(departureTime), "Invalid departure time, has " + vjas.getDepartureTime() +" expected" + departureTime);
+				treat = true;
+			}
+		}
+		Assert.assertTrue(treat, "VehicleJourneyAtStop not found (arrivalTime :) :" + arrivalTimeStr);
 	}
 
 	private void assertVehicleJourney(Referential referential, String id, String publishedName, String journeyPatternId,
