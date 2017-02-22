@@ -38,6 +38,7 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 		stopPoint.setContainedInStopArea(stopArea);
 		stopPoint.setObjectVersion(version);
 		stopPoint.setRoute(route);
+		stopPoint.setPosition(Integer.parseInt(order));
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FOR_ALIGHTING)) {
 				Boolean tmp = Boolean.parseBoolean(xpp.nextText());
