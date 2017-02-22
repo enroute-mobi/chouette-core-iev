@@ -3,7 +3,7 @@
   <parent>
     <groupId>mobi.chouette</groupId>
     <artifactId>mobi.chouette</artifactId>
-    <version>3.4.2</version>
+    <version>4.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>mobi.chouette.exchange.validator</artifactId>
   <packaging>ejb</packaging>
@@ -102,19 +102,7 @@
       </dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.neptune</artifactId>
-         <type>ejb</type>
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.netex</artifactId>
-         <type>ejb</type>
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.gtfs</artifactId>
+         <artifactId>mobi.chouette.exchange.netex_stif</artifactId>
          <type>ejb</type>
          <version>${project.version}</version>
       </dependency>

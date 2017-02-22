@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mobi.chouette</groupId>
 	<artifactId>mobi.chouette</artifactId>
-	<version>3.4.2</version>
+	<version>4.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -371,7 +371,7 @@
 											maven-processor-plugin
 										</artifactId>
 										<versionRange>
-											[2.2.4,)
+											[3.2.0,)
 										</versionRange>
 										<goals>
 											<goal>process</goal>
@@ -390,7 +390,7 @@
 											maven-ear-plugin
 										</artifactId>
 										<versionRange>
-											[2.9.1,)
+											[2.10.1,)
 										</versionRange>
 										<goals>
 											<goal>
@@ -411,7 +411,7 @@
 											maven-dependency-plugin
 										</artifactId>
 										<versionRange>
-											[2.8,)
+											[3.0.0,)
 										</versionRange>
 										<goals>
 											<goal>unpack</goal>
@@ -426,7 +426,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.projectlombok</groupId>
 										<artifactId>lombok-maven-plugin</artifactId>
-										<versionRange>[1.12.4.0,)</versionRange>
+										<versionRange>[1.16.12.0,)</versionRange>
 										<goals>
 											<goal>delombok</goal>
 										</goals>
@@ -439,7 +439,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.codehaus.mojo</groupId>
 										<artifactId>properties-maven-plugin</artifactId>
-										<versionRange>[1.0-alpha-2,)</versionRange>
+										<versionRange>[1.0.0,)</versionRange>
 										<goals>
 											<goal>set-system-properties</goal>
 										</goals>
@@ -514,11 +514,6 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>mobi.chouette.exchange</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>mobi.chouette.exchange.neptune</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -825,12 +820,11 @@
 		<module>mobi.chouette.dao</module>
 		<module>mobi.chouette.dao.iev</module>
 		<module>mobi.chouette.exchange</module>
-		<module>mobi.chouette.exchange.neptune</module>
 		<module>mobi.chouette.exchange.netex_stif</module>
 		<module>mobi.chouette.exchange.validator</module>
 		<module>mobi.chouette.service</module>
 		<module>mobi.chouette.schema.checker</module>
 		<module>mobi.chouette.ws</module>
-		<module>chouette_iev</module>
+		<module>boiv_iev</module>
 	</modules>
 </project>
