@@ -2,8 +2,6 @@ package mobi.chouette.exchange.netex_stif.parser;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +11,8 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.ConnectionLinkTypeEnum;
 import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.type.PTDirectionEnum;
@@ -54,11 +52,9 @@ public class NetexStifUtils extends ParserUtils {
 			return null;
 		PTNetworkSourceTypeEnum result = null;
 		try {
-			result = PTNetworkSourceTypeEnum.valueOf(StringUtils
-					.capitalize(value));
+			result = PTNetworkSourceTypeEnum.valueOf(StringUtils.capitalize(value));
 		} catch (Exception e) {
-			log.error("unable to translate " + value
-					+ " as PTNetworkSourceType");
+			log.error("unable to translate " + value + " as PTNetworkSourceType");
 		}
 		return result;
 	}
@@ -171,7 +167,6 @@ public class NetexStifUtils extends ParserUtils {
 			return TransportModeNameEnum.Other;
 	}
 
-
 	public static List<DayTypeEnum> getDayTypes(List<String> values) {
 		List<DayTypeEnum> result = new ArrayList<DayTypeEnum>();
 		for (String dayType : values) {
@@ -212,15 +207,8 @@ public class NetexStifUtils extends ParserUtils {
 		return id + ID_SEPARATOR + order;
 	}
 
-	public static String genStopPointId(ScheduledStopPoint scheduledStopPoint) {
-		return scheduledStopPoint.getId() + ID_SEPARATOR + scheduledStopPoint.getOrder();
+	public static String genStopPointId(StopPoint stopPoint) {
+		return stopPoint.getId() + ID_SEPARATOR + stopPoint.getPosition();
 	}
 
-	public static void refreshJourneyPattern (Context context){
-		Referential referential = (Referential)context.get(Constant.REFERENTIAL);
-		Map<String, JourneyPattern> journeyPatterns= referential.getJourneyPatterns();
-		for (JourneyPattern pattern : journeyPatterns.values()){
-			//pattern.g
-		}
-	}
 }

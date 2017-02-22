@@ -23,7 +23,6 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-
 		xpp.require(XmlPullParser.START_TAG, null, SERVICE_JOURNEY_PATTERN);
 		String id = xpp.getAttributeValue(null, ID);
 		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
@@ -36,10 +35,10 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			} else if (xpp.getName().equals(DESTINATION_DISPLAY_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);
 				DestinationDisplay display = factory.getDestinationDisplay(tmp);
-				if (display.isFilled()){
-				journeyPattern.setPublishedName(display.getFrontText());
-				journeyPattern.setRegistrationNumber(display.getPublicCode());
-				}else{
+				if (display.isFilled()) {
+					journeyPattern.setPublishedName(display.getFrontText());
+					journeyPattern.setRegistrationNumber(display.getPublicCode());
+				} else {
 					factory.addJourneyPatternDestination(id, tmp);
 				}
 				XPPUtil.skipSubTree(log, xpp);
@@ -60,10 +59,14 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				String routeRef = xpp.getAttributeValue(null, REF);
 				Route route = ObjectFactory.getRoute(referential, routeRef);
 				journeyPattern.setRoute(route);
+				context.put(ROUTE_FROM_SERVICE_JOURNEY_PATTERN, route);
 				XPPUtil.skipSubTree(log, xpp);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
+		}
+		if (context.contains(ROUTE_FROM_SERVICE_JOURNEY_PATTERN)) {
+			context.remove(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
 		}
 	}
 

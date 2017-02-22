@@ -20,28 +20,25 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 
-		StopPoint stopPoint = null;
+		ScheduledStopPoint scheduledStopPoint = null;
 		String quayRef = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(ref);
-				stopPoint = ObjectFactory.getStopPoint(referential, NetexStifUtils.genStopPointId(scheduledStopPoint));
-				if (quayRef != null) {
-					// stopPoint.setStopArea(quayRef);
-				}
+				scheduledStopPoint = factory.getScheduledStopPoint(ref);
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(QUAY_REF)) {
 				quayRef = xpp.nextText();
-				if (stopPoint != null) {
-					// stopPoint.setStopArea(quayRef);
-				}
+			} else {
+				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-
-		XPPUtil.skipSubTree(log, xpp);
+		if (quayRef != null && scheduledStopPoint != null) {
+			// stopPoint.setStopArea(quayRef);
+			scheduledStopPoint.setStopArea(quayRef);
+		}
 
 	}
 

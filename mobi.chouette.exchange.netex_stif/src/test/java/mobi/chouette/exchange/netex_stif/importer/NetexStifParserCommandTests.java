@@ -2,6 +2,9 @@ package mobi.chouette.exchange.netex_stif.importer;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
+import java.text.ParseException;
+import java.util.List;
 import java.util.Locale;
 
 import javax.naming.InitialContext;
@@ -14,6 +17,7 @@ import org.testng.annotations.Test;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
@@ -24,6 +28,8 @@ import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.VehicleJourney;
+import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -102,19 +108,60 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				NetexStifParserCommand.class.getName());
 		File f = new File(path, "offre.xml");
 		Referential referential = (Referential) context.get(REFERENTIAL);
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
 		assertRoute(referential, "CITYWAY:Route:1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
 				"Par ici", "CITYWAY:Route:2:LOC");
 		assertRoute(referential, "CITYWAY:Route:2:LOC", "route 2", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.R,
 				"Par là", "CITYWAY:Route:1:LOC");
-		assertServiceJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1",
-				"1234", "CITYWAY:Route:1:LOC");
-		assertServiceJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:2:LOC", "Par là", "Mission 2",
-				"2345", "CITYWAY:Route:2:LOC");
+
+		assertJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1", "1234",
+				"CITYWAY:Route:1:LOC");
+		assertJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:2:LOC", "Par là", "Mission 2", "2345",
+				"CITYWAY:Route:2:LOC");
+		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici",
+				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234");
+		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0,"01:01:00.000", 0);
+		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0,"01:05:00.000", 0);
+		
 	}
 
-	private void assertServiceJourneyPattern(Referential referential, String id, String name, String publishedName,
+	private void assertStopPoint(Referential referential, String id, String quayRef){
+		
+	}
+	
+	/// Warning FLA : on considère arriaval time unique pour un vehicleJourney
+	private void assertVehicleJourneyAtStop(Referential referential, String vehicleJourneyId, String arrivalTimeStr, int arrivalDayOffset, String departureTimeStr, int departureDayOffset) throws ParseException {
+		Time arrivalTime = ParserUtils.getSQLTime(arrivalTimeStr);
+		Time departureTime = ParserUtils.getSQLTime(departureTimeStr);
+		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, vehicleJourneyId);
+		List<VehicleJourneyAtStop> list = vehicleJourney.getVehicleJourneyAtStops();
+		boolean treat = false;
+		for (VehicleJourneyAtStop vjas : list) {
+			if (vjas.getArrivalTime().equals(arrivalTime)){
+				Assert.assertEquals(vjas.getArrivalDayOffset(), arrivalDayOffset);
+				Assert.assertEquals(vjas.getDepartureDayOffset(), departureDayOffset);
+				Assert.assertTrue(vjas.getDepartureTime().equals(departureTime), "Invalid departure time, has " + vjas.getDepartureTime() +" expected" + departureTime);
+				treat = true;
+			}
+		}
+		Assert.assertTrue(treat, "VehicleJourneyAtStop not found (arrivalTime :) :" + arrivalTimeStr);
+	}
+
+	private void assertVehicleJourney(Referential referential, String id, String publishedName, String journeyPatternId,
+			String companyId, String publishedJourneyIdentifier) {
+		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);
+		Assert.assertEquals(vehicleJourney.getPublishedJourneyName(), publishedName);
+		Assert.assertEquals(vehicleJourney.getJourneyPattern().getObjectId(), journeyPatternId);
+		Assert.assertEquals(vehicleJourney.getCompany().getObjectId(), companyId);
+		Assert.assertEquals(vehicleJourney.getPublishedJourneyIdentifier(), publishedJourneyIdentifier);
+
+	}
+	
+
+
+	private void assertJourneyPattern(Referential referential, String id, String name, String publishedName,
 			String registrationNumber, String routeId) {
 		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
 		Assert.assertEquals(journeyPattern.getName(), name);
