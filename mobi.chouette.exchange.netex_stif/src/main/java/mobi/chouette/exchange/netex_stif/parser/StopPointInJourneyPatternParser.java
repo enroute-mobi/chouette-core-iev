@@ -8,6 +8,9 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
+import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
@@ -21,13 +24,15 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-
+		NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
 		Integer version = (Integer) context.get(VERSION);
-
 		String id = xpp.getAttributeValue(null, ID);
 		String order = xpp.getAttributeValue(null, ORDER);
 		String objectId = NetexStifUtils.genStopPointId(id, order);
+		ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(id);
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
+		StopArea stopArea = new StopArea();
+		stopArea.setName(scheduledStopPoint.getStopArea());
 		stopPoint.setObjectVersion(version);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FOR_ALIGHTING)) {

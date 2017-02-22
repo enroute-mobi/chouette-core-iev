@@ -15,12 +15,8 @@ public class ScheduledStopPoint extends ChouetteIdentifiedObject {
 	@Setter
 	private Long id;
 
-	@Getter
-	@Setter
-	private String name;
-
-	@Getter
-	@Setter
-	private String order;
+	@Getter @Setter
+	private String stopArea;
+	
 
 }
