@@ -126,13 +126,15 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234");
 		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0,"01:01:00.000", 0);
 		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0,"01:05:00.000", 0);
-		assertStopPoint(referential, "CITYWAY:StopPointInJourneyPattern:1-1-1:LOC:1", 1, "", "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:StopPointInJourneyPattern:1-1-1:LOC:1", 1, "code reflex 1", "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:StopPointInJourneyPattern:1-1-2:LOC:2", 2, "code reflex 2", "CITYWAY:Route:1:LOC");
 	}
 
 	private void assertStopPoint(Referential referential, String id, int position, String quayRef, String routeId){
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, id);
 		Assert.assertEquals(stopPoint.getPosition(), new Integer(position));
 		Assert.assertEquals(stopPoint.getRoute().getObjectId(), routeId);
+		Assert.assertEquals(stopPoint.getContainedInStopArea().getName(), quayRef);
 	}
 	
 	/// Warning FLA : on considère arriaval time unique pour un vehicleJourney
