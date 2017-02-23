@@ -33,12 +33,14 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 		String objectId = NetexStifUtils.genStopPointId(id, order);
 		ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(id);
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
-		StopArea stopArea =	ObjectFactory.getStopArea(referential, scheduledStopPoint.getStopArea());
+		//StopArea stopArea =	ObjectFactory.getStopArea(referential, scheduledStopPoint.getStopArea());
 		Route route = (Route)context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
-		stopPoint.setContainedInStopArea(stopArea);
+		//log.info("stopArea : " + stopArea);
+		//stopPoint.setContainedInStopArea(stopArea);
 		stopPoint.setObjectVersion(version);
 		stopPoint.setRoute(route);
 		stopPoint.setPosition(Integer.parseInt(order));
+		factory.addStopPoint(id, stopPoint);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FOR_ALIGHTING)) {
 				Boolean tmp = Boolean.parseBoolean(xpp.nextText());

@@ -1,11 +1,14 @@
 package mobi.chouette.exchange.netex_stif.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.Period;
+import mobi.chouette.model.StopPoint;
 
 public class NetexStifObjectFactory {
 
@@ -24,6 +27,9 @@ public class NetexStifObjectFactory {
 	
 	@Getter
 	private Map<String, String> JourneyPatternDestinations = new HashMap<>();
+	
+	@Getter
+	private Map<String, List<StopPoint>> stopPointInitIdToStopPoints = new HashMap<>();
 
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);
@@ -82,6 +88,18 @@ public class NetexStifObjectFactory {
 		this.JourneyPatternDestinations.put(journeyPatternId, destinationId);
 	}
 	
+	public void addStopPoint(String initId, StopPoint stopPoint){
+		List<StopPoint> list =  stopPointInitIdToStopPoints.get(initId);
+		if (list == null){
+			list = new ArrayList<StopPoint>();
+			stopPointInitIdToStopPoints.put(initId, list);
+		}
+		list.add(stopPoint);
+	}
+	
+	public List<StopPoint> getStopPoints (String initId){
+		return stopPointInitIdToStopPoints.get(initId);
+	}
 	
 
 	public void clear() {

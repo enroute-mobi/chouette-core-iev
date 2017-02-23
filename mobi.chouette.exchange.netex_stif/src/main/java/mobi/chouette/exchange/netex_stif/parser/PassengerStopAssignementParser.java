@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.List;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
@@ -9,7 +11,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
+import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -21,13 +23,14 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-
-		ScheduledStopPoint scheduledStopPoint = null;
+		Referential referential = (Referential)context.get(REFERENTIAL);
+		
 		String quayRef = null;
+		String id = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
-				String ref = xpp.getAttributeValue(null, REF);
-				scheduledStopPoint = factory.getScheduledStopPoint(ref);
+				id = xpp.getAttributeValue(null, REF);
+				
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(QUAY_REF)) {
 				quayRef = xpp.nextText();
@@ -35,9 +38,14 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		if (quayRef != null && scheduledStopPoint != null) {
+		if (quayRef != null && id!= null) {
+			List<StopPoint> list = factory.getStopPoints(id);
+			StopArea stopArea =	ObjectFactory.getStopArea(referential, quayRef);
+			for (StopPoint stopPoint : list) {
+				stopPoint.setContainedInStopArea(stopArea);
+			}
 			// stopPoint.setStopArea(quayRef);
-			scheduledStopPoint.setStopArea(quayRef);
+			//.setStopArea(quayRef);
 		}
 
 	}
