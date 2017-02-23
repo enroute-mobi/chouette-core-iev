@@ -33,9 +33,8 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 		String objectId = NetexStifUtils.genStopPointId(id, order);
 		ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(id);
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
-		StopArea stopArea = new StopArea();
+		StopArea stopArea =	ObjectFactory.getStopArea(referential, scheduledStopPoint.getStopArea());
 		Route route = (Route)context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
-		stopArea.setName(scheduledStopPoint.getStopArea());
 		stopPoint.setContainedInStopArea(stopArea);
 		stopPoint.setObjectVersion(version);
 		stopPoint.setRoute(route);
