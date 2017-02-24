@@ -30,8 +30,10 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -126,14 +128,10 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234");
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0, "01:01:00.000", 0);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0, "01:05:00.000", 0);
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:1", 1, "code reflex 1",
-				"CITYWAY:Route:1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-2:LOC:2", 2, "code reflex 3",
-				"CITYWAY:Route:1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-1:LOC:1", 1, "code reflex 2",
-				"CITYWAY:Route:2:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2:LOC:2", 2, "code reflex 4",
-				"CITYWAY:Route:2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:1", 1, "code reflex 1", "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-2:LOC:2", 2, "code reflex 3", "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-1:LOC:1", 1, "code reflex 2", "CITYWAY:Route:2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2:LOC:2", 2, "code reflex 4", "CITYWAY:Route:2:LOC");
 	}
 
 	private void assertStopPoint(Referential referential, String id, int position, String quayRef, String routeId) {
@@ -226,7 +224,25 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		File f = new File(path, "calendrier.xml");
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		assertTimetable(referential, "CITYWAY:DayType:1:LOC", "Semaine", "Monday,Tuesday,Wednesday,Thursday,Friday");
+		assertTimetable(referential, "CITYWAY:DayType:2:LOC", "Fin de semaine", "Saturday,Sunday");
+		assertTimetable(referential, "CITYWAY:DayType:3:LOC", "Service spécial", null);
+		assertTimetable(referential, "CITYWAY:DayType:4:LOC", "Restriction", null);
 
-		/// Assert.assertXXX();
+	}
+
+	private void assertTimetable(Referential referential, String id, String comment, String daytypes) {
+		Timetable timetable = ObjectFactory.getTimetable(referential, id);
+		if (daytypes != null) {
+			String[] types = daytypes.split(",");
+			List<DayTypeEnum> list = timetable.getDayTypes();
+			Assert.assertEquals(list.size(), types.length);
+			for (String tmp : types) {
+				Assert.assertTrue(list.contains(DayTypeEnum.valueOf(tmp)), "Daytype " + tmp + " not found");
+			}
+		}
+
+		Assert.assertEquals(timetable.getComment(), comment);
 	}
 }
