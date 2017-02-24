@@ -37,7 +37,6 @@ import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
-@Log4j
 public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private static final String path = "src/test/data/";
@@ -129,16 +128,18 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0, "01:05:00.000", 0);
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:1", 1, "code reflex 1",
 				"CITYWAY:Route:1:LOC");
-		//assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:2", 2, "code reflex 2",
-		//		"CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-2:LOC:2", 2, "code reflex 3",
+				"CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-1:LOC:1", 1, "code reflex 2",
+				"CITYWAY:Route:2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2:LOC:2", 2, "code reflex 4",
+				"CITYWAY:Route:2:LOC");
 	}
 
 	private void assertStopPoint(Referential referential, String id, int position, String quayRef, String routeId) {
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, id);
-		log.info("stop point" + stopPoint);
 		Assert.assertEquals(stopPoint.getPosition(), new Integer(position));
 		Assert.assertEquals(stopPoint.getRoute().getObjectId(), routeId);
-		log.info("StopArea : " + stopPoint.getContainedInStopArea());
 		Assert.assertEquals(stopPoint.getContainedInStopArea().getObjectId(), quayRef);
 	}
 
