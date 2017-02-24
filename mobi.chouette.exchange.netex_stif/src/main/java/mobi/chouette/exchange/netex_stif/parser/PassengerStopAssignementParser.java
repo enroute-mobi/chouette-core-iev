@@ -23,29 +23,34 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-		Referential referential = (Referential)context.get(REFERENTIAL);
-		
+		Referential referential = (Referential) context.get(REFERENTIAL);
+
 		String quayRef = null;
 		String id = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			log.info("PassengerStopAssignementParser : " + xpp.getName());
 			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
 				id = xpp.getAttributeValue(null, REF);
-				
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(QUAY_REF)) {
-				quayRef = xpp.nextText();
+				quayRef = xpp.getAttributeValue(null, REF);
+				XPPUtil.skipSubTree(log, xpp);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		if (quayRef != null && id!= null) {
+		if (quayRef != null && id != null) {
 			List<StopPoint> list = factory.getStopPoints(id);
-			StopArea stopArea =	ObjectFactory.getStopArea(referential, quayRef);
-			for (StopPoint stopPoint : list) {
-				stopPoint.setContainedInStopArea(stopArea);
+			log.info("id :" + id + " list : " + list);
+			if (list != null) {
+				StopArea stopArea = ObjectFactory.getStopArea(referential, quayRef);
+				for (StopPoint stopPoint : list) {
+					log.info("stop point" + stopPoint);
+					stopPoint.setContainedInStopArea(stopArea);
+				}
 			}
 			// stopPoint.setStopArea(quayRef);
-			//.setStopArea(quayRef);
+			// .setStopArea(quayRef);
 		}
 
 	}

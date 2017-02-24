@@ -37,6 +37,7 @@ import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
+@Log4j
 public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private static final String path = "src/test/data/";
@@ -124,31 +125,37 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				"CITYWAY:Route:2:LOC");
 		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici",
 				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234");
-		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0,"01:01:00.000", 0);
-		assertVehicleJourneyAtStop (referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0,"01:05:00.000", 0);
-		assertStopPoint(referential, "CITYWAY:StopPointInJourneyPattern:1-1-1:LOC:1", 1, "code reflex 1", "CITYWAY:Route:1:LOC");
-		assertStopPoint(referential, "CITYWAY:StopPointInJourneyPattern:1-1-2:LOC:2", 2, "code reflex 2", "CITYWAY:Route:1:LOC");
+		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0, "01:01:00.000", 0);
+		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0, "01:05:00.000", 0);
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:1", 1, "code reflex 1",
+				"CITYWAY:Route:1:LOC");
+		//assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:2", 2, "code reflex 2",
+		//		"CITYWAY:Route:1:LOC");
 	}
 
-	private void assertStopPoint(Referential referential, String id, int position, String quayRef, String routeId){
+	private void assertStopPoint(Referential referential, String id, int position, String quayRef, String routeId) {
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, id);
+		log.info("stop point" + stopPoint);
 		Assert.assertEquals(stopPoint.getPosition(), new Integer(position));
 		Assert.assertEquals(stopPoint.getRoute().getObjectId(), routeId);
-		//Assert.assertEquals(stopPoint.getContainedInStopArea().getObjectId(), quayRef);
+		log.info("StopArea : " + stopPoint.getContainedInStopArea());
+		Assert.assertEquals(stopPoint.getContainedInStopArea().getObjectId(), quayRef);
 	}
-	
+
 	/// Warning FLA : on considère arriaval time unique pour un vehicleJourney
-	private void assertVehicleJourneyAtStop(Referential referential, String vehicleJourneyId, String arrivalTimeStr, int arrivalDayOffset, String departureTimeStr, int departureDayOffset) throws ParseException {
+	private void assertVehicleJourneyAtStop(Referential referential, String vehicleJourneyId, String arrivalTimeStr,
+			int arrivalDayOffset, String departureTimeStr, int departureDayOffset) throws ParseException {
 		Time arrivalTime = ParserUtils.getSQLTime(arrivalTimeStr);
 		Time departureTime = ParserUtils.getSQLTime(departureTimeStr);
 		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, vehicleJourneyId);
 		List<VehicleJourneyAtStop> list = vehicleJourney.getVehicleJourneyAtStops();
 		boolean treat = false;
 		for (VehicleJourneyAtStop vjas : list) {
-			if (vjas.getArrivalTime().equals(arrivalTime)){
+			if (vjas.getArrivalTime().equals(arrivalTime)) {
 				Assert.assertEquals(vjas.getArrivalDayOffset(), arrivalDayOffset);
 				Assert.assertEquals(vjas.getDepartureDayOffset(), departureDayOffset);
-				Assert.assertTrue(vjas.getDepartureTime().equals(departureTime), "Invalid departure time, has " + vjas.getDepartureTime() +" expected" + departureTime);
+				Assert.assertTrue(vjas.getDepartureTime().equals(departureTime),
+						"Invalid departure time, has " + vjas.getDepartureTime() + " expected" + departureTime);
 				treat = true;
 			}
 		}
@@ -164,8 +171,6 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		Assert.assertEquals(vehicleJourney.getPublishedJourneyIdentifier(), publishedJourneyIdentifier);
 
 	}
-	
-
 
 	private void assertJourneyPattern(Referential referential, String id, String name, String publishedName,
 			String registrationNumber, String routeId) {

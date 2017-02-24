@@ -30,9 +30,11 @@ public class NetexStructureParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			String name = xpp.getName();
 			// check if it is one of the member we treat
+			log.info("tag : " + name);
 			if (members.containsKey(name)) {
 				parseMember(name, xpp, context);
 			} else {
+				log.info("skip tag: " + name);
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
