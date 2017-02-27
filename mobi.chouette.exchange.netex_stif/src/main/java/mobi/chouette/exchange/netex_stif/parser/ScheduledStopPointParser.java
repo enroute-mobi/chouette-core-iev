@@ -18,7 +18,6 @@ import mobi.chouette.model.util.Referential;
 public class ScheduledStopPointParser implements Parser, Constant {
 
 	public void parse(Context context) throws Exception {
-		log.info("aaa");
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 
