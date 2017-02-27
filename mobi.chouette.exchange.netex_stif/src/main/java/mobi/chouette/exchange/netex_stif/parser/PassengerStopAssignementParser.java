@@ -49,8 +49,6 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 					stopPoint.setContainedInStopArea(stopArea);
 				}
 			}
-			// stopPoint.setStopArea(quayRef);
-			// .setStopArea(quayRef);
 		}
 
 	}
