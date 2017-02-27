@@ -20,20 +20,13 @@ public class ScheduledStopPointParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		log.info("aaa");
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
-		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 
-		Integer version = (Integer) context.get(VERSION);
-
 		String id = xpp.getAttributeValue(null, ID);
-		//String order = xpp.getAttributeValue(null, ORDER);
-		//log.info("order for stopPoint : " + order);
-		//StopPoint stopPoint = ObjectFactory.getStopPoint(referential, NetexStifUtils.genStopPointId(id, order));
-		//stopPoint.setObjectVersion(version);
 		// save ScheduledStopPoint to use it latter, call get to create the
 		// point if not exists
-		ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(id);
-		//scheduledStopPoint.setOrder(order);
+		factory.getScheduledStopPoint(id);
+		// scheduledStopPoint.setOrder(order);
 		XPPUtil.skipSubTree(log, xpp);
 	}
 
