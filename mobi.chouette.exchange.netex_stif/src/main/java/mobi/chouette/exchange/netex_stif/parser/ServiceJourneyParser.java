@@ -25,7 +25,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		Integer version = (Integer) context.get(VERSION);
+		Long version = (Long) context.get(VERSION);
 
 		String id = xpp.getAttributeValue(null, ID);
 		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);

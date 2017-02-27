@@ -22,7 +22,7 @@ public class DestinationDisplayParser implements Parser, Constant {
 		String id = xpp.getAttributeValue(null, ID);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		DestinationDisplay destinationDisplay = factory.getDestinationDisplay(id);
-		Integer version = (Integer)context.get(VERSION);
+		Long version = (Long)context.get(VERSION);
 		destinationDisplay.setObjectVersion(version);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FRONT_TEXT)) {

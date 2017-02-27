@@ -51,8 +51,8 @@ public class JourneyPatternParser implements Parser, Constant {
 		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(
 				referential, id);
 
-		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
-		journeyPattern.setObjectVersion(version != null ? version : 0);
+		Long version = (Long) context.get(VERSION);
+		journeyPattern.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 

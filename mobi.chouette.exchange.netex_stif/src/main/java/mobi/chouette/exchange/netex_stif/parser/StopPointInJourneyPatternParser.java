@@ -24,7 +24,7 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-		Integer version = (Integer) context.get(VERSION);
+		Long version = (Long) context.get(VERSION);
 		String scheduledStopPointId = null;
 		String order = xpp.getAttributeValue(null, ORDER);
 		Boolean forAlighting = null;

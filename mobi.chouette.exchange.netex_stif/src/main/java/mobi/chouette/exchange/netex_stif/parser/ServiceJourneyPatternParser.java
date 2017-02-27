@@ -26,7 +26,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		xpp.require(XmlPullParser.START_TAG, null, SERVICE_JOURNEY_PATTERN);
 		String id = xpp.getAttributeValue(null, ID);
 		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
-		Integer version = (Integer) context.get(VERSION);
+		Long version = (Long) context.get(VERSION);
 		journeyPattern.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {

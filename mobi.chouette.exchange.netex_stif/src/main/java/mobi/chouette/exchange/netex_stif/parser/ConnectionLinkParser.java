@@ -50,14 +50,13 @@ public class ConnectionLinkParser implements Parser, Constant {
 		context.put(LINE_NUMBER, xpp.getLineNumber());
 
 		String id = xpp.getAttributeValue(null, ID);
-		ConnectionLink connectionLink = ObjectFactory.getConnectionLink(
-				referential, id);
+		ConnectionLink connectionLink = ObjectFactory.getConnectionLink(referential, id);
 
-		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
-		connectionLink.setObjectVersion(version != null ? version : 0);
+		Long version = (Long) context.get(VERSION);
+		connectionLink.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			
+
 			if (xpp.getName().equals(NAME)) {
 				connectionLink.setName(xpp.nextText());
 			} else if (xpp.getName().equals("Description")) {
@@ -68,25 +67,20 @@ public class ConnectionLinkParser implements Parser, Constant {
 			} else if (xpp.getName().equals("TransferDuration")) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals("Covered")) {
-						ConnectionLinkTypeEnum value = NetexStifUtils
-								.toConnectionLinkType(xpp.nextText());
+						ConnectionLinkTypeEnum value = NetexStifUtils.toConnectionLinkType(xpp.nextText());
 						connectionLink.setLinkType(value);
 					} else if (xpp.getName().equals("DefaultDuration")) {
 						Time value = ParserUtils.getSQLDuration(xpp.nextText());
 						connectionLink.setDefaultDuration(value);
-					} else if (xpp.getName()
-							.equals("FrequentTravellerDuration")) {
+					} else if (xpp.getName().equals("FrequentTravellerDuration")) {
 						Time value = ParserUtils.getSQLDuration(xpp.nextText());
 						connectionLink.setFrequentTravellerDuration(value);
-					} else if (xpp.getName().equals(
-							"OccasionalTravellerDuration")) {
+					} else if (xpp.getName().equals("OccasionalTravellerDuration")) {
 						Time value = ParserUtils.getSQLDuration(xpp.nextText());
 						connectionLink.setOccasionalTravellerDuration(value);
-					} else if (xpp.getName().equals(
-							"MobilityRestrictedTravellerDuration")) {
+					} else if (xpp.getName().equals("MobilityRestrictedTravellerDuration")) {
 						Time value = ParserUtils.getSQLDuration(xpp.nextText());
-						connectionLink
-								.setMobilityRestrictedTravellerDuration(value);
+						connectionLink.setMobilityRestrictedTravellerDuration(value);
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
 					}
@@ -98,8 +92,7 @@ public class ConnectionLinkParser implements Parser, Constant {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals("StopPlaceRef")) {
 						String ref = xpp.getAttributeValue(null, REF);
-						StopArea startOfLink = ObjectFactory.getStopArea(
-								referential, ref);
+						StopArea startOfLink = ObjectFactory.getStopArea(referential, ref);
 						connectionLink.setStartOfLink(startOfLink);
 						XPPUtil.skipSubTree(log, xpp);
 					} else {
@@ -111,8 +104,7 @@ public class ConnectionLinkParser implements Parser, Constant {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals("StopPlaceRef")) {
 						String ref = xpp.getAttributeValue(null, REF);
-						StopArea endOfLink = ObjectFactory.getStopArea(
-								referential, ref);
+						StopArea endOfLink = ObjectFactory.getStopArea(referential, ref);
 						connectionLink.setEndOfLink(endOfLink);
 						XPPUtil.skipSubTree(log, xpp);
 					} else {
@@ -127,15 +119,14 @@ public class ConnectionLinkParser implements Parser, Constant {
 	}
 
 	static {
-		ParserFactory.register(ConnectionLinkParser.class.getName(),
-				new ParserFactory() {
-					private ConnectionLinkParser instance = new ConnectionLinkParser();
+		ParserFactory.register(ConnectionLinkParser.class.getName(), new ParserFactory() {
+			private ConnectionLinkParser instance = new ConnectionLinkParser();
 
-					@Override
-					protected Parser create() {
-						return instance;
-					}
-				});
+			@Override
+			protected Parser create() {
+				return instance;
+			}
+		});
 	}
 
 }
