@@ -94,6 +94,7 @@ public class RouteRegisterCommand implements Command {
 				//lineDAO.flush(); // to prevent SQL error outside method
 				routeDAO.create(newValue);
 				routeDAO.flush();
+				
 				if (optimized) {
 					Monitor wMonitor = MonitorFactory.start("prepareCopy");
 					StringWriter buffer = new StringWriter(1024);
