@@ -13,6 +13,7 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.ObjectFactory;
@@ -39,7 +40,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 				parseNoticeAssignements(xpp, context, vehicleJourney);
 			} else if (xpp.getName().equals(DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				// TODO qu'en fait on
+				Timetable timetable = ObjectFactory.getTimetable(referential, ref);
+				vehicleJourney.getTimetables().add(timetable);
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(JOURNEY_PATTERN_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
