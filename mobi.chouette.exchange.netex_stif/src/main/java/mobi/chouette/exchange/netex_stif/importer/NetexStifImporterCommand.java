@@ -36,7 +36,6 @@ public class NetexStifImporterCommand extends AbstractImporterCommand implements
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		Date date = new Date();
-		// TODO cast en attendant de voir comment on transforme la date en int ou si on met la version sur un long au lieu d'un int
 		long version = date.getTime();
 		context.put(VERSION, version);
 		context.put(REFERENTIAL, new Referential());
