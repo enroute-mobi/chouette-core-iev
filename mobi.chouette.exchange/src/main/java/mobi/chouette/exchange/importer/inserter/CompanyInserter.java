@@ -14,7 +14,7 @@ public class CompanyInserter implements Inserter<Company> {
 	public static final String BEAN_NAME = "CompanyUpdater";
 
 	@Override
-	public void update(Context context, Company oldValue, Company newValue) {
+	public void insert(Context context, Company oldValue, Company newValue) {
 
 		if (newValue.isSaved()) {
 			return;

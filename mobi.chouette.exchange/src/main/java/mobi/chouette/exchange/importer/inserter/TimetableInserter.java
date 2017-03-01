@@ -33,7 +33,7 @@ public class TimetableInserter implements Inserter<Timetable> {
 	};
 
 	@Override
-	public void update(Context context, Timetable oldValue, Timetable newValue)
+	public void insert(Context context, Timetable oldValue, Timetable newValue)
 			throws Exception {
 
 		if (newValue.isSaved()) {

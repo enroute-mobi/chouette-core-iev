@@ -59,7 +59,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 	private Inserter<ConnectionLink> connectionLinkUpdater;
 
 	@Override
-	public void update(Context context, StopArea oldValue, StopArea newValue) throws Exception {
+	public void insert(Context context, StopArea oldValue, StopArea newValue) throws Exception {
 
 		if (newValue.isSaved()) {
 			return;
@@ -205,7 +205,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 				oldValue.forceParent(stopArea);
 			else
 				oldValue.setParent(stopArea);
-			stopAreaUpdater.update(context, oldValue.getParent(), newValue.getParent());
+			stopAreaUpdater.insert(context, oldValue.getParent(), newValue.getParent());
 		}
 
 		// AccessPoint
@@ -236,7 +236,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 		Collection<Pair<AccessPoint, AccessPoint>> modifiedAccessPoint = CollectionUtil.intersection(
 				oldValue.getAccessPoints(), newValue.getAccessPoints(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<AccessPoint, AccessPoint> pair : modifiedAccessPoint) {
-			accessPointUpdater.update(context, pair.getLeft(), pair.getRight());
+			accessPointUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		// AccessLink
@@ -266,7 +266,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 		Collection<Pair<AccessLink, AccessLink>> modifiedAccessLink = CollectionUtil.intersection(
 				oldValue.getAccessLinks(), newValue.getAccessLinks(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<AccessLink, AccessLink> pair : modifiedAccessLink) {
-			accessLinkUpdater.update(context, pair.getLeft(), pair.getRight());
+			accessLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		if (!context.containsKey(AREA_BLOC)) {
@@ -301,7 +301,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 					oldValue.getConnectionStartLinks(), newValue.getConnectionStartLinks(),
 					NeptuneIdentifiedObjectComparator.INSTANCE);
 			for (Pair<ConnectionLink, ConnectionLink> pair : modifiedStartOfLink) {
-				connectionLinkUpdater.update(context, pair.getLeft(), pair.getRight());
+				connectionLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
 			}
 
 			// EndOfLink
@@ -333,7 +333,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 					oldValue.getConnectionEndLinks(), newValue.getConnectionEndLinks(),
 					NeptuneIdentifiedObjectComparator.INSTANCE);
 			for (Pair<ConnectionLink, ConnectionLink> pair : modifiedEndOfLink) {
-				connectionLinkUpdater.update(context, pair.getLeft(), pair.getRight());
+				connectionLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
 			}
 		}
 
@@ -368,7 +368,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 				oldValue.getRoutingConstraintAreas(), newValue.getRoutingConstraintAreas(),
 				NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<StopArea, StopArea> pair : modifiedStopArea) {
-			stopAreaUpdater.update(context, pair.getLeft(), pair.getRight());
+			stopAreaUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 		monitor.stop();
 

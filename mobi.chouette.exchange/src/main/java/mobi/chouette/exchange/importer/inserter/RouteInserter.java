@@ -42,7 +42,7 @@ public class RouteInserter implements Inserter<Route> {
 	private Inserter<JourneyPattern> journeyPatternUpdater;
 
 	@Override
-	public void update(Context context, Route oldValue, Route newValue) throws Exception {
+	public void insert(Context context, Route oldValue, Route newValue) throws Exception {
 
 		if (newValue.isSaved()) {
 			return;
@@ -154,7 +154,7 @@ public class RouteInserter implements Inserter<Route> {
 		Collection<Pair<StopPoint, StopPoint>> modifiedStopPoint = CollectionUtil.intersection(
 				oldValue.getStopPoints(), newValue.getStopPoints(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<StopPoint, StopPoint> pair : modifiedStopPoint) {
-			stopPointUpdater.update(context, pair.getLeft(), pair.getRight());
+			stopPointUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		Collection<StopPoint> removedStopPoint = CollectionUtil.substract(oldValue.getStopPoints(),
@@ -197,7 +197,7 @@ public class RouteInserter implements Inserter<Route> {
 				oldValue.getJourneyPatterns(), newValue.getJourneyPatterns(),
 				NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<JourneyPattern, JourneyPattern> pair : modifiedJourneyPattern) {
-			journeyPatternUpdater.update(context, pair.getLeft(), pair.getRight());
+			journeyPatternUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 //		monitor.stop();
 	}

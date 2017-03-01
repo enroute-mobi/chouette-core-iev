@@ -27,7 +27,7 @@ public class AccessPointInserter implements Inserter<AccessPoint> {
 	private Inserter<AccessLink> accessLinkUpdater;
 
 	@Override
-	public void update(Context context, AccessPoint oldValue,
+	public void insert(Context context, AccessPoint oldValue,
 			AccessPoint newValue) throws Exception {
 
 		if (newValue.isSaved()) {
@@ -170,7 +170,7 @@ public class AccessPointInserter implements Inserter<AccessPoint> {
 						newValue.getAccessLinks(),
 						NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<AccessLink, AccessLink> pair : modifiedAccessLink) {
-			accessLinkUpdater.update(context, pair.getLeft(), pair.getRight());
+			accessLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		// Collection<AccessLink> removedAccessLink = CollectionUtils.substract(

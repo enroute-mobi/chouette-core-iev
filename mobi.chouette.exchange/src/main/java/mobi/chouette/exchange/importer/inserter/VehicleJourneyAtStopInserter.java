@@ -19,7 +19,7 @@ public class VehicleJourneyAtStopInserter implements
 
 	
 	@Override
-	public void update(Context context, VehicleJourneyAtStop oldValue,
+	public void insert(Context context, VehicleJourneyAtStop oldValue,
 			VehicleJourneyAtStop newValue) { 
 		// The list of fields to sunchronize with LineRegisterCommand.write(StringWriter buffer, VehicleJourney vehicleJourney, StopPoint stopPoint,
 		//    VehicleJourneyAtStop vehicleJourneyAtStop)

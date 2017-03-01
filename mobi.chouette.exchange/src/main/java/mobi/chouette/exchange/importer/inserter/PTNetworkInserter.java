@@ -12,7 +12,7 @@ public class PTNetworkInserter implements Inserter<Network> {
 	public static final String BEAN_NAME = "PTNetworkUpdater";
 
 	@Override
-	public void update(Context context, Network oldValue, Network newValue) {
+	public void insert(Context context, Network oldValue, Network newValue) {
 
 		if (newValue.isSaved()) {
 			return;

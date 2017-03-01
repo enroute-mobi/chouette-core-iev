@@ -18,7 +18,7 @@ public class TimebandInserter implements Inserter<Timeband> {
 	private TimebandDAO timebandDAO;
 
 	@Override
-	public void update(Context context, Timeband oldValue, Timeband newValue) throws Exception {
+	public void insert(Context context, Timeband oldValue, Timeband newValue) throws Exception {
 		if (newValue.isSaved()) {
 			return;
 		}

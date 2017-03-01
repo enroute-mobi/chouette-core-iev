@@ -23,6 +23,6 @@ public interface Inserter<T> extends Constant {
 	public static final String DATABASE_CONNECTION_LINK_1 = "2-DATABASE-ConnectionLink-1";
 // 	public static final String DATABASE_CONNECTION_LINK_1_2 = "2-DATABASE-ConnectionLink-1-2";
 	
-	void update(Context context, T oldValue, T newValue) throws Exception;
+	void insert(Context context, T oldValue, T newValue) throws Exception;
 
 }

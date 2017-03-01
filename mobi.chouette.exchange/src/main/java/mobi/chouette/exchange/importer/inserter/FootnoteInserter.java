@@ -13,7 +13,7 @@ public class FootnoteInserter implements Inserter<Footnote> {
 	public static final String BEAN_NAME = "FootnoteUpdater";
 
 	@Override
-	public void update(Context context, Footnote oldValue, Footnote newValue) {
+	public void insert(Context context, Footnote oldValue, Footnote newValue) {
 
 		if (newValue.getCode() != null
 				&& !newValue.getCode().equals(oldValue.getCode())) {

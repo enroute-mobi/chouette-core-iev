@@ -25,7 +25,7 @@ public class StopPointInserter implements Inserter<StopPoint> {
 	private Inserter<StopArea> stopAreaUpdater;
 
 	@Override
-	public void update(Context context, StopPoint oldValue, StopPoint newValue) throws Exception {
+	public void insert(Context context, StopPoint oldValue, StopPoint newValue) throws Exception {
 
 		if (newValue.isSaved()) {
 			return;
@@ -98,7 +98,7 @@ public class StopPointInserter implements Inserter<StopPoint> {
 			oldValue.setContainedInStopArea(stopArea);
 
 			if (!context.containsKey(AREA_BLOC))
-			   stopAreaUpdater.update(context, oldValue.getContainedInStopArea(), newValue.getContainedInStopArea());
+			   stopAreaUpdater.insert(context, oldValue.getContainedInStopArea(), newValue.getContainedInStopArea());
 		}
 //		monitor.stop();
 

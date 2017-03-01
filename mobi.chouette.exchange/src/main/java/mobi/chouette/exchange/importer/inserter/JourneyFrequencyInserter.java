@@ -22,7 +22,7 @@ public class JourneyFrequencyInserter implements Inserter<JourneyFrequency> {
 	private Inserter<Timeband> timebandUpdater;
 
 	@Override
-	public void update(Context context, JourneyFrequency oldValue, JourneyFrequency newValue) throws Exception {
+	public void insert(Context context, JourneyFrequency oldValue, JourneyFrequency newValue) throws Exception {
 		Referential cache = (Referential) context.get(CACHE);
 
 		if (newValue.getFirstDepartureTime() != null
@@ -54,7 +54,7 @@ public class JourneyFrequencyInserter implements Inserter<JourneyFrequency> {
 				timeband = ObjectFactory.getTimeband(cache, objectId);
 			}
 			oldValue.setTimeband(timeband);
-			timebandUpdater.update(context,  oldValue.getTimeband(), newValue.getTimeband());
+			timebandUpdater.insert(context,  oldValue.getTimeband(), newValue.getTimeband());
 		}
 	}
 }

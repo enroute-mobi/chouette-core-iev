@@ -11,7 +11,7 @@ public class GroupOfLineInserter implements Inserter<GroupOfLine> {
 	public static final String BEAN_NAME = "GroupOfLineUpdater";
 
 	@Override
-	public void update(Context context, GroupOfLine oldValue, GroupOfLine newValue) {
+	public void insert(Context context, GroupOfLine oldValue, GroupOfLine newValue) {
 
 		if (newValue.isSaved()) {
 			return;

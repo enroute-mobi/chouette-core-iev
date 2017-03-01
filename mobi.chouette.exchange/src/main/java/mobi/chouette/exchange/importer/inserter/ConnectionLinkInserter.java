@@ -27,7 +27,7 @@ public class ConnectionLinkInserter implements Inserter<ConnectionLink> {
 	private StopAreaDAO stopAreaDAO;
 
 	@Override
-	public void update(Context context, ConnectionLink oldValue, ConnectionLink newValue) {
+	public void insert(Context context, ConnectionLink oldValue, ConnectionLink newValue) {
 
 		if (newValue.isSaved()) {
 			return;

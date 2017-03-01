@@ -19,7 +19,7 @@ public class AccessLinkInserter implements Inserter<AccessLink> {
 	private AccessPointDAO accessPointDAO;
 
 	@Override
-	public void update(Context context, AccessLink oldValue, AccessLink newValue) {
+	public void insert(Context context, AccessLink oldValue, AccessLink newValue) {
 
 		if (newValue.isSaved()) {
 			return;

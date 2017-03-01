@@ -21,7 +21,7 @@ public class RouteSectionInserter implements Inserter<RouteSection> {
 	private StopAreaDAO stopAreaDAO;
 
 	@Override
-	public void update(Context context, RouteSection oldValue, RouteSection newValue) throws Exception {
+	public void insert(Context context, RouteSection oldValue, RouteSection newValue) throws Exception {
 		if (newValue.isSaved()) {
 			return;
 		}

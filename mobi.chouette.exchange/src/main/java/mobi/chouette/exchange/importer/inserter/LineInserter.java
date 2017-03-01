@@ -68,7 +68,7 @@ public class LineInserter implements Inserter<Line> {
 	private Inserter<Footnote> footnoteUpdater;
 
 	@Override
-	public void update(Context context, Line oldValue, Line newValue) throws Exception {
+	public void insert(Context context, Line oldValue, Line newValue) throws Exception {
 
 		if (newValue.isSaved()) {
 			return;
@@ -172,7 +172,7 @@ public class LineInserter implements Inserter<Line> {
 				ptNetwork = ObjectFactory.getPTNetwork(cache, objectId);
 			}
 			oldValue.setNetwork(ptNetwork);
-			ptNetworkUpdater.update(context, oldValue.getNetwork(), newValue.getNetwork());
+			ptNetworkUpdater.insert(context, oldValue.getNetwork(), newValue.getNetwork());
 		}
 
 		// Company
@@ -193,7 +193,7 @@ public class LineInserter implements Inserter<Line> {
 			}
 			oldValue.setCompany(company);
 			
-			companyUpdater.update(context, oldValue.getCompany(), newValue.getCompany());
+			companyUpdater.insert(context, oldValue.getCompany(), newValue.getCompany());
 		}
 
 		// GroupOfLine
@@ -220,7 +220,7 @@ public class LineInserter implements Inserter<Line> {
 		Collection<Pair<GroupOfLine, GroupOfLine>> modifiedGroupOfLine = CollectionUtil.intersection(
 				oldValue.getGroupOfLines(), newValue.getGroupOfLines(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<GroupOfLine, GroupOfLine> pair : modifiedGroupOfLine) {
-			groupOfLineUpdater.update(context, pair.getLeft(), pair.getRight());
+			groupOfLineUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		Collection<GroupOfLine> removedGroupOfLine = CollectionUtil.substract(oldValue.getGroupOfLines(),
@@ -259,7 +259,7 @@ public class LineInserter implements Inserter<Line> {
 		Collection<Pair<Route, Route>> modifiedRoute = CollectionUtil.intersection(oldValue.getRoutes(),
 				newValue.getRoutes(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<Route, Route> pair : modifiedRoute) {
-			routeUpdater.update(context, pair.getLeft(), pair.getRight());
+			routeUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		// TODO stop area list (routingConstraintLines)
@@ -287,7 +287,7 @@ public class LineInserter implements Inserter<Line> {
 				oldValue.getRoutingConstraints(), newValue.getRoutingConstraints(),
 				NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<StopArea, StopArea> pair : modifiedRoutingConstraint) {
-			stopAreaUpdater.update(context, pair.getLeft(), pair.getRight());
+			stopAreaUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		Collection<StopArea> removedRoutingConstraint = CollectionUtil.substract(oldValue.getRoutingConstraints(),
@@ -321,7 +321,7 @@ public class LineInserter implements Inserter<Line> {
 						newValue.getFootnotes(),
 						footnoteCodeCompatator);
 		for (Pair<Footnote, Footnote> pair : modifiedFootnotes) {
-			footnoteUpdater.update(context, pair.getLeft(), pair.getRight());
+			footnoteUpdater.insert(context, pair.getLeft(), pair.getRight());
 			footnotes.add(pair.getLeft());
 		}
 		

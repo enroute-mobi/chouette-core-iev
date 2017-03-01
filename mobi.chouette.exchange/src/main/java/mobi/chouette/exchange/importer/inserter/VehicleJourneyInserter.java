@@ -104,7 +104,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 	private Inserter<Footnote> footnoteUpdater;
 
 	@Override
-	public void update(Context context, VehicleJourney oldValue, VehicleJourney newValue) throws Exception {
+	public void insert(Context context, VehicleJourney oldValue, VehicleJourney newValue) throws Exception {
 
 		if (newValue.isSaved()) {
 			return;
@@ -210,7 +210,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 				company = ObjectFactory.getCompany(cache, objectId);
 			}
 			oldValue.setCompany(company);
-			companyUpdater.update(context, oldValue.getCompany(), newValue.getCompany());
+			companyUpdater.insert(context, oldValue.getCompany(), newValue.getCompany());
 		}
 
 		// Route
@@ -266,7 +266,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 					.intersection(oldValue.getVehicleJourneyAtStops(), newValue.getVehicleJourneyAtStops(),
 							VEHICLE_JOURNEY_AT_STOP_COMPARATOR);
 			for (Pair<VehicleJourneyAtStop, VehicleJourneyAtStop> pair : modifiedVehicleJourneyAtStop) {
-				vehicleJourneyAtStopUpdater.update(context, pair.getLeft(), pair.getRight());
+				vehicleJourneyAtStopUpdater.insert(context, pair.getLeft(), pair.getRight());
 			}
 
 			Collection<VehicleJourneyAtStop> removedVehicleJourneyAtStop = CollectionUtil.substract(
@@ -305,7 +305,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 		Collection<Pair<Timetable, Timetable>> modifiedTimetable = CollectionUtil.intersection(
 				oldValue.getTimetables(), newValue.getTimetables(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<Timetable, Timetable> pair : modifiedTimetable) {
-			timetableUpdater.update(context, pair.getLeft(), pair.getRight());
+			timetableUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		Collection<Timetable> removedTimetable = CollectionUtil.substract(oldValue.getTimetables(),
@@ -345,7 +345,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 					.intersection(oldValue.getJourneyFrequencies(), newValue.getJourneyFrequencies(),
 							JOURNEY_FREQUENCY_COMPARATOR);
 			for (Pair<JourneyFrequency, JourneyFrequency> pair : modifiedJourneyFrequency) {
-				journeyFrequencyUpdater.update(context, pair.getLeft(), pair.getRight());
+				journeyFrequencyUpdater.insert(context, pair.getLeft(), pair.getRight());
 			}
 
 			Collection<JourneyFrequency> removedJourneyFrequency = CollectionUtil.substract(
@@ -381,7 +381,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 						newValue.getFootnotes(),
 						footnoteCodeCompatator);
 		for (Pair<Footnote, Footnote> pair : modifiedFootnotes) {
-			footnoteUpdater.update(context, pair.getLeft(), pair.getRight());
+			footnoteUpdater.insert(context, pair.getLeft(), pair.getRight());
 			footnotes.add(pair.getLeft());
 		}
 		
