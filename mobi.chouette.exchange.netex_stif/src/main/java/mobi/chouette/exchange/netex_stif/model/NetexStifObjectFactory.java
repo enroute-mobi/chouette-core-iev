@@ -1,12 +1,17 @@
 package mobi.chouette.exchange.netex_stif.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.Period;
+import mobi.chouette.model.StopPoint;
 
+@Log4j
 public class NetexStifObjectFactory {
 
 	private Map<String, Direction> direction = new HashMap<>();
@@ -16,14 +21,17 @@ public class NetexStifObjectFactory {
 	private Map<String, DestinationDisplay> destinationDisplay = new HashMap<>();
 
 	private Map<String, ScheduledStopPoint> scheduledStopPoint = new HashMap<>();
-	
+
 	private Map<String, Period> operatingPeriods = new HashMap<>();
-	
+
 	@Getter
 	private Map<String, String> routeDirections = new HashMap<>();
-	
+
 	@Getter
 	private Map<String, String> JourneyPatternDestinations = new HashMap<>();
+
+	@Getter
+	private Map<String, List<StopPoint>> stopPointInitIdToStopPoints = new HashMap<>();
 
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);
@@ -64,7 +72,7 @@ public class NetexStifObjectFactory {
 		}
 		return result;
 	}
-	
+
 	public Period getOperatingPeriod(String objectId) {
 		Period result = operatingPeriods.get(objectId);
 		if (result == null) {
@@ -73,16 +81,30 @@ public class NetexStifObjectFactory {
 		}
 		return result;
 	}
-	
-	public void addRouteDirection(String routeId, String directionId){
+
+	public void addRouteDirection(String routeId, String directionId) {
 		this.routeDirections.put(routeId, directionId);
 	}
-	
-	public void addJourneyPatternDestination(String journeyPatternId, String destinationId){
+
+	public void addJourneyPatternDestination(String journeyPatternId, String destinationId) {
 		this.JourneyPatternDestinations.put(journeyPatternId, destinationId);
 	}
-	
-	
+
+	public void addStopPoint(String initId, StopPoint stopPoint) {
+		List<StopPoint> list = stopPointInitIdToStopPoints.get(initId);
+		log.info("id:" + initId + " List:" + list);
+		if (list == null) {
+			list = new ArrayList<StopPoint>();
+			stopPointInitIdToStopPoints.put(initId, list);
+		}
+		log.info("list:" + list);
+		list.add(stopPoint);
+		log.info("list:" + list);
+	}
+
+	public List<StopPoint> getStopPoints(String initId) {
+		return stopPointInitIdToStopPoints.get(initId);
+	}
 
 	public void clear() {
 		direction.clear();

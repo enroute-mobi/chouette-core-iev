@@ -23,6 +23,7 @@ import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
 import mobi.chouette.exchange.importer.CopyCommand;
 import mobi.chouette.exchange.importer.LineRegisterCommand;
+import mobi.chouette.exchange.importer.RouteRegisterCommand;
 import mobi.chouette.exchange.importer.UncompressCommand;
 import mobi.chouette.exchange.validation.ImportedLineValidatorCommand;
 import mobi.chouette.exchange.validation.SharedDataValidatorCommand;
@@ -98,7 +99,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 				if (withDao && !parameters.isNoSave()) {
 
 					// register
-					Command register = CommandFactory.create(initialContext, LineRegisterCommand.class.getName());
+					Command register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
 					chain.add(register);
 
 					Command copy = CommandFactory.create(initialContext, CopyCommand.class.getName());

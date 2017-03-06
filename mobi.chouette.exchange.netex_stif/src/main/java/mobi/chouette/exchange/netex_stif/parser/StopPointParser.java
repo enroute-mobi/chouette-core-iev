@@ -19,8 +19,8 @@ public class StopPointParser implements Parser, Constant{
 		xpp.require(XmlPullParser.START_TAG, null, STOP_POINT);
 		String id = xpp.getAttributeValue(null, ID);
 		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, id);
-		Integer version = Integer.valueOf(xpp.getAttributeValue(null, VERSION));
-		stopPoint.setObjectVersion(version != null ? version : 0);
+		Long version = (Long)context.get(VERSION);
+		stopPoint.setObjectVersion(version);
 		
 	}
 	

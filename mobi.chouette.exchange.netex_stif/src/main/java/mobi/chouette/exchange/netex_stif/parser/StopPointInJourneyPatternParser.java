@@ -9,9 +9,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
 import mobi.chouette.model.Route;
-import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
@@ -25,32 +23,43 @@ public class StopPointInJourneyPatternParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
-		Integer version = (Integer) context.get(VERSION);
-		String id = xpp.getAttributeValue(null, ID);
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		Long version = (Long) context.get(VERSION);
+		String scheduledStopPointId = null;
 		String order = xpp.getAttributeValue(null, ORDER);
-		String objectId = NetexStifUtils.genStopPointId(id, order);
-		ScheduledStopPoint scheduledStopPoint = factory.getScheduledStopPoint(id);
-		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
-		StopArea stopArea = new StopArea();
-		Route route = (Route)context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
-		stopArea.setName(scheduledStopPoint.getStopArea());
-		stopPoint.setContainedInStopArea(stopArea);
-		stopPoint.setObjectVersion(version);
-		stopPoint.setRoute(route);
-		stopPoint.setPosition(Integer.parseInt(order));
+		Boolean forAlighting = null;
+		Boolean forBoarding = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(FOR_ALIGHTING)) {
-				Boolean tmp = Boolean.parseBoolean(xpp.nextText());
-				stopPoint.setForAlighting(tmp ? AlightingPossibilityEnum.normal : AlightingPossibilityEnum.forbidden);
+				forAlighting = Boolean.parseBoolean(xpp.nextText());
 			} else if (xpp.getName().equals(FOR_BOARDING)) {
-				Boolean tmp = Boolean.parseBoolean(xpp.nextText());
-				stopPoint.setForBoarding(tmp ? BoardingPossibilityEnum.normal : BoardingPossibilityEnum.forbidden);
+				forBoarding = Boolean.parseBoolean(xpp.nextText());
+
+			} else if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
+				scheduledStopPointId = xpp.getAttributeValue(null, REF);
+				XPPUtil.skipSubTree(log, xpp);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		
+		if (scheduledStopPointId != null) {
+			String objectId = NetexStifUtils.genStopPointId(scheduledStopPointId, order);
+			StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
+			Route route = (Route) context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
+			stopPoint.setObjectVersion(version);
+			stopPoint.setRoute(route);
+			log.info("set position : "+ order);
+			stopPoint.setPosition(Integer.parseInt(order));
+			if (forAlighting != null) {
+				stopPoint.setForAlighting(
+						forAlighting ? AlightingPossibilityEnum.normal : AlightingPossibilityEnum.forbidden);
+			}
+			if (forBoarding != null) {
+				stopPoint.setForBoarding(
+						forBoarding ? BoardingPossibilityEnum.normal : BoardingPossibilityEnum.forbidden);
+			}
+			factory.addStopPoint(scheduledStopPointId, stopPoint);
+		}
 	}
 
 	static {
