@@ -97,8 +97,9 @@ public class StopPoint extends ChouetteIdentifiedObject {
 	 * @return The actual value
 	 */
 	@Getter
-	@ManyToOne(fetch = FetchType.LAZY , cascade = { CascadeType.PERSIST})
-	@JoinColumn(name = "stop_area_id")
+	@Transient
+//	@ManyToOne(fetch = FetchType.LAZY , cascade = { CascadeType.PERSIST})
+//	@JoinColumn(name = "stop_area_id")
 	private StopArea containedInStopArea;
 
 	/**

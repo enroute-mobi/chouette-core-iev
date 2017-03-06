@@ -30,15 +30,19 @@ SET search_path = public, pg_catalog;
 DROP TABLE IF EXISTS public.access_links CASCADE;
 DROP TABLE IF EXISTS public.access_points CASCADE;
 DROP TABLE IF EXISTS public.companies CASCADE;
--- DROP TABLE IF EXISTS public.connection_links CASCADE;
+DROP TABLE IF EXISTS public.connection_links CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines_lines CASCADE;
+DROP TABLE IF EXISTS public.import_messages CASCADE;
+DROP TABLE IF EXISTS public.import_resources CASCADE;
+DROP TABLE IF EXISTS public.imports CASCADE;
 DROP TABLE IF EXISTS public.line_referentials CASCADE;
 DROP TABLE IF EXISTS public.lines CASCADE;
 DROP TABLE IF EXISTS public.networks CASCADE;
 DROP TABLE IF EXISTS public.organisations CASCADE;
 DROP TABLE IF EXISTS public.referential_metadata CASCADE;
 DROP TABLE IF EXISTS public.referentials CASCADE;
+DROP TABLE IF EXISTS public.route_sections CASCADE;
 DROP TABLE IF EXISTS public.stop_area_referentials CASCADE;
 DROP TABLE IF EXISTS public.stop_areas CASCADE;
 DROP TABLE IF EXISTS public.users CASCADE;
@@ -50,8 +54,7 @@ CREATE TABLE access_links (
     access_point_id bigint,
     stop_area_id bigint,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
@@ -65,7 +68,9 @@ CREATE TABLE access_links (
     mobility_restricted_traveller_duration time without time zone,
     link_type character varying(255),
     int_user_needs integer,
-    link_orientation character varying(255)
+    link_orientation character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE access_links OWNER TO chouette;
 CREATE SEQUENCE access_links_id_seq
@@ -80,8 +85,7 @@ ALTER SEQUENCE access_links_id_seq OWNED BY access_links.id;
 CREATE TABLE access_points (
     id bigint NOT NULL,
     objectid character varying(255),
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
@@ -100,7 +104,9 @@ CREATE TABLE access_points (
     stop_area_id bigint,
     zip_code character varying(255),
     city_name character varying(255),
-    import_xml text
+    import_xml text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE access_points OWNER TO chouette;
 CREATE SEQUENCE access_points_id_seq
@@ -116,8 +122,7 @@ ALTER SEQUENCE access_points_id_seq OWNED BY access_points.id;
 CREATE TABLE companies (
     id bigint NOT NULL,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     short_name character varying(255),
@@ -131,7 +136,9 @@ CREATE TABLE companies (
     url character varying(255),
     time_zone character varying(255),
     line_referential_id integer,
-    import_xml text
+    import_xml text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE companies OWNER TO chouette;
 CREATE SEQUENCE companies_id_seq
@@ -144,17 +151,51 @@ ALTER TABLE companies_id_seq OWNER TO chouette;
 ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
 
 
+CREATE TABLE connection_links (
+    id bigint NOT NULL,
+    departure_id bigint,
+    arrival_id bigint,
+    objectid character varying(255) NOT NULL,
+    object_version bigint,
+    creator_id character varying(255),
+    name character varying(255),
+    comment character varying(255),
+    link_distance numeric(19,2),
+    link_type character varying(255),
+    default_duration time without time zone,
+    frequent_traveller_duration time without time zone,
+    occasional_traveller_duration time without time zone,
+    mobility_restricted_traveller_duration time without time zone,
+    mobility_restricted_suitability boolean,
+    stairs_availability boolean,
+    lift_availability boolean,
+    int_user_needs integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+ALTER TABLE connection_links OWNER TO chouette;
+CREATE SEQUENCE connection_links_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE connection_links_id_seq OWNER TO chouette;
+ALTER SEQUENCE connection_links_id_seq OWNED BY connection_links.id;
+
+
 CREATE TABLE group_of_lines (
     id bigint NOT NULL,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
     registration_number character varying(255),
     line_referential_id integer,
-    import_xml text
+    import_xml text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE group_of_lines OWNER TO chouette;
 CREATE SEQUENCE group_of_lines_id_seq
@@ -172,6 +213,68 @@ CREATE TABLE group_of_lines_lines (
     line_id bigint
 );
 ALTER TABLE group_of_lines_lines OWNER TO chouette;
+
+CREATE TABLE import_messages (
+    id bigint NOT NULL,
+    criticity integer,
+    message_key character varying(255),
+    message_attributs shared_extensions.hstore,
+    import_id integer,
+    resource_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+ALTER TABLE import_messages OWNER TO chouette;
+CREATE SEQUENCE import_messages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE import_messages_id_seq OWNER TO chouette;
+ALTER SEQUENCE import_messages_id_seq OWNED BY import_messages.id;
+
+CREATE TABLE import_resources (
+    id bigint NOT NULL,
+    import_id integer,
+    status character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+ALTER TABLE import_resources OWNER TO chouette;
+CREATE SEQUENCE import_resources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE import_resources_id_seq OWNER TO chouette;
+ALTER SEQUENCE import_resources_id_seq OWNED BY import_resources.id;
+
+CREATE TABLE imports (
+    id bigint NOT NULL,
+    status character varying(255),
+    current_step_id character varying(255),
+    current_step_progress double precision,
+    workbench_id integer,
+    referential_id integer,
+    name character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    file character varying(255)
+);
+
+ALTER TABLE imports OWNER TO chouette;
+CREATE SEQUENCE imports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE imports_id_seq OWNER TO chouette;
+ALTER SEQUENCE imports_id_seq OWNED BY imports.id;
+
+
 
 CREATE TABLE line_referentials (
     id bigint NOT NULL,
@@ -196,8 +299,7 @@ CREATE TABLE lines (
     network_id bigint,
     company_id bigint,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     number character varying(255),
@@ -215,7 +317,10 @@ CREATE TABLE lines (
     line_referential_id integer,
     deactivated boolean DEFAULT false,
     import_xml text,
-    transport_submode character varying(255)
+    transport_submode character varying(255),
+    secondary_company_ids integer[],
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE lines OWNER TO chouette;
 CREATE SEQUENCE lines_id_seq
@@ -231,8 +336,7 @@ ALTER SEQUENCE lines_id_seq OWNED BY lines.id;
 CREATE TABLE networks (
     id bigint NOT NULL,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     version_date date,
     description character varying(255),
@@ -243,7 +347,9 @@ CREATE TABLE networks (
     source_identifier character varying(255),
     comment character varying(255),
     import_xml text,
-    line_referential_id integer
+    line_referential_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE networks OWNER TO chouette;
 CREATE SEQUENCE networks_id_seq
@@ -328,6 +434,30 @@ CREATE SEQUENCE referentials_id_seq
 ALTER TABLE referentials_id_seq OWNER TO chouette;
 ALTER SEQUENCE referentials_id_seq OWNED BY referentials.id;
 
+CREATE TABLE route_sections (
+    id bigint NOT NULL,
+    departure_id bigint,
+    arrival_id bigint,
+    objectid character varying(255) NOT NULL,
+    object_version bigint,
+    creator_id character varying(255),
+    input_geometry shared_extensions.geometry(LineString,4326),
+    processed_geometry shared_extensions.geometry(LineString,4326),
+    distance double precision,
+    no_processing boolean,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+ALTER TABLE route_sections OWNER TO chouette;
+CREATE SEQUENCE route_sections_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE route_sections_id_seq OWNER TO chouette;
+ALTER SEQUENCE route_sections_id_seq OWNED BY route_sections.id;
+
 
 CREATE TABLE stop_area_referentials (
     id bigint NOT NULL,
@@ -351,8 +481,7 @@ CREATE TABLE stop_areas (
     id bigint NOT NULL,
     parent_id bigint,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
@@ -376,7 +505,9 @@ CREATE TABLE stop_areas (
     stop_area_referential_id integer,
     status character varying(255),
     import_xml text,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE stop_areas OWNER TO chouette;
 CREATE SEQUENCE stop_areas_id_seq
@@ -461,7 +592,11 @@ ALTER SEQUENCE workbenches_id_seq OWNED BY workbenches.id;
 ALTER TABLE ONLY access_links ALTER COLUMN id SET DEFAULT nextval('access_links_id_seq'::regclass);
 ALTER TABLE ONLY access_points ALTER COLUMN id SET DEFAULT nextval('access_points_id_seq'::regclass);
 ALTER TABLE ONLY companies ALTER COLUMN id SET DEFAULT nextval('companies_id_seq'::regclass);
+ALTER TABLE ONLY connection_links ALTER COLUMN id SET DEFAULT nextval('connection_links_id_seq'::regclass);
 ALTER TABLE ONLY group_of_lines ALTER COLUMN id SET DEFAULT nextval('group_of_lines_id_seq'::regclass);
+ALTER TABLE ONLY import_messages ALTER COLUMN id SET DEFAULT nextval('import_messages_id_seq'::regclass);
+ALTER TABLE ONLY import_resources ALTER COLUMN id SET DEFAULT nextval('import_resources_id_seq'::regclass);
+ALTER TABLE ONLY imports ALTER COLUMN id SET DEFAULT nextval('imports_id_seq'::regclass);
 ALTER TABLE ONLY line_referentials ALTER COLUMN id SET DEFAULT nextval('line_referentials_id_seq'::regclass);
 ALTER TABLE ONLY lines ALTER COLUMN id SET DEFAULT nextval('lines_id_seq'::regclass);
 ALTER TABLE ONLY networks ALTER COLUMN id SET DEFAULT nextval('networks_id_seq'::regclass);
@@ -476,15 +611,1092 @@ ALTER TABLE ONLY workbenches ALTER COLUMN id SET DEFAULT nextval('workbenches_id
 -----------------------------------------------------------
 -- insert init data here !
 -----------------------------------------------------------
+SELECT pg_catalog.setval('access_links_id_seq', 1, false);
+SELECT pg_catalog.setval('access_points_id_seq', 1, false);
 
+INSERT INTO companies VALUES (1, 'STIF:CODIFLIGNE:Operator:011', 2, 'chouette', 'TRANSDEV IDF ECQUEVILLY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="STIF:CODIFLIGNE:Operator:011">
+  <Name>TRANSDEV IDF ECQUEVILLY</Name>
+</Operator>', '2017-02-10 09:39:20.66393', NULL);
 
+SELECT pg_catalog.setval('companies_id_seq', 1, true);
+SELECT pg_catalog.setval('connection_links_id_seq', 1, false);
+SELECT pg_catalog.setval('group_of_lines_id_seq', 1, false);
+SELECT pg_catalog.setval('import_messages_id_seq', 1, false);
+SELECT pg_catalog.setval('import_resources_id_seq', 1, false);
+SELECT pg_catalog.setval('imports_id_seq', 1, false);
+
+INSERT INTO line_referentials VALUES (1, 'CodifLigne', '2017-02-10 09:37:12.188078', '2017-02-10 09:37:12.188078', 1);
+
+SELECT pg_catalog.setval('line_referentials_id_seq', 1, true);
+
+INSERT INTO lines VALUES (1, 1, 1, 'STIF:CODIFLIGNE:Line:C00108', 5, 'chouette', '9', '9', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00108">
+  <keyList>
+    <KeyValue>
+      <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
+      <Key>Accessibility</Key>
+      <Value>0</Value>
+    </KeyValue>
+  </keyList>
+  <Name>9</Name>
+  <ShortName>9</ShortName>
+  <TransportMode>bus</TransportMode>
+  <TransportSubmode>
+    <BusSubmode/>
+  </TransportSubmode>
+  <!-- Ceci est le code technique -->
+  <PrivateCode>011011009</PrivateCode>
+  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:011"/>
+  <!-- Type of line null ou égal à seasonal -->
+  <TypeOfLineRef version="any" ref="null"/>
+  <Presentation>
+    <infoLinks/>
+  </Presentation>
+</Line>', NULL, NULL, '2017-02-10 09:45:19.680043', NULL);
+
+SELECT pg_catalog.setval('lines_id_seq', 1, true);
+
+INSERT INTO networks VALUES (1, 'STIF:CODIFLIGNE:PTNetwork:117', 2, 'chouette', NULL, NULL, 'Veolia Ecquevilly', NULL, NULL, NULL, NULL, NULL, '<Network version="any" changed="2009-12-02T00:00:00Z" id="STIF:CODIFLIGNE:PTNetwork:117">
+  <Name>Veolia Ecquevilly</Name>
+  <members>
+    <LineRef ref="STIF:CODIFLIGNE:Line:C00108"/>
+  </members>
+</Network>', 1, '2017-02-10 09:45:19.627071', NULL);
+
+SELECT pg_catalog.setval('networks_id_seq', 1, true);
+
+INSERT INTO organisations VALUES (1, 'STIF', '2017-02-10 09:37:12.285489', '2017-02-10 09:44:28.887246', 'neptune', 'STIF', '2017-02-10 09:44:28.720673', '"functional_scope"=>"[]"');
+INSERT INTO organisations VALUES (2, 'Cityway', '2017-02-10 10:05:53.212327', '2017-02-10 10:05:53.212327', 'neptune', 'CITYWAY', '2017-02-10 10:05:53.21035', '"functional_scope"=>"[\"STIF:CODIFLIGNE:Line:C00108\"]"');
+
+SELECT pg_catalog.setval('organisations_id_seq', 2, true);
+
+INSERT INTO referential_metadata VALUES (1, 1, '{1}', NULL, '2017-02-10 10:06:41.901097', '2017-02-10 10:06:41.901097', '{"[2017-02-10,2017-03-11)"}');
+
+SELECT pg_catalog.setval('referential_metadata_id_seq', 1, true);
+
+INSERT INTO referentials VALUES (1, 'test', 'test', '2017-02-10 10:06:27.034272', '2017-02-10 10:06:27.034272', 'test', '', 'Paris', 'SRID=4326;POLYGON((-5.2 42.25,-5.2 51.1,8.23 51.1,8.23 42.25,-5.2 42.25))', 2, NULL, 2, 'Etienne Michel', 'neptune', 1, 1, 1, NULL, NULL, true);
+
+SELECT pg_catalog.setval('referentials_id_seq', 1, true);
+
+INSERT INTO stop_area_referentials VALUES (1, 'Reflex', '2017-02-10 09:37:12.116926', '2017-02-10 09:37:12.116926');
+
+SELECT pg_catalog.setval('stop_area_referentials_id_seq', 1, true);
+
+INSERT INTO stop_areas VALUES (1, NULL, 'FR:78217:ZDE:32531:STIF', 1, 'chouette', 'MOULIN A VENT', NULL, 'zder', NULL, NULL, NULL, 1.8099622622031800, 48.9454845919617000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32531" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32531:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>MOULIN A VENT</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612834.737 6872381.055</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32531">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32531">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:45:37.406026', NULL);
+INSERT INTO stop_areas VALUES (2, NULL, 'FR:78217:ZDE:32523:STIF', 1, 'chouette', 'CHEMIN NEUF', NULL, 'zder', NULL, NULL, NULL, 1.8162940080552900, 48.9524979333468000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32523" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32523:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>CHEMIN NEUF</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613310.167 6873153.911</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32523">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32523">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:45:48.545597', NULL);
+INSERT INTO stop_areas VALUES (3, NULL, 'FR:78217:ZDE:32529:STIF', 1, 'chouette', 'LES BICHES', NULL, 'zder', NULL, NULL, NULL, 1.8118139867675400, 48.9526329360882000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32529" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32529:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>LES BICHES</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612982.319 6873173.85</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32529">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32529">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:45:49.633456', NULL);
+INSERT INTO stop_areas VALUES (4, NULL, 'FR:78217:ZDE:32521:STIF', 1, 'chouette', 'LE CHATEAU', NULL, 'zder', NULL, NULL, NULL, 1.8133756580597400, 48.9533662680704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32521" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32521:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>LE CHATEAU</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613097.906 6873253.671</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32521">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32521">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:45:49.675806', NULL);
+INSERT INTO stop_areas VALUES (5, NULL, 'FR:78217:ZDE:32522:STIF', 1, 'chouette', 'LE CHATEAU', NULL, 'zder', NULL, NULL, NULL, 1.8126173239686100, 48.9533412676803000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32522" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32522:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>LE CHATEAU</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613042.332 6873251.726</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32522">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32522">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:45:49.699328', NULL);
+INSERT INTO stop_areas VALUES (6, NULL, 'FR:78217:ZDE:32784:STIF', 1, 'chouette', 'BROUILLARD', NULL, 'zder', NULL, NULL, NULL, 1.7875870622303600, 48.9263228997569000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32784" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32784:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>BROUILLARD</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">611163.259 6870275.399</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32784">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32784">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:53:18.141605', NULL);
+INSERT INTO stop_areas VALUES (7, NULL, 'FR:78217:ZDE:32785:STIF', 1, 'chouette', 'BROUILLARD', NULL, 'zder', NULL, NULL, NULL, 1.7870004023971600, 48.9261295695634000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32785" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32785:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>BROUILLARD</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">611119.946 6870254.563</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32785">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32785">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:53:18.166346', NULL);
+INSERT INTO stop_areas VALUES (8, NULL, 'FR:78217:ZDE:32786:STIF', 1, 'chouette', 'CANADA', NULL, 'zder', NULL, NULL, NULL, 1.7903770996057600, 48.9298595765723000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32786" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32786:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>CANADA</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">611373.701 6870665.504</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32786">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32786">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:53:21.017113', NULL);
+INSERT INTO stop_areas VALUES (9, NULL, 'FR:78217:ZDE:32787:STIF', 1, 'chouette', 'CANADA', NULL, 'zder', NULL, NULL, NULL, 1.7902854280654100, 48.9289362426669000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32787" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32787:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>CANADA</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">611365.412 6870562.942</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32787">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32787">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:53:21.038821', NULL);
+INSERT INTO stop_areas VALUES (10, NULL, 'FR:78217:ZDE:32516:STIF', 1, 'chouette', 'ALLEE DE PINCELOUP', NULL, 'zder', NULL, NULL, NULL, 1.8084105849672000, 48.9439162501291000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32516" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32516:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>ALLEE DE PINCELOUP</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612718.46 6872208.383</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32516">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32516">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:53:32.279403', NULL);
+INSERT INTO stop_areas VALUES (11, NULL, 'FR:78217:ZDE:32533:STIF', 1, 'chouette', 'POTEAU', NULL, 'zder', NULL, NULL, NULL, 1.8300191012754500, 48.9566545958770000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32533" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32533:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011512</Value>
+        </KeyValue>
+       </keyList>
+       <Name>POTEAU</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614322.112 6873601.121</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32533">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32533">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:19.188452', NULL);
+INSERT INTO stop_areas VALUES (12, NULL, 'FR:78217:ZDE:32519:STIF', 1, 'chouette', 'CARREFOUR ST MARTIN', NULL, 'zder', NULL, NULL, NULL, 1.8195940225965100, 48.9537812663945000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32519" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32519:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>CARREFOUR ST MARTIN</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613553.962 6873292.99</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32519">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32519">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:17.057362', NULL);
+INSERT INTO stop_areas VALUES (13, NULL, 'FR:78217:ZDE:32520:STIF', 1, 'chouette', 'CARREFOUR ST MARTIN', NULL, 'zder', NULL, NULL, NULL, 1.8193123651273500, 48.9536762647935000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32520" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32520:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>CARREFOUR ST MARTIN</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613533.162 6873281.623</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32520">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32520">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:17.090476', NULL);
+INSERT INTO stop_areas VALUES (14, NULL, 'FR:78217:ZDE:32527:STIF', 1, 'chouette', 'LA FALAISE', NULL, 'zder', NULL, NULL, NULL, 1.8215623902590100, 48.9563379380118000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32527" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32527:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>LA FALAISE</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613702.346 6873575.12</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32527">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32527">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:19.04396', NULL);
+INSERT INTO stop_areas VALUES (15, NULL, 'FR:78217:ZDE:32528:STIF', 1, 'chouette', 'LA FALAISE', NULL, 'zder', NULL, NULL, NULL, 1.8215273921141900, 48.9563896027813000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32528" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32528:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>LA FALAISE</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613699.869 6873580.903</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32528">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32528">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:19.075433', NULL);
+INSERT INTO stop_areas VALUES (16, NULL, 'FR:78217:ZDE:32532:STIF', 1, 'chouette', 'POTEAU', NULL, 'zder', NULL, NULL, NULL, 1.8301257677224300, 48.9567112696982000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32532" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32532:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011512</Value>
+        </KeyValue>
+       </keyList>
+       <Name>POTEAU</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614330.016 6873607.307</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32532">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32532">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:19.154373', NULL);
+INSERT INTO stop_areas VALUES (17, NULL, 'FR:78217:ZDE:13660:STIF', 1, 'chouette', 'Mairie', NULL, 'zder', NULL, NULL, NULL, 1.8115371679130100, 48.9573485884751000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819300" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:21.0Z" id="FR:78217:ZDE:13660:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>052052080</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Mairie</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612969.94 6873698.5</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:13660">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:13660">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:19.62122', NULL);
+INSERT INTO stop_areas VALUES (18, NULL, 'FR:78217:ZDE:32530:STIF', 1, 'chouette', 'Mairie', NULL, 'zder', NULL, NULL, NULL, 1.8116042808075700, 48.9572862999147000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819294" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:55.0Z" id="FR:78217:ZDE:32530:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>052052080</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Mairie</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612974.75 6873691.5</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32530">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32530">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:56:19.65563', NULL);
+INSERT INTO stop_areas VALUES (19, NULL, 'FR:78217:ZDE:41202:STIF', 1, 'chouette', 'GARE D''EPONE MEZIERES', NULL, 'zder', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="41202" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:41202:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>800854541</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>800854518</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>800852051</Value>
+        </KeyValue>
+       </keyList>
+       <Name>GARE D''EPONE MEZIERES</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612768.167 6874364.259</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:41202">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:41202">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:53.642561', NULL);
+INSERT INTO stop_areas VALUES (20, NULL, 'FR:78217:ZDE:32503:STIF', 1, 'chouette', 'Annexe Mairie (Gare SNCF)', NULL, 'zder', NULL, NULL, NULL, 1.8085190228973600, 48.9626212928230000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32503" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32503:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011180</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Annexe Mairie (Gare SNCF)</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612757.788 6874288.118</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32503">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32503">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:53.710717', NULL);
+INSERT INTO stop_areas VALUES (21, NULL, 'FR:78217:ZDE:18304:STIF', 1, 'chouette', 'Gare d''Epône Mézières', NULL, 'zder', NULL, NULL, NULL, 1.8083189204177400, 48.9631353611361000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18304" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:18304:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>057057081</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>057057082</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>057318208</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Gare d''Epône Mézières</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612744.0 6874345.5</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:18304">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:18304">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:53.762431', NULL);
+INSERT INTO stop_areas VALUES (22, NULL, 'FR:78217:ZDE:18305:STIF', 1, 'chouette', 'Gare d''Epône Mézières', NULL, 'zder', NULL, NULL, NULL, 1.8083195437807300, 48.9630724138501000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18305" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:18305:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>057318208</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>057057082</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>057057081</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Gare d''Epône Mézières</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612743.94 6874338.5</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:18305">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:18305">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:53.796372', NULL);
+INSERT INTO stop_areas VALUES (23, NULL, 'FR:78217:ZDE:418584:STIF', 1, 'chouette', 'GARE D''EPONE MEZIERES', NULL, 'zder', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="709210" created="2015-06-15T09:06:29.0Z" changed="2015-06-15T09:06:29.0Z" id="FR:78217:ZDE:418584:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>800854541</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>800854541</Value>
+        </KeyValue>
+       </keyList>
+       <Name>GARE D''EPONE MEZIERES</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">612768.167 6874364.259</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:418584">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:418584">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:53.821219', NULL);
+INSERT INTO stop_areas VALUES (24, NULL, 'FR:78217:ZDE:32509:STIF', 1, 'chouette', 'BOUT DU MONDE', NULL, 'zder', NULL, NULL, NULL, 1.8298075100030400, 48.9683646251586000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32509" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32509:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011042</Value>
+        </KeyValue>
+       </keyList>
+       <Name>BOUT DU MONDE</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614325.916 6874903.431</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32509">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32509">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:58.44123', NULL);
+INSERT INTO stop_areas VALUES (25, NULL, 'FR:78217:ZDE:32504:STIF', 1, 'chouette', 'AVENUE D''EPONE', NULL, 'zder', NULL, NULL, NULL, 1.8337208598697700, 48.9686746309032000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32504" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32504:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011042</Value>
+        </KeyValue>
+       </keyList>
+       <Name>AVENUE D''EPONE</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614612.915 6874933.663</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32504">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32504">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:58.678861', NULL);
+INSERT INTO stop_areas VALUES (26, NULL, 'FR:78217:ZDE:32507:STIF', 1, 'chouette', 'BOULEVARD DE LA PAIX', NULL, 'zder', NULL, NULL, NULL, 1.8359592073884300, 48.9698496280250000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32507" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32507:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011042</Value>
+        </KeyValue>
+       </keyList>
+       <Name>BOULEVARD DE LA PAIX</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614778.706 6875061.898</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32507">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32507">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:58:59.955092', NULL);
+INSERT INTO stop_areas VALUES (27, NULL, 'FR:78217:ZDE:32510:STIF', 1, 'chouette', 'LES DOLMENS', NULL, 'zder', NULL, NULL, NULL, 1.8328141968442100, 48.9702879693091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32510" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32510:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011042</Value>
+        </KeyValue>
+       </keyList>
+       <Name>LES DOLMENS</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614549.192 6875114.038</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32510">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32510">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:59:00.20431', NULL);
+INSERT INTO stop_areas VALUES (28, NULL, 'FR:78217:ZDE:32514:STIF', 1, 'chouette', 'PLACE MARECHAL JUIN', NULL, 'zder', NULL, NULL, NULL, 1.8369392346693400, 48.9715229669525000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32514" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32514:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011180</Value>
+        </KeyValue>
+       </keyList>
+       <Name>PLACE MARECHAL JUIN</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614853.191 6875246.907</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32514">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32514">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:59:02.425365', NULL);
+INSERT INTO stop_areas VALUES (29, NULL, 'FR:78217:ZDE:416465:STIF', 1, 'chouette', 'Elisab. Pl du Maréchal Juin', NULL, 'zder', NULL, NULL, NULL, 1.8368735974221300, 48.9714362201824000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="666350" created="2015-05-12T09:05:28.0Z" changed="2015-05-12T09:05:28.0Z" id="FR:78217:ZDE:416465:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Elisab. Pl du Maréchal Juin</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614848.244 6875237.332</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:416465">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:416465">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:59:02.458789', NULL);
+INSERT INTO stop_areas VALUES (30, NULL, 'FR:78217:ZDE:32511:STIF', 1, 'chouette', 'MAIRIE / ECOLE', NULL, 'zder', NULL, NULL, NULL, 1.8369025767705700, 48.9732296340157000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32511" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32511:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011042</Value>
+        </KeyValue>
+       </keyList>
+       <Name>MAIRIE / ECOLE</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614853.303 6875436.719</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32511">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32511">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:59:04.610939', NULL);
+INSERT INTO stop_areas VALUES (31, NULL, 'FR:78217:ZDE:32508:STIF', 1, 'chouette', 'LA BERGERIE', NULL, 'zder', NULL, NULL, NULL, 1.8388059189735000, 48.9739196359739000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32508" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32508:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011042</Value>
+        </KeyValue>
+       </keyList>
+       <Name>LA BERGERIE</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">614993.759 6875511.393</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32508">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32508">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 09:59:05.633874', NULL);
+INSERT INTO stop_areas VALUES (32, NULL, 'FR:78217:ZDE:32525:STIF', 1, 'chouette', 'EMILE SERGENT', NULL, 'zder', NULL, NULL, NULL, 1.8170356954507600, 48.9568029441520000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32525" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32525:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011009</Value>
+        </KeyValue>
+       </keyList>
+       <Name>EMILE SERGENT</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613371.653 6873631.782</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32525">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32525">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 10:02:44.451375', NULL);
+INSERT INTO stop_areas VALUES (33, NULL, 'FR:78217:ZDE:32524:STIF', 1, 'chouette', 'EMILE SERGENT', NULL, 'zder', NULL, NULL, NULL, 1.8169827330564200, 48.9566739779480000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="729344" created="2014-12-29T12:12:00.0Z" changed="2015-10-07T04:10:33.0Z" id="FR:78217:ZDE:32524:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>LINE_ID</Key>
+         <Value>011011010</Value>
+        </KeyValue>
+       </keyList>
+       <Name>EMILE SERGENT</Name>
+       <Centroid>
+        <Location>
+         <gml:pos srsName="EPSG:2154">613367.56 6873617.5</gml:pos>
+        </Location>
+       </Centroid>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:32524">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32524">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+      </Quay>', NULL, '2017-02-10 10:02:44.472555', NULL);
+INSERT INTO stop_areas VALUES (34, NULL, 'FR:78217:LDA:65045:STIF', 1, 'chouette', 'Moulinà Vent', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65045" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65045:STIF">
+       <Name>Moulin à Vent</Name>
+       <placeTypes>
+        <TypeOfPlaceRef ref="LDA"/>
+       </placeTypes>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:65045">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:65045">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+       <StopPlaceType>onstreetBus</StopPlaceType>
+      </StopPlace>', NULL, '2017-02-10 10:05:27.928283', NULL);
+INSERT INTO stop_areas VALUES (35, NULL, 'FR:78217:ZDL:53999:STIF', 1, 'chouette', 'Moulinà Vent', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53999" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53999:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Moulin à Vent</Name>
+       <placeTypes>
+        <TypeOfPlaceRef ref="ZDL"/>
+       </placeTypes>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:53999">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:53999">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+       <ParentSiteRef ref="FR:78217:LDA:65045:STIF" version="65045"/>
+       <StopPlaceType>onstreetBus</StopPlaceType>
+       <quays>
+        <QuayRef ref="FR:78217:ZDE:32531:STIF" version="32531"/>
+       </quays>
+      </StopPlace>', NULL, '2017-02-10 10:05:27.954129', NULL);
+INSERT INTO stop_areas VALUES (36, NULL, 'FR:78217:LDA:65144:STIF', 1, 'chouette', 'Chemin Neuf', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65144" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65144:STIF">
+       <Name>Chemin Neuf</Name>
+       <placeTypes>
+        <TypeOfPlaceRef ref="LDA"/>
+       </placeTypes>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:65144">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:65144">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+       <StopPlaceType>onstreetBus</StopPlaceType>
+      </StopPlace>', NULL, '2017-02-10 10:05:32.80977', NULL);
+INSERT INTO stop_areas VALUES (37, NULL, 'FR:78217:ZDL:53995:STIF', 1, 'chouette', 'Chemin Neuf', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53995" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53995:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Chemin Neuf</Name>
+       <placeTypes>
+        <TypeOfPlaceRef ref="ZDL"/>
+       </placeTypes>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:53995">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:53995">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+       <ParentSiteRef ref="FR:78217:LDA:65144:STIF" version="65144"/>
+       <StopPlaceType>onstreetBus</StopPlaceType>
+       <quays>
+        <QuayRef ref="FR:78217:ZDE:32523:STIF" version="32523"/>
+       </quays>
+      </StopPlace>', NULL, '2017-02-10 10:05:32.835216', NULL);
+INSERT INTO stop_areas VALUES (38, NULL, 'FR:78217:ZDL:53998:STIF', 1, 'chouette', 'Les Biches', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53998" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53998:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Les Biches</Name>
+       <placeTypes>
+        <TypeOfPlaceRef ref="ZDL"/>
+       </placeTypes>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:53998">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:53998">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+       <ParentSiteRef ref="FR:78217:LDA:65159:STIF" version="65159"/>
+       <StopPlaceType>onstreetBus</StopPlaceType>
+       <quays>
+        <QuayRef ref="FR:78217:ZDE:32529:STIF" version="32529"/>
+       </quays>
+      </StopPlace>', NULL, '2017-02-10 10:05:33.446592', NULL);
+INSERT INTO stop_areas VALUES (39, NULL, 'FR:78217:ZDL:53994:STIF', 1, 'chouette', 'Le Château', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53994" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53994:STIF">
+       <keyList>
+        <KeyValue typeOfKey="OBJET_QUALIFIER">
+         <Key>OBJECT_STATUS</Key>
+         <Value>REFERENCE_OBJECT</Value>
+        </KeyValue>
+       </keyList>
+       <Name>Le Château</Name>
+       <placeTypes>
+        <TypeOfPlaceRef ref="ZDL"/>
+       </placeTypes>
+       <PostalAddress version="any" id="STIF-REFLEX:PostalAddress:53994">
+        <Town>Épône</Town>
+        <PostalRegion>78217</PostalRegion>
+       </PostalAddress>
+       <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:53994">
+        <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+       </AccessibilityAssessment>
+       <ParentSiteRef ref="FR:78217:LDA:65159:STIF" version="65159"/>
+       <StopPlaceType>onstreetBus</StopPlaceType>
+       <quays>
+        <QuayRef ref="FR:78217:ZDE:32521:STIF" version="32521"/>
+        <QuayRef ref="FR:78217:ZDE:32522:STIF" version="32522"/>
+       </quays>
+      </StopPlace>', NULL, '2017-02-10 10:05:33.469636', NULL);
+
+SELECT pg_catalog.setval('stop_areas_id_seq', 39, true);
+
+INSERT INTO users VALUES (1, 'admin@stif.info', '', NULL, NULL, NULL, 1, '2017-02-10 09:44:29.503632', '2017-02-10 09:44:29.503632', '173.18.0.1', '173.18.0.1', '2017-02-10 09:37:12.514985', '2017-02-10 09:44:29.506024', 2, 'stif admin', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', NULL, '{routes.create,routes.edit,routes.destroy,journey_patterns.create,journey_patterns.edit,journey_patterns.destroy,vehicle_journeys.create,vehicle_journeys.edit,vehicle_journeys.destroy,time_tables.create,time_tables.edit,time_tables.destroy,footnotes.edit,footnotes.create,footnotes.destroy,routing_constraint_zones.create,routing_constraint_zones.edit,routing_constraint_zones.destroy,access_points.create,access_points.edit,access_points.destroy,access_links.create,access_links.edit,access_links.destroy,connection_links.create,connection_links.edit,connection_links.destroy,route_sections.create,route_sections.edit,route_sections.destroy}');
+INSERT INTO users VALUES (2, 'metienne@cityway.fr', '', NULL, NULL, NULL, 1, '2017-02-10 10:05:53.285943', '2017-02-10 10:05:53.285943', '173.18.0.1', '173.18.0.1', '2017-02-10 10:05:53.2692', '2017-02-10 10:05:53.287299', 4, 'Etienne Michel', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'metienne', NULL, '{routes.create,routes.edit,routes.destroy,journey_patterns.create,journey_patterns.edit,journey_patterns.destroy,vehicle_journeys.create,vehicle_journeys.edit,vehicle_journeys.destroy,time_tables.create,time_tables.edit,time_tables.destroy,footnotes.edit,footnotes.create,footnotes.destroy,routing_constraint_zones.create,routing_constraint_zones.edit,routing_constraint_zones.destroy,access_points.create,access_points.edit,access_points.destroy,access_links.create,access_links.edit,access_links.destroy,connection_links.create,connection_links.edit,connection_links.destroy,route_sections.create,route_sections.edit,route_sections.destroy}');
+
+SELECT pg_catalog.setval('users_id_seq', 2, true);
+
+INSERT INTO workbenches VALUES (1, 'Gestion de l offre', 2, '2017-02-10 09:37:12.360669', '2017-02-10 09:37:12.360669', 1, 1);
+
+SELECT pg_catalog.setval('workbenches_id_seq', 1, true);
 
 
 -- #################################################################
+ALTER TABLE ONLY access_links
+    ADD CONSTRAINT access_links_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY access_points
+    ADD CONSTRAINT access_points_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY connection_links
+    ADD CONSTRAINT connection_links_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY group_of_lines
     ADD CONSTRAINT group_of_lines_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY import_messages
+    ADD CONSTRAINT import_messages_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY import_resources
+    ADD CONSTRAINT import_resources_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY imports
+    ADD CONSTRAINT imports_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY line_referentials
     ADD CONSTRAINT line_referentials_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY lines
@@ -506,10 +1718,19 @@ ALTER TABLE ONLY users
 ALTER TABLE ONLY workbenches
     ADD CONSTRAINT workbenches_pkey PRIMARY KEY (id);
 
+CREATE UNIQUE INDEX access_links_objectid_key ON access_links USING btree (objectid);
+CREATE UNIQUE INDEX access_points_objectid_key ON access_points USING btree (objectid);
 CREATE UNIQUE INDEX companies_objectid_key ON companies USING btree (objectid);
+CREATE INDEX companies_registration_number_key ON companies USING btree (registration_number);
+CREATE UNIQUE INDEX connection_links_objectid_key ON connection_links USING btree (objectid);
 CREATE UNIQUE INDEX group_of_lines_objectid_key ON group_of_lines USING btree (objectid);
 CREATE INDEX index_companies_on_line_referential_id ON companies USING btree (line_referential_id);
 CREATE INDEX index_group_of_lines_on_line_referential_id ON group_of_lines USING btree (line_referential_id);
+CREATE INDEX index_import_messages_on_import_id ON import_messages USING btree (import_id);
+CREATE INDEX index_import_messages_on_resource_id ON import_messages USING btree (resource_id);
+CREATE INDEX index_import_resources_on_import_id ON import_resources USING btree (import_id);
+CREATE INDEX index_imports_on_referential_id ON imports USING btree (referential_id);
+CREATE INDEX index_imports_on_workbench_id ON imports USING btree (workbench_id);
 CREATE INDEX index_lines_on_line_referential_id ON lines USING btree (line_referential_id);
 CREATE INDEX index_networks_on_line_referential_id ON networks USING btree (line_referential_id);
 CREATE UNIQUE INDEX index_organisations_on_code ON organisations USING btree (code);
@@ -533,6 +1754,8 @@ CREATE UNIQUE INDEX networks_objectid_key ON networks USING btree (objectid);
 CREATE INDEX networks_registration_number_key ON networks USING btree (registration_number);
 CREATE UNIQUE INDEX stop_areas_objectid_key ON stop_areas USING btree (objectid);
 
+ALTER TABLE ONLY access_links
+    ADD CONSTRAINT aclk_acpt_fkey FOREIGN KEY (access_point_id) REFERENCES access_points(id) ON DELETE CASCADE;
 ALTER TABLE ONLY stop_areas
     ADD CONSTRAINT area_parent_fkey FOREIGN KEY (parent_id) REFERENCES stop_areas(id) ON DELETE SET NULL;
 ALTER TABLE ONLY group_of_lines_lines
@@ -573,144 +1796,73 @@ CREATE TABLE footnotes (
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.footnotes OWNER TO chouette;
-
---
--- TOC entry 192 (class 1259 OID 938926)
--- Name: footnotes_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE footnotes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.footnotes_id_seq OWNER TO chouette;
-
---
--- TOC entry 4260 (class 0 OID 0)
--- Dependencies: 192
--- Name: footnotes_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE footnotes_id_seq OWNED BY footnotes.id;
 
-
---
--- TOC entry 193 (class 1259 OID 938928)
--- Name: footnotes_vehicle_journeys; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE footnotes_vehicle_journeys (
     vehicle_journey_id bigint,
     footnote_id bigint
 );
-
-
 ALTER TABLE chouette_gui.footnotes_vehicle_journeys OWNER TO chouette;
 
 
---
--- TOC entry 378 (class 1259 OID 942346)
--- Name: journey_frequencies; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE journey_frequencies (
     id bigint NOT NULL,
-    vehicle_journey_id integer,
+    vehicle_journey_id bigint,
     scheduled_headway_interval time without time zone NOT NULL,
     first_departure_time time without time zone NOT NULL,
     last_departure_time time without time zone,
     exact_time boolean DEFAULT false,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    timeband_id integer
+    timeband_id bigint
 );
-
-
 ALTER TABLE chouette_gui.journey_frequencies OWNER TO chouette;
-
---
--- TOC entry 377 (class 1259 OID 942344)
--- Name: journey_frequencies_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE journey_frequencies_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.journey_frequencies_id_seq OWNER TO chouette;
-
---
--- TOC entry 4262 (class 0 OID 0)
--- Dependencies: 377
--- Name: journey_frequencies_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE journey_frequencies_id_seq OWNED BY journey_frequencies.id;
 
 
---
--- TOC entry 382 (class 1259 OID 942378)
--- Name: journey_pattern_sections; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE journey_pattern_sections (
     id bigint NOT NULL,
-    journey_pattern_id integer NOT NULL,
-    route_section_id integer NOT NULL,
+    journey_pattern_id bigint NOT NULL,
+    route_section_id bigint NOT NULL,
     rank integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.journey_pattern_sections OWNER TO chouette;
-
---
--- TOC entry 381 (class 1259 OID 942376)
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE journey_pattern_sections_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.journey_pattern_sections_id_seq OWNER TO chouette;
-
---
--- TOC entry 4263 (class 0 OID 0)
--- Dependencies: 381
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE journey_pattern_sections_id_seq OWNED BY journey_pattern_sections.id;
 
 
---
--- TOC entry 197 (class 1259 OID 938943)
--- Name: journey_patterns; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE journey_patterns (
     id bigint NOT NULL,
     route_id bigint,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
@@ -718,107 +1870,38 @@ CREATE TABLE journey_patterns (
     published_name character varying(255),
     departure_stop_point_id bigint,
     arrival_stop_point_id bigint,
-    section_status integer DEFAULT 0 NOT NULL
+    section_status integer DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.journey_patterns OWNER TO chouette;
-
---
--- TOC entry 198 (class 1259 OID 938949)
--- Name: journey_patterns_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE journey_patterns_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.journey_patterns_id_seq OWNER TO chouette;
-
---
--- TOC entry 4264 (class 0 OID 0)
--- Dependencies: 198
--- Name: journey_patterns_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE journey_patterns_id_seq OWNED BY journey_patterns.id;
 
 
---
--- TOC entry 199 (class 1259 OID 938951)
--- Name: journey_patterns_stop_points; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE journey_patterns_stop_points (
     journey_pattern_id bigint,
     stop_point_id bigint
 );
-
-
 ALTER TABLE chouette_gui.journey_patterns_stop_points OWNER TO chouette;
 
 
---
--- TOC entry 376 (class 1259 OID 942335)
--- Name: route_sections; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
-CREATE TABLE route_sections (
-    id bigint NOT NULL,
-    departure_id integer,
-    arrival_id integer,
-    objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
-    creator_id character varying(255),
-    input_geometry shared_extensions.geometry(LineString,4326),
-    processed_geometry shared_extensions.geometry(LineString,4326),
-    distance double precision,
-    no_processing boolean
-);
 
 
-ALTER TABLE chouette_gui.route_sections OWNER TO chouette;
 
---
--- TOC entry 375 (class 1259 OID 942333)
--- Name: route_sections_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
-CREATE SEQUENCE route_sections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE chouette_gui.route_sections_id_seq OWNER TO chouette;
-
---
--- TOC entry 4270 (class 0 OID 0)
--- Dependencies: 375
--- Name: route_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
-ALTER SEQUENCE route_sections_id_seq OWNED BY route_sections.id;
-
-
---
--- TOC entry 210 (class 1259 OID 938995)
--- Name: routes; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE routes (
     id bigint NOT NULL,
     line_id bigint,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
@@ -826,99 +1909,69 @@ CREATE TABLE routes (
     published_name character varying(255),
     number character varying(255),
     direction character varying(255),
-    wayback character varying(255)
+    wayback character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.routes OWNER TO chouette;
-
---
--- TOC entry 211 (class 1259 OID 939001)
--- Name: routes_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE routes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.routes_id_seq OWNER TO chouette;
-
---
--- TOC entry 4271 (class 0 OID 0)
--- Dependencies: 211
--- Name: routes_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE routes_id_seq OWNED BY routes.id;
 
 
---
--- TOC entry 212 (class 1259 OID 939003)
--- Name: routing_constraints_lines; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
-CREATE TABLE routing_constraints_lines (
-    stop_area_id bigint,
-    line_id bigint
+CREATE TABLE routing_constraint_zones (
+    id bigint NOT NULL,
+    name character varying(255),
+    stop_area_ids integer[],
+    line_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    objectid character varying(255) NOT NULL,
+    object_version bigint,
+    creator_id character varying(255)
 );
+ALTER TABLE chouette_gui.routing_constraint_zones OWNER TO chouette;
+CREATE SEQUENCE routing_constraint_zones_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE chouette_gui.routing_constraint_zones_id_seq OWNER TO chouette;
+ALTER SEQUENCE routing_constraint_zones_id_seq OWNED BY routing_constraint_zones.id;
 
 
-ALTER TABLE chouette_gui.routing_constraints_lines OWNER TO chouette;
-
-
---
--- TOC entry 219 (class 1259 OID 939028)
--- Name: stop_points; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE stop_points (
     id bigint NOT NULL,
     route_id bigint,
     stop_area_id bigint,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     "position" integer,
     for_boarding character varying(255),
-    for_alighting character varying(255)
+    for_alighting character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.stop_points OWNER TO chouette;
-
---
--- TOC entry 220 (class 1259 OID 939034)
--- Name: stop_points_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE stop_points_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.stop_points_id_seq OWNER TO chouette;
-
---
--- TOC entry 4274 (class 0 OID 0)
--- Dependencies: 220
--- Name: stop_points_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE stop_points_id_seq OWNED BY stop_points.id;
 
 
---
--- TOC entry 225 (class 1259 OID 939058)
--- Name: time_table_dates; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE time_table_dates (
     time_table_id bigint NOT NULL,
@@ -927,38 +1980,17 @@ CREATE TABLE time_table_dates (
     id bigint NOT NULL,
     in_out boolean
 );
-
-
 ALTER TABLE chouette_gui.time_table_dates OWNER TO chouette;
-
---
--- TOC entry 226 (class 1259 OID 939061)
--- Name: time_table_dates_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE time_table_dates_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.time_table_dates_id_seq OWNER TO chouette;
-
---
--- TOC entry 4277 (class 0 OID 0)
--- Dependencies: 226
--- Name: time_table_dates_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE time_table_dates_id_seq OWNED BY time_table_dates.id;
 
 
---
--- TOC entry 227 (class 1259 OID 939063)
--- Name: time_table_periods; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE time_table_periods (
     time_table_id bigint NOT NULL,
@@ -967,102 +1999,57 @@ CREATE TABLE time_table_periods (
     "position" integer NOT NULL,
     id bigint NOT NULL
 );
-
-
 ALTER TABLE chouette_gui.time_table_periods OWNER TO chouette;
-
---
--- TOC entry 228 (class 1259 OID 939066)
--- Name: time_table_periods_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE time_table_periods_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.time_table_periods_id_seq OWNER TO chouette;
-
---
--- TOC entry 4278 (class 0 OID 0)
--- Dependencies: 228
--- Name: time_table_periods_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE time_table_periods_id_seq OWNED BY time_table_periods.id;
 
 
---
--- TOC entry 229 (class 1259 OID 939068)
--- Name: time_tables; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE time_tables (
     id bigint NOT NULL,
     objectid character varying(255) NOT NULL,
-    object_version integer DEFAULT 1,
-    creation_time timestamp without time zone,
+    object_version bigint DEFAULT 1,
     creator_id character varying(255),
     version character varying(255),
     comment character varying(255),
     int_day_types integer DEFAULT 0,
     start_date date,
-    end_date date
+    end_date date,
+    calendar_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.time_tables OWNER TO chouette;
-
---
--- TOC entry 230 (class 1259 OID 939076)
--- Name: time_tables_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE time_tables_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.time_tables_id_seq OWNER TO chouette;
-
---
--- TOC entry 4279 (class 0 OID 0)
--- Dependencies: 230
--- Name: time_tables_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE time_tables_id_seq OWNED BY time_tables.id;
 
 
---
--- TOC entry 231 (class 1259 OID 939078)
--- Name: time_tables_vehicle_journeys; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
+
 
 CREATE TABLE time_tables_vehicle_journeys (
     time_table_id bigint,
     vehicle_journey_id bigint
 );
-
-
 ALTER TABLE chouette_gui.time_tables_vehicle_journeys OWNER TO chouette;
 
---
--- TOC entry 380 (class 1259 OID 942366)
--- Name: timebands; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
+
 
 CREATE TABLE timebands (
     id bigint NOT NULL,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     name character varying(255),
     start_time time without time zone NOT NULL,
@@ -1070,38 +2057,17 @@ CREATE TABLE timebands (
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.timebands OWNER TO chouette;
-
---
--- TOC entry 379 (class 1259 OID 942364)
--- Name: timebands_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE timebands_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.timebands_id_seq OWNER TO chouette;
-
---
--- TOC entry 4280 (class 0 OID 0)
--- Dependencies: 379
--- Name: timebands_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE timebands_id_seq OWNED BY timebands.id;
 
 
---
--- TOC entry 234 (class 1259 OID 939093)
--- Name: vehicle_journey_at_stops; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE vehicle_journey_at_stops (
     id bigint NOT NULL,
@@ -1116,38 +2082,17 @@ CREATE TABLE vehicle_journey_at_stops (
     departure_day_offset int not null default 0,
     arrival_day_offset int not null default 0
 );
-
-
 ALTER TABLE chouette_gui.vehicle_journey_at_stops OWNER TO chouette;
-
---
--- TOC entry 235 (class 1259 OID 939099)
--- Name: vehicle_journey_at_stops_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE vehicle_journey_at_stops_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.vehicle_journey_at_stops_id_seq OWNER TO chouette;
-
---
--- TOC entry 4282 (class 0 OID 0)
--- Dependencies: 235
--- Name: vehicle_journey_at_stops_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE vehicle_journey_at_stops_id_seq OWNED BY vehicle_journey_at_stops.id;
 
 
---
--- TOC entry 236 (class 1259 OID 939101)
--- Name: vehicle_journeys; Type: TABLE; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 CREATE TABLE vehicle_journeys (
     id bigint NOT NULL,
@@ -1155,8 +2100,7 @@ CREATE TABLE vehicle_journeys (
     journey_pattern_id bigint,
     company_id bigint,
     objectid character varying(255) NOT NULL,
-    object_version integer,
-    creation_time timestamp without time zone,
+    object_version bigint,
     creator_id character varying(255),
     comment character varying(255),
     status_value character varying(255),
@@ -1168,632 +2112,153 @@ CREATE TABLE vehicle_journeys (
     number bigint,
     mobility_restricted_suitability boolean,
     flexible_service boolean,
-    journey_category integer DEFAULT 0 NOT NULL
+    journey_category integer DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
-
-
 ALTER TABLE chouette_gui.vehicle_journeys OWNER TO chouette;
-
---
--- TOC entry 237 (class 1259 OID 939107)
--- Name: vehicle_journeys_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
 CREATE SEQUENCE vehicle_journeys_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
 ALTER TABLE chouette_gui.vehicle_journeys_id_seq OWNER TO chouette;
-
---
--- TOC entry 4283 (class 0 OID 0)
--- Dependencies: 237
--- Name: vehicle_journeys_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
 ALTER SEQUENCE vehicle_journeys_id_seq OWNED BY vehicle_journeys.id;
 
 
 
-
---
--- TOC entry 3958 (class 2604 OID 939615)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq'::regclass);
-
-
-
---
--- TOC entry 3989 (class 2604 OID 942349)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journey_frequencies_id_seq'::regclass);
-
-
---
--- TOC entry 3992 (class 2604 OID 942381)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
-
-
---
--- TOC entry 3960 (class 2604 OID 939617)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_patterns ALTER COLUMN id SET DEFAULT nextval('journey_patterns_id_seq'::regclass);
-
-
-
---
--- TOC entry 3988 (class 2604 OID 942338)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY route_sections ALTER COLUMN id SET DEFAULT nextval('route_sections_id_seq'::regclass);
-
-
---
--- TOC entry 3968 (class 2604 OID 939623)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY routes ALTER COLUMN id SET DEFAULT nextval('routes_id_seq'::regclass);
-
-
-
---
--- TOC entry 3971 (class 2604 OID 939626)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
+ALTER TABLE ONLY routing_constraint_zones ALTER COLUMN id SET DEFAULT nextval('routing_constraint_zones_id_seq'::regclass);
 ALTER TABLE ONLY stop_points ALTER COLUMN id SET DEFAULT nextval('stop_points_id_seq'::regclass);
-
-
-
---
--- TOC entry 3975 (class 2604 OID 939630)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY time_table_dates ALTER COLUMN id SET DEFAULT nextval('time_table_dates_id_seq'::regclass);
-
-
---
--- TOC entry 3976 (class 2604 OID 939631)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY time_table_periods ALTER COLUMN id SET DEFAULT nextval('time_table_periods_id_seq'::regclass);
-
-
---
--- TOC entry 3979 (class 2604 OID 939632)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY time_tables ALTER COLUMN id SET DEFAULT nextval('time_tables_id_seq'::regclass);
-
-
---
--- TOC entry 3991 (class 2604 OID 942369)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY timebands ALTER COLUMN id SET DEFAULT nextval('timebands_id_seq'::regclass);
-
-
---
--- TOC entry 3985 (class 2604 OID 939634)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY vehicle_journey_at_stops ALTER COLUMN id SET DEFAULT nextval('vehicle_journey_at_stops_id_seq'::regclass);
-
-
---
--- TOC entry 3986 (class 2604 OID 939635)
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY vehicle_journeys ALTER COLUMN id SET DEFAULT nextval('vehicle_journeys_id_seq'::regclass);
 
 
+------------------------------------------------------------------
+SELECT pg_catalog.setval('footnotes_id_seq', 1, true);
+SELECT pg_catalog.setval('journey_frequencies_id_seq', 1, true);
+SELECT pg_catalog.setval('journey_pattern_sections_id_seq', 1, true);
+SELECT pg_catalog.setval('journey_patterns_id_seq', 1, true);
+SELECT pg_catalog.setval('route_sections_id_seq', 1, true);
+SELECT pg_catalog.setval('routes_id_seq', 1, true);
+SELECT pg_catalog.setval('routing_constraint_zones_id_seq', 1, true);
+SELECT pg_catalog.setval('stop_points_id_seq', 1, true);
+SELECT pg_catalog.setval('time_table_dates_id_seq', 1, true);
+SELECT pg_catalog.setval('time_table_periods_id_seq', 1, true);
+SELECT pg_catalog.setval('time_tables_id_seq', 1, true);
+SELECT pg_catalog.setval('timebands_id_seq', 1, true);
+SELECT pg_catalog.setval('vehicle_journey_at_stops_id_seq', 1, true);
+SELECT pg_catalog.setval('vehicle_journeys_id_seq', 1, true);
+------------------------------------------------------------------
 
---
--- TOC entry 4018 (class 2606 OID 939709)
--- Name: footnotes_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
 
 ALTER TABLE ONLY footnotes
     ADD CONSTRAINT footnotes_pkey PRIMARY KEY (id);
-
-
-
---
--- TOC entry 4090 (class 2606 OID 942352)
--- Name: journey_frequencies_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY journey_frequencies
     ADD CONSTRAINT journey_frequencies_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4097 (class 2606 OID 942383)
--- Name: journey_pattern_sections_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY journey_pattern_sections
     ADD CONSTRAINT journey_pattern_sections_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4024 (class 2606 OID 939713)
--- Name: journey_patterns_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT journey_patterns_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4086 (class 2606 OID 942343)
--- Name: route_sections_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY route_sections
     ADD CONSTRAINT route_sections_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4043 (class 2606 OID 939725)
--- Name: routes_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY routes
     ADD CONSTRAINT routes_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4053 (class 2606 OID 939731)
--- Name: stop_points_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
+ALTER TABLE ONLY routing_constraint_zones
+    ADD CONSTRAINT routing_constraint_zones_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY stop_points
     ADD CONSTRAINT stop_points_pkey PRIMARY KEY (id);
-
-
-
---
--- TOC entry 4063 (class 2606 OID 939739)
--- Name: time_table_dates_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY time_table_dates
     ADD CONSTRAINT time_table_dates_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4066 (class 2606 OID 939741)
--- Name: time_table_periods_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY time_table_periods
     ADD CONSTRAINT time_table_periods_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4069 (class 2606 OID 939743)
--- Name: time_tables_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY time_tables
     ADD CONSTRAINT time_tables_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4092 (class 2606 OID 942374)
--- Name: timebands_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY timebands
     ADD CONSTRAINT timebands_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4080 (class 2606 OID 939747)
--- Name: vehicle_journey_at_stops_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY vehicle_journey_at_stops
     ADD CONSTRAINT vehicle_journey_at_stops_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4084 (class 2606 OID 939749)
--- Name: vehicle_journeys_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 ALTER TABLE ONLY vehicle_journeys
     ADD CONSTRAINT vehicle_journeys_pkey PRIMARY KEY (id);
 
-
-
---
--- TOC entry 4087 (class 1259 OID 942375)
--- Name: index_journey_frequencies_on_timeband_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_journey_frequencies_on_timeband_id ON journey_frequencies USING btree (timeband_id);
-
-
---
--- TOC entry 4088 (class 1259 OID 942353)
--- Name: index_journey_frequencies_on_vehicle_journey_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequencies USING btree (vehicle_journey_id);
-
-
---
--- TOC entry 4025 (class 1259 OID 939871)
--- Name: index_journey_pattern_id_on_journey_patterns_stop_points; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey_patterns_stop_points USING btree (journey_pattern_id);
-
-
---
--- TOC entry 4093 (class 1259 OID 942384)
--- Name: index_journey_pattern_sections_on_journey_pattern_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_journey_pattern_sections_on_journey_pattern_id ON journey_pattern_sections USING btree (journey_pattern_id);
-
-
---
--- TOC entry 4094 (class 1259 OID 942385)
--- Name: index_journey_pattern_sections_on_route_section_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_journey_pattern_sections_on_route_section_id ON journey_pattern_sections USING btree (route_section_id);
-
-
---
--- TOC entry 4095 (class 1259 OID 942396)
--- Name: index_jps_on_journey_pattern_id_and_route_section_id_and_rank; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE UNIQUE INDEX index_jps_on_journey_pattern_id_and_route_section_id_and_rank ON journey_pattern_sections USING btree (journey_pattern_id, route_section_id, rank);
-
-
-
---
--- TOC entry 4061 (class 1259 OID 939875)
--- Name: index_time_table_dates_on_time_table_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_time_table_dates_on_time_table_id ON time_table_dates USING btree (time_table_id);
-
-
---
--- TOC entry 4064 (class 1259 OID 939876)
--- Name: index_time_table_periods_on_time_table_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_time_table_periods_on_time_table_id ON time_table_periods USING btree (time_table_id);
-
-
---
--- TOC entry 4070 (class 1259 OID 939877)
--- Name: index_time_tables_vehicle_journeys_on_time_table_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_time_tables_vehicle_journeys_on_time_table_id ON time_tables_vehicle_journeys USING btree (time_table_id);
-
-
---
--- TOC entry 4071 (class 1259 OID 939878)
--- Name: index_time_tables_vehicle_journeys_on_vehicle_journey_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_time_tables_vehicle_journeys_on_vehicle_journey_id ON time_tables_vehicle_journeys USING btree (vehicle_journey_id);
-
-
---
--- TOC entry 4077 (class 1259 OID 939882)
--- Name: index_vehicle_journey_at_stops_on_stop_pointid; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_vehicle_journey_at_stops_on_stop_pointid ON vehicle_journey_at_stops USING btree (stop_point_id);
-
-
---
--- TOC entry 4078 (class 1259 OID 939883)
--- Name: index_vehicle_journey_at_stops_on_vehicle_journey_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_vehicle_journey_at_stops_on_vehicle_journey_id ON vehicle_journey_at_stops USING btree (vehicle_journey_id);
-
-
---
--- TOC entry 4081 (class 1259 OID 939884)
--- Name: index_vehicle_journeys_on_route_id; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE INDEX index_vehicle_journeys_on_route_id ON vehicle_journeys USING btree (route_id);
-
-
---
--- TOC entry 4022 (class 1259 OID 939885)
--- Name: journey_patterns_objectid_key; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE UNIQUE INDEX journey_patterns_objectid_key ON journey_patterns USING btree (objectid);
-
-
---
--- TOC entry 4041 (class 1259 OID 939891)
--- Name: routes_objectid_key; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE UNIQUE INDEX routes_objectid_key ON routes USING btree (objectid);
-
-
-
---
--- TOC entry 4051 (class 1259 OID 939893)
--- Name: stop_points_objectid_key; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
+CREATE INDEX index_routing_constraint_zones_on_line_id ON routing_constraint_zones USING btree (line_id);
 CREATE UNIQUE INDEX stop_points_objectid_key ON stop_points USING btree (objectid);
-
-
---
--- TOC entry 4067 (class 1259 OID 939896)
--- Name: time_tables_objectid_key; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE UNIQUE INDEX time_tables_objectid_key ON time_tables USING btree (objectid);
-
-
-
---
--- TOC entry 4082 (class 1259 OID 939898)
--- Name: vehicle_journeys_objectid_key; Type: INDEX; Schema: chouette_gui; Owner: chouette; Tablespace: 
---
-
 CREATE UNIQUE INDEX vehicle_journeys_objectid_key ON vehicle_journeys USING btree (objectid);
 
 
 
 
---
--- TOC entry 4107 (class 2606 OID 939991)
--- Name: arrival_point_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
+ALTER TABLE ONLY journey_frequencies
+    ADD CONSTRAINT journey_frequencies_timeband_id_fk FOREIGN KEY (timeband_id) REFERENCES timebands(id) ON DELETE SET NULL;
+ALTER TABLE ONLY journey_frequencies
+    ADD CONSTRAINT journey_frequencies_vehicle_journey_id_fk FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE SET NULL;
 ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT arrival_point_fkey FOREIGN KEY (arrival_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
-
-
-
---
--- TOC entry 4106 (class 2606 OID 940006)
--- Name: departure_point_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT departure_point_fkey FOREIGN KEY (departure_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
-
-
-
---
--- TOC entry 4131 (class 2606 OID 942386)
--- Name: journey_pattern_sections_journey_pattern_id_fk; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_pattern_sections
     ADD CONSTRAINT journey_pattern_sections_journey_pattern_id_fk FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4130 (class 2606 OID 942391)
--- Name: journey_pattern_sections_route_section_id_fk; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_pattern_sections
     ADD CONSTRAINT journey_pattern_sections_route_section_id_fk FOREIGN KEY (route_section_id) REFERENCES route_sections(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4105 (class 2606 OID 940021)
--- Name: jp_route_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT jp_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4109 (class 2606 OID 940026)
--- Name: jpsp_jp_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_patterns_stop_points
     ADD CONSTRAINT jpsp_jp_fkey FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4108 (class 2606 OID 940031)
--- Name: jpsp_stoppoint_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY journey_patterns_stop_points
     ADD CONSTRAINT jpsp_stoppoint_fkey FOREIGN KEY (stop_point_id) REFERENCES stop_points(id) ON DELETE CASCADE;
-
-
-
-
---
--- TOC entry 4113 (class 2606 OID 940046)
--- Name: route_line_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
--- ALTER TABLE ONLY routes
---    ADD CONSTRAINT route_line_fkey FOREIGN KEY (line_id) REFERENCES lines(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4112 (class 2606 OID 940051)
--- Name: route_opposite_route_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY routes
     ADD CONSTRAINT route_opposite_route_fkey FOREIGN KEY (opposite_route_id) REFERENCES routes(id) ON DELETE SET NULL;
-
-
---
--- TOC entry 4115 (class 2606 OID 940056)
--- Name: routingconstraint_line_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
--- ALTER TABLE ONLY routing_constraints_lines
---     ADD CONSTRAINT routingconstraint_line_fkey FOREIGN KEY (line_id) REFERENCES lines(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4114 (class 2606 OID 940061)
--- Name: routingconstraint_stoparea_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
--- ALTER TABLE ONLY routing_constraints_lines
---     ADD CONSTRAINT routingconstraint_stoparea_fkey FOREIGN KEY (stop_area_id) REFERENCES stop_areas(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4120 (class 2606 OID 940076)
--- Name: stoppoint_area_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
---ALTER TABLE ONLY stop_points
---   ADD CONSTRAINT stoppoint_area_fkey FOREIGN KEY (stop_area_id) REFERENCES stop_areas(id);
-
-
---
--- TOC entry 4119 (class 2606 OID 940081)
--- Name: stoppoint_route_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY stop_points
     ADD CONSTRAINT stoppoint_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4121 (class 2606 OID 940086)
--- Name: tm_date_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY time_table_dates
     ADD CONSTRAINT tm_date_fkey FOREIGN KEY (time_table_id) REFERENCES time_tables(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4122 (class 2606 OID 940091)
--- Name: tm_period_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY time_table_periods
     ADD CONSTRAINT tm_period_fkey FOREIGN KEY (time_table_id) REFERENCES time_tables(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4129 (class 2606 OID 940096)
--- Name: vj_company_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
--- ALTER TABLE ONLY vehicle_journeys
---     ADD CONSTRAINT vj_company_fkey FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL;
-
-
---
--- TOC entry 4128 (class 2606 OID 940101)
--- Name: vj_jp_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY vehicle_journeys
     ADD CONSTRAINT vj_jp_fkey FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4127 (class 2606 OID 940106)
--- Name: vj_route_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY vehicle_journeys
     ADD CONSTRAINT vj_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4126 (class 2606 OID 940111)
--- Name: vjas_sp_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY vehicle_journey_at_stops
     ADD CONSTRAINT vjas_sp_fkey FOREIGN KEY (stop_point_id) REFERENCES stop_points(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4125 (class 2606 OID 940116)
--- Name: vjas_vj_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY vehicle_journey_at_stops
     ADD CONSTRAINT vjas_vj_fkey FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4124 (class 2606 OID 940121)
--- Name: vjtm_tm_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY time_tables_vehicle_journeys
     ADD CONSTRAINT vjtm_tm_fkey FOREIGN KEY (time_table_id) REFERENCES time_tables(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 4123 (class 2606 OID 940126)
--- Name: vjtm_vj_fkey; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
 ALTER TABLE ONLY time_tables_vehicle_journeys
     ADD CONSTRAINT vjtm_vj_fkey FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE CASCADE;
 
-
---
--- TOC entry 4251 (class 0 OID 0)
--- Dependencies: 8
--- Name: chouette_gui; Type: ACL; Schema: -; Owner: postgres
---
 
 GRANT ALL ON SCHEMA chouette_gui TO chouette;
 GRANT ALL ON SCHEMA chouette_gui TO PUBLIC;
 
 
--- Completed on 2016-01-04 11:09:57 CET
-
 --
--- PostgreSQL database dump complete
 --
 
 

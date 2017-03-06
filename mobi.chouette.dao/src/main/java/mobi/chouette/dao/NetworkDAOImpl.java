@@ -13,7 +13,7 @@ public class NetworkDAOImpl extends GenericDAOImpl<Network> implements NetworkDA
 		super(Network.class);
 	}
 
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}

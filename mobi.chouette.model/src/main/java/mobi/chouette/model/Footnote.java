@@ -59,8 +59,9 @@ public class Footnote extends ChouetteIdentifiedObject {
 	 */
 	@Getter
 	@Setter
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "line_id")
+	@Transient
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "line_id")
 	private Line line;
 
 	/**

@@ -13,7 +13,7 @@ public class LineDAOImpl extends GenericDAOImpl<Line> implements LineDAO {
 		super(Line.class);
 	}
 
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}

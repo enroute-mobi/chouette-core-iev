@@ -17,18 +17,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.type.SectionStatusEnum;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  * Chouette Journey Pattern : pattern for vehicle journeys in a route
@@ -239,9 +239,10 @@ public class JourneyPattern extends ChouetteIdentifiedObject {
 	 */
 	@Getter
 	@Setter
-	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
-	@OrderColumn(name="rank")
-	@JoinTable(name = "journey_pattern_sections", joinColumns = { @JoinColumn(name = "journey_pattern_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "route_section_id", nullable = false, updatable = false) })
+	@Transient
+//	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+//	@OrderColumn(name="rank")
+//	@JoinTable(name = "journey_pattern_sections", joinColumns = { @JoinColumn(name = "journey_pattern_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "route_section_id", nullable = false, updatable = false) })
 	private List<RouteSection> routeSections = new ArrayList<RouteSection>(0);
 	
 	/**

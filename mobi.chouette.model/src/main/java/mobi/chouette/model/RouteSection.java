@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -33,7 +35,7 @@ import com.vividsolutions.jts.geom.LineString;
  */
 
 @Entity
-@Table(name = "route_sections")
+@Table(name = "route_sections",schema="public")
 @NoArgsConstructor
 @ToString
 public class RouteSection extends ChouetteIdentifiedObject {
@@ -41,10 +43,8 @@ public class RouteSection extends ChouetteIdentifiedObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "route_sections_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "route_sections_id_seq"),
-			@Parameter(name = "increment_size", value = "100") })
-	@GeneratedValue(generator = "route_sections_id_seq")
+	@SequenceGenerator(name="route_sections_id_seq", sequenceName="public.route_sections_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="route_sections_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;

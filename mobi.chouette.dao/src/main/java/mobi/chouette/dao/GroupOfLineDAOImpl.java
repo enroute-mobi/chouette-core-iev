@@ -13,7 +13,7 @@ public class GroupOfLineDAOImpl extends GenericDAOImpl<GroupOfLine> implements G
 		super(GroupOfLine.class);
 	}
 
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}

@@ -11,7 +11,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<wildfly.version>9.0.2.Final</wildfly.version>
-		<wildfly.arquillian.version>1.0.1.Final</wildfly.arquillian.version>
+		<wildfly.arquillian.version>1.0.2.Final</wildfly.arquillian.version>
 		<version.wildfly.maven.plugin>1.1.0.Final</version.wildfly.maven.plugin>
 		<version.compiler.plugin>3.6.1</version.compiler.plugin>
 		<version.jaxb2.plugin>1.5</version.jaxb2.plugin>
@@ -173,22 +173,16 @@
 									<groupId>net.postgis</groupId>
 									<artifactId>postgis-jdbc</artifactId>
 									<version>${postgis.version}</version>
+									<overWrite>false</overWrite>
 									<outputDirectory>
 										${project.rootDir}/target/wildfly-${wildfly.version}/modules/org/postgres/main
-									</outputDirectory>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.hibernate</groupId>
-									<artifactId>hibernate-spatial</artifactId>
-									<version>${hibernate-spatial.version}</version>
-									<outputDirectory>
-										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
 									</outputDirectory>
 								</artifactItem>
 								<artifactItem>
 									<groupId>com.vividsolutions</groupId>
 									<artifactId>jts</artifactId>
 									<version>${jts.version}</version>
+									<overWrite>false</overWrite>
 									<outputDirectory>
 										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
 									</outputDirectory>
@@ -197,6 +191,7 @@
 									<groupId>org.hibernate</groupId>
 									<artifactId>hibernate-core</artifactId>
 									<version>${hibernate.version}</version>
+									<overWrite>false</overWrite>
 									<outputDirectory>
 										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
 									</outputDirectory>
@@ -205,6 +200,16 @@
 									<groupId>org.hibernate</groupId>
 									<artifactId>hibernate-envers</artifactId>
 									<version>${hibernate.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>
+										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
+									</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.hibernate.javax.persistence</groupId>
+									<artifactId>hibernate-jpa-2.1-api</artifactId>
+									<version>1.0.0.Final</version>
+									<overWrite>false</overWrite>
 									<outputDirectory>
 										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
 									</outputDirectory>
@@ -213,6 +218,25 @@
 									<groupId>org.hibernate</groupId>
 									<artifactId>hibernate-entitymanager</artifactId>
 									<version>${hibernate.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>
+										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
+									</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.hibernate</groupId>
+									<artifactId>hibernate-infinispan</artifactId>
+									<version>${hibernate.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>
+										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/infinispan/main
+									</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.hibernate</groupId>
+									<artifactId>hibernate-spatial</artifactId>
+									<version>${hibernate-spatial.version}</version>
+									<overWrite>false</overWrite>
 									<outputDirectory>
 										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
 									</outputDirectory>

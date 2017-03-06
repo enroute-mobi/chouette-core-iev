@@ -13,7 +13,7 @@ public class CompanyDAOImpl extends GenericDAOImpl<Company> implements CompanyDA
 		super(Company.class);
 	}
 
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}

@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -412,7 +413,8 @@ public class StopArea extends ChouetteLocalizedObject {
 	 */
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "containedInStopArea")
+	@Transient
+//	@OneToMany(mappedBy = "containedInStopArea")
 	private List<StopPoint> containedStopPoints = new ArrayList<StopPoint>(0);
 
 	/**
@@ -440,8 +442,9 @@ public class StopArea extends ChouetteLocalizedObject {
 	 */
 	@Getter
 	@Setter
-	@OneToMany(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "departure_id") //, updatable = false)
+	@Transient
+//	@OneToMany(cascade = { CascadeType.PERSIST })
+//	@JoinColumn(name = "departure_id") //, updatable = false)
 	private List<RouteSection> routeSectionDepartures = new ArrayList<RouteSection>(
 			0);
 
@@ -456,8 +459,9 @@ public class StopArea extends ChouetteLocalizedObject {
 	 */
 	@Getter
 	@Setter
-	@OneToMany(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "arrival_id") //, updatable = false)
+	@Transient
+//	@OneToMany(cascade = { CascadeType.PERSIST })
+//	@JoinColumn(name = "arrival_id") //, updatable = false)
 	private List<RouteSection> routeSectionArrivals = new ArrayList<RouteSection>(
 			0);
 

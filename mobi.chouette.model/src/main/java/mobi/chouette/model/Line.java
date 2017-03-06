@@ -25,6 +25,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,10 +36,6 @@ import lombok.ToString;
 import mobi.chouette.model.type.TransportModeNameEnum;
 import mobi.chouette.model.type.UserNeedEnum;
 import mobi.chouette.model.util.ObjectIdTypes;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  * Chouette Line : a group of Routes which is generally known to the public by a
@@ -383,7 +382,8 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	 */
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "line", cascade = { CascadeType.PERSIST })
+	@Transient
+// 	@OneToMany(mappedBy = "line", cascade = { CascadeType.PERSIST })
 	private List<Route> routes = new ArrayList<Route>(0);
 
 	/**
@@ -397,7 +397,8 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	 */
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "line", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@Transient
+	// @OneToMany(mappedBy = "line", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Footnote> footnotes = new ArrayList<>(0);
 
 	/**

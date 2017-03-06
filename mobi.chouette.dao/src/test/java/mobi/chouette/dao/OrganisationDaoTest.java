@@ -1,7 +1,8 @@
 package mobi.chouette.dao;
 
 import java.io.File;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -19,6 +20,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.importer.ZipImporter;
+import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
@@ -33,14 +37,48 @@ public class OrganisationDaoTest extends Arquillian
 	@EJB 
 	OrganisationDAO organisationDao;
 
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	EntityManager em;
 
 	@Inject
 	UserTransaction utx;
 
 	@Deployment
-	public static WebArchive createDeployment() {
+	public static EnterpriseArchive createDeployment() {
+
+		EnterpriseArchive result;
+		File[] files = Maven.resolver().loadPomFromFile("pom.xml")
+				.resolve("mobi.chouette:mobi.chouette.dao").withTransitivity().asFile();
+		List<File> jars = new ArrayList<>();
+		List<JavaArchive> modules = new ArrayList<>();
+		for (File file : files) {
+			if (file.getName().startsWith("mobi.chouette.dao"))
+			{
+				String name = file.getName().split("\\-")[0]+".jar";
+				JavaArchive archive = ShrinkWrap
+						  .create(ZipImporter.class, name)
+						  .importFrom(file)
+						  .as(JavaArchive.class);
+				modules.add(archive);
+			}
+			else
+			{
+				jars.add(file);
+			}
+		}
+		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war").addAsWebInfResource("postgres-ds.xml")
+				.addClass(OrganisationDaoTest.class);
+		
+		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear")
+				.addAsLibraries(jars.toArray(new File[0]))
+				.addAsModules(modules.toArray(new JavaArchive[0]))
+				.addAsModule(testWar)
+				.addAsResource(EmptyAsset.INSTANCE, "beans.xml");
+		return result;
+	}
+
+ 	// @Deployment
+	public static WebArchive createDeploymentOld() {
 
 		try
 		{
@@ -48,6 +86,9 @@ public class OrganisationDaoTest extends Arquillian
 		File[] files = Maven.resolver().loadPomFromFile("pom.xml")
 				.resolve("mobi.chouette:mobi.chouette.dao").withTransitivity().asFile();
 
+		for (File file : files) {
+			System.out.println(file.getName());
+		}
 		result = ShrinkWrap.create(WebArchive.class, "test.war").addAsWebInfResource("postgres-ds.xml")
 				.addAsLibraries(files).addAsResource(EmptyAsset.INSTANCE, "beans.xml");
 		return result;

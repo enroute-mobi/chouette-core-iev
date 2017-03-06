@@ -13,7 +13,7 @@ public class RouteSectionDAOImpl extends GenericDAOImpl<RouteSection> implements
 		super(RouteSection.class);
 	}
 
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}

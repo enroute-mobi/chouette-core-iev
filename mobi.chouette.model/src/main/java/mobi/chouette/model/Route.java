@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -222,8 +223,9 @@ public class Route extends ChouetteIdentifiedObject {
 	 * @return The actual value
 	 */
 	@Getter
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "line_id")
+	@Transient
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "line_id")
 	private Line line;
 
 	/**

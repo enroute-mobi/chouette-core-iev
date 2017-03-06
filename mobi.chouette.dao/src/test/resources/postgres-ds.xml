@@ -15,12 +15,12 @@
          <user-name>chouette</user-name>
          <password>chouette</password>         
       </security>
-        <validation>  
+    <!--   <validation>  
             <valid-connection-checker  
                  class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"></valid-connection-checker>  
             <exception-sorter  
                  class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"></exception-sorter>  
-        </validation>  
+        </validation>   -->  
    </datasource>
    <datasource jndi-name="java:jboss/datasources/iev"
       pool-name="chouette" enabled="true" use-java-context="true">
@@ -30,12 +30,12 @@
          <user-name>chouette</user-name>
          <password>chouette</password>         
       </security>
-        <validation>  
+       <!-- <validation>  
             <valid-connection-checker  
                  class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"></valid-connection-checker>  
             <exception-sorter  
                  class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"></exception-sorter>  
-        </validation>  
+        </validation>    --> 
    </datasource>
      
 </datasources>
