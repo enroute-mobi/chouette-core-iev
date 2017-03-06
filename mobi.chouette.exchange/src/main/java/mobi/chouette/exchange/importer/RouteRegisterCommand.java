@@ -83,7 +83,7 @@ public class RouteRegisterCommand implements Command {
 		
 		if(importParameter.isKeepObsoleteLines() ) {
 		
-			log.info("register line : " + newValue.getObjectId() + " " + newValue.getName() + " vehicleJourney count = "
+			log.info("register route : " + newValue.getObjectId() + " " + newValue.getName() + " vehicleJourney count = "
 					+ referential.getVehicleJourneys().size());
 			try {
 	
@@ -95,26 +95,26 @@ public class RouteRegisterCommand implements Command {
 				routeDAO.create(newValue);
 				routeDAO.flush();
 				
-				if (optimized) {
-					Monitor wMonitor = MonitorFactory.start("prepareCopy");
-					StringWriter buffer = new StringWriter(1024);
-					final List<String> list = new ArrayList<String>(referential.getVehicleJourneys().keySet());
-					for (VehicleJourney item : referential.getVehicleJourneys().values()) {
-						VehicleJourney vehicleJourney = cache.getVehicleJourneys().get(item.getObjectId());
-	
-						List<VehicleJourneyAtStop> vehicleJourneyAtStops = item.getVehicleJourneyAtStops();
-						for (VehicleJourneyAtStop vehicleJourneyAtStop : vehicleJourneyAtStops) {
-	
-							StopPoint stopPoint = cache.getStopPoints().get(
-									vehicleJourneyAtStop.getStopPoint().getObjectId());
-	
-							write(buffer, vehicleJourney, stopPoint, vehicleJourneyAtStop);
-						}
-					}
-					vehicleJourneyDAO.deleteChildren(list);
-					context.put(BUFFER, buffer.toString());
-					wMonitor.stop();
-				}
+//				if (optimized) {
+//					Monitor wMonitor = MonitorFactory.start("prepareCopy");
+//					StringWriter buffer = new StringWriter(1024);
+//					final List<String> list = new ArrayList<String>(referential.getVehicleJourneys().keySet());
+//					for (VehicleJourney item : referential.getVehicleJourneys().values()) {
+//						VehicleJourney vehicleJourney = cache.getVehicleJourneys().get(item.getObjectId());
+//	
+//						List<VehicleJourneyAtStop> vehicleJourneyAtStops = item.getVehicleJourneyAtStops();
+//						for (VehicleJourneyAtStop vehicleJourneyAtStop : vehicleJourneyAtStops) {
+//	
+//							StopPoint stopPoint = cache.getStopPoints().get(
+//									vehicleJourneyAtStop.getStopPoint().getObjectId());
+//	
+//							write(buffer, vehicleJourney, stopPoint, vehicleJourneyAtStop);
+//						}
+//					}
+//					vehicleJourneyDAO.deleteChildren(list);
+//					context.put(BUFFER, buffer.toString());
+//					wMonitor.stop();
+//				}
 	
 				result = SUCCESS;
 			} catch (Exception ex) {
