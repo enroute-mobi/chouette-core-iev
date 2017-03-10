@@ -341,4 +341,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject {
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST })
 	@JoinColumn(name = "vehicle_journey_id", updatable = false)
 	private List<JourneyFrequency> journeyFrequencies = new ArrayList<JourneyFrequency>(0);
+
+	@Setter
+	private String companyId;
 }

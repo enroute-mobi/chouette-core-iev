@@ -10,7 +10,7 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.model.Company;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Timetable;
@@ -50,8 +50,12 @@ public class ServiceJourneyParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				Company company = ObjectFactory.getCompany(referential, ref);
-				vehicleJourney.setCompany(company);
+				//Company company = ObjectFactory.getCompany(referential, ref);
+				//vehicleJourney.setCompany(company);
+				CompanyLite company = referential.getSharedReadOnlyCompanies().get(ref);
+				if (company!=null){
+					vehicleJourney.setCompanyId(company.getObjectId());
+				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(TRAIN_NUMBERS)) {
 				parseTrainNumber(xpp, context, vehicleJourney);

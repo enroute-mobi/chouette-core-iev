@@ -120,8 +120,9 @@ public class Route extends ChouetteIdentifiedObject {
 
 	/**
 	 * opposite route identifier <br/>
-
-	 * @param oppositeRoute new value
+	 * 
+	 * @param oppositeRoute
+	 *            new value
 	 */
 	public void setOppositeRoute(Route oppositeRoute) {
 
@@ -223,8 +224,8 @@ public class Route extends ChouetteIdentifiedObject {
 	 */
 	@Getter
 	@Transient
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "line_id")
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "line_id")
 	private Line line;
 
 	/**
@@ -266,5 +267,8 @@ public class Route extends ChouetteIdentifiedObject {
 	@OneToMany(mappedBy = "route", cascade = { CascadeType.PERSIST })
 	@OrderColumn(name = "position", nullable = false)
 	private List<StopPoint> stopPoints = new ArrayList<StopPoint>(0);
+
+	@Setter
+	private String lineId;
 
 }

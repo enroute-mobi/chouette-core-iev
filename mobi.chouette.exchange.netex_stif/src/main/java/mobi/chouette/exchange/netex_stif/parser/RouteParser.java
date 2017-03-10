@@ -10,7 +10,7 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ObjectFactory;
@@ -37,8 +37,11 @@ public class RouteParser implements Parser, Constant {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(LINE_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);
-				Line line = ObjectFactory.getLine(referential, tmp);
-				route.setLine(line);
+				// Line line = ObjectFactory.getLine(referential, tmp);
+				LineLite line = referential.getSharedReadOnlyLines().get(tmp);
+				if (line != null) {
+					route.setLineId(line.getObjectId());
+				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
 
