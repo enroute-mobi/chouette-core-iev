@@ -24,7 +24,7 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class NetexStifValidationCommand implements Command, Constant {
 
-	public static final String COMMAND = "NetexValidationCommand";
+	public static final String COMMAND = "NetexStifValidationCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {

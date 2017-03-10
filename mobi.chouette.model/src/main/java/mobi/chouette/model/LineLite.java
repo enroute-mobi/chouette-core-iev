@@ -124,6 +124,6 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 	@Getter
 	@Column(name = "secondary_company_ids",columnDefinition="bigint[]")
 	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
-	private Long[] secondaryCompanyIds;
+	private Long[] secondaryCompanyIds = new Long[0];
 
 }

@@ -30,7 +30,7 @@ import com.jamonapi.MonitorFactory;
 @Stateless(name = NetexStifExporterCommand.COMMAND)
 public class NetexStifExporterCommand extends AbstractExporterCommand implements Command, Constant, ReportConstant {
 
-	public static final String COMMAND = "NetexExporterCommand";
+	public static final String COMMAND = "NetexStifExporterCommand";
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -94,7 +94,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 		protected Command create(InitialContext context) throws IOException {
 			Command result = null;
 			try {
-				String name = "java:app/mobi.chouette.exchange.netex/" + COMMAND;
+				String name = "java:app/mobi.chouette.exchange.netex_stif/" + COMMAND;
 				result = (Command) context.lookup(name);
 			} catch (NamingException e) {
 				// try another way on test context

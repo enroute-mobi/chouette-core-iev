@@ -26,7 +26,7 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class NetexStifInitExportCommand implements Command, Constant {
 
-	public static final String COMMAND = "NetexInitExportCommand";
+	public static final String COMMAND = "NetexStifInitExportCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {

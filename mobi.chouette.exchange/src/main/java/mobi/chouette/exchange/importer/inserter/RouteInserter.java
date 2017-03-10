@@ -33,7 +33,7 @@ public class RouteInserter implements Inserter<Route> {
 	private StopPointDAO stopPointDAO;
 
 	@EJB(beanName = StopPointInserter.BEAN_NAME)
-	private Inserter<StopPoint> stopPointUpdater;
+	private Inserter<StopPoint> stopPointInserter;
 
 	@EJB
 	private JourneyPatternDAO journeyPatternDAO;
@@ -154,7 +154,7 @@ public class RouteInserter implements Inserter<Route> {
 		Collection<Pair<StopPoint, StopPoint>> modifiedStopPoint = CollectionUtil.intersection(
 				oldValue.getStopPoints(), newValue.getStopPoints(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<StopPoint, StopPoint> pair : modifiedStopPoint) {
-			stopPointUpdater.insert(context, pair.getLeft(), pair.getRight());
+			stopPointInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		Collection<StopPoint> removedStopPoint = CollectionUtil.substract(oldValue.getStopPoints(),

@@ -37,10 +37,10 @@ public class JourneyPatternInserter implements Inserter<JourneyPattern> {
 	private RouteSectionDAO routeSectionDAO;
 
 	@EJB(beanName = VehicleJourneyInserter.BEAN_NAME)
-	private Inserter<VehicleJourney> vehicleJourneyUpdater;
+	private Inserter<VehicleJourney> vehicleJourneyInserter;
 
 	@EJB(beanName = RouteSectionInserter.BEAN_NAME)
-	private Inserter<RouteSection> routeSectionUpdater;
+	private Inserter<RouteSection> routeSectionInserter;
 
 	@Override
 	public void insert(Context context, JourneyPattern oldValue, JourneyPattern newValue) throws Exception {
@@ -123,7 +123,7 @@ public class JourneyPatternInserter implements Inserter<JourneyPattern> {
 		Collection<Pair<RouteSection, RouteSection>> modifiedRouteSection = CollectionUtil.intersection(
 				oldValue.getRouteSections(), newValue.getRouteSections(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<RouteSection, RouteSection> pair : modifiedRouteSection) {
-			routeSectionUpdater.insert(context, pair.getLeft(), pair.getRight());
+			routeSectionInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		// StopPoint
@@ -225,7 +225,7 @@ public class JourneyPatternInserter implements Inserter<JourneyPattern> {
 				oldValue.getVehicleJourneys(), newValue.getVehicleJourneys(),
 				NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<VehicleJourney, VehicleJourney> pair : modifiedVehicleJourney) {
-			vehicleJourneyUpdater.insert(context, pair.getLeft(), pair.getRight());
+			vehicleJourneyInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 

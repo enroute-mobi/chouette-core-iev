@@ -36,7 +36,7 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class NetexStifParserCommand implements Command, Constant {
 
-	public static final String COMMAND = "NetexParserCommand";
+	public static final String COMMAND = "NetexStifParserCommand";
 
 	@Getter
 	@Setter

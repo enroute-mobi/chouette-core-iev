@@ -92,16 +92,16 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 	private JourneyFrequencyDAO journeyFrequencyDAO;
 
 	@EJB(beanName = TimetableInserter.BEAN_NAME)
-	private Inserter<Timetable> timetableUpdater;
+	private Inserter<Timetable> timetableInserter;
 
 	@EJB(beanName = VehicleJourneyAtStopInserter.BEAN_NAME)
-	private Inserter<VehicleJourneyAtStop> vehicleJourneyAtStopUpdater;
+	private Inserter<VehicleJourneyAtStop> vehicleJourneyAtStopInserter;
 
 	@EJB(beanName = JourneyFrequencyInserter.BEAN_NAME)
-	private Inserter<JourneyFrequency> journeyFrequencyUpdater;
+	private Inserter<JourneyFrequency> journeyFrequencyInserter;
 
 	@EJB(beanName = FootnoteInserter.BEAN_NAME)
-	private Inserter<Footnote> footnoteUpdater;
+	private Inserter<Footnote> footnoteInserter;
 
 	@Override
 	public void insert(Context context, VehicleJourney oldValue, VehicleJourney newValue) throws Exception {
@@ -266,7 +266,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 					.intersection(oldValue.getVehicleJourneyAtStops(), newValue.getVehicleJourneyAtStops(),
 							VEHICLE_JOURNEY_AT_STOP_COMPARATOR);
 			for (Pair<VehicleJourneyAtStop, VehicleJourneyAtStop> pair : modifiedVehicleJourneyAtStop) {
-				vehicleJourneyAtStopUpdater.insert(context, pair.getLeft(), pair.getRight());
+				vehicleJourneyAtStopInserter.insert(context, pair.getLeft(), pair.getRight());
 			}
 
 			Collection<VehicleJourneyAtStop> removedVehicleJourneyAtStop = CollectionUtil.substract(
@@ -305,7 +305,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 		Collection<Pair<Timetable, Timetable>> modifiedTimetable = CollectionUtil.intersection(
 				oldValue.getTimetables(), newValue.getTimetables(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<Timetable, Timetable> pair : modifiedTimetable) {
-			timetableUpdater.insert(context, pair.getLeft(), pair.getRight());
+			timetableInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		Collection<Timetable> removedTimetable = CollectionUtil.substract(oldValue.getTimetables(),
@@ -345,7 +345,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 					.intersection(oldValue.getJourneyFrequencies(), newValue.getJourneyFrequencies(),
 							JOURNEY_FREQUENCY_COMPARATOR);
 			for (Pair<JourneyFrequency, JourneyFrequency> pair : modifiedJourneyFrequency) {
-				journeyFrequencyUpdater.insert(context, pair.getLeft(), pair.getRight());
+				journeyFrequencyInserter.insert(context, pair.getLeft(), pair.getRight());
 			}
 
 			Collection<JourneyFrequency> removedJourneyFrequency = CollectionUtil.substract(
@@ -381,7 +381,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 						newValue.getFootnotes(),
 						footnoteCodeCompatator);
 		for (Pair<Footnote, Footnote> pair : modifiedFootnotes) {
-			footnoteUpdater.insert(context, pair.getLeft(), pair.getRight());
+			footnoteInserter.insert(context, pair.getLeft(), pair.getRight());
 			footnotes.add(pair.getLeft());
 		}
 		

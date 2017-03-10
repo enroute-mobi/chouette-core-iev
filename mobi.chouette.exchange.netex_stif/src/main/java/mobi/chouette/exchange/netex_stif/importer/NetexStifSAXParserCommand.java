@@ -35,7 +35,7 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class NetexStifSAXParserCommand implements Command, Constant {
 
-	public static final String COMMAND = "NetexSAXParserCommand";
+	public static final String COMMAND = "NetexStifSAXParserCommand";
 
 	public static final String SCHEMA_FILE = "/xsd/chouette-netex.xsd";
 

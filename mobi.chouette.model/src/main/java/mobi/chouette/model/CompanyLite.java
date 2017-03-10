@@ -53,5 +53,13 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 	@Column(name = "name")
 	protected String name;
 
+	/**
+	 * line referential reference
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "line_referential_id")
+	protected Long lineReferentialId;
 
 }

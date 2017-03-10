@@ -24,7 +24,7 @@ public class AccessPointInserter implements Inserter<AccessPoint> {
 	private AccessLinkDAO accessLinkDAO;
 
 	@EJB(beanName = AccessLinkInserter.BEAN_NAME)
-	private Inserter<AccessLink> accessLinkUpdater;
+	private Inserter<AccessLink> accessLinkInserter;
 
 	@Override
 	public void insert(Context context, AccessPoint oldValue,
@@ -170,7 +170,7 @@ public class AccessPointInserter implements Inserter<AccessPoint> {
 						newValue.getAccessLinks(),
 						NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<AccessLink, AccessLink> pair : modifiedAccessLink) {
-			accessLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
+			accessLinkInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		// Collection<AccessLink> removedAccessLink = CollectionUtils.substract(

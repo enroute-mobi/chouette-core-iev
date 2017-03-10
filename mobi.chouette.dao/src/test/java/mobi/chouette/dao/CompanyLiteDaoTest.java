@@ -47,7 +47,7 @@ public class CompanyLiteDaoTest extends Arquillian
 	@Test
 	public void checkReadCompanies()
 	{
-		List<CompanyLite> companies = companyLiteDao.findAll();
+		List<CompanyLite> companies = companyLiteDao.findAll(1L);
 		Assert.assertNotEquals(companies.size(), 0,"company list");
 		for (CompanyLite companyLite : companies) {
 			Assert.assertNotNull(companyLite.getId(),"company id");

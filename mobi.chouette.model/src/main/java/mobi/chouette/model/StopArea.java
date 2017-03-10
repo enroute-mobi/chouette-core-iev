@@ -56,10 +56,6 @@ import mobi.chouette.model.type.UserNeedEnum;
  * types) <br/>
  */
 
-/**
- * @author dsuru
- * 
- */
 @Entity
 @Table(name = "stop_areas",schema="public")
 @Cacheable

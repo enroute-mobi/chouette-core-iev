@@ -10,14 +10,17 @@ import lombok.ToString;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RouteSection;
 import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timeband;
 import mobi.chouette.model.Timetable;
@@ -43,6 +46,10 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, Company> sharedCompanies = new HashMap<String, Company>();
+	
+	@Getter
+	@Setter
+	private Map<String, CompanyLite> sharedReadOnlyCompanies = new HashMap<String, CompanyLite>();
 
 	@Getter
 	@Setter
@@ -54,13 +61,19 @@ public class Referential implements java.io.Serializable {
 
 	@Getter
 	@Setter
-	private Map<String, GroupOfLine> sharedGroupOfLines = new HashMap<String, GroupOfLine>();
+	private Map<String, StopAreaLite> sharedReadOnlyStopAreas = new HashMap<String, StopAreaLite>();
 
+	@Getter
+	@Setter
+	private Map<String, GroupOfLine> sharedGroupOfLines = new HashMap<String, GroupOfLine>();
 
 	@Getter
 	@Setter
 	private Map<String, Line> sharedLines = new HashMap<String, Line>();
 
+	@Getter
+	@Setter
+	private Map<String, LineLite> sharedReadOnlyLines = new HashMap<String, LineLite>();
 	@Getter
 	@Setter
 	private Map<String, Timetable> sharedTimetables = new HashMap<String, Timetable>();
@@ -201,6 +214,9 @@ public class Referential implements java.io.Serializable {
 		sharedStopAreas.clear();
 		sharedTimebands.clear();
 		sharedTimetables.clear();
+		sharedReadOnlyLines.clear();
+		sharedReadOnlyCompanies.clear();
+		sharedReadOnlyStopAreas.clear();
 	}
 
 }

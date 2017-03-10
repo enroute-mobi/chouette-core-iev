@@ -19,7 +19,7 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class NetexStifInitImportCommand implements Command, Constant {
 
-	public static final String COMMAND = "NetexInitImportCommand";
+	public static final String COMMAND = "NetexStifInitImportCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {

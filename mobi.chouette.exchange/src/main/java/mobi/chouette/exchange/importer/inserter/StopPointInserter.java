@@ -22,7 +22,7 @@ public class StopPointInserter implements Inserter<StopPoint> {
 	private StopAreaDAO stopAreaDAO;
 
 	@EJB(beanName = StopAreaInserter.BEAN_NAME)
-	private Inserter<StopArea> stopAreaUpdater;
+	private Inserter<StopArea> stopAreaInserter;
 
 	@Override
 	public void insert(Context context, StopPoint oldValue, StopPoint newValue) throws Exception {
@@ -98,7 +98,7 @@ public class StopPointInserter implements Inserter<StopPoint> {
 			oldValue.setContainedInStopArea(stopArea);
 
 			if (!context.containsKey(AREA_BLOC))
-			   stopAreaUpdater.insert(context, oldValue.getContainedInStopArea(), newValue.getContainedInStopArea());
+			   stopAreaInserter.insert(context, oldValue.getContainedInStopArea(), newValue.getContainedInStopArea());
 		}
 //		monitor.stop();
 

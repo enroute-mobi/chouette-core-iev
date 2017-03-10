@@ -19,7 +19,7 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class NetexStifDisposeImportCommand extends AbstractDisposeImportCommand implements  Constant {
 
-	public static final String COMMAND = "NetexDisposeImportCommand";
+	public static final String COMMAND = "NetexStifDisposeImportCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {

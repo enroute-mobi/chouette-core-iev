@@ -26,7 +26,7 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class NetexStifImporterCommand extends AbstractImporterCommand implements Command, Constant {
 
-	public static final String COMMAND = "NetextImporterCommand";
+	public static final String COMMAND = "NetexStifImporterCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {

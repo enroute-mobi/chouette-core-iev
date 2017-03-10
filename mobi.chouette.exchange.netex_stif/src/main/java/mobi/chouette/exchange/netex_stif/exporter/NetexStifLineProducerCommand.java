@@ -24,7 +24,7 @@ import com.jamonapi.MonitorFactory;
 
 @Log4j
 public class NetexStifLineProducerCommand implements Command, Constant {
-	public static final String COMMAND = "NetexLineProducerCommand";
+	public static final String COMMAND = "NetexStifLineProducerCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {

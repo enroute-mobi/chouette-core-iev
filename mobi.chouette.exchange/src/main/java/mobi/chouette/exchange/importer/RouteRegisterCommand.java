@@ -55,7 +55,7 @@ public class RouteRegisterCommand implements Command {
 	private VehicleJourneyDAO vehicleJourneyDAO;
 
 	@EJB(beanName = RouteInserter.BEAN_NAME)
-	private Inserter<Line> routeInserter;
+	private Inserter<Route> routeInserter;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

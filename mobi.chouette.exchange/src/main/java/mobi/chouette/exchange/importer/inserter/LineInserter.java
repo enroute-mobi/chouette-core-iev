@@ -38,19 +38,20 @@ public class LineInserter implements Inserter<Line> {
 	private NetworkDAO ptNetworkDAO;
 
 	@EJB(beanName = PTNetworkInserter.BEAN_NAME)
-	private Inserter<Network> ptNetworkUpdater;
+	private Inserter<Network> ptNetworkInserter;
 
 	@EJB
 	private CompanyDAO companyDAO;
 
 	@EJB(beanName = CompanyInserter.BEAN_NAME)
-	private Inserter<Company> companyUpdater;
+	private Inserter<Company> companyInserter;
 
 	@EJB
 	private GroupOfLineDAO groupOfLineDAO;
 
 	@EJB(beanName = GroupOfLineInserter.BEAN_NAME)
-	private Inserter<GroupOfLine> groupOfLineUpdater;
+	private Inserter<GroupOfLine> groupOfLineInserter;
+	
 
 	@EJB
 	private RouteDAO routeDAO;
@@ -172,7 +173,7 @@ public class LineInserter implements Inserter<Line> {
 				ptNetwork = ObjectFactory.getPTNetwork(cache, objectId);
 			}
 			oldValue.setNetwork(ptNetwork);
-			ptNetworkUpdater.insert(context, oldValue.getNetwork(), newValue.getNetwork());
+			ptNetworkInserter.insert(context, oldValue.getNetwork(), newValue.getNetwork());
 		}
 
 		// Company
@@ -193,7 +194,7 @@ public class LineInserter implements Inserter<Line> {
 			}
 			oldValue.setCompany(company);
 			
-			companyUpdater.insert(context, oldValue.getCompany(), newValue.getCompany());
+			companyInserter.insert(context, oldValue.getCompany(), newValue.getCompany());
 		}
 
 		// GroupOfLine
@@ -220,7 +221,7 @@ public class LineInserter implements Inserter<Line> {
 		Collection<Pair<GroupOfLine, GroupOfLine>> modifiedGroupOfLine = CollectionUtil.intersection(
 				oldValue.getGroupOfLines(), newValue.getGroupOfLines(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<GroupOfLine, GroupOfLine> pair : modifiedGroupOfLine) {
-			groupOfLineUpdater.insert(context, pair.getLeft(), pair.getRight());
+			groupOfLineInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		Collection<GroupOfLine> removedGroupOfLine = CollectionUtil.substract(oldValue.getGroupOfLines(),

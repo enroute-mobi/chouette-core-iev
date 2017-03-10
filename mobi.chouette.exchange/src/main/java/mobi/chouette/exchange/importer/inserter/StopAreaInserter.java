@@ -38,25 +38,25 @@ public class StopAreaInserter implements Inserter<StopArea> {
 	private StopAreaDAO stopAreaDAO;
 
 	@EJB(beanName = StopAreaInserter.BEAN_NAME)
-	private Inserter<StopArea> stopAreaUpdater;
+	private Inserter<StopArea> stopAreaInserter;
 
 	@EJB
 	private AccessPointDAO accessPointDAO;
 
 	@EJB(beanName = AccessPointInserter.BEAN_NAME)
-	private Inserter<AccessPoint> accessPointUpdater;
+	private Inserter<AccessPoint> accessPointInserter;
 
 	@EJB
 	private AccessLinkDAO accessLinkDAO;
 
 	@EJB(beanName = AccessLinkInserter.BEAN_NAME)
-	private Inserter<AccessLink> accessLinkUpdater;
+	private Inserter<AccessLink> accessLinkInserter;
 
 	@EJB
 	private ConnectionLinkDAO connectionLinkDAO;
 
 	@EJB(beanName = ConnectionLinkInserter.BEAN_NAME)
-	private Inserter<ConnectionLink> connectionLinkUpdater;
+	private Inserter<ConnectionLink> connectionLinkInserter;
 
 	@Override
 	public void insert(Context context, StopArea oldValue, StopArea newValue) throws Exception {
@@ -205,7 +205,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 				oldValue.forceParent(stopArea);
 			else
 				oldValue.setParent(stopArea);
-			stopAreaUpdater.insert(context, oldValue.getParent(), newValue.getParent());
+			stopAreaInserter.insert(context, oldValue.getParent(), newValue.getParent());
 		}
 
 		// AccessPoint
@@ -236,7 +236,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 		Collection<Pair<AccessPoint, AccessPoint>> modifiedAccessPoint = CollectionUtil.intersection(
 				oldValue.getAccessPoints(), newValue.getAccessPoints(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<AccessPoint, AccessPoint> pair : modifiedAccessPoint) {
-			accessPointUpdater.insert(context, pair.getLeft(), pair.getRight());
+			accessPointInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		// AccessLink
@@ -266,7 +266,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 		Collection<Pair<AccessLink, AccessLink>> modifiedAccessLink = CollectionUtil.intersection(
 				oldValue.getAccessLinks(), newValue.getAccessLinks(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<AccessLink, AccessLink> pair : modifiedAccessLink) {
-			accessLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
+			accessLinkInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 
 		if (!context.containsKey(AREA_BLOC)) {
@@ -301,7 +301,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 					oldValue.getConnectionStartLinks(), newValue.getConnectionStartLinks(),
 					NeptuneIdentifiedObjectComparator.INSTANCE);
 			for (Pair<ConnectionLink, ConnectionLink> pair : modifiedStartOfLink) {
-				connectionLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
+				connectionLinkInserter.insert(context, pair.getLeft(), pair.getRight());
 			}
 
 			// EndOfLink
@@ -333,7 +333,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 					oldValue.getConnectionEndLinks(), newValue.getConnectionEndLinks(),
 					NeptuneIdentifiedObjectComparator.INSTANCE);
 			for (Pair<ConnectionLink, ConnectionLink> pair : modifiedEndOfLink) {
-				connectionLinkUpdater.insert(context, pair.getLeft(), pair.getRight());
+				connectionLinkInserter.insert(context, pair.getLeft(), pair.getRight());
 			}
 		}
 
@@ -368,7 +368,7 @@ public class StopAreaInserter implements Inserter<StopArea> {
 				oldValue.getRoutingConstraintAreas(), newValue.getRoutingConstraintAreas(),
 				NeptuneIdentifiedObjectComparator.INSTANCE);
 		for (Pair<StopArea, StopArea> pair : modifiedStopArea) {
-			stopAreaUpdater.insert(context, pair.getLeft(), pair.getRight());
+			stopAreaInserter.insert(context, pair.getLeft(), pair.getRight());
 		}
 		monitor.stop();
 

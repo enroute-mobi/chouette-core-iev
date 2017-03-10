@@ -27,7 +27,7 @@ import com.jamonapi.MonitorFactory;
 @Stateless(name = DaoNetexStifLineProducerCommand.COMMAND)
 public class DaoNetexStifLineProducerCommand implements Command, Constant {
 
-	public static final String COMMAND = "DaoNetexLineProducerCommand";
+	public static final String COMMAND = "DaoNetexStifLineProducerCommand";
 	
 	@Resource 
 	private SessionContext daoContext;
@@ -70,7 +70,7 @@ public class DaoNetexStifLineProducerCommand implements Command, Constant {
 		protected Command create(InitialContext context) throws IOException {
 			Command result = null;
 			try {
-				String name = "java:app/mobi.chouette.exchange.neptune/" + COMMAND;
+				String name = "java:app/mobi.chouette.exchange.netex_stif/" + COMMAND;
 				result = (Command) context.lookup(name);
 			} catch (NamingException e) {
 				// try another way on test context
