@@ -1,11 +1,9 @@
 package mobi.chouette.dao;
 
 import java.io.File;
+import java.util.List;
 
 import javax.ejb.EJB;
-
-import mobi.chouette.model.Line;
-import mobi.chouette.persistence.hibernate.ContextHolder;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
@@ -16,11 +14,13 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import mobi.chouette.model.CompanyLite;
 
-public class LineDaoTest extends Arquillian
+
+public class CompanyLiteDaoTest extends Arquillian
 {
 	@EJB 
-	LineDAO lineDao;
+	CompanyLiteDAO companyLiteDao;
 
 
 	@Deployment
@@ -45,26 +45,13 @@ public class LineDaoTest extends Arquillian
 	}
 	
 	@Test
-	public void checkSequence()
+	public void checkReadCompanies()
 	{
-		ContextHolder.setContext("chouette_gui"); // set tenant schema
-		for (int i = 0; i < 300; i++)
-		{
-			Line l = createLine();
-			lineDao.create(l);
-			Assert.assertEquals(l.getId(), Long.valueOf(i+2),"line id");
+		List<CompanyLite> companies = companyLiteDao.findAll();
+		Assert.assertNotEquals(companies.size(), 0,"company list");
+		for (CompanyLite companyLite : companies) {
+			Assert.assertNotNull(companyLite.getId(),"company id");
 		}
-	}
-	
-	private int id = 1;
-	private Line createLine()
-	{
-		Line l = new Line();
-		l.setName("toto");
-		l.setObjectId("test:Line:"+id);
-		id++;
-		
-		return l;
 	}
 	
 

@@ -135,7 +135,7 @@ CREATE TABLE companies (
     registration_number character varying(255),
     url character varying(255),
     time_zone character varying(255),
-    line_referential_id integer,
+    line_referential_id bigint,
     import_xml text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -192,7 +192,7 @@ CREATE TABLE group_of_lines (
     name character varying(255),
     comment character varying(255),
     registration_number character varying(255),
-    line_referential_id integer,
+    line_referential_id bigint,
     import_xml text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -219,10 +219,11 @@ CREATE TABLE import_messages (
     criticity integer,
     message_key character varying(255),
     message_attributs shared_extensions.hstore,
-    import_id integer,
-    resource_id integer,
+    import_id bigint,
+    resource_id bigint,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    resource_attributes shared_extensions.hstore
 );
 ALTER TABLE import_messages OWNER TO chouette;
 CREATE SEQUENCE import_messages_id_seq
@@ -236,10 +237,14 @@ ALTER SEQUENCE import_messages_id_seq OWNED BY import_messages.id;
 
 CREATE TABLE import_resources (
     id bigint NOT NULL,
-    import_id integer,
+    import_id bigint,
     status character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    type character varying(255),
+    reference character varying(255),
+    name character varying(255),
+    metrics shared_extensions.hstore
 );
 ALTER TABLE import_resources OWNER TO chouette;
 CREATE SEQUENCE import_resources_id_seq
@@ -256,12 +261,15 @@ CREATE TABLE imports (
     status character varying(255),
     current_step_id character varying(255),
     current_step_progress double precision,
-    workbench_id integer,
-    referential_id integer,
+    workbench_id bigint,
+    referential_id bigint,
     name character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    file character varying(255)
+    file character varying(255),
+    started_at date,
+    ended_at date,
+    token_download character varying(255)
 );
 
 ALTER TABLE imports OWNER TO chouette;
@@ -314,11 +322,11 @@ CREATE TABLE lines (
     color character varying(6),
     text_color character varying(6),
     stable_id character varying(255),
-    line_referential_id integer,
+    line_referential_id bigint,
     deactivated boolean DEFAULT false,
     import_xml text,
     transport_submode character varying(255),
-    secondary_company_ids integer[],
+    secondary_company_ids bigint[],
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -347,7 +355,7 @@ CREATE TABLE networks (
     source_identifier character varying(255),
     comment character varying(255),
     import_xml text,
-    line_referential_id integer,
+    line_referential_id bigint,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -384,9 +392,9 @@ ALTER SEQUENCE organisations_id_seq OWNED BY organisations.id;
 
 CREATE TABLE referential_metadata (
     id bigint NOT NULL,
-    referential_id integer,
-    line_ids integer[],
-    referential_source_id integer,
+    referential_id bigint,
+    line_ids bigint[],
+    referential_source_id bigint,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     periodes daterange[]
@@ -417,11 +425,11 @@ CREATE TABLE referentials (
     user_id bigint,
     user_name character varying(255),
     data_format character varying(255),
-    line_referential_id integer,
-    stop_area_referential_id integer,
-    workbench_id integer,
+    line_referential_id bigint,
+    stop_area_referential_id bigint,
+    workbench_id bigint,
     archived_at timestamp without time zone,
-    created_from_id integer,
+    created_from_id bigint,
     ready boolean DEFAULT false
 );
 ALTER TABLE referentials OWNER TO chouette;
@@ -502,7 +510,7 @@ CREATE TABLE stop_areas (
     city_name character varying(255),
     url character varying(255),
     time_zone character varying(255),
-    stop_area_referential_id integer,
+    stop_area_referential_id bigint,
     status character varying(255),
     import_xml text,
     deleted_at timestamp without time zone,
@@ -534,7 +542,7 @@ CREATE TABLE users (
     last_sign_in_ip character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    organisation_id integer,
+    organisation_id bigint,
     name character varying(255),
     confirmation_token character varying(255),
     confirmed_at timestamp without time zone,
@@ -548,7 +556,7 @@ CREATE TABLE users (
     invitation_sent_at timestamp without time zone,
     invitation_accepted_at timestamp without time zone,
     invitation_limit integer,
-    invited_by_id integer,
+    invited_by_id bigint,
     invited_by_type character varying(255),
     invitation_created_at timestamp without time zone,
     username character varying(255),
@@ -569,11 +577,11 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 CREATE TABLE workbenches (
     id bigint NOT NULL,
     name character varying(255),
-    organisation_id integer,
+    organisation_id bigint,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    line_referential_id integer,
-    stop_area_referential_id integer
+    line_referential_id bigint,
+    stop_area_referential_id bigint
 );
 ALTER TABLE workbenches OWNER TO chouette;
 CREATE SEQUENCE workbenches_id_seq
@@ -2132,7 +2140,6 @@ ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq
 ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journey_frequencies_id_seq'::regclass);
 ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
 ALTER TABLE ONLY journey_patterns ALTER COLUMN id SET DEFAULT nextval('journey_patterns_id_seq'::regclass);
-ALTER TABLE ONLY route_sections ALTER COLUMN id SET DEFAULT nextval('route_sections_id_seq'::regclass);
 ALTER TABLE ONLY routes ALTER COLUMN id SET DEFAULT nextval('routes_id_seq'::regclass);
 ALTER TABLE ONLY routing_constraint_zones ALTER COLUMN id SET DEFAULT nextval('routing_constraint_zones_id_seq'::regclass);
 ALTER TABLE ONLY stop_points ALTER COLUMN id SET DEFAULT nextval('stop_points_id_seq'::regclass);
@@ -2149,7 +2156,6 @@ SELECT pg_catalog.setval('footnotes_id_seq', 1, true);
 SELECT pg_catalog.setval('journey_frequencies_id_seq', 1, true);
 SELECT pg_catalog.setval('journey_pattern_sections_id_seq', 1, true);
 SELECT pg_catalog.setval('journey_patterns_id_seq', 1, true);
-SELECT pg_catalog.setval('route_sections_id_seq', 1, true);
 SELECT pg_catalog.setval('routes_id_seq', 1, true);
 SELECT pg_catalog.setval('routing_constraint_zones_id_seq', 1, true);
 SELECT pg_catalog.setval('stop_points_id_seq', 1, true);
@@ -2170,8 +2176,6 @@ ALTER TABLE ONLY journey_pattern_sections
     ADD CONSTRAINT journey_pattern_sections_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT journey_patterns_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY route_sections
-    ADD CONSTRAINT route_sections_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY routes
     ADD CONSTRAINT routes_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY routing_constraint_zones
@@ -2224,8 +2228,6 @@ ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT departure_point_fkey FOREIGN KEY (departure_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
 ALTER TABLE ONLY journey_pattern_sections
     ADD CONSTRAINT journey_pattern_sections_journey_pattern_id_fk FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT journey_pattern_sections_route_section_id_fk FOREIGN KEY (route_section_id) REFERENCES route_sections(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT jp_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_patterns_stop_points

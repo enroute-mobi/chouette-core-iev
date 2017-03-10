@@ -18,7 +18,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = AccessPointInserter.BEAN_NAME)
 public class AccessPointInserter implements Inserter<AccessPoint> {
 
-	public static final String BEAN_NAME = "AccessPointUpdater";
+	public static final String BEAN_NAME = "AccessPointInserter";
 
 	@EJB
 	private AccessLinkDAO accessLinkDAO;

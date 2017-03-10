@@ -50,7 +50,7 @@ public class RouteSectionDaoTest extends Arquillian
 
 	}
 	
-	@Test
+	// @Test
 	public void checkLineString()
 	{
 		try

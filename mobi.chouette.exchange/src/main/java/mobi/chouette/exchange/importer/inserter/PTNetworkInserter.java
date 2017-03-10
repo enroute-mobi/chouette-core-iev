@@ -9,7 +9,7 @@ import mobi.chouette.model.Network;
 @Stateless(name = PTNetworkInserter.BEAN_NAME)
 public class PTNetworkInserter implements Inserter<Network> {
 
-	public static final String BEAN_NAME = "PTNetworkUpdater";
+	public static final String BEAN_NAME = "PTNetworkInserter";
 
 	@Override
 	public void insert(Context context, Network oldValue, Network newValue) {

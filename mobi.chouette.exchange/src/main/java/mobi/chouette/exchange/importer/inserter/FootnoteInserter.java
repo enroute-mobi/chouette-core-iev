@@ -10,7 +10,7 @@ import mobi.chouette.model.Footnote;
 @Stateless(name = FootnoteInserter.BEAN_NAME)
 public class FootnoteInserter implements Inserter<Footnote> {
 
-	public static final String BEAN_NAME = "FootnoteUpdater";
+	public static final String BEAN_NAME = "FootnoteInserter";
 
 	@Override
 	public void insert(Context context, Footnote oldValue, Footnote newValue) {
@@ -31,7 +31,7 @@ public class FootnoteInserter implements Inserter<Footnote> {
 		}
 
 		// Updated now anyhow
-		oldValue.setUpdatedAt(new Date());
+		oldValue.setUpdatedTime(new Date());
 		
 	}
 

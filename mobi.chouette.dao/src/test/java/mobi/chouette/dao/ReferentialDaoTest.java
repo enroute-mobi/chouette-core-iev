@@ -109,7 +109,7 @@ public class ReferentialDaoTest extends Arquillian {
 		Referential r = new Referential();
 		r.setName("toto");
 		ReferentialMetadata md = new ReferentialMetadata();
-		Integer[] lids = new Integer[] { 1, 2, 3, 4 };
+		Long[] lids = new Long[] { 1L, 2L, 3L, 4L };
 		md.setLineIds(lids);
 		DateRange[] periods = new DateRange[2];
 		Calendar c = Calendar.getInstance();

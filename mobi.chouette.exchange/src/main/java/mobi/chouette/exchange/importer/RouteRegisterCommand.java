@@ -5,9 +5,7 @@ import java.io.StringWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,9 +24,8 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
+import mobi.chouette.exchange.importer.inserter.Inserter;
 import mobi.chouette.exchange.importer.inserter.RouteInserter;
-import mobi.chouette.exchange.importer.updater.RouteUpdater;
-import mobi.chouette.exchange.importer.updater.Updater;
 import mobi.chouette.exchange.parameters.AbstractImportParameter;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
@@ -51,7 +48,6 @@ public class RouteRegisterCommand implements Command {
 
 	public static final String COMMAND = "RouteRegisterCommand";
 
-	
 	@EJB
 	private RouteDAO routeDAO;
 
@@ -59,7 +55,7 @@ public class RouteRegisterCommand implements Command {
 	private VehicleJourneyDAO vehicleJourneyDAO;
 
 	@EJB(beanName = RouteInserter.BEAN_NAME)
-	private Updater<Line> routeUpdater;
+	private Inserter<Line> routeInserter;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

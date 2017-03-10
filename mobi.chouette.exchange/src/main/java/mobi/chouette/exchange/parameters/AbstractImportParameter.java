@@ -15,8 +15,14 @@ import org.apache.log4j.Logger;
 @NoArgsConstructor
 @ToString
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "noSave", "cleanRepository" ,"keepObsoleteLines"}, name = "actionImportParameter")
+@XmlType(propOrder = { "importId", "noSave", "cleanRepository" ,"keepObsoleteLines"}, name = "actionImportParameter")
 public class AbstractImportParameter extends AbstractParameter {
+	
+	@XmlElement(name = "import_id")
+	@Getter
+	@Setter
+	private Long importId = null;
+	
 
 	@XmlElement(name = "no_save", defaultValue = "false")
 	@Getter

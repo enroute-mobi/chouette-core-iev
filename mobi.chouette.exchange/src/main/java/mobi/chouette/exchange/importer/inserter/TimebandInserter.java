@@ -12,7 +12,7 @@ import mobi.chouette.model.Timeband;
 @Stateless(name = TimebandInserter.BEAN_NAME)
 public class TimebandInserter implements Inserter<Timeband> {
 
-	public static final String BEAN_NAME = "TimebandUpdater";
+	public static final String BEAN_NAME = "TimebandInserter";
 
 	@EJB 
 	private TimebandDAO timebandDAO;

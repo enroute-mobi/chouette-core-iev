@@ -31,7 +31,7 @@ public class FootnoteUpdater implements Updater<Footnote> {
 		}
 
 		// Updated now anyhow
-		oldValue.setUpdatedAt(new Date());
+		oldValue.setUpdatedTime(new Date());
 		
 	}
 

@@ -37,7 +37,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = VehicleJourneyInserter.BEAN_NAME)
 public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 
-	public static final String BEAN_NAME = "VehicleJourneyUpdater";
+	public static final String BEAN_NAME = "VehicleJourneyInserter";
 
 	private static final Comparator<VehicleJourneyAtStop> VEHICLE_JOURNEY_AT_STOP_COMPARATOR = new Comparator<VehicleJourneyAtStop>() {
 		@Override

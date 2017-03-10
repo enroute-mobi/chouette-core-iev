@@ -15,7 +15,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = RouteSectionInserter.BEAN_NAME)
 public class RouteSectionInserter implements Inserter<RouteSection> {
 
-	public static final String BEAN_NAME = "RouteSectionUpdater";
+	public static final String BEAN_NAME = "RouteSectionInserter";
 
 	@EJB 
 	private StopAreaDAO stopAreaDAO;

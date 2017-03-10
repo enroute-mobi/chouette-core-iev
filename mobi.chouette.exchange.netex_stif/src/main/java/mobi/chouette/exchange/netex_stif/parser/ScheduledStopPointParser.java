@@ -9,10 +9,6 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.exchange.netex_stif.model.ScheduledStopPoint;
-import mobi.chouette.model.StopPoint;
-import mobi.chouette.model.util.ObjectFactory;
-import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class ScheduledStopPointParser implements Parser, Constant {

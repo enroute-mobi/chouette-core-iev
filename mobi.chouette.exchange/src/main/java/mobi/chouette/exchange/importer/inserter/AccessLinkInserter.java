@@ -13,7 +13,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = AccessLinkInserter.BEAN_NAME)
 public class AccessLinkInserter implements Inserter<AccessLink> {
 
-	public static final String BEAN_NAME = "AccessLinkUpdater";
+	public static final String BEAN_NAME = "AccessLinkInserter";
 
 	@EJB 
 	private AccessPointDAO accessPointDAO;

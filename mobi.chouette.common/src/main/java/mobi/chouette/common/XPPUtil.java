@@ -7,8 +7,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.util.XmlPullUtil;
 
-import lombok.extern.log4j.Log4j;
-
 
 public class XPPUtil {
 	public static void nextStartTag(XmlPullParser xpp, String name) throws XmlPullParserException, IOException {

@@ -12,7 +12,7 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 public class VehicleJourneyAtStopInserter implements
 		Inserter<VehicleJourneyAtStop> {
 
-	public static final String BEAN_NAME = "VehicleJourneyAtStopUpdater";
+	public static final String BEAN_NAME = "VehicleJourneyAtStopInserter";
 
 	@EJB 
 	private StopPointDAO stopPointDAO;

@@ -11,7 +11,7 @@ import mobi.chouette.model.Company;
 @Stateless(name = CompanyInserter.BEAN_NAME)
 public class CompanyInserter implements Inserter<Company> {
 
-	public static final String BEAN_NAME = "CompanyUpdater";
+	public static final String BEAN_NAME = "CompanyInserter";
 
 	@Override
 	public void insert(Context context, Company oldValue, Company newValue) {

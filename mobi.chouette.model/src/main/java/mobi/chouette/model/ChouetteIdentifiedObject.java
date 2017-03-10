@@ -77,8 +77,20 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	 */
 	@Getter
 	@Setter
-	@Column(name = "creation_time")
+	@Column(name = "created_at")
 	protected Date creationTime = new Date();
+
+	/**
+	 * update time
+	 * 
+	 * @param updateTime
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "updated_at")
+	protected Date updatedTime = new Date();
 
 	/**
 	 * creator id
@@ -116,7 +128,7 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	 * 
 	 * @param oid
 	 *            objectId to check
-	 * @return true if valid, false othewise
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean checkObjectId(String oid) {
 		if (oid == null)

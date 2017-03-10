@@ -16,7 +16,7 @@ import mobi.chouette.model.util.NamingUtil;
 @Stateless(name = TimetableInserter.BEAN_NAME)
 public class TimetableInserter implements Inserter<Timetable> {
 
-	public static final String BEAN_NAME = "TimetableUpdater";
+	public static final String BEAN_NAME = "TimetableInserter";
 
 	private static final Comparator<Period> PERIOD_COMPARATOR = new Comparator<Period>() {
 		@Override

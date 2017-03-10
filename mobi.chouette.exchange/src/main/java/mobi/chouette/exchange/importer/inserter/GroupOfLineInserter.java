@@ -8,7 +8,7 @@ import mobi.chouette.model.GroupOfLine;
 @Stateless(name = GroupOfLineInserter.BEAN_NAME)
 public class GroupOfLineInserter implements Inserter<GroupOfLine> {
 
-	public static final String BEAN_NAME = "GroupOfLineUpdater";
+	public static final String BEAN_NAME = "GroupOfLineInserter";
 
 	@Override
 	public void insert(Context context, GroupOfLine oldValue, GroupOfLine newValue) {

@@ -16,7 +16,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = StopPointInserter.BEAN_NAME)
 public class StopPointInserter implements Inserter<StopPoint> {
 
-	public static final String BEAN_NAME = "StopPointUpdater";
+	public static final String BEAN_NAME = "StopPointInserter";
 
 	@EJB
 	private StopAreaDAO stopAreaDAO;

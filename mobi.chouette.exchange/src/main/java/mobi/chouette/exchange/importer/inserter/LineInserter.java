@@ -32,7 +32,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = LineInserter.BEAN_NAME)
 public class LineInserter implements Inserter<Line> {
 
-	public static final String BEAN_NAME = "LineUpdater";
+	public static final String BEAN_NAME = "LineInserter";
 
 	@EJB
 	private NetworkDAO ptNetworkDAO;

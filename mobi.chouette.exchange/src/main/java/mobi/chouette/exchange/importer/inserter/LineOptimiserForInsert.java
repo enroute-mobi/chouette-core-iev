@@ -38,7 +38,7 @@ import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
 @Stateless
-public class LineOptimiser {
+public class LineOptimiserForInsert {
 
 	@EJB
 	private ConnectionLinkDAO connectionLinkDAO;

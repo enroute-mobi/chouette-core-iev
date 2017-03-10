@@ -13,7 +13,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = JourneyFrequencyInserter.BEAN_NAME)
 public class JourneyFrequencyInserter implements Inserter<JourneyFrequency> {
 
-	public static final String BEAN_NAME = "JourneyFrequencyUpdater";
+	public static final String BEAN_NAME = "JourneyFrequencyInserter";
 
 	@EJB 
 	private TimebandDAO timebandDAO;

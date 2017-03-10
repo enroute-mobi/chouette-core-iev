@@ -25,7 +25,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = JourneyPatternInserter.BEAN_NAME)
 public class JourneyPatternInserter implements Inserter<JourneyPattern> {
 
-	public static final String BEAN_NAME = "JourneyPatternUpdater";
+	public static final String BEAN_NAME = "JourneyPatternInserter";
 
 	@EJB
 	private StopPointDAO stopPointDAO;

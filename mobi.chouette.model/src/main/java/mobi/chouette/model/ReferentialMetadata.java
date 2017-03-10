@@ -2,12 +2,9 @@ package mobi.chouette.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import mobi.chouette.model.type.DateRange;
 
 @Entity
@@ -35,9 +31,9 @@ public class ReferentialMetadata {
 
 	@Getter
 	@Setter
-	@Column(name = "line_ids",columnDefinition="int[]")
-	@Type(type = "mobi.chouette.model.usertype.IntegerArrayUserType")
-	private Integer[] lineIds;
+	@Column(name = "line_ids",columnDefinition="bigint[]")
+	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
+	private Long[] lineIds;
 
 	@Getter
 	@Setter

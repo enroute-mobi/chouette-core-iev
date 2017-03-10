@@ -24,7 +24,7 @@ import mobi.chouette.model.util.Referential;
 @Stateless(name = RouteInserter.BEAN_NAME)
 public class RouteInserter implements Inserter<Route> {
 
-	public static final String BEAN_NAME = "RouteUpdater";
+	public static final String BEAN_NAME = "RouteInserter";
 
 	@EJB
 	private RouteDAO routeDAO;

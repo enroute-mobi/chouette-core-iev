@@ -18,7 +18,10 @@
 		<class>mobi.chouette.model.Line</class>
 		<class>mobi.chouette.model.Network</class>
 		<class>mobi.chouette.model.StopArea</class>
-      <class>mobi.chouette.model.RouteSection</class>
+		<class>mobi.chouette.model.RouteSection</class>
+		<class>mobi.chouette.model.CompanyLite</class>
+		<class>mobi.chouette.model.LineLite</class>
+		<class>mobi.chouette.model.StopAreaLite</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<validation-mode>NONE</validation-mode>
 
@@ -34,20 +37,20 @@
 			<property name="javax.persistence.validation.mode" value="none" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.default_schema" value="public" />
-         <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="javax.persistence.validation.mode" value="none" />
 		</properties>
-		
-		
+
+
 	</persistence-unit>
 
 	<persistence-unit name="referential" transaction-type="JTA">
 
 		<jta-data-source>java:jboss/datasources/chouette</jta-data-source>
 
-		
+
 		<class>mobi.chouette.model.CalendarDay</class>
-      <class>mobi.chouette.model.Footnote</class>
+		<class>mobi.chouette.model.Footnote</class>
 		<class>mobi.chouette.model.JourneyFrequency</class>
 		<class>mobi.chouette.model.JourneyPattern</class>
 		<class>mobi.chouette.model.Period</class>
@@ -74,7 +77,8 @@
 			<property name="hibernate.cache.use_second_level_cache"
 				value="true" />
 			<property name="hibernate.cache.use_query_cache" value="true" />
-         <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect" />
+			<property name="hibernate.dialect"
+				value="org.hibernate.spatial.dialect.postgis.PostgisDialect" />
 			<property name="javax.persistence.validation.mode" value="none" />
 		</properties>
 	</persistence-unit>

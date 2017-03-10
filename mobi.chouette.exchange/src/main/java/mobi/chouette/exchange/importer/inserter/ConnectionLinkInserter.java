@@ -21,7 +21,7 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class ConnectionLinkInserter implements Inserter<ConnectionLink> {
 
-	public static final String BEAN_NAME = "ConnectionLinkUpdater";
+	public static final String BEAN_NAME = "ConnectionLinkInserter";
 
 	@EJB
 	private StopAreaDAO stopAreaDAO;

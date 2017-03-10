@@ -32,7 +32,7 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class StopAreaInserter implements Inserter<StopArea> {
 
-	public static final String BEAN_NAME = "StopAreaUpdater";
+	public static final String BEAN_NAME = "StopAreaInserter";
 
 	@EJB
 	private StopAreaDAO stopAreaDAO;

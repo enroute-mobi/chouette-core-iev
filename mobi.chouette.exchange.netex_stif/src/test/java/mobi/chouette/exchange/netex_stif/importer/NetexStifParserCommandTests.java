@@ -15,7 +15,6 @@ import org.apache.log4j.BasicConfigurator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.ParserUtils;

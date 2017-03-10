@@ -22,7 +22,6 @@ import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
 import mobi.chouette.exchange.importer.CopyCommand;
-import mobi.chouette.exchange.importer.LineRegisterCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
 import mobi.chouette.exchange.importer.UncompressCommand;
 import mobi.chouette.exchange.validation.ImportedLineValidatorCommand;

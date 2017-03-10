@@ -1,11 +1,9 @@
 package mobi.chouette.dao;
 
 import java.io.File;
+import java.util.List;
 
 import javax.ejb.EJB;
-
-import mobi.chouette.model.Line;
-import mobi.chouette.persistence.hibernate.ContextHolder;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
@@ -16,11 +14,13 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import mobi.chouette.model.StopAreaLite;
 
-public class LineDaoTest extends Arquillian
+
+public class StopAreaLiteDaoTest extends Arquillian
 {
 	@EJB 
-	LineDAO lineDao;
+	StopAreaLiteDAO stopAreaLiteDao;
 
 
 	@Deployment
@@ -45,26 +45,13 @@ public class LineDaoTest extends Arquillian
 	}
 	
 	@Test
-	public void checkSequence()
+	public void checkReadStopAreas()
 	{
-		ContextHolder.setContext("chouette_gui"); // set tenant schema
-		for (int i = 0; i < 300; i++)
-		{
-			Line l = createLine();
-			lineDao.create(l);
-			Assert.assertEquals(l.getId(), Long.valueOf(i+2),"line id");
+		List<StopAreaLite> stopAreas = stopAreaLiteDao.findByType(1L,"zder");
+		Assert.assertNotEquals(stopAreas.size(), 0,"stop area list");
+		for (StopAreaLite stopAreaLite : stopAreas) {
+			Assert.assertNotNull(stopAreaLite.getId(),"stop Area id");
 		}
-	}
-	
-	private int id = 1;
-	private Line createLine()
-	{
-		Line l = new Line();
-		l.setName("toto");
-		l.setObjectId("test:Line:"+id);
-		id++;
-		
-		return l;
 	}
 	
 
