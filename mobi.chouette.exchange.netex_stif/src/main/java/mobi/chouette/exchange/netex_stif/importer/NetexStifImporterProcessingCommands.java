@@ -56,6 +56,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 			}
 			commands.add(CommandFactory.create(initialContext, UncompressCommand.class.getName()));
 			commands.add(CommandFactory.create(initialContext, NetexStifInitImportCommand.class.getName()));
+			commands.add(CommandFactory.create(initialContext, NetexStifLoadSharedDataCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
 			throw new RuntimeException("unable to call factories");
