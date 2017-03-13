@@ -35,6 +35,7 @@ import mobi.chouette.dao.LineDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.parser.NetexStifUtils;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
@@ -167,42 +168,25 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		f.mkdirs();
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(IMPORTER);
-		jobData.setType( "neptune");
+		jobData.setType( "netex_stif");
 		context.put("testng", "true");
 		context.put(OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
 
-	// @Test(groups = { "CheckParameters" }, description = "Import Plugin should reject file not found")
-	public void verifyCheckInputFileExists() throws Exception {
-		// TODO test à passer aussi sur la commande uncompress du module
-		// mobi.chouette.exchange
-		Context context = initImportContext();
-		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-				NetexStifImporterCommand.class.getName());
-		try {
-			command.execute(context);
-		} catch (Exception ex) {
-			log.error("test failed", ex);
-			throw ex;
-		}
-		ActionReport report = (ActionReport) context.get(REPORT);
-		Assert.assertEquals(report.getResult(), STATUS_ERROR, "result");
-		Assert.assertTrue(report.getFailure().getDescription().startsWith("Missing"), "error message " + report.getFailure());
-		System.out.println("error message = " + report.getFailure());
-
-	}
+	
 	
 
-	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
+	//@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
 	public void verifyImportLine() throws Exception {
 		Context context = initImportContext();
+		context.put(REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
-		//NeptuneTestsUtils.copyFile("C_NEPTUNE_1.xml");
+		NetexStifUtils.copyFile("OFFRE_TRANSDEV_20170301122517.zip");
 		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		jobData.setInputFilename("C_NEPTUNE_1.xml");
+		jobData.setInputFilename("OFFRE_TRANSDEV_20170301122517.zip");
 		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
 		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
@@ -240,123 +224,6 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	}
 
-	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file with frequencies")
-	public void verifyImportLineWithFrequency() throws Exception {
-		Context context = initImportContext();
-		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-				NetexStifImporterCommand.class.getName());
-		//NeptuneTestsUtils.copyFile("Neptune_With_Frequencies.xml");
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		jobData.setInputFilename("Neptune_With_Frequencies.xml");
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
-		configuration.setNoSave(false);
-		configuration.setCleanRepository(true);
-		try {
-			command.execute(context);
-		} catch (Exception ex) {
-			log.error("test failed", ex);
-			throw ex;
-		}
-		ActionReport report = (ActionReport) context.get(REPORT);
-		Assert.assertEquals(report.getResult(), STATUS_OK, "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported");
-		Assert.assertNotNull(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE), "line reported");
-		Assert.assertEquals(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports().size(), 1, "line reported");
-		for (ObjectReport info : report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports()) {
-			Reporter.log("report line :" + info.toString(), true);
-			Assert.assertEquals(info.getStatus(), OBJECT_STATE.OK, "line status");
-		}
-
-		//NeptuneTestsUtils.checkLineWithFrequencies(context);
-		
-		Referential referential = (Referential) context.get(REFERENTIAL);
-		Assert.assertNotEquals(referential.getTimetables(),0, "timetables" );
-		Assert.assertNotEquals(referential.getSharedTimetables(),0, "shared timetables" );
-
-		// line should be saved
-		utx.begin();
-		em.joinTransaction();
-		Line line = lineDao.findByObjectId("NINOXE:Line:15574334");
-		
-		//NeptuneTestsUtils.checkMinimalLine(line);
-		
-		utx.rollback();
-
-	}
-
-	// @Test(groups = { "ImportRCLine" }, description = "Import Plugin should import file with ITL")
-	public void verifyImportRCLine() throws Exception {
-		Context context = initImportContext();
-		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-				NetexStifImporterCommand.class.getName());
-//		NeptuneTestsUtils.copyFile("C_CHOUETTE_52.xml");
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		jobData.setInputFilename("C_CHOUETTE_52.xml");
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
-		configuration.setNoSave(true);
-		try {
-			command.execute(context);
-		} catch (Exception ex) {
-			log.error("test failed", ex);
-			throw ex;
-		}
-		ActionReport report = (ActionReport) context.get(REPORT);
-		Reporter.log("report :" + report.toString(), true);
-		ValidationReport valreport = (ValidationReport) context.get(VALIDATION_REPORT);
-		Reporter.log("valreport :" + valreport.toString(), true);
-		Assert.assertEquals(report.getResult(), STATUS_OK, "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported");
-		Assert.assertNotNull(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE), "line reported");
-		Assert.assertEquals(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports().size(), 1, "line reported");
-		for (ObjectReport info : report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports()) {
-			Assert.assertEquals(info.getStatus(), OBJECT_STATE.OK, "line status");
-		}
-
-		Referential referential = (Referential) context.get(REFERENTIAL);
-		Assert.assertNotNull(referential, "referential");
-		Assert.assertEquals(referential.getLines().size(), 1, "lines size");
-		Line line = referential.getLines().get("Hastustoto:Line:52");
-		Assert.assertNotNull(line, "line");
-
-		Assert.assertNotNull(line.getRoutingConstraints(), "line must have routing constraints");
-		Assert.assertEquals(line.getRoutingConstraints().size(), 1, "line must have 1 routing constraint");
-		StopArea area = line.getRoutingConstraints().get(0);
-		Assert.assertEquals(area.getAreaType(), ChouetteAreaEnum.ITL, "routing constraint area must be of "
-				+ ChouetteAreaEnum.ITL + " type");
-		Assert.assertNotNull(area.getRoutingConstraintAreas(),
-				"routing constraint area must have stopArea children as routing constraints");
-		Assert.assertEquals(area.getContainedStopAreas().size(),0, "routing constraint area must not have stopArea children");
-		Assert.assertNull(area.getParent(), "routing constraint area must not have stopArea parent");
-		Assert.assertTrue(area.getRoutingConstraintAreas().size() > 0,
-				"routing constraint area must have stopArea children as routing constraints");
-	}
-
-	// @Test(groups = { "ImportZipLines" }, description = "Import Plugin should import zip file")
-	public void verifyImportZipLines() throws Exception {
-		Context context = initImportContext();
-		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-				NetexStifImporterCommand.class.getName());
-		//NeptuneTestsUtils.copyFile("lignes_neptune.zip");
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		jobData.setInputFilename("lignes_neptune.zip");
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
-		configuration.setNoSave(false);
-		try {
-			command.execute(context);
-		} catch (Exception ex) {
-			log.error("test failed", ex);
-			throw ex;
-		}
-		ActionReport report = (ActionReport) context.get(REPORT);
-		Assert.assertEquals(report.getResult(), STATUS_OK, "result");
-		Assert.assertEquals(report.getFiles().size(), 7, "file reported");
-		Assert.assertNotNull(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE), "line reported");
-		Assert.assertEquals(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports().size(), 6, "line reported");
-		for (ObjectReport info : report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports()) {
-			Reporter.log("report line :" + info.toString(), true);
-			Assert.assertEquals(info.getStatus(), OBJECT_STATE.OK, "line status");
-		}
-
-	}
-
+	
+	
 }
