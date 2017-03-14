@@ -44,12 +44,12 @@ public class Referential {
 	@Getter
 	@Setter
 	@Column(name="line_referential_id")
-	private Integer lineReferentialId;
+	private Long lineReferentialId;
 	
 	@Getter
 	@Setter
 	@Column(name="stop_area_referential_id")
-	private Integer stopAreaReferentialId;
+	private Long stopAreaReferentialId;
 	
 	@Getter
 	@Setter

@@ -6,6 +6,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import mobi.chouette.common.Context;
+import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifParserCommand;
@@ -41,7 +42,7 @@ public class NetexStifParserTest  implements mobi.chouette.common.Constant{
 		File f = new File("src/test/data/valid/line_test.xml");
 		JobDataTest job = new JobDataTest();
 		context.put(JOB_DATA, job);
-		job.setAction("importer");
+		job.setAction(JobData.ACTION.importer);
 		job.setType("netex");
 		job.setPathName("target/referential/test");
 		job.setReferential("chouette_gui");

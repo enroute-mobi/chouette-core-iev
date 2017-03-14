@@ -552,12 +552,12 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>mobi.chouette.service</artifactId>
+				<artifactId>mobi.chouette.boiv.service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>mobi.chouette.ws</artifactId>
+				<artifactId>mobi.chouette.boiv.ws</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -840,15 +840,12 @@
 		<module>mobi.chouette.common</module>
 		<module>mobi.chouette.persistence.hibernate</module>
 		<module>mobi.chouette.model</module>
-		<module>mobi.chouette.model.iev</module>
 		<module>mobi.chouette.dao</module>
-		<module>mobi.chouette.dao.iev</module>
 		<module>mobi.chouette.exchange</module>
 		<module>mobi.chouette.exchange.netex_stif</module>
 		<module>mobi.chouette.exchange.validator</module>
-		<module>mobi.chouette.service</module>
-		<module>mobi.chouette.schema.checker</module>
-		<module>mobi.chouette.ws</module>
+		<module>mobi.chouette.boiv.service</module>
+		<module>mobi.chouette.boiv.ws</module>
 		<module>boiv_iev</module>
 	</modules>
 </project>

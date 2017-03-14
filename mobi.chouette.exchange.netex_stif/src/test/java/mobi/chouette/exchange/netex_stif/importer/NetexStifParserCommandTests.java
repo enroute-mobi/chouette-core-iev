@@ -16,6 +16,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import mobi.chouette.common.Context;
+import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
@@ -88,7 +89,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 			}
 		f.mkdirs();
 		test.setReferential("chouette_gui");
-		test.setAction(IMPORTER);
+		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
 		context.put("testng", "true");
 		context.put(OPTIMIZED, Boolean.FALSE);

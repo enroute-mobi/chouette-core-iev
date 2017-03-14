@@ -111,6 +111,12 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		
 		return lstResults;
 	}
-	
+
+	@Override
+	public AbstractParameter toActionParameter(Object task) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

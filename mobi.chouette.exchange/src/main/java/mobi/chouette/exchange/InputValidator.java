@@ -9,6 +9,8 @@ import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 
 public interface InputValidator {
 	AbstractParameter toActionParameter(String abstractParameter);
+	
+	AbstractParameter toActionParameter(Object task);
 
 	ValidationParameters toValidation(String validationParameters);
 
