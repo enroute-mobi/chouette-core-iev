@@ -25,13 +25,11 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.ReferentialMetadata;
 import mobi.chouette.model.type.DateRange;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
-@Log4j
 public class ReferentialDaoTest extends Arquillian {
 	@EJB
 	ReferentialDAO referentialDao;

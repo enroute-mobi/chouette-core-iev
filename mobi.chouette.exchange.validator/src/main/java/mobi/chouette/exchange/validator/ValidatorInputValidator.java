@@ -15,7 +15,6 @@ import mobi.chouette.exchange.TestDescription;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.checkpoint.AbstractValidation;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
-import mobi.chouette.model.Referential;
 
 @Log4j
 public class ValidatorInputValidator extends AbstractInputValidator {
