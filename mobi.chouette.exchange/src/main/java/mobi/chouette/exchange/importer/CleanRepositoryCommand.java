@@ -41,50 +41,18 @@ public class CleanRepositoryCommand implements Command {
 
 	public static final String COMMAND = "CleanRepositoryCommand";
 
-	@EJB
-	private AccessLinkDAO accessLinkDAO;
-
-	@EJB
-	private AccessPointDAO accessPointDAO;
-
-	@EJB
-	private CompanyDAO companyDAO;
-
-	@EJB
-	private ConnectionLinkDAO connectionLinkDAO;
-
-	@EJB
-	private GroupOfLineDAO groupOfLineDAO;
-
-	@EJB
-	private JourneyFrequencyDAO journeyFrequencyDAO;
 
 	@EJB
 	private JourneyPatternDAO journeyPatternDAO;
 
 	@EJB
-	private LineDAO lineDAO;
-
-	@EJB
-	private NetworkDAO networkDAO;
-
-	@EJB
 	private RouteDAO routeDAO;
-
-	@EJB
-	private RouteSectionDAO routeSectionDAO;
-
-	@EJB
-	private StopAreaDAO stopAreaDAO;
 
 	@EJB
 	private StopPointDAO stopPointDAO;
 
 	@EJB
 	private TimetableDAO timetableDAO;
-
-	@EJB
-	private TimebandDAO timebandDAO;
 
 	@EJB
 	private VehicleJourneyDAO vehicleJourneyDAO;
@@ -98,24 +66,16 @@ public class CleanRepositoryCommand implements Command {
 
 		boolean result = ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-
+		log.debug("aaa");
 		try {
-
-			accessLinkDAO.truncate();
-			accessPointDAO.truncate();
-			companyDAO.truncate();
-			connectionLinkDAO.truncate();
-			groupOfLineDAO.truncate();
-			journeyFrequencyDAO.truncate();
+			log.debug("nnnn");
+			
+			log.debug("mm");
+			log.debug("oo");
 			journeyPatternDAO.truncate();
-			lineDAO.truncate();
-			networkDAO.truncate();
 			routeDAO.truncate();
-			routeSectionDAO.truncate();
-			stopAreaDAO.truncate();
 			stopPointDAO.truncate();
 			timetableDAO.truncate();
-			timebandDAO.truncate();
 			vehicleJourneyDAO.truncate();
 			vehicleJourneyAtStopDAO.truncate();
 

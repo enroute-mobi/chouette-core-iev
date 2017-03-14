@@ -47,7 +47,7 @@ public class StopAreaLiteDaoTest extends Arquillian
 	@Test
 	public void checkReadStopAreas()
 	{
-		List<StopAreaLite> stopAreas = stopAreaLiteDao.findByType(1L,"zder");
+		List<StopAreaLite> stopAreas = stopAreaLiteDao.findByType(1L,"zdep");
 		Assert.assertNotEquals(stopAreas.size(), 0,"stop area list");
 		for (StopAreaLite stopAreaLite : stopAreas) {
 			Assert.assertNotNull(stopAreaLite.getId(),"stop Area id");

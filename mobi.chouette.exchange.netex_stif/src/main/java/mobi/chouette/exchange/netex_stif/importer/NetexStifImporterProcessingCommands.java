@@ -96,6 +96,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 				Command validation = CommandFactory.create(initialContext, NetexStifValidationCommand.class.getName());
 				chain.add(validation);
 
+				log.debug("WithDao : "  + withDao + " / "+ parameters.isNoSave());
 				if (withDao && !parameters.isNoSave()) {
 
 					// register
@@ -111,6 +112,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 							ImportedLineValidatorCommand.class.getName());
 					chain.add(validate);
 				}
+				//chain.execute(context);
 			}
 
 		} catch (Exception e) {

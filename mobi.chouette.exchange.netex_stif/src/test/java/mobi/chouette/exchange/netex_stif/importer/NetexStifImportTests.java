@@ -24,27 +24,22 @@ import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.testng.Assert;
-import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.LineDAO;
+import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.netex_stif.parser.NetexStifUtils;
 import mobi.chouette.exchange.report.ActionReport;
-import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
-import mobi.chouette.exchange.report.ObjectReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.StopArea;
-import mobi.chouette.model.type.ChouetteAreaEnum;
+import mobi.chouette.model.Route;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
@@ -53,6 +48,9 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	@EJB 
 	LineDAO lineDao;
+	
+	@EJB
+	RouteDAO routeDao;
 
 	@EJB 
 	VehicleJourneyDAO vjDao;
@@ -178,7 +176,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 	
 	
 
-	//@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
+	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
 	public void verifyImportLine() throws Exception {
 		Context context = initImportContext();
 		context.put(REFERENTIAL, new Referential());
@@ -196,27 +194,20 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 			log.error("test failed", ex);
 			throw ex;
 		}
-		ActionReport report = (ActionReport) context.get(REPORT);
-		Reporter.log("report :" + report.toString(), true);
-		Assert.assertEquals(report.getResult(), STATUS_OK, "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported");
-		Assert.assertNotNull(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE), "line reported");
-		Assert.assertEquals(report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports().size(), 1, "line reported");
-		for (ObjectReport info : report.getCollections().get(ActionReporter.OBJECT_TYPE.LINE).getObjectReports()) {
-			Reporter.log("report line :" + info.toString(), true);
-			Assert.assertEquals(info.getStatus(), OBJECT_STATE.OK, "line status");
-		}
 		
-		//NeptuneTestsUtils.checkLine(context);
 		
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		Assert.assertNotEquals(referential.getTimetables(),0, "timetables" );
-		Assert.assertNotEquals(referential.getSharedTimetables(),0, "shared timetables" );
+//		Assert.assertNotEquals(referential.getTimetables(),0, "timetables" );
+//		Assert.assertNotEquals(referential.getSharedTimetables(),0, "shared timetables" );
 
 		// line should be saved
 		utx.begin();
 		em.joinTransaction();
-		Line line = lineDao.findByObjectId("NINOXE:Line:15574334");
+		//Line line = lineDao.findByObjectId("");
+		List<Route> routes = routeDao.findAll();
+		for (Route route : routes) {
+			System.out.println("route :" + route.getObjectId());
+		}
 		
 		//NeptuneTestsUtils.checkMinimalLine(line);
 		
