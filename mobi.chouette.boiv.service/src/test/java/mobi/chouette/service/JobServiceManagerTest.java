@@ -1,11 +1,8 @@
 package mobi.chouette.service;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 

@@ -1,9 +1,12 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import lombok.extern.log4j.Log4j;
@@ -204,6 +207,13 @@ public class NetexStifUtils extends ParserUtils {
 
 	public static String genStopPointId(StopPoint stopPoint) {
 		return stopPoint.getId() + ID_SEPARATOR + stopPoint.getPosition();
+	}
+	
+	protected static final String path = "src/test/data";
+	public static  void copyFile(String fileName) throws IOException {
+		File srcFile = new File(path, fileName);
+		File destFile = new File("target/referential/test", fileName);
+		FileUtils.copyFile(srcFile, destFile);
 	}
 
 }

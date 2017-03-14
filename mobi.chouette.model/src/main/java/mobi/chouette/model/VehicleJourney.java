@@ -342,6 +342,6 @@ public class VehicleJourney extends ChouetteIdentifiedObject {
 	@JoinColumn(name = "vehicle_journey_id", updatable = false)
 	private List<JourneyFrequency> journeyFrequencies = new ArrayList<JourneyFrequency>(0);
 
-	@Setter
+	@Setter @Getter
 	private String companyId;
 }

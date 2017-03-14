@@ -269,6 +269,7 @@ public class Route extends ChouetteIdentifiedObject {
 	private List<StopPoint> stopPoints = new ArrayList<StopPoint>(0);
 
 	@Setter
+	@Getter
 	private String lineId;
 
 }
