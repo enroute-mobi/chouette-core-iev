@@ -1,6 +1,10 @@
 package mobi.chouette.common;
 
 public interface JobData {
+
+	public enum ACTION { 
+		importer,exporter,validator
+	}
 	
 	Long getId();
 	String getInputFilename();
@@ -8,7 +12,7 @@ public interface JobData {
 	String getOutputFilename();
 	void setOutputFilename(String filename); 
 	String getReferential();
-	String getAction();
+	ACTION getAction();
 	String getType();
 	String getPathName();
 

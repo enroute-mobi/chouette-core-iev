@@ -6,7 +6,7 @@ import javax.persistence.PersistenceContext;
 
 import mobi.chouette.model.Referential;
 
-@Stateless
+@Stateless (name="ReferentialDAO")
 public class ReferentialDAOImpl extends GenericDAOImpl<Referential> implements ReferentialDAO{
 
 	public ReferentialDAOImpl() {

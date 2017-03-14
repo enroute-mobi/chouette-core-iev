@@ -30,6 +30,7 @@ import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.LineDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
@@ -166,7 +167,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 			}
 		f.mkdirs();
 		jobData.setReferential("chouette_gui");
-		jobData.setAction(IMPORTER);
+		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType( "neptune");
 		context.put("testng", "true");
 		context.put(OPTIMIZED, Boolean.FALSE);

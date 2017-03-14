@@ -3,6 +3,7 @@ package mobi.chouette.exchange.netex_stif.importer;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.extern.log4j.Log4j;
@@ -15,6 +16,8 @@ import mobi.chouette.exchange.importer.updater.DatabaseTestUtils;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.checkpoint.AbstractValidation;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
+import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.Referential;
 
 @Log4j
 public class NetexStifImporterInputValidator extends AbstractInputValidator {
@@ -27,11 +30,13 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 			return null;
 		}
 	}
+
 	@Override
 	public boolean checkParameters(String abstractParameterString, String validationParametersString) {
 
 		try {
-			NetexStifImportParameters parameters = JSONUtil.fromJSON(abstractParameterString, NetexStifImportParameters.class);
+			NetexStifImportParameters parameters = JSONUtil.fromJSON(abstractParameterString,
+					NetexStifImportParameters.class);
 
 			ValidationParameters validationParameters = JSONUtil.fromJSON(validationParametersString,
 					ValidationParameters.class);
@@ -42,6 +47,7 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 			return false;
 		}
 	}
+
 	@Override
 	public boolean checkParameters(AbstractParameter abstractParameter, ValidationParameters validationParameters) {
 		if (!(abstractParameter instanceof NetexStifImportParameters)) {
@@ -53,11 +59,11 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 
 	@Override
 	public boolean checkFilename(String fileName) {
-		if (fileName  == null || fileName.isEmpty()) {
+		if (fileName == null || fileName.isEmpty()) {
 			log.error("input data expected");
 			return false;
 		}
-		
+
 		if (!fileName.endsWith(".zip") && !fileName.endsWith(".xml")) {
 			log.error("xml or Zip archive input data expected");
 			return false;
@@ -65,12 +71,12 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean checkFile(String fileName, Path filePath, AbstractParameter abstractParameter) {
 		return checkFileExistenceInZip(fileName, filePath, "xml");
 	}
-	
+
 	public static class DefaultFactory extends InputValidatorFactory {
 
 		@Override
@@ -81,8 +87,7 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 	}
 
 	static {
-		InputValidatorFactory.factories.put(NetexStifImporterInputValidator.class.getName(),
-				new DefaultFactory());
+		InputValidatorFactory.factories.put(NetexStifImporterInputValidator.class.getName(), new DefaultFactory());
 	}
 
 	@Override
@@ -91,9 +96,28 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 		List<TestDescription> lstTestWithDatabase = new ArrayList<TestDescription>();
 		lstTestWithDatabase.addAll(dbTestUtils.getTestUtilsList());
 		lstTestWithDatabase.addAll(AbstractValidation.getTestLevel3FileList());
-		
+
 		return lstTestWithDatabase;
 	}
-	
+
+	@Override
+	public AbstractParameter toActionParameter( Object task) {
+		if (task instanceof ImportTask) {
+			ImportTask importTask = (ImportTask) task;
+			if (!importTask.getFormat().equals("netex_stif"))
+				return null;
+			Referential referential = importTask.getReferential();
+			NetexStifImportParameters parameter = new NetexStifImportParameters();
+			parameter.setImportId(importTask.getId());
+			parameter.setLineReferentialId(referential.getLineReferentialId());
+			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
+			parameter.setReferencesType("lines");
+			parameter.setIds(Arrays.asList(referential.getMetadata().getLineIds()));
+			parameter.setReferentialId(referential.getId());
+			parameter.setReferentialName(referential.getName());
+			return parameter;
+		}
+		return null;
+	}
 
 }

@@ -71,7 +71,7 @@
 		        <modules>
 		            <webModule>
 		                <groupId>mobi.chouette</groupId>
-		                <artifactId>mobi.chouette.ws</artifactId>
+		                <artifactId>mobi.chouette.boiv.ws</artifactId>
 		                <uri>mobi.chouette.ws.war</uri>
 		                <bundleFileName>mobi.chouette.ws.war</bundleFileName>
 		                <contextRoot>/boiv_iev</contextRoot>
@@ -79,7 +79,7 @@
 		        </modules>
 				</configuration>
 			</plugin>
-			<plugin>
+<!-- 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>${version.wildfly.maven.plugin}</version>
@@ -95,7 +95,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
          <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
@@ -138,22 +138,16 @@
          <type>ejb</type>        
          <version>${project.version}</version>
       </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.schema.checker</artifactId>
-         <type>ejb</type>        
-         <version>${project.version}</version>
-      </dependency>
 
       <dependency>
          <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.service</artifactId>
+         <artifactId>mobi.chouette.boiv.service</artifactId>
          <type>ejb</type>        
          <version>${project.version}</version>
       </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>mobi.chouette.ws</artifactId>
+			<artifactId>mobi.chouette.boiv.ws</artifactId>
 			<type>war</type>			
 			<version>${project.version}</version>
 		</dependency>

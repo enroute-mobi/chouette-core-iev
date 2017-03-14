@@ -105,5 +105,10 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 		List<TestDescription> emptyList = new ArrayList<TestDescription>();
 		return emptyList;
 	}
+	@Override
+	public AbstractParameter toActionParameter(Object task) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

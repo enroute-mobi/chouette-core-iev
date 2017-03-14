@@ -15,6 +15,7 @@ import mobi.chouette.exchange.TestDescription;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.checkpoint.AbstractValidation;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
+import mobi.chouette.model.Referential;
 
 @Log4j
 public class ValidatorInputValidator extends AbstractInputValidator {
@@ -111,6 +112,12 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		
 		return lstResults;
 	}
-	
+
+	@Override
+	public AbstractParameter toActionParameter(Object task) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

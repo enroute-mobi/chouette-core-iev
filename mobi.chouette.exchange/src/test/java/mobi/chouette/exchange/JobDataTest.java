@@ -12,7 +12,7 @@ public class JobDataTest implements JobData {
 
 	private String outputFilename;
 
-	private String action;
+	private JobData.ACTION action;
 	
 	private String type;
 	

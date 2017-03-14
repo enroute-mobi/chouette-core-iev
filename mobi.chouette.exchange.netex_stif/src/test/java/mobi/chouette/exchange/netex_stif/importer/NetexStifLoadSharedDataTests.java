@@ -30,6 +30,7 @@ import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.LineDAO;
@@ -166,7 +167,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 			}
 		f.mkdirs();
 		jobData.setReferential("chouette_gui");
-		jobData.setAction(IMPORTER);
+		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType( "netex_stif");
 		context.put("testng", "true");
 		context.put(OPTIMIZED, Boolean.FALSE);
