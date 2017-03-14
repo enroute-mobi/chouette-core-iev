@@ -24,12 +24,9 @@ import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-<<<<<<< HEAD
 import org.testng.annotations.Test;
-=======
 import org.testng.Assert;
 import org.testng.Reporter;
->>>>>>> 68a7161c955f91b834c5226574b414894ed13ffe
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
@@ -45,10 +42,7 @@ import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Line;
-<<<<<<< HEAD
 import mobi.chouette.model.Route;
-=======
->>>>>>> 68a7161c955f91b834c5226574b414894ed13ffe
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
