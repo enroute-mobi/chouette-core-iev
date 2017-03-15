@@ -4,9 +4,18 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
@@ -15,45 +24,69 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.dao.ActionDAO;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.report.ProgressionReport;
 import mobi.chouette.exchange.report.Report;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.report.StepProgression;
 import mobi.chouette.exchange.report.StepProgression.STEP;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
+import mobi.chouette.model.ActionTask;
 
 @Log4j
+@Stateless(name = ProgressionCommand.COMMAND)
 public class ProgressionCommand implements Command, Constant, ReportConstant {
 
 	public static final String COMMAND = "ProgressionCommand";
+	
+	@EJB 
+	ActionDAO actionDAO;
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void initialize(Context context, int stepCount) {
 		ProgressionReport report = (ProgressionReport) context.get(REPORT);
 		report.getProgression().setCurrentStep(STEP.INITIALISATION.ordinal() + 1);
 		report.getProgression().getSteps().get(STEP.INITIALISATION.ordinal()).setTotal(stepCount);
+		saveProgression(context);
 		saveReport(context, true);
 		saveMainValidationReport(context, true);
 	}
 
+	private void saveProgression(Context context) {
+		ProgressionReport report = (ProgressionReport) context.get(REPORT);
+		JobData job = (JobData) context.get(JOB_DATA);
+		ActionTask task = actionDAO.getTask(job);
+		task.setCurrentStepId(STEP.values()[report.getProgression().getCurrentStep() - 1].name());
+		StepProgression step = report.getProgression().getSteps().get(report.getProgression().getCurrentStep() - 1);
+		int count = step.getTotal();
+		int value = step.getRealized();
+		double currentStepProgress = count > 0 ? (double) value / (double) count : 0L;
+		task.setCurrentStepProgress(currentStepProgress);
+		task.setUpdatedAt(new Timestamp(new Date().getTime()));
+		actionDAO.saveTask(task);
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void start(Context context, int stepCount) {
 		ProgressionReport report = (ProgressionReport) context.get(REPORT);
 		report.getProgression().setCurrentStep(STEP.PROCESSING.ordinal() + 1);
 		report.getProgression().getSteps().get(STEP.PROCESSING.ordinal()).setTotal(stepCount);
+		saveProgression(context);
 		saveReport(context, true);
 		saveMainValidationReport(context, true);
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void terminate(Context context, int stepCount) {
 		ProgressionReport report = (ProgressionReport) context.get(REPORT);
 		report.getProgression().setCurrentStep(STEP.FINALISATION.ordinal() + 1);
 		report.getProgression().getSteps().get(STEP.FINALISATION.ordinal()).setTotal(stepCount);
+		saveProgression(context);
 		saveReport(context, true);
 		saveMainValidationReport(context, true);
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void dispose(Context context) {
 		saveReport(context, true);
 		saveMainValidationReport(context, true);
@@ -123,6 +156,7 @@ public class ProgressionCommand implements Command, Constant, ReportConstant {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 		boolean result = SUCCESS;
 
@@ -130,6 +164,7 @@ public class ProgressionCommand implements Command, Constant, ReportConstant {
 		StepProgression step = report.getProgression().getSteps().get(report.getProgression().getCurrentStep() - 1);
 		step.setRealized(step.getRealized() + 1);
 		boolean force = report.getProgression().getCurrentStep() != STEP.PROCESSING.ordinal() + 1;
+		saveProgression(context);
 		saveReport(context, force);
 		if (force && context.containsKey(VALIDATION_REPORT)) {
 			saveMainValidationReport(context, force);
@@ -148,14 +183,22 @@ public class ProgressionCommand implements Command, Constant, ReportConstant {
 
 	public static class DefaultCommandFactory extends CommandFactory {
 
-		private ProgressionCommand instance;
-
 		@Override
 		protected Command create(InitialContext context) throws IOException {
-			if (instance == null) {
-				instance = new ProgressionCommand();
+			Command result = null;
+			try {
+				String name = "java:app/mobi.chouette.exchange/" + COMMAND;
+				result = (Command) context.lookup(name);
+			} catch (NamingException e) {
+				// try another way on test context
+				String name = "java:module/" + COMMAND;
+				try {
+					result = (Command) context.lookup(name);
+				} catch (NamingException e1) {
+					log.error(e);
+				}
 			}
-			return instance;
+			return result;
 		}
 	}
 
