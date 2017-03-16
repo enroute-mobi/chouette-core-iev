@@ -8,23 +8,24 @@ import javax.ejb.TransactionAttributeType;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.exchange.CommandCancelledException;
+import mobi.chouette.exchange.DaoProgressionCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
-import mobi.chouette.exchange.ProgressionCommand;
 import mobi.chouette.exchange.exporter.AbstractExporterCommand;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
+import mobi.chouette.exchange.report.ReportConstant;
 
 @Log4j
 @Stateless(name = NetexStifExporterCommand.COMMAND)
@@ -43,7 +44,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 
 		// initialize reporting and progression
 		ProgressionCommand progression = (ProgressionCommand) CommandFactory.create(initialContext,
-				ProgressionCommand.class.getName());
+				DaoProgressionCommand.class.getName());
 
 		try {
 

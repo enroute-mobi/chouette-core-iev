@@ -9,9 +9,9 @@ import javax.ejb.EJB;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
+import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.exchange.DaoReader;
 import mobi.chouette.exchange.ProcessingCommands;
-import mobi.chouette.exchange.ProgressionCommand;
 import mobi.chouette.exchange.parameters.AbstractExportParameter;
 import mobi.chouette.exchange.report.ActionReporter;
 

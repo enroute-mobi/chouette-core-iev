@@ -22,7 +22,7 @@ public interface InputValidator {
 	
 	boolean checkFile(String fileName, Path filePath, AbstractParameter abstractParameter);
 	
-	boolean initReport(JobData data);
+	boolean initReport2(JobData data);
 	
 	List<TestDescription> getTestList();
 }

@@ -27,13 +27,13 @@ public class JobServiceManagerTest extends Arquillian {
 	public static EnterpriseArchive createDeployment() {
 
 		EnterpriseArchive result;
-		File[] files = Maven.resolver().loadPomFromFile("pom.xml").resolve("mobi.chouette:mobi.chouette.service")
+		File[] files = Maven.resolver().loadPomFromFile("pom.xml").resolve("mobi.chouette:mobi.chouette.boiv.service")
 				.withTransitivity().asFile();
 		List<File> jars = new ArrayList<>();
 		List<JavaArchive> modules = new ArrayList<>();
 		for (File file : files) {
 			if (file.getName().startsWith("mobi.chouette.exchange")
-					|| file.getName().startsWith("mobi.chouette.service")
+					|| file.getName().startsWith("mobi.chouette.boiv.service")
 					|| file.getName().startsWith("mobi.chouette.dao")) {
 				String name = file.getName().split("\\-")[0] + ".jar";
 				JavaArchive archive = ShrinkWrap.create(ZipImporter.class, name).importFrom(file).as(JavaArchive.class);

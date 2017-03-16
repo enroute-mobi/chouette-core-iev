@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 
 @Log4j
 public class ProgressionCommandTest implements Constant {
-	private ProgressionCommand progression = null;
+	private DaoProgressionCommand progression = null;
 	private DummyActionTaskDAO dao = null;
 	private Context context = new Context();
 	File d = new File("target/referential/test");
@@ -45,7 +45,7 @@ public class ProgressionCommandTest implements Constant {
 				e.printStackTrace();
 			}
 		d.mkdirs();
-		progression = new ProgressionCommand();
+		progression = new DaoProgressionCommand();
 		dao=new DummyActionTaskDAO(); 
 		progression.actionDAO=dao; // inject dummy EJB
 		

@@ -24,6 +24,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.dao.ActionDAO;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.report.ProgressionReport;
@@ -34,8 +35,8 @@ import mobi.chouette.exchange.report.StepProgression.STEP;
 import mobi.chouette.model.ActionTask;
 
 @Log4j
-@Stateless(name = ProgressionCommand.COMMAND)
-public class ProgressionCommand implements Command, Constant, ReportConstant {
+@Stateless(name = DaoProgressionCommand.COMMAND)
+public class DaoProgressionCommand implements ProgressionCommand, Constant, ReportConstant {
 
 	public static final String COMMAND = "ProgressionCommand";
 	
@@ -203,6 +204,6 @@ public class ProgressionCommand implements Command, Constant, ReportConstant {
 	}
 
 	static {
-		CommandFactory.factories.put(ProgressionCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.factories.put(DaoProgressionCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

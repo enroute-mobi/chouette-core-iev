@@ -13,10 +13,11 @@ import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.exchange.CommandCancelledException;
+import mobi.chouette.exchange.DaoProgressionCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
-import mobi.chouette.exchange.ProgressionCommand;
 import mobi.chouette.exchange.importer.AbstractImporterCommand;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReporter;
@@ -42,7 +43,7 @@ public class NetexStifImporterCommand extends AbstractImporterCommand implements
 
 		// initialize reporting and progression
 		ProgressionCommand progression = (ProgressionCommand) CommandFactory.create(initialContext,
-				ProgressionCommand.class.getName());
+				DaoProgressionCommand.class.getName());
 
 		try {
 

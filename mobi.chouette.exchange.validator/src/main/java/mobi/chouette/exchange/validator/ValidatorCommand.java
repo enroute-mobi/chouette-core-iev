@@ -12,17 +12,21 @@ import javax.ejb.TransactionAttributeType;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.exchange.CommandCancelledException;
+import mobi.chouette.exchange.DaoProgressionCommand;
 import mobi.chouette.exchange.DaoReader;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
-import mobi.chouette.exchange.ProgressionCommand;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
@@ -31,9 +35,6 @@ import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.util.NamingUtil;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
 
 @Log4j
 @Stateless(name = ValidatorCommand.COMMAND)
@@ -54,7 +55,7 @@ public class ValidatorCommand implements Command, Constant {
 
 		// initialize reporting and progression
 		ProgressionCommand progression = (ProgressionCommand) CommandFactory.create(initialContext,
-				ProgressionCommand.class.getName());
+				DaoProgressionCommand.class.getName());
 		try {
 
 			// read parameters

@@ -17,12 +17,12 @@ import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 
 @Log4j
 public abstract class AbstractInputValidator implements InputValidator, Constant {
-	public boolean initReport(JobData data) {
+	public boolean initReport2(JobData data) {
 		Context context = new Context();
 		context.put(REPORT, new ActionReport());
 		context.put(JOB_DATA, data);
-		ProgressionCommand progression = new ProgressionCommand();
-		progression.initialize(context, 1);
+//		ProgressionCommand progression = new ProgressionCommand();
+//		progression.initialize(context, 1);
 		return true;
 	}
 
