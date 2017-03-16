@@ -10,6 +10,7 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.Footnote;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class NoticeParser implements Parser, Constant {
@@ -19,7 +20,7 @@ public class NoticeParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 
 		String id = xpp.getAttributeValue(null, ID);
-		Long version = (Long)context.get(VERSION);
+		Long version = (Long) context.get(VERSION);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		String text = null;
 		String publicCode = null;
@@ -28,22 +29,24 @@ public class NoticeParser implements Parser, Constant {
 			if (xpp.getName().equals(TYPE_OF_NOTICE_REF)) {
 				String type = xpp.nextText();
 				if (type.equals(SERVICE_JOURNEY_NOTICE)) {
-					validType = true;					
+					validType = true;
 				}
-			}else if (xpp.getName().equals(TEXT)) {
+			} else if (xpp.getName().equals(TEXT)) {
 				text = xpp.nextText();
-			}else if (xpp.getName().equals(PUBLIC_CODE)) {
+			} else if (xpp.getName().equals(PUBLIC_CODE)) {
 				publicCode = xpp.nextText();
-			}else{
+			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		if (validType){
+		if (validType) {
 			Footnote footnote = factory.getFootnote(id);
 			footnote.setObjectVersion(version);
 			footnote.setLabel(text);
 			footnote.setCode(publicCode);
 			log.info("Footnote with : " + text + " code " + publicCode);
+			Referential referential = (Referential) context.get(REFERENTIAL);
+			referential.getFootnotes().put(id, footnote);
 		}
 	}
 

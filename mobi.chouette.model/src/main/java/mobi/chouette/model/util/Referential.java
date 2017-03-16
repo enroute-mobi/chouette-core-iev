@@ -12,6 +12,7 @@ import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
@@ -46,7 +47,7 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, Company> sharedCompanies = new HashMap<String, Company>();
-	
+
 	@Getter
 	@Setter
 	private Map<String, CompanyLite> sharedReadOnlyCompanies = new HashMap<String, CompanyLite>();
@@ -81,7 +82,6 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, Timeband> sharedTimebands = new HashMap<String, Timeband>();
-
 
 	@Getter
 	@Setter
@@ -142,6 +142,10 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, RouteSection> routeSections = new HashMap<String, RouteSection>();
+
+	@Getter
+	@Setter
+	private Map<String, Footnote> footnotes = new HashMap<String, Footnote>();
 
 	public void clear(boolean cascade) {
 		if (cascade) {
