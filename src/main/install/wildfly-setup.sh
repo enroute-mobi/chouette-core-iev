@@ -3,10 +3,13 @@
 echo postgres database supposed to be on localhost port 5432 and named chouette2.  
 echo If not : stop this script and change connection-url on line 53
 echo -n press ENTER to continue : 
-input a
+read a
 
 # install wildfly as service
-sudo ./wildfly-install.sh
+if test ! -d /opt/wildfly  ; then
+   echo install wildfly
+   sudo ./wildfly-install.sh
+fi
 
 # update hibernate and add postgres and hibernate-spatial
 sudo service wildfly stop
@@ -34,7 +37,7 @@ sudo cp -f module_hibernate.xml $WILDFLY_HOME/modules/system/layers/base/org/hib
 
 sudo rm $WILDFLY_HOME/modules/system/layers/base/org/hibernate/infinispan/main/hibernate*4.3.10.Final.jar
 sudo cp hibernate-infinispan-4.3.11.Final.jar $WILDFLY_HOME/modules/system/layers/base/org/hibernate/infinispan/main/
-sudo cp -f module_infinspan.xml $WILDFLY_HOME/modules/system/layers/base/org/hibernate/infinispan/main/module.xml
+sudo cp -f module_infinispan.xml $WILDFLY_HOME/modules/system/layers/base/org/hibernate/infinispan/main/module.xml
 
 sudo service wildfly start
 

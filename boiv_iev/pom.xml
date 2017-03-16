@@ -79,7 +79,7 @@
 		        </modules>
 				</configuration>
 			</plugin>
-<!-- 			<plugin>
+ 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>${version.wildfly.maven.plugin}</version>
@@ -95,7 +95,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin> -->
+			</plugin> 
          <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
