@@ -8,7 +8,7 @@ import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.ImportTask;
 
 @Stateless  (name="ActionDAO")
-public class ActionDAOImpl {
+public class ActionDAOImpl implements ActionDAO {
 
 	@EJB
 	ImportTaskDAO importTaskDAO;
