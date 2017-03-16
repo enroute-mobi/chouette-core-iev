@@ -22,10 +22,10 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
+import mobi.chouette.exchange.importer.FootnoteRegisterCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
 import mobi.chouette.exchange.importer.UncompressCommand;
 import mobi.chouette.exchange.validation.SharedDataValidatorCommand;
-import mobi.chouette.model.Footnote;
 
 @Data
 @Log4j
@@ -123,6 +123,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 					Command register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
 					chain.add(register);
 					
+					register = CommandFactory.create(initialContext, FootnoteRegisterCommand.class.getName());
 					chain.add(register);
 
 					// Command copy = CommandFactory.create(initialContext,
