@@ -44,8 +44,6 @@ public class RouteRegisterCommand implements Command {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
-		
 		if (!context.containsKey(OPTIMIZED)) {
 			context.put(OPTIMIZED, Boolean.TRUE);
 		}
@@ -62,7 +60,7 @@ public class RouteRegisterCommand implements Command {
 			routeDAO.flush();
 		}
 	
-		return result;
+		return true;
 	}
 
 		
