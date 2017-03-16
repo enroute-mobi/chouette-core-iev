@@ -151,5 +151,9 @@ public class StopPoint extends ChouetteIdentifiedObject {
 	@Setter
 	@Transient
 	private String comment;
+	
+	@Getter @Setter
+	@Column(name = "stop_area_id")
+	private Long stopAreaId;
 
 }

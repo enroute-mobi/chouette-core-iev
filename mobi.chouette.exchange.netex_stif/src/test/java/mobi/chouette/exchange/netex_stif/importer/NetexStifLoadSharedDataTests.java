@@ -175,7 +175,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 
 	}
 
-	@Test(groups = { "LoadData" }, description = "check if shared data are loaded")
+	//@Test(groups = { "LoadData" }, description = "check if shared data are loaded")
 	public void verifyCheckLoadData() throws Exception {
 		
 		Context context = initImportContext();

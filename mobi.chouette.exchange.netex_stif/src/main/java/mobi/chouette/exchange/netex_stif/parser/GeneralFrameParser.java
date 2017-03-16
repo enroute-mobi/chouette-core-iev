@@ -11,6 +11,7 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class GeneralFrameParser implements Constant, Parser {
@@ -58,6 +59,8 @@ public class GeneralFrameParser implements Constant, Parser {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		Referential ref = (Referential)context.get(REFERENTIAL);
+		log.info("Referential.routes : " + ref.getRoutes());
 	}
 
 }

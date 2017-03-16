@@ -66,12 +66,8 @@ public class CleanRepositoryCommand implements Command {
 
 		boolean result = ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		log.debug("aaa");
+		
 		try {
-			log.debug("nnnn");
-			
-			log.debug("mm");
-			log.debug("oo");
 			journeyPatternDAO.truncate();
 			routeDAO.truncate();
 			stopPointDAO.truncate();

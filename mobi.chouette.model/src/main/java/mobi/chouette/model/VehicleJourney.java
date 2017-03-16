@@ -343,5 +343,6 @@ public class VehicleJourney extends ChouetteIdentifiedObject {
 	private List<JourneyFrequency> journeyFrequencies = new ArrayList<JourneyFrequency>(0);
 
 	@Setter @Getter
+	@Column(name = "company_id")
 	private String companyId;
 }

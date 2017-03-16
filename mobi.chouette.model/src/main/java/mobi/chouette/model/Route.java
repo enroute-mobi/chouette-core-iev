@@ -270,6 +270,7 @@ public class Route extends ChouetteIdentifiedObject {
 
 	@Setter
 	@Getter
+	@Column(name = "line_id")
 	private String lineId;
 
 }

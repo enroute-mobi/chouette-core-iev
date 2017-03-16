@@ -38,8 +38,11 @@ public class NetexStructureParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		Referential ref = (Referential)context.get(REFERENTIAL);
+		log.info("Referential.routes : " + ref.getRoutes());
 		updateDirectionsToRoute(context);
 		updateDestinationDisplayToJourneyPattern(context);
+		log.info("Referential.routes : " + ref.getRoutes());
 	}
 
 	private void parseMember(String tag, XmlPullParser xpp, Context context) throws Exception {

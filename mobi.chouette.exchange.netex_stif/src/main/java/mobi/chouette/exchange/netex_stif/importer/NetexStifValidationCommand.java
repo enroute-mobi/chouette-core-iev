@@ -40,8 +40,8 @@ public class NetexStifValidationCommand implements Command, Constant {
 			// TODO create level 2 validation for NETEX
 			
 			result = SUCCESS;
-			if (result)
-				addStats(context, reporter, referential);
+			//if (result)
+			//	addStats(context, reporter, referential);
 
 		} catch (Exception e) {
 			log.error("Neptune validation failed ", e);

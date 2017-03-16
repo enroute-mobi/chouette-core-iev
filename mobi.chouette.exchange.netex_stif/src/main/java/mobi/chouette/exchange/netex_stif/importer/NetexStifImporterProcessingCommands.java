@@ -1,5 +1,6 @@
 package mobi.chouette.exchange.netex_stif.importer;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,10 +22,8 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
-import mobi.chouette.exchange.importer.CopyCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
 import mobi.chouette.exchange.importer.UncompressCommand;
-import mobi.chouette.exchange.validation.ImportedLineValidatorCommand;
 import mobi.chouette.exchange.validation.SharedDataValidatorCommand;
 
 @Data
@@ -46,7 +45,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	}
 
 	@Override
-	public List<? extends Command> getPreProcessingCommands(Context context,boolean withDao) {
+	public List<? extends Command> getPreProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
 		List<Command> commands = new ArrayList<>();
@@ -65,16 +64,35 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 		return commands;
 	}
 
+	private Chain treatOneFile(InitialContext initialContext, String filename, String path, boolean mandatory)
+			throws ClassNotFoundException, IOException {
+		Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
+		File calendarFile = new File(path + "/" + INPUT + "/" + filename);
+		log.info(calendarFile);
+		String calendarFileUrl = calendarFile.toURI().toURL().toExternalForm();
+		log.info("url : " + calendarFileUrl);
+		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
+				NetexStifParserCommand.class.getName());
+		parser.setFileURL(calendarFileUrl);
+		chain.add(parser);
+		return chain;
+	}
+
 	@Override
-	public List<? extends Command> getLineProcessingCommands(Context context,boolean withDao) {
+	public List<? extends Command> getLineProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
 		boolean level3validation = context.get(VALIDATION) != null;
 		List<Command> commands = new ArrayList<>();
 		JobData jobData = (JobData) context.get(JOB_DATA);
-		Path path = Paths.get(jobData.getPathName(), INPUT);
 		try {
-			List<Path> stream = FileUtil.listFiles(path, "*.xml", "*metadata*");
+			Chain tmp = treatOneFile(initialContext, "calendrier.xml", jobData.getPathName(), true);
+			commands.add(tmp);
+			tmp = treatOneFile(initialContext, "commun.xml", jobData.getPathName(), true);
+			commands.add(tmp);
+
+			Path path = Paths.get(jobData.getPathName(), INPUT);
+			List<Path> stream = FileUtil.listFiles(path, "offre*.xml", "*metadata*");
 			for (Path file : stream) {
 				Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
 				commands.add(chain);
@@ -96,23 +114,25 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 				Command validation = CommandFactory.create(initialContext, NetexStifValidationCommand.class.getName());
 				chain.add(validation);
 
-				log.debug("WithDao : "  + withDao + " / "+ parameters.isNoSave());
+				// log.debug("WithDao : " + withDao + " / "+
+				// parameters.isNoSave());
 				if (withDao && !parameters.isNoSave()) {
 
 					// register
 					Command register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
 					chain.add(register);
 
-					Command copy = CommandFactory.create(initialContext, CopyCommand.class.getName());
-					chain.add(copy);
+					// Command copy = CommandFactory.create(initialContext,
+					// CopyCommand.class.getName());
+					// chain.add(copy);
 				}
 				if (level3validation) {
 					// add validation
-					Command validate = CommandFactory.create(initialContext,
-							ImportedLineValidatorCommand.class.getName());
-					chain.add(validate);
+					// Command validate = CommandFactory.create(initialContext,
+					// ImportedLineValidatorCommand.class.getName());
+					// chain.add(validate);
 				}
-				//chain.execute(context);
+
 			}
 
 		} catch (Exception e) {
@@ -123,7 +143,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	}
 
 	@Override
-	public List<? extends Command> getPostProcessingCommands(Context context,boolean withDao) {
+	public List<? extends Command> getPostProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		boolean level3validation = context.get(VALIDATION) != null;
 
@@ -145,6 +165,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	public List<? extends Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
 		return new ArrayList<>();
 	}
+
 	@Override
 	public List<? extends Command> getDisposeCommands(Context context, boolean withDao) {
 		List<Command> commands = new ArrayList<>();

@@ -85,6 +85,7 @@ public class NetexStifParserCommand implements Command, Constant {
 			parser.parse(context);
 
 			result = SUCCESS;
+			log.info("Referential.routes : " + referential.getRoutes());
 		} catch (Exception e) {
 			// report service
 			reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INTERNAL_ERROR, e.toString());
@@ -92,7 +93,7 @@ public class NetexStifParserCommand implements Command, Constant {
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
-
+		
 		return result;
 	}
 
