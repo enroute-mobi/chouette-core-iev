@@ -25,6 +25,7 @@ import mobi.chouette.exchange.importer.CleanRepositoryCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
 import mobi.chouette.exchange.importer.UncompressCommand;
 import mobi.chouette.exchange.validation.SharedDataValidatorCommand;
+import mobi.chouette.model.Footnote;
 
 @Data
 @Log4j
@@ -120,6 +121,8 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 
 					// register
 					Command register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
+					chain.add(register);
+					
 					chain.add(register);
 
 					// Command copy = CommandFactory.create(initialContext,

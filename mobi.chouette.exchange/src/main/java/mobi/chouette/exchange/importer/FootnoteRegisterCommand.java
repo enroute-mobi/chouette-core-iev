@@ -65,7 +65,7 @@ public class FootnoteRegisterCommand implements Command {
 	}
 
 	static {
-		CommandFactory.factories.put(RouteRegisterCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.factories.put(FootnoteRegisterCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }
