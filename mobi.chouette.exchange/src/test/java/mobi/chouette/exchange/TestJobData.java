@@ -4,7 +4,7 @@ import lombok.Data;
 import mobi.chouette.common.JobData;
 
 @Data
-public class JobDataTest implements JobData {
+public class TestJobData implements JobData {
 
 	private Long id;
 

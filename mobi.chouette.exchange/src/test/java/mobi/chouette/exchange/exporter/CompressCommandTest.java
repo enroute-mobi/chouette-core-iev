@@ -9,7 +9,7 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.FileUtil;
 import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.exchange.JobDataTest;
+import mobi.chouette.exchange.TestJobData;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -24,7 +24,7 @@ public class CompressCommandTest implements Constant
 		InitialContext initialContext = new InitialContext();
 		Context context = new Context();
 		context.put(INITIAL_CONTEXT, initialContext);
-		JobDataTest test = new JobDataTest();
+		TestJobData test = new TestJobData();
 		context.put(JOB_DATA, test);
 		test.setPathName("target/referential/test");
 		test.setOutputFilename("output.zip");
