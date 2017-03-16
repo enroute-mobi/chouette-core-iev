@@ -128,6 +128,7 @@ public class JobServiceManager {
 			Files.createDirectories(jobService.getPath());
 			jobService.setStatus(JobService.STATUS.PENDING);
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
+			importTaskDAO.update(importTask);
 			return jobService;
 
 		} catch (RequestServiceException ex) {
@@ -170,7 +171,8 @@ public class JobServiceManager {
 		}
 		return null;
 	}
-
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void start(JobService jobService) {
 		jobService.setStatus(JobService.STATUS.STARTED);
 		jobService.setUpdatedAt(new Date());
@@ -182,6 +184,7 @@ public class JobServiceManager {
 			importTask.setStartedAt(new Timestamp(jobService.getStartedAt().getTime()));
 			importTask.setCurrentStepId("Initialization");
 			importTask.setCurrentStepProgress(0);
+			importTaskDAO.update(importTask);
 		}
 	}
 
@@ -203,12 +206,12 @@ public class JobServiceManager {
 			// Enregistrer le jobService pour obtenir un id
 
 			log.info("job " + jobService.getId() + " found for import ");
-			if (importTask.getStatus().equals("pending") || importTask.getStatus().equals("running")) {
+			if (jobService.getStatus().equals(JobService.STATUS.PENDING) || jobService.getStatus().equals(JobService.STATUS.STARTED)) {
 				jobService.setUpdatedAt(new Date());
 				jobService.setStatus(JobService.STATUS.CANCELED);
 				importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 				importTask.setStatus(jobService.getStatus().name().toLowerCase());
-
+                importTaskDAO.update(importTask);
 				// TODO clean directory
 			}
 			return jobService;
@@ -233,12 +236,14 @@ public class JobServiceManager {
         // TODO delete directory
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	private void updateImportTask(JobService jobService) {
 		ImportTask importTask = importTaskDAO.find(jobService.getId());
 		importTask.setStatus(jobService.getStatus().name().toLowerCase());
 		importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 		if (jobService.getEndedAt() != null)
 			importTask.setEndedAt(new Timestamp(jobService.getEndedAt().getTime()));
+		importTaskDAO.update(importTask);
 	}
 
 	public void abort(JobService jobService) {
