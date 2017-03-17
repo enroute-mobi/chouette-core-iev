@@ -89,22 +89,27 @@ public class Scheduler {
 	@PostConstruct
 	private void initialize() {
 
-		List<JobService> list = jobManager.findAll(JobService.STATUS.STARTED);
+		try {
+			List<JobService> list = jobManager.findAll(JobService.STATUS.STARTED);
 
-		// abort started job
-		Collection<JobService> scheduled = Collections2.filter(list, new Predicate<JobService>() {
-			@Override
-			public boolean apply(JobService jobService) {
-				return jobService.getStatus() == JobService.STATUS.STARTED;
+			// abort started job
+			Collection<JobService> scheduled = Collections2.filter(list, new Predicate<JobService>() {
+				@Override
+				public boolean apply(JobService jobService) {
+					return jobService.getStatus() == JobService.STATUS.STARTED;
+				}
+			});
+			for (JobService jobService : scheduled) {
+				jobManager.abort(jobService);
+
 			}
-		});
-		for (JobService jobService : scheduled) {
-			jobManager.abort(jobService);
 
-		}
-
-		while (schedule()) {
-			log.info("schedule pending tasks");
+			while (schedule()) {
+				log.info("schedule pending tasks");
+			}
+		} catch (RuntimeException ex) {
+			log.fatal("cannot start scheduler",ex);
+			throw ex;
 		}
 	}
 

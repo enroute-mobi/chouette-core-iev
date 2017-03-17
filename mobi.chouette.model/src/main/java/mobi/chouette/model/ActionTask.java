@@ -16,12 +16,12 @@ import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData;
 
+@SuppressWarnings("serial")
 @MappedSuperclass
 @Access(AccessType.FIELD)
 @ToString(exclude={"referential"})
 @Data
 public abstract class ActionTask implements Serializable {
-	private static final long serialVersionUID = 5555502513420660543L;
 	
 	public abstract Long getId();
 	

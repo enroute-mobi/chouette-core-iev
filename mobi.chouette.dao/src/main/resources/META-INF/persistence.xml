@@ -15,6 +15,9 @@
 		<class>mobi.chouette.model.Company</class>
 		<class>mobi.chouette.model.ConnectionLink</class>
 		<class>mobi.chouette.model.GroupOfLine</class>
+		<class>mobi.chouette.model.ImportResource</class>
+		<class>mobi.chouette.model.ImportMessage</class>
+		<class>mobi.chouette.model.ImportTask</class>
 		<class>mobi.chouette.model.Line</class>
 		<class>mobi.chouette.model.Network</class>
 		<class>mobi.chouette.model.StopArea</class>

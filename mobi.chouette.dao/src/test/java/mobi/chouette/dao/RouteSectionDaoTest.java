@@ -29,7 +29,7 @@ public class RouteSectionDaoTest extends Arquillian
 	RouteSectionDAO routeSectionDao;
 
 
-	@Deployment
+	// @Deployment
 	public static WebArchive createDeployment() {
 
 		try

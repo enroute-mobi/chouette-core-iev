@@ -28,7 +28,7 @@ public class JourneyPatternDaoTest extends Arquillian {
 	@EJB 
 	JourneyPatternDAO journeyPatternDao;
 
-	@Deployment
+	// @Deployment
 	public static WebArchive createDeployment() {
 
 		try {
@@ -46,7 +46,7 @@ public class JourneyPatternDaoTest extends Arquillian {
 
 	}
 
-	@Test
+	// @Test
 	public void checkJourneyPatternSections() {
 		try {
 			ContextHolder.setContext("chouette_gui"); // set tenant schema

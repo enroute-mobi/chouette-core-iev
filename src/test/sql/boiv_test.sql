@@ -681,7 +681,7 @@ INSERT INTO referential_metadata VALUES (1, 1, '{1}', NULL, '2017-02-10 10:06:41
 
 SELECT pg_catalog.setval('referential_metadata_id_seq', 1, true);
 
-INSERT INTO referentials VALUES (1, 'test', 'test', '2017-02-10 10:06:27.034272', '2017-02-10 10:06:27.034272', 'test', '', 'Paris', 'SRID=4326;POLYGON((-5.2 42.25,-5.2 51.1,8.23 51.1,8.23 42.25,-5.2 42.25))', 2, NULL, 2, 'Etienne Michel', 'neptune', 1, 1, 1, NULL, NULL, true);
+INSERT INTO referentials VALUES (1, 'test', 'chouette_gui', '2017-02-10 10:06:27.034272', '2017-02-10 10:06:27.034272', 'test', '', 'Paris', 'SRID=4326;POLYGON((-5.2 42.25,-5.2 51.1,8.23 51.1,8.23 42.25,-5.2 42.25))', 2, NULL, 2, 'Etienne Michel', 'neptune', 1, 1, 1, NULL, NULL, true);
 
 SELECT pg_catalog.setval('referentials_id_seq', 1, true);
 

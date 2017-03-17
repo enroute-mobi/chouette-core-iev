@@ -3,8 +3,10 @@ package mobi.chouette.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -103,7 +105,7 @@ public class JobServiceManager {
 	public JobService createJob(String action, Long id) throws ServiceException {
 
 		// Instancier le modèle du service 'upload'
-		if (action.equals("import")) {
+		if (action.equals(JobData.ACTION.importer.name())) {
 			return createImportJob(id);
 		} else {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, action);
@@ -115,8 +117,11 @@ public class JobServiceManager {
 		try {
 			// Instancier le modèle du service 'upload'
 			ImportTask importTask = importTaskDAO.find(id);
+			if (importTask == null)
+			{
+				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "import id "+id);
+			}
 			JobService jobService = new JobService(rootDirectory, importTask);
-			// Enregistrer le jobService pour obtenir un id
 
 			log.info("job " + jobService.getId() + " found for import ");
 			// mkdir
@@ -126,6 +131,10 @@ public class JobServiceManager {
 				FileUtils.deleteDirectory(jobService.getPath().toFile());
 			}
 			Files.createDirectories(jobService.getPath());
+			// copy file from Ruby server
+			
+			URL url = new URL(importTask.getFile());
+			
 			jobService.setStatus(JobService.STATUS.PENDING);
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
 			importTaskDAO.update(importTask);
@@ -256,9 +265,20 @@ public class JobServiceManager {
         // TODO delete directory
 	}
 
-	public List<JobService> findAll(STATUS started) {
-		// TODO Auto-generated method stub
-		return null;
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public List<JobService> findAll(STATUS status) {
+		List<JobService> jobs = new ArrayList<>();
+		List<ImportTask> startedImportTasks = importTaskDAO.getTasks(status.name().toLowerCase());
+        for (ImportTask importTask : startedImportTasks) {
+        	
+			try {
+				JobService job = new JobService(rootDirectory,importTask);
+				jobs.add(job);
+			} catch (ServiceException e) {
+				log.error("fail to manage import task "+importTask.getId());
+			}
+		}
+		return jobs;
 	}
 
 }
