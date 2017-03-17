@@ -117,9 +117,8 @@ public class JobServiceManager {
 		try {
 			// Instancier le modèle du service 'upload'
 			ImportTask importTask = importTaskDAO.find(id);
-			if (importTask == null)
-			{
-				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "import id "+id);
+			if (importTask == null) {
+				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "import id " + id);
 			}
 			JobService jobService = new JobService(rootDirectory, importTask);
 
@@ -132,19 +131,26 @@ public class JobServiceManager {
 			}
 			Files.createDirectories(jobService.getPath());
 			// copy file from Ruby server
-			
-			URL url = new URL(importTask.getFile());
-			
+			try {
+				URL url = new URL(importTask.getUrl());
+				File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+				FileUtils.copyURLToFile(url, dest);
+			} catch (Exception ex) {
+				log.error("fail to get file for import job " + ex.getMessage());
+				throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR,
+						"cannot manage URL " + importTask.getUrl());
+			}
+
 			jobService.setStatus(JobService.STATUS.PENDING);
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
 			importTaskDAO.update(importTask);
 			return jobService;
 
 		} catch (RequestServiceException ex) {
-			log.info("fail to create import job " + ex.getMessage());
+			log.info("fail to create import job " + ex.getMessage(),ex);
 			throw ex;
 		} catch (Exception ex) {
-			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName());
+			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(),ex);
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
@@ -160,7 +166,7 @@ public class JobServiceManager {
 	public JobService getNextJob() {
 
 		List<ImportTask> pendingImportTasks = importTaskDAO.getTasks(JobService.STATUS.PENDING.name().toLowerCase());
-		List<ImportTask> startedImportTasks = importTaskDAO.getTasks(JobService.STATUS.STARTED.name().toLowerCase());
+		List<ImportTask> startedImportTasks = importTaskDAO.getTasks(JobService.STATUS.RUNNING.name().toLowerCase());
 
 		Set<Long> refIds = new HashSet<>();
 		for (ImportTask task : startedImportTasks) {
@@ -173,17 +179,17 @@ public class JobServiceManager {
 			try {
 				js = new JobService(rootDirectory, task);
 			} catch (ServiceException e) {
-				log.error("abnormal problem when getting job info "+e.getMessage(),e);
-				// TODO aborting task ? 
+				log.error("abnormal problem when getting job info " + e.getMessage(), e);
+				// TODO aborting task ?
 			}
 			return js;
 		}
 		return null;
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void start(JobService jobService) {
-		jobService.setStatus(JobService.STATUS.STARTED);
+		jobService.setStatus(JobService.STATUS.RUNNING);
 		jobService.setUpdatedAt(new Date());
 		jobService.setStartedAt(new Date());
 		if (jobService.getAction().equals(JobData.ACTION.importer)) {
@@ -192,7 +198,7 @@ public class JobServiceManager {
 			importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 			importTask.setStartedAt(new Timestamp(jobService.getStartedAt().getTime()));
 			importTask.setCurrentStepId("Initialization");
-			importTask.setCurrentStepProgress(0);
+			importTask.setCurrentStepProgress(0.);
 			importTaskDAO.update(importTask);
 		}
 	}
@@ -215,12 +221,13 @@ public class JobServiceManager {
 			// Enregistrer le jobService pour obtenir un id
 
 			log.info("job " + jobService.getId() + " found for import ");
-			if (jobService.getStatus().equals(JobService.STATUS.PENDING) || jobService.getStatus().equals(JobService.STATUS.STARTED)) {
+			if (jobService.getStatus().equals(JobService.STATUS.PENDING)
+					|| jobService.getStatus().equals(JobService.STATUS.RUNNING)) {
 				jobService.setUpdatedAt(new Date());
-				jobService.setStatus(JobService.STATUS.CANCELED);
+				jobService.setStatus(JobService.STATUS.CANCELLED);
 				importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 				importTask.setStatus(jobService.getStatus().name().toLowerCase());
-                importTaskDAO.update(importTask);
+				importTaskDAO.update(importTask);
 				// TODO clean directory
 			}
 			return jobService;
@@ -242,7 +249,7 @@ public class JobServiceManager {
 		if (jobService.getAction().equals(JobData.ACTION.importer)) {
 			jobServiceManager.updateImportTask(jobService);
 		}
-        // TODO delete directory
+		// TODO delete directory
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -262,20 +269,20 @@ public class JobServiceManager {
 		if (jobService.getAction().equals(JobData.ACTION.importer)) {
 			jobServiceManager.updateImportTask(jobService);
 		}
-        // TODO delete directory
+		// TODO delete directory
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public List<JobService> findAll(STATUS status) {
 		List<JobService> jobs = new ArrayList<>();
 		List<ImportTask> startedImportTasks = importTaskDAO.getTasks(status.name().toLowerCase());
-        for (ImportTask importTask : startedImportTasks) {
-        	
+		for (ImportTask importTask : startedImportTasks) {
+
 			try {
-				JobService job = new JobService(rootDirectory,importTask);
+				JobService job = new JobService(rootDirectory, importTask);
 				jobs.add(job);
 			} catch (ServiceException e) {
-				log.error("fail to manage import task "+importTask.getId());
+				log.error("fail to manage import task " + importTask.getId());
 			}
 		}
 		return jobs;

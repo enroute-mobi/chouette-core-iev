@@ -43,8 +43,8 @@ public class Task implements Callable<JobService.STATUS>, ManagedTask, Constant 
 	@Override
 	public JobService.STATUS call() throws Exception {
 
-		JobService.STATUS result = JobService.STATUS.SUCCEDED;
-		if (context.containsKey(CANCEL_ASKED)) return JobService.STATUS.CANCELED;
+		JobService.STATUS result = JobService.STATUS.SUCCESSFULL;
+		if (context.containsKey(CANCEL_ASKED)) return JobService.STATUS.CANCELLED;
 		ContextHolder.setContext(job.getReferential());
 		try {
 			InitialContext initialContext = new InitialContext();

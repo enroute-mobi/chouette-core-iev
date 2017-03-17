@@ -17,7 +17,6 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ReportConstant;
-import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.service.JobService;
 import mobi.chouette.service.JobServiceManager;
@@ -62,7 +61,7 @@ public class MainCommand implements Command, Constant {
 			else if (report.getResult().equals(ReportConstant.STATUS_ERROR))
 				jobManager.terminate(jobService,JobService.STATUS.FAILED);
 			else
-				jobManager.terminate(jobService,JobService.STATUS.SUCCEDED);
+				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFULL);
 
 		} catch (javax.ejb.EJBTransactionRolledbackException ex) {
 			log.warn("exception bypassed " + ex);
@@ -74,7 +73,7 @@ public class MainCommand implements Command, Constant {
 			else if (report.getResult().equals(ReportConstant.STATUS_ERROR))
 				jobManager.terminate(jobService,JobService.STATUS.FAILED);
 			else
-				jobManager.terminate(jobService,JobService.STATUS.SUCCEDED);
+				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFULL);
 
 		} catch (Exception ex) {
 			if (!COMMAND_CANCELLED.equals(ex.getMessage())) {

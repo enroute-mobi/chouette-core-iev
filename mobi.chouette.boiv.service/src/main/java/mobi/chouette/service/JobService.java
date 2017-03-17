@@ -1,5 +1,6 @@
 package mobi.chouette.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -20,10 +21,9 @@ import mobi.chouette.model.ImportTask;
 public class JobService implements JobData, ServiceConstants {
 
 	public enum STATUS {
-		NEW, PENDING, STARTED, SUCCEDED, FAILED, CANCELED, ABORTED
+		NEW, PENDING, RUNNING, SUCCESSFULL, FAILED, CANCELLED, ABORTED
 	}
-	
-	
+
 	private Long id;
 	private String inputFilename;
 	private String outputFilename;
@@ -35,7 +35,7 @@ public class JobService implements JobData, ServiceConstants {
 	private Date updatedAt;
 
 	private AbstractParameter actionParameter;
-	
+
 	private String rootDirectory;
 
 	private InputValidator inputValidator;
@@ -54,13 +54,19 @@ public class JobService implements JobData, ServiceConstants {
 	 * create a new jobService
 	 * 
 	 */
-	public JobService(String rootDirectory, ImportTask importTask ) throws ServiceException {
+	public JobService(String rootDirectory, ImportTask importTask) throws ServiceException {
 		this.rootDirectory = rootDirectory;
 		this.id = importTask.getId();
 		this.action = ACTION.importer;
 		this.type = importTask.getFormat();
-		if (this.type == null) this.type = "netex_stif";
-		this.inputFilename = importTask.getFile();
+		if (this.type == null)
+			this.type = "netex_stif";
+		if (importTask.getFile() != null && !importTask.getFile().isEmpty()) {
+			File f = new File(importTask.getFile());
+			this.inputFilename = f.getName();
+		} else {
+			this.inputFilename = ACTION.importer.name() + ".zip";
+		}
 		this.updatedAt = importTask.getUpdatedAt();
 		this.startedAt = importTask.getStartedAt();
 		this.endedAt = importTask.getEndedAt();
@@ -77,7 +83,6 @@ public class JobService implements JobData, ServiceConstants {
 		}
 	}
 
-
 	/**
 	 * return job file path <br/>
 	 * build it if not set and job saved
@@ -85,8 +90,8 @@ public class JobService implements JobData, ServiceConstants {
 	 * @return path or null if job not saved
 	 */
 	public String getPathName() {
-		
-			return Paths.get(rootDirectory, ROOT_PATH, action.name(), id.toString()).toString();
+
+		return Paths.get(rootDirectory, ROOT_PATH, action.name(), id.toString()).toString();
 	}
 
 	public static String getRootPathName(String rootDirectory) {
@@ -94,10 +99,8 @@ public class JobService implements JobData, ServiceConstants {
 	}
 
 	public java.nio.file.Path getPath() {
-			return java.nio.file.Paths.get(getPathName());
+		return java.nio.file.Paths.get(getPathName());
 	}
-
-
 
 	private boolean commandExists() {
 		try {
@@ -110,21 +113,20 @@ public class JobService implements JobData, ServiceConstants {
 
 	public String getCommandName() {
 		String type = getType() == null ? "" : getType();
-		return "mobi.chouette.exchange." + (type.isEmpty() ? "" : type + ".") + getAction() + "."
-				+ capitalize(type) + StringUtils.capitalize(getAction().name()) + "Command";
+		return "mobi.chouette.exchange." + (type.isEmpty() ? "" : type + ".") + getAction() + "." + capitalize(type)
+				+ StringUtils.capitalize(getAction().name()) + "Command";
 	}
 
-	private static String capitalize(String text)
-	{
-		return WordUtils.capitalize(text.replaceAll("_", " ")).replaceAll(" ","");
+	private static String capitalize(String text) {
+		return WordUtils.capitalize(text.replaceAll("_", " ")).replaceAll(" ", "");
 	}
-	
 
-	public static InputValidator getCommandInputValidator(String actionParam, String typeParam) throws ClassNotFoundException, IOException {
-			String type = typeParam == null ? "" : typeParam;
-			final InputValidator inputValidator = InputValidatorFactory.create("mobi.chouette.exchange."
-					+ (type.isEmpty() ? "" : type + ".") + actionParam + "." + capitalize(type)
-					+ StringUtils.capitalize(actionParam) + "InputValidator");
+	public static InputValidator getCommandInputValidator(String actionParam, String typeParam)
+			throws ClassNotFoundException, IOException {
+		String type = typeParam == null ? "" : typeParam;
+		final InputValidator inputValidator = InputValidatorFactory
+				.create("mobi.chouette.exchange." + (type.isEmpty() ? "" : type + ".") + actionParam + "."
+						+ capitalize(type) + StringUtils.capitalize(actionParam) + "InputValidator");
 		return inputValidator;
 	}
 }

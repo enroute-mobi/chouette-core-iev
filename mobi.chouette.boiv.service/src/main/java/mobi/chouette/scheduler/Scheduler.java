@@ -1,6 +1,5 @@
 package mobi.chouette.scheduler;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +23,6 @@ import mobi.chouette.common.PropertyNames;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 import mobi.chouette.service.JobService;
 import mobi.chouette.service.JobServiceManager;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 
 /**
  * @author michel
@@ -90,15 +86,9 @@ public class Scheduler {
 	private void initialize() {
 
 		try {
-			List<JobService> list = jobManager.findAll(JobService.STATUS.STARTED);
+			List<JobService> scheduled = jobManager.findAll(JobService.STATUS.RUNNING);
 
-			// abort started job
-			Collection<JobService> scheduled = Collections2.filter(list, new Predicate<JobService>() {
-				@Override
-				public boolean apply(JobService jobService) {
-					return jobService.getStatus() == JobService.STATUS.STARTED;
-				}
-			});
+			
 			for (JobService jobService : scheduled) {
 				jobManager.abort(jobService);
 

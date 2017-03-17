@@ -20,9 +20,9 @@
          <source>${project.build.directory}/iev.properties</source>
          <outputDirectory>/</outputDirectory>
       </file>
-		<file>
+		<!-- <file>
 			<source>../CHANGELOG.md</source>
 			<outputDirectory>/</outputDirectory>
-		</file>
+		</file>   -->
 	</files>
 </assembly>
