@@ -25,10 +25,12 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
-import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
@@ -100,19 +102,55 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private void initLines(Context context) {
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		Line line = ObjectFactory.getLine(referential, "STIF:CODIFLIGNE:Line:12234");
-		line.setObjectId("STIF:CODIFLIGNE:Line:12234");
+//		Line line = ObjectFactory.getLine(referential, "STIF:CODIFLIGNE:Line:12234");
+//		line.setObjectId("STIF:CODIFLIGNE:Line:12234");
+		LineLite line = new LineLite();
+		line.setId(1L);
+		line.setObjectId("STIF:CODIFLIGNE:Line:C00108");
+		referential.getSharedReadOnlyLines().put(line.getObjectId(),line);
+		CompanyLite company = new CompanyLite();
+		company.setId(1L);
+		company.setObjectId("STIF:CODIFLIGNE:Operator:011");
+		referential.getSharedReadOnlyCompanies().put(company.getObjectId(),company);
+		StopAreaLite quay1 = new StopAreaLite();
+		quay1.setId(18304L);
+		quay1.setObjectId("FR:78217:ZDE:18304:STIF");
+		referential.getSharedReadOnlyStopAreas().put(quay1.getObjectId(),quay1);
+		StopAreaLite quay2 = new StopAreaLite();
+		quay2.setId(32522L);
+		quay2.setObjectId("FR:78217:ZDE:32522:STIF");
+		referential.getSharedReadOnlyStopAreas().put(quay2.getObjectId(),quay2);
+		StopAreaLite quay3 = new StopAreaLite();
+		quay3.setId(32521L);
+		quay3.setObjectId("FR:78217:ZDE:32521:STIF");
+		referential.getSharedReadOnlyStopAreas().put(quay3.getObjectId(),quay3);
+		StopAreaLite quay4 = new StopAreaLite();
+		quay4.setId(18305L);
+		quay4.setObjectId("FR:78217:ZDE:18305:STIF");
+		referential.getSharedReadOnlyStopAreas().put(quay4.getObjectId(),quay4);
 	}
 
-	//@Test(groups = { "Nominal" }, description = "offre")
+	@Test(groups = { "Nominal" }, description = "offre" , priority = 3 )
 	public void verifiyOfferParser() throws Exception {
 		Context context = initImportContext();
 
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
-		File f = new File(path, "offre.xml");
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		{
+		File f = new File(path, "calendrier.xml");
+		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.execute(context);
+		Assert.assertFalse(referential.getSharedTimetableTemplates().isEmpty()," no timetables");
+		}
+		{
+		File f = new File(path, "commun.xml");
+		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.execute(context);
+		Assert.assertFalse(referential.getSharedFootnotes().isEmpty()," no footnotes");
+		Assert.assertFalse(referential.getSharedTimetableTemplates().isEmpty()," no timetables");
+		}
+		File f = new File(path, "offre.xml");
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
 		assertRoute(referential, "CITYWAY:Route:1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
@@ -125,20 +163,21 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		assertJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:2:LOC", "Par là", "Mission 2", "2345",
 				"CITYWAY:Route:2:LOC");
 		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici",
-				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234");
+				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234",1,1);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0, "01:01:00.000", 0);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0, "01:05:00.000", 0);
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:1", 1, "FR:78217:ZDE:18304:STIF", "CITYWAY:Route:1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-2:LOC:2", 2, "FR:78217:ZDE:32521:STIF", "CITYWAY:Route:1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-1:LOC:1", 1, "FR:78217:ZDE:32522:STIF", "CITYWAY:Route:2:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2:LOC:2", 2, "FR:78217:ZDE:18305:STIF", "CITYWAY:Route:2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:1", 1, 18304L, "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-2:LOC:2", 2, 32521L, "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-1:LOC:1", 1, 32522L, "CITYWAY:Route:2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2:LOC:2", 2, 18305L, "CITYWAY:Route:2:LOC");
 	}
 
-	private void assertStopPoint(Referential referential, String id, int position, String quayRef, String routeId) {
-		StopPoint stopPoint = ObjectFactory.getStopPoint(referential, id);
+	private void assertStopPoint(Referential referential, String id, int position, Long quayRef, String routeId) {
+		StopPoint stopPoint = referential.getStopPoints().get(id);
+		Assert.assertNotNull(stopPoint," stopPoint id = "+id);
 		Assert.assertEquals(stopPoint.getPosition(), new Integer(position));
 		Assert.assertEquals(stopPoint.getRoute().getObjectId(), routeId);
-		Assert.assertEquals(stopPoint.getContainedInStopArea().getObjectId(), quayRef);
+		Assert.assertEquals(stopPoint.getStopAreaId(), quayRef);
 	}
 
 	/// Warning FLA : on considère arriaval time unique pour un vehicleJourney
@@ -146,7 +185,8 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 			int arrivalDayOffset, String departureTimeStr, int departureDayOffset) throws ParseException {
 		Time arrivalTime = ParserUtils.getSQLTime(arrivalTimeStr);
 		Time departureTime = ParserUtils.getSQLTime(departureTimeStr);
-		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, vehicleJourneyId);
+		VehicleJourney vehicleJourney = referential.getVehicleJourneys().get(vehicleJourneyId);
+		Assert.assertNotNull(vehicleJourney," vehicleJourney id = "+vehicleJourneyId);
 		List<VehicleJourneyAtStop> list = vehicleJourney.getVehicleJourneyAtStops();
 		boolean treat = false;
 		for (VehicleJourneyAtStop vjas : list) {
@@ -162,18 +202,22 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	}
 
 	private void assertVehicleJourney(Referential referential, String id, String publishedName, String journeyPatternId,
-			String companyId, String publishedJourneyIdentifier) {
-		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);
+			String companyId, String publishedJourneyIdentifier, int noteCount, int timetableCount) {
+		VehicleJourney vehicleJourney = referential.getVehicleJourneys().get(id);
+		Assert.assertNotNull(vehicleJourney," vehicleJourney id = "+id);
 		Assert.assertEquals(vehicleJourney.getPublishedJourneyName(), publishedName);
 		Assert.assertEquals(vehicleJourney.getJourneyPattern().getObjectId(), journeyPatternId);
 		//Assert.assertEquals(vehicleJourney.getCompanyId(), companyId);
 		Assert.assertEquals(vehicleJourney.getPublishedJourneyIdentifier(), publishedJourneyIdentifier);
+		Assert.assertEquals(vehicleJourney.getFootnotes().size(), noteCount, " vehicleJourney id = "+id+ " notes count");
+		Assert.assertEquals(vehicleJourney.getTimetables().size(), timetableCount, " vehicleJourney id = "+id+ " timetables count");
 
 	}
 
 	private void assertJourneyPattern(Referential referential, String id, String name, String publishedName,
 			String registrationNumber, String routeId) {
-		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
+		JourneyPattern journeyPattern = referential.getJourneyPatterns().get(id);
+		Assert.assertNotNull(journeyPattern," journeyPattern id = "+id);
 		Assert.assertEquals(journeyPattern.getName(), name);
 		Assert.assertEquals(journeyPattern.getPublishedName(), publishedName);
 		Assert.assertEquals(journeyPattern.getRegistrationNumber(), registrationNumber);
@@ -182,7 +226,8 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private void assertRoute(Referential referential, String id, String name, String lineRef, PTDirectionEnum dir,
 			String publishedName, String inverse) {
-		Route route = ObjectFactory.getRoute(referential, id);
+		Route route = referential.getRoutes().get(id);
+		Assert.assertNotNull(route," route id = "+id);
 		Assert.assertEquals(route.getName(), name);
 		//Assert.assertEquals(route.getLineId(), lineRef);
 		Assert.assertEquals(route.getDirection(), dir);
@@ -191,7 +236,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	}
 
-	//@Test(groups = { "Nominal" }, description = "commun")
+	@Test(groups = { "Nominal" }, description = "commun" , priority = 2)
 	public void verifiyCommunParser() throws Exception {
 		Context context = initImportContext();
 
@@ -200,22 +245,22 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		File f = new File(path, "commun.xml");
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
-		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-
-		assertNotice(factory, "CITYWAY:Notice:1:LOC", "Notice 1", "1");
-		assertNotice(factory, "CITYWAY:Notice:2:LOC", "Notice 2", "2");
-		assertNotice(factory, "CITYWAY:Notice:3:LOC", "Notice 3", "3");
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		assertNotice(referential, "CITYWAY:Notice:1:LOC", "Notice 1", "1");
+		assertNotice(referential, "CITYWAY:Notice:2:LOC", "Notice 2", "2");
+		assertNotice(referential, "CITYWAY:Notice:3:LOC", "Notice 3", "3");
 
 	}
 
-	private void assertNotice(NetexStifObjectFactory nsof, String id, String text, String publicCode) {
-		Footnote fn = nsof.getFootnote(id);
+	private void assertNotice(Referential referential, String id, String text, String publicCode) {
+		Footnote fn = referential.getSharedFootnotes().get(id);
+		Assert.assertNotNull(fn," footnote id = "+id);
 		Assert.assertEquals(fn.getLabel(), text);
 		Assert.assertEquals(fn.getCode(), publicCode);
 
 	}
 
-	//@Test(groups = { "Nominal" }, description = "calendrier")
+	@Test(groups = { "Nominal" }, description = "calendrier", priority = 1)
 	public void verifiyCalendrierParser() throws Exception {
 		Context context = initImportContext();
 
@@ -225,24 +270,30 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		assertTimetable(referential, "CITYWAY:DayType:1:LOC", "Semaine", "Monday,Tuesday,Wednesday,Thursday,Friday");
-		assertTimetable(referential, "CITYWAY:DayType:2:LOC", "Fin de semaine", "Saturday,Sunday");
-		assertTimetable(referential, "CITYWAY:DayType:3:LOC", "Service spécial", null);
-		assertTimetable(referential, "CITYWAY:DayType:4:LOC", "Restriction", null);
+		assertTimetable(referential, "CITYWAY:DayType:1:LOC", "Semaine", "Monday,Tuesday,Wednesday,Thursday,Friday",0,1);
+		assertTimetable(referential, "CITYWAY:DayType:2:LOC", "Fin de semaine", "Saturday,Sunday",0,1);
+		assertTimetable(referential, "CITYWAY:DayType:3:LOC", "Service spécial", null,1,0);
+		assertTimetable(referential, "CITYWAY:DayType:4:LOC", "Restriction", null,1,0);
 
 	}
 
-	private void assertTimetable(Referential referential, String id, String comment, String daytypes) {
-		Timetable timetable = ObjectFactory.getTimetable(referential, id);
+	private void assertTimetable(Referential referential, String id, String comment, String daytypes,int dateSize, int periodSize) {
+		Timetable timetable = referential.getSharedTimetableTemplates().get(id);
+		Assert.assertNotNull(timetable," timetable id = "+id);
 		if (daytypes != null) {
 			String[] types = daytypes.split(",");
 			List<DayTypeEnum> list = timetable.getDayTypes();
 			Assert.assertEquals(list.size(), types.length);
 			for (String tmp : types) {
-				Assert.assertTrue(list.contains(DayTypeEnum.valueOf(tmp)), "Daytype " + tmp + " not found");
+				Assert.assertTrue(list.contains(DayTypeEnum.valueOf(tmp)), "Timetable "+id+" Daytype " + tmp + " not found");
 			}
 		}
+		else
+		{
+			Assert.assertTrue(timetable.getDayTypes().isEmpty(),"Timetable "+id+" no daytypes ");
+		}
 
-		Assert.assertEquals(timetable.getComment(), comment);
+		Assert.assertEquals(timetable.getCalendarDays().size(), dateSize, "Timetable "+id+" CalendarDay size");
+		Assert.assertEquals(timetable.getPeriods().size(), periodSize, "Timetable "+id+" period size");
 	}
 }

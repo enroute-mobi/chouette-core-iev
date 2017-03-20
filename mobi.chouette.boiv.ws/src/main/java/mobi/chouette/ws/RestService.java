@@ -19,7 +19,6 @@ import javax.ws.rs.core.UriInfo;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.Constant;
-import mobi.chouette.common.JobData;
 import mobi.chouette.service.JobServiceManager;
 import mobi.chouette.service.RequestExceptionCode;
 import mobi.chouette.service.RequestServiceException;

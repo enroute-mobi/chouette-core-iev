@@ -61,7 +61,7 @@ public class MainCommand implements Command, Constant {
 			else if (report.getResult().equals(ReportConstant.STATUS_ERROR))
 				jobManager.terminate(jobService,JobService.STATUS.FAILED);
 			else
-				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFULL);
+				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFUL);
 
 		} catch (javax.ejb.EJBTransactionRolledbackException ex) {
 			log.warn("exception bypassed " + ex);
@@ -73,7 +73,7 @@ public class MainCommand implements Command, Constant {
 			else if (report.getResult().equals(ReportConstant.STATUS_ERROR))
 				jobManager.terminate(jobService,JobService.STATUS.FAILED);
 			else
-				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFULL);
+				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFUL);
 
 		} catch (Exception ex) {
 			if (!COMMAND_CANCELLED.equals(ex.getMessage())) {

@@ -75,9 +75,18 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, LineLite> sharedReadOnlyLines = new HashMap<String, LineLite>();
+
 	@Getter
 	@Setter
 	private Map<String, Timetable> sharedTimetables = new HashMap<String, Timetable>();
+
+	@Getter
+	@Setter
+	private Map<String, Timetable> sharedTimetableTemplates = new HashMap<String, Timetable>();
+
+	@Getter
+	@Setter
+	private Map<String, Footnote> sharedFootnotes = new HashMap<String, Footnote>();
 
 	@Getter
 	@Setter
@@ -193,6 +202,7 @@ public class Referential implements java.io.Serializable {
 		accessPoints.clear();
 		companies.clear();
 		connectionLinks.clear();
+		footnotes.clear();
 		groupOfLines.clear();
 		journeyPatterns.clear();
 		lines.clear();
@@ -212,12 +222,14 @@ public class Referential implements java.io.Serializable {
 		sharedAccessPoints.clear();
 		sharedCompanies.clear();
 		sharedConnectionLinks.clear();
+		sharedFootnotes.clear();
 		sharedGroupOfLines.clear();
 		sharedLines.clear();
 		sharedPTNetworks.clear();
 		sharedStopAreas.clear();
 		sharedTimebands.clear();
 		sharedTimetables.clear();
+		sharedTimetableTemplates.clear();
 		sharedReadOnlyLines.clear();
 		sharedReadOnlyCompanies.clear();
 		sharedReadOnlyStopAreas.clear();
