@@ -123,11 +123,12 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 				if (withDao && !parameters.isNoSave()) {
 
 					// register
-					Command register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
+					Command register = CommandFactory.create(initialContext, FootnoteRegisterCommand.class.getName());
+					chain.add(register);
+					register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
 					chain.add(register);
 					
-					register = CommandFactory.create(initialContext, FootnoteRegisterCommand.class.getName());
-					chain.add(register);
+					
 
 					// Command copy = CommandFactory.create(initialContext,
 					// CopyCommand.class.getName());
