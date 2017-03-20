@@ -89,6 +89,12 @@ public class Footnote extends ChouetteObject {
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "line_id")
 	private Line line;
+	
+	@Getter
+	@Setter
+	@Column(name = "line_id")
+	private String lineId;
+	
 
 	/**
 	 * label
