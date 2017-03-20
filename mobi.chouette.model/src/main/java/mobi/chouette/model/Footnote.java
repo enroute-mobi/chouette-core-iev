@@ -93,7 +93,7 @@ public class Footnote extends ChouetteObject {
 	@Getter
 	@Setter
 	@Column(name = "line_id")
-	private String lineId;
+	private Long lineId;
 	
 
 	/**
