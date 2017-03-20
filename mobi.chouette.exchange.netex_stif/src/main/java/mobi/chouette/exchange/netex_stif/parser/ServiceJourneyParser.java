@@ -180,8 +180,12 @@ public class ServiceJourneyParser implements Parser, Constant {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(NOTICE_REF)) {
 						String ref = xpp.getAttributeValue(null, REF);
-						Footnote footnote = factory.getFootnote(ref);
-						vehicleJourney.getFootnotes().add(footnote);
+						// Footnote footnote = factory.getFootnote(ref);
+						Referential referential = (Referential) context.get(REFERENTIAL);
+						Footnote footnote = referential.getFootnotes().get(ref);
+						if (footnote != null) {
+							vehicleJourney.getFootnotes().add(footnote);
+						}
 						XPPUtil.skipSubTree(log, xpp);
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
