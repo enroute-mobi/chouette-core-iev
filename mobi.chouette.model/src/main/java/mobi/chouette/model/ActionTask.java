@@ -45,7 +45,7 @@ public abstract class ActionTask implements Serializable {
 	@Getter
 	@Setter
 	@Column(name="current_step_progress")
-	private double currentStepProgress;
+	private Double currentStepProgress;
 
 	@Getter
 	@Setter
@@ -54,8 +54,8 @@ public abstract class ActionTask implements Serializable {
 	
 	@Getter
 	@Setter
-	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinColumn(name="referential_id", insertable=false, updatable=false)
+	@ManyToOne (fetch = FetchType.EAGER)
+	@JoinColumn(name="referential_id", updatable=false)
 	private Referential referential;
 	
 	@Getter

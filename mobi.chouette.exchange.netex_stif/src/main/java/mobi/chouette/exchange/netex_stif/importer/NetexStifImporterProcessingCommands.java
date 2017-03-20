@@ -91,6 +91,9 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 			commands.add(tmp);
 			tmp = treatOneFile(initialContext, "commun.xml", jobData.getPathName(), true);
 			commands.add(tmp);
+			
+			// TODO a supprimer quand copycommand sera ok 
+			context.put(OPTIMIZED,Boolean.FALSE);
 
 			Path path = Paths.get(jobData.getPathName(), INPUT);
 			List<Path> stream = FileUtil.listFiles(path, "offre*.xml", "*metadata*");

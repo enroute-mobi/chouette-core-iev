@@ -47,6 +47,9 @@ public class ImportTask extends ActionTask {
 	@Column(name="file")
 	private String file;
 
-
+	@Getter
+	@Setter
+	@Column(name="token_download")
+	private String url;
 
 }

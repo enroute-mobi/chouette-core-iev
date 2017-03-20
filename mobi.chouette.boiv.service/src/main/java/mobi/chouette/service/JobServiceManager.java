@@ -203,6 +203,7 @@ public class JobServiceManager {
 		}
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public JobService cancel(String action, Long id) throws ServiceException {
 
 		// Instancier le modèle du service 'upload'
@@ -242,32 +243,50 @@ public class JobServiceManager {
 
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void terminate(JobService jobService, JobService.STATUS status) {
 		jobService.setStatus(status);
 		jobService.setUpdatedAt(new Date());
 		jobService.setEndedAt(new Date());
 		if (jobService.getAction().equals(JobData.ACTION.importer)) {
-			jobServiceManager.updateImportTask(jobService);
+			updateImportTask(jobService);
 		}
 		// TODO delete directory
 	}
 
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	private void updateImportTask(JobService jobService) {
+		if (jobService.getId() == null) {
+			log.error("null id for jobService");
+			throw new NullPointerException("null id for jobService");
+		}
+		if (importTaskDAO == null) {
+			log.error("importTaskDAO is null");
+			throw new NullPointerException("null importTaskDAO");
+		}
+			
 		ImportTask importTask = importTaskDAO.find(jobService.getId());
+		if (importTask == null) {
+			log.error("null importTask for jobService id = "+jobService.getId());
+			throw new NullPointerException("null importTask for jobService");
+		}
 		importTask.setStatus(jobService.getStatus().name().toLowerCase());
+		if (jobService.getStatus() == null) {
+			log.error("null status for jobService");
+			throw new NullPointerException("null status for jobService");
+		}
 		importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 		if (jobService.getEndedAt() != null)
 			importTask.setEndedAt(new Timestamp(jobService.getEndedAt().getTime()));
 		importTaskDAO.update(importTask);
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void abort(JobService jobService) {
 
 		jobService.setStatus(JobService.STATUS.ABORTED);
 		jobService.setUpdatedAt(new Date());
 		if (jobService.getAction().equals(JobData.ACTION.importer)) {
-			jobServiceManager.updateImportTask(jobService);
+			updateImportTask(jobService);
 		}
 		// TODO delete directory
 	}

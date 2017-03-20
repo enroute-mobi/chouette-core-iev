@@ -112,7 +112,10 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
-			parameter.setIds(Arrays.asList(referential.getMetadata().getLineIds()));
+			if (referential.getId() == null) throw new RuntimeException("referential id is null");
+			if (referential.getMetadatas().isEmpty()) throw new RuntimeException("referential id "+referential.getId() +" metadata is null");
+			if (referential.getMetadatas().get(0).getLineIds() == null) throw new RuntimeException("referential's metadata line ids  null");
+			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			return parameter;

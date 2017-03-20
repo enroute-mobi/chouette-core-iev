@@ -41,5 +41,6 @@ public class ReferentialMetadata {
 	@Type(type = "mobi.chouette.model.usertype.DateRangeArrayUserType")
 	private DateRange[] periods;
 	
+	
 
 }

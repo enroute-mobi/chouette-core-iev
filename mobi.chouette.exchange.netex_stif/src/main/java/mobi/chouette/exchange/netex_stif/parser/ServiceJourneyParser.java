@@ -54,7 +54,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				//vehicleJourney.setCompany(company);
 				CompanyLite company = referential.getSharedReadOnlyCompanies().get(ref);
 				if (company!=null){
-					vehicleJourney.setCompanyId(company.getObjectId());
+					vehicleJourney.setCompanyId(company.getId());
 				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(TRAIN_NUMBERS)) {
@@ -72,6 +72,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
 				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
+				vjas.setVehicleJourney(vehicleJourney);
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(ARRIVAL_TIME)) {
 						vjas.setArrivalTime(ParserUtils.getSQLTime(xpp.nextText()));

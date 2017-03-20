@@ -1,5 +1,7 @@
 package mobi.chouette.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "footnotes")
 @NoArgsConstructor
-public class Footnote extends ChouetteIdentifiedObject {
+public class Footnote extends ChouetteObject {
 	/**
     * 
     */
@@ -43,6 +45,36 @@ public class Footnote extends ChouetteIdentifiedObject {
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
+
+	@Getter @Setter @Transient 
+	private String objectId;
+	
+	@Getter @Setter @Transient 
+	private Long objectVersion;
+
+	/**
+	 * creation time
+	 * 
+	 * @param creationTime
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "created_at")
+	protected Date creationTime = new Date();
+
+	/**
+	 * update time
+	 * 
+	 * @param updateTime
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "updated_at")
+	protected Date updatedTime = new Date();
 
 	/**
 	 * referenced line

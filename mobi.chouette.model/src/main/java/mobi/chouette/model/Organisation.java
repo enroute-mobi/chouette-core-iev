@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CollectionType;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

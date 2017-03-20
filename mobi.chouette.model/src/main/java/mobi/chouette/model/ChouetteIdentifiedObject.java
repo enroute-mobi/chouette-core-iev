@@ -69,6 +69,18 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	protected Long objectVersion = 1L;
 
 	/**
+	 * creator id
+	 * 
+	 * @param creatorId
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "creator_id")
+	protected String creatorId;
+ 
+	/**
 	 * creation time
 	 * 
 	 * @param creationTime
@@ -91,18 +103,6 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	@Setter
 	@Column(name = "updated_at")
 	protected Date updatedTime = new Date();
-
-	/**
-	 * creator id
-	 * 
-	 * @param creatorId
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "creator_id")
-	protected String creatorId;
 
 	@Getter
 	@Setter

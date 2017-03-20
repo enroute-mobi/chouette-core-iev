@@ -169,7 +169,7 @@ public class Scheduler {
 					try {
 						InitialContext initialContext = new InitialContext();
 						Scheduler scheduler = (Scheduler) initialContext
-								.lookup("java:app/mobi.chouette.service/" + BEAN_NAME);
+								.lookup("java:app/mobi.chouette.boiv.service/" + BEAN_NAME);
 
 						scheduler.schedule();
 					} catch (Exception e) {

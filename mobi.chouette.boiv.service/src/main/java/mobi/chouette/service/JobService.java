@@ -57,6 +57,7 @@ public class JobService implements JobData, ServiceConstants {
 	public JobService(String rootDirectory, ImportTask importTask) throws ServiceException {
 		this.rootDirectory = rootDirectory;
 		this.id = importTask.getId();
+		this.referential = importTask.getReferential().getSchemaName();
 		this.action = ACTION.importer;
 		this.type = importTask.getFormat();
 		if (this.type == null)

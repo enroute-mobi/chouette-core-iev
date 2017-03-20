@@ -344,5 +344,5 @@ public class VehicleJourney extends ChouetteIdentifiedObject {
 
 	@Setter @Getter
 	@Column(name = "company_id")
-	private String companyId;
+	private Long companyId;
 }

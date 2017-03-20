@@ -30,7 +30,10 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.parser.PublicationDeliveryParser;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_ERROR_CODE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
@@ -64,6 +67,16 @@ public class NetexStifParserCommand implements Command, Constant {
 			if (referential != null) {
 				referential.clear(true);
 			}
+			if (fileName.startsWith("offre_")) {
+				// create line report entry
+				String id = fileName.split("_")[1];
+				id = "STIF:CODIFLIGNE:Line:" + id;
+				LineLite line = referential.getSharedReadOnlyLines().get(id);
+				if (line != null) {
+					reporter.addObjectReport(context, id, OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
+							IO_TYPE.INPUT);
+				}
+			}
 
 			InputStream input = new BOMInputStream(url.openStream());
 			BufferedReader in = new BufferedReader(new InputStreamReader(input), 8192 * 10);
@@ -93,7 +106,7 @@ public class NetexStifParserCommand implements Command, Constant {
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
-		
+
 		return result;
 	}
 

@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CollectionType;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,8 +46,9 @@ public class ImportMessage {
 	@Getter
 	@Setter
 	@Column(name="message_attributs")
+	@CollectionType(type="java.util.HashMap")
    	@Convert(converter = HstoreConverter.class)
-	private Map<String, String> currentStepProgress = new HashMap<String, String>();
+	private Map<String, String> messageAttributs = new HashMap<String, String>();
 	
 	@Getter
 	@Setter

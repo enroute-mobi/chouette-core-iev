@@ -41,7 +41,7 @@ public class RouteParser implements Parser, Constant {
 				// Line line = ObjectFactory.getLine(referential, tmp);
 				LineLite line = referential.getSharedReadOnlyLines().get(tmp);
 				if (line != null) {
-					route.setLineId(line.getObjectId());
+					route.setLineId(line.getId());
 				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {

@@ -2,6 +2,7 @@ package mobi.chouette.dao;
 
 import java.io.File;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 import javax.ejb.EJB;
@@ -25,14 +26,23 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import mobi.chouette.common.JobData;
+import mobi.chouette.model.ActionTask;
+import mobi.chouette.model.ImportTask;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.ReferentialMetadata;
 import mobi.chouette.model.type.DateRange;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
-public class ReferentialDaoTest extends Arquillian {
+public class ActionDaoTest extends Arquillian {
 	@EJB
 	ReferentialDAO referentialDao;
+	
+	@EJB 
+	ImportTaskDAO importDao;
+	
+	@EJB 
+	ActionDAO actionDao;
 
 	@PersistenceContext(unitName = "referential")
 	EntityManager em;
@@ -49,6 +59,7 @@ public class ReferentialDaoTest extends Arquillian {
 				.withTransitivity().asFile();
 
 		result = ShrinkWrap.create(WebArchive.class, "test.war").addAsWebInfResource("postgres-ds.xml")
+				.addClass(TestJobData.class)
 				.addAsLibraries(files).addAsResource(EmptyAsset.INSTANCE, "beans.xml");
 		return result;
 
@@ -57,7 +68,8 @@ public class ReferentialDaoTest extends Arquillian {
 	@Test
 	public void checkSaveReferential() {
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
-		Long id = null;
+		Long refId = null;
+		Long taskId = null;
 		{
 			try {
 
@@ -65,7 +77,11 @@ public class ReferentialDaoTest extends Arquillian {
 				referentialDao.create(r);
 				referentialDao.flush();
 				Assert.assertNotNull(r.getId(), "referential id");
-				id = r.getId();
+				refId = r.getId();
+				ImportTask task = createImportTask(r);
+				importDao.create(task);
+				importDao.flush();
+				taskId = task.getId();
 			} catch (RuntimeException ex) {
 				System.err.println("Exception " + ex.getClass().getName() + " " + ex.getMessage());
 				ex.printStackTrace();
@@ -88,14 +104,20 @@ public class ReferentialDaoTest extends Arquillian {
 			try {
 				utx.begin();
 				em.joinTransaction();
-				Referential r = referentialDao.find(id);
-				Assert.assertNotNull(r.getId(), "referential id");
-				Assert.assertEquals(r.getName(), "toto", "referential name");
-				Assert.assertNotEquals(r.getMetadatas().size(), 0, "metadata not empty");
-				ReferentialMetadata md = r.getMetadatas().get(0);
-				Assert.assertEquals(md.getLineIds().length, 4, "lines size");
-				Assert.assertEquals(md.getPeriods().length, 2, "periods size");
-				referentialDao.delete(r);
+				JobData job = new TestJobData(taskId,JobData.ACTION.importer);
+				
+				ActionTask ac = actionDao.getTask(job);
+				Assert.assertNotNull(ac.getId(), "Action id");
+				Assert.assertNotNull(ac.getReferential(), "Action referential");
+				Assert.assertFalse(ac.getReferential().getMetadatas().isEmpty(), "Action referential metadata");
+
+//				Assert.assertEquals(r.getName(), "toto", "referential name");
+//				Assert.assertNotEquals(r.getMetadatas().size(), 0, "metadata not empty");
+//				ReferentialMetadata md = r.getMetadatas().get(0);
+//				Assert.assertEquals(md.getLineIds().length, 4, "lines size");
+//				Assert.assertEquals(md.getPeriods().length, 2, "periods size");
+				importDao.delete((ImportTask) ac);
+				referentialDao.delete(referentialDao.find(refId));
 				utx.commit();
 			} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException
 					| RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
@@ -106,9 +128,21 @@ public class ReferentialDaoTest extends Arquillian {
 
 	}
 
+	private ImportTask createImportTask(Referential r) {
+		ImportTask t = new ImportTask();
+		t.setReferential(r);
+		t.setFile("toto");
+		t.setUrl("http://toto.com");
+		t.setFormat("netex_stif");
+		t.setCreatedAt(new Timestamp((new java.util.Date()).getTime()));
+ 		return t;
+	}
+
 	private Referential createReferential() {
 		Referential r = new Referential();
 		r.setName("toto");
+		r.setLineReferentialId(1L);
+		r.setStopAreaReferentialId(1L);
 		ReferentialMetadata md = new ReferentialMetadata();
 		Long[] lids = new Long[] { 1L, 2L, 3L, 4L };
 		md.setLineIds(lids);
@@ -128,5 +162,7 @@ public class ReferentialDaoTest extends Arquillian {
 		r.getMetadatas().add(md);
 		return r;
 	}
+	
+	
 
 }
