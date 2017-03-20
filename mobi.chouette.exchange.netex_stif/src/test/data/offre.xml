@@ -169,7 +169,7 @@
                                             version="any"</netex:NoticeRef>
                                     </netex:NoticeAssignment>
                                 </netex:noticeAssignments>
-										  <netex:DayTypeRef ref="CITYWAY:DayTypeRef:1:LOC">
+										  <netex:DayTypeRef ref="CITYWAY:DayType:1:LOC">
                                     version="any"</netex:DayTypeRef>
                                 <netex:JourneyPatternRef ref="CITYWAY:ServiceJourneyPattern:1:LOC"
                                     version="any"/>

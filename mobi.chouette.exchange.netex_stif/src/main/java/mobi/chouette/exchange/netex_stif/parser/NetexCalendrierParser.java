@@ -11,6 +11,7 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.model.util.Referential;
 
 // members level 
 
@@ -29,6 +30,9 @@ public class NetexCalendrierParser implements Parser, Constant {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		referential.getSharedTimetableTemplates().putAll(referential.getTimetables());
+		referential.getTimetables().clear();
 	}
 
 	private void parseMember(String tag, XmlPullParser xpp, Context context) throws Exception {

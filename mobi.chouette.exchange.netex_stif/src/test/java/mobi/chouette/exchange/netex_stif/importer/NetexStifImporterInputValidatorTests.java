@@ -2,12 +2,9 @@ package mobi.chouette.exchange.netex_stif.importer;
 
 import java.nio.file.Paths;
 
-import mobi.chouette.exchange.netex_stif.importer.NetexStifImportParameters;
-import mobi.chouette.exchange.netex_stif.importer.NetexStifImporterInputValidator;
-import mobi.chouette.exchange.parameters.AbstractExportParameter;
-
 import org.testng.Assert;
-import org.testng.annotations.Test;
+
+import mobi.chouette.exchange.parameters.AbstractExportParameter;
 
 public class NetexStifImporterInputValidatorTests {
 	//@Test(groups = { "InputValidator" }, description = "test good inputs")

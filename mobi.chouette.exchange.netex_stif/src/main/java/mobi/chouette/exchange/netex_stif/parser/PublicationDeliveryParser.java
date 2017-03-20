@@ -44,7 +44,7 @@ public class PublicationDeliveryParser implements Parser, Constant {
 			}
 		}
 		Referential ref = (Referential)context.get(REFERENTIAL);
-		log.info("Referential.routes : " + ref.getRoutes());
+		// log.info("Referential.routes : " + ref.getRoutes());
 	}
 
 	static {

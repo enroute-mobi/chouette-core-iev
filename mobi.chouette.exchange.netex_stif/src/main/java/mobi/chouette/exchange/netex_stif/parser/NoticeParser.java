@@ -45,7 +45,7 @@ public class NoticeParser implements Parser, Constant {
 			footnote.setLabel(text);
 			footnote.setCode(publicCode);
 			Referential referential = (Referential) context.get(REFERENTIAL);
-			referential.getFootnotes().put(id, footnote);
+			referential.getSharedFootnotes().put(id, footnote);
 		}
 	}
 

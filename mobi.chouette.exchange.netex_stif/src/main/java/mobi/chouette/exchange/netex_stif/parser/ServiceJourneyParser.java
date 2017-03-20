@@ -1,6 +1,8 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -20,6 +22,7 @@ import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.CopyUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -36,6 +39,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);
 		vehicleJourney.setObjectVersion(version);
 		JourneyPattern pattern = null;
+		Set<String> timetableRefs = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			log.info("ServiceJourneyParser tag : " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
@@ -44,8 +48,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				parseNoticeAssignements(xpp, context, vehicleJourney);
 			} else if (xpp.getName().equals(DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				Timetable timetable = ObjectFactory.getTimetable(referential, ref);
-				vehicleJourney.getTimetables().add(timetable);
+				timetableRefs.add(ref);
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(JOURNEY_PATTERN_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
@@ -81,6 +84,58 @@ public class ServiceJourneyParser implements Parser, Constant {
 			}
 		}
 
+		// affect timetables
+		affectTimetables(context, referential, vehicleJourney, timetableRefs);
+
+	}
+
+	private void affectTimetables(Context context, Referential referential, VehicleJourney vehicleJourney,
+			Set<String> timetableRefs) {
+		if (referential.getSharedTimetableTemplates().isEmpty()) {
+			log.info("no tm loaded ");
+			return;
+		}
+		Set<String> negative = getNegative(referential, timetableRefs);
+		if (negative.isEmpty()) {
+			for (String ref : timetableRefs) {
+				Timetable tm = referential.getTimetables().get(ref);
+				if (tm == null) {
+					tm = referential.getSharedTimetables().get(ref);
+					referential.getTimetables().put(ref, tm);
+				}
+				if (tm == null) {
+					tm = referential.getSharedTimetableTemplates().get(ref);
+					if (tm == null) {
+						log.info("tm not found " + ref);
+						continue;
+					}
+					tm = CopyUtil.copy(tm);
+					referential.getTimetables().put(ref, tm);
+				}
+				log.info("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
+				tm.addVehicleJourney(vehicleJourney);
+			}
+		} else {
+			// combine excluded tm with others
+			throw new RuntimeException("not allowed case");
+		}
+
+	}
+
+	private Set<String> getNegative(Referential referential, Set<String> timetableRefs) {
+		Set<String> negative = new HashSet<>();
+		for (String ref : timetableRefs) {
+			Timetable tm = referential.getSharedTimetableTemplates().get(ref);
+			if (tm != null) {
+				if (!tm.getPeriods().isEmpty())
+					continue;
+				if (tm.getEffectiveDates().isEmpty()) {
+					log.info("negative tm found " + ref);
+					negative.add(ref);
+				}
+			}
+		}
+		return negative;
 	}
 
 	private void parsePassingTimes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney) throws Exception {
