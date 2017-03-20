@@ -3,6 +3,7 @@ package mobi.chouette.exchange.netex_stif.importer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,15 +47,14 @@ import mobi.chouette.persistence.hibernate.ContextHolder;
 @Log4j
 public class NetexStifImportTests extends Arquillian implements Constant, ReportConstant {
 
-	@EJB 
+	@EJB
 	LineDAO lineDao;
-	
+
 	@EJB
 	RouteDAO routeDao;
 
-	@EJB 
+	@EJB
 	VehicleJourneyDAO vjDao;
-
 
 	@PersistenceContext(unitName = "referential")
 	EntityManager em;
@@ -71,59 +71,43 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		List<File> jars = new ArrayList<>();
 		List<JavaArchive> modules = new ArrayList<>();
 		for (File file : files) {
-			if (file.getName().startsWith("mobi.chouette.exchange"))
-			{
-				String name = file.getName().split("\\-")[0]+".jar";
-				JavaArchive archive = ShrinkWrap
-						  .create(ZipImporter.class, name)
-						  .importFrom(file)
-						  .as(JavaArchive.class);
+			if (file.getName().startsWith("mobi.chouette.exchange")) {
+				String name = file.getName().split("\\-")[0] + ".jar";
+				JavaArchive archive = ShrinkWrap.create(ZipImporter.class, name).importFrom(file).as(JavaArchive.class);
 				modules.add(archive);
-			}
-			else
-			{
+			} else {
 				jars.add(file);
 			}
 		}
-		File[] filesDao = Maven.resolver().loadPomFromFile("pom.xml")
-				.resolve("mobi.chouette:mobi.chouette.dao").withTransitivity().asFile();
-		if (filesDao.length == 0) 
-		{
+		File[] filesDao = Maven.resolver().loadPomFromFile("pom.xml").resolve("mobi.chouette:mobi.chouette.dao")
+				.withTransitivity().asFile();
+		if (filesDao.length == 0) {
 			throw new NullPointerException("no dao");
 		}
 		for (File file : filesDao) {
-			if (file.getName().startsWith("mobi.chouette.dao"))
-			{
-				String name = file.getName().split("\\-")[0]+".jar";
-				
-				JavaArchive archive = ShrinkWrap
-						  .create(ZipImporter.class, name)
-						  .importFrom(file)
-						  .as(JavaArchive.class);
+			if (file.getName().startsWith("mobi.chouette.dao")) {
+				String name = file.getName().split("\\-")[0] + ".jar";
+
+				JavaArchive archive = ShrinkWrap.create(ZipImporter.class, name).importFrom(file).as(JavaArchive.class);
 				modules.add(archive);
 				if (!modules.contains(archive))
-				   modules.add(archive);
-			}
-			else
-			{
+					modules.add(archive);
+			} else {
 				if (!jars.contains(file))
-				   jars.add(file);
+					jars.add(file);
 			}
 		}
-		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war").addAsWebInfResource("postgres-ds.xml")
-				.addClass(NetexStifImportTests.class)
+		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
+				.addAsWebInfResource("postgres-ds.xml").addClass(NetexStifImportTests.class)
 				.addClass(JobDataTest.class);
-		
-		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear")
-				.addAsLibraries(jars.toArray(new File[0]))
-				.addAsModules(modules.toArray(new JavaArchive[0]))
-				.addAsModule(testWar)
+
+		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
+				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
 				.addAsResource(EmptyAsset.INSTANCE, "beans.xml");
 		return result;
 	}
 
 	protected static InitialContext initialContext;
-	
 
 	protected void init() {
 		Locale.setDefault(Locale.ENGLISH);
@@ -133,11 +117,12 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
-			
-			
+
 		}
-		//Logger.getInstance(RouteRegisterCommand.class).setLevel(Level.DEBUG) ;
+		// Logger.getInstance(RouteRegisterCommand.class).setLevel(Level.DEBUG)
+		// ;
 	}
+
 	protected Context initImportContext() {
 		init();
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
@@ -154,8 +139,12 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		configuration.setCleanRepository(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
+		configuration.setLineReferentialId(1L);
+		configuration.setStopAreaReferentialId(1L);
+		List<Long> ids = Arrays.asList(new Long[] { 1L });
+		configuration.setIds(ids);
 		JobDataTest jobData = new JobDataTest();
-		context.put(JOB_DATA,jobData);
+		context.put(JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
@@ -167,15 +156,12 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		f.mkdirs();
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
-		jobData.setType( "netex_stif");
+		jobData.setType("netex_stif");
 		context.put(TESTNG, "true"); // mode test
 		context.put(OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
-
-	
-	
 
 	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
 	public void verifyImportLine() throws Exception {
@@ -195,27 +181,25 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 			log.error("test failed", ex);
 			throw ex;
 		}
-		
-		
+
 		Referential referential = (Referential) context.get(REFERENTIAL);
-//		Assert.assertNotEquals(referential.getTimetables(),0, "timetables" );
-//		Assert.assertNotEquals(referential.getSharedTimetables(),0, "shared timetables" );
+		// Assert.assertNotEquals(referential.getTimetables(),0, "timetables" );
+		// Assert.assertNotEquals(referential.getSharedTimetables(),0, "shared
+		// timetables" );
 
 		// line should be saved
 		utx.begin();
 		em.joinTransaction();
-		//Line line = lineDao.findByObjectId("");
+		// Line line = lineDao.findByObjectId("");
 		List<Route> routes = routeDao.findAll();
 		for (Route route : routes) {
 			System.out.println("route :" + route.getObjectId());
 		}
-		
-		//NeptuneTestsUtils.checkMinimalLine(line);
-		
+
+		// NeptuneTestsUtils.checkMinimalLine(line);
+
 		utx.rollback();
 
 	}
 
-	
-	
 }
