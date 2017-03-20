@@ -165,7 +165,7 @@
                                 <netex:Name>Course 1 par ici</netex:Name>
                                 <netex:noticeAssignments>
                                     <netex:NoticeAssignment>
-												  <netex:NoticeRef ref="CITYWAY:Notice:1234:LOC">
+												  <netex:NoticeRef ref="CITYWAY:Notice:1:LOC">
                                             version="any"</netex:NoticeRef>
                                     </netex:NoticeAssignment>
                                 </netex:noticeAssignments>
