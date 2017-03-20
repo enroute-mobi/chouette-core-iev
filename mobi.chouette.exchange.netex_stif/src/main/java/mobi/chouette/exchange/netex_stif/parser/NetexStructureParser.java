@@ -115,7 +115,7 @@ public class NetexStructureParser implements Parser, Constant {
 		members.put(SERVICE_JOURNEY_PATTERNS, SERVICE_JOURNEY_PATTERN);
 		members.put(DESTINATION_DISPLAYS, DESTINATION_DISPLAY);
 		members.put(SCHEDULED_STOP_POINTS, SCHEDULED_STOP_POINT);
-		members.put(PASSENGER_STOP_ASSIGNEMENTS, PASSENGER_STOP_ASSIGNEMENT);
+		members.put(PASSENGER_STOP_ASSIGNMENTS, PASSENGER_STOP_ASSIGNMENT);
 		members.put(ROUTING_CONSTRAINT_ZONES, ROUTING_CONSTRAINT_ZONE);
 
 		// init used parsers
@@ -124,7 +124,7 @@ public class NetexStructureParser implements Parser, Constant {
 		parsers.put(SERVICE_JOURNEY_PATTERN, ServiceJourneyPatternParser.class.getName());
 		parsers.put(DESTINATION_DISPLAY, DestinationDisplayParser.class.getName());
 		parsers.put(SCHEDULED_STOP_POINT, ScheduledStopPointParser.class.getName());
-		parsers.put(PASSENGER_STOP_ASSIGNEMENT, PassengerStopAssignementParser.class.getName());
+		parsers.put(PASSENGER_STOP_ASSIGNMENT, PassengerStopAssignmentParser.class.getName());
 		parsers.put(ROUTING_CONSTRAINT_ZONE, RoutingConstraintZoneParser.class.getName());
 
 		ParserFactory.register(NetexStructureParser.class.getName(), new ParserFactory() {

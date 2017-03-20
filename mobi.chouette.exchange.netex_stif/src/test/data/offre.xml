@@ -164,10 +164,10 @@
                             <netex:ServiceJourney id="CITYWAY:ServiceJourney:1-1:LOC" version="any">
                                 <netex:Name>Course 1 par ici</netex:Name>
                                 <netex:noticeAssignments>
-                                    <netex:NoticeAssignement>
+                                    <netex:NoticeAssignment>
 												  <netex:NoticeRef ref="CITYWAY:Notice:1234:LOC">
                                             version="any"</netex:NoticeRef>
-                                    </netex:NoticeAssignement>
+                                    </netex:NoticeAssignment>
                                 </netex:noticeAssignments>
 										  <netex:DayTypeRef ref="CITYWAY:DayTypeRef:1:LOC">
                                     version="any"</netex:DayTypeRef>

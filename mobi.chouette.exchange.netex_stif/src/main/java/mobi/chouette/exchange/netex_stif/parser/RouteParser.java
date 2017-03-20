@@ -24,7 +24,7 @@ public class RouteParser implements Parser, Constant {
 
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		log.info("Referential : " + referential + " / " + referential.hashCode());
+		// log.info("Referential : " + referential + " / " + referential.hashCode());
 		Long version = (Long) context.get(VERSION);
 		xpp.require(XmlPullParser.START_TAG, null, ROUTE);
 

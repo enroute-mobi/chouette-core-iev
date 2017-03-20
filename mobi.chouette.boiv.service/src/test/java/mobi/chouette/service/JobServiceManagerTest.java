@@ -91,7 +91,7 @@ public class JobServiceManagerTest extends Arquillian {
 	public void createWrongJobId() {
 		String action = JobData.ACTION.importer.name();
 		try {
-			jobServiceManager.create(action, -1L);
+			jobServiceManager.create(action, 9999L);
 		} catch (RequestServiceException e) {
 			Assert.assertEquals(e.getCode(), ServiceExceptionCode.INVALID_REQUEST.name(), "code expected");
 			Assert.assertEquals(e.getRequestCode(), RequestExceptionCode.UNKNOWN_JOB.name(), "request code expected");

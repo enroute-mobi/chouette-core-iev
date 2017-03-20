@@ -15,7 +15,7 @@ import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class DayTypeAssignementParser implements Parser, Constant {
+public class DayTypeAssignmentParser implements Parser, Constant {
 
 	@Override
 	public void parse(Context context) throws Exception {
@@ -53,8 +53,8 @@ public class DayTypeAssignementParser implements Parser, Constant {
 
 	static {
 
-		ParserFactory.register(DayTypeAssignementParser.class.getName(), new ParserFactory() {
-			private DayTypeAssignementParser instance = new DayTypeAssignementParser();
+		ParserFactory.register(DayTypeAssignmentParser.class.getName(), new ParserFactory() {
+			private DayTypeAssignmentParser instance = new DayTypeAssignmentParser();
 
 			@Override
 			protected Parser create() {

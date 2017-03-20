@@ -11,13 +11,12 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
-import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class PassengerStopAssignementParser implements Parser, Constant {
+public class PassengerStopAssignmentParser implements Parser, Constant {
 
 	@Override
 	public void parse(Context context) throws Exception {
@@ -28,7 +27,7 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 		String quayRef = null;
 		String id = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			log.info("PassengerStopAssignementParser : " + xpp.getName());
+			log.info("PassengerStopAssignmentParser : " + xpp.getName());
 			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
 				id = xpp.getAttributeValue(null, REF);
 				XPPUtil.skipSubTree(log, xpp);
@@ -43,10 +42,10 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 			List<StopPoint> list = factory.getStopPoints(id);
 			log.info("id :" + id + " list : " + list);
 			if (list != null) {
-				StopArea stopArea = ObjectFactory.getStopArea(referential, quayRef);
+				StopAreaLite stopArea = referential.getSharedReadOnlyStopAreas().get(quayRef);
 				for (StopPoint stopPoint : list) {
 					log.info("stop point" + stopPoint);
-					stopPoint.setContainedInStopArea(stopArea);
+					stopPoint.setStopAreaId(stopArea.getId());
 				}
 			}
 		}
@@ -54,8 +53,8 @@ public class PassengerStopAssignementParser implements Parser, Constant {
 	}
 
 	static {
-		ParserFactory.register(PassengerStopAssignementParser.class.getName(), new ParserFactory() {
-			private PassengerStopAssignementParser instance = new PassengerStopAssignementParser();
+		ParserFactory.register(PassengerStopAssignmentParser.class.getName(), new ParserFactory() {
+			private PassengerStopAssignmentParser instance = new PassengerStopAssignmentParser();
 
 			@Override
 			protected Parser create() {

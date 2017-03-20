@@ -62,12 +62,12 @@ public class NetexCalendrierParser implements Parser, Constant {
 
 		// init used members
 		members.put(DAY_TYPES, DAY_TYPE);
-		members.put(DAY_TYPE_ASSIGNEMENTS, DAY_TYPE_ASSIGNEMENT);
+		members.put(DAY_TYPE_ASSIGNMENTS, DAY_TYPE_ASSIGNMENT);
 		members.put(OPERATING_PERIODS, OPERATING_PERIOD);
 
 		// init used parsers
 		parsers.put(DAY_TYPE, DayTypeParser.class.getName());
-		parsers.put(DAY_TYPE_ASSIGNEMENT, DayTypeAssignementParser.class.getName());
+		parsers.put(DAY_TYPE_ASSIGNMENT, DayTypeAssignmentParser.class.getName());
 		parsers.put(OPERATING_PERIOD, OperatingPeriodParser.class.getName());
 		
 		ParserFactory.register(NetexCalendrierParser.class.getName(), new ParserFactory() {

@@ -13,6 +13,7 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
@@ -33,10 +34,10 @@ public class ServiceJourneyParser implements Parser, Constant {
 		vehicleJourney.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			log.info("ServiceJourneyParser tag : "+ xpp.getName());
+			log.info("ServiceJourneyParser tag : " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				vehicleJourney.setPublishedJourneyName(xpp.nextText());
-			} else if (xpp.getName().equals(NOTICE_ASSIGNEMENTS)) {
+			} else if (xpp.getName().equals(NOTICE_ASSIGNMENTS)) {
 				parseNoticeAssignements(xpp, context, vehicleJourney);
 			} else if (xpp.getName().equals(DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
@@ -50,10 +51,10 @@ public class ServiceJourneyParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				//Company company = ObjectFactory.getCompany(referential, ref);
-				//vehicleJourney.setCompany(company);
+				// Company company = ObjectFactory.getCompany(referential, ref);
+				// vehicleJourney.setCompany(company);
 				CompanyLite company = referential.getSharedReadOnlyCompanies().get(ref);
-				if (company!=null){
+				if (company != null) {
 					vehicleJourney.setCompanyId(company.getId());
 				}
 				XPPUtil.skipSubTree(log, xpp);
@@ -72,7 +73,12 @@ public class ServiceJourneyParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
 				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
+				int rank = vehicleJourney.getVehicleJourneyAtStops().size();
 				vjas.setVehicleJourney(vehicleJourney);
+				if (rank < vehicleJourney.getJourneyPattern().getStopPoints().size()) {
+					StopPoint sp = vehicleJourney.getJourneyPattern().getStopPoints().get(rank);
+					vjas.setStopPoint(sp);
+				}
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(ARRIVAL_TIME)) {
 						vjas.setArrivalTime(ParserUtils.getSQLTime(xpp.nextText()));
@@ -86,7 +92,6 @@ public class ServiceJourneyParser implements Parser, Constant {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
-				vehicleJourney.getVehicleJourneyAtStops().add(vjas);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
@@ -114,7 +119,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 			throws Exception {
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals(NOTICE_ASSIGNEMENT)) {
+			if (xpp.getName().equals(NOTICE_ASSIGNMENT)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(NOTICE_REF)) {
 						String ref = xpp.getAttributeValue(null, REF);

@@ -109,6 +109,12 @@ public class NetexStifObjectFactory {
 	public void clear() {
 		direction.clear();
 		footnote.clear();
+		destinationDisplay.clear();
+		scheduledStopPoint.clear();
+		operatingPeriods.clear();
+		routeDirections.clear();
+		JourneyPatternDestinations.clear();
+		stopPointInitIdToStopPoints.clear();
 	}
 
 	public void dispose() {
