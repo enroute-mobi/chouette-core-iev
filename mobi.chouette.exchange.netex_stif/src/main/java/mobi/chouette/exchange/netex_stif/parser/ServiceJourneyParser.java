@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.List;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
@@ -13,6 +15,7 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
@@ -32,7 +35,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 		String id = xpp.getAttributeValue(null, ID);
 		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);
 		vehicleJourney.setObjectVersion(version);
-
+		JourneyPattern pattern = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			log.info("ServiceJourneyParser tag : " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
@@ -46,7 +49,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(JOURNEY_PATTERN_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				JourneyPattern pattern = ObjectFactory.getJourneyPattern(referential, ref);
+				pattern = ObjectFactory.getJourneyPattern(referential, ref);
 				vehicleJourney.setJourneyPattern(pattern);
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
@@ -64,6 +67,17 @@ public class ServiceJourneyParser implements Parser, Constant {
 				parsePassingTimes(xpp, context, vehicleJourney);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
+			}
+		}
+		if (pattern != null) {
+			List<Footnote> list = vehicleJourney.getFootnotes();
+			for (Footnote footnote : list) {
+				Route route = pattern.getRoute();
+				log.info("route : " + route);
+				if (route != null) {
+					log.info("lineid : " + route.getLineId());
+					footnote.setLineId(route.getLineId());
+				}
 			}
 		}
 
@@ -126,6 +140,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 						// Footnote footnote = factory.getFootnote(ref);
 						Referential referential = (Referential) context.get(REFERENTIAL);
 						Footnote footnote = referential.getFootnotes().get(ref);
+						log.info("Footnote with  id : " + ref + " footnotes : " + referential.getFootnotes());
+						log.info("Footnote : " + footnote);
 						if (footnote != null) {
 							vehicleJourney.getFootnotes().add(footnote);
 						}
