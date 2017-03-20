@@ -168,7 +168,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType( "netex_stif");
-		context.put("testng", "true");
+		context.put(TESTNG, "true"); // mode test
 		context.put(OPTIMIZED, Boolean.FALSE);
 		return context;
 

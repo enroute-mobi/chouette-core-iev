@@ -169,7 +169,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType( "netex_stif");
-		context.put("testng", "true");
+		context.put(TESTNG, "true");
 		context.put(OPTIMIZED, Boolean.FALSE);
 		return context;
 

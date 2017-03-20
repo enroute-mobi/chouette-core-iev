@@ -91,7 +91,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		test.setReferential("chouette_gui");
 		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
-		context.put("testng", "true");
+		context.put(TESTNG, "true");
 		context.put(OPTIMIZED, Boolean.FALSE);
 		initLines(context);
 		return context;

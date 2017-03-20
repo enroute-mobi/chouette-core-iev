@@ -35,6 +35,8 @@ public interface Constant {
 	public static final String VALIDATION_FILE = "validation_report.json";
 	public static final String CANCEL_ASKED = "cancel_asked";
 	public static final String COMMAND_CANCELLED = "command_cancelled";
+	
+	public static final String TESTNG = "testng" ; // use to bypass action in testing mode
 
 	public static final String COLUMN_NUMBER = "column_number";
 	public static final String LINE_NUMBER = "line_number";

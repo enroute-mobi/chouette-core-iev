@@ -54,6 +54,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 	}
 
 	private void saveProgression(Context context) {
+		if (context.containsKey(TESTNG)) return;
 		ProgressionReport report = (ProgressionReport) context.get(REPORT);
 		JobData job = (JobData) context.get(JOB_DATA);
 		ActionTask task = actionDAO.getTask(job);
@@ -103,8 +104,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 
 
 	public void saveReport(Context context, boolean force) {
-		if (context.containsKey("testng"))
-			return;
+		if (context.containsKey(TESTNG)) return;
 		Report report = (Report) context.get(REPORT);
 		Date date = new Date();
 		Date delay = new Date(date.getTime() - 8000);
@@ -130,8 +130,8 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 	 * @param context
 	 */
 	public void saveMainValidationReport(Context context, boolean force) {
-		if (context.containsKey("testng"))
-			return;
+		if (context.containsKey(TESTNG)) return;
+			
 		Report report = (Report) context.get(VALIDATION_REPORT);
 		// ne pas sauver un rapport null ou vide
 		if (report == null || report.isEmpty())
