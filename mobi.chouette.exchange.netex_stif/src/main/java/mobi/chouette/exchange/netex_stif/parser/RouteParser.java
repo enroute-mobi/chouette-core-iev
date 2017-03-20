@@ -24,7 +24,6 @@ public class RouteParser implements Parser, Constant {
 
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
-		// log.info("Referential : " + referential + " / " + referential.hashCode());
 		Long version = (Long) context.get(VERSION);
 		xpp.require(XmlPullParser.START_TAG, null, ROUTE);
 
@@ -38,7 +37,6 @@ public class RouteParser implements Parser, Constant {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(LINE_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);
-				// Line line = ObjectFactory.getLine(referential, tmp);
 				LineLite line = referential.getSharedReadOnlyLines().get(tmp);
 				if (line != null) {
 					route.setLineId(line.getId());
@@ -47,7 +45,6 @@ public class RouteParser implements Parser, Constant {
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
 
 				String tmpDirType = xpp.nextText();
-				log.info("RouteParser : dir " + tmpDirType);
 				if (tmpDirType.equals(DIRECTION_INBOUND)) {
 					route.setDirection(PTDirectionEnum.R);
 				} else if (tmpDirType.equals(DIRECTION_OUTBOUND)) {
@@ -76,12 +73,9 @@ public class RouteParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		log.info("end of route");
 		route.setFilled(true);
-		Referential ref = (Referential)context.get(REFERENTIAL);
-		log.info("Referential.routes : " + ref.getRoutes());
-		
-	}
+		Referential ref = (Referential) context.get(REFERENTIAL);
+			}
 
 	static {
 		ParserFactory.register(RouteParser.class.getName(), new ParserFactory() {
