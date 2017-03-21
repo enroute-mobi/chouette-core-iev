@@ -267,8 +267,8 @@ CREATE TABLE imports (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     file character varying(255),
-    started_at date,
-    ended_at date,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
     token_download character varying(255)
 );
 
@@ -515,7 +515,8 @@ CREATE TABLE stop_areas (
     import_xml text,
     deleted_at timestamp without time zone,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    stif_type character varying(255)
 );
 ALTER TABLE stop_areas OWNER TO chouette;
 CREATE SEQUENCE stop_areas_id_seq
@@ -713,7 +714,7 @@ INSERT INTO stop_areas VALUES (1, NULL, 'FR:78217:ZDE:32531:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32531">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:45:37.406026', NULL);
+      </Quay>', NULL, '2017-02-10 09:45:37.406026', NULL, NULL);
 INSERT INTO stop_areas VALUES (2, NULL, 'FR:78217:ZDE:32523:STIF', 1, 'chouette', 'CHEMIN NEUF', NULL, 'zdep', NULL, NULL, NULL, 1.8162940080552900, 48.9524979333468000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32523" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32523:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -738,7 +739,7 @@ INSERT INTO stop_areas VALUES (2, NULL, 'FR:78217:ZDE:32523:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32523">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:45:48.545597', NULL);
+      </Quay>', NULL, '2017-02-10 09:45:48.545597', NULL, NULL);
 INSERT INTO stop_areas VALUES (3, NULL, 'FR:78217:ZDE:32529:STIF', 1, 'chouette', 'LES BICHES', NULL, 'zdep', NULL, NULL, NULL, 1.8118139867675400, 48.9526329360882000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32529" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32529:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -763,7 +764,7 @@ INSERT INTO stop_areas VALUES (3, NULL, 'FR:78217:ZDE:32529:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32529">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:45:49.633456', NULL);
+      </Quay>', NULL, '2017-02-10 09:45:49.633456', NULL, NULL);
 INSERT INTO stop_areas VALUES (4, NULL, 'FR:78217:ZDE:32521:STIF', 1, 'chouette', 'LE CHATEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8133756580597400, 48.9533662680704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32521" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32521:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -788,7 +789,7 @@ INSERT INTO stop_areas VALUES (4, NULL, 'FR:78217:ZDE:32521:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32521">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:45:49.675806', NULL);
+      </Quay>', NULL, '2017-02-10 09:45:49.675806', NULL, NULL);
 INSERT INTO stop_areas VALUES (5, NULL, 'FR:78217:ZDE:32522:STIF', 1, 'chouette', 'LE CHATEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8126173239686100, 48.9533412676803000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32522" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32522:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -813,7 +814,7 @@ INSERT INTO stop_areas VALUES (5, NULL, 'FR:78217:ZDE:32522:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32522">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:45:49.699328', NULL);
+      </Quay>', NULL, '2017-02-10 09:45:49.699328', NULL, NULL);
 INSERT INTO stop_areas VALUES (6, NULL, 'FR:78217:ZDE:32784:STIF', 1, 'chouette', 'BROUILLARD', NULL, 'zdep', NULL, NULL, NULL, 1.7875870622303600, 48.9263228997569000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32784" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32784:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -838,7 +839,7 @@ INSERT INTO stop_areas VALUES (6, NULL, 'FR:78217:ZDE:32784:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32784">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:53:18.141605', NULL);
+      </Quay>', NULL, '2017-02-10 09:53:18.141605', NULL, NULL);
 INSERT INTO stop_areas VALUES (7, NULL, 'FR:78217:ZDE:32785:STIF', 1, 'chouette', 'BROUILLARD', NULL, 'zdep', NULL, NULL, NULL, 1.7870004023971600, 48.9261295695634000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32785" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32785:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -863,7 +864,7 @@ INSERT INTO stop_areas VALUES (7, NULL, 'FR:78217:ZDE:32785:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32785">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:53:18.166346', NULL);
+      </Quay>', NULL, '2017-02-10 09:53:18.166346', NULL, NULL);
 INSERT INTO stop_areas VALUES (8, NULL, 'FR:78217:ZDE:32786:STIF', 1, 'chouette', 'CANADA', NULL, 'zdep', NULL, NULL, NULL, 1.7903770996057600, 48.9298595765723000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32786" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32786:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -888,7 +889,7 @@ INSERT INTO stop_areas VALUES (8, NULL, 'FR:78217:ZDE:32786:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32786">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:53:21.017113', NULL);
+      </Quay>', NULL, '2017-02-10 09:53:21.017113', NULL, NULL);
 INSERT INTO stop_areas VALUES (9, NULL, 'FR:78217:ZDE:32787:STIF', 1, 'chouette', 'CANADA', NULL, 'zdep', NULL, NULL, NULL, 1.7902854280654100, 48.9289362426669000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32787" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32787:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -913,7 +914,7 @@ INSERT INTO stop_areas VALUES (9, NULL, 'FR:78217:ZDE:32787:STIF', 1, 'chouette'
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32787">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:53:21.038821', NULL);
+      </Quay>', NULL, '2017-02-10 09:53:21.038821', NULL, NULL);
 INSERT INTO stop_areas VALUES (10, NULL, 'FR:78217:ZDE:32516:STIF', 1, 'chouette', 'ALLEE DE PINCELOUP', NULL, 'zdep', NULL, NULL, NULL, 1.8084105849672000, 48.9439162501291000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32516" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32516:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -938,7 +939,7 @@ INSERT INTO stop_areas VALUES (10, NULL, 'FR:78217:ZDE:32516:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32516">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:53:32.279403', NULL);
+      </Quay>', NULL, '2017-02-10 09:53:32.279403', NULL, NULL);
 INSERT INTO stop_areas VALUES (11, NULL, 'FR:78217:ZDE:32533:STIF', 1, 'chouette', 'POTEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8300191012754500, 48.9566545958770000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32533" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32533:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -963,7 +964,7 @@ INSERT INTO stop_areas VALUES (11, NULL, 'FR:78217:ZDE:32533:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32533">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:19.188452', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:19.188452', NULL, NULL);
 INSERT INTO stop_areas VALUES (12, NULL, 'FR:78217:ZDE:32519:STIF', 1, 'chouette', 'CARREFOUR ST MARTIN', NULL, 'zdep', NULL, NULL, NULL, 1.8195940225965100, 48.9537812663945000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32519" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32519:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -988,7 +989,7 @@ INSERT INTO stop_areas VALUES (12, NULL, 'FR:78217:ZDE:32519:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32519">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:17.057362', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:17.057362', NULL, NULL);
 INSERT INTO stop_areas VALUES (13, NULL, 'FR:78217:ZDE:32520:STIF', 1, 'chouette', 'CARREFOUR ST MARTIN', NULL, 'zdep', NULL, NULL, NULL, 1.8193123651273500, 48.9536762647935000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32520" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32520:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1013,7 +1014,7 @@ INSERT INTO stop_areas VALUES (13, NULL, 'FR:78217:ZDE:32520:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32520">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:17.090476', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:17.090476', NULL, NULL);
 INSERT INTO stop_areas VALUES (14, NULL, 'FR:78217:ZDE:32527:STIF', 1, 'chouette', 'LA FALAISE', NULL, 'zdep', NULL, NULL, NULL, 1.8215623902590100, 48.9563379380118000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32527" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32527:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1038,7 +1039,7 @@ INSERT INTO stop_areas VALUES (14, NULL, 'FR:78217:ZDE:32527:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32527">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:19.04396', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:19.04396', NULL, NULL);
 INSERT INTO stop_areas VALUES (15, NULL, 'FR:78217:ZDE:32528:STIF', 1, 'chouette', 'LA FALAISE', NULL, 'zdep', NULL, NULL, NULL, 1.8215273921141900, 48.9563896027813000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32528" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32528:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1063,7 +1064,7 @@ INSERT INTO stop_areas VALUES (15, NULL, 'FR:78217:ZDE:32528:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32528">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:19.075433', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:19.075433', NULL, NULL);
 INSERT INTO stop_areas VALUES (16, NULL, 'FR:78217:ZDE:32532:STIF', 1, 'chouette', 'POTEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8301257677224300, 48.9567112696982000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32532" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32532:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1088,7 +1089,7 @@ INSERT INTO stop_areas VALUES (16, NULL, 'FR:78217:ZDE:32532:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32532">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:19.154373', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:19.154373', NULL, NULL);
 INSERT INTO stop_areas VALUES (17, NULL, 'FR:78217:ZDE:13660:STIF', 1, 'chouette', 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.8115371679130100, 48.9573485884751000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819300" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:21.0Z" id="FR:78217:ZDE:13660:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1117,7 +1118,7 @@ INSERT INTO stop_areas VALUES (17, NULL, 'FR:78217:ZDE:13660:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:13660">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:19.62122', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:19.62122', NULL, NULL);
 INSERT INTO stop_areas VALUES (18, NULL, 'FR:78217:ZDE:32530:STIF', 1, 'chouette', 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.8116042808075700, 48.9572862999147000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819294" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:55.0Z" id="FR:78217:ZDE:32530:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1146,7 +1147,7 @@ INSERT INTO stop_areas VALUES (18, NULL, 'FR:78217:ZDE:32530:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32530">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:56:19.65563', NULL);
+      </Quay>', NULL, '2017-02-10 09:56:19.65563', NULL, NULL);
 INSERT INTO stop_areas VALUES (19, NULL, 'FR:78217:ZDE:41202:STIF', 1, 'chouette', 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="41202" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:41202:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1179,7 +1180,7 @@ INSERT INTO stop_areas VALUES (19, NULL, 'FR:78217:ZDE:41202:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:41202">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:53.642561', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:53.642561', NULL, NULL);
 INSERT INTO stop_areas VALUES (20, NULL, 'FR:78217:ZDE:32503:STIF', 1, 'chouette', 'Annexe Mairie (Gare SNCF)', NULL, 'zdep', NULL, NULL, NULL, 1.8085190228973600, 48.9626212928230000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32503" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32503:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1208,7 +1209,7 @@ INSERT INTO stop_areas VALUES (20, NULL, 'FR:78217:ZDE:32503:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32503">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:53.710717', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:53.710717', NULL, NULL);
 INSERT INTO stop_areas VALUES (21, NULL, 'FR:78217:ZDE:18304:STIF', 1, 'chouette', 'Gare d''Epône Mézières', NULL, 'zdep', NULL, NULL, NULL, 1.8083189204177400, 48.9631353611361000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18304" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:18304:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1241,7 +1242,7 @@ INSERT INTO stop_areas VALUES (21, NULL, 'FR:78217:ZDE:18304:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:18304">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:53.762431', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:53.762431', NULL, NULL);
 INSERT INTO stop_areas VALUES (22, NULL, 'FR:78217:ZDE:18305:STIF', 1, 'chouette', 'Gare d''Epône Mézières', NULL, 'zdep', NULL, NULL, NULL, 1.8083195437807300, 48.9630724138501000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18305" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:18305:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1274,7 +1275,7 @@ INSERT INTO stop_areas VALUES (22, NULL, 'FR:78217:ZDE:18305:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:18305">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:53.796372', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:53.796372', NULL, NULL);
 INSERT INTO stop_areas VALUES (23, NULL, 'FR:78217:ZDE:418584:STIF', 1, 'chouette', 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="709210" created="2015-06-15T09:06:29.0Z" changed="2015-06-15T09:06:29.0Z" id="FR:78217:ZDE:418584:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1303,7 +1304,7 @@ INSERT INTO stop_areas VALUES (23, NULL, 'FR:78217:ZDE:418584:STIF', 1, 'chouett
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:418584">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:53.821219', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:53.821219', NULL, NULL);
 INSERT INTO stop_areas VALUES (24, NULL, 'FR:78217:ZDE:32509:STIF', 1, 'chouette', 'BOUT DU MONDE', NULL, 'zdep', NULL, NULL, NULL, 1.8298075100030400, 48.9683646251586000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32509" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32509:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1328,7 +1329,7 @@ INSERT INTO stop_areas VALUES (24, NULL, 'FR:78217:ZDE:32509:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32509">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:58.44123', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:58.44123', NULL, NULL);
 INSERT INTO stop_areas VALUES (25, NULL, 'FR:78217:ZDE:32504:STIF', 1, 'chouette', 'AVENUE D''EPONE', NULL, 'zdep', NULL, NULL, NULL, 1.8337208598697700, 48.9686746309032000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32504" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32504:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1353,7 +1354,7 @@ INSERT INTO stop_areas VALUES (25, NULL, 'FR:78217:ZDE:32504:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32504">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:58.678861', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:58.678861', NULL, NULL);
 INSERT INTO stop_areas VALUES (26, NULL, 'FR:78217:ZDE:32507:STIF', 1, 'chouette', 'BOULEVARD DE LA PAIX', NULL, 'zdep', NULL, NULL, NULL, 1.8359592073884300, 48.9698496280250000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32507" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32507:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1378,7 +1379,7 @@ INSERT INTO stop_areas VALUES (26, NULL, 'FR:78217:ZDE:32507:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32507">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:58:59.955092', NULL);
+      </Quay>', NULL, '2017-02-10 09:58:59.955092', NULL, NULL);
 INSERT INTO stop_areas VALUES (27, NULL, 'FR:78217:ZDE:32510:STIF', 1, 'chouette', 'LES DOLMENS', NULL, 'zdep', NULL, NULL, NULL, 1.8328141968442100, 48.9702879693091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32510" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32510:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1403,7 +1404,7 @@ INSERT INTO stop_areas VALUES (27, NULL, 'FR:78217:ZDE:32510:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32510">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:59:00.20431', NULL);
+      </Quay>', NULL, '2017-02-10 09:59:00.20431', NULL, NULL);
 INSERT INTO stop_areas VALUES (28, NULL, 'FR:78217:ZDE:32514:STIF', 1, 'chouette', 'PLACE MARECHAL JUIN', NULL, 'zdep', NULL, NULL, NULL, 1.8369392346693400, 48.9715229669525000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32514" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32514:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1428,7 +1429,7 @@ INSERT INTO stop_areas VALUES (28, NULL, 'FR:78217:ZDE:32514:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32514">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:59:02.425365', NULL);
+      </Quay>', NULL, '2017-02-10 09:59:02.425365', NULL, NULL);
 INSERT INTO stop_areas VALUES (29, NULL, 'FR:78217:ZDE:416465:STIF', 1, 'chouette', 'Elisab. Pl du Maréchal Juin', NULL, 'zdep', NULL, NULL, NULL, 1.8368735974221300, 48.9714362201824000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="666350" created="2015-05-12T09:05:28.0Z" changed="2015-05-12T09:05:28.0Z" id="FR:78217:ZDE:416465:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1449,7 +1450,7 @@ INSERT INTO stop_areas VALUES (29, NULL, 'FR:78217:ZDE:416465:STIF', 1, 'chouett
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:416465">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:59:02.458789', NULL);
+      </Quay>', NULL, '2017-02-10 09:59:02.458789', NULL, NULL);
 INSERT INTO stop_areas VALUES (30, NULL, 'FR:78217:ZDE:32511:STIF', 1, 'chouette', 'MAIRIE / ECOLE', NULL, 'zdep', NULL, NULL, NULL, 1.8369025767705700, 48.9732296340157000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32511" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32511:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1474,7 +1475,7 @@ INSERT INTO stop_areas VALUES (30, NULL, 'FR:78217:ZDE:32511:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32511">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:59:04.610939', NULL);
+      </Quay>', NULL, '2017-02-10 09:59:04.610939', NULL, NULL);
 INSERT INTO stop_areas VALUES (31, NULL, 'FR:78217:ZDE:32508:STIF', 1, 'chouette', 'LA BERGERIE', NULL, 'zdep', NULL, NULL, NULL, 1.8388059189735000, 48.9739196359739000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32508" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32508:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1499,7 +1500,7 @@ INSERT INTO stop_areas VALUES (31, NULL, 'FR:78217:ZDE:32508:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32508">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 09:59:05.633874', NULL);
+      </Quay>', NULL, '2017-02-10 09:59:05.633874', NULL, NULL);
 INSERT INTO stop_areas VALUES (32, NULL, 'FR:78217:ZDE:32525:STIF', 1, 'chouette', 'EMILE SERGENT', NULL, 'zdep', NULL, NULL, NULL, 1.8170356954507600, 48.9568029441520000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32525" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32525:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1524,7 +1525,7 @@ INSERT INTO stop_areas VALUES (32, NULL, 'FR:78217:ZDE:32525:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32525">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 10:02:44.451375', NULL);
+      </Quay>', NULL, '2017-02-10 10:02:44.451375', NULL, NULL);
 INSERT INTO stop_areas VALUES (33, NULL, 'FR:78217:ZDE:32524:STIF', 1, 'chouette', 'EMILE SERGENT', NULL, 'zdep', NULL, NULL, NULL, 1.8169827330564200, 48.9566739779480000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="729344" created="2014-12-29T12:12:00.0Z" changed="2015-10-07T04:10:33.0Z" id="FR:78217:ZDE:32524:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1549,7 +1550,7 @@ INSERT INTO stop_areas VALUES (33, NULL, 'FR:78217:ZDE:32524:STIF', 1, 'chouette
        <AccessibilityAssessment version="any" id="STIF-REFLEX:AccessibilityAssessment:32524">
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
-      </Quay>', NULL, '2017-02-10 10:02:44.472555', NULL);
+      </Quay>', NULL, '2017-02-10 10:02:44.472555', NULL, NULL);
 INSERT INTO stop_areas VALUES (34, NULL, 'FR:78217:LDA:65045:STIF', 1, 'chouette', 'Moulinà Vent', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65045" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65045:STIF">
        <Name>Moulin à Vent</Name>
        <placeTypes>
@@ -1563,7 +1564,7 @@ INSERT INTO stop_areas VALUES (34, NULL, 'FR:78217:LDA:65045:STIF', 1, 'chouette
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
-      </StopPlace>', NULL, '2017-02-10 10:05:27.928283', NULL);
+      </StopPlace>', NULL, '2017-02-10 10:05:27.928283', NULL, NULL);
 INSERT INTO stop_areas VALUES (35, NULL, 'FR:78217:ZDL:53999:STIF', 1, 'chouette', 'Moulinà Vent', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53999" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53999:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1587,7 +1588,7 @@ INSERT INTO stop_areas VALUES (35, NULL, 'FR:78217:ZDL:53999:STIF', 1, 'chouette
        <quays>
         <QuayRef ref="FR:78217:ZDE:32531:STIF" version="32531"/>
        </quays>
-      </StopPlace>', NULL, '2017-02-10 10:05:27.954129', NULL);
+      </StopPlace>', NULL, '2017-02-10 10:05:27.954129', NULL, NULL);
 INSERT INTO stop_areas VALUES (36, NULL, 'FR:78217:LDA:65144:STIF', 1, 'chouette', 'Chemin Neuf', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65144" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65144:STIF">
        <Name>Chemin Neuf</Name>
        <placeTypes>
@@ -1601,7 +1602,7 @@ INSERT INTO stop_areas VALUES (36, NULL, 'FR:78217:LDA:65144:STIF', 1, 'chouette
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
-      </StopPlace>', NULL, '2017-02-10 10:05:32.80977', NULL);
+      </StopPlace>', NULL, '2017-02-10 10:05:32.80977', NULL, NULL);
 INSERT INTO stop_areas VALUES (37, NULL, 'FR:78217:ZDL:53995:STIF', 1, 'chouette', 'Chemin Neuf', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53995" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53995:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1625,7 +1626,7 @@ INSERT INTO stop_areas VALUES (37, NULL, 'FR:78217:ZDL:53995:STIF', 1, 'chouette
        <quays>
         <QuayRef ref="FR:78217:ZDE:32523:STIF" version="32523"/>
        </quays>
-      </StopPlace>', NULL, '2017-02-10 10:05:32.835216', NULL);
+      </StopPlace>', NULL, '2017-02-10 10:05:32.835216', NULL, NULL);
 INSERT INTO stop_areas VALUES (38, NULL, 'FR:78217:ZDL:53998:STIF', 1, 'chouette', 'Les Biches', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53998" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53998:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1649,7 +1650,7 @@ INSERT INTO stop_areas VALUES (38, NULL, 'FR:78217:ZDL:53998:STIF', 1, 'chouette
        <quays>
         <QuayRef ref="FR:78217:ZDE:32529:STIF" version="32529"/>
        </quays>
-      </StopPlace>', NULL, '2017-02-10 10:05:33.446592', NULL);
+      </StopPlace>', NULL, '2017-02-10 10:05:33.446592', NULL, NULL);
 INSERT INTO stop_areas VALUES (39, NULL, 'FR:78217:ZDL:53994:STIF', 1, 'chouette', 'Le Château', NULL, 'zdlr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53994" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53994:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -1674,7 +1675,7 @@ INSERT INTO stop_areas VALUES (39, NULL, 'FR:78217:ZDL:53994:STIF', 1, 'chouette
         <QuayRef ref="FR:78217:ZDE:32521:STIF" version="32521"/>
         <QuayRef ref="FR:78217:ZDE:32522:STIF" version="32522"/>
        </quays>
-      </StopPlace>', NULL, '2017-02-10 10:05:33.469636', NULL);
+      </StopPlace>', NULL, '2017-02-10 10:05:33.469636', NULL, NULL);
 
 SELECT pg_catalog.setval('stop_areas_id_seq', 39, true);
 
@@ -2236,8 +2237,6 @@ ALTER TABLE ONLY journey_patterns_stop_points
     ADD CONSTRAINT jpsp_stoppoint_fkey FOREIGN KEY (stop_point_id) REFERENCES stop_points(id) ON DELETE CASCADE;
 ALTER TABLE ONLY routes
     ADD CONSTRAINT route_opposite_route_fkey FOREIGN KEY (opposite_route_id) REFERENCES routes(id) ON DELETE SET NULL;
-ALTER TABLE ONLY stop_points
-    ADD CONSTRAINT stoppoint_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
 ALTER TABLE ONLY time_table_dates
     ADD CONSTRAINT tm_date_fkey FOREIGN KEY (time_table_id) REFERENCES time_tables(id) ON DELETE CASCADE;
 ALTER TABLE ONLY time_table_periods

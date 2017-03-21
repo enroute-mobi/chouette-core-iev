@@ -186,15 +186,20 @@ public class ServiceJourneyParser implements Parser, Constant {
 
 	private void parseNoticeAssignements(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney)
 			throws Exception {
-		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NOTICE_ASSIGNMENT)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(NOTICE_REF)) {
 						String ref = xpp.getAttributeValue(null, REF);
-						// Footnote footnote = factory.getFootnote(ref);
 						Referential referential = (Referential) context.get(REFERENTIAL);
 						Footnote footnote = referential.getFootnotes().get(ref);
+						if (footnote == null) {
+							footnote = referential.getSharedFootnotes().get(ref);
+							if (footnote != null) {
+								footnote = CopyUtil.copy(footnote);
+								referential.getFootnotes().put(ref, footnote);
+							}
+						}
 						log.info("Footnote with  id : " + ref + " footnotes : " + referential.getFootnotes());
 						log.info("Footnote : " + footnote);
 						if (footnote != null) {

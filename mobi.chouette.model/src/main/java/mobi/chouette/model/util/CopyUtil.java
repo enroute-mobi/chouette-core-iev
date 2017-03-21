@@ -8,6 +8,7 @@ import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.ConnectionLink;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
@@ -103,5 +104,12 @@ public abstract class CopyUtil {
 	public static VehicleJourney copy(VehicleJourney object)
 	{
 		throw new RuntimeException("not implemented");
+	}
+
+	public static Footnote copy(Footnote footnote) {
+		Footnote ft = new Footnote();
+		ft.setKey(footnote.getKey());
+		ft.setLabel(footnote.getLabel());
+		return ft;
 	}
 }
