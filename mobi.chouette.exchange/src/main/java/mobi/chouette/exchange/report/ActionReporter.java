@@ -51,65 +51,87 @@ public interface ActionReporter {
 	};
 	
 	/**
+	 * create an entry for a zip file
+	 * 
 	 * @param context
-	 * @param fileInfoName
-	 * @param ioType
+	 * @param fileInfoName zip file simple name
+	 * @param ioType access mode
 	 */
 	void addZipReport(Context context, String fileInfoName,IO_TYPE ioType);
 	/**
+	 * report an error on zip file
+	 * 
 	 * @param context
-	 * @param fileInfoName
-	 * @param code
-	 * @param message
+	 * @param fileInfoName zip file simple name
+	 * @param code error code
+	 * @param message explanation message
 	 */
 	void addZipErrorInReport(Context context, String fileInfoName, FILE_ERROR_CODE code, String message);
 	/**
+	 * create an entry for a simple file
+	 * 
 	 * @param context
-	 * @param fileInfoName
-	 * @param ioType
+	 * @param fileInfoName simple file name
+	 * @param ioType access mode
 	 */
 	void addFileReport(Context context, String fileInfoName,IO_TYPE ioType);
 	/**
+	 * fix file state 
+	 * 
 	 * @param context
-	 * @param fileInfoName
-	 * @param ioType
+	 * @param fileInfoName simple file name
+	 * @param ioType  access mode
+	 * @param state state to fix
 	 */
 	void setFileState(Context context, String fileInfoName,IO_TYPE ioType,FILE_STATE state);
 	/**
+	 * add error on file
+	 * 
 	 * @param context
-	 * @param fileInfoName
-	 * @param code
-	 * @param message
+	 * @param fileInfoName simple file name
+	 * @param code access mode
+	 * @param message message
 	 */
 	void addFileErrorInReport(Context context, String fileInfoName, FILE_ERROR_CODE code, String message);
 	/**
+	 * affect a validation error on a file 
+	 * 
 	 * @param context
 	 * @param fileInfoName
-	 * @param code
-	 * @return
+	 * @param code 
+	 * @param severity 
+	 * @return 
 	 */
 	boolean addValidationErrorToFileReport(Context context, String fileInfoName, int code, SEVERITY severity);
 	/**
+	 * set final action error
+	 * 
 	 * @param context
 	 * @param code
 	 * @param description
 	 */
 	void setActionError(Context context, ERROR_CODE code, String description);
     /**
+     * check if action is in error
+     * 
      * @param context
      * @return
      */
     boolean hasActionError(Context context);
 	/**
-	 * @param context
-	 * @param objectId
-	 * @param type
-	 * @param description
-	 * @param status
-	 * @param ioType
+	 * add object entry
+	 * 
+	 * @param context 
+	 * @param objectId object id
+	 * @param type objet type 
+	 * @param description object name 
+	 * @param status object initial status
+	 * @param ioType access mode
 	 */
 	void addObjectReport(Context context, String objectId, OBJECT_TYPE type, String description, OBJECT_STATE status, IO_TYPE ioType);
 	/**
+	 * add error on object
+	 * 
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -118,6 +140,8 @@ public interface ActionReporter {
 	 */
 	void addErrorToObjectReport(Context context, String objectId, OBJECT_TYPE type, ERROR_CODE code, String descriptionError);
 	/**
+	 * add validation error on object
+	 * 
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -127,6 +151,7 @@ public interface ActionReporter {
 	boolean addValidationErrorToObjectReport(Context context,  String objectId, OBJECT_TYPE type, int code, SEVERITY severity);
 	/**
 	 * add statistics value for object 
+	 * 
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -135,7 +160,8 @@ public interface ActionReporter {
 	 */
 	void addStatToObjectReport(Context context, String objectId, OBJECT_TYPE type, OBJECT_TYPE statType, int count);
 	/**
-	 * set statistics value for object 
+	 * set statistics value for object (force value)
+	 * 
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -143,13 +169,19 @@ public interface ActionReporter {
 	 * @param count value to set
 	 */
 	void setStatToObjectReport(Context context, String objectId, OBJECT_TYPE type, OBJECT_TYPE statType, int count);
+	
 	/**
 	 * @param context
-	 * @param line
+	 * @param type
 	 * @return
 	 */
-	boolean hasInfo(Context context, OBJECT_TYPE line);
+	boolean hasInfo(Context context, OBJECT_TYPE type);
 
+	/**
+	 * @param context
+	 * @param filename
+	 * @return
+	 */
 	boolean hasFileValidationErrors(Context context, String filename);
 	
 	
