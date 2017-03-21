@@ -13,7 +13,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
@@ -76,9 +76,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 			List<Footnote> list = vehicleJourney.getFootnotes();
 			for (Footnote footnote : list) {
 				Route route = pattern.getRoute();
-				log.info("route : " + route);
 				if (route != null) {
-					log.info("lineid : " + route.getLineId());
 					footnote.setLineId(route.getLineId());
 				}
 			}
@@ -87,6 +85,22 @@ public class ServiceJourneyParser implements Parser, Constant {
 		// affect timetables
 		affectTimetables(context, referential, vehicleJourney, timetableRefs);
 
+	}
+
+	private Timetable getTimetable(Referential referential, String ref) {
+		Timetable tm = referential.getTimetables().get(ref);
+		if (tm == null) {
+			tm = referential.getSharedTimetables().get(ref);
+			if (tm == null) {
+				tm = referential.getSharedTimetableTemplates().get(ref);
+				if (tm == null) {
+					log.info("tm not found " + ref);
+					return null;
+				}
+				tm = CopyUtil.copy(tm);
+			}
+		}
+		return tm;
 	}
 
 	private void affectTimetables(Context context, Referential referential, VehicleJourney vehicleJourney,
@@ -98,25 +112,44 @@ public class ServiceJourneyParser implements Parser, Constant {
 		Set<String> negative = getNegative(referential, timetableRefs);
 		if (negative.isEmpty()) {
 			for (String ref : timetableRefs) {
-				Timetable tm = referential.getTimetables().get(ref);
-				if (tm == null) {
-					tm = referential.getSharedTimetables().get(ref);
+				Timetable tm = getTimetable(referential, ref);
+				if (tm != null) {
 					referential.getTimetables().put(ref, tm);
+					log.info("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
+					tm.addVehicleJourney(vehicleJourney);
 				}
-				if (tm == null) {
-					tm = referential.getSharedTimetableTemplates().get(ref);
-					if (tm == null) {
-						log.info("tm not found " + ref);
-						continue;
-					}
-					tm = CopyUtil.copy(tm);
-					referential.getTimetables().put(ref, tm);
-				}
-				log.info("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
-				tm.addVehicleJourney(vehicleJourney);
 			}
 		} else {
 			// combine excluded tm with others
+			for (String ref : timetableRefs) {
+				Timetable tm = getTimetable(referential, ref);
+				if (tm != null) {
+					String key = ref;
+					for (String refNeg : negative) {
+						Timetable tmNeg = referential.getSharedTimetableTemplates().get(refNeg);
+						//
+						List<CalendarDay> list = tmNeg.getCalendarDays();
+						boolean hasActiveDay = false;
+						for (CalendarDay calendarDay : list) {
+							if (tm.isActiveOn(calendarDay.getDate())){
+								hasActiveDay = true;
+								break;
+							}
+						}
+						if (hasActiveDay){
+							key += refNeg;
+							Timetable newTm = CopyUtil.copy(tm);
+							for (CalendarDay calendarDay : list) {
+								if (newTm.isActiveOn(calendarDay.getDate())){
+									newTm.addCalendarDay(calendarDay);
+								}
+							}
+							referential.getTimetables().put(key, tm);
+							tm.addVehicleJourney(vehicleJourney);
+						}
+					}
+				}
+			}
 			throw new RuntimeException("not allowed case");
 		}
 
@@ -200,8 +233,6 @@ public class ServiceJourneyParser implements Parser, Constant {
 								referential.getFootnotes().put(ref, footnote);
 							}
 						}
-						log.info("Footnote with  id : " + ref + " footnotes : " + referential.getFootnotes());
-						log.info("Footnote : " + footnote);
 						if (footnote != null) {
 							vehicleJourney.getFootnotes().add(footnote);
 						}
