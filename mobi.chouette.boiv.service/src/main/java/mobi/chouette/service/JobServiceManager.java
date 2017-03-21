@@ -118,7 +118,7 @@ public class JobServiceManager {
 			// Instancier le modèle du service 'upload'
 			ImportTask importTask = importTaskDAO.find(id);
 			if (importTask == null) {
-				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "import id " + id);
+				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
 			JobService jobService = new JobService(rootDirectory, importTask);
 
@@ -147,7 +147,7 @@ public class JobServiceManager {
 			return jobService;
 
 		} catch (RequestServiceException ex) {
-			log.info("fail to create import job " + ex.getMessage(),ex);
+			log.info("fail to create import job " + ex.getMessage());
 			throw ex;
 		} catch (Exception ex) {
 			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(),ex);

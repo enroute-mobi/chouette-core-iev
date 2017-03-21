@@ -106,7 +106,7 @@ public class RestService implements Constant {
 			result = builder.build();
 			return result;
 		} catch (RequestServiceException ex) {
-			log.info("RequestCode = " + ex.getRequestCode() + ", Message = " + ex.getMessage(), ex);
+			log.info("RequestCode = " + ex.getRequestCode() + ", Message = " + ex.getMessage());
 			throw toWebApplicationException(ex);
 		} catch (ServiceException e) {
 			log.error("Code = " + e.getCode() + ", Message = " + e.getMessage());
