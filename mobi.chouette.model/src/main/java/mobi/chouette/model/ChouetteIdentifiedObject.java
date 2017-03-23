@@ -138,7 +138,7 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 		return p.matcher(oid).matches();
 	}
 
-	private String[] objectIdArray() {
+	protected String[] objectIdArray() {
 		return objectId.split(":");
 	}
 
@@ -148,8 +148,9 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	 * @return String
 	 */
 	public String objectIdPrefix() {
-		if (objectIdArray().length > 2) {
-			return objectIdArray()[0].trim();
+		String[] tokens = objectIdArray();
+		if (tokens.length > 2) {
+			return tokens[0].trim();
 		} else
 			return "";
 	}
@@ -160,8 +161,9 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	 * @return String
 	 */
 	public String objectIdSuffix() {
-		if (objectIdArray().length > 2)
-			return objectIdArray()[2].trim();
+		String[] tokens = objectIdArray();
+		if (tokens.length > 2)
+			return tokens[2].trim();
 		else
 			return "";
 	}

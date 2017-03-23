@@ -171,6 +171,8 @@
                                 </netex:noticeAssignments>
 										  <netex:DayTypeRef ref="CITYWAY:DayType:1:LOC">
                                     version="any"</netex:DayTypeRef>
+										  <netex:DayTypeRef ref="CITYWAY:DayType:4:LOC">
+                                    version="any"</netex:DayTypeRef>
                                 <netex:JourneyPatternRef ref="CITYWAY:ServiceJourneyPattern:1:LOC"
                                     version="any"/>
 										  <netex:OperatorRef ref="STIF:CODIFLIGNE:Operator:011">

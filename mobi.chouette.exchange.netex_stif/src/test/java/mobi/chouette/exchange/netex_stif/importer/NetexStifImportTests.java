@@ -109,6 +109,13 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	protected static InitialContext initialContext;
 
+	protected static final String path = "src/test/data";
+	public static  void copyFile(String fileName) throws IOException {
+		File srcFile = new File(path, fileName);
+		File destFile = new File("target/referential/test", fileName);
+		FileUtils.copyFile(srcFile, destFile);
+	}
+	
 	protected void init() {
 		Locale.setDefault(Locale.ENGLISH);
 		if (initialContext == null) {
@@ -169,7 +176,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		context.put(REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
-		NetexStifUtils.copyFile("OFFRE_TRANSDEV_20170301122517.zip");
+		copyFile("OFFRE_TRANSDEV_20170301122517.zip");
 		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
 		jobData.setInputFilename("OFFRE_TRANSDEV_20170301122517.zip");
 		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);

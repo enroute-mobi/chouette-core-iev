@@ -10,7 +10,7 @@ import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
-public class StopPointParser implements Parser, Constant{
+public class StopPointParserOld implements Parser, Constant{
 
 	@Override
 	public void parse(Context context) throws Exception {
@@ -25,8 +25,8 @@ public class StopPointParser implements Parser, Constant{
 	}
 	
 	static {
-		ParserFactory.register(StopPointParser.class.getName(), new ParserFactory() {
-			private StopPointParser instance = new StopPointParser();
+		ParserFactory.register(StopPointParserOld.class.getName(), new ParserFactory() {
+			private StopPointParserOld instance = new StopPointParserOld();
 
 			@Override
 			protected Parser create() {

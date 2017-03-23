@@ -11,6 +11,7 @@ import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
@@ -30,6 +31,10 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		String id = xpp.getAttributeValue(null, ID);
 		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
 		Long version = (Long) context.get(VERSION);
+		LineLite line = (LineLite) context.get(LINE);
+		if (line != null)
+			NetexStifUtils.uniqueObjectIdOnLine(journeyPattern, line);
+
 		journeyPattern.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -48,7 +53,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			} else if (xpp.getName().equals(POINTS_IN_SEQUENCE)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(STOP_POINT_IN_JOURNEY_PATTERN)) {
-						
+
 						parseStopPointInJourneyPattern(context, journeyPattern);
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
@@ -72,7 +77,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		}
 	}
 
-	public void parseStopPointInJourneyPattern(Context context,JourneyPattern journeyPattern) throws Exception {
+	public void parseStopPointInJourneyPattern(Context context, JourneyPattern journeyPattern) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
@@ -100,7 +105,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			Route route = (Route) context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
 			stopPoint.setObjectVersion(version);
 			stopPoint.setRoute(route);
-			log.info("set position : "+ order);
+			log.info("set position : " + order);
 			stopPoint.setPosition(Integer.parseInt(order));
 			if (forAlighting != null) {
 				stopPoint.setForAlighting(
@@ -115,8 +120,6 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		}
 	}
 
-	
-	
 	static {
 		ParserFactory.register(ServiceJourneyPatternParser.class.getName(), new ParserFactory() {
 			private ServiceJourneyPatternParser instance = new ServiceJourneyPatternParser();

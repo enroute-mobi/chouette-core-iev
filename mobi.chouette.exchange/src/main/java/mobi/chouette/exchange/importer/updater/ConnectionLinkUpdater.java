@@ -11,7 +11,7 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.util.NamingUtil;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.Referential;
 
 import com.jamonapi.Monitor;
@@ -141,7 +141,7 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 				else
 				{
 					// check for no link change
-					if (!NeptuneUtil.sameValue(oldValue.getStartOfLink(), newValue.getStartOfLink()))
+					if (!ChouetteModelUtil.sameValue(oldValue.getStartOfLink(), newValue.getStartOfLink()))
 						validationReporter.addCheckPointReportError(context, DATABASE_CONNECTION_LINK_1, "1", data
 								.getDataLocations().get(newValue.getObjectId()));
 					else
@@ -168,7 +168,7 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 					oldValue.forceEndOfLink(endOfLink);
 				else
 				{
-					if (!NeptuneUtil.sameValue(oldValue.getEndOfLink(), newValue.getEndOfLink()))
+					if (!ChouetteModelUtil.sameValue(oldValue.getEndOfLink(), newValue.getEndOfLink()))
 						validationReporter.addCheckPointReportError(context, DATABASE_CONNECTION_LINK_1, "2", data
 								.getDataLocations().get(newValue.getObjectId()));
 					else

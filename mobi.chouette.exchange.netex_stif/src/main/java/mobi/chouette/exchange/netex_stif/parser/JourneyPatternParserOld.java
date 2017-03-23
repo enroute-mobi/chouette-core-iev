@@ -17,7 +17,7 @@ import mobi.chouette.model.util.Referential;
 import org.xmlpull.v1.XmlPullParser;
 
 @Log4j
-public class JourneyPatternParser implements Parser, Constant {
+public class JourneyPatternParserOld implements Parser, Constant {
 
 	private static final String CHILD_TAG = "servicePatterns";
 
@@ -124,9 +124,9 @@ public class JourneyPatternParser implements Parser, Constant {
 	}
 
 	static {
-		ParserFactory.register(JourneyPatternParser.class.getName(),
+		ParserFactory.register(JourneyPatternParserOld.class.getName(),
 				new ParserFactory() {
-					private JourneyPatternParser instance = new JourneyPatternParser();
+					private JourneyPatternParserOld instance = new JourneyPatternParserOld();
 
 					@Override
 					protected Parser create() {

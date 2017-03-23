@@ -25,7 +25,7 @@ import mobi.chouette.model.Line;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -343,7 +343,7 @@ public class LineInserter implements Inserter<Line> {
 	 * @param newLine
 	 */
 	private void twoDatabaseLineOneTest(ValidationReporter validationReporter, Context context, Line oldLine, Line newLine, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldLine.getNetwork(), newLine.getNetwork()))
+		if(!ChouetteModelUtil.sameValue(oldLine.getNetwork(), newLine.getNetwork()))
 			validationReporter.addCheckPointReportError(context, DATABASE_LINE_1, data.getDataLocations().get(newLine.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_LINE_1);
@@ -357,7 +357,7 @@ public class LineInserter implements Inserter<Line> {
 	 * @param newLine
 	 */
 	private void twoDatabaseLineTwoTest(ValidationReporter validationReporter, Context context, Line oldLine, Line newLine, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldLine.getCompany(), newLine.getCompany()))
+		if(!ChouetteModelUtil.sameValue(oldLine.getCompany(), newLine.getCompany()))
 			validationReporter.addCheckPointReportError(context, DATABASE_LINE_2, data.getDataLocations().get(newLine.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_LINE_2);
@@ -371,7 +371,7 @@ public class LineInserter implements Inserter<Line> {
 	 * @param newRoute
 	 */
 	private void twoDatabaseRouteOneTest(ValidationReporter validationReporter, Context context, Route oldRoute, Route newRoute, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldRoute.getLine(), newRoute.getLine()))
+		if(!ChouetteModelUtil.sameValue(oldRoute.getLine(), newRoute.getLine()))
 			validationReporter.addCheckPointReportError(context, DATABASE_ROUTE_1, data.getDataLocations().get(newRoute.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_ROUTE_1);

@@ -17,7 +17,7 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -210,7 +210,7 @@ public class RouteInserter implements Inserter<Route> {
 	 * @param newRouteSection
 	 */
 	private void twoDatabaseJourneyPatternOneTest(ValidationReporter validationReporter, Context context, JourneyPattern oldValue, JourneyPattern newValue, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldValue.getRoute(), newValue.getRoute()))
+		if(!ChouetteModelUtil.sameValue(oldValue.getRoute(), newValue.getRoute()))
 			validationReporter.addCheckPointReportError(context, DATABASE_JOURNEY_PATTERN_1, data.getDataLocations().get(newValue.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_JOURNEY_PATTERN_1);
@@ -224,7 +224,7 @@ public class RouteInserter implements Inserter<Route> {
 	 * @param newSp
 	 */
 	private void twoDatabaseStopPointOneTest(ValidationReporter validationReporter, Context context, StopPoint oldSp, StopPoint newSp, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldSp.getRoute(), newSp.getRoute()))
+		if(!ChouetteModelUtil.sameValue(oldSp.getRoute(), newSp.getRoute()))
 			validationReporter.addCheckPointReportError(context, DATABASE_STOP_POINT_1, data.getDataLocations().get(newSp.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_STOP_POINT_1);

@@ -18,7 +18,7 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.RouteSection;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.VehicleJourney;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -241,7 +241,7 @@ public class JourneyPatternInserter implements Inserter<JourneyPattern> {
 	 * @param newVj
 	 */
 	private void twoDatabaseVehicleJourneyOneTest(ValidationReporter validationReporter, Context context, VehicleJourney oldVj, VehicleJourney newVj, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldVj.getJourneyPattern(), newVj.getJourneyPattern()))
+		if(!ChouetteModelUtil.sameValue(oldVj.getJourneyPattern(), newVj.getJourneyPattern()))
 			validationReporter.addCheckPointReportError(context, DATABASE_VEHICLE_JOURNEY_1, data.getDataLocations().get(newVj.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_VEHICLE_JOURNEY_1);

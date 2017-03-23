@@ -17,11 +17,13 @@ import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.CopyUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -38,6 +40,9 @@ public class ServiceJourneyParser implements Parser, Constant {
 		String id = xpp.getAttributeValue(null, ID);
 		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);
 		vehicleJourney.setObjectVersion(version);
+		LineLite line = (LineLite) context.get(LINE);
+		if (line != null)
+			NetexStifUtils.uniqueObjectIdOnLine(vehicleJourney, line);
 		JourneyPattern pattern = null;
 		Set<String> timetableRefs = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -111,6 +116,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 		}
 		Set<String> negative = getNegative(referential, timetableRefs);
 		if (negative.isEmpty()) {
+			log.info("no negative timetable");
 			for (String ref : timetableRefs) {
 				Timetable tm = getTimetable(referential, ref);
 				if (tm != null) {
@@ -121,7 +127,9 @@ public class ServiceJourneyParser implements Parser, Constant {
 			}
 		} else {
 			// combine excluded tm with others
+			log.info("negative timetable");
 			for (String ref : timetableRefs) {
+				if (negative.contains(ref)) continue; // skip negative timetables
 				Timetable tm = getTimetable(referential, ref);
 				if (tm != null) {
 					String key = ref;
@@ -131,27 +139,41 @@ public class ServiceJourneyParser implements Parser, Constant {
 						List<CalendarDay> list = tmNeg.getCalendarDays();
 						boolean hasActiveDay = false;
 						for (CalendarDay calendarDay : list) {
-							if (tm.isActiveOn(calendarDay.getDate())){
+							if (tm.isActiveOn(calendarDay.getDate())) {
 								hasActiveDay = true;
 								break;
 							}
 						}
-						if (hasActiveDay){
-							key += refNeg;
-							Timetable newTm = CopyUtil.copy(tm);
+						if (hasActiveDay) {
+							log.info("timetable will be combined");
+							key = combineTMId(key, refNeg);
+							tm = CopyUtil.copy(tm);
 							for (CalendarDay calendarDay : list) {
-								if (newTm.isActiveOn(calendarDay.getDate())){
-									newTm.addCalendarDay(calendarDay);
+								if (tm.isActiveOn(calendarDay.getDate())) {
+									tm.addCalendarDay(new CalendarDay(calendarDay));
 								}
 							}
-							referential.getTimetables().put(key, tm);
-							tm.addVehicleJourney(vehicleJourney);
 						}
 					}
+					tm.setObjectId(key);
+					referential.getTimetables().put(key, tm);
+					log.info("affect tm " + key + " on vj " + vehicleJourney.getObjectId());
+					tm.addVehicleJourney(vehicleJourney);
 				}
 			}
-			throw new RuntimeException("not allowed case");
 		}
+
+	}
+
+	private String combineTMId(String first, String second) {
+		String firstSuffix = first.split(":")[2];
+		String secondSuffix = second;
+		if (secondSuffix.contains(":"))
+			secondSuffix = second.split(":")[2];
+		if (firstSuffix.contains("-without-")) 
+		    return ChouetteModelUtil.changeSuffix(first, firstSuffix + "-and-" + secondSuffix);
+		else
+			return ChouetteModelUtil.changeSuffix(first, firstSuffix + "-without-" + secondSuffix);
 
 	}
 

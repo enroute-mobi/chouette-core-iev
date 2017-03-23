@@ -19,7 +19,7 @@ import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 
 @Log4j
-public abstract class NeptuneUtil {
+public abstract class ChouetteModelUtil {
 
 	/**
 	 * Build a list of Neptune Ids (ObjectId) from a list of Neptune Objects
@@ -165,7 +165,29 @@ public abstract class NeptuneUtil {
 
 	public static String changePrefix(String objectId, String prefix) {
 		String[] tokens = objectId.split(":");
-		return prefix + ":" + tokens[1] + ":" + tokens[2];
+		String changed = prefix;
+		for (int i = 1; i < tokens.length; i++)
+		{
+			changed += ":"+tokens[i];
+		}
+		return changed;
+	}
+	
+	public static String changeSuffix(String objectId, String suffix)
+	{
+		String[] tokens = objectId.split(":");
+		if (tokens.length < 2) return objectId;
+		String changed = "";
+		for (int i = 0; i < 2; i++)
+		{
+			changed += tokens[i]+":";
+		}
+		changed += suffix;
+		for (int i = 3; i < tokens.length; i++)
+		{
+			changed += ":"+tokens[i];
+		}
+		return changed;
 	}
 
 	/**

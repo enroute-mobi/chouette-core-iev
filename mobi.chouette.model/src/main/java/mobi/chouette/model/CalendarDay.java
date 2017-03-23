@@ -74,6 +74,18 @@ public class CalendarDay implements Serializable, Comparable<CalendarDay> {
 		this.date = date;
 		this.included = Boolean.valueOf(included);
 	}
+	/**
+	 * complete constructor
+	 * 
+	 * @param date
+	 *            date
+	 * @param included
+	 *            indicate if date is included or excluded on the timetable
+	 */
+	public CalendarDay(CalendarDay day) {
+		this.date = new Date(day.date.getTime());
+		this.included = day.included;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -122,7 +134,6 @@ public class CalendarDay implements Serializable, Comparable<CalendarDay> {
 		return true;
 	}
 
-	
 	
 
 }

@@ -74,5 +74,24 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 	@Column(name = "parent_id")
 	protected Long parentId;
 
+	@Override
+	public String objectIdPrefix() {
+		if (objectId.startsWith("FR:")) return "FR";
+		return super.objectIdPrefix();
+	}
+
+	@Override
+	public String objectIdSuffix() {
+		if (objectId.startsWith("FR:") )
+		{
+			String[] tokens = objectIdArray();
+			if (tokens.length > 3)
+				return tokens[3].trim();
+			else
+				return ""; 
+		}
+		return super.objectIdSuffix();
+	}
+
 
 }

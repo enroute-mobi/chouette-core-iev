@@ -61,5 +61,25 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 	@Getter
 	@Column(name = "line_referential_id")
 	protected Long lineReferentialId;
+	
+	@Override
+	public String objectIdPrefix() {
+		if (objectId.startsWith("STIF:CODIFLIGNE")) return "STIF:CODIFLIGNE";
+		return super.objectIdPrefix();
+	}
+
+	@Override
+	public String objectIdSuffix() {
+		if (objectId.startsWith("STIF:CODIFLIGNE") )
+		{
+			String[] tokens = objectIdArray();
+			if (tokens.length > 3)
+				return tokens[3].trim();
+			else
+				return ""; 
+		}
+		return super.objectIdSuffix();
+	}
+
 
 }

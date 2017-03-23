@@ -126,4 +126,25 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
 	private Long[] secondaryCompanyIds = new Long[0];
 
+	@Override
+	public String objectIdPrefix() {
+		if (objectId.startsWith("STIF:CODIFLIGNE")) return "STIF:CODIFLIGNE";
+		return super.objectIdPrefix();
+	}
+
+	@Override
+	public String objectIdSuffix() {
+		if (objectId.startsWith("STIF:CODIFLIGNE") )
+		{
+			String[] tokens = objectIdArray();
+			if (tokens.length > 3)
+				return tokens[3].trim();
+			else
+				return ""; 
+		}
+		return super.objectIdSuffix();
+	}
+	
+	
+
 }

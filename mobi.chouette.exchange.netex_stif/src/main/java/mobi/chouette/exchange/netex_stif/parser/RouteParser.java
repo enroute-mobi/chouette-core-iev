@@ -40,6 +40,8 @@ public class RouteParser implements Parser, Constant {
 				LineLite line = referential.getSharedReadOnlyLines().get(tmp);
 				if (line != null) {
 					route.setLineId(line.getId());
+					NetexStifUtils.uniqueObjectIdOnLine(route, line);
+					context.put(LINE, line);
 				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
@@ -74,8 +76,7 @@ public class RouteParser implements Parser, Constant {
 			}
 		}
 		route.setFilled(true);
-		Referential ref = (Referential) context.get(REFERENTIAL);
-			}
+	}
 
 	static {
 		ParserFactory.register(RouteParser.class.getName(), new ParserFactory() {

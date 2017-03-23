@@ -30,7 +30,7 @@ import mobi.chouette.model.Timeband;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -404,7 +404,7 @@ public class VehicleJourneyInserter implements Inserter<VehicleJourney> {
 	 * @param newCompany
 	 */
 	private void twoDatabaseVehicleJourneyTwoTest(ValidationReporter validationReporter, Context context, Company oldCompany,  Company newCompany, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldCompany, newCompany))
+		if(!ChouetteModelUtil.sameValue(oldCompany, newCompany))
 			validationReporter.addCheckPointReportError(context, DATABASE_VEHICLE_JOURNEY_2, data.getDataLocations().get(newCompany.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_VEHICLE_JOURNEY_2);

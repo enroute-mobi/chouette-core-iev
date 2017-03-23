@@ -18,7 +18,7 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 
 @Log4j
 public class RouteCheckPoints extends AbstractValidation<Route> implements Validator<Route> {
@@ -119,7 +119,7 @@ public class RouteCheckPoints extends AbstractValidation<Route> implements Valid
 		// 3-Route-1 : check if two successive stops are in same area
 		prepareCheckPoint(context, ROUTE_1);
 
-		List<StopArea> areas = NeptuneUtil.getStopAreaOfRoute(route);
+		List<StopArea> areas = ChouetteModelUtil.getStopAreaOfRoute(route);
 		for (int j = 1; j < areas.size(); j++) {
 			if (areas.get(j - 1).equals(areas.get(j))) {
 				// failure encountered, add route 1
@@ -145,7 +145,7 @@ public class RouteCheckPoints extends AbstractValidation<Route> implements Valid
 		if (!hasOppositeRoute(route, log))
 			return;
 
-		List<StopArea> areas = NeptuneUtil.getStopAreaOfRoute(route);
+		List<StopArea> areas = ChouetteModelUtil.getStopAreaOfRoute(route);
 		// test can be passed if areas exist and have parents
 		if (areas.isEmpty())
 			return;
@@ -154,7 +154,7 @@ public class RouteCheckPoints extends AbstractValidation<Route> implements Valid
 		if (first == null || last == null)
 			return;
 		Route routeWb = route.getOppositeRoute();
-		List<StopArea> areasWb = NeptuneUtil.getStopAreaOfRoute(routeWb);
+		List<StopArea> areasWb = ChouetteModelUtil.getStopAreaOfRoute(routeWb);
 		// test can be passed if wayback areas exist and have parents
 		if (!areasWb.isEmpty()) {
 			StopArea firstWb = areasWb.get(0).getParent();
@@ -184,7 +184,7 @@ public class RouteCheckPoints extends AbstractValidation<Route> implements Valid
 	}
 
 	private void check3Route3(Context context, Route route, ValidationParameters parameters) {
-		List<StopArea> areas = NeptuneUtil.getStopAreaOfRoute(route);
+		List<StopArea> areas = ChouetteModelUtil.getStopAreaOfRoute(route);
 		if (isEmpty(areas))
 			return;
 		// 3-Route-3 : check distance between stops
@@ -239,11 +239,11 @@ public class RouteCheckPoints extends AbstractValidation<Route> implements Valid
 		if (isEmpty(route.getStopPoints()))
 			return;
 		prepareCheckPoint(context, ROUTE_4);
-		List<StopArea> areas = NeptuneUtil.getStopAreaOfRoute(route);
+		List<StopArea> areas = ChouetteModelUtil.getStopAreaOfRoute(route);
 		if (isEmpty(route2.getStopPoints()))
 			return;
 
-		List<StopArea> areas2 = NeptuneUtil.getStopAreaOfRoute(route2);
+		List<StopArea> areas2 = ChouetteModelUtil.getStopAreaOfRoute(route2);
 		// test can be passed if alternate route areas exist
 		if (!areas2.isEmpty()) {
 			if (areas.equals(areas2)) {
@@ -269,7 +269,7 @@ public class RouteCheckPoints extends AbstractValidation<Route> implements Valid
 		// 3-Route-5 : check for potentially waybacks
 		if (route.getOppositeRoute() != null)
 			return;
-		List<StopArea> areas = NeptuneUtil.getStopAreaOfRoute(route);
+		List<StopArea> areas = ChouetteModelUtil.getStopAreaOfRoute(route);
 		// test can be passed if areas exist and have parents
 		if (areas.isEmpty())
 			return;
@@ -280,7 +280,7 @@ public class RouteCheckPoints extends AbstractValidation<Route> implements Valid
 		prepareCheckPoint(context, ROUTE_5);
 		if (routeWb.getOppositeRoute() != null)
 			return;
-		List<StopArea> areasWb = NeptuneUtil.getStopAreaOfRoute(routeWb);
+		List<StopArea> areasWb = ChouetteModelUtil.getStopAreaOfRoute(routeWb);
 		// test can be passed if wayback areas exist and have parents
 		if (!areasWb.isEmpty()) {
 			StopArea firstWb = areasWb.get(0).getParent();

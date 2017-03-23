@@ -9,7 +9,7 @@ import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -132,7 +132,7 @@ public class StopPointUpdater implements Updater<StopPoint> {
 	 * @param newSp
 	 */
 	private void twoDatabaseStopPointThreeTest(ValidationReporter validationReporter, Context context, StopArea oldSA, StopArea newSA, ValidationData data) {
-		if(!NeptuneUtil.sameValue(oldSA, newSA))
+		if(!ChouetteModelUtil.sameValue(oldSA, newSA))
 			validationReporter.addCheckPointReportError(context, DATABASE_STOP_POINT_3, data.getDataLocations().get(newSA.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_STOP_POINT_3);

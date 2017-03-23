@@ -16,7 +16,7 @@ import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
-import mobi.chouette.model.util.NeptuneUtil;
+import mobi.chouette.model.util.ChouetteModelUtil;
 
 @Log4j
 public class DataCollector {
@@ -40,7 +40,7 @@ public class DataCollector {
 				if (jp.getStopPoints().size() < 2)
 					continue; // no stops
 				if (jp.getDepartureStopPoint() == null || jp.getArrivalStopPoint() == null) {
-					NeptuneUtil.refreshDepartureArrivals(jp);
+					ChouetteModelUtil.refreshDepartureArrivals(jp);
 				}
 				for (VehicleJourney vehicleJourney : jp.getVehicleJourneys()) {
 					if (vehicleJourney.getVehicleJourneyAtStops().isEmpty()) {
