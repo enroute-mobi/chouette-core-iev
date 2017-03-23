@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.ConnectionLinkTypeEnum;
 import mobi.chouette.model.type.DayTypeEnum;
@@ -36,7 +37,6 @@ public class NetexStifUtils extends ParserUtils {
 		}
 		return result;
 	}
-
 
 	public static String fromConnectionLinkType(ConnectionLinkTypeEnum type) {
 		if (type == null)
@@ -65,7 +65,6 @@ public class NetexStifUtils extends ParserUtils {
 		else
 			return null;
 	}
-
 
 	public static List<DayTypeEnum> getDayTypes(List<String> values) {
 		List<DayTypeEnum> result = new ArrayList<DayTypeEnum>();
@@ -110,8 +109,8 @@ public class NetexStifUtils extends ParserUtils {
 	public static String genStopPointId(StopPoint stopPoint) {
 		return stopPoint.getId() + ID_SEPARATOR + stopPoint.getPosition();
 	}
-	
-    public static void uniqueObjectIdOnLine(ChouetteIdentifiedObject object, LineLite line)
+
+	public static void uniqueObjectIdOnLine(ChouetteIdentifiedObject object, LineLite line)
     {
     	String suffix = object.objectIdSuffix();
     	String lineSuffix = line.objectIdSuffix();
@@ -119,5 +118,15 @@ public class NetexStifUtils extends ParserUtils {
     	String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), lineSuffix+"-"+suffix);
     	object.setObjectId(objectId);
     }
+
+	public static void stopPointObjectId (ChouetteIdentifiedObject object, Route route, String order){
+		String suffix = object.objectIdSuffix();
+    	String routeSuffix = route.objectIdSuffix();
+    	if (suffix.startsWith(routeSuffix) && ! suffix.equals(routeSuffix)){
+    		return;
+    	}
+    	String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), routeSuffix+"-"+suffix+"-"+order);
+    	object.setObjectId (objectId);
+	}
 	
 }

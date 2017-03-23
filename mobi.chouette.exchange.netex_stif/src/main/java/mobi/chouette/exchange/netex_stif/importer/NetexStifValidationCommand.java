@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import javax.naming.InitialContext;
 
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
@@ -11,15 +14,8 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
-import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
-import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
 
 @Log4j
 public class NetexStifValidationCommand implements Command, Constant {
@@ -40,8 +36,9 @@ public class NetexStifValidationCommand implements Command, Constant {
 			// TODO create level 2 validation for NETEX
 			
 			result = SUCCESS;
-			//if (result)
-			//	addStats(context, reporter, referential);
+			if (result){
+				addStats(context, reporter, referential);
+			}
 
 		} catch (Exception e) {
 			log.error("Neptune validation failed ", e);
@@ -56,8 +53,11 @@ public class NetexStifValidationCommand implements Command, Constant {
 	}
 
 	private void addStats(Context context, ActionReporter reporter, Referential referential) {
-		Line line = referential.getLines().values().iterator().next();
 		
+		
+	//	Line line = referential.getLines().values().iterator().next();
+	//	reporter.addStatToObjectReport(context, line.getObjectId(), type, statType, count);
+		/*
 		reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
 		reporter.addStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
 		reporter.addStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, referential.getJourneyPatterns().size());
@@ -67,7 +67,7 @@ public class NetexStifValidationCommand implements Command, Constant {
 		reporter.addStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.TIMETABLE, referential.getTimetables().size());
 		reporter.addStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ACCESS_POINT, referential.getAccessPoints().size());
 		reporter.addStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.STOP_AREA, referential.getStopAreas().size());
-
+*/
 		// TODO report on end of processing
 //		report.getLines().add(lineInfo);
 //		DataStats globalStats = report.getStats();
