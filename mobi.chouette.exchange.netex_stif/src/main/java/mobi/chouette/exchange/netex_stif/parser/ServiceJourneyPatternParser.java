@@ -36,7 +36,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			NetexStifUtils.uniqueObjectIdOnLine(journeyPattern, line);
 
 		journeyPattern.setObjectVersion(version);
-
+		
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
 				journeyPattern.setName(xpp.nextText());
@@ -100,9 +100,10 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			}
 		}
 		if (scheduledStopPointId != null) {
-			String objectId = NetexStifUtils.genStopPointId(scheduledStopPointId, order);
-			StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
 			Route route = (Route) context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
+			String objectId = NetexStifUtils.genStopPointId(scheduledStopPointId, order, route);
+			StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
+			
 			stopPoint.setObjectVersion(version);
 			stopPoint.setRoute(route);
 			log.info("set position : " + order);

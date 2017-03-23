@@ -102,31 +102,33 @@ public class NetexStifUtils extends ParserUtils {
 
 	public final static String ID_SEPARATOR = ":";
 
-	public static String genStopPointId(String id, String order) {
+	public static String genStopPointId(String id, String order, Route route) {
 		return id + ID_SEPARATOR + order;
 	}
 
 	public static String genStopPointId(StopPoint stopPoint) {
-		return stopPoint.getId() + ID_SEPARATOR + stopPoint.getPosition();
+		return genStopPointId(stopPoint.getObjectId(), stopPoint.getPosition().toString(), stopPoint.getRoute());
+
 	}
 
-	public static void uniqueObjectIdOnLine(ChouetteIdentifiedObject object, LineLite line)
-    {
-    	String suffix = object.objectIdSuffix();
-    	String lineSuffix = line.objectIdSuffix();
-    	if (suffix.startsWith(lineSuffix) && ! suffix.equals(lineSuffix)) return;
-    	String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), lineSuffix+"-"+suffix);
-    	object.setObjectId(objectId);
-    }
-
-	public static void stopPointObjectId (ChouetteIdentifiedObject object, Route route, String order){
+	public static void uniqueObjectIdOnLine(ChouetteIdentifiedObject object, LineLite line) {
 		String suffix = object.objectIdSuffix();
-    	String routeSuffix = route.objectIdSuffix();
-    	if (suffix.startsWith(routeSuffix) && ! suffix.equals(routeSuffix)){
-    		return;
-    	}
-    	String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), routeSuffix+"-"+suffix+"-"+order);
-    	object.setObjectId (objectId);
+		String lineSuffix = line.objectIdSuffix();
+		if (suffix.startsWith(lineSuffix) && !suffix.equals(lineSuffix))
+			return;
+		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), lineSuffix + "-" + suffix);
+		object.setObjectId(objectId);
 	}
-	
+
+	public static void stopPointObjectId(ChouetteIdentifiedObject object, Route route, String order) {
+		String suffix = object.objectIdSuffix();
+		String routeSuffix = route.objectIdSuffix();
+		if (suffix.startsWith(routeSuffix) && !suffix.equals(routeSuffix)) {
+			return;
+		}
+		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(),
+				routeSuffix + "-" + suffix + "-" + order);
+		object.setObjectId(objectId);
+	}
+
 }
