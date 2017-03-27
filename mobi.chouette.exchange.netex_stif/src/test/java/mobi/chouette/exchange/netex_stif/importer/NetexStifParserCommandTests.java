@@ -37,7 +37,6 @@ import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.type.PTDirectionEnum;
-import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
@@ -167,10 +166,10 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 				"CITYWAY:ServiceJourneyPattern:C00108-1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234", 1, 1);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0, "01:01:00.000", 0);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0, "01:05:00.000", 0);
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1:LOC:1","", 1, 18304L, "CITYWAY:Route:C00108-1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-2:LOC:2","", 2, 32521L, "CITYWAY:Route:C00108-1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-1:LOC:1","", 1, 32522L, "CITYWAY:Route:C00108-2:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2:LOC:2","", 2, 18305L, "CITYWAY:Route:C00108-2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-1-1-1-1:LOC","", 1, 18304L, "CITYWAY:Route:C00108-1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-1-1-2-2:LOC","", 2, 32521L, "CITYWAY:Route:C00108-1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-2-2-1-1:LOC","", 1, 32522L, "CITYWAY:Route:C00108-2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-2-2-2-2:LOC","", 2, 18305L, "CITYWAY:Route:C00108-2:LOC");
 	}
 
 	private void assertStopPoint(Referential referential, String id, String objectId, int position, Long quayRef, String routeId) {

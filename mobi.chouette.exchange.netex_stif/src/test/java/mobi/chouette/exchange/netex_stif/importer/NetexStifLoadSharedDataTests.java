@@ -196,7 +196,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 		for (String key : referential.getSharedReadOnlyCompanies().keySet()) {
 			Assert.assertEquals(key,"STIF:CODIFLIGNE:Operator:011","objectid should be good for companies");
 		}
-		Assert.assertEquals(referential.getSharedReadOnlyStopAreas().size(), 33, "stops size");
+		Assert.assertEquals(referential.getSharedReadOnlyStopAreas().size(), 58, "stops size");
 		for (StopAreaLite stop : referential.getSharedReadOnlyStopAreas().values()) {
 			Assert.assertEquals(stop.getAreaType(),"zdep","stop type should be zdep");
 		}

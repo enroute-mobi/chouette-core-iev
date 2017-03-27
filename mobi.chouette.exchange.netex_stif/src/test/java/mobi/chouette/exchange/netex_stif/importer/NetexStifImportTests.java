@@ -25,6 +25,7 @@ import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
@@ -36,7 +37,6 @@ import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
-import mobi.chouette.exchange.netex_stif.parser.NetexStifUtils;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
@@ -148,7 +148,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		configuration.setReferentialName("test");
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
-		List<Long> ids = Arrays.asList(new Long[] { 1L });
+		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L });
 		configuration.setIds(ids);
 		JobDataTest jobData = new JobDataTest();
 		context.put(JOB_DATA, jobData);
@@ -189,16 +189,12 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 			throw ex;
 		}
 
-		Referential referential = (Referential) context.get(REFERENTIAL);
-		// Assert.assertNotEquals(referential.getTimetables(),0, "timetables" );
-		// Assert.assertNotEquals(referential.getSharedTimetables(),0, "shared
-		// timetables" );
-
 		// line should be saved
 		utx.begin();
 		em.joinTransaction();
 		// Line line = lineDao.findByObjectId("");
 		List<Route> routes = routeDao.findAll();
+		Assert.assertEquals(routes.size(),4, "Routes" );
 		for (Route route : routes) {
 			System.out.println("route :" + route.getObjectId());
 		}

@@ -17,6 +17,7 @@ import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.dao.FootnoteDAO;
 import mobi.chouette.dao.JourneyPatternDAO;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.StopPointDAO;
@@ -38,6 +39,9 @@ public class CleanRepositoryCommand implements Command {
 	private RouteDAO routeDAO;
 
 	@EJB
+	private FootnoteDAO footnoteDAO;
+
+	@EJB
 	private StopPointDAO stopPointDAO;
 
 	@EJB
@@ -57,12 +61,13 @@ public class CleanRepositoryCommand implements Command {
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		
 		try {
-			journeyPatternDAO.truncate();
 			routeDAO.truncate();
-			stopPointDAO.truncate();
+			journeyPatternDAO.truncate();
 			timetableDAO.truncate();
 			vehicleJourneyDAO.truncate();
 			vehicleJourneyAtStopDAO.truncate();
+			stopPointDAO.truncate();
+			footnoteDAO.truncate();
 
 			result = SUCCESS;
 		} catch (Exception e) {

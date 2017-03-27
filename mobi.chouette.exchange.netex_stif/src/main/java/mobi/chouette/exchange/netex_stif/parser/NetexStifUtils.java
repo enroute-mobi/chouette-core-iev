@@ -103,13 +103,20 @@ public class NetexStifUtils extends ParserUtils {
 	public final static String ID_SEPARATOR = ":";
 
 	public static String genStopPointId(String id, String order, Route route) {
-		return id + ID_SEPARATOR + order;
+		String suffix =  id.split(ID_SEPARATOR)[2];
+		String routeSuffix = route.objectIdSuffix();
+		if (!suffix.startsWith(routeSuffix) ) {
+			suffix = routeSuffix+"-"+suffix;
+		}
+		suffix += "-"+order;
+		
+		return ChouetteModelUtil.changeSuffix(id,suffix);
 	}
 
-	public static String genStopPointId(StopPoint stopPoint) {
-		return genStopPointId(stopPoint.getObjectId(), stopPoint.getPosition().toString(), stopPoint.getRoute());
-
-	}
+//	public static String genStopPointId(StopPoint stopPoint) {
+//		return genStopPointId(stopPoint.getObjectId(), stopPoint.getPosition().toString(), stopPoint.getRoute());
+//
+//	}
 
 	public static void uniqueObjectIdOnLine(ChouetteIdentifiedObject object, LineLite line) {
 		String suffix = object.objectIdSuffix();
@@ -120,15 +127,15 @@ public class NetexStifUtils extends ParserUtils {
 		object.setObjectId(objectId);
 	}
 
-	public static void stopPointObjectId(ChouetteIdentifiedObject object, Route route, String order) {
-		String suffix = object.objectIdSuffix();
-		String routeSuffix = route.objectIdSuffix();
-		if (suffix.startsWith(routeSuffix) && !suffix.equals(routeSuffix)) {
-			return;
-		}
-		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(),
-				routeSuffix + "-" + suffix + "-" + order);
-		object.setObjectId(objectId);
-	}
+//	public static void stopPointObjectId(ChouetteIdentifiedObject object, Route route, String order) {
+//		String suffix = object.objectIdSuffix();
+//		String routeSuffix = route.objectIdSuffix();
+//		if (suffix.startsWith(routeSuffix) && !suffix.equals(routeSuffix)) {
+//			return;
+//		}
+//		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(),
+//				routeSuffix + "-" + suffix + "-" + order);
+//		object.setObjectId(objectId);
+//	}
 
 }

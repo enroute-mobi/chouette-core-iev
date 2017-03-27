@@ -62,11 +62,12 @@ public class ServiceJourneyParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				// Company company = ObjectFactory.getCompany(referential, ref);
-				// vehicleJourney.setCompany(company);
 				CompanyLite company = referential.getSharedReadOnlyCompanies().get(ref);
 				if (company != null) {
 					vehicleJourney.setCompanyId(company.getId());
+					// don't save if company is same as line main one
+					if (line != null && company.getId().equals(line.getCompanyId()))
+						vehicleJourney.setCompanyId(null);
 				}
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(TRAIN_NUMBERS)) {

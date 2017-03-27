@@ -13,6 +13,7 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
@@ -103,7 +104,6 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			Route route = (Route) context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
 			String objectId = NetexStifUtils.genStopPointId(scheduledStopPointId, order, route);
 			StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
-			
 			stopPoint.setObjectVersion(version);
 			stopPoint.setRoute(route);
 			log.info("set position : " + order);
