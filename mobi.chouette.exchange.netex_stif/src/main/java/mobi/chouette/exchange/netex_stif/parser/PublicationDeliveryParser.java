@@ -8,7 +8,6 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class PublicationDeliveryParser implements Parser, Constant {
@@ -43,7 +42,7 @@ public class PublicationDeliveryParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		Referential ref = (Referential)context.get(REFERENTIAL);
+		// Referential ref = (Referential)context.get(REFERENTIAL);
 		// log.info("Referential.routes : " + ref.getRoutes());
 	}
 

@@ -66,7 +66,8 @@ public class AbstractParameter {
 	
 	@Getter@Setter
 	@XmlElement(name = "test")
-	private boolean test = false;
+	private long test = 0;
+	
 	public boolean isValid(Logger log)
 	{
 		return true;

@@ -14,7 +14,6 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.model.Line;
 import mobi.chouette.model.util.Referential;
 
 @Log4j

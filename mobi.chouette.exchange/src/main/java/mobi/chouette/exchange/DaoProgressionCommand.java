@@ -175,9 +175,10 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 			throw new CommandCancelledException(COMMAND_CANCELLED);
 		}
 		AbstractParameter params = (AbstractParameter) context.get(CONFIGURATION);
-		if (params.isTest()) {
-			log.info(Color.YELLOW + "Mode test on: waiting 10 s" + Color.NORMAL);
-			Thread.sleep(10000);
+		if (params.getTest() > 0) {
+			long time = params.getTest()/1000;
+			log.info(Color.YELLOW + "Mode test on: waiting "+time+" s" + Color.NORMAL);
+			Thread.sleep(params.getTest());
 		}
 		return result;
 	}

@@ -38,7 +38,7 @@ public class NetexStructureParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		Referential ref = (Referential)context.get(REFERENTIAL);
+		// Referential ref = (Referential)context.get(REFERENTIAL);
 		// log.info("Referential.routes : " + ref.getRoutes());
 		updateDirectionsToRoute(context);
 		updateDestinationDisplayToJourneyPattern(context);

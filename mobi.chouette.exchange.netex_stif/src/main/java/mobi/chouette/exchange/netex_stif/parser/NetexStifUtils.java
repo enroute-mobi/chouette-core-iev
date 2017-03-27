@@ -11,7 +11,6 @@ import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
-import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.ConnectionLinkTypeEnum;
 import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.type.PTDirectionEnum;

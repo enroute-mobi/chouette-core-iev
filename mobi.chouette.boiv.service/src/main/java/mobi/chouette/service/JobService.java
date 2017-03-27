@@ -11,6 +11,7 @@ import org.apache.commons.lang.WordUtils;
 import lombok.Data;
 import lombok.ToString;
 import mobi.chouette.common.JobData;
+import mobi.chouette.common.PropertyNames;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
@@ -54,7 +55,7 @@ public class JobService implements JobData, ServiceConstants {
 	 * create a new jobService
 	 * 
 	 */
-	public JobService(String rootDirectory, ImportTask importTask) throws ServiceException {
+	public JobService(String application, String rootDirectory, ImportTask importTask) throws ServiceException {
 		this.rootDirectory = rootDirectory;
 		this.id = importTask.getId();
 		this.referential = importTask.getReferential().getSchemaName();
@@ -81,6 +82,14 @@ public class JobService implements JobData, ServiceConstants {
 			actionParameter = inputValidator.toActionParameter(importTask);
 		} catch (ClassNotFoundException | IOException e) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, "");
+		}
+		if (System.getProperty(application+PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null)
+		{
+			long stepWait = Long.parseLong(System.getProperty(application+PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS));
+			if (stepWait > 0)
+			{
+				actionParameter.setTest(stepWait);
+			}
 		}
 	}
 

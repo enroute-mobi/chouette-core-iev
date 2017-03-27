@@ -38,6 +38,8 @@ public class JobServiceManager {
 
 	public static final String BEAN_NAME = "JobServiceManager";
 
+	public static final String APPLICATION_NAME = "boiv";
+
 	@EJB
 	ReferentialDAO referentialDAO;
 
@@ -56,17 +58,17 @@ public class JobServiceManager {
 
 	@PostConstruct
 	public synchronized void init() {
-		String context = "boiv";
-		if (intializedContexts.contains(context))
+		if (intializedContexts.contains(APPLICATION_NAME))
 			return;
-		System.setProperty(context + PropertyNames.MAX_STARTED_JOBS, "5");
-		System.setProperty(context + PropertyNames.MAX_COPY_BY_JOB, "5");
+		System.setProperty(APPLICATION_NAME + PropertyNames.MAX_STARTED_JOBS, "5");
+		System.setProperty(APPLICATION_NAME + PropertyNames.MAX_COPY_BY_JOB, "5");
+		System.setProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME, "");
 		try {
 			// set default properties
-			System.setProperty(context + PropertyNames.ROOT_DIRECTORY, System.getProperty("user.home"));
+			System.setProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY, System.getProperty("user.home"));
 
 			// try to read properties
-			File propertyFile = new File("/etc/chouette/" + context + "/" + context + ".properties");
+			File propertyFile = new File("/etc/chouette/" + APPLICATION_NAME + "/" + APPLICATION_NAME + ".properties");
 			if (propertyFile.exists() && propertyFile.isFile()) {
 				try {
 					FileInputStream fileInput = new FileInputStream(propertyFile);
@@ -75,10 +77,10 @@ public class JobServiceManager {
 					fileInput.close();
 					log.info("reading properties from " + propertyFile.getAbsolutePath());
 					for (String key : properties.stringPropertyNames()) {
-						if (key.startsWith(context))
+						if (key.startsWith(APPLICATION_NAME))
 							System.setProperty(key, properties.getProperty(key));
 						else
-							System.setProperty(context + "." + key, properties.getProperty(key));
+							System.setProperty(APPLICATION_NAME + "." + key, properties.getProperty(key));
 					}
 				} catch (IOException e) {
 					log.error(
@@ -91,7 +93,7 @@ public class JobServiceManager {
 		} catch (Exception e) {
 			log.error("cannot process properties", e);
 		}
-		rootDirectory = System.getProperty(context + PropertyNames.ROOT_DIRECTORY);
+		rootDirectory = System.getProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY);
 
 	}
 
@@ -120,7 +122,7 @@ public class JobServiceManager {
 			if (importTask == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
-			JobService jobService = new JobService(rootDirectory, importTask);
+			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
 
 			log.info("job " + jobService.getId() + " found for import ");
 			// mkdir
@@ -131,14 +133,20 @@ public class JobServiceManager {
 			}
 			Files.createDirectories(jobService.getPath());
 			// copy file from Ruby server
+			String urlName = importTask.getUrl();
+			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+			if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
+				// build url with token
+				urlName = guiBaseUrl + "/imports/" + importTask.getId() + "/file?token=" + urlName;
+			}
 			try {
-				URL url = new URL(importTask.getUrl());
+				URL url = new URL(urlName);
 				File dest = new File(jobService.getPathName(), jobService.getInputFilename());
 				FileUtils.copyURLToFile(url, dest);
 			} catch (Exception ex) {
 				log.error("fail to get file for import job " + ex.getMessage());
 				throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR,
-						"cannot manage URL " + importTask.getUrl());
+						"cannot manage URL " + urlName);
 			}
 
 			jobService.setStatus(JobService.STATUS.PENDING);
@@ -150,7 +158,7 @@ public class JobServiceManager {
 			log.info("fail to create import job " + ex.getMessage());
 			throw ex;
 		} catch (Exception ex) {
-			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(),ex);
+			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
@@ -177,7 +185,7 @@ public class JobServiceManager {
 				continue;
 			JobService js = null;
 			try {
-				js = new JobService(rootDirectory, task);
+				js = new JobService(APPLICATION_NAME, rootDirectory, task);
 			} catch (ServiceException e) {
 				log.error("abnormal problem when getting job info " + e.getMessage(), e);
 				// TODO aborting task ?
@@ -218,7 +226,7 @@ public class JobServiceManager {
 		try {
 			// Instancier le modèle du service 'upload'
 			ImportTask importTask = importTaskDAO.find(id);
-			JobService jobService = new JobService(rootDirectory, importTask);
+			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
 			// Enregistrer le jobService pour obtenir un id
 
 			log.info("job " + jobService.getId() + " found for import ");
@@ -263,10 +271,10 @@ public class JobServiceManager {
 			log.error("importTaskDAO is null");
 			throw new NullPointerException("null importTaskDAO");
 		}
-			
+
 		ImportTask importTask = importTaskDAO.find(jobService.getId());
 		if (importTask == null) {
-			log.error("null importTask for jobService id = "+jobService.getId());
+			log.error("null importTask for jobService id = " + jobService.getId());
 			throw new NullPointerException("null importTask for jobService");
 		}
 		importTask.setStatus(jobService.getStatus().name().toLowerCase());
@@ -298,7 +306,7 @@ public class JobServiceManager {
 		for (ImportTask importTask : startedImportTasks) {
 
 			try {
-				JobService job = new JobService(rootDirectory, importTask);
+				JobService job = new JobService(APPLICATION_NAME, rootDirectory, importTask);
 				jobs.add(job);
 			} catch (ServiceException e) {
 				log.error("fail to manage import task " + importTask.getId());
