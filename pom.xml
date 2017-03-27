@@ -62,6 +62,11 @@
 			<name>Chouette Repository</name>
 			<url>http://maven.chouette.mobi/</url>
 		</repository>
+				<repository>
+			<id>hibernate-spatial-repository</id>
+			<name>hibernate-spatial Repository</name>
+			<url>http://www.hibernatespatial.org/repository/</url>
+		</repository>
 	</repositories>
 	<build>
 		<extensions>
