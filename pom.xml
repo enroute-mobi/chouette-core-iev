@@ -232,7 +232,7 @@
 										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/infinispan/main
 									</outputDirectory>
 								</artifactItem>
-								<!-- <artifactItem>
+								<artifactItem>
 									<groupId>org.hibernate</groupId>
 									<artifactId>hibernate-spatial</artifactId>
 									<version>${hibernate-spatial.version}</version>
@@ -240,7 +240,7 @@
 									<outputDirectory>
 										${project.rootDir}/target/wildfly-${wildfly.version}/modules/system/layers/base/org/hibernate/main
 									</outputDirectory>
-								</artifactItem> -->
+								</artifactItem>
 							</artifactItems>
 						</configuration>
 					</execution>
