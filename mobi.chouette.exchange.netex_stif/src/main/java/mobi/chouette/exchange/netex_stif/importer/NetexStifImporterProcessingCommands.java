@@ -68,13 +68,19 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	private Chain treatOneFile(InitialContext initialContext, String filename, String path, boolean mandatory)
 			throws ClassNotFoundException, IOException {
 		Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
-		File calendarFile = new File(path + "/" + INPUT + "/" + filename);
-		log.info(calendarFile);
-		String calendarFileUrl = calendarFile.toURI().toURL().toExternalForm();
-		log.info("url : " + calendarFileUrl);
+		File file = new File(path + "/" + INPUT + "/" + filename);
+		// log.info(file);
+		String url = file.toURI().toURL().toExternalForm();
+		log.info("url : " + url);
+		// validation schema
+		// NetexSAXParserCommand schema = (NetexSAXParserCommand)
+		// CommandFactory.create(initialContext,
+		// NetexSAXParserCommand.class.getName());
+		// schema.setFileURL(url);
+		// chain.add(schema);
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
-		parser.setFileURL(calendarFileUrl);
+		parser.setFileURL(url);
 		chain.add(parser);
 		return chain;
 	}
@@ -89,7 +95,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 		try {
 			Chain tmp = treatOneFile(initialContext, "calendrier.xml", jobData.getPathName(), true);
 			commands.add(tmp);
-			tmp = treatOneFile(initialContext, "commun.xml", jobData.getPathName(), true);
+			tmp = treatOneFile(initialContext, "commun.xml", jobData.getPathName(), false);
 			commands.add(tmp);
 			
 			// TODO a supprimer quand copycommand sera ok 
