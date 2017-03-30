@@ -72,6 +72,9 @@ public class JobService implements JobData, ServiceConstants {
 		this.updatedAt = importTask.getUpdatedAt();
 		this.startedAt = importTask.getStartedAt();
 		this.endedAt = importTask.getEndedAt();
+		if (importTask.getStatus() == null) {
+			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS, "Status is null");
+		}
 		this.status = STATUS.valueOf(importTask.getStatus().toUpperCase());
 
 		if (!commandExists()) {
@@ -83,11 +86,10 @@ public class JobService implements JobData, ServiceConstants {
 		} catch (ClassNotFoundException | IOException e) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, "");
 		}
-		if (System.getProperty(application+PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null)
-		{
-			long stepWait = Long.parseLong(System.getProperty(application+PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS));
-			if (stepWait > 0)
-			{
+		if (System.getProperty(application + PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null) {
+			long stepWait = Long
+					.parseLong(System.getProperty(application + PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS));
+			if (stepWait > 0) {
 				actionParameter.setTest(stepWait);
 			}
 		}
