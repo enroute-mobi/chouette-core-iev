@@ -137,7 +137,7 @@ public class JobServiceManager {
 			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
 			if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
 				// build url with token
-				urlName = guiBaseUrl + "/imports/" + importTask.getId() + "/download?token=" + urlName;
+				urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/" + importTask.getId() + "/download?token=" + urlName;
 			}
 			try {
 				URL url = new URL(urlName);
