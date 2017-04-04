@@ -27,6 +27,7 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.dao.ActionDAO;
 import mobi.chouette.exchange.parameters.AbstractParameter;
+import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ProgressionReport;
 import mobi.chouette.exchange.report.Report;
 import mobi.chouette.exchange.report.ReportConstant;
@@ -105,7 +106,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 
 	public void saveReport(Context context, boolean force) {
 		if (context.containsKey(TESTNG)) return;
-		Report report = (Report) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(REPORT);
 		Date date = new Date();
 		Date delay = new Date(date.getTime() - 8000);
 		if (force || report.getDate().before(delay)) {
