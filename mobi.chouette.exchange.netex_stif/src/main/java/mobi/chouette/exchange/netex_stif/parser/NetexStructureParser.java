@@ -33,7 +33,10 @@ public class NetexStructureParser implements Parser, Constant {
 			log.info("tag : " + name);
 			if (members.containsKey(name)) {
 				parseMember(name, xpp, context);
-			} else {
+			}else if (parsers.containsKey(name)){
+				parseSimpleMember(name, xpp, context);
+			}
+			else {
 				log.info("skip tag: " + name);
 				XPPUtil.skipSubTree(log, xpp);
 			}
@@ -45,6 +48,18 @@ public class NetexStructureParser implements Parser, Constant {
 		// log.info("Referential.routes : " + ref.getRoutes());
 	}
 
+	private void parseSimpleMember (String tag, XmlPullParser xpp, Context context) throws Exception{
+		String clazz = parsers.get(tag);
+		log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
+		if (clazz != null) {
+			log.info("parse with " + clazz);
+			Parser parser = ParserFactory.create(clazz);
+			parser.parse(context);
+		} else {
+			XPPUtil.skipSubTree(log, xpp);
+		}
+	}
+	
 	private void parseMember(String tag, XmlPullParser xpp, Context context) throws Exception {
 		String elt = members.get(tag);
 		if (elt != null) {
