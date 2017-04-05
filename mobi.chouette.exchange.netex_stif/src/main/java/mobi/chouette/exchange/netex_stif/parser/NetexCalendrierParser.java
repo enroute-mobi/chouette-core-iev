@@ -26,13 +26,28 @@ public class NetexCalendrierParser implements Parser, Constant {
 					// check if it is one of the member we treat
 					if (members.containsKey(name)) {
 						parseMember(name, xpp, context);
-					} else {
+					}else if (parsers.containsKey(name)){
+						parseSimpleMember(name, xpp, context);
+					}
+					else {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		referential.getSharedTimetableTemplates().putAll(referential.getTimetables());
 		referential.getTimetables().clear();
+	}
+	
+	private void parseSimpleMember (String tag, XmlPullParser xpp, Context context) throws Exception{
+		String clazz = parsers.get(tag);
+		log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
+		if (clazz != null) {
+			log.info("parse with " + clazz);
+			Parser parser = ParserFactory.create(clazz);
+			parser.parse(context);
+		} else {
+			XPPUtil.skipSubTree(log, xpp);
+		}
 	}
 
 	private void parseMember(String tag, XmlPullParser xpp, Context context) throws Exception {
