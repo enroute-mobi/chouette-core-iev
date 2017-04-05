@@ -131,14 +131,21 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	}
 
 	@Test(groups = { "Nominal" }, description = "offre", priority = 3)
-	public void verifiyOfferParser() throws Exception {
+	public void verifiyOfferParser() throws Exception{
+		verifiyOfferParser("calendrier.xml", "commun.xml", "offre.xml");
+		verifiyOfferParser("calendrier_sans_s.xml", "commun_sans_s.xml", "offre_sans_s.xml");
+	}
+
+	
+	//@Test(groups = { "Nominal" }, description = "offre", priority = 3)
+	public void verifiyOfferParser(String calendrier, String commun, String offre) throws Exception {
 		Context context = initImportContext();
 
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		{
-			File f = new File(path, "calendrier.xml");
+			File f = new File(path, calendrier);
 			parser.setFileURL("file://" + f.getAbsolutePath());
 			parser.execute(context);
 			Assert.assertFalse(referential.getSharedTimetableTemplates().isEmpty(), " no timetables");
