@@ -54,7 +54,6 @@
 				<netex:DayType id="CITYWAY:DayType:4:LOC" version="any">
 					<netex:Name>Restriction</netex:Name>
 				</netex:DayType>
-				<netex:dayTypeAssignments>
 					<netex:DayTypeAssignment version="any">
 						<netex:OperatingPeriodRef ref="CITYWAY:OperatingPeriod:1:LOC"
 							version="any" />
@@ -79,7 +78,6 @@
 							version="any" />
 						<netex:isAvailable>false</netex:isAvailable>
 					</netex:DayTypeAssignment>
-				</netex:dayTypeAssignments>
 				<netex:OperatingPeriod id="CITYWAY:OperatingPeriod:1:LOC"
 					version="any">
 					<netex:FromDate>2017-01-01</netex:FromDate>

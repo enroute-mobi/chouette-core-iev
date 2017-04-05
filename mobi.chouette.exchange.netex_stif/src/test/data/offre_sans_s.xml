@@ -29,15 +29,12 @@
                                 <netex:DirectionRef ref="CITYWAY:Direction:2:LOC" version="any"/>
                                 <netex:InverseRouteRef ref="CITYWAY:Route:1:LOC" version="any"/>
                             </netex:Route>
-                        <netex:directions>
                             <netex:Direction id="CITYWAY:Direction:1:LOC" version="any">
                                 <netex:Name>Par ici</netex:Name>
                             </netex:Direction>
                             <netex:Direction id="CITYWAY:Direction:2:LOC" version="any">
                                 <netex:Name>Par là</netex:Name>
                             </netex:Direction>
-                        </netex:directions>
-                        <netex:serviceJourneyPatterns>
                             <netex:ServiceJourneyPattern id="CITYWAY:ServiceJourneyPattern:1:LOC"
                                 version="any">
                                 <netex:Name>Par ici</netex:Name>
@@ -90,8 +87,6 @@
                                 </netex:pointsInSequence>
                                 <netex:ServiceJourneyPatternType>passenger</netex:ServiceJourneyPatternType>
                             </netex:ServiceJourneyPattern>
-                        </netex:serviceJourneyPatterns>
-                        <netex:destinationDisplays>
                             <netex:DestinationDisplay id="CITYWAY:DestinationDisplay:1:LOC"
                                 version="any">
                                 <netex:FrontText>Mission 1</netex:FrontText>
@@ -102,8 +97,6 @@
                                 <netex:FrontText>Mission 2</netex:FrontText>
                                 <netex:PublicCode>2345</netex:PublicCode>
                             </netex:DestinationDisplay>
-                        </netex:destinationDisplays>
-                        <netex:scheduledStopPoints>
                             <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:1-1:LOC"
                                 version="any"/>
                             <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:1-2:LOC"
@@ -112,8 +105,6 @@
                                 version="any"/>
                             <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:2-2:LOC"
                                 version="any"/>
-                        </netex:scheduledStopPoints>
-                        <netex:passengerStopAssignments>
                             <netex:PassengerStopAssignment
                                 id="CITYWAY:PassengerStopAssignment:1-1:LOC" version="any">
                                 <netex:ScheduledStopPointRef
@@ -138,8 +129,6 @@
                                     ref="CITYWAY:ScheduledStopPoint:2-2:LOC" version="any"/>
 										  <netex:QuayRef ref="FR:78217:ZDE:18305:STIF">version="any"</netex:QuayRef>
                             </netex:PassengerStopAssignment>
-                        </netex:passengerStopAssignments>
-                        <netex:routingConstraintZones>
                             <netex:RoutingConstraintZone id="CITYWAY:RoutingConstraintZone:1:LOC"
                                 version="any">
                                 <netex:Name>ITL 1</netex:Name>
@@ -151,7 +140,6 @@
                                 </netex:members>
                                 <netex:ZoneUse>cannotBoardAndAlightInSameZone</netex:ZoneUse>
                             </netex:RoutingConstraintZone>
-                        </netex:routingConstraintZones>
                     </netex:members>
                 </netex:GeneralFrame>
                 <netex:GeneralFrame id="CITYWAY:GeneralFrame:NETEX_HORAIRE-20170214090012:LOC"
