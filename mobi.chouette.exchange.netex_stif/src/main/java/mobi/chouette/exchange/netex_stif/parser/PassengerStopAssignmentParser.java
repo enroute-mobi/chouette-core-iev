@@ -45,7 +45,9 @@ public class PassengerStopAssignmentParser implements Parser, Constant {
 				StopAreaLite stopArea = referential.getSharedReadOnlyStopAreas().get(quayRef);
 				for (StopPoint stopPoint : list) {
 					log.info("stop point" + stopPoint);
-					stopPoint.setStopAreaId(stopArea.getId());
+					if (stopArea != null) {
+						stopPoint.setStopAreaId(stopArea.getId());
+					}
 				}
 			}
 		}
