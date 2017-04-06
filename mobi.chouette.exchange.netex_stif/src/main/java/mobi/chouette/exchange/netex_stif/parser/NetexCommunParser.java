@@ -28,11 +28,17 @@ public class NetexCommunParser implements Parser, Constant {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
-			} else {
+			}else if (xpp.getName().equals(NOTICE)){
+				Parser parser = ParserFactory.create(NoticeParser.class.getName());
+				parser.parse(context);
+			}
+			else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
 	}
+	
+	
 
 	static {
 		ParserFactory.register(NetexCommunParser.class.getName(), new ParserFactory() {

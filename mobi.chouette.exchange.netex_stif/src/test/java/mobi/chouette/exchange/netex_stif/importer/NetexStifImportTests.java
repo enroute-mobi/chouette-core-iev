@@ -172,13 +172,18 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
 	public void verifyImportLine() throws Exception {
+		verifyImportLine("OFFRE_TRANSDEV_20170301122517.zip");
+		verifyImportLine("OFFRE_TRANSDEV_20170404152230.zip");
+	}
+	
+	public void verifyImportLine(String zipFile) throws Exception {
 		Context context = initImportContext();
 		context.put(REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
-		copyFile("OFFRE_TRANSDEV_20170301122517.zip");
+		copyFile(zipFile);
 		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		jobData.setInputFilename("OFFRE_TRANSDEV_20170301122517.zip");
+		jobData.setInputFilename(zipFile);
 		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
 		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
