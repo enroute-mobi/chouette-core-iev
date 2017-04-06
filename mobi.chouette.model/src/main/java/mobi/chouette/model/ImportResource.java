@@ -12,16 +12,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import mobi.chouette.common.JobData;
 
 @Entity
 @Table(name = "import_resources")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class ImportResource {
+public class ImportResource extends ActionResource{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1257345220758519489L;
+
+	public JobData.ACTION getAction()
+	{
+		return JobData.ACTION.importer;
+	}
+	
 	@Getter
 	@Setter
-	@SequenceGenerator(name="import_resources_id_seq", sequenceName="import_resources_id_seq", allocationSize=100)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="import_resources_id_seq")
+	@SequenceGenerator(name = "import_resources_id_seq", sequenceName = "import_resources_id_seq", allocationSize = 100)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "import_resources_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
@@ -30,22 +42,20 @@ public class ImportResource {
 	@Setter
 	@Column(name = "status")
 	private String status;
-		
+
 	@Getter
 	@Setter
-	@Column(name="import_id")
+	@Column(name = "import_id")
 	private Integer importId;
-	
-	
+
 	@Getter
 	@Setter
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	private java.sql.Timestamp createdAt;
 
 	@Getter
 	@Setter
-	@Column(name="updated_at")
+	@Column(name = "updated_at")
 	private java.sql.Timestamp updatedAt;
-	
 
 }
