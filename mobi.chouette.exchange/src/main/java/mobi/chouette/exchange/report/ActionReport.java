@@ -14,15 +14,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import mobi.chouette.common.Constant;
-import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
-import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
-
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import mobi.chouette.common.Constant;
+import mobi.chouette.common.JobData.ACTION;
+import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.model.ActionResource;
+import mobi.chouette.model.ImportResource;
 
 @XmlRootElement(name = "action_report")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -263,5 +266,14 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 	public void print(PrintStream stream) {
 		print(stream, new StringBuilder() , 1, true);
 
+	}
+	
+	public List<ActionResource> getResources(){
+		List<ActionResource> result = new ArrayList<ActionResource>();
+		for (ObjectReport objectReport : objects.values()) {
+			ImportResource importResource = new ImportResource();
+			//importResource.setId(objectReport.getObjectId());
+		}
+		return result;
 	}
 }
