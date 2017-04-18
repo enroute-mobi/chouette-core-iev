@@ -6682,8 +6682,8 @@ ALTER SEQUENCE routes_id_seq OWNED BY routes.id;
 CREATE TABLE routing_constraint_zones (
     id bigint NOT NULL,
     name character varying(255),
-    stop_area_ids integer[],
-    line_id integer,
+    stop_point_ids bigint[],
+    route_id bigint,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     objectid character varying(255) NOT NULL,
@@ -6956,7 +6956,6 @@ CREATE INDEX index_vehicle_journey_at_stops_on_vehicle_journey_id ON vehicle_jou
 CREATE INDEX index_vehicle_journeys_on_route_id ON vehicle_journeys USING btree (route_id);
 CREATE UNIQUE INDEX journey_patterns_objectid_key ON journey_patterns USING btree (objectid);
 CREATE UNIQUE INDEX routes_objectid_key ON routes USING btree (objectid);
-CREATE INDEX index_routing_constraint_zones_on_line_id ON routing_constraint_zones USING btree (line_id);
 CREATE UNIQUE INDEX stop_points_objectid_key ON stop_points USING btree (objectid);
 CREATE UNIQUE INDEX time_tables_objectid_key ON time_tables USING btree (objectid);
 CREATE UNIQUE INDEX vehicle_journeys_objectid_key ON vehicle_journeys USING btree (objectid);
