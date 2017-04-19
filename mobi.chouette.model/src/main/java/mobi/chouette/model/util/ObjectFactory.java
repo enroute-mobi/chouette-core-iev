@@ -10,6 +10,7 @@ import mobi.chouette.model.Line;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RouteSection;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timeband;
@@ -112,6 +113,17 @@ public class ObjectFactory {
 			result.setDetached(true);
 			result.setObjectId(objectId);
 			referential.getRoutes().put(objectId, result);
+		}
+		return result;
+	}
+	
+	public static RoutingConstraint getRoutingConstraint(Referential referential, String objectId) {
+		RoutingConstraint result = referential.getRoutingConstraints().get(objectId);
+		if (result == null) {
+			result = new RoutingConstraint();
+			result.setDetached(true);
+			result.setObjectId(objectId);
+			referential.getRoutingConstraints().put(objectId, result);
 		}
 		return result;
 	}
