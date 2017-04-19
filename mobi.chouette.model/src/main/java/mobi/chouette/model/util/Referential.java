@@ -20,6 +20,7 @@ import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RouteSection;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
@@ -155,6 +156,10 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, Footnote> footnotes = new HashMap<String, Footnote>();
+	
+	@Getter
+	@Setter
+	private Map<String, RoutingConstraint> routingConstraints = new HashMap<String, RoutingConstraint>();
 
 	public void clear(boolean cascade) {
 		if (cascade) {
