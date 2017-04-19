@@ -65,5 +65,5 @@ public class RoutingConstraint extends ChouetteIdentifiedObject {
 	@Getter
 	@Setter
 	@Transient
-	private List<String> scheduleStopPointId;
+	private List<StopPoint> stopPoints;
 }
