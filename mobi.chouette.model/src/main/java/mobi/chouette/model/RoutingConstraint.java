@@ -1,6 +1,6 @@
 package mobi.chouette.model;
 
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Type;
@@ -61,4 +62,8 @@ public class RoutingConstraint extends ChouetteIdentifiedObject {
 	@JoinColumn(name = "route_id")
 	private Route route;
 	
+	@Getter
+	@Setter
+	@Transient
+	private List<String> scheduleStopPointId;
 }
