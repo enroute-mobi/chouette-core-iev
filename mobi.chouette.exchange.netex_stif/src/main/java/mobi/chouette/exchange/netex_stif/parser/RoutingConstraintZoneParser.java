@@ -37,10 +37,12 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 					if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
 						String ref = xpp.getAttributeValue(null, ID);
 						List<StopPoint> list = factory.getStopPoints(ref);
-						List<StopPoint> routingList = routingConstraint.getStopPoints();
-						for (StopPoint stopPoint : list) {
-							if (!routingList.contains(stopPoint)) {
-								routingList.add(stopPoint);
+						if (list != null) {
+							List<StopPoint> routingList = routingConstraint.getStopPoints();
+							for (StopPoint stopPoint : list) {
+								if (!routingList.contains(stopPoint)) {
+									routingList.add(stopPoint);
+								}
 							}
 						}
 						XPPUtil.skipSubTree(log, xpp);
