@@ -58,6 +58,7 @@
 		<class>mobi.chouette.model.JourneyPattern</class>
 		<class>mobi.chouette.model.Period</class>
 		<class>mobi.chouette.model.Route</class>
+		<class>mobi.chouette.model.RoutingConstraint</class>
 		<class>mobi.chouette.model.StopPoint</class>
 		<class>mobi.chouette.model.Timeband</class>
 		<class>mobi.chouette.model.Timetable</class>
@@ -67,6 +68,7 @@
 		<validation-mode>NONE</validation-mode>
 
 		<properties>
+			<property name="hibernate.ejb.interceptor." value="mobi.chouette.dao.NetexInterceptor" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.jdbc.batch_size" value="2000" />
