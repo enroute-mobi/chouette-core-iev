@@ -7,14 +7,19 @@ import org.hibernate.type.Type;
 
 import com.jamonapi.utils.Logger;
 
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
 
-@Log
+@Log4j
 public class NetexInterceptor extends EmptyInterceptor {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2139978840612539482L;
 
 	@Override
 	public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-		Logger.logInfo("onSave");
+		log.info("onSave");
 		return false;
 	}
 }

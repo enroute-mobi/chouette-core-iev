@@ -2,6 +2,7 @@ package mobi.chouette.exchange.netex_stif.parser;
 
 import java.util.List;
 
+import org.codehaus.plexus.logging.Logger;
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
@@ -42,6 +43,7 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 							for (StopPoint stopPoint : list) {
 								if (!routingList.contains(stopPoint)) {
 									routingList.add(stopPoint);
+									log.info ("add stopPOint");
 								}
 							}
 						}
