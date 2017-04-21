@@ -2,7 +2,6 @@ package mobi.chouette.exchange.netex_stif.parser;
 
 import java.util.List;
 
-import org.codehaus.plexus.logging.Logger;
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
