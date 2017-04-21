@@ -149,7 +149,7 @@
                                     <netex:ScheduledStopPointRef
                                         ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
                                     <netex:ScheduledStopPointRef
-                                        ref="CITYWAY:ScheduledStopPoint:2-1:LOC" version="any"/>
+                                        ref="CITYWAY:ScheduledStopPoint:1-2:LOC" version="any"/>
                                 </netex:members>
                                 <netex:ZoneUse>cannotBoardAndAlightInSameZone</netex:ZoneUse>
                             </netex:RoutingConstraintZone>
