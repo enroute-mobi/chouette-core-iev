@@ -23,7 +23,7 @@ import lombok.Setter;
 @Table(name = "routing_constraint_zone")
 @NoArgsConstructor
 public class RoutingConstraint extends ChouetteIdentifiedObject {
-	
+
 	@Setter
 	@Getter
 	@Id
@@ -49,20 +49,26 @@ public class RoutingConstraint extends ChouetteIdentifiedObject {
 	public void setName(String value) {
 		name = StringUtils.abbreviate(value, 255);
 	}
-		
-	@Getter
-	@Setter
-	@Column(name = "stop_point_ids",columnDefinition="bigint[]")
-	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
-	private Long[] stopPointIds;
-	
 
 	@Getter
 	@Setter
+	@Column(name = "stop_point_ids", columnDefinition = "bigint[]")
+	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
+	private Long[] stopPointIds;
+
+	@Getter
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "route_id")
 	private Route route;
-	
+
+	public void setRoute(Route route) {
+		this.route = route;
+		if (this.route != null) {
+			this.route.getRoutingConstraints().remove(this);
+			this.route.getRoutingConstraints().add(this);
+		}
+	}
+
 	@Getter
 	@Setter
 	@Transient
