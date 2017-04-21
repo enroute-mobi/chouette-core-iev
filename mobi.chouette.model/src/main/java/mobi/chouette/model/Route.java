@@ -256,6 +256,19 @@ public class Route extends ChouetteIdentifiedObject {
 	private List<JourneyPattern> journeyPatterns = new ArrayList<JourneyPattern>(0);
 
 	/**
+	 * routingConstraints
+	 * 
+	 * @param RoutingConstraints
+	 *            New value
+	 * @return The actual value
+	 */
+
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "route", cascade = { CascadeType.PERSIST })
+	private List<RoutingConstraint> routingConstraints = new ArrayList<RoutingConstraint>(0);
+
+	/**
 	 * stopPoints
 	 * 
 	 * @param stopPoints
