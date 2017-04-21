@@ -35,7 +35,7 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 			} else if (xpp.getName().equals(MEMBERS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
-						String ref = xpp.getAttributeValue(null, ID);
+						String ref = xpp.getAttributeValue(null, REF);
 						List<StopPoint> list = factory.getStopPoints(ref);
 						if (list != null) {
 							List<StopPoint> routingList = routingConstraint.getStopPoints();
