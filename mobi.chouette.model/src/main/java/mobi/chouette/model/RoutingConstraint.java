@@ -1,5 +1,6 @@
 package mobi.chouette.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -65,5 +66,5 @@ public class RoutingConstraint extends ChouetteIdentifiedObject {
 	@Getter
 	@Setter
 	@Transient
-	private List<StopPoint> stopPoints;
+	private List<StopPoint> stopPoints = new ArrayList<StopPoint>();
 }
