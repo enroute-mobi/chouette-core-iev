@@ -21,20 +21,20 @@ public class NetexInterceptor extends EmptyInterceptor {
 	@Override
 	public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
 		log.info("Class :" + entity.getClass().getName());
-		if (entity instanceof RoutingConstraint) {
-			log.info("onSave for RoutingConstraint");
-			RoutingConstraint routingConstraint = (RoutingConstraint) entity;
-			List<StopPoint> stopPoints = routingConstraint.getStopPoints();
-			Long ids[] = new Long[stopPoints.size()];
-			int c = 0;
-			for (StopPoint stopPoint : stopPoints) {
-				ids[c++] = stopPoint.getId();
-			}
-			routingConstraint.setStopPointIds(ids);
-			return true;
-		} else {
-			log.info("onSave other");
-		}
+//		if (entity instanceof RoutingConstraint) {
+//			log.info("onSave for RoutingConstraint");
+//			RoutingConstraint routingConstraint = (RoutingConstraint) entity;
+//			List<StopPoint> stopPoints = routingConstraint.getStopPoints();
+//			Long ids[] = new Long[stopPoints.size()];
+//			int c = 0;
+//			for (StopPoint stopPoint : stopPoints) {
+//				ids[c++] = stopPoint.getId();
+//			}
+//			routingConstraint.setStopPointIds(ids);
+//			return true;
+//		} else {
+//			log.info("onSave other");
+//		}
 
 		return false;
 	}
