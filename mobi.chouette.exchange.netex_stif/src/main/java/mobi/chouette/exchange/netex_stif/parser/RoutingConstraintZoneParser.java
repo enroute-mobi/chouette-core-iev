@@ -1,6 +1,9 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -11,6 +14,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.ObjectFactory;
@@ -24,13 +28,13 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		Map<Route, List<StopPoint>> stopPoints = new HashMap<Route, List<StopPoint>>();
 
 		String id = xpp.getAttributeValue(null, ID);
-		RoutingConstraint routingConstraint = ObjectFactory.getRoutingConstraint(referential, id);
+		String name = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
-				String name = xpp.getText();
-				routingConstraint.setName(name);
+				name = xpp.getText();
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(MEMBERS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -38,12 +42,17 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 						String ref = xpp.getAttributeValue(null, REF);
 						List<StopPoint> list = factory.getStopPoints(ref);
 						if (list != null) {
-							List<StopPoint> routingList = routingConstraint.getStopPoints();
 							for (StopPoint stopPoint : list) {
-								if (!routingList.contains(stopPoint)) {
-									routingList.add(stopPoint);
-									log.info ("add stopPOint");
+								// routingList.add(stopPoint);
+								Route route = stopPoint.getRoute();
+								List<StopPoint> savedList = stopPoints.get(route);
+								if (savedList == null) {
+									savedList = new ArrayList<StopPoint>();
 								}
+								if (!savedList.contains(stopPoint)) {
+									savedList.add(stopPoint);
+								}
+								stopPoints.put(route, savedList);
 							}
 						}
 						XPPUtil.skipSubTree(log, xpp);
@@ -54,6 +63,21 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
+		}
+		if (name != null && id != null) {
+
+			for (Route route : stopPoints.keySet()) {
+				List<StopPoint> list = stopPoints.get(route);
+				// we need to stop points to have an itl
+				if (list != null && list.size() >= 2) {
+					String realId = route.getId() + id;
+					RoutingConstraint routingConstraint = ObjectFactory.getRoutingConstraint(referential, realId);
+					routingConstraint.setName(name);
+					routingConstraint.setRoute(route);
+					routingConstraint.setStopPoints(list);
+				}
+			}
+
 		}
 
 	}
