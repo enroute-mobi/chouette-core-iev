@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -19,9 +20,11 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
+import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.exchange.importer.inserter.Inserter;
 import mobi.chouette.exchange.importer.inserter.RouteInserter;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
@@ -36,6 +39,8 @@ public class RouteRegisterCommand implements Command {
 	@EJB
 	private RouteDAO routeDAO;
 
+	@EJB
+	private RoutingConstraintDAO routingConstraintDAO;
 
 	@EJB(beanName = RouteInserter.BEAN_NAME)
 	private Inserter<Route> routeInserter;
@@ -50,23 +55,36 @@ public class RouteRegisterCommand implements Command {
 		Referential cache = new Referential();
 		context.put(CACHE, cache);
 
-		
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		Map<String, Route> routes = referential.getRoutes();
 		Iterator<Route> iterator = routes.values().iterator();
-		while (iterator.hasNext()){
+		while (iterator.hasNext()) {
 			Route route = iterator.next();
 			routeDAO.create(route);
 			routeDAO.flush();
 		}
-	
+		// RoutingConstraint routingConstraint = (RoutingConstraint) entity;
+		Map<String, RoutingConstraint> routingConstraints = referential.getRoutingConstraints();
+		Iterator<RoutingConstraint> iterator2 = routingConstraints.values().iterator();
+		while (iterator2.hasNext()) {
+			RoutingConstraint routingConstraint = iterator2.next();
+			List<StopPoint> stopPoints = routingConstraint.getStopPoints();
+			Long ids[] = new Long[stopPoints.size()];
+			int c = 0;
+			for (StopPoint stopPoint : stopPoints) {
+				ids[c++] = stopPoint.getId();
+			}
+			routingConstraint.setStopPointIds(ids);
+			routingConstraintDAO.update(routingConstraint);
+			routingConstraintDAO.flush();
+		}
+
 		return true;
 	}
 
-		
 	protected void write(StringWriter buffer, VehicleJourney vehicleJourney, StopPoint stopPoint,
 			VehicleJourneyAtStop vehicleJourneyAtStop) throws IOException {
-	
+
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		buffer.write(vehicleJourney.getId().toString());
 		buffer.append(SEP);
@@ -85,9 +103,9 @@ public class RouteRegisterCommand implements Command {
 		buffer.write(Integer.toString(vehicleJourneyAtStop.getArrivalDayOffset()));
 		buffer.append(SEP);
 		buffer.write(Integer.toString(vehicleJourneyAtStop.getDepartureDayOffset()));
-		
+
 		buffer.append('\n');
-		
+
 	}
 
 	public static class DefaultCommandFactory extends CommandFactory {
