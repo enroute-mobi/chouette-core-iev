@@ -202,6 +202,8 @@ public class Referential implements java.io.Serializable {
 			for (StopArea area : sharedStopAreas.values()) {
 				area.getContainedStopPoints().clear();
 			}
+			
+			
 		}
 		accessLinks.clear();
 		accessPoints.clear();
@@ -219,6 +221,7 @@ public class Referential implements java.io.Serializable {
 		timetables.clear();
 		vehicleJourneys.clear();
 		routeSections.clear();
+		routingConstraints.clear();
 	}
 
 	public void dispose() {
