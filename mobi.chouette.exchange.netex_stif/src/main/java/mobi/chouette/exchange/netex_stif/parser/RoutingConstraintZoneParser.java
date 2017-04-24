@@ -23,6 +23,8 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class RoutingConstraintZoneParser implements Parser, Constant {
 
+	private final static String VALID_ZONE_USE = "cannotBoardAndAlightInSameZone";
+
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
@@ -32,10 +34,16 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		String name = null;
+		boolean valid = false;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
 				name = xpp.getText();
 				XPPUtil.skipSubTree(log, xpp);
+			} else if (xpp.getName().equals(ZONE_USE)) {
+				String tmp = xpp.getText();
+				if (tmp.equals(VALID_ZONE_USE)) {
+					valid = true;
+				}
 			} else if (xpp.getName().equals(MEMBERS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
@@ -64,7 +72,7 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		if (name != null && id != null) {
+		if (name != null && id != null && valid) {
 
 			for (Route route : stopPoints.keySet()) {
 				List<StopPoint> list = stopPoints.get(route);
