@@ -20,6 +20,7 @@ public class NetexInterceptor extends EmptyInterceptor {
 
 	@Override
 	public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+		log.info("Class :" + entity.getClass().getName());
 		if (entity instanceof RoutingConstraint) {
 			log.info("onSave for RoutingConstraint");
 			RoutingConstraint routingConstraint = (RoutingConstraint) entity;

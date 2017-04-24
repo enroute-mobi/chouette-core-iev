@@ -74,7 +74,7 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 					RoutingConstraint routingConstraint = ObjectFactory.getRoutingConstraint(referential, realId);
 					routingConstraint.setName(name);
 					routingConstraint.setRoute(route);
-					routingConstraint.setStopPoints(list);
+					routingConstraint.getStopPoints().addAll(list);
 				}
 			}
 
