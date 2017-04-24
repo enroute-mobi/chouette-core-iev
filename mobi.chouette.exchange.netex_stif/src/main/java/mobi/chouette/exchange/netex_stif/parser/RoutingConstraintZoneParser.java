@@ -70,7 +70,7 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 				List<StopPoint> list = stopPoints.get(route);
 				// we need to stop points to have an itl
 				if (list != null && list.size() >= 2) {
-					String realId = route.getId() + id;
+					String realId = NetexStifUtils.genRoutingConstrainId(id, route);
 					RoutingConstraint routingConstraint = ObjectFactory.getRoutingConstraint(referential, realId);
 					routingConstraint.setName(name);
 					routingConstraint.setRoute(route);
