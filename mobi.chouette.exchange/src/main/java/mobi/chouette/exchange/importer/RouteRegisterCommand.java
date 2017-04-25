@@ -65,11 +65,14 @@ public class RouteRegisterCommand implements Command {
 		}
 		// RoutingConstraint routingConstraint = (RoutingConstraint) entity;
 		Map<String, RoutingConstraint> routingConstraints = referential.getRoutingConstraints();
+		log.info("list of rc size : "+ routingConstraints.size());
 		Iterator<RoutingConstraint> iterator2 = routingConstraints.values().iterator();
 		while (iterator2.hasNext()) {
 			RoutingConstraint routingConstraint = iterator2.next();
+			
 			List<StopPoint> stopPoints = routingConstraint.getStopPoints();
 			Long ids[] = new Long[stopPoints.size()];
+			log.info("RC nb stop point: " + stopPoints.size());
 			int c = 0;
 			for (StopPoint stopPoint : stopPoints) {
 				ids[c++] = stopPoint.getId();
