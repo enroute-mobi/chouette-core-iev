@@ -37,10 +37,10 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 		boolean valid = false;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
-				name = xpp.getText();
-				XPPUtil.skipSubTree(log, xpp);
+				name = xpp.nextText();
 			} else if (xpp.getName().equals(ZONE_USE)) {
-				String tmp = xpp.getText();
+				String tmp = xpp.nextText();
+				log.info("zone use: " + tmp);
 				if (tmp.equals(VALID_ZONE_USE)) {
 					valid = true;
 				}
@@ -72,6 +72,7 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		log.info("name : "  + name + " id " + id + " valid " + valid);
 		if (name != null && id != null && valid) {
 
 			for (Route route : stopPoints.keySet()) {
