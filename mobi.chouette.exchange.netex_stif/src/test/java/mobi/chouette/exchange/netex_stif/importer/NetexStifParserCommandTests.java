@@ -15,6 +15,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
@@ -30,6 +31,7 @@ import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
@@ -40,6 +42,7 @@ import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
+@Log4j
 public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private static final String path = "src/test/data/";
@@ -177,6 +180,15 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-1-1-2-2:LOC","", 2, 32521L, "CITYWAY:Route:C00108-1:LOC");
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-2-2-1-1:LOC","", 1, 32522L, "CITYWAY:Route:C00108-2:LOC");
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-2-2-2-2:LOC","", 2, 18305L, "CITYWAY:Route:C00108-2:LOC");
+		
+		assertRoutingConstraint(referential, "CITYWAY:RoutingConstraintZone:C00108-1-1:LOC", "ITL 1", "route 1","");
+	}
+	
+	private void assertRoutingConstraint (Referential referential, String id, String name, String routeName, String stopPointsId){
+		RoutingConstraint routingConstraint = referential.getRoutingConstraints().get(id);
+		Assert.assertEquals(routingConstraint.getName(), name);
+		Assert.assertEquals(routingConstraint.getRoute().getName(), routeName);
+		
 	}
 
 	private void assertStopPoint(Referential referential, String id, String objectId, int position, Long quayRef, String routeId) {
