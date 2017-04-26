@@ -1,0 +1,92 @@
+{
+	"routes": [
+		{
+			"id": "CITYWAY:Route:C00109-2:LOC",
+			"name": "route 2",
+			"direction": "R",
+			"publishedName": "Par là aussi",
+			"inverse": "CITYWAY:Route:C00109-1:LOC",
+			"journeyPatterns": [
+				{
+					"id": "CITYWAY:ServiceJourneyPattern:C00109-2:LOC",
+					"name": "Par là itou",
+					"publishedName": "Mission 2 bis",
+					"registrationNumber": "2345",
+					"routeId": "CITYWAY:Route:C00109-2:LOC"
+				}
+			]
+		},
+		{
+			"id": "CITYWAY:Route:C00109-1:LOC",
+			"name": "route 1",
+			"direction": "A",
+			"publishedName": "Par ici aussi",
+			"inverse": "CITYWAY:Route:C00109-2:LOC",
+			"journeyPatterns": [
+				{
+					"id": "CITYWAY:ServiceJourneyPattern:C00109-1:LOC",
+					"name": "Par ici itou",
+					"publishedName": "Mission 1 bis",
+					"registrationNumber": "1234",
+					"routeId": "CITYWAY:Route:C00109-1:LOC"
+				}
+			],
+			"routingConstraints": [
+				{
+					"id": "CITYWAY:RoutingConstraintZone:C00109-1-1:LOC",
+					"name": "ITL 1"
+				}
+			]
+		},
+		{
+			"id": "CITYWAY:Route:C00108-2:LOC",
+			"name": "route 2",
+			"direction": "R",
+			"publishedName": "Par là",
+			"inverse": "CITYWAY:Route:C00108-1:LOC",
+			"journeyPatterns": [
+				{
+					"id": "CITYWAY:ServiceJourneyPattern:C00108-2:LOC",
+					"name": "Par là",
+					"publishedName": "Mission 2",
+					"registrationNumber": "2345",
+					"routeId": "CITYWAY:Route:C00108-2:LOC"
+				}
+			]
+		},
+		{
+			"id": "CITYWAY:Route:C00108-1:LOC",
+			"name": "route 1",
+			"direction": "A",
+			"publishedName": "Par ici",
+			"inverse": "CITYWAY:Route:C00108-2:LOC",
+			"journeyPatterns": [
+				{
+					"id": "CITYWAY:ServiceJourneyPattern:C00108-1:LOC",
+					"name": "Par ici",
+					"publishedName": "Mission 1",
+					"registrationNumber": "1234",
+					"routeId": "CITYWAY:Route:C00108-1:LOC"
+				}
+			],
+			"routingConstraints": [
+				{
+					"id": "CITYWAY:RoutingConstraintZone:C00108-1-1:LOC",
+					"name": "ITL 1"
+				}
+			]
+		}
+	],
+	"routingConstraints": [
+		{
+			"id": "CITYWAY:RoutingConstraintZone:C00109-1-1:LOC",
+			"name": "ITL 1",
+			"routeId": "CITYWAY:Route:C00109-1:LOC"
+		},
+		{
+			"id": "CITYWAY:RoutingConstraintZone:C00108-1-1:LOC",
+			"name": "ITL 1",
+			"routeId": "CITYWAY:Route:C00108-1:LOC"
+		}
+	]
+}
