@@ -1,7 +1,9 @@
 package mobi.chouette.exchange.netex_stif.importer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +18,9 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -34,13 +39,17 @@ import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.LineDAO;
 import mobi.chouette.dao.RouteDAO;
+import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
+import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
@@ -52,6 +61,9 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	@EJB
 	RouteDAO routeDao;
+
+	@EJB
+	RoutingConstraintDAO routingConstraintDao;
 
 	@EJB
 	VehicleJourneyDAO vjDao;
@@ -110,12 +122,13 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 	protected static InitialContext initialContext;
 
 	protected static final String path = "src/test/data";
-	public static  void copyFile(String fileName) throws IOException {
+
+	public static void copyFile(String fileName) throws IOException {
 		File srcFile = new File(path, fileName);
 		File destFile = new File("target/referential/test", fileName);
 		FileUtils.copyFile(srcFile, destFile);
 	}
-	
+
 	protected void init() {
 		Locale.setDefault(Locale.ENGLISH);
 		if (initialContext == null) {
@@ -175,7 +188,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		verifyImportLine("OFFRE_TRANSDEV_20170301122517.zip");
 		verifyImportLine("OFFRE_TRANSDEV_20170404152230.zip");
 	}
-	
+
 	public void verifyImportLine(String zipFile) throws Exception {
 		Context context = initImportContext();
 		context.put(REFERENTIAL, new Referential());
@@ -198,16 +211,103 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		utx.begin();
 		em.joinTransaction();
 		// Line line = lineDao.findByObjectId("");
-		List<Route> routes = routeDao.findAll();
-		Assert.assertEquals(routes.size(),4, "Routes" );
-		for (Route route : routes) {
-			System.out.println("route :" + route.getObjectId());
-		}
 
+		List<Route> routes = routeDao.findAll();
+		Assert.assertEquals(routes.size(), 4, "Routes");
+		buidAndSaveJson();
+		// JSONWriter writer = new JSONWriter(w);
+		List<RoutingConstraint> routingConstraints = routingConstraintDao.findAll();
+		for (RoutingConstraint routingConstraint : routingConstraints) {
+			log.info("routing constraint" + routingConstraint.getName());
+		}
 		// NeptuneTestsUtils.checkMinimalLine(line);
 
 		utx.rollback();
 
 	}
 
+	private void buidAndSaveJson() throws JSONException, FileNotFoundException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("routes", buildJsonRoute());
+		jsonObject.put("routingConstraints", buildRoutingConstraint());
+		File toSave = new File("/tmp/offer.json");
+		PrintWriter pw = new PrintWriter(toSave);
+		pw.write(jsonObject.toString());
+		pw.close();
+	}
+
+	private JSONArray buildJsonJourneyPattern(List<JourneyPattern> journeyPatterns) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		for (JourneyPattern journeyPattern : journeyPatterns) {
+			JSONObject jpObject = new JSONObject();
+			jpObject.put("id", journeyPattern.getObjectId());
+			jpObject.put("name", journeyPattern.getName());
+			jpObject.put("publishedName", journeyPattern.getPublishedName());
+			jpObject.put("registrationNumber", journeyPattern.getRegistrationNumber());
+			jpObject.put("routeId", journeyPattern.getRoute().getObjectId());
+			jsonArray.put(jpObject);
+		}
+		return jsonArray;
+	}
+
+	private JSONArray buildJsonRoute() throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		List<Route> routes = routeDao.findAll();
+		for (Route route : routes) {
+			JSONObject routeObject = new JSONObject();
+			routeObject.put("id", route.getObjectId());
+			routeObject.put("name", route.getName());
+			routeObject.put("direction", route.getDirection().toString());
+			routeObject.put("publishedName", route.getPublishedName());
+			// routeObject.put("lineId", route.getLine().getObjectId());
+			routeObject.put("inverse", route.getOppositeRoute().getObjectId());
+			routeObject.put("journeyPatterns", buildJsonJourneyPattern(route.getJourneyPatterns()));
+			JSONArray tmp = buildRoutingConstraint(route.getRoutingConstraints());
+			if (tmp.length() > 0) {
+				routeObject.put("routingConstraints", tmp);
+			}
+			tmp = buildJsonStopPoint(route.getStopPoints());
+			if (tmp.length() > 0) {
+				routeObject.put("stopPoints", tmp);
+			}
+			jsonArray.put(routeObject);
+		}
+		return jsonArray;
+	}
+
+	private JSONArray buildJsonStopPoint(List<StopPoint> stopPoints) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		for (StopPoint stopPoint : stopPoints) {
+			JSONObject rcObject = new JSONObject();
+			rcObject.put("id", stopPoint.getObjectId());
+			rcObject.put("position", stopPoint.getPosition());
+			rcObject.put("routeId", stopPoint.getRoute().getObjectId());
+			rcObject.put("areaId", stopPoint.getStopAreaId());
+		}
+		return jsonArray;
+	}
+
+	private JSONArray buildRoutingConstraint(List<RoutingConstraint> routingConstraints) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		for (RoutingConstraint routingConstraint : routingConstraints) {
+			JSONObject rcObject = new JSONObject();
+			rcObject.put("id", routingConstraint.getObjectId());
+			rcObject.put("name", routingConstraint.getName());
+			jsonArray.put(rcObject);
+		}
+		return jsonArray;
+	}
+
+	private JSONArray buildRoutingConstraint() throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		List<RoutingConstraint> routingConstraints = routingConstraintDao.findAll();
+		for (RoutingConstraint routingConstraint : routingConstraints) {
+			JSONObject rcObject = new JSONObject();
+			rcObject.put("id", routingConstraint.getObjectId());
+			rcObject.put("name", routingConstraint.getName());
+			rcObject.put("routeId", routingConstraint.getRoute().getObjectId());
+			jsonArray.put(rcObject);
+		}
+		return jsonArray;
+	}
 }
