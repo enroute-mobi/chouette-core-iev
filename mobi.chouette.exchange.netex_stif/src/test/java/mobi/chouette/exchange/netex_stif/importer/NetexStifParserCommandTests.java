@@ -271,7 +271,6 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		assertNotice(referential, "CITYWAY:Notice:1:LOC", "Notice 1", "1");
 		assertNotice(referential, "CITYWAY:Notice:2:LOC", "Notice 2", "2");
 		assertNotice(referential, "CITYWAY:Notice:3:LOC", "Notice 3", "3");
-
 	}
 
 	private void assertNotice(Referential referential, String id, String text, String publicCode) {

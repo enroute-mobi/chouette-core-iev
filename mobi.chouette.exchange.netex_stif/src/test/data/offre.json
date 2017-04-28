@@ -14,6 +14,20 @@
 					"registrationNumber": "2345",
 					"routeId": "CITYWAY:Route:C00109-2:LOC"
 				}
+			],
+			"stopPoints": [
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00109-2-2-1-1:LOC",
+					"position": 0,
+					"routeId": "CITYWAY:Route:C00109-2:LOC",
+					"areaId": 96986
+				},
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00109-2-2-2-2:LOC",
+					"position": 1,
+					"routeId": "CITYWAY:Route:C00109-2:LOC",
+					"areaId": 94850
+				}
 			]
 		},
 		{
@@ -34,7 +48,22 @@
 			"routingConstraints": [
 				{
 					"id": "CITYWAY:RoutingConstraintZone:C00109-1-1:LOC",
-					"name": "ITL 1"
+					"name": "ITL 1",
+					"routeId": "CITYWAY:Route:C00109-1:LOC"
+				}
+			],
+			"stopPoints": [
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00109-1-1-1-1:LOC",
+					"position": 0,
+					"routeId": "CITYWAY:Route:C00109-1:LOC",
+					"areaId": 94851
+				},
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00109-1-1-2-2:LOC",
+					"position": 1,
+					"routeId": "CITYWAY:Route:C00109-1:LOC",
+					"areaId": 96984
 				}
 			]
 		},
@@ -51,6 +80,20 @@
 					"publishedName": "Mission 2",
 					"registrationNumber": "2345",
 					"routeId": "CITYWAY:Route:C00108-2:LOC"
+				}
+			],
+			"stopPoints": [
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00108-2-2-1-1:LOC",
+					"position": 0,
+					"routeId": "CITYWAY:Route:C00108-2:LOC",
+					"areaId": 111207
+				},
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00108-2-2-2-2:LOC",
+					"position": 1,
+					"routeId": "CITYWAY:Route:C00108-2:LOC",
+					"areaId": 94850
 				}
 			]
 		},
@@ -72,7 +115,22 @@
 			"routingConstraints": [
 				{
 					"id": "CITYWAY:RoutingConstraintZone:C00108-1-1:LOC",
-					"name": "ITL 1"
+					"name": "ITL 1",
+					"routeId": "CITYWAY:Route:C00108-1:LOC"
+				}
+			],
+			"stopPoints": [
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00108-1-1-1-1:LOC",
+					"position": 0,
+					"routeId": "CITYWAY:Route:C00108-1:LOC",
+					"areaId": 94851
+				},
+				{
+					"id": "CITYWAY:ScheduledStopPoint:C00108-1-1-2-2:LOC",
+					"position": 1,
+					"routeId": "CITYWAY:Route:C00108-1:LOC",
+					"areaId": 111208
 				}
 			]
 		}
@@ -87,6 +145,86 @@
 			"id": "CITYWAY:RoutingConstraintZone:C00108-1-1:LOC",
 			"name": "ITL 1",
 			"routeId": "CITYWAY:Route:C00108-1:LOC"
+		}
+	],
+	"journeyPatterns": [
+		{
+			"id": "CITYWAY:ServiceJourneyPattern:C00109-1:LOC",
+			"name": "Par ici itou",
+			"publishedName": "Mission 1 bis",
+			"registrationNumber": "1234",
+			"routeId": "CITYWAY:Route:C00109-1:LOC"
+		},
+		{
+			"id": "CITYWAY:ServiceJourneyPattern:C00109-2:LOC",
+			"name": "Par là itou",
+			"publishedName": "Mission 2 bis",
+			"registrationNumber": "2345",
+			"routeId": "CITYWAY:Route:C00109-2:LOC"
+		},
+		{
+			"id": "CITYWAY:ServiceJourneyPattern:C00108-1:LOC",
+			"name": "Par ici",
+			"publishedName": "Mission 1",
+			"registrationNumber": "1234",
+			"routeId": "CITYWAY:Route:C00108-1:LOC"
+		},
+		{
+			"id": "CITYWAY:ServiceJourneyPattern:C00108-2:LOC",
+			"name": "Par là",
+			"publishedName": "Mission 2",
+			"registrationNumber": "2345",
+			"routeId": "CITYWAY:Route:C00108-2:LOC"
+		}
+	],
+	"stopPoints": [
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00109-1-1-1-1:LOC",
+			"position": 0,
+			"routeId": "CITYWAY:Route:C00109-1:LOC",
+			"areaId": 94851
+		},
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00109-1-1-2-2:LOC",
+			"position": 1,
+			"routeId": "CITYWAY:Route:C00109-1:LOC",
+			"areaId": 96984
+		},
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00109-2-2-1-1:LOC",
+			"position": 0,
+			"routeId": "CITYWAY:Route:C00109-2:LOC",
+			"areaId": 96986
+		},
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00109-2-2-2-2:LOC",
+			"position": 1,
+			"routeId": "CITYWAY:Route:C00109-2:LOC",
+			"areaId": 94850
+		},
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00108-1-1-1-1:LOC",
+			"position": 0,
+			"routeId": "CITYWAY:Route:C00108-1:LOC",
+			"areaId": 94851
+		},
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00108-1-1-2-2:LOC",
+			"position": 1,
+			"routeId": "CITYWAY:Route:C00108-1:LOC",
+			"areaId": 111208
+		},
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00108-2-2-1-1:LOC",
+			"position": 0,
+			"routeId": "CITYWAY:Route:C00108-2:LOC",
+			"areaId": 111207
+		},
+		{
+			"id": "CITYWAY:ScheduledStopPoint:C00108-2-2-2-2:LOC",
+			"position": 1,
+			"routeId": "CITYWAY:Route:C00108-2:LOC",
+			"areaId": 94850
 		}
 	]
 }
