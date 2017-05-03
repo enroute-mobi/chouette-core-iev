@@ -27,7 +27,11 @@ public class NetexHoraireParser implements Parser, Constant {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
-			} else {
+			}else if (xpp.getName().equals(SERVICE_JOURNEY)){
+				Parser parser = ParserFactory.create(ServiceJourneyParser.class.getName());
+				parser.parse(context);
+			}
+			else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
