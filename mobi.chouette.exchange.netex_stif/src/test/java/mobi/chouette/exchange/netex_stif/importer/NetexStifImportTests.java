@@ -247,7 +247,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		// InputStream is =
 		// this.getClass().getResourceAsStream("/tmp/offre.json");
 
-		InputStream is = new FileInputStream(new File("/tmp/offer.json"));
+		InputStream is = new FileInputStream(new File("/tmp/offer0.json"));
 
 		String data = IOUtils.toString(is);
 		JSONObject jsonObject = new JSONObject(data);
@@ -312,7 +312,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		Assert.assertEquals(sp.getRoute().getObjectId(),jsp.getString("routeId"));
 	}
 	
-	
+	static int count = 0;
 	private void buidAndSaveJson() throws JSONException, FileNotFoundException {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("routes", buildJsonRoute());
@@ -323,7 +323,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		if (tmp.length() > 0) {
 			jsonObject.put("footnotes", tmp);
 		}
-		File toSave = new File("/tmp/offer.json");
+		File toSave = new File("/tmp/offer"+count+".json");
 		PrintWriter pw = new PrintWriter(toSave);
 		pw.write(jsonObject.toString());
 		pw.close();
