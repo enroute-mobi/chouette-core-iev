@@ -12,11 +12,14 @@ import mobi.chouette.common.Pair;
 import mobi.chouette.dao.JourneyPatternDAO;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.StopPointDAO;
+import mobi.chouette.dao.TimetableDAO;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.Timetable;
+import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -31,6 +34,10 @@ public class RouteInserter implements Inserter<Route> {
 
 	@EJB
 	private StopPointDAO stopPointDAO;
+	
+	@EJB
+	private TimetableDAO timetableDAO;
+	
 
 	@EJB(beanName = StopPointInserter.BEAN_NAME)
 	private Inserter<StopPoint> stopPointInserter;
@@ -40,6 +47,9 @@ public class RouteInserter implements Inserter<Route> {
 
 	@EJB(beanName = JourneyPatternInserter.BEAN_NAME)
 	private Inserter<JourneyPattern> journeyPatternUpdater;
+	
+	@EJB(beanName = TimetableInserter.BEAN_NAME)
+	private Inserter<Timetable> timetableInserter;
 
 	@Override
 	public void insert(Context context, Route oldValue, Route newValue) throws Exception {
@@ -190,7 +200,15 @@ public class RouteInserter implements Inserter<Route> {
 			} else {
 				journeyPattern.setRoute(oldValue);
 			}
-			
+			List<VehicleJourney> vehicleJourneys = journeyPattern.getVehicleJourneys();
+			for (VehicleJourney vehicleJourney : vehicleJourneys) {
+				List<Timetable> timetables = vehicleJourney.getTimetables();
+				for (Timetable timetable : timetables) {
+					if ((timetable.getId() != null &&  timetable.getId()!= 0)){
+						timetableDAO.update(timetable);
+					}
+				}
+			}
 		}
 
 		Collection<Pair<JourneyPattern, JourneyPattern>> modifiedJourneyPattern = CollectionUtil.intersection(
@@ -199,6 +217,7 @@ public class RouteInserter implements Inserter<Route> {
 		for (Pair<JourneyPattern, JourneyPattern> pair : modifiedJourneyPattern) {
 			journeyPatternUpdater.insert(context, pair.getLeft(), pair.getRight());
 		}
+		
 //		monitor.stop();
 	}
 	

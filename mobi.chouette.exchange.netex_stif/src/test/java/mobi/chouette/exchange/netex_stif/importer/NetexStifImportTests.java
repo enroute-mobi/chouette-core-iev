@@ -323,7 +323,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		if (tmp.length() > 0) {
 			jsonObject.put("footnotes", tmp);
 		}
-		File toSave = new File("/tmp/offer"+count+".json");
+		File toSave = new File("/tmp/offer"+ count++ +".json");
 		PrintWriter pw = new PrintWriter(toSave);
 		pw.write(jsonObject.toString());
 		pw.close();
