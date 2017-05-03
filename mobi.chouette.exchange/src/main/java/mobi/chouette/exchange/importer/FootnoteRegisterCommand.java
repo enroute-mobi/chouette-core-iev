@@ -2,6 +2,7 @@ package mobi.chouette.exchange.importer;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -10,6 +11,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.codehaus.plexus.logging.Logger;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.chain.Command;
@@ -33,13 +36,14 @@ public class FootnoteRegisterCommand implements Command {
 		Referential referential = (Referential) context.get(REFERENTIAL);
 
 		Map<String, Footnote> footnotes = referential.getFootnotes();
+		log.info("footnotes:" + footnotes.size());
 		Iterator<Footnote> iterator = footnotes.values().iterator();
 		while (iterator.hasNext()) {
 			Footnote footnote = iterator.next();
 			footnoteDAO.create(footnote);
 			footnoteDAO.flush();
 		}
-
+		
 		return true;
 	}
 
