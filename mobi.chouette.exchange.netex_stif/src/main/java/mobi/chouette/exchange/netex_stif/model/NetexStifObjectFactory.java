@@ -92,14 +92,11 @@ public class NetexStifObjectFactory {
 
 	public void addStopPoint(String initId, StopPoint stopPoint) {
 		List<StopPoint> list = stopPointInitIdToStopPoints.get(initId);
-		log.info("id:" + initId + " List:" + list);
 		if (list == null) {
 			list = new ArrayList<StopPoint>();
 			stopPointInitIdToStopPoints.put(initId, list);
 		}
-		log.info("list:" + list);
 		list.add(stopPoint);
-		log.info("list:" + list);
 	}
 
 	public List<StopPoint> getStopPoints(String initId) {

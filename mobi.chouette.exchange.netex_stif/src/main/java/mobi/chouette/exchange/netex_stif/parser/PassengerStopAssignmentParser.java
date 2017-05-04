@@ -5,6 +5,7 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
@@ -40,14 +41,17 @@ public class PassengerStopAssignmentParser implements Parser, Constant {
 		}
 		if (quayRef != null && id != null) {
 			List<StopPoint> list = factory.getStopPoints(id);
-			log.info("id :" + id + " list : " + list);
+			log.info(Color.CYAN+"id :" + id + " list : " + list+Color.NORMAL);
 			if (list != null) {
 				StopAreaLite stopArea = referential.getSharedReadOnlyStopAreas().get(quayRef);
 				if (stopArea != null) {
 					for (StopPoint stopPoint : list) {
-						log.info("stop point" + stopPoint);
 						stopPoint.setStopAreaId(stopArea.getId());
 					}
+				}
+				else
+				{
+					log.info(Color.RED+"quay " + quayRef+ " not found"+Color.NORMAL);
 				}
 			}
 		}

@@ -21,11 +21,14 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.RoutingConstraintDAO;
+import mobi.chouette.dao.TimetableDAO;
 import mobi.chouette.exchange.importer.inserter.Inserter;
 import mobi.chouette.exchange.importer.inserter.RouteInserter;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.Referential;
@@ -40,10 +43,13 @@ public class RouteRegisterCommand implements Command {
 	private RouteDAO routeDAO;
 
 	@EJB
+	private TimetableDAO timetableDAO;
+
+	@EJB
 	private RoutingConstraintDAO routingConstraintDAO;
 
-	@EJB(beanName = RouteInserter.BEAN_NAME)
-	private Inserter<Route> routeInserter;
+	// @EJB(beanName = RouteInserter.BEAN_NAME)
+	// private Inserter<Route> routeInserter;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -56,20 +62,40 @@ public class RouteRegisterCommand implements Command {
 		context.put(CACHE, cache);
 
 		Referential referential = (Referential) context.get(REFERENTIAL);
+		Map<String, Timetable> timetables = referential.getTimetables();
+		for (Timetable timetable : timetables.values()) {
+			if (timetable.getId() != null) {
+				log.info("timetable " + timetable.getObjectId() + " already saved ");
+				Timetable saved = timetableDAO.findByObjectId(timetable.getObjectId());
+				if (saved != null) {
+					for (VehicleJourney vj : timetable.getVehicleJourneys()) {
+						vj.getTimetables().remove(timetable);
+						vj.getTimetables().add(saved);
+					}
+				}
+			}
+		}
 		Map<String, Route> routes = referential.getRoutes();
 		Iterator<Route> iterator = routes.values().iterator();
 		while (iterator.hasNext()) {
 			Route route = iterator.next();
+			for (JourneyPattern jp : route.getJourneyPatterns()) {
+				if (jp.getStopPoints().size() > 0)
+				{
+					jp.setDepartureStopPoint(jp.getStopPoints().get(0));
+					jp.setArrivalStopPoint(jp.getStopPoints().get(jp.getStopPoints().size()-1));
+				}
+			}
 			routeDAO.create(route);
 			routeDAO.flush();
 		}
 		// RoutingConstraint routingConstraint = (RoutingConstraint) entity;
 		Map<String, RoutingConstraint> routingConstraints = referential.getRoutingConstraints();
-		log.info("list of rc size : "+ routingConstraints.size());
+		log.info("list of rc size : " + routingConstraints.size());
 		Iterator<RoutingConstraint> iterator2 = routingConstraints.values().iterator();
 		while (iterator2.hasNext()) {
 			RoutingConstraint routingConstraint = iterator2.next();
-			
+
 			List<StopPoint> stopPoints = routingConstraint.getStopPoints();
 			Long ids[] = new Long[stopPoints.size()];
 			log.info("RC nb stop point: " + stopPoints.size());

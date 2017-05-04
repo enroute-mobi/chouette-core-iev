@@ -252,7 +252,9 @@ public class ServiceJourneyParser implements Parser, Constant {
 						if (footnote == null) {
 							footnote = referential.getSharedFootnotes().get(ref);
 							if (footnote != null) {
-								footnote = CopyUtil.copy(footnote);
+								Footnote footnote2 = CopyUtil.copy(footnote);
+								footnote2.setCode(footnote.getCode());
+								footnote = footnote2;
 								referential.getFootnotes().put(ref, footnote);
 							}
 						}
