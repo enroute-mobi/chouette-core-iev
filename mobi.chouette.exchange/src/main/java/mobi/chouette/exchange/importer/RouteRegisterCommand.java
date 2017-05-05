@@ -22,8 +22,6 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.dao.TimetableDAO;
-import mobi.chouette.exchange.importer.inserter.Inserter;
-import mobi.chouette.exchange.importer.inserter.RouteInserter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
