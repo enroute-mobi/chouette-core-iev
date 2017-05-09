@@ -27,6 +27,9 @@
 		<jts.version>1.13</jts.version>
 		<arquillian-version>1.1.12.Final</arquillian-version>
 		<project.rootDir>${project.basedir}</project.rootDir>
+		<boiv.testdb.hostname>localhost</boiv.testdb.hostname>
+		<boiv.testdb.port>5432</boiv.testdb.port>
+		<boiv.testdb.name>boiv_test</boiv.testdb.name>
 	</properties>
 	<distributionManagement>
 		<snapshotRepository>
@@ -109,7 +112,7 @@
 				<!-- common configuration shared by all executions -->
 				<configuration>
 					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/boiv_test</url>
+					<url>jdbc:postgresql://${boiv.testdb.hostname}:${boiv.testdb.port}/${boiv.testdb.name}</url>
 					<username>chouette</username>
 					<password>chouette</password>
 					<!--all executions are ignored if -Dmaven.test.skip=true or -DskipTests=true -->
