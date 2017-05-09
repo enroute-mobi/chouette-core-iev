@@ -48,8 +48,7 @@
 						<argument>log</argument>
 						<argument>--pretty=format:
 							git.commit.id.short = %h%n
-							git.commit.id
-							= %H%n
+							git.commit.id.full = %H%n
 							git.commit.message.short = %s%n
 							git.commit.time = %ci%n
 							git.commit.user.name = %cn</argument>
@@ -101,7 +100,7 @@
 						<manifestEntries>
 							<Git-Author>${git.commit.user.name}</Git-Author>
 							<Git-Message>"${git.commit.message.short}"</Git-Message>
-							<Git-CommitId>${git.commit.id}</Git-CommitId>
+							<Git-CommitId>${git.commit.id.full}</Git-CommitId>
 							<Git-Time>${git.commit.time}</Git-Time>
 							<Build-Time>${maven.build.timestamp}</Build-Time>
 						</manifestEntries>
