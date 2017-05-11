@@ -255,6 +255,22 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		verifyJourneyPatterns(jsonObject.getJSONArray("journeyPatterns"));
 		verifyRoutingConstraints(jsonObject.getJSONArray("routingConstraints"));
 		verifyStopPoints(jsonObject.getJSONArray("stopPoints"));
+		verifyFootnotes(jsonObject.getJSONArray("footnotes"));
+	}
+
+	private void verifyFootnotes(JSONArray footnotes) throws JSONException {
+		for (int i = 0; i < footnotes.length(); ++i) {
+			verifyFootnote(footnotes.getJSONObject(i));
+		}
+	}
+
+	private void verifyFootnote(JSONObject jsonFootnote) throws JSONException {
+		log.info("footnote:"+ jsonFootnote);
+		String id = jsonFootnote.getString("id");
+		Footnote footnote = footnoteDao.findByObjectId(id);
+		Assert.assertEquals(footnote.getLabel(), jsonFootnote.getString("label"));
+		Assert.assertEquals(footnote.getCode(), jsonFootnote.getString("code"));
+
 	}
 
 	private void verifyRoutes(JSONArray routes) throws JSONException {
@@ -299,20 +315,21 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		Assert.assertEquals(rc.getRoute().getObjectId(), jrc.getString("routeId"));
 	}
 
-	private void verifyStopPoints(JSONArray jsps) throws JSONException{
+	private void verifyStopPoints(JSONArray jsps) throws JSONException {
 		for (int i = 0; i < jsps.length(); ++i) {
 			verifyStopPoint(jsps.getJSONObject(i));
 		}
 	}
-	
-	private void verifyStopPoint (JSONObject jsp) throws JSONException{
+
+	private void verifyStopPoint(JSONObject jsp) throws JSONException {
 		StopPoint sp = stopPointDao.findByObjectId(jsp.getString("id"));
 		Assert.assertEquals(sp.getPosition(), new Integer(jsp.getInt("position")));
 		Assert.assertEquals(sp.getStopAreaId(), new Long(jsp.getInt("areaId")));
-		Assert.assertEquals(sp.getRoute().getObjectId(),jsp.getString("routeId"));
+		Assert.assertEquals(sp.getRoute().getObjectId(), jsp.getString("routeId"));
 	}
-	
+
 	static int count = 0;
+
 	private void buidAndSaveJson() throws JSONException, FileNotFoundException {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("routes", buildJsonRoute());
@@ -323,7 +340,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		if (tmp.length() > 0) {
 			jsonObject.put("footnotes", tmp);
 		}
-		File toSave = new File("/tmp/offer"+ count++ +".json");
+		File toSave = new File("/tmp/offer" + count++ + ".json");
 		PrintWriter pw = new PrintWriter(toSave);
 		pw.write(jsonObject.toString());
 		pw.close();
@@ -395,6 +412,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	private JSONObject buildJsonFootnote(Footnote footnote) throws JSONException {
 		JSONObject fnObject = new JSONObject();
+		log.info("footnote oid : " + footnote.getObjectId());
 		fnObject.put("id", footnote.getObjectId());
 		fnObject.put("label", footnote.getLabel());
 		fnObject.put("code", footnote.getCode());
