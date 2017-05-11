@@ -52,6 +52,22 @@ public class ImportResource extends ActionResource{
 	@Setter
 	@Column(name = "import_id")
 	private Integer importId;
+	
+	@Getter
+	@Setter
+	@Column(name = "name")
+	private String name;
+	
+	@Getter
+	@Setter
+	@Column(name = "reference")
+	private String reference;
+	
+	@Getter
+	@Setter
+	@Column(name = "type")
+	private String type;
+	
 
 	@Getter
 	@Setter
