@@ -255,7 +255,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		verifyJourneyPatterns(jsonObject.getJSONArray("journeyPatterns"));
 		verifyRoutingConstraints(jsonObject.getJSONArray("routingConstraints"));
 		verifyStopPoints(jsonObject.getJSONArray("stopPoints"));
-		verifyFootnotes(jsonObject.getJSONArray("footnotes"));
+		//verifyFootnotes(jsonObject.getJSONArray("footnotes"));
 	}
 
 	private void verifyFootnotes(JSONArray footnotes) throws JSONException {
