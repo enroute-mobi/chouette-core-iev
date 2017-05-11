@@ -59,11 +59,12 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 		}
 		if (timetable != null) {
 			if (period != null) {
-				log.info("add period to timetable "+timetable.getObjectId());
-				timetable.addPeriod(period);
+				// log.info("add period to timetable "+timetable.getObjectId());
+				// bypass method add to avoid identical content for uninitialized period 
+				timetable.getPeriods().add(period);
 			}
 			if (day != null) {
-				log.info("add date to timetable "+timetable.getObjectId());
+				// log.info("add date to timetable "+timetable.getObjectId());
 				timetable.addCalendarDay(day);
 			}
 		}

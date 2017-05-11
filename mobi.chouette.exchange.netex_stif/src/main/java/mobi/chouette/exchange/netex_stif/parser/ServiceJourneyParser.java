@@ -59,6 +59,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				String ref = xpp.getAttributeValue(null, REF);
 				pattern = ObjectFactory.getJourneyPattern(referential, ref);
 				vehicleJourney.setJourneyPattern(pattern);
+				vehicleJourney.setRoute(pattern.getRoute());
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);

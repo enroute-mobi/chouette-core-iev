@@ -7,7 +7,7 @@
 
    <datasource jndi-name="java:jboss/datasources/chouette"
       pool-name="chouette" enabled="true" use-java-context="true">
-      <connection-url>jdbc:postgresql_postGIS://localhost:5432/boiv_test</connection-url>
+      <connection-url>jdbc:postgresql_postGIS://${boiv.testdb.hostname:localhost}:${boiv.testdb.port:5432}/${boiv.testdb.name:boiv_test}</connection-url>
          <driver-class>org.postgis.DriverWrapper</driver-class>
         <driver>postgresql</driver>
       <security>
