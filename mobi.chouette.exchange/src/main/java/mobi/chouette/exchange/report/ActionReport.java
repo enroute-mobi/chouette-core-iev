@@ -268,8 +268,9 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 
 	}
 	
-	public List<ActionResource> getResources(){
-		List<ActionResource> result = new ArrayList<ActionResource>();
+	//import id en arg
+	public List<ImportResource> getImportResources(){
+		List<ImportResource> result = new ArrayList<ImportResource>();
 		for (ObjectReport objectReport : objects.values()) {
 			ImportResource importResource = new ImportResource();
 			//importResource.setId(objectReport.getObjectId());
