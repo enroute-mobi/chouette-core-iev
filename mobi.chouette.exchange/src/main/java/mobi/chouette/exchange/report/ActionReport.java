@@ -2,6 +2,7 @@ package mobi.chouette.exchange.report;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,11 +22,10 @@ import org.codehaus.jettison.json.JSONObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mobi.chouette.common.Constant;
-import mobi.chouette.common.JobData.ACTION;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
-import mobi.chouette.model.ActionResource;
 import mobi.chouette.model.ImportResource;
+import mobi.chouette.model.util.NamingUtil;
 
 @XmlRootElement(name = "action_report")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -269,12 +269,49 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 	}
 	
 	//import id en arg
-	public List<ImportResource> getImportResources(){
+	public List<ImportResource> getImportResources(Long importId){
 		List<ImportResource> result = new ArrayList<ImportResource>();
+		//List<ImportResource> tmp = getSubImportResources(objects.values(), importId, "objects");
 		for (ObjectReport objectReport : objects.values()) {
 			ImportResource importResource = new ImportResource();
-			//importResource.setId(objectReport.getObjectId());
+			importResource.setType("objects");
+			//importResource.setName(NamingUtil.getName(objectReport));
+			importResource.setReference(objectReport.getObjectId());
+			result.add(importResource);
+		}
+		for (FileReport zip: zips){
+			ImportResource importResource = new ImportResource();
+			importResource.setType("zip");
+			//importResource.setName(NamingUtil.getName(objectReport));
+			importResource.setReference(zip.getName());
+			//importResource.setName(NamingUtil.getName(zip));
+			result.add(importResource);
+		}
+		for (FileReport file : files){
+			ImportResource importResource = new ImportResource();
+			importResource.setType("file");
+			importResource.setReference(file.getName());
+			result.add(importResource);
+		}
+		
+		return result;
+	}
+	
+	private List<ImportResource> getSubImportResources(Collection<? extends AbstractReport>list, Long importId, String type){
+		List<ImportResource>result = new ArrayList<ImportResource>();
+		for (AbstractReport report : list) {
+			ImportResource importResource  = createImportResource(report, importId, type);
+			result.add(importResource);
 		}
 		return result;
+	}
+	
+	private ImportResource createImportResource (AbstractReport abstractReport, Long importId, String type){
+		ImportResource importResource = new ImportResource();
+		importResource.setType(type);
+		//importResource.setImportId((Integer)importId);
+		//importResource.setName(NamingUtil.getName(abstractReport));
+		
+		return importResource;
 	}
 }
