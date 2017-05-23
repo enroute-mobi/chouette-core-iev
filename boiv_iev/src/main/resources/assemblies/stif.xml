@@ -12,17 +12,15 @@
 			<source>${project.build.directory}/${project.build.finalName}.ear</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
-      <file>
-         <source>${project.build.directory}/git.properties</source>
-         <outputDirectory>/</outputDirectory>
-		</file>
-      <file>
-         <source>${project.build.directory}/boiv.properties</source>
-         <outputDirectory>/</outputDirectory>
-      </file>
-		<!-- <file>
-			<source>../CHANGELOG.md</source>
+		<file>
+			<source>${project.build.directory}/build.properties</source>
 			<outputDirectory>/</outputDirectory>
-		</file>   -->
+		</file>
+		<file>
+			<source>${project.build.directory}/boiv.properties</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<!-- <file> <source>../CHANGELOG.md</source> <outputDirectory>/</outputDirectory> 
+			</file> -->
 	</files>
 </assembly>

@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
@@ -30,47 +33,60 @@ public class NetexStructureParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			String name = xpp.getName();
 			// check if it is one of the member we treat
-			log.info("tag : " + name);
+			// log.info("tag : " + name);
 			if (members.containsKey(name)) {
 				parseMember(name, xpp, context);
-			}else if (parsers.containsKey(name)){
+			} else if (parsers.containsKey(name)) {
 				parseSimpleMember(name, xpp, context);
-			}
-			else {
-				log.info("skip tag: " + name);
+			} else {
+				// log.info("skip tag: " + name);
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
 		// Referential ref = (Referential)context.get(REFERENTIAL);
 		// log.info("Referential.routes : " + ref.getRoutes());
+		orderStopPointsInRoute(context);
 		updateDirectionsToRoute(context);
 		updateDestinationDisplayToJourneyPattern(context);
 		// log.info("Referential.routes : " + ref.getRoutes());
 	}
 
-	private void parseSimpleMember (String tag, XmlPullParser xpp, Context context) throws Exception{
+	private void orderStopPointsInRoute(Context context) {
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		for (Route r : referential.getRoutes().values()) {
+			Collections.sort(r.getStopPoints(), new Comparator<StopPoint>() {
+				@Override
+				public int compare(StopPoint o1, StopPoint o2) {
+					return o1.getPosition() - o2.getPosition();
+				}
+			});
+		}
+
+	}
+
+	private void parseSimpleMember(String tag, XmlPullParser xpp, Context context) throws Exception {
 		String clazz = parsers.get(tag);
-		log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
+		// log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
 		if (clazz != null) {
-			log.info("parse with " + clazz);
+			// log.info("parse with " + clazz);
 			Parser parser = ParserFactory.create(clazz);
 			parser.parse(context);
 		} else {
 			XPPUtil.skipSubTree(log, xpp);
 		}
 	}
-	
+
 	private void parseMember(String tag, XmlPullParser xpp, Context context) throws Exception {
 		String elt = members.get(tag);
 		if (elt != null) {
 			if (xpp.getName().equals(tag)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					log.info("NetexStructureParser: tag " + xpp.getName());
+					// log.info("NetexStructureParser: tag " + xpp.getName());
 					if (xpp.getName().equals(elt)) {
 						String clazz = parsers.get(elt);
-						log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
+						// log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
 						if (clazz != null) {
-							log.info("parse with " + clazz);
+							// log.info("parse with " + clazz);
 							Parser parser = ParserFactory.create(clazz);
 							parser.parse(context);
 						} else {

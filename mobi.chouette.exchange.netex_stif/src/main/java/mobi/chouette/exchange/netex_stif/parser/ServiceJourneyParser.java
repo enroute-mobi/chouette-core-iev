@@ -59,6 +59,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				String ref = xpp.getAttributeValue(null, REF);
 				pattern = ObjectFactory.getJourneyPattern(referential, ref);
 				vehicleJourney.setJourneyPattern(pattern);
+				vehicleJourney.setRoute(pattern.getRoute());
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
@@ -252,7 +253,9 @@ public class ServiceJourneyParser implements Parser, Constant {
 						if (footnote == null) {
 							footnote = referential.getSharedFootnotes().get(ref);
 							if (footnote != null) {
-								footnote = CopyUtil.copy(footnote);
+								Footnote footnote2 = CopyUtil.copy(footnote);
+								footnote2.setCode(footnote.getCode());
+								footnote = footnote2;
 								referential.getFootnotes().put(ref, footnote);
 							}
 						}

@@ -111,6 +111,16 @@ public class NetexStifUtils extends ParserUtils {
 		
 		return ChouetteModelUtil.changeSuffix(id,suffix);
 	}
+	
+	public static String genRoutingConstrainId(String id, Route route) {
+		String suffix =  id.split(ID_SEPARATOR)[2];
+		String routeSuffix = route.objectIdSuffix();
+		if (!suffix.startsWith(routeSuffix) ) {
+			suffix = routeSuffix+"-"+suffix;
+		}
+		
+		return ChouetteModelUtil.changeSuffix(id,suffix);
+	}
 
 //	public static String genStopPointId(StopPoint stopPoint) {
 //		return genStopPointId(stopPoint.getObjectId(), stopPoint.getPosition().toString(), stopPoint.getRoute());
@@ -125,7 +135,7 @@ public class NetexStifUtils extends ParserUtils {
 		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), lineSuffix + "-" + suffix);
 		object.setObjectId(objectId);
 	}
-
+	
 //	public static void stopPointObjectId(ChouetteIdentifiedObject object, Route route, String order) {
 //		String suffix = object.objectIdSuffix();
 //		String routeSuffix = route.objectIdSuffix();

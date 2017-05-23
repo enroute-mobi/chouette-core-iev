@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.Map;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
@@ -8,7 +10,8 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
-
+import mobi.chouette.model.Footnote;
+import mobi.chouette.model.util.Referential;
 
 // we are at members level
 @Log4j
@@ -28,17 +31,16 @@ public class NetexCommunParser implements Parser, Constant {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
-			}else if (xpp.getName().equals(NOTICE)){
+			} else if (xpp.getName().equals(NOTICE)) {
+				log.info("NetexCommun tag " + xpp.getName());
 				Parser parser = ParserFactory.create(NoticeParser.class.getName());
 				parser.parse(context);
-			}
-			else {
+			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		
 	}
-	
-	
 
 	static {
 		ParserFactory.register(NetexCommunParser.class.getName(), new ParserFactory() {

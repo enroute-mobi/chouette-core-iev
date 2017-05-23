@@ -20,6 +20,7 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.FootnoteDAO;
 import mobi.chouette.dao.JourneyPatternDAO;
 import mobi.chouette.dao.RouteDAO;
+import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.dao.StopPointDAO;
 import mobi.chouette.dao.TimetableDAO;
 import mobi.chouette.dao.VehicleJourneyAtStopDAO;
@@ -52,6 +53,9 @@ public class CleanRepositoryCommand implements Command {
 
 	@EJB
 	private VehicleJourneyAtStopDAO vehicleJourneyAtStopDAO;
+	
+	@EJB
+	private RoutingConstraintDAO routingConstraintDAO;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -61,6 +65,7 @@ public class CleanRepositoryCommand implements Command {
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		
 		try {
+			routingConstraintDAO.truncate();
 			routeDAO.truncate();
 			journeyPatternDAO.truncate();
 			timetableDAO.truncate();
@@ -68,6 +73,7 @@ public class CleanRepositoryCommand implements Command {
 			vehicleJourneyAtStopDAO.truncate();
 			stopPointDAO.truncate();
 			footnoteDAO.truncate();
+			
 
 			result = SUCCESS;
 		} catch (Exception e) {

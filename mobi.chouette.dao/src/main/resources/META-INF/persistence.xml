@@ -58,6 +58,7 @@
 		<class>mobi.chouette.model.JourneyPattern</class>
 		<class>mobi.chouette.model.Period</class>
 		<class>mobi.chouette.model.Route</class>
+		<class>mobi.chouette.model.RoutingConstraint</class>
 		<class>mobi.chouette.model.StopPoint</class>
 		<class>mobi.chouette.model.Timeband</class>
 		<class>mobi.chouette.model.Timetable</class>

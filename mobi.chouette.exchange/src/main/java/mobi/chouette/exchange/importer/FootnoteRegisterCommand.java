@@ -33,13 +33,14 @@ public class FootnoteRegisterCommand implements Command {
 		Referential referential = (Referential) context.get(REFERENTIAL);
 
 		Map<String, Footnote> footnotes = referential.getFootnotes();
+		log.info("footnotes:" + footnotes.size());
 		Iterator<Footnote> iterator = footnotes.values().iterator();
 		while (iterator.hasNext()) {
 			Footnote footnote = iterator.next();
 			footnoteDAO.create(footnote);
 			footnoteDAO.flush();
 		}
-
+		
 		return true;
 	}
 

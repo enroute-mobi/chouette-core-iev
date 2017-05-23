@@ -39,6 +39,7 @@ public class NoticeParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		log.info("valid " + validType);
 		if (validType) {
 			Footnote footnote = factory.getFootnote(id);
 			footnote.setObjectVersion(version);
