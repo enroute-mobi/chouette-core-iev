@@ -6,11 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
-
-import lombok.extern.log4j.Log4j;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
@@ -25,8 +21,10 @@ import org.hibernate.internal.util.config.ConfigurationHelper;
 import org.hibernate.mapping.Table;
 import org.hibernate.type.Type;
 
+import lombok.extern.log4j.Log4j;
+
 @Log4j
-public class ChouetteIdentifierGenerator implements IdentifierGenerator, Configurable {
+public class ChouettePublicIdentifierGenerator implements IdentifierGenerator, Configurable {
 
 	public static final String SCHEMA = "schema";
 	public static final String CATALOG = "catalog";
@@ -41,17 +39,12 @@ public class ChouetteIdentifierGenerator implements IdentifierGenerator, Configu
 	private Type identifierType;
 	private int incrementSize;
 
-	private static List<ChouetteIdentifierGenerator> instances = new ArrayList<>();
+	private static List<ChouettePublicIdentifierGenerator> instances = new ArrayList<>();
 
-	private Map<String, State> states = new ConcurrentHashMap<>();
+	private State state = null;
 
-	public static void deleteTenant(String tenantIdentifier) {
-		for (ChouetteIdentifierGenerator instance : instances) {
-			instance.states.remove(tenantIdentifier);
-		}
-	}
 
-	public ChouetteIdentifierGenerator() {
+	public ChouettePublicIdentifierGenerator() {
 		instances.add(this);
 	}
 
@@ -67,12 +60,7 @@ public class ChouetteIdentifierGenerator implements IdentifierGenerator, Configu
 	@Override
 	public Serializable generate(SessionImplementor session, Object object) throws HibernateException {
 
-		State state = states.get(session.getTenantIdentifier());
-
-		if (state == null) {
-			state = new State();
-			states.put(session.getTenantIdentifier(), state);
-		}
+		if (state == null) state = new State();
 
 		if (state.hiValue == null || state.value == null || state.hiValue.lt(state.value)) {
 			state.hiValue = getNextValue(session);

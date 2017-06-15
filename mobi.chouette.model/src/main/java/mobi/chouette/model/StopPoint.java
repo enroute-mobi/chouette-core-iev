@@ -39,7 +39,7 @@ public class StopPoint extends ChouetteIdentifiedObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "stop_points_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", 
+	@GenericGenerator(name = "stop_points_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", 
 		parameters = {
 			@Parameter(name = "sequence_name", value = "stop_points_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })

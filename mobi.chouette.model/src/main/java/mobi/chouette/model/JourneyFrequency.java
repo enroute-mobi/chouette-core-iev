@@ -36,7 +36,7 @@ public class JourneyFrequency extends ChouetteObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "journey_frequencies_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", parameters = {
+	@GenericGenerator(name = "journey_frequencies_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", parameters = {
 			@Parameter(name = "sequence_name", value = "journey_frequencies_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })
 	@GeneratedValue(generator = "journey_frequencies_id_seq")

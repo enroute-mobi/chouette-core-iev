@@ -49,7 +49,7 @@ public class Timetable extends ChouetteIdentifiedObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "time_tables_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", parameters = {
+	@GenericGenerator(name = "time_tables_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", parameters = {
 			@Parameter(name = "sequence_name", value = "time_tables_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })
 	@GeneratedValue(generator = "time_tables_id_seq")

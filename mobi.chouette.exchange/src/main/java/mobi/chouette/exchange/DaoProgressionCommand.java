@@ -5,7 +5,11 @@ import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Map.Entry;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,14 +30,22 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.dao.ActionDAO;
+import mobi.chouette.dao.ResourceDAO;
 import mobi.chouette.exchange.parameters.AbstractParameter;
+import mobi.chouette.exchange.report.AbstractReport;
 import mobi.chouette.exchange.report.ActionReport;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.report.FileReport;
+import mobi.chouette.exchange.report.ObjectCollectionReport;
+import mobi.chouette.exchange.report.ObjectReport;
 import mobi.chouette.exchange.report.ProgressionReport;
 import mobi.chouette.exchange.report.Report;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.report.StepProgression;
 import mobi.chouette.exchange.report.StepProgression.STEP;
+import mobi.chouette.model.ActionResource;
 import mobi.chouette.model.ActionTask;
+import mobi.chouette.model.ImportResource;
 
 @Log4j
 @Stateless(name = DaoProgressionCommand.COMMAND)
@@ -43,6 +55,9 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 	
 	@EJB 
 	ActionDAO actionDAO;
+	
+	@EJB 
+	ResourceDAO resourceDAO;
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void initialize(Context context, int stepCount) {
@@ -103,30 +118,60 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		
 	}
 
-
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void saveReport(Context context, boolean force) {
 		if (context.containsKey(TESTNG)) return;
 		ActionReport report = (ActionReport) context.get(REPORT);
-		Date date = new Date();
-		Date delay = new Date(date.getTime() - 8000);
-		if (force || report.getDate().before(delay)) {
-			report.setDate(date);
-			Monitor monitor = MonitorFactory.start("ActionReport");
-			JobData jobData = (JobData) context.get(JOB_DATA);
-			Path path = Paths.get(jobData.getPathName(), REPORT_FILE);
-			// pseudo pretty print
-			try {
-				PrintStream stream = new PrintStream(path.toFile(), "UTF-8");
-				report.print(stream);
-				stream.close();
-			} catch (Exception e) {
-				log.error("failed to save report", e);
-			}
-			monitor.stop();
+		JobData job = (JobData) context.get(JOB_DATA);
+		
+		// List<ActionResource> result = new ArrayList<ActionResource>();
+		for (FileReport zipReport : report.getZips()) {
+			ActionResource actionResource = resourceDAO.createResource(job);
+			actionResource.setType("zip");
+			actionResource.setName(zipReport.getName());
+			actionResource.setStatus(zipReport.getStatus().name());
+			resourceDAO.saveResource(actionResource);
 		}
-
+		report.getZips().clear(); // TODO : see if mark as saved or delete ! 
+		for (FileReport fileReport : report.getFiles()) {
+			ActionResource actionResource = resourceDAO.createResource(job);
+			actionResource.setType("file");
+			actionResource.setName(fileReport.getName());
+			actionResource.setStatus(fileReport.getStatus().name());			
+			resourceDAO.saveResource(actionResource);
+		}
+		report.getFiles().clear(); // TODO : see if mark as saved or delete ! 
+		
+		for (ObjectReport objectReport : report.getObjects().values()) {
+			ActionResource actionResource = resourceDAO.createResource(job);
+			actionResource.setType(objectReport.getType().name());
+			actionResource.setName(objectReport.getDescription());
+			actionResource.setStatus(objectReport.getStatus().name());
+			actionResource.setReference("merged");
+			for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
+				actionResource.getMetrics().put(entry.getKey().name(), entry.getValue().toString());
+			}
+			resourceDAO.saveResource(actionResource);
+		}
+		report.getObjects().clear(); // TODO : see if mark as saved or delete ! 
+		
+		for (ObjectCollectionReport collection : report.getCollections().values()) {
+			for (ObjectReport objectReport : collection.getObjectReports()) {
+				ActionResource actionResource = resourceDAO.createResource(job);
+				actionResource.setType(objectReport.getType().name());
+				actionResource.setName(objectReport.getDescription());
+				actionResource.setStatus(objectReport.getStatus().name());
+				actionResource.setReference(objectReport.getObjectId());
+				for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
+					actionResource.getMetrics().put(entry.getKey().name(), entry.getValue().toString());
+				}
+				resourceDAO.saveResource(actionResource);				
+			}
+		}
+		report.getCollections().clear(); // TODO : see if mark as saved or delete !
 	}
 
+	
 	/**
 	 * @param context
 	 */

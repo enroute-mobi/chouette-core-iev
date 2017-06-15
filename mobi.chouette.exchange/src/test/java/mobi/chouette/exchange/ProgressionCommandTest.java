@@ -14,15 +14,21 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.parameters.DummyParameter;
 import mobi.chouette.exchange.report.ActionReport;
+import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.report.ReportConstant;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.StepProgression.STEP;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.model.ActionResource;
 
 @Log4j
 public class ProgressionCommandTest implements Constant {
 	private DaoProgressionCommand progression = null;
-	private DummyActionTaskDAO dao = null;
+	private DummyActionTaskDAO taskDao = null;
+	private DummyActionResourceDAO resourceDao = null;
 	private Context context = new Context();
 	File d = new File("target/referential/test");
 
@@ -45,15 +51,18 @@ public class ProgressionCommandTest implements Constant {
 			}
 		d.mkdirs();
 		progression = new DaoProgressionCommand();
-		dao=new DummyActionTaskDAO(); 
-		progression.actionDAO=dao; // inject dummy EJB
+		taskDao=new DummyActionTaskDAO(); 
+		resourceDao=new DummyActionResourceDAO(); 
+		progression.actionDAO=taskDao; // inject dummy EJB
+		progression.resourceDAO=resourceDao; // inject dummy EJB
 		
 		log.info(report);
 		progression.initialize(context, 2);
-		File reportFile = new File(d, REPORT_FILE);
-		File validationFile = new File(d, VALIDATION_FILE);
-		Assert.assertTrue(reportFile.exists(), REPORT_FILE + "should exists");
-		Assert.assertFalse(validationFile.exists(), VALIDATION_FILE + "should not exists");
+		
+//		File reportFile = new File(d, REPORT_FILE);
+//		File validationFile = new File(d, VALIDATION_FILE);
+//		Assert.assertTrue(reportFile.exists(), REPORT_FILE + "should exists");
+//		Assert.assertFalse(validationFile.exists(), VALIDATION_FILE + "should not exists");
 
 		Assert.assertNotNull(report.getProgression(), "progression should be reported");
 		Assert.assertEquals(report.getProgression().getCurrentStep(), STEP.INITIALISATION.ordinal() + 1,
@@ -61,10 +70,10 @@ public class ProgressionCommandTest implements Constant {
 		Assert.assertEquals(report.getProgression().getSteps().get(0).getTotal(), 2, " total progression should be 2");
 		Assert.assertEquals(report.getProgression().getSteps().get(0).getRealized(), 0,
 				" current progression should be 0");
-		Assert.assertNotNull(dao.getSaved(), "task should be saved");
-		Assert.assertEquals(dao.getSaved().getCurrentStepId(), STEP.INITIALISATION.name(),"task should be on Init step");
-		Assert.assertEquals(dao.getSaved().getCurrentStepProgress(), 0. ,"task progression should be 0");
-		Assert.assertNotNull(dao.getSaved().getUpdatedAt(), "task should has updated time updated");
+		Assert.assertNotNull(taskDao.getSaved(), "task should be saved");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepId(), STEP.INITIALISATION.name(),"task should be on Init step");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepProgress(), 0. ,"task progression should be 0");
+		Assert.assertNotNull(taskDao.getSaved().getUpdatedAt(), "task should has updated time updated");
 
 	}
 
@@ -78,15 +87,21 @@ public class ProgressionCommandTest implements Constant {
 		Assert.assertEquals(report.getProgression().getSteps().get(1).getTotal(), 2, " total progression should be 2");
 		Assert.assertEquals(report.getProgression().getSteps().get(1).getRealized(), 0,
 				" current progression should be 0");
-		Assert.assertNotNull(dao.getSaved(), "task should be saved");
-		Assert.assertEquals(dao.getSaved().getCurrentStepId(), STEP.PROCESSING.name(),"task should be on process step");
-		Assert.assertEquals(dao.getSaved().getCurrentStepProgress(), 0. ,"task progression should be 0");
-		Assert.assertNotNull(dao.getSaved().getUpdatedAt(), "task should has updated time updated");
+		Assert.assertNotNull(taskDao.getSaved(), "task should be saved");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepId(), STEP.PROCESSING.name(),"task should be on process step");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepProgress(), 0. ,"task progression should be 0");
+		Assert.assertNotNull(taskDao.getSaved().getUpdatedAt(), "task should has updated time updated");
 
 	}
 
 	@Test(groups = { "progression" }, description = "execute progression command", dependsOnMethods = { "testProgressionStart" })
 	public void testProgressionExecute() throws Exception {
+        ActionReporter reporter = ActionReporter.Factory.getInstance();
+        reporter.addZipReport(context, "toto.zip", IO_TYPE.INPUT);
+        reporter.addFileReport(context, "toto.xml", IO_TYPE.INPUT);
+		reporter.addObjectReport(context, "TEST:Timetable:12", OBJECT_TYPE.TIMETABLE, "Test Timetable", OBJECT_STATE.OK, IO_TYPE.INPUT);
+		reporter.addObjectReport(context, "TEST:Line:12", OBJECT_TYPE.LINE, "Test Line", OBJECT_STATE.OK, IO_TYPE.INPUT);
+		resourceDao.getSaved().clear();
 		progression.execute(context);
 		ActionReport report = (ActionReport) context.get(REPORT);
 		Assert.assertNotNull(report.getProgression(), "progression should be reported");
@@ -96,10 +111,13 @@ public class ProgressionCommandTest implements Constant {
 		Assert.assertEquals(report.getProgression().getSteps().get(1).getRealized(), 1,
 				" current progression should be 1");
 
-		Assert.assertNotNull(dao.getSaved(), "task should be saved");
-		Assert.assertEquals(dao.getSaved().getCurrentStepId(), STEP.PROCESSING.name(),"task should be on process step");
-		Assert.assertEquals(dao.getSaved().getCurrentStepProgress(), 0.5 ,"task progression should be 0.5");
-		Assert.assertNotNull(dao.getSaved().getUpdatedAt(), "task should has updated time updated");
+		Assert.assertNotNull(taskDao.getSaved(), "task should be saved");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepId(), STEP.PROCESSING.name(),"task should be on process step");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepProgress(), 0.5 ,"task progression should be 0.5");
+		Assert.assertNotNull(taskDao.getSaved().getUpdatedAt(), "task should has updated time updated");
+
+		Assert.assertEquals(resourceDao.getSaved().size(),4, "resources should be saved");
+
 		// ValidationReport validation = new ValidationReport();
 		// context.put(VALIDATION_REPORT, validation);
 		// ValidationReporter reporter =
@@ -127,13 +145,13 @@ public class ProgressionCommandTest implements Constant {
 		Assert.assertEquals(report.getProgression().getSteps().get(2).getTotal(), 2, " total progression should be 2");
 		Assert.assertEquals(report.getProgression().getSteps().get(2).getRealized(), 0,
 				" current progression should be 0");
-		Assert.assertNotNull(dao.getSaved(), "task should be saved");
-		Assert.assertEquals(dao.getSaved().getCurrentStepId(), STEP.FINALISATION.name(),"task should be on process step");
-		Assert.assertEquals(dao.getSaved().getCurrentStepProgress(), 0. ,"task progression should be 0.");
-		Assert.assertNotNull(dao.getSaved().getUpdatedAt(), "task should has updated time updated");
+		Assert.assertNotNull(taskDao.getSaved(), "task should be saved");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepId(), STEP.FINALISATION.name(),"task should be on process step");
+		Assert.assertEquals(taskDao.getSaved().getCurrentStepProgress(), 0. ,"task progression should be 0.");
+		Assert.assertNotNull(taskDao.getSaved().getUpdatedAt(), "task should has updated time updated");
 		context.remove(VALIDATION_REPORT);
-		File validationFile = new File(d, VALIDATION_FILE);
-		Assert.assertTrue(validationFile.exists(), VALIDATION_FILE + " should exists");
+//		File validationFile = new File(d, VALIDATION_FILE);
+//		Assert.assertTrue(validationFile.exists(), VALIDATION_FILE + " should exists");
 	}
 
 	@Test(groups = { "progression" }, description = "dispose progression command", dependsOnMethods = { "testProgressionTerminate" })

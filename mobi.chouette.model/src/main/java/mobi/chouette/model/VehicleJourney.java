@@ -52,7 +52,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "vehicle_journeys_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", parameters = {
+	@GenericGenerator(name = "vehicle_journeys_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", parameters = {
 			@Parameter(name = "sequence_name", value = "vehicle_journeys_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })
 	@GeneratedValue(generator = "vehicle_journeys_id_seq")

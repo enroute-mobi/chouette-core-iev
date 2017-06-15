@@ -3,6 +3,8 @@ package mobi.chouette.dao;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,6 +19,11 @@ public class ImportResourceDAOImpl extends GenericDAOImpl<ImportResource> implem
 
 	public ImportResourceDAOImpl() {
 		super(ImportResource.class);
+	}
+
+	@PersistenceContext(unitName = "public")
+	public void setEntityManager(EntityManager em) {
+		this.em = em;
 	}
 
 	@Override

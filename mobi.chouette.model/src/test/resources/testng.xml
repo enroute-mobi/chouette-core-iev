@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="MODEL" verbose="5">
+   
+	<test name="model_util">
+		<packages>
+         <package name="mobi.chouette.model.util" >
+         </package>
+       </packages>
+    </test>
+   
+</suite>

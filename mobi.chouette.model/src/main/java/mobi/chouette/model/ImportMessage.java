@@ -13,6 +13,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CollectionType;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +29,13 @@ import mobi.chouette.model.converter.HstoreConverter;
 public class ImportMessage {
 	@Getter
 	@Setter
-	@SequenceGenerator(name="import_messages_id_seq", sequenceName="import_messages_id_seq", allocationSize=100)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="import_messages_id_seq")
+	@GenericGenerator(name = "import_messages_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", 
+	parameters = {
+		@Parameter(name = "sequence_name", value = "public.import_messages_id_seq"),
+		@Parameter(name = "increment_size", value = "100") })
+    @GeneratedValue(generator = "import_messages_id_seq")
+//	@SequenceGenerator(name="import_messages_id_seq", sequenceName="import_messages_id_seq", allocationSize=1)
+//  @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="import_messages_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;

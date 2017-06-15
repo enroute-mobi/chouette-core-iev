@@ -40,7 +40,7 @@ public class VehicleJourneyAtStop extends ChouetteObject {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "vehicle_journey_at_stops_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", 
+	@GenericGenerator(name = "vehicle_journey_at_stops_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", 
 		parameters = {
 			@Parameter(name = "sequence_name", value = "vehicle_journey_at_stops_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })

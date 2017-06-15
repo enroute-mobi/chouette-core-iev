@@ -30,7 +30,7 @@ public class RoutingConstraint extends ChouetteIdentifiedObject {
 
 	@Setter
 	@Getter
-	@GenericGenerator(name = "routing_constraint_zones_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteIdentifierGenerator", parameters = {
+	@GenericGenerator(name = "routing_constraint_zones_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", parameters = {
 			@Parameter(name = "sequence_name", value = "routing_constraint_zones_id_seq"),
 			@Parameter(name = "increment_size", value = "50") })
 	@GeneratedValue(generator = "routing_constraint_zones_id_seq")
