@@ -11,6 +11,7 @@ import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Route;
@@ -206,5 +207,16 @@ public abstract class NamingUtil {
 		} else {
 			timetable.setComment(timetable.objectIdSuffix() + " : Empty timetable");
 		}
+	}
+
+	public static String getName(LineLite object) {
+		if (isFilled(object.getName()))
+			return object.getName();
+		if (isFilled(object.getPublishedName()))
+			return object.getPublishedName();
+		if (isFilled(object.getNumber()))
+			return object.getNumber();
+		return object.getObjectId();
+
 	}
 }

@@ -15,14 +15,13 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.parameters.DummyParameter;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.report.StepProgression.STEP;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
-import mobi.chouette.model.ActionResource;
 
 @Log4j
 public class ProgressionCommandTest implements Constant {
@@ -54,7 +53,7 @@ public class ProgressionCommandTest implements Constant {
 		taskDao=new DummyActionTaskDAO(); 
 		resourceDao=new DummyActionResourceDAO(); 
 		progression.actionDAO=taskDao; // inject dummy EJB
-		progression.resourceDAO=resourceDao; // inject dummy EJB
+		progression.actionResourceDAO=resourceDao; // inject dummy EJB
 		
 		log.info(report);
 		progression.initialize(context, 2);

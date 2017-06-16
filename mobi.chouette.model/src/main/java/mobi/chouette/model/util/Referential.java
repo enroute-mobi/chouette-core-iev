@@ -35,6 +35,10 @@ public class Referential implements java.io.Serializable {
 
 	@Getter
 	@Setter
+	private LineLite currentLine = null;
+	
+	@Getter
+	@Setter
 	private Map<String, AccessLink> sharedAccessLinks = new HashMap<String, AccessLink>();
 
 	@Getter
@@ -222,6 +226,7 @@ public class Referential implements java.io.Serializable {
 		vehicleJourneys.clear();
 		routeSections.clear();
 		routingConstraints.clear();
+		currentLine = null;
 	}
 
 	public void dispose() {

@@ -5,23 +5,21 @@ import java.sql.SQLException;
 
 import javax.ejb.EJB;
 
-import lombok.extern.log4j.Log4j;
-import mobi.chouette.model.JourneyPattern;
-import mobi.chouette.model.RouteSection;
-import mobi.chouette.persistence.hibernate.ContextHolder;
-
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.testng.annotations.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.PrecisionModel;
+
+import lombok.extern.log4j.Log4j;
+import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.RouteSection;
+import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
 public class JourneyPatternDaoTest extends Arquillian {

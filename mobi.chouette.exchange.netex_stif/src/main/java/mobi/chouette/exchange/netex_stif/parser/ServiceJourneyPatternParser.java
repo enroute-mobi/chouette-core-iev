@@ -105,7 +105,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
 			stopPoint.setObjectVersion(version);
 			stopPoint.setRoute(route);
-			log.info("set position : " + order);
+			// log.info("set position : " + order);
 			stopPoint.setPosition(Integer.parseInt(order));
 			if (forAlighting != null) {
 				stopPoint.setForAlighting(

@@ -25,7 +25,7 @@ import org.codehaus.jettison.json.JSONObject;
 @Data
 @EqualsAndHashCode(exclude = { "status", "errors" }, callSuper=false)
 @NoArgsConstructor
-public class FileReport extends AbstractReport{
+public class FileReport extends AbstractReport implements CheckedReport{
 
 	@XmlElement(name = "name", required = true)
 	private String name;

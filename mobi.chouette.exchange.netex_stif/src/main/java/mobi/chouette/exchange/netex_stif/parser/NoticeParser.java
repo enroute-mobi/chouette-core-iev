@@ -27,10 +27,11 @@ public class NoticeParser implements Parser, Constant {
 		boolean validType = false;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_NOTICE_REF)) {
-				String type = xpp.nextText();
+				String type = xpp.getAttributeValue(null, REF);
 				if (type.equals(SERVICE_JOURNEY_NOTICE)) {
 					validType = true;
 				}
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(TEXT)) {
 				text = xpp.nextText();
 			} else if (xpp.getName().equals(PUBLIC_CODE)) {

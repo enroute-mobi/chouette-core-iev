@@ -21,7 +21,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 @ToString
-public class ObjectReport extends AbstractReport {
+public class ObjectReport extends AbstractReport  implements CheckedReport{
 
 	@XmlElement(name = "type", required = true)
 	@Getter

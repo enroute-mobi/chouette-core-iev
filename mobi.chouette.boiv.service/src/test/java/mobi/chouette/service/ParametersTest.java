@@ -3,12 +3,12 @@ package mobi.chouette.service;
 import java.io.File;
 import java.nio.file.Files;
 
+import org.apache.log4j.BasicConfigurator;
+import org.testng.annotations.Test;
+
 import mobi.chouette.common.JSONUtil;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.dummy.importer.DummyImporterInputValidator;
-
-import org.apache.log4j.BasicConfigurator;
-import org.testng.annotations.Test;
 
 public class ParametersTest {
 
@@ -26,8 +26,8 @@ public class ParametersTest {
 		InputValidator inputValidator =  new DummyImporterInputValidator();
 
 		Parameters param = new Parameters(text, inputValidator);
-		String result = JSONUtil.toJSON(param.getConfiguration());
-		result = JSONUtil.toJSON(param.getValidation());
+		JSONUtil.toJSON(param.getConfiguration());
+		JSONUtil.toJSON(param.getValidation());
 		//log.info("ParametersTest.test() : \n" + result);
 	}
 

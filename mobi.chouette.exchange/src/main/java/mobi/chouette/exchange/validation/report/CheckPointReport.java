@@ -8,13 +8,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import mobi.chouette.exchange.report.AbstractReport;
+import mobi.chouette.exchange.report.CheckedReport;
 import mobi.chouette.exchange.validation.report.ValidationReporter.RESULT;
 
 
 @Data
 @EqualsAndHashCode(callSuper=false)
 @ToString
-public class CheckPointReport extends AbstractReport{
+public class CheckPointReport extends AbstractReport  implements CheckedReport {
 
 	public enum SEVERITY {
 		WARNING, ERROR, IMPROVMENT
@@ -33,8 +34,13 @@ public class CheckPointReport extends AbstractReport{
 	private RESULT state;
 
 	private int checkPointErrorCount = 0;
+	
+	private int checkPointWarningCount = 0;
 
-	private List<Integer> checkPointErrorsKeys = new ArrayList<Integer>();
+	private List<Integer> checkPointErrorKeys = new ArrayList<Integer>();
+	
+	private List<Integer> checkPointWarningKeys = new ArrayList<Integer>();
+
 
 	private boolean maxByFile = true;
 
@@ -62,7 +68,7 @@ public class CheckPointReport extends AbstractReport{
 		if (maxByFile) {
 			if (checkPointErrorCount < maxErrors) 
 			{
-				checkPointErrorsKeys.add(new Integer(checkPointErrorId));
+				checkPointErrorKeys.add(new Integer(checkPointErrorId));
 				ret = true;
 			}
 		}
@@ -83,8 +89,8 @@ public class CheckPointReport extends AbstractReport{
 		out.print(toJsonString(ret,level+1,"severity", severity, false));
 		out.print(toJsonString(ret,level+1,"result", state, false));
 		out.print(toJsonString(ret,level+1,"check_point_error_count", checkPointErrorCount, false));
-		if (!checkPointErrorsKeys.isEmpty())
-			printIntArray(out,ret, level+1,"errors",checkPointErrorsKeys, false);
+		if (!checkPointErrorKeys.isEmpty())
+			printIntArray(out,ret, level+1,"errors",checkPointErrorKeys, false);
 		ret.setLength(0);
 		out.print(addLevel(ret.append('\n'),level).append('}'));
 		

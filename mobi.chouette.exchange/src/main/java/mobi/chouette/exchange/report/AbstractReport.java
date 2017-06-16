@@ -8,7 +8,7 @@ public abstract class AbstractReport {
 	public static final int maxErrors = 15;
 
 	public abstract void print(PrintStream out, StringBuilder ret, int level, boolean first);
-
+	
 	public StringBuilder toJsonString(StringBuilder ret, int level, String name, Object value, boolean first) {
 		ret.setLength(0);
 		if (!first)

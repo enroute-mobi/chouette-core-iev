@@ -73,11 +73,10 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 		String url = file.toURI().toURL().toExternalForm();
 		log.info("url : " + url);
 		// validation schema
-		// NetexSAXParserCommand schema = (NetexSAXParserCommand)
-		// CommandFactory.create(initialContext,
-		// NetexSAXParserCommand.class.getName());
-		// schema.setFileURL(url);
-		// chain.add(schema);
+		NetexStifSAXParserCommand schema = (NetexStifSAXParserCommand) CommandFactory.create(initialContext,
+				NetexStifSAXParserCommand.class.getName());
+		schema.setFileURL(url);
+		chain.add(schema);
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		parser.setFileURL(url);
@@ -97,9 +96,9 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 			commands.add(tmp);
 			tmp = treatOneFile(initialContext, "commun.xml", jobData.getPathName(), false);
 			commands.add(tmp);
-			
-			// TODO a supprimer quand copycommand sera ok 
-			context.put(OPTIMIZED,Boolean.FALSE);
+
+			// TODO a supprimer quand copycommand sera ok
+			context.put(OPTIMIZED, Boolean.FALSE);
 
 			Path path = Paths.get(jobData.getPathName(), INPUT);
 			List<Path> stream = FileUtil.listFiles(path, "offre*.xml", "*metadata*");
@@ -108,11 +107,10 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 				commands.add(chain);
 				String url = file.toUri().toURL().toExternalForm();
 				// validation schema
-				// NetexSAXParserCommand schema = (NetexSAXParserCommand)
-				// CommandFactory.create(initialContext,
-				// NetexSAXParserCommand.class.getName());
-				// schema.setFileURL(url);
-				// chain.add(schema);
+				NetexStifSAXParserCommand schema = (NetexStifSAXParserCommand) CommandFactory.create(initialContext,
+						NetexStifSAXParserCommand.class.getName());
+				schema.setFileURL(url);
+				chain.add(schema);
 
 				// parser
 				NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
@@ -133,8 +131,6 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 					chain.add(register);
 					register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
 					chain.add(register);
-					
-					
 
 					// Command copy = CommandFactory.create(initialContext,
 					// CopyCommand.class.getName());

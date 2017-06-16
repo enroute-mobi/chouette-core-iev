@@ -1,10 +1,13 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
@@ -46,15 +49,13 @@ public class ServiceJourneyParser implements Parser, Constant {
 		JourneyPattern pattern = null;
 		Set<String> timetableRefs = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			log.info("ServiceJourneyParser tag : " + xpp.getName());
+			// log.info("ServiceJourneyParser tag : " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				vehicleJourney.setPublishedJourneyName(xpp.nextText());
 			} else if (xpp.getName().equals(NOTICE_ASSIGNMENTS)) {
 				parseNoticeAssignements(xpp, context, vehicleJourney);
-			} else if (xpp.getName().equals(DAY_TYPE_REF)) {
-				String ref = xpp.getAttributeValue(null, REF);
-				timetableRefs.add(ref);
-				XPPUtil.skipSubTree(log, xpp);
+			} else if (xpp.getName().equals(DAY_TYPES)) {
+				timetableRefs.addAll(parseDayTypes(xpp, context, vehicleJourney));
 			} else if (xpp.getName().equals(JOURNEY_PATTERN_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
 				pattern = ObjectFactory.getJourneyPattern(referential, ref);
@@ -94,6 +95,20 @@ public class ServiceJourneyParser implements Parser, Constant {
 
 	}
 
+	private Collection<String> parseDayTypes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney) throws XmlPullParserException, IOException {
+		Set<String> result = new HashSet<>();
+		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			if (xpp.getName().equals(DAY_TYPE_REF)) {
+				String ref = xpp.getAttributeValue(null, REF);
+				result.add(ref);
+				XPPUtil.skipSubTree(log, xpp);
+			} else {
+				XPPUtil.skipSubTree(log, xpp);
+			}
+		}
+		return result;
+	}
+
 	private Timetable getTimetable(Referential referential, String ref) {
 		Timetable tm = referential.getTimetables().get(ref);
 		if (tm == null) {
@@ -118,7 +133,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 		}
 		Set<String> negative = getNegative(referential, timetableRefs);
 		if (negative.isEmpty()) {
-			log.info("no negative timetable");
+			// log.info("no negative timetable");
 			for (String ref : timetableRefs) {
 				Timetable tm = getTimetable(referential, ref);
 				if (tm != null) {
@@ -129,9 +144,10 @@ public class ServiceJourneyParser implements Parser, Constant {
 			}
 		} else {
 			// combine excluded tm with others
-			log.info("negative timetable");
+			// log.info("negative timetable");
 			for (String ref : timetableRefs) {
-				if (negative.contains(ref)) continue; // skip negative timetables
+				if (negative.contains(ref))
+					continue; // skip negative timetables
 				Timetable tm = getTimetable(referential, ref);
 				if (tm != null) {
 					String key = ref;
@@ -147,7 +163,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 							}
 						}
 						if (hasActiveDay) {
-							log.info("timetable will be combined");
+							// log.info("timetable will be combined");
 							key = combineTMId(key, refNeg);
 							tm = CopyUtil.copy(tm);
 							for (CalendarDay calendarDay : list) {
@@ -172,8 +188,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 		String secondSuffix = second;
 		if (secondSuffix.contains(":"))
 			secondSuffix = second.split(":")[2];
-		if (firstSuffix.contains("-without-")) 
-		    return ChouetteModelUtil.changeSuffix(first, firstSuffix + "-and-" + secondSuffix);
+		if (firstSuffix.contains("-without-"))
+			return ChouetteModelUtil.changeSuffix(first, firstSuffix + "-and-" + secondSuffix);
 		else
 			return ChouetteModelUtil.changeSuffix(first, firstSuffix + "-without-" + secondSuffix);
 
@@ -187,7 +203,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				if (!tm.getPeriods().isEmpty())
 					continue;
 				if (tm.getEffectiveDates().isEmpty()) {
-					log.info("negative tm found " + ref);
+					// log.info("negative tm found " + ref);
 					negative.add(ref);
 				}
 			}

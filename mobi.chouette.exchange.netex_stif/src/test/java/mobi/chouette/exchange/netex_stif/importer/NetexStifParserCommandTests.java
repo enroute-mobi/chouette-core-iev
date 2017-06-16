@@ -15,7 +15,6 @@ import org.apache.log4j.BasicConfigurator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
@@ -42,7 +41,6 @@ import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
-@Log4j
 public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private static final String path = "src/test/data/";

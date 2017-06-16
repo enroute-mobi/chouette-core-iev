@@ -45,7 +45,7 @@ public class GeneralFrameParser implements Constant, Parser {
 				if (type != null) {
 					String clazz = frameTypes.get(type);
 					if (clazz != null) {
-						log.info("Parse with "+ clazz);
+						// log.info("Parse with "+ clazz);
 						Parser subParser = ParserFactory.create(clazz);
 						subParser.parse(context);
 					} else {

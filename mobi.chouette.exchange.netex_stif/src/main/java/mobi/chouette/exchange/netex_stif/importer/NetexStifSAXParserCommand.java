@@ -3,7 +3,6 @@ package mobi.chouette.exchange.netex_stif.importer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 
@@ -14,6 +13,11 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import org.xml.sax.SAXException;
+
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,21 +27,15 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.report.ActionReporter.FILE_ERROR_CODE;
-
-import org.apache.commons.io.input.BOMInputStream;
-import org.xml.sax.SAXException;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
+import mobi.chouette.exchange.report.IO_TYPE;
 
 @Log4j
 public class NetexStifSAXParserCommand implements Command, Constant {
 
 	public static final String COMMAND = "NetexStifSAXParserCommand";
 
-	public static final String SCHEMA_FILE = "/xsd/chouette-netex.xsd";
+	public static final String SCHEMA_FILE = "/xsd/NeTEx_publication.xsd";
 
 	@Getter
 	@Setter
@@ -67,7 +65,7 @@ public class NetexStifSAXParserCommand implements Command, Constant {
 		NetexStifSAXErrorHandler handler = new NetexStifSAXErrorHandler(context, fileURL);
 		Reader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(new BOMInputStream(url.openStream())), 8192 * 10);
+			reader = new BufferedReader(CharSetChecker.getEncodedInputStreamReader(url.toString(), url.openStream()), 8192 * 10);
 			StreamSource file = new StreamSource(reader);
 
 			Validator validator = schema.newValidator();

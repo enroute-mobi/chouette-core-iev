@@ -5,10 +5,8 @@ import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.ejb.EJB;
@@ -30,11 +28,12 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.dao.ActionDAO;
-import mobi.chouette.dao.ResourceDAO;
+import mobi.chouette.dao.ActionMessageDAO;
+import mobi.chouette.dao.ActionResourceDAO;
 import mobi.chouette.exchange.parameters.AbstractParameter;
-import mobi.chouette.exchange.report.AbstractReport;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.report.CheckedReport;
 import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.ObjectCollectionReport;
 import mobi.chouette.exchange.report.ObjectReport;
@@ -43,21 +42,27 @@ import mobi.chouette.exchange.report.Report;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.report.StepProgression;
 import mobi.chouette.exchange.report.StepProgression.STEP;
+import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
+import mobi.chouette.exchange.validation.report.Location;
+import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.model.ActionMessage;
 import mobi.chouette.model.ActionResource;
 import mobi.chouette.model.ActionTask;
-import mobi.chouette.model.ImportResource;
 
 @Log4j
 @Stateless(name = DaoProgressionCommand.COMMAND)
 public class DaoProgressionCommand implements ProgressionCommand, Constant, ReportConstant {
 
 	public static final String COMMAND = "ProgressionCommand";
-	
-	@EJB 
+
+	@EJB
 	ActionDAO actionDAO;
-	
-	@EJB 
-	ResourceDAO resourceDAO;
+
+	@EJB
+	ActionResourceDAO actionResourceDAO;
+
+	@EJB
+	ActionMessageDAO actionMessageDAO;
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void initialize(Context context, int stepCount) {
@@ -70,7 +75,8 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 	}
 
 	private void saveProgression(Context context) {
-		if (context.containsKey(TESTNG)) return;
+		if (context.containsKey(TESTNG))
+			return;
 		ProgressionReport report = (ProgressionReport) context.get(REPORT);
 		JobData job = (JobData) context.get(JOB_DATA);
 		ActionTask task = actionDAO.getTask(job);
@@ -108,42 +114,45 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 	public void dispose(Context context) {
 		saveReport(context, true);
 		saveMainValidationReport(context, true);
-		
+
 		Monitor monitor = MonitorFactory.getTimeMonitor("ActionReport");
 		if (monitor != null)
 			log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
 		monitor = MonitorFactory.getTimeMonitor("ValidationReport");
 		if (monitor != null)
 			log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-		
+
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void saveReport(Context context, boolean force) {
-		if (context.containsKey(TESTNG)) return;
+		if (context.containsKey(TESTNG))
+			return;
 		ActionReport report = (ActionReport) context.get(REPORT);
 		JobData job = (JobData) context.get(JOB_DATA);
-		
+
 		// List<ActionResource> result = new ArrayList<ActionResource>();
 		for (FileReport zipReport : report.getZips()) {
-			ActionResource actionResource = resourceDAO.createResource(job);
+			ActionResource actionResource = actionResourceDAO.createResource(job);
 			actionResource.setType("zip");
 			actionResource.setName(zipReport.getName());
 			actionResource.setStatus(zipReport.getStatus().name());
-			resourceDAO.saveResource(actionResource);
+			actionResourceDAO.saveResource(actionResource);
+			addMessages(context, zipReport, actionResource);
 		}
-		report.getZips().clear(); // TODO : see if mark as saved or delete ! 
+		report.getZips().clear(); // TODO : see if mark as saved or delete !
 		for (FileReport fileReport : report.getFiles()) {
-			ActionResource actionResource = resourceDAO.createResource(job);
+			ActionResource actionResource = actionResourceDAO.createResource(job);
 			actionResource.setType("file");
 			actionResource.setName(fileReport.getName());
-			actionResource.setStatus(fileReport.getStatus().name());			
-			resourceDAO.saveResource(actionResource);
+			actionResource.setStatus(fileReport.getStatus().name());
+			actionResourceDAO.saveResource(actionResource);
+			addMessages(context, fileReport, actionResource);
 		}
-		report.getFiles().clear(); // TODO : see if mark as saved or delete ! 
-		
+		report.getFiles().clear(); // TODO : see if mark as saved or delete !
+
 		for (ObjectReport objectReport : report.getObjects().values()) {
-			ActionResource actionResource = resourceDAO.createResource(job);
+			ActionResource actionResource = actionResourceDAO.createResource(job);
 			actionResource.setType(objectReport.getType().name());
 			actionResource.setName(objectReport.getDescription());
 			actionResource.setStatus(objectReport.getStatus().name());
@@ -151,13 +160,14 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 			for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
 				actionResource.getMetrics().put(entry.getKey().name(), entry.getValue().toString());
 			}
-			resourceDAO.saveResource(actionResource);
+			actionResourceDAO.saveResource(actionResource);
+			addMessages(context, objectReport, actionResource);
 		}
-		report.getObjects().clear(); // TODO : see if mark as saved or delete ! 
-		
+		report.getObjects().clear(); // TODO : see if mark as saved or delete !
+
 		for (ObjectCollectionReport collection : report.getCollections().values()) {
 			for (ObjectReport objectReport : collection.getObjectReports()) {
-				ActionResource actionResource = resourceDAO.createResource(job);
+				ActionResource actionResource = actionResourceDAO.createResource(job);
 				actionResource.setType(objectReport.getType().name());
 				actionResource.setName(objectReport.getDescription());
 				actionResource.setStatus(objectReport.getStatus().name());
@@ -165,19 +175,77 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 				for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
 					actionResource.getMetrics().put(entry.getKey().name(), entry.getValue().toString());
 				}
-				resourceDAO.saveResource(actionResource);				
+				actionResourceDAO.saveResource(actionResource);
 			}
 		}
-		report.getCollections().clear(); // TODO : see if mark as saved or delete !
+		report.getCollections().clear(); // TODO : see if mark as saved or
+											// delete !
 	}
 
-	
+	private void addMessages(Context context, CheckedReport report, ActionResource actionResource) {
+		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		if (valReport == null)
+			return;
+		if (report.getCheckPointErrorCount() > 0) {
+			for (Integer key : report.getCheckPointErrorKeys()) {
+				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
+				ActionMessage message = actionMessageDAO.createMessage(actionResource);
+				message.setCriticity(ActionMessage.CRITICITY.ERROR);
+				populateMessage(message,error);
+				actionMessageDAO.saveMessage(message);
+			}
+		}
+		if (report.getCheckPointWarningCount() > 0) {
+			for (Integer key : report.getCheckPointWarningKeys()) {
+				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
+				ActionMessage message = actionMessageDAO.createMessage(actionResource);
+				message.setCriticity(ActionMessage.CRITICITY.WARNING);
+				populateMessage(message,error);
+				actionMessageDAO.saveMessage(message);
+			}
+		}
+	}
+
+	private void populateMessage(ActionMessage message, CheckPointErrorReport error) {
+		message.setMessageKey(error.getKey());
+		Map<String, String> map = message.getMessageAttributs();
+		map.put("test_id", error.getTestId());
+		addLocation(map, "source", error.getSource());
+		for (int i = 0; i < error.getTargets().size(); i++) {
+			addLocation(map, "target_"+i, error.getTargets().get(i));
+		}
+		map.put("error_value", asString(error.getValue()));
+		map.put("reference_value", asString(error.getReferenceValue()));		
+	}
+
+	private void addLocation(Map<String, String> map, String prefix, Location location) {
+		if (location.getFile() != null) {
+			map.put(prefix + ".filename", asString(location.getFile().getFilename()));
+			map.put(prefix + ".line_number", asString(location.getFile().getLineNumber()));
+			map.put(prefix + ".column_number", asString(location.getFile().getColumnNumber()));
+		}
+		map.put(prefix + ".label", asString(location.getName()));
+		map.put(prefix + ".objectid", asString(location.getObjectId()));
+        if (!location.getObjectRefs().isEmpty())
+        {
+        	// TODO save path
+        }
+
+	}
+
+	private String asString(Object o) {
+		if (o == null)
+			return "";
+		return o.toString();
+	}
+
 	/**
 	 * @param context
 	 */
 	public void saveMainValidationReport(Context context, boolean force) {
-		if (context.containsKey(TESTNG)) return;
-			
+		if (context.containsKey(TESTNG))
+			return;
+
 		Report report = (Report) context.get(VALIDATION_REPORT);
 		// ne pas sauver un rapport null ou vide
 		if (report == null || report.isEmpty())
@@ -222,8 +290,8 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		}
 		AbstractParameter params = (AbstractParameter) context.get(CONFIGURATION);
 		if (params.getTest() > 0) {
-			long time = params.getTest()/1000;
-			log.info(Color.YELLOW + "Mode test on: waiting "+time+" s" + Color.NORMAL);
+			long time = params.getTest() / 1000;
+			log.info(Color.YELLOW + "Mode test on: waiting " + time + " s" + Color.NORMAL);
 			Thread.sleep(params.getTest());
 		}
 		return result;

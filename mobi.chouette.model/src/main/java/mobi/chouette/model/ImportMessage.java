@@ -1,18 +1,14 @@
 package mobi.chouette.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CollectionType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -20,13 +16,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.converter.HstoreConverter;
+import mobi.chouette.common.JobData;
 
 @Entity
 @Table(name = "import_messages")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class ImportMessage {
+public class ImportMessage extends ActionMessage{
+	private static final long serialVersionUID = -2708006192840323555L;
+
+
+	public JobData.ACTION getAction()
+	{
+		return JobData.ACTION.importer;
+	}
+
 	@Getter
 	@Setter
 	@GenericGenerator(name = "import_messages_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", 
@@ -40,36 +44,19 @@ public class ImportMessage {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
-	@Getter
-	@Setter
-	@Column(name = "criticity")
-	private Integer criticity;
-	
-	@Getter
-	@Setter
-	@Column(name = "message_key")
-	private String messageKey;
-	
-	@Getter
-	@Setter
-	@Column(name="message_attributs")
-	@CollectionType(type="java.util.HashMap")
-   	@Convert(converter = HstoreConverter.class)
-	private Map<String, String> messageAttributs = new HashMap<String, String>();
 	
 	@Getter
 	@Setter
 	@Column(name="import_id")
-	private Integer importId;
+	private Long taskId;
 	
-	@Getter
-	@Setter
-	@Column(name="resource_id")
-	private Integer resourceId;
+	public ImportMessage(Long taskId, Long resouceId) {
+		this.taskId = taskId;
+		setResourceId(resouceId);
+		Timestamp now = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		this.setCreatedAt(now);
+		// this.setUpdatedAt((Timestamp) now.clone());
+	}
 	
-	@Getter
-	@Setter
-	@Column(name="created_at")
-	private java.sql.Timestamp createdAt;
 	
 }

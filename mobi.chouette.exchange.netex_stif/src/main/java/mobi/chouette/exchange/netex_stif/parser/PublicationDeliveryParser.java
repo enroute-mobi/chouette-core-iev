@@ -26,7 +26,7 @@ public class PublicationDeliveryParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(DATA_OBJECTS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					log.info("PublicationDeliveryParser tag : "  + xpp.getName());
+					// log.info("PublicationDeliveryParser tag : "  + xpp.getName());
 					if (xpp.getName().equals(COMPOSITE_FRAME)) {
 						Parser compositeFrameParser = ParserFactory.create(CompositeFrameParser.class.getName());
 						compositeFrameParser.parse(context);

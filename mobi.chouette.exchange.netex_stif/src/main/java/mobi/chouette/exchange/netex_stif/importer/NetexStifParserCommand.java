@@ -34,6 +34,7 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
@@ -72,9 +73,12 @@ public class NetexStifParserCommand implements Command, Constant {
 				String id = fileName.split("_")[1];
 				id = "STIF:CODIFLIGNE:Line:" + id;
 				LineLite line = referential.getSharedReadOnlyLines().get(id);
+				referential.setCurrentLine(line); // for reporting
 				if (line != null) {
-					reporter.addObjectReport(context, id, OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
+					reporter.addObjectReport(context, id, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,
 							IO_TYPE.INPUT);
+				} else {
+					// TODO : manage invalid line for referential
 				}
 			}
 

@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,6 +26,8 @@ import lombok.Setter;
 @Table(name = "routing_constraint_zones")
 @NoArgsConstructor
 public class RoutingConstraint extends ChouetteIdentifiedObject {
+
+	private static final long serialVersionUID = -2247411121328805905L;
 
 	@Setter
 	@Getter

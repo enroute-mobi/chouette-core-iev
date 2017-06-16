@@ -121,7 +121,7 @@ It adds a XML attribute codeSpace to a term, where the value of the codeSpace at
 	</complexType>
 	<simpleType name="UomIdentifier">
 		<annotation>
-			<documentation>The simple type gml:UomIdentifer defines the syntax and value space of the unit of measure identifier.</documentation>
+			<documentation>The simple type gml:Uomidentifier defines the syntax and value space of the unit of measure identifier.</documentation>
 		</annotation>
 		<union memberTypes="gml:UomSymbol gml:UomURI"/>
 	</simpleType>

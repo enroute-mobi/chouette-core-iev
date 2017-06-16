@@ -55,6 +55,6 @@ public class ValidationReporterTest implements Constant {
 		Assert.assertNotNull(validationReport.findCheckPointReportByName("Neptune-Checkpoint-1"),
 				"checkpoint must exist in validation report");
 		Assert.assertEquals(validationReport.findCheckPointReportByName("Neptune-Checkpoint-1")
-				.getCheckPointErrorsKeys().size(), 1, "Checkpoint error key must be present in list");
+				.getCheckPointErrorKeys().size(), 1, "Checkpoint error key must be present in list");
 	}
 }

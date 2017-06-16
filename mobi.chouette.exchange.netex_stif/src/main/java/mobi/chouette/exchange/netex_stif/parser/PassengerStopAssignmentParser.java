@@ -28,7 +28,7 @@ public class PassengerStopAssignmentParser implements Parser, Constant {
 		String quayRef = null;
 		String id = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			log.info("PassengerStopAssignmentParser : " + xpp.getName());
+			// log.info("PassengerStopAssignmentParser : " + xpp.getName());
 			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
 				id = xpp.getAttributeValue(null, REF);
 				XPPUtil.skipSubTree(log, xpp);
@@ -41,7 +41,7 @@ public class PassengerStopAssignmentParser implements Parser, Constant {
 		}
 		if (quayRef != null && id != null) {
 			List<StopPoint> list = factory.getStopPoints(id);
-			log.info(Color.CYAN+"id :" + id + " list : " + list+Color.NORMAL);
+			// log.info(Color.CYAN+"id :" + id + " list : " + list+Color.NORMAL);
 			if (list != null) {
 				StopAreaLite stopArea = referential.getSharedReadOnlyStopAreas().get(quayRef);
 				if (stopArea != null) {

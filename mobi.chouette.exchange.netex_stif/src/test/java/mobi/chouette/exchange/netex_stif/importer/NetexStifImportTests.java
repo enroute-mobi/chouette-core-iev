@@ -202,7 +202,6 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
 	public void verifyImportLine() throws Exception {
 		verifyImportLine("OFFRE_TRANSDEV_20170301122517.zip");
-		verifyImportLine("OFFRE_TRANSDEV_20170404152230.zip");
 	}
 
 	public void verifyImportLine(String zipFile) throws Exception {

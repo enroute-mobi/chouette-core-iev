@@ -32,7 +32,7 @@ public class RouteParser implements Parser, Constant {
 		route.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			log.info("RouteParser  tag: " + xpp.getName());
+			// log.info("RouteParser  tag: " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(LINE_REF)) {

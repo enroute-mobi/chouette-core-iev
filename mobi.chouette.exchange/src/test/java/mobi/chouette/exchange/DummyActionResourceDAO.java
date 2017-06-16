@@ -5,10 +5,10 @@ import java.util.List;
 
 import lombok.Getter;
 import mobi.chouette.common.JobData;
-import mobi.chouette.dao.ResourceDAO;
+import mobi.chouette.dao.ActionResourceDAO;
 import mobi.chouette.model.ActionResource;
 
-public class DummyActionResourceDAO implements ResourceDAO  {
+public class DummyActionResourceDAO implements ActionResourceDAO  {
 
 	@Getter
 	List<ActionResource> saved = new ArrayList<>();

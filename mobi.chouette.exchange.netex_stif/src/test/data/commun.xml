@@ -14,17 +14,17 @@
                     <netex:Notice id="CITYWAY:Notice:1:LOC" version="any">
                         <netex:Text>Notice 1</netex:Text>
                         <netex:PublicCode>1</netex:PublicCode>
-                        <netex:TypeOfNoticeRef>ServiceJourneyNotice</netex:TypeOfNoticeRef>
+                        <netex:TypeOfNoticeRef ref="ServiceJourneyNotice" />
                     </netex:Notice>
                     <netex:Notice id="CITYWAY:Notice:2:LOC" version="any">
                         <netex:Text>Notice 2</netex:Text>
                         <netex:PublicCode>2</netex:PublicCode>
-                        <netex:TypeOfNoticeRef>ServiceJourneyNotice</netex:TypeOfNoticeRef>
+                        <netex:TypeOfNoticeRef ref="ServiceJourneyNotice" />
                     </netex:Notice>
                     <netex:Notice id="CITYWAY:Notice:3:LOC" version="any">
                         <netex:Text>Notice 3</netex:Text>
                         <netex:PublicCode>3</netex:PublicCode>
-                        <netex:TypeOfNoticeRef>ServiceJourneyNotice</netex:TypeOfNoticeRef>
+                        <netex:TypeOfNoticeRef ref="ServiceJourneyNotice" />
                     </netex:Notice>
                 </netex:notices>
             </netex:members>

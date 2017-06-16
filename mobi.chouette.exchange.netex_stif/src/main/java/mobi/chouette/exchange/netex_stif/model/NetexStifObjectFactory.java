@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.StopPoint;
 
-@Log4j
 public class NetexStifObjectFactory {
 
 	private Map<String, Direction> direction = new HashMap<>();

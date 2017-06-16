@@ -106,25 +106,25 @@
                             <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:2-2:LOC"
                                 version="any"/>
                             <netex:PassengerStopAssignment
-                                id="CITYWAY:PassengerStopAssignment:1-1:LOC" version="any">
+                                id="CITYWAY:PassengerStopAssignment:1-1:LOC" version="any" order="0">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
 										  <netex:QuayRef ref="FR:78217:ZDE:18304:STIF">version="any"</netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
-                                id="CITYWAY:PassengerStopAssignment:2-1:LOC" version="any">
+                                id="CITYWAY:PassengerStopAssignment:2-1:LOC" version="any" order="0">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:2-1:LOC" version="any"/>
 										  <netex:QuayRef ref="FR:78217:ZDE:32522:STIF">version="any"</netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
-                                id="CITYWAY:PassengerStopAssignment:1-2:LOC" version="any">
+                                id="CITYWAY:PassengerStopAssignment:1-2:LOC" version="any" order="0">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:1-2:LOC" version="any"/>
 										  <netex:QuayRef ref="FR:78217:ZDE:32521:STIF">version="any"</netex:QuayRef>
                             </netex:PassengerStopAssignment>
                             <netex:PassengerStopAssignment
-                                id="CITYWAY:PassengerStopAssignment:2-2:LOC" version="any">
+                                id="CITYWAY:PassengerStopAssignment:2-2:LOC" version="any" order="0">
                                 <netex:ScheduledStopPointRef
                                     ref="CITYWAY:ScheduledStopPoint:2-2:LOC" version="any"/>
 										  <netex:QuayRef ref="FR:78217:ZDE:18305:STIF">version="any"</netex:QuayRef>
@@ -149,15 +149,17 @@
                             <netex:ServiceJourney id="CITYWAY:ServiceJourney:1-1:LOC" version="any">
                                 <netex:Name>Course 1 par ici</netex:Name>
                                 <netex:noticeAssignments>
-                                    <netex:NoticeAssignment>
+                                    <netex:NoticeAssignment id="CITYWAY:NoticeAssignment:1:LOC" version="any" order="0">
 												  <netex:NoticeRef ref="CITYWAY:Notice:1:LOC">
                                             version="any"</netex:NoticeRef>
                                     </netex:NoticeAssignment>
                                 </netex:noticeAssignments>
+										   <netex:dayTypes>
 										  <netex:DayTypeRef ref="CITYWAY:DayType:1:LOC">
                                     version="any"</netex:DayTypeRef>
 										  <netex:DayTypeRef ref="CITYWAY:DayType:4:LOC">
                                     version="any"</netex:DayTypeRef>
+										  </netex:dayTypes>
                                 <netex:JourneyPatternRef ref="CITYWAY:ServiceJourneyPattern:1:LOC"
                                     version="any"/>
 										  <netex:OperatorRef ref="STIF:CODIFLIGNE:Operator:011">
