@@ -27,7 +27,7 @@ public class DayTypeParser implements Parser, Constant {
 		timeTable.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			log.info("DayTypeParser tag : "+ xpp.getName());
+			// log.info("DayTypeParser tag : "+ xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				timeTable.setComment(xpp.nextText());
 			} else if (xpp.getName().equals(PROPERTIES)) {

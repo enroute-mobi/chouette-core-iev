@@ -25,7 +25,7 @@ public class OperatingPeriodParser implements Parser, Constant {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			log.info("OperatingPeriodParser tag : " + xpp.getName());
+			// log.info("OperatingPeriodParser tag : " + xpp.getName());
 			if (xpp.getName().equals(FROM_DATE)) {
 				Date date = sdf.parse(xpp.nextText());
 				period.setStartDate(new java.sql.Date(date.getTime()));

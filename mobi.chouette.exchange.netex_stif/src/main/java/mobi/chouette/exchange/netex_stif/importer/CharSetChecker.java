@@ -67,7 +67,7 @@ public class CharSetChecker {
 
 	      // Use given encoding.
 	      InputStreamReader reader;
-	      log.info("file "+fileName+" : encoding = "+encoding);
+	      // log.info("file "+fileName+" : encoding = "+encoding);
 	      if (encoding == null)
 	      {
 	         reader = new InputStreamReader(pushbackStream);

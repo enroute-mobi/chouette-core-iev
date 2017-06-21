@@ -17,8 +17,8 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 
-	private static final String XML_1 = "1-NETEX-XML-1";
-	private static final String XML_2 = "1-NETEX-XML-2";
+	private static final String L1_NetexStif_2 = "1-NeTExStif-2";
+	private static final String L1_NetexStif_3 = "1-NeTExStif-3";
 
 	private ValidationReporter validationReporter;
 	private Context context;
@@ -30,8 +30,10 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 	public NetexStifSAXErrorHandler(Context context, String fileURL) throws Exception {
 		this.context = context;
 		validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context, XML_1, "E");
-		validationReporter.addItemToValidationReport(context, XML_2, "W");
+		validationReporter.addItemToValidationReport(context, L1_NetexStif_2, "E");
+		validationReporter.addItemToValidationReport(context, L1_NetexStif_3, "W");
+		validationReporter.updateCheckPointReportState(context, L1_NetexStif_2,ValidationReporter.RESULT.OK );
+		validationReporter.updateCheckPointReportState(context, L1_NetexStif_3,ValidationReporter.RESULT.OK );
 
 		fileName = new File(new URL(fileURL).toURI()).getName();
 	}
@@ -40,11 +42,11 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 		if (error instanceof SAXParseException) {
 			SAXParseException cause = (SAXParseException) error;
 			DataLocation location = new DataLocation(fileName, cause.getLineNumber(), cause.getColumnNumber());
-			validationReporter.addCheckPointReportError(context, XML_1, location, cause.getMessage());
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, cause.getMessage());
 		} else {
 			DataLocation location = new DataLocation(fileName, 1, 1);
 			location.setName("xml-failure");
-			validationReporter.addCheckPointReportError(context, XML_1, location, error.toString());
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, error.toString());
 		}
 	}
 
@@ -64,8 +66,8 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 		DataLocation location = new DataLocation(fileName, error.getLineNumber(), error.getColumnNumber());
 		location.setName(key);
 
-		validationReporter.updateCheckPointReportSeverity(context, XML_2, severity);
-		validationReporter.addCheckPointReportError(context, XML_2, location, error.getMessage());
+		validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_3, severity);
+		validationReporter.addCheckPointReportError(context, L1_NetexStif_3, location, error.getMessage());
 		return;
 	}
 

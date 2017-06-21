@@ -40,9 +40,9 @@ public class NetexCalendrierParser implements Parser, Constant {
 	
 	private void parseSimpleMember (String tag, XmlPullParser xpp, Context context) throws Exception{
 		String clazz = parsers.get(tag);
-		log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
+		// log.info("NetexStructure: tag " + xpp.getName() + " use : " + clazz);
 		if (clazz != null) {
-			log.info("parse with " + clazz);
+			// log.info("parse with " + clazz);
 			Parser parser = ParserFactory.create(clazz);
 			parser.parse(context);
 		} else {

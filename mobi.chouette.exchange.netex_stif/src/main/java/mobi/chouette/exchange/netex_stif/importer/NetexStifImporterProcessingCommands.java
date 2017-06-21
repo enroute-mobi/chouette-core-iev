@@ -24,8 +24,10 @@ import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
 import mobi.chouette.exchange.importer.FootnoteRegisterCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
-import mobi.chouette.exchange.importer.UncompressCommand;
-import mobi.chouette.exchange.validation.SharedDataValidatorCommand;
+import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
+import mobi.chouette.exchange.validation.report.DataLocation;
+import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 @Data
 @Log4j
@@ -54,7 +56,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 			if (withDao && parameters.isCleanRepository()) {
 				commands.add(CommandFactory.create(initialContext, CleanRepositoryCommand.class.getName()));
 			}
-			commands.add(CommandFactory.create(initialContext, UncompressCommand.class.getName()));
+			commands.add(CommandFactory.create(initialContext, NetexStifUncompressCommand.class.getName()));
 			commands.add(CommandFactory.create(initialContext, NetexStifInitImportCommand.class.getName()));
 			commands.add(CommandFactory.create(initialContext, NetexStifLoadSharedDataCommand.class.getName()));
 		} catch (Exception e) {
@@ -65,10 +67,27 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 		return commands;
 	}
 
-	private Chain treatOneFile(InitialContext initialContext, String filename, String path, boolean mandatory)
+	private Chain treatOneFile(Context context, String filename, JobData jobData, boolean mandatory)
 			throws ClassNotFoundException, IOException {
+		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		String path = jobData.getPathName();
 		Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
 		File file = new File(path + "/" + INPUT + "/" + filename);
+		if (!file.exists()) {
+			if (mandatory) {
+				ActionReporter reporter = ActionReporter.Factory.getInstance();
+				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no "+filename+" file");
+				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+				String zipName = jobData.getInputFilename();
+				validationReporter.addCheckPointReportError(context, NetexStifUncompressCommand.L1_NetexStif_1, "2",
+						new DataLocation(zipName), filename);
+				NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+				parameters.setNoSave(true); // block save mode to check other
+											// files
+			}
+			return chain;
+		}
+
 		// log.info(file);
 		String url = file.toURI().toURL().toExternalForm();
 		log.info("url : " + url);
@@ -88,13 +107,13 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	public List<? extends Command> getLineProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
-		boolean level3validation = context.get(VALIDATION) != null;
+		// boolean level3validation = context.get(VALIDATION) != null;
 		List<Command> commands = new ArrayList<>();
 		JobData jobData = (JobData) context.get(JOB_DATA);
 		try {
-			Chain tmp = treatOneFile(initialContext, "calendrier.xml", jobData.getPathName(), true);
+			Chain tmp = treatOneFile(context, "calendrier.xml", jobData, true);
 			commands.add(tmp);
-			tmp = treatOneFile(initialContext, "commun.xml", jobData.getPathName(), false);
+			tmp = treatOneFile(context, "commun.xml", jobData, false);
 			commands.add(tmp);
 
 			// TODO a supprimer quand copycommand sera ok
@@ -102,6 +121,14 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 
 			Path path = Paths.get(jobData.getPathName(), INPUT);
 			List<Path> stream = FileUtil.listFiles(path, "offre*.xml", "*metadata*");
+			if (stream.isEmpty()) {
+				ActionReporter reporter = ActionReporter.Factory.getInstance();
+				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no offer data");
+				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+				String fileName = jobData.getInputFilename();
+				validationReporter.addCheckPointReportError(context, NetexStifUncompressCommand.L1_NetexStif_1, "3",
+						new DataLocation(fileName));
+			}
 			for (Path file : stream) {
 				Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
 				commands.add(chain);
@@ -136,12 +163,12 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 					// CopyCommand.class.getName());
 					// chain.add(copy);
 				}
-				if (level3validation) {
-					// add validation
-					// Command validate = CommandFactory.create(initialContext,
-					// ImportedLineValidatorCommand.class.getName());
-					// chain.add(validate);
-				}
+				// if (level3validation) {
+				// // add validation
+				// Command validate = CommandFactory.create(initialContext,
+				// ImportedLineValidatorCommand.class.getName());
+				// chain.add(validate);
+				// }
 
 			}
 
@@ -154,20 +181,22 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 
 	@Override
 	public List<? extends Command> getPostProcessingCommands(Context context, boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
-		boolean level3validation = context.get(VALIDATION) != null;
+		// InitialContext initialContext = (InitialContext)
+		// context.get(INITIAL_CONTEXT);
+		// boolean level3validation = context.get(VALIDATION) != null;
 
 		List<Command> commands = new ArrayList<>();
-		try {
-			if (level3validation) {
-				// add shared data validation
-				commands.add(CommandFactory.create(initialContext, SharedDataValidatorCommand.class.getName()));
-			}
-
-		} catch (Exception e) {
-			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
-		}
+		// try {
+		// if (level3validation) {
+		// // add shared data validation
+		// commands.add(CommandFactory.create(initialContext,
+		// SharedDataValidatorCommand.class.getName()));
+		// }
+		//
+		// } catch (Exception e) {
+		// log.error(e, e);
+		// throw new RuntimeException("unable to call factories");
+		// }
 		return commands;
 	}
 
