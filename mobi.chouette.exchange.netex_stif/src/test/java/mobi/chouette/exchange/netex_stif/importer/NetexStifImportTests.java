@@ -50,7 +50,10 @@ import mobi.chouette.dao.VehicleJourneyDAO;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
+import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
+import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.ReportConstant;
+import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
@@ -242,6 +245,120 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	}
 
+	@Test(groups = { "ImportBadFiles" }, description = "Import invalid Zip format")
+	public void verifyImportBadZip() throws Exception {
+		String zipFile = "badformated.zip";
+		Context context = initImportContext();
+		context.put(REFERENTIAL, new Referential());
+		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
+				NetexStifImporterCommand.class.getName());
+		copyFile(zipFile);
+		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		jobData.setInputFilename(zipFile);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		configuration.setNoSave(false);
+		configuration.setCleanRepository(true);
+		try {
+			command.execute(context);
+		} catch (Exception ex) {
+			log.error("test failed", ex);
+			throw ex;
+		}
+
+		// check error report
+		ActionReport report = (ActionReport) context.get(REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		log.info(report);
+		log.info(valReport);
+		Assert.assertEquals(report.getResult(), "NOK", "result");
+		Assert.assertEquals(report.getZips().size(), 1, "zip reported size ");
+		FileReport file = report.getZips().get(0);
+		Assert.assertEquals(file.getStatus(),FILE_STATE.ERROR,"zip status reported");
+		Assert.assertEquals(file.getCheckPointErrorCount(),1,"zip error reported");
+		CheckPointErrorReport error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
+		Assert.assertEquals(error.getTestId(),"1-NeTExStif-1","checkpoint code");
+		Assert.assertEquals(error.getKey(),"1_netexstif_1_1","message code");
+		Assert.assertEquals(error.getSource().getFile().getFilename(),zipFile,"source filename");
+
+	}
+	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without calendar")
+	public void verifyImportNoCalendarZip() throws Exception {
+		String zipFile = "nocalendar.zip";
+		Context context = initImportContext();
+		context.put(REFERENTIAL, new Referential());
+		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
+				NetexStifImporterCommand.class.getName());
+		copyFile(zipFile);
+		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		jobData.setInputFilename(zipFile);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		configuration.setNoSave(false);
+		configuration.setCleanRepository(true);
+		try {
+			command.execute(context);
+		} catch (Exception ex) {
+			log.error("test failed", ex);
+			throw ex;
+		}
+
+		// check error report
+		ActionReport report = (ActionReport) context.get(REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		log.info(report);
+		log.info(valReport);
+		Assert.assertEquals(report.getResult(), "NOK", "result");
+		Assert.assertEquals(report.getZips().size(), 1, "zip reported size ");
+		FileReport file = report.getZips().get(0);
+		Assert.assertEquals(file.getStatus(),FILE_STATE.ERROR,"zip status reported");
+		Assert.assertEquals(file.getCheckPointErrorCount(),1,"zip error reported");
+		CheckPointErrorReport error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
+		Assert.assertEquals(error.getTestId(),"1-NeTExStif-1","checkpoint code");
+		Assert.assertEquals(error.getKey(),"1_netexstif_1_2","message code");
+		Assert.assertEquals(error.getValue(),"calendrier.xml","value");
+		Assert.assertEquals(error.getSource().getFile().getFilename(),zipFile,"source filename");
+		
+
+	}
+
+	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without offer")
+	public void verifyImportNoOfferZip() throws Exception {
+		String zipFile = "nooffer.zip";
+		Context context = initImportContext();
+		context.put(REFERENTIAL, new Referential());
+		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
+				NetexStifImporterCommand.class.getName());
+		copyFile(zipFile);
+		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		jobData.setInputFilename(zipFile);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		configuration.setNoSave(false);
+		configuration.setCleanRepository(true);
+		try {
+			command.execute(context);
+		} catch (Exception ex) {
+			log.error("test failed", ex);
+			throw ex;
+		}
+
+		// check error report
+		ActionReport report = (ActionReport) context.get(REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		log.info(report);
+		log.info(valReport);
+		Assert.assertEquals(report.getResult(), "NOK", "result");
+		Assert.assertEquals(report.getZips().size(), 1, "zip reported size ");
+		FileReport file = report.getZips().get(0);
+		Assert.assertEquals(file.getStatus(),FILE_STATE.ERROR,"zip status reported");
+		Assert.assertEquals(file.getCheckPointErrorCount(),1,"zip error reported");
+		CheckPointErrorReport error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
+		Assert.assertEquals(error.getTestId(),"1-NeTExStif-1","checkpoint code");
+		Assert.assertEquals(error.getKey(),"1_netexstif_1_3","message code");
+		Assert.assertEquals(error.getSource().getFile().getFilename(),zipFile,"source filename");
+		
+
+	}
+
+	
 	private void verifyFromJson() throws JSONException, IOException {
 		// InputStream is =
 		// this.getClass().getResourceAsStream("/tmp/offre.json");
@@ -254,7 +371,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		verifyJourneyPatterns(jsonObject.getJSONArray("journeyPatterns"));
 		verifyRoutingConstraints(jsonObject.getJSONArray("routingConstraints"));
 		verifyStopPoints(jsonObject.getJSONArray("stopPoints"));
-		//verifyFootnotes(jsonObject.getJSONArray("footnotes"));
+		verifyFootnotes(jsonObject.getJSONArray("footnotes"));
 	}
 
 	private void verifyFootnotes(JSONArray footnotes) throws JSONException {
@@ -265,8 +382,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	private void verifyFootnote(JSONObject jsonFootnote) throws JSONException {
 		log.info("footnote:"+ jsonFootnote);
-		String id = jsonFootnote.getString("id");
-		Footnote footnote = footnoteDao.findByObjectId(id);
+		Long id = jsonFootnote.getLong("id");
+		Footnote footnote = footnoteDao.find(id);
 		Assert.assertEquals(footnote.getLabel(), jsonFootnote.getString("label"));
 		Assert.assertEquals(footnote.getCode(), jsonFootnote.getString("code"));
 
@@ -411,8 +528,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	private JSONObject buildJsonFootnote(Footnote footnote) throws JSONException {
 		JSONObject fnObject = new JSONObject();
-		log.info("footnote oid : " + footnote.getObjectId());
-		fnObject.put("id", footnote.getObjectId());
+		log.info("footnote id : " + footnote.getId());
+		fnObject.put("id", footnote.getId());
 		fnObject.put("label", footnote.getLabel());
 		fnObject.put("code", footnote.getCode());
 		return fnObject;

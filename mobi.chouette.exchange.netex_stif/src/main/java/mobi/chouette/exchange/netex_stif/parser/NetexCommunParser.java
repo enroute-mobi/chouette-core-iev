@@ -19,7 +19,7 @@ public class NetexCommunParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NOTICES)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					log.info("NetexCommunParser tag : " + xpp.getName());
+					// log.info("NetexCommunParser tag : " + xpp.getName());
 					if (xpp.getName().equals(NOTICE)) {
 						Parser parser = ParserFactory.create(NoticeParser.class.getName());
 						parser.parse(context);
@@ -28,7 +28,7 @@ public class NetexCommunParser implements Parser, Constant {
 					}
 				}
 			} else if (xpp.getName().equals(NOTICE)) {
-				log.info("NetexCommun tag " + xpp.getName());
+				// log.info("NetexCommun tag " + xpp.getName());
 				Parser parser = ParserFactory.create(NoticeParser.class.getName());
 				parser.parse(context);
 			} else {

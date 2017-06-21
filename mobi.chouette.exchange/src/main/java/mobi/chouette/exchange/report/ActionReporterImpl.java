@@ -180,6 +180,19 @@ public class ActionReporterImpl implements ActionReporter, Constant {
 	}
 
 	@Override
+	public boolean addValidationErrorToZipReport(Context context, String fileInfoName, int code, SEVERITY severity) {
+		ActionReport actionReport = (ActionReport) context.get(REPORT);
+		boolean ret = false;
+		if (actionReport != null) {
+			FileReport fileReport = actionReport.findZipReport(fileInfoName);
+			if (fileReport != null) {
+				ret = fileReport.addCheckPointError(code, severity);
+			}
+		}
+		return ret;
+	}
+
+	@Override
 	public boolean addValidationErrorToFileReport(Context context, String fileInfoName, int code, SEVERITY severity) {
 		ActionReport actionReport = (ActionReport) context.get(REPORT);
 		boolean ret = false;

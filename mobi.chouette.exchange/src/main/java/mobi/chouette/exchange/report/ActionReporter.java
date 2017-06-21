@@ -67,6 +67,18 @@ public interface ActionReporter {
 	 * @param message explanation message
 	 */
 	void addZipErrorInReport(Context context, String fileInfoName, FILE_ERROR_CODE code, String message);
+	
+	/**
+	 * report an error on zip file with validation code
+	 * 
+	 * @param context
+	 * @param fileInfoName
+	 * @param code
+	 * @param severity
+	 * @return
+	 */
+	boolean addValidationErrorToZipReport(Context context, String fileInfoName, int code, SEVERITY severity);
+
 	/**
 	 * create an entry for a simple file
 	 * 
@@ -201,6 +213,8 @@ public interface ActionReporter {
 			return actionReporter;
 		}
 	}
+
+
 
 
 
