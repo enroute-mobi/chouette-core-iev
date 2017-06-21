@@ -24,10 +24,6 @@ import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
 import mobi.chouette.exchange.importer.FootnoteRegisterCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
-import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
-import mobi.chouette.exchange.validation.report.DataLocation;
-import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 @Data
 @Log4j
@@ -75,12 +71,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 		File file = new File(path + "/" + INPUT + "/" + filename);
 		if (!file.exists()) {
 			if (mandatory) {
-				ActionReporter reporter = ActionReporter.Factory.getInstance();
-				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no "+filename+" file");
-				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-				String zipName = jobData.getInputFilename();
-				validationReporter.addCheckPointReportError(context, NetexStifUncompressCommand.L1_NetexStif_1, "2",
-						new DataLocation(zipName), filename);
+				// may not occurs : rejected by NetexStifUncompressCommand
 				NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
 				parameters.setNoSave(true); // block save mode to check other
 											// files
@@ -121,14 +112,6 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 
 			Path path = Paths.get(jobData.getPathName(), INPUT);
 			List<Path> stream = FileUtil.listFiles(path, "offre*.xml", "*metadata*");
-			if (stream.isEmpty()) {
-				ActionReporter reporter = ActionReporter.Factory.getInstance();
-				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no offer data");
-				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-				String fileName = jobData.getInputFilename();
-				validationReporter.addCheckPointReportError(context, NetexStifUncompressCommand.L1_NetexStif_1, "3",
-						new DataLocation(fileName));
-			}
 			for (Path file : stream) {
 				Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
 				commands.add(chain);
