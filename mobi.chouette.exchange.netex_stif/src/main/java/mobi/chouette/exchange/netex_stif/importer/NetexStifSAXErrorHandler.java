@@ -32,8 +32,8 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 		validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.addItemToValidationReport(context, L1_NetexStif_2, "E");
 		validationReporter.addItemToValidationReport(context, L1_NetexStif_3, "W");
-		validationReporter.updateCheckPointReportState(context, L1_NetexStif_2,ValidationReporter.RESULT.OK );
-		validationReporter.updateCheckPointReportState(context, L1_NetexStif_3,ValidationReporter.RESULT.OK );
+		validationReporter.updateCheckPointReportState(context, L1_NetexStif_2, ValidationReporter.RESULT.OK);
+		validationReporter.updateCheckPointReportState(context, L1_NetexStif_3, ValidationReporter.RESULT.OK);
 
 		fileName = new File(new URL(fileURL).toURI()).getName();
 	}
@@ -42,16 +42,17 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 		if (error instanceof SAXParseException) {
 			SAXParseException cause = (SAXParseException) error;
 			DataLocation location = new DataLocation(fileName, cause.getLineNumber(), cause.getColumnNumber());
-			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, cause.getMessage());
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, "xml-failure", cause.getMessage());
 		} else {
 			DataLocation location = new DataLocation(fileName, 1, 1);
 			location.setName("xml-failure");
-			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, error.toString());
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, "xml-failure",
+					error.getMessage());
 		}
 	}
 
 	private void handleError(SAXParseException error, SEVERITY severity) {
-		String key = "others";
+		String key = "";
 		if (error.getMessage().contains(":")) {
 			String newKey = error.getMessage().substring(0, error.getMessage().indexOf(":")).trim();
 			if (!newKey.contains(" ")) {
@@ -66,8 +67,13 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 		DataLocation location = new DataLocation(fileName, error.getLineNumber(), error.getColumnNumber());
 		// location.setName(key);
 
-		validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_3, severity);
-		validationReporter.addCheckPointReportError(context, L1_NetexStif_3, location, key, error.getMessage());
+		if (key.isEmpty()) {
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, "xml-failure",
+					error.getMessage());
+		} else {
+			validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_3, severity);
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_3, location, key, error.getMessage());
+		}
 		return;
 	}
 
