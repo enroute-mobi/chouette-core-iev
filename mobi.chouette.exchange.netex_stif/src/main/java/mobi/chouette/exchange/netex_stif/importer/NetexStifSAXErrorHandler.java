@@ -15,6 +15,50 @@ import mobi.chouette.exchange.validation.report.CheckPointReport.SEVERITY;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
+/*
+ * Manage XML and XSD errors as 2 Netex Checkpoints : 
+ * 
+ * Description
+ *
+ * Code : 1-NeTExStif-2
+ *
+ * Variables :
+ *    néant
+ *
+ * Prérequis :
+ *    néant
+ *
+ * Prédicat :
+ *    les fichiers xml doivent respecter la syntaxe XML du W3C
+ *
+ * Message :
+ *    Le fichier {nomFichier} ne respecte pas la syntaxe XML : code W3C {code erreur} rencontré
+ *
+ * Criticité :
+ * error
+ * 
+ * ------------------------------------------------------------------------
+ * 
+ * Description
+ *
+ *Code : 1-NeTExStif-3
+ *
+ * Variables :
+ *    néant
+ *
+ * Prérequis :
+ *    néant
+ *
+ * Prédicat :
+ *    les fichiers xml doivent respecter la XSD NeTEx
+ *
+ * Message :
+ *    Le fichier {nomFichier} ne respecte pas la XSD NeTEx : code W3C {code erreur} rencontré
+ *
+ * Criticité :
+ *    error
+ * 
+ */
 public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 
 	private static final String L1_NetexStif_2 = "1-NeTExStif-2";
@@ -42,7 +86,8 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant {
 		if (error instanceof SAXParseException) {
 			SAXParseException cause = (SAXParseException) error;
 			DataLocation location = new DataLocation(fileName, cause.getLineNumber(), cause.getColumnNumber());
-			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, "xml-failure", cause.getMessage());
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, "xml-failure",
+					cause.getMessage());
 		} else {
 			DataLocation location = new DataLocation(fileName, 1, 1);
 			location.setName("xml-failure");

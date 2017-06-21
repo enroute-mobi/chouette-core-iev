@@ -371,7 +371,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		verifyJourneyPatterns(jsonObject.getJSONArray("journeyPatterns"));
 		verifyRoutingConstraints(jsonObject.getJSONArray("routingConstraints"));
 		verifyStopPoints(jsonObject.getJSONArray("stopPoints"));
-		//verifyFootnotes(jsonObject.getJSONArray("footnotes"));
+		verifyFootnotes(jsonObject.getJSONArray("footnotes"));
 	}
 
 	private void verifyFootnotes(JSONArray footnotes) throws JSONException {
@@ -382,8 +382,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	private void verifyFootnote(JSONObject jsonFootnote) throws JSONException {
 		log.info("footnote:"+ jsonFootnote);
-		String id = jsonFootnote.getString("id");
-		Footnote footnote = footnoteDao.findByObjectId(id);
+		Long id = jsonFootnote.getLong("id");
+		Footnote footnote = footnoteDao.find(id);
 		Assert.assertEquals(footnote.getLabel(), jsonFootnote.getString("label"));
 		Assert.assertEquals(footnote.getCode(), jsonFootnote.getString("code"));
 
@@ -528,8 +528,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	private JSONObject buildJsonFootnote(Footnote footnote) throws JSONException {
 		JSONObject fnObject = new JSONObject();
-		log.info("footnote oid : " + footnote.getObjectId());
-		fnObject.put("id", footnote.getObjectId());
+		log.info("footnote id : " + footnote.getId());
+		fnObject.put("id", footnote.getId());
 		fnObject.put("label", footnote.getLabel());
 		fnObject.put("code", footnote.getCode());
 		return fnObject;
