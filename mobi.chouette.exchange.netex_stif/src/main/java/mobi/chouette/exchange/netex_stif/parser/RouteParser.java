@@ -10,6 +10,7 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.validatior.RouteValidator;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.type.PTDirectionEnum;
@@ -27,12 +28,19 @@ public class RouteParser implements Parser, Constant {
 		Long version = (Long) context.get(VERSION);
 		xpp.require(XmlPullParser.START_TAG, null, ROUTE);
 
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
+
 		String id = xpp.getAttributeValue(null, ID);
+		
+		RouteValidator routeRalidator = new RouteValidator();
+		routeRalidator.checkNetexId(context, ROUTE, id, lineNumber, columnNumber);
+		
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			// log.info("RouteParser  tag: " + xpp.getName());
+			// log.info("RouteParser tag: " + xpp.getName());
 			if (xpp.getName().equals(NAME)) {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(LINE_REF)) {
