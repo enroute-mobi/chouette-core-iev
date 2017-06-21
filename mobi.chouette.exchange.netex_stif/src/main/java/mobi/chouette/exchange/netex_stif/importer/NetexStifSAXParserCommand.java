@@ -73,7 +73,7 @@ public class NetexStifSAXParserCommand implements Command, Constant {
 			validator.validate(file);
 			result = SUCCESS;
 		} catch (IOException | SAXException e) {
-			log.error(e.getMessage(), e);
+			log.error(e.getMessage());
 			reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT,e.getMessage());
 		} finally {
 			if (reader != null ) reader.close();

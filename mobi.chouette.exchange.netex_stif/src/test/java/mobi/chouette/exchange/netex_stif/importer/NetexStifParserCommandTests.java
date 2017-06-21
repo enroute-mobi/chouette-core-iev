@@ -316,4 +316,5 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		Assert.assertEquals(timetable.getCalendarDays().size(), dateSize, "Timetable " + id + " CalendarDay size");
 		Assert.assertEquals(timetable.getPeriods().size(), periodSize, "Timetable " + id + " period size");
 	}
+	
 }
