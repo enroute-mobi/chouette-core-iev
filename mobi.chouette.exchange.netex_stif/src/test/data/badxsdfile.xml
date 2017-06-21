@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<netex:PublicationDelivery xmlns:netex="http://www.netex.org.uk/netex"
+    xmlns:siri="http://www.siri.org.uk/siri" xmlns:core="http://www.govtalk.gov.uk/core"
+    xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:ifopt="http://www.ifopt.org.uk/ifopt"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    version="1.0">
+    <netex:PublicationTimestamp>2017-02-14T09:13:51.0</netex:PublicationTimestamp>
+    <netex:ParticipantRef>CITYWAY</netex:ParticipantRef>
+    <netex:dataObjects>
+        <netex:CompositeFrame id="CITYWAY:CompositeFrame:NETEX_OFFRE_LIGNE-1:LOC" version="any">
+            <netex:Name>Ligne 1</netex:Name>
+            <netex:TypeOfFrameRef ref="NETEX_OFFRE_LIGNE"/>
+            <netex:frames>
+                <netex:GeneralFrame id="CITYWAY:GeneralFrame:NETEX_STRUCTURE-20170214090012:LOC"
+                    version="any">
+                    <netex:TypeOfFrameRef ref="NETEX_STRUCTURE"/>
+                    <netex:members>
+                        <netex:Route id="CITYWAY:Route:1:LOC" version="any">
+                                <netex:Name>route 1</netex:Name>
+                                <netex:DirectionType>outbound</netex:DirectionType>
+										  <netex:LineRef ref="STIF:CODIFLIGNE:Line:C00108">version="any"</netex:LineRef>
+                                <netex:DirectionRef ref="CITYWAY:Direction:1:LOC" version="any"/>
+                                <netex:InverseRouteRef ref="CITYWAY:Route:2:LOC" version="any"/>
+                            </netex:Route>
+                            <netex:Route id="CITYWAY:Route:2:LOC" version="any">
+                                <netex:Name>route 2</netex:Name>
+										  <netex:LineRef ref="STIF:CODIFLIGNE:Line:C00108">version="any"</netex:LineRef>
+                                <netex:DirectionType>inbound</netex:DirectionType>
+                                <netex:DirectionRef ref="CITYWAY:Direction:2:LOC" version="any"/>
+                                <netex:InverseRouteRef ref="CITYWAY:Route:1:LOC" version="any"/>
+                            </netex:Route>
+                            <netex:Direction id="CITYWAY:Direction:1:LOC" version="any">
+                                <netex:Name>Par ici</netex:Name>
+                            </netex:Direction>
+                            <netex:Direction id="CITYWAY:Direction:2:LOC" version="any">
+                                <netex:Name>Par là</netex:Name>
+                            </netex:Direction>
+                            <netex:ServiceJourneyPattern id="CITYWAY:ServiceJourneyPattern:1:LOC"
+                                version="any">
+                                <netex:Name>Par ici</netex:Name>
+                                <netex:RouteRef ref="CITYWAY:Route:1:LOC" version="any"/>
+                                <netex:DestinationDisplayRef ref="CITYWAY:DestinationDisplay:1:LOC"
+                                    version="any"/>
+                                <netex:pointsInSequence>
+                                    <netex:StopPointInJourneyPattern
+                                        id="CITYWAY:StopPointInJourneyPattern:1-1-1:LOC" order="1"
+                                        version="any">
+                                        <netex:ScheduledStopPointRef
+                                            ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
+                                        <netex:ForAlighting>true</netex:ForAlighting>
+                                        <netex:ForBoarding>true</netex:ForBoarding>
+                                    </netex:StopPointInJourneyPattern>
+                                    <netex:StopPointInJourneyPattern
+                                        id="CITYWAY:StopPointInJourneyPattern:1-1-2:LOC" order="2"
+                                        version="any">
+                                        <netex:ScheduledStopPointRef
+                                            ref="CITYWAY:ScheduledStopPoint:1-2:LOC" version="any"/>
+                                        <netex:ForAlighting>true</netex:ForAlighting>
+                                        <netex:ForBoarding>true</netex:ForBoarding>
+                                    </netex:StopPointInJourneyPattern>
+                                </netex:pointsInSequence>
+                                <netex:ServiceJourneyPatternType>passenger</netex:ServiceJourneyPatternType>
+                            </netex:ServiceJourneyPattern>
+                            <netex:ServiceJourneyPattern id="CITYWAY:ServiceJourneyPattern:2:LOC"
+                                version="any">
+                                <netex:Name>Par là</netex:Name>
+                                <netex:RouteRef ref="CITYWAY:Route:2:LOC" version="any"/>
+                                <netex:DestinationDisplayRef ref="CITYWAY:DestinationDisplay:2:LOC"
+                                    version="any"/>
+                                <netex:pointsInSequence>
+                                    <netex:StopPointInJourneyPattern
+                                        id="CITYWAY:StopPointInJourneyPattern:2-2-1:LOC" order="1"
+                                        version="any">
+                                        <netex:ScheduledStopPointRef
+                                            ref="CITYWAY:ScheduledStopPoint:2-1:LOC" version="any"/>
+                                        <netex:ForAlighting>true</netex:ForAlighting>
+                                        <netex:ForBoarding>true</netex:ForBoarding>
+                                    </netex:StopPointInJourneyPattern>
+                                    <netex:StopPointInJourneyPattern
+                                        id="CITYWAY:StopPointInJourneyPattern:2-2-2:LOC" order="2"
+                                        version="any">
+                                        <netex:ScheduledStopPointRef
+                                            ref="CITYWAY:ScheduledStopPoint:2-2:LOC" version="any"/>
+                                        <netex:ForAlighting>true</netex:ForAlighting>
+                                        <netex:ForBoarding>true</netex:ForBoarding>
+                                    </netex:StopPointInJourneyPattern>
+                                </netex:pointsInSequence>
+                                <netex:ServiceJourneyPatternType>passenger</netex:ServiceJourneyPatternType>
+                            </netex:ServiceJourneyPattern>
+                            <netex:DestinationDisplay id="CITYWAY:DestinationDisplay:1:LOC"
+                                version="any">
+                                <netex:FrontText>Mission 1</netex:FrontText>
+                                <netex:PublicCode>1234</netex:PublicCode>
+                            </netex:DestinationDisplay>
+                            <netex:DestinationDisplay id="CITYWAY:DestinationDisplay:2:LOC"
+                                version="any">
+                                <netex:FrontText>Mission 2</netex:FrontText>
+                                <netex:PublicCode>2345</netex:PublicCode>
+                            </netex:DestinationDisplay>
+                            <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:1-1:LOC"
+                                version="any"/>
+                            <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:1-2:LOC"
+                                version="any"/>
+                            <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:2-1:LOC"
+                                version="any"/>
+                            <netex:ScheduledStopPoint id="CITYWAY:ScheduledStopPoint:2-2:LOC"
+                                version="any"/>
+                            <netex:PassengerStopAssignment
+                                id="CITYWAY:PassengerStopAssignment:1-1:LOC" version="any" order="0">
+                                <netex:ScheduledStopPointRef
+                                    ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
+										  <netex:QuayRef ref="FR:78217:ZDE:18304:STIF">version="any"</netex:QuayRef>
+                            </netex:PassengerStopAssignment>
+                            <netex:PassengerStopAssignment
+                                id="CITYWAY:PassengerStopAssignment:2-1:LOC" version="any" order="0">
+                                <netex:ScheduledStopPointRef
+                                    ref="CITYWAY:ScheduledStopPoint:2-1:LOC" version="any"/>
+										  <netex:QuayRef ref="FR:78217:ZDE:32522:STIF">version="any"</netex:QuayRef>
+                            </netex:PassengerStopAssignment>
+                            <netex:PassengerStopAssignment
+                                id="CITYWAY:PassengerStopAssignment:1-2:LOC" version="any" order="0">
+                                <netex:ScheduledStopPointRef
+                                    ref="CITYWAY:ScheduledStopPoint:1-2:LOC" version="any"/>
+										  <netex:QuayRef ref="FR:78217:ZDE:32521:STIF">version="any"</netex:QuayRef>
+                            </netex:PassengerStopAssignment>
+                            <netex:PassengerStopAssignment
+                                id="CITYWAY:PassengerStopAssignment:2-2:LOC" version="any" order="0">
+                                <netex:ScheduledStopPointRef
+                                    ref="CITYWAY:ScheduledStopPoint:2-2:LOC" version="any"/>
+										  <netex:QuayRef ref="FR:78217:ZDE:18305:STIF">version="any"</netex:QuayRef>
+                            </netex:PassengerStopAssignment>
+                            <netex:RoutingConstraintZone id="CITYWAY:RoutingConstraintZone:1:LOC"
+                                version="any">
+                                <netex:Name>ITL 1</netex:Name>
+                                <netex:members>
+                                    <netex:ScheduledStopPointRef
+                                        ref="CITYWAY:ScheduledStopPoint:1-1:LOC" version="any"/>
+                                    <netex:ScheduledStopPointRef
+                                        ref="CITYWAY:ScheduledStopPoint:1-2:LOC" version="any"/>
+                                </netex:members>
+                                <netex:ZoneUse>cannotBoardAndAlightInSameZone</netex:ZoneUse>
+                            </netex:RoutingConstraintZone>
+                    </netex:members>
+                </netex:GeneralFrame>
+                <netex:GeneralFrame id="CITYWAY:GeneralFrame:NETEX_HORAIRE-20170214090012:LOC"
+                    version="any">
+                    <netex:TypeOfFrameRef ref="NETEX_HORAIRE"/>
+                    <netex:members>
+                            <netex:ServiceJourney id="CITYWAY:ServiceJourney:1-1:LOC" version="any">
+                                <netex:Name>Course 1 par ici</netex:Name>
+                                <netex:noticeAssignments>
+                                    <netex:NoticeAssignment id="CITYWAY:NoticeAssignment:1:LOC" version="any" order="0">
+												  <netex:NoticeRef ref="CITYWAY:Notice:1:LOC">
+                                            version="any"</netex:NoticeRef>
+                                    </netex:NoticeAssignment>
+                                </netex:noticeAssignments>
+										   <netex:dayTypes>
+										  <netex:DayTypeRef ref="CITYWAY:DayType:1:LOC">
+                                    version="any"</netex:DayTypeRef>
+										  <netex:DayTypeRef ref="CITYWAY:DayType:4:LOC">
+                                    version="any"</netex:DayTypeRef>
+										  </netex:dayTypes>
+                                <netex:JourneyPatternRef ref="CITYWAY:ServiceJourneyPattern:1:LOC"
+                                    version="any"/>
+										  <netex:OperatorRef ref="STIF:CODIFLIGNE:Operator:011">
+                                    version="any"</netex:OperatorRef>
+                                <netex:trainNumbers>
+											 <netex:TrainNumberRef ref="CITYWAY:TrainNumber:1234:LOC">version="any"</netex:TrainNumberRef>
+                                </netex:trainNumbers>
+                                <netex:passingTimes>
+                                    <netex:TimetabledPassingTime version="any">
+                                        <netex:ArrivalTime>01:01:00.000</netex:ArrivalTime>
+                                        <netex:ArrivalDayOffset>0</netex:ArrivalDayOffset>
+                                        <netex:DepartureTime>01:01:00.000</netex:DepartureTime>
+                                        <netex:DepartureDayOffset>0</netex:DepartureDayOffset>
+                                    </netex:TimetabledPassingTime>
+                                    <netex:TimetabledPassingTime version="any">
+                                        <netex:ArrivalTime>01:05:00.000</netex:ArrivalTime>
+                                        <netex:ArrivalDayOffset>0</netex:ArrivalDayOffset>
+                                        <netex:DepartureTime>01:05:00.000</netex:DepartureTime>
+                                        <netex:DepartureDayOffset>0</netex:DepartureDayOffset>
+                                    </netex:TimetabledPassingTime>
+                                </netex:passingTimes>
+                            </netex:ServiceJourney>                    
+	                </netex:members>
+                </netex:GeneralFrame>
+            </netex:frames>
+        </netex:CompositeFrame>
+    </netex:dataObjects>
+</netex:PublicationDelivery>
