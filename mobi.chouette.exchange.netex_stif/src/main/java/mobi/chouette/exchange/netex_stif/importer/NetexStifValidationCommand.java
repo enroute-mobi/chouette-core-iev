@@ -37,9 +37,11 @@ public class NetexStifValidationCommand implements Command, Constant {
 		try {
 			Referential referential = (Referential) context.get(REFERENTIAL);
 
-			// TODO create level 2 validation for NETEX
+			// Tests are done during parsing just check file status
 
-			result = SUCCESS;
+			if (!reporter.hasFileValidationErrors(context, fileName))
+				result = SUCCESS;
+			
 			if (result) {
 				addStats(context, reporter, referential);
 			}
@@ -60,23 +62,22 @@ public class NetexStifValidationCommand implements Command, Constant {
 	private void addStats(Context context, ActionReporter reporter, Referential referential) {
 
 		LineLite line = referential.getCurrentLine();
-		if (line != null)
-		{
-		reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
-				OBJECT_STATE.OK, IO_TYPE.INPUT);
-		reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
+		if (line != null) {
+			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
+					OBJECT_STATE.OK, IO_TYPE.INPUT);
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
 
-		reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE,
-				referential.getRoutes().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE,
+					referential.getRoutes().size());
 
-		reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.TIMETABLE,
-				referential.getTimetables().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.TIMETABLE,
+					referential.getTimetables().size());
 
-		reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY,
-				referential.getVehicleJourneys().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY,
+					referential.getVehicleJourneys().size());
 
-		reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
-				referential.getJourneyPatterns().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
+					referential.getJourneyPatterns().size());
 		}
 	}
 
