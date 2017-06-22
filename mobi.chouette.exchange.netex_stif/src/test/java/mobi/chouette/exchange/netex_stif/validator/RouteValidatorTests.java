@@ -1,8 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import com.vividsolutions.jts.util.Assert;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
@@ -38,7 +37,7 @@ public class RouteValidatorTests {
 		String directionType = "xxxx";
 		boolean result = validateId(directionType);
 
-		Assert.isTrue(!result);
+		Assert.assertTrue(!result);
 	}
 
 	@Test(groups = { "Cas erreur 1" }, description = "Route DirectionType incorrect (null) ", priority = 3)
@@ -47,7 +46,7 @@ public class RouteValidatorTests {
 		String directionType = null;
 		boolean result = validateId(directionType);
 
-		Assert.isTrue(!result);
+		Assert.assertTrue(!result);
 	}
 
 	@Test(groups = { "Nominal 1" }, description = "Route DirectionType is inbound", priority = 3)
@@ -56,7 +55,7 @@ public class RouteValidatorTests {
 		String directionType = "inbound";
 		boolean result = validateId(directionType);
 
-		Assert.isTrue(result);
+		Assert.assertTrue(result);
 	}
 
 	@Test(groups = { "Nominal 2" }, description = "Route DirectionType is outbound", priority = 3)
@@ -65,6 +64,6 @@ public class RouteValidatorTests {
 		String directionType = "outbound";
 		boolean result = validateId(directionType);
 
-		Assert.isTrue(result);
+		Assert.assertTrue(result);
 	}
 }

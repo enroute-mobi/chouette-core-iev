@@ -1,8 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import com.vividsolutions.jts.util.Assert;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
@@ -41,7 +40,7 @@ public class AbstractValidatorTests {
 
 		boolean result = validateId(id, expectedType);
 
-		Assert.isTrue(!result);
+		Assert.assertTrue(!result);
 	}
 
 	@Test(groups = {
@@ -52,7 +51,7 @@ public class AbstractValidatorTests {
 
 		boolean result = validateId(id, expectedType);
 
-		Assert.isTrue(!result);
+		Assert.assertTrue(!result);
 	}
 
 	@Test(groups = { "Cas erreur 3" }, description = "Le champ #4 n'est pas 'LOC'", priority = 3)
@@ -61,7 +60,7 @@ public class AbstractValidatorTests {
 		String expectedType = "montype";
 
 		boolean result = validateId(id, expectedType);
-		Assert.isTrue(!result);
+		Assert.assertTrue(!result);
 	}
 
 	@Test(groups = { "Nominal" }, description = "ObjectId correct ", priority = 3)
@@ -70,7 +69,7 @@ public class AbstractValidatorTests {
 		String expectedType = "montype";
 
 		boolean result = validateId(id, expectedType);
-		Assert.isTrue(result);
+		Assert.assertTrue(result);
 	}
 
 }
