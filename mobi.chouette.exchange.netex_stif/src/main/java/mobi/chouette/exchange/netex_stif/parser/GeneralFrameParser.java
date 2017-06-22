@@ -1,5 +1,6 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.validator.FrameValidator;
 
 @Log4j
 public class GeneralFrameParser implements Constant, Parser {
@@ -33,16 +35,25 @@ public class GeneralFrameParser implements Constant, Parser {
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		FrameValidator validator = new FrameValidator(context); 
 		String type = null;
+		boolean valid = false;
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
+		Collection<String> frames = (Collection<String>) context.get(GENERAL_FRAMES);
+
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_FRAME_REF)) {
 				type = xpp.getAttributeValue(null, REF);
+				valid = validator.checkForbiddenGeneralFrames(context, type, lineNumber, columnNumber);
+				frames.add(type);  // to check mandatory frames
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(MEMBERS)) {
-				if (type != null) {
+				if (valid && type != null) {
 					String clazz = frameTypes.get(type);
 					if (clazz != null) {
 						// log.info("Parse with "+ clazz);

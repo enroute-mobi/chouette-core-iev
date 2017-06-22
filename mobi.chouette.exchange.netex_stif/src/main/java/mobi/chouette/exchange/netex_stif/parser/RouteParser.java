@@ -33,8 +33,8 @@ public class RouteParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		
-		RouteValidator routeRalidator = new RouteValidator();
-		routeRalidator.checkNetexId(context, ROUTE, id, lineNumber, columnNumber);
+		RouteValidator routeValidator = new RouteValidator(context);
+		routeValidator.checkNetexId(context, ROUTE, id, lineNumber, columnNumber);
 		
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);

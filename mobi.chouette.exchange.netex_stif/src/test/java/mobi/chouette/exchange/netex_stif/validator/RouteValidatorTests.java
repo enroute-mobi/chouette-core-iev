@@ -7,21 +7,24 @@ import com.vividsolutions.jts.util.Assert;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
+import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 
 public class RouteValidatorTests {
 
 	private boolean validateId(String directionType) {
-		RouteValidator validator = new RouteValidator(); // --
 		// RouteValidator
 		// étend
 		// AbstractParsingValidator
 		Context context = new Context();
 		int lineNumber = 0;
 		int columnNumber = 0;
+		ActionReport actionReport = new ActionReport();
 		ValidationReport report = new ValidationReport();
 		context.put(Constant.FILE_NAME, "fakeFilename");
+		context.put(Constant.REPORT, actionReport);
 		context.put(Constant.VALIDATION_REPORT, report);
+		RouteValidator validator = new RouteValidator(context); // --
 
 		boolean result = validator.check2NeTExSTIFRoute1(context, directionType, lineNumber, columnNumber);
 		System.out.println("Report ===>" + report.toString());

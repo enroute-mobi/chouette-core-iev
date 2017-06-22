@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.Collection;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
@@ -8,24 +10,31 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.validator.FrameValidator;
 
 @Log4j
 public class CompositeFrameParser implements Constant, Parser {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		xpp.require(XmlPullParser.START_TAG, null, COMPOSITE_FRAME);
 
-		boolean isTypeValid = false;
+		FrameValidator validator = new FrameValidator(context); 
+		String type = null;
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
+		Collection<String> frames = (Collection<String>) context.get(COMPOSITE_FRAMES);
+
+		boolean valid = false;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_FRAME_REF)) {
-				String val = xpp.getAttributeValue(null, REF);
-				if (val.equals(NETEX_OFFRE_LIGNE)) {
-					isTypeValid = true;
-				}
+				type = xpp.getAttributeValue(null, REF);
+				valid = validator.checkForbiddenGeneralFrames(context, type, lineNumber, columnNumber);
+				frames.add(type);  // to check mandatory frames
 				XPPUtil.skipSubTree(log, xpp);
-			} else if (xpp.getName().equals(FRAMES) && isTypeValid) {
+			} else if (xpp.getName().equals(FRAMES) && valid) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(GENERAL_FRAME)) {
 						Parser parser = ParserFactory.create(GeneralFrameParser.class.getName());

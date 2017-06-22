@@ -6,7 +6,7 @@ public interface NetexCheckPoints {
 	static final String L1_NetexStif_2 = "1-NeTExStif-2";  // NetexStifSAXErrorHandler
 	static final String L1_NetexStif_3 = "1-NeTExStif-3";  // NetexStifSAXErrorHandler
 
-	static final String L2_NeTExSTIF_1 = "2-NeTExSTIF-1";
+	static final String L2_NeTExSTIF_1 = "2-NeTExSTIF-1"; 
 	static final String L2_NeTExSTIF_2 = "2-NeTExSTIF-2";
 	static final String L2_NeTExSTIF_3 = "2-NeTExSTIF-3";
 	static final String L2_NeTExSTIF_4 = "2-NeTExSTIF-4"; // AbstractValidator

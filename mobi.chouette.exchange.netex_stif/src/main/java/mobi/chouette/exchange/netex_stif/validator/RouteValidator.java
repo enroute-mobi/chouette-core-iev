@@ -6,10 +6,6 @@ import mobi.chouette.model.Route;
 
 public class RouteValidator extends AbstractValidator {
 
-	public RouteValidator() {
-
-	}
-
 	public RouteValidator(Context context) {
 		init(context);
 		
@@ -19,8 +15,11 @@ public class RouteValidator extends AbstractValidator {
 		super.init(context);
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
-		// --criticité ERROR
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_4, "E");
+		// -- preset checkpoints to OK if uncheck
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_1);
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_2);
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_3);
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_4);
 	}
 	
 	

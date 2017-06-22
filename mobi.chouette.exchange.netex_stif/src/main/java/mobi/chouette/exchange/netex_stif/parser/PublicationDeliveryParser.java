@@ -1,5 +1,8 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
@@ -8,6 +11,7 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.validator.FrameValidator;
 
 @Log4j
 public class PublicationDeliveryParser implements Parser, Constant {
@@ -22,7 +26,13 @@ public class PublicationDeliveryParser implements Parser, Constant {
 		// Referential referential = (Referential) context.get(REFERENTIAL);
 		String version = xpp.getAttributeValue(null, VERSION);
 		// TODO vérifier que la version soit celle du stif
+		Collection<String> compositeFrameNames =  new ArrayList<String>();
+		Collection<String> generalFrameNames =  new ArrayList<String>();
+		context.put(COMPOSITE_FRAMES, compositeFrameNames);
+		context.put(GENERAL_FRAMES, generalFrameNames);
 
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(DATA_OBJECTS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -42,6 +52,11 @@ public class PublicationDeliveryParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		// check frames completion
+		FrameValidator validator = new FrameValidator(context); 
+		validator.checkMandatoryCompositeFrames(context, compositeFrameNames, lineNumber, columnNumber);
+		validator.checkMandatoryGeneralFrames(context, generalFrameNames, lineNumber, columnNumber);
+		
 		// Referential ref = (Referential)context.get(REFERENTIAL);
 		// log.info("Referential.routes : " + ref.getRoutes());
 	}
