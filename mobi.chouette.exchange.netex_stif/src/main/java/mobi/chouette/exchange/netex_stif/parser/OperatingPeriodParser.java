@@ -19,6 +19,8 @@ public class OperatingPeriodParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		String id = xpp.getAttributeValue(null, ID);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		Period period = factory.getOperatingPeriod(id);

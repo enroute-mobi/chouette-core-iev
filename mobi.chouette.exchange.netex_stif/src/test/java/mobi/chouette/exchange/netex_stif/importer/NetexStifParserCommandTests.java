@@ -134,7 +134,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	@Test(groups = { "Nominal" }, description = "offre", priority = 3)
 	public void verifiyOfferParser() throws Exception{
 		verifiyOfferParser("calendrier.xml", "commun.xml", "offre.xml");
-		verifiyOfferParser("calendrier_sans_s.xml", "commun_sans_s.xml", "offre_sans_s.xml");
+		
 	}
 
 	

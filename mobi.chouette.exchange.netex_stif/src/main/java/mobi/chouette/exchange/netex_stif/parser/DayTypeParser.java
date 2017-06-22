@@ -21,6 +21,8 @@ public class DayTypeParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		xpp.require(XmlPullParser.START_TAG, null, DAY_TYPE);
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		String id = xpp.getAttributeValue(null, ID);
 		Timetable timeTable = ObjectFactory.getTimetable(referential, id);
 		Long version = (Long)context.get(VERSION);

@@ -28,6 +28,8 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		Map<Route, List<StopPoint>> stopPoints = new HashMap<Route, List<StopPoint>>();

@@ -28,6 +28,8 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		xpp.require(XmlPullParser.START_TAG, null, SERVICE_JOURNEY_PATTERN);
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		String id = xpp.getAttributeValue(null, ID);
 		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
 		Long version = (Long) context.get(VERSION);

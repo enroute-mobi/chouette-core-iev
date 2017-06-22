@@ -37,6 +37,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 	@Override
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		Long version = (Long) context.get(VERSION);
 

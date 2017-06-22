@@ -28,7 +28,6 @@ public abstract class AbstractValidator implements NetexCheckPoints {
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_8, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_9, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_10, "E");
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_11, "E");
 		
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Notice_1, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Notice_2, "W");

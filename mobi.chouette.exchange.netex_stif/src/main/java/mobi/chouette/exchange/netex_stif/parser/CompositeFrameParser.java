@@ -31,7 +31,7 @@ public class CompositeFrameParser implements Constant, Parser {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_FRAME_REF)) {
 				type = xpp.getAttributeValue(null, REF);
-				valid = validator.checkForbiddenGeneralFrames(context, type, lineNumber, columnNumber);
+				valid = validator.checkForbiddenCompositeFrames(context, type, lineNumber, columnNumber);
 				frames.add(type);  // to check mandatory frames
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(FRAMES) && valid) {

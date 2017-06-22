@@ -17,49 +17,26 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 /*
- * Manage XML and XSD errors as 2 Netex Checkpoints : 
+ * Manage XML and XSD errors as a Netex Checkpoint : 
  * 
- * Description
+ * https://projects.af83.io/issues/2111
  *
  * Code : 1-NeTExStif-2
  *
- * Variables :
- *    néant
+ * Variables : néant
  *
- * Prérequis :
- *    néant
+ * Prérequis : néant
  *
- * Prédicat :
- *    les fichiers xml doivent respecter la syntaxe XML du W3C
+ * Prédicat : les fichiers xml doivent respecter la syntaxe XML du W3C et la XSD NeTEx
  *
  * Message :
- *    Le fichier {nomFichier} ne respecte pas la syntaxe XML : code W3C {code erreur} rencontré
+ *    Le fichier {nomFichier} ne respecte pas la syntaxe XML ou la XSD NeTEx : message {message XERCES} rencontré
  *
- * Criticité :
- * error
+ * Criticité : error
  * 
- * ------------------------------------------------------------------------
- * 
- * Description
- *
- *Code : 1-NeTExStif-3
- *
- * Variables :
- *    néant
- *
- * Prérequis :
- *    néant
- *
- * Prédicat :
- *    les fichiers xml doivent respecter la XSD NeTEx
- *
- * Message :
- *    Le fichier {nomFichier} ne respecte pas la XSD NeTEx : code W3C {code erreur} rencontré
- *
- * Criticité :
- *    error
  * 
  */
+
 public class NetexStifSAXErrorHandler implements ErrorHandler, Constant, NetexCheckPoints {
 
 	private ValidationReporter validationReporter;
@@ -72,51 +49,22 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant, NetexCh
 	public NetexStifSAXErrorHandler(Context context, String fileURL) throws Exception {
 		this.context = context;
 		validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context,L1_NetexStif_2, "E");
-		validationReporter.addItemToValidationReport(context, L1_NetexStif_3, "W");
+		validationReporter.addItemToValidationReport(context, L1_NetexStif_2, "E");
 		validationReporter.updateCheckPointReportState(context, L1_NetexStif_2, ValidationReporter.RESULT.OK);
-		validationReporter.updateCheckPointReportState(context, L1_NetexStif_3, ValidationReporter.RESULT.OK);
 
 		fileName = new File(new URL(fileURL).toURI()).getName();
 	}
 
-	public void handleError(Exception error) {
-		if (error instanceof SAXParseException) {
-			SAXParseException cause = (SAXParseException) error;
-			DataLocation location = new DataLocation(fileName, cause.getLineNumber(), cause.getColumnNumber());
-			validationReporter.addCheckPointReportError(context,L1_NetexStif_2, location, "xml-failure",
-					cause.getMessage());
-		} else {
-			DataLocation location = new DataLocation(fileName, 1, 1);
-			location.setName("xml-failure");
-			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, "xml-failure",
-					error.getMessage());
-		}
-	}
-
 	private void handleError(SAXParseException error, SEVERITY severity) {
-		String key = "";
-		if (error.getMessage().contains(":")) {
-			String newKey = error.getMessage().substring(0, error.getMessage().indexOf(":")).trim();
-			if (!newKey.contains(" ")) {
-				if (newKey.contains("."))
-					newKey = newKey.substring(0, newKey.indexOf("."));
-				key = newKey;
-			}
-		}
-		if (severity.equals(CheckPointReport.SEVERITY.ERROR))
+		if (severity.equals(CheckPointReport.SEVERITY.ERROR)) {
 			hasErrors = true;
 
-		DataLocation location = new DataLocation(fileName, error.getLineNumber(), error.getColumnNumber());
-		// location.setName(key);
+			DataLocation location = new DataLocation(fileName, error.getLineNumber(), error.getColumnNumber());
 
-		if (key.isEmpty()) {
-			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, "xml-failure",
-					error.getMessage());
-		} else {
-			validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_3, severity);
-			validationReporter.addCheckPointReportError(context, L1_NetexStif_3, location, key, error.getMessage());
+			validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_2, severity);
+			validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, error.getMessage());
 		}
+
 		return;
 	}
 

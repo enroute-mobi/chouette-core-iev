@@ -19,6 +19,8 @@ public class DirectionParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory)context.get(NETEX_STIF_OBJECT_FACTORY);
 		
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		Long version = (Long) context.get(VERSION);
 		String id = xpp.getAttributeValue(null, ID);
 		Direction direction = factory.getDirection(id);

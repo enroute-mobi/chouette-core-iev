@@ -27,6 +27,8 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		Timetable timetable = null;
 		Period period = null;
 		CalendarDay day = null;

@@ -15,6 +15,8 @@ public class ScheduledStopPointParser implements Parser, Constant {
 
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 
 		String id = xpp.getAttributeValue(null, ID);

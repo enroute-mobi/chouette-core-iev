@@ -111,8 +111,7 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		CheckPointErrorReport error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
 		Assert.assertEquals(error.getTestId(),"1-NeTExStif-2","checkpoint code");
 		Assert.assertEquals(error.getKey(),"1_netexstif_2","message code");
-		Assert.assertEquals(error.getValue(),"xml-failure","value");
-		Assert.assertFalse(error.getReferenceValue().isEmpty(),"ref value");
+		Assert.assertTrue(error.getValue().contains("netex:ParticipantRef"),"value");
 		Assert.assertEquals(error.getSource().getFile().getFilename(),"badxmlfile.xml","source filename");
 		Assert.assertEquals(error.getSource().getFile().getLineNumber(),Integer.valueOf(190),"source line number");
 		Assert.assertEquals(error.getSource().getFile().getColumnNumber(),Integer.valueOf(3),"source column number");		
@@ -140,10 +139,9 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		Assert.assertEquals(file.getStatus(),FILE_STATE.ERROR,"file status reported");
 		Assert.assertEquals(file.getCheckPointErrorCount(),1,"file error reported");
 		CheckPointErrorReport error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
-		Assert.assertEquals(error.getTestId(),"1-NeTExStif-3","checkpoint code");
-		Assert.assertEquals(error.getKey(),"1_netexstif_3","message code");
-		Assert.assertEquals(error.getValue(),"cvc-complex-type","value");
-		Assert.assertFalse(error.getReferenceValue().isEmpty(),"ref value");
+		Assert.assertEquals(error.getTestId(),"1-NeTExStif-2","checkpoint code");
+		Assert.assertEquals(error.getKey(),"1_netexstif_2","message code");
+		Assert.assertTrue(error.getValue().startsWith("cvc-complex-type"),"value");
 		Assert.assertEquals(error.getSource().getFile().getFilename(),"badxsdfile.xml","source filename");
 		Assert.assertEquals(error.getSource().getFile().getLineNumber(),Integer.valueOf(21),"source line number");
 		Assert.assertEquals(error.getSource().getFile().getColumnNumber(),Integer.valueOf(62),"source column number");		
