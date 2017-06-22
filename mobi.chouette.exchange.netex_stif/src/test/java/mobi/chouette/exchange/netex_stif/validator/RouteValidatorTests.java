@@ -6,7 +6,7 @@ import com.vividsolutions.jts.util.Assert;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.validatior.RouteValidator;
+import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 
 public class RouteValidatorTests {

@@ -6,18 +6,18 @@ import com.vividsolutions.jts.util.Assert;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.validatior.AbstractParsingValidator;
-import mobi.chouette.exchange.netex_stif.validatior.RouteValidator;
+import mobi.chouette.exchange.netex_stif.validator.AbstractValidator;
+import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
-public class AbstractParsingValidatorTests {
+public class AbstractValidatorTests {
 
 	
 	
 	private boolean validateId(String id, String type) {
 		Context context = new Context();
-		AbstractParsingValidator validator = new RouteValidator(context); // --
+		AbstractValidator validator = new RouteValidator(context); // --
 																	// RouteValidator
 																	// étend
 																	// AbstractParsingValidator

@@ -165,6 +165,33 @@ public class Referential implements java.io.Serializable {
 	@Setter
 	private Map<String, RoutingConstraint> routingConstraints = new HashMap<String, RoutingConstraint>();
 
+	public LineLite findLine(Long id)
+	{
+		for (LineLite line : sharedReadOnlyLines.values()) {
+			if (line.getId().equals(id))
+				return line;
+		}
+		return null;
+	}
+	
+	public StopAreaLite findStopArea(Long id)
+	{
+		for (StopAreaLite stop : sharedReadOnlyStopAreas.values()) {
+			if (stop.getId().equals(id))
+				return stop;
+		}
+		return null;
+	}
+
+	public CompanyLite findCompany(Long id)
+	{
+		for (CompanyLite company : sharedReadOnlyCompanies.values()) {
+			if (company.getId().equals(id))
+				return company;
+		}
+		return null;
+	}
+
 	public void clear(boolean cascade) {
 		if (cascade) {
 			for (Line line : lines.values()) {

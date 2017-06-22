@@ -1,10 +1,10 @@
-package mobi.chouette.exchange.netex_stif.validatior;
+package mobi.chouette.exchange.netex_stif.validator;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.Route;
 
-public class RouteValidator extends AbstractParsingValidator {
+public class RouteValidator extends AbstractValidator {
 
 	public RouteValidator() {
 

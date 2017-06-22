@@ -1,8 +1,8 @@
-package mobi.chouette.exchange.netex_stif.validatior;
+package mobi.chouette.exchange.netex_stif.validator;
 
 import mobi.chouette.common.Context;
 
-public class LineValidator extends AbstractParsingValidator {
+public class LineValidator extends AbstractValidator {
 
 	/*
 	 * https://projects.af83.io/issues/2308

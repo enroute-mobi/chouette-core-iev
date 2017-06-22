@@ -15,6 +15,7 @@ import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.UncompressCommand;
+import mobi.chouette.exchange.netex_stif.validator.NetexCheckPoints;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.exchange.report.ReportConstant;
@@ -35,11 +36,9 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
  *
  */
 @Log4j
-public class NetexStifUncompressCommand implements Command, ReportConstant {
+public class NetexStifUncompressCommand implements Command, ReportConstant,NetexCheckPoints {
 
 	public static final String COMMAND = "NetexStifUncompressCommand";
-
-	public static final String L1_NetexStif_1 = "1-NeTExStif-1";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
@@ -68,7 +67,7 @@ public class NetexStifUncompressCommand implements Command, ReportConstant {
                 log.error("missing file : calendrier.xml");
 				ActionReporter reporter = ActionReporter.Factory.getInstance();
 				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no calendrier.xml file");
-				validationReporter.addCheckPointReportError(context, NetexStifUncompressCommand.L1_NetexStif_1, "2",
+				validationReporter.addCheckPointReportError(context, L1_NetexStif_1, "2",
 						new DataLocation(zipName), "calendrier.xml");
 				result = ERROR;
 			}
@@ -78,7 +77,7 @@ public class NetexStifUncompressCommand implements Command, ReportConstant {
                 log.error("missing files : no offer file found");
 				ActionReporter reporter = ActionReporter.Factory.getInstance();
 				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no offer data");
-				validationReporter.addCheckPointReportError(context, NetexStifUncompressCommand.L1_NetexStif_1, "3",
+				validationReporter.addCheckPointReportError(context, L1_NetexStif_1, "3",
 						new DataLocation(zipName));
 				result = ERROR;
 			}
