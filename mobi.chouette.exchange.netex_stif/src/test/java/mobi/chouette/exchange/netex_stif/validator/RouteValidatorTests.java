@@ -3,15 +3,24 @@ package mobi.chouette.exchange.netex_stif.validator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import lombok.Getter;
+import lombok.Setter;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 
 public class RouteValidatorTests {
 
-	private boolean validateId(String directionType) {
+	@Getter
+	@Setter
+	class ReportAndResult {
+		ValidationReport report;
+		boolean result;
+
+	}
+
+	private ReportAndResult validateId(String directionType) {
 		// RouteValidator
 		// étend
 		// AbstractParsingValidator
@@ -19,6 +28,7 @@ public class RouteValidatorTests {
 		int lineNumber = 0;
 		int columnNumber = 0;
 		ActionReport actionReport = new ActionReport();
+
 		ValidationReport report = new ValidationReport();
 		context.put(Constant.FILE_NAME, "fakeFilename");
 		context.put(Constant.REPORT, actionReport);
@@ -28,42 +38,46 @@ public class RouteValidatorTests {
 		boolean result = validator.check2NeTExSTIFRoute1(context, directionType, lineNumber, columnNumber);
 		System.out.println("Report ===>" + report.toString());
 		System.out.println("REPORT Result = " + report.getResult());
-		return result;
+
+		ReportAndResult rar = new ReportAndResult();
+		rar.setReport(report);
+		rar.setResult(result);
+		return rar;
 	}
 
 	@Test(groups = { "Cas erreur 1" }, description = "Route DirectionType incorrect ", priority = 3)
 	public void verifyRouteDirectionTypeIncorrect() throws Exception {
 
 		String directionType = "xxxx";
-		boolean result = validateId(directionType);
+		ReportAndResult rar= validateId(directionType);
 
-		Assert.assertTrue(!result);
+		Assert.assertTrue(!rar.isResult());
 	}
 
 	@Test(groups = { "Cas erreur 1" }, description = "Route DirectionType incorrect (null) ", priority = 3)
 	public void verifyRouteDirectionTypeNull() throws Exception {
 
 		String directionType = null;
-		boolean result = validateId(directionType);
+		ReportAndResult rar = validateId(directionType);
 
-		Assert.assertTrue(!result);
+		Assert.assertTrue(!rar.isResult());
 	}
 
 	@Test(groups = { "Nominal 1" }, description = "Route DirectionType is inbound", priority = 3)
 	public void verifyRouteDirectionTypeWithInbound() throws Exception {
 
 		String directionType = "inbound";
-		boolean result = validateId(directionType);
+		ReportAndResult rar = validateId(directionType);
 
-		Assert.assertTrue(result);
+		Assert.assertTrue(!rar.isResult());
 	}
 
 	@Test(groups = { "Nominal 2" }, description = "Route DirectionType is outbound", priority = 3)
 	public void verifyRouteDirectionTypeWithOutbound() throws Exception {
 
 		String directionType = "outbound";
-		boolean result = validateId(directionType);
+		ReportAndResult rar = validateId(directionType);
 
-		Assert.assertTrue(result);
+		Assert.assertTrue(!rar.isResult());
 	}
 }

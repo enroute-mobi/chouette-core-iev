@@ -1,6 +1,8 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.Route;
 
@@ -48,6 +50,15 @@ public class RouteValidator extends AbstractValidator {
 		if (attribute == null || (!attribute.equals("outbound") && !attribute.equals("inbound"))) {
 			result = false;
 		}
+		
+		if (!result) {
+
+			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_1, location, attribute);
+		}
 		return result;
 	}
 
@@ -75,7 +86,9 @@ public class RouteValidator extends AbstractValidator {
 	 * 
 	 */
 	public boolean check2NeTExSTIFRoute2(Context context, Route route, int lineNumber, int columnNumber) {
-		throw new RuntimeException("Not yet implemented");
+		boolean result = true;
+		
+		return result;
 	}
 
 	/*
@@ -99,6 +112,8 @@ public class RouteValidator extends AbstractValidator {
 	 * 
 	 */
 	public boolean check2NeTExSTIFRoute3(Context context, String zzz, int lineNumber, int columnNumber) {
-		throw new RuntimeException("Not yet implemented");
+		boolean result = true;
+	
+		return result;
 	}
 }
