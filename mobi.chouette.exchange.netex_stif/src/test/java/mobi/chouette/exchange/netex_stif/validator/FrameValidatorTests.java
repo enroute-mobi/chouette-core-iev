@@ -36,11 +36,12 @@ public class FrameValidatorTests implements Constant {
 	private static final String FRAME_OFFRE_LIGNE = "NETEX_OFFRE_LIGNE";
 	private static final String FRAME_COMMUN = "NETEX_COMMUN";
 	private static final String FRAME_CALENDRIER = "NETEX_CALENDRIER";
-	protected static InitialContext initialContext;
 	private static final String OFFRE_FILE_NAME = "offre_test.xml";
 	private static final String COMMUN_FILE_NAME = "commun.xml";
 	private static final String CALENDRIER_FILE_NAME = "calendrier.xml";
-	
+
+	protected static InitialContext initialContext;
+
 	@BeforeSuite
 	public void init() {
 		BasicConfigurator.resetConfiguration();
