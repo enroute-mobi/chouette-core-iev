@@ -5,10 +5,7 @@ import org.testng.annotations.Test;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.validator.AbstractValidator;
-import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public class AbstractValidatorTests {
 

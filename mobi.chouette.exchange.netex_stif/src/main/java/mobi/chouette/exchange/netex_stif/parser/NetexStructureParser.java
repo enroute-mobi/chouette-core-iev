@@ -141,13 +141,14 @@ public class NetexStructureParser implements Parser, Constant {
 
 	static {
 		// init used members
-		members.put(ROUTES, ROUTE);
-		members.put(DIRECTIONS, DIRECTION);
-		members.put(SERVICE_JOURNEY_PATTERNS, SERVICE_JOURNEY_PATTERN);
-		members.put(DESTINATION_DISPLAYS, DESTINATION_DISPLAY);
-		members.put(SCHEDULED_STOP_POINTS, SCHEDULED_STOP_POINT);
-		members.put(PASSENGER_STOP_ASSIGNMENTS, PASSENGER_STOP_ASSIGNMENT);
-		members.put(ROUTING_CONSTRAINT_ZONES, ROUTING_CONSTRAINT_ZONE);
+		// Not yet implemented in XSD
+//		members.put(ROUTES, ROUTE);
+//		members.put(DIRECTIONS, DIRECTION);
+//		members.put(SERVICE_JOURNEY_PATTERNS, SERVICE_JOURNEY_PATTERN);
+//		members.put(DESTINATION_DISPLAYS, DESTINATION_DISPLAY);
+//		members.put(SCHEDULED_STOP_POINTS, SCHEDULED_STOP_POINT);
+//		members.put(PASSENGER_STOP_ASSIGNMENTS, PASSENGER_STOP_ASSIGNMENT);
+//		members.put(ROUTING_CONSTRAINT_ZONES, ROUTING_CONSTRAINT_ZONE);
 
 		// init used parsers
 		parsers.put(ROUTE, RouteParser.class.getName());

@@ -2,10 +2,15 @@
 
 <suite name="exchangeNetexStif" verbose="5">
    
-   
    <test name="ImportNetexStif">
        <packages>
          <package name="mobi.chouette.exchange.netex_stif.importer" >
+         </package>
+       </packages>
+   </test>
+   <test name="ValidateNetexStif">
+       <packages>
+         <package name="mobi.chouette.exchange.netex_stif.validator" >
          </package>
        </packages>
    </test>

@@ -2,18 +2,15 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 import java.util.Collection;
 
-import mobi.chouette.common.Constant;
+import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
-public class FrameValidator extends AbstractValidator {
+public class FrameValidator extends AbstractValidator implements Constant{
 
-	private static final String FrameCommun = "NETEX_COMMUN";
-	private static final String FrameCalendrier = "NETEX_CALENDRIER";
-	private static final String FrameOffre = "NETEX_OFFRE_LIGNE";
-	private static final String FrameStructure = "NETEX_STRUCTURE";
-	private static final String FrameHoraire = "NETEX_HORAIRE";
+	private static final String CALENDRIER_FILE_NAME = "calendrier.xml";
+	private static final String COMMUN_FILE_NAME = "commun.xml";
 
 	public FrameValidator(Context context) {
 		init(context);
@@ -39,9 +36,9 @@ public class FrameValidator extends AbstractValidator {
 	public boolean checkMandatoryGeneralFrames(Context context, Collection<String> frameNames, int lineNumber,
 			int columnNumber) {
 		String fileName = (String) context.get(Constant.FILE_NAME);
-		if (fileName.endsWith("commun.xml")) {
+		if (fileName.endsWith(COMMUN_FILE_NAME)) {
 			return check2NeTExSTIF1_1(context, frameNames, lineNumber, columnNumber);
-		} else if (fileName.endsWith("calendrier.xml")) {
+		} else if (fileName.endsWith(CALENDRIER_FILE_NAME)) {
 			return check2NeTExSTIF2_1(context, frameNames, lineNumber, columnNumber);
 
 		} else {
@@ -53,9 +50,9 @@ public class FrameValidator extends AbstractValidator {
 			int columnNumber) {
 		String fileName = (String) context.get(Constant.FILE_NAME);
 		// no mandatory composite frames for commun and calendrier ; skip checkpoint
-		if (fileName.endsWith("commun.xml")) {
+		if (fileName.endsWith(COMMUN_FILE_NAME)) {
 			return true;
-		} else if (fileName.endsWith("calendrier.xml")) {
+		} else if (fileName.endsWith(CALENDRIER_FILE_NAME)) {
 			return true;
 
 		} else {
@@ -65,9 +62,9 @@ public class FrameValidator extends AbstractValidator {
 
 	public boolean checkForbiddenGeneralFrames(Context context, String frameName, int lineNumber, int columnNumber) {
 		String fileName = (String) context.get(Constant.FILE_NAME);
-		if (fileName.endsWith("commun.xml")) {
+		if (fileName.endsWith(COMMUN_FILE_NAME)) {
 			return check2NeTExSTIF1_2(context, frameName, lineNumber, columnNumber);
-		} else if (fileName.endsWith("calendrier.xml")) {
+		} else if (fileName.endsWith(CALENDRIER_FILE_NAME)) {
 			return check2NeTExSTIF2_2(context, frameName, lineNumber, columnNumber);
 
 		} else {
@@ -78,9 +75,9 @@ public class FrameValidator extends AbstractValidator {
 	public boolean checkForbiddenCompositeFrames(Context context, String frameName, int lineNumber, int columnNumber) {
 		String fileName = (String) context.get(Constant.FILE_NAME);
 		// no composite frame for calendrier or commun : creare error using CompositeFrame as name
-		if (fileName.endsWith("commun.xml")) {
+		if (fileName.endsWith(COMMUN_FILE_NAME)) {
 			return check2NeTExSTIF1_2(context, "CompositeFrame", lineNumber, columnNumber);
-		} else if (fileName.endsWith("calendrier.xml")) {
+		} else if (fileName.endsWith(CALENDRIER_FILE_NAME)) {
 			return check2NeTExSTIF2_2(context, "CompositeFrame", lineNumber, columnNumber);
 
 		} else {
@@ -112,7 +109,7 @@ public class FrameValidator extends AbstractValidator {
 			int columnNumber) {
 		boolean result = false;
 		for (String frameName : frameNames) {
-			if (frameName.equals(FrameCommun)) {
+			if (frameName.equals(NETEX_COMMUN)) {
 				result = true;
 			}
 		}
@@ -127,7 +124,7 @@ public class FrameValidator extends AbstractValidator {
 
 	private boolean check2NeTExSTIF1_2(Context context, String frameName, int lineNumber, int columnNumber) {
 		boolean result = true;
-		if (!frameName.equals(FrameCommun)) {
+		if (!frameName.equals(NETEX_COMMUN)) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
@@ -160,7 +157,7 @@ public class FrameValidator extends AbstractValidator {
 			int columnNumber) {
 		boolean result = false;
 		for (String frameName : frameNames) {
-			if (frameName.equals(FrameCalendrier)) {
+			if (frameName.equals(NETEX_CALENDRIER)) {
 				result = true;
 			}
 		}
@@ -175,7 +172,7 @@ public class FrameValidator extends AbstractValidator {
 
 	private boolean check2NeTExSTIF2_2(Context context, String frameName, int lineNumber, int columnNumber) {
 		boolean result = true;
-		if (!frameName.equals(FrameCalendrier)) {
+		if (!frameName.equals(NETEX_CALENDRIER)) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
@@ -213,7 +210,7 @@ public class FrameValidator extends AbstractValidator {
 			int columnNumber) {
 		boolean result = false;
 		for (String frameName : frameNames) {
-			if (frameName.equals(FrameOffre)) {
+			if (frameName.equals(NETEX_OFFRE_LIGNE)) {
 				result = true;
 			}
 		}
@@ -228,7 +225,7 @@ public class FrameValidator extends AbstractValidator {
 
 	private boolean check2NeTExSTIF3_2(Context context, String frameName, int lineNumber, int columnNumber) {
 		boolean result = true;
-		if (!frameName.equals(FrameOffre)) {
+		if (!frameName.equals(NETEX_OFFRE_LIGNE)) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
@@ -241,14 +238,14 @@ public class FrameValidator extends AbstractValidator {
 
 	private boolean check2NeTExSTIF3_3(Context context, Collection<String> frameNames, int lineNumber,
 			int columnNumber) {
-		boolean result = false;
+		boolean result = true;
 		boolean structure = false;
 		boolean horaire = false;
 		for (String frameName : frameNames) {
-			if (frameName.equals(FrameStructure)) {
+			if (frameName.equals(NETEX_STRUCTURE)) {
 				structure = true;
 			}
-			if (frameName.equals(FrameHoraire)) {
+			if (frameName.equals(NETEX_HORAIRE)) {
 				horaire = true;
 			}
 		}
@@ -256,14 +253,14 @@ public class FrameValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "3", location, "NETEX_STRUCTURE");
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "3", location, NETEX_STRUCTURE);
 			result = false;
 		}
 		if (!horaire) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "3", location, "NETEX_HORAIRE");
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "3", location, NETEX_HORAIRE);
 			result = false;
 		}
 		return result;
@@ -272,7 +269,7 @@ public class FrameValidator extends AbstractValidator {
 
 	private boolean check2NeTExSTIF3_4(Context context, String frameName, int lineNumber, int columnNumber) {
 		boolean result = true;
-		if (!frameName.equals(FrameStructure) && !frameName.equals(FrameHoraire)) {
+		if (!frameName.equals(NETEX_STRUCTURE) && !frameName.equals(NETEX_HORAIRE)) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
