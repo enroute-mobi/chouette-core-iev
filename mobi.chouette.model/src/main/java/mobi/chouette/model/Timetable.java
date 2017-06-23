@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +44,7 @@ import org.hibernate.annotations.Parameter;
 @Cacheable
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "vehicleJourneys" })
-public class Timetable extends ChouetteIdentifiedObject {
+public class Timetable extends ChouetteIdentifiedObject implements SignedChouetteObject {
 	private static final long serialVersionUID = -1598554061982685113L;
 	public static final long ONE_DAY = 3600000 * 24;
 
@@ -57,6 +58,17 @@ public class Timetable extends ChouetteIdentifiedObject {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
+
+	
 	/**
 	 * mapping day type with enumerations
 	 */

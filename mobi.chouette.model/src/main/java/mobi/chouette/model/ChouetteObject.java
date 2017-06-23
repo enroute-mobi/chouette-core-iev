@@ -33,6 +33,7 @@ public abstract class ChouetteObject implements Serializable {
 	@Transient
 	private boolean detached = false;
 
+	
 	/**
 	 * database id <br/>
 	 * null if not saved

@@ -22,6 +22,7 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.dao.TimetableDAO;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
@@ -29,6 +30,7 @@ import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
@@ -71,6 +73,8 @@ public class RouteRegisterCommand implements Command {
 						vj.getTimetables().add(saved);
 					}
 				}
+			} else {
+				ChecksumUtil.checksum(context, timetable);
 			}
 		}
 		Map<String, Route> routes = referential.getRoutes();
@@ -78,11 +82,25 @@ public class RouteRegisterCommand implements Command {
 		while (iterator.hasNext()) {
 			Route route = iterator.next();
 			for (JourneyPattern jp : route.getJourneyPatterns()) {
-				if (jp.getStopPoints().size() > 0)
-				{
+				if (jp.getStopPoints().size() > 0) {
 					jp.setDepartureStopPoint(jp.getStopPoints().get(0));
-					jp.setArrivalStopPoint(jp.getStopPoints().get(jp.getStopPoints().size()-1));
+					jp.setArrivalStopPoint(jp.getStopPoints().get(jp.getStopPoints().size() - 1));
 				}
+				for (VehicleJourney vj : jp.getVehicleJourneys()) {
+					for (VehicleJourneyAtStop vjas : vj.getVehicleJourneyAtStops()) {
+						ChecksumUtil.checksum(context, vjas);
+					}
+					for (Footnote note : vj.getFootnotes()) {
+						if (note.getChecksum() == null)
+							ChecksumUtil.checksum(context, note);
+					}
+
+				}
+				ChecksumUtil.checksum(context, jp);
+			}
+			for (RoutingConstraint rc : route.getRoutingConstraints()) {
+				if (rc.getChecksum() == null)
+					ChecksumUtil.checksum(context, rc);
 			}
 			routeDAO.create(route);
 			routeDAO.flush();

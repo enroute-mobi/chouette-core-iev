@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,10 +20,21 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Period implements Serializable, Comparable<Period>, Cloneable {
+public class Period implements Serializable, Comparable<Period>, Cloneable , SignedChouetteObject{
 
 	private static final long serialVersionUID = -1964071056103739954L;
 
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
+
+	
 	/**
 	 * first date of period
 	 * 

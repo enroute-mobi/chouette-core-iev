@@ -30,7 +30,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "footnotes")
 @NoArgsConstructor
-public class Footnote extends ChouetteObject {
+public class Footnote extends ChouetteObject implements SignedChouetteObject {
 	/**
     * 
     */
@@ -46,10 +46,24 @@ public class Footnote extends ChouetteObject {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
-	@Getter @Setter @Transient 
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
+
+	@Getter 
+	@Setter 
+	@Transient 
 	private String objectId;
 	
-	@Getter @Setter @Transient 
+	@Getter 
+	@Setter 
+	@Transient 
 	private Long objectVersion;
 
 	/**

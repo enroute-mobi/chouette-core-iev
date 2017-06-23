@@ -49,7 +49,7 @@ import mobi.chouette.model.type.PTDirectionEnum;
 @Table(name = "routes")
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "line", "oppositeRoute" })
-public class Route extends ChouetteIdentifiedObject {
+public class Route extends ChouetteIdentifiedObject implements SignedChouetteObject {
 
 	private static final long serialVersionUID = -2249654966081042738L;
 
@@ -63,6 +63,17 @@ public class Route extends ChouetteIdentifiedObject {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
+
+	
 	/**
 	 * name
 	 * 

@@ -25,7 +25,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "routing_constraint_zones")
 @NoArgsConstructor
-public class RoutingConstraint extends ChouetteIdentifiedObject {
+public class RoutingConstraint extends ChouetteIdentifiedObject implements SignedChouetteObject {
 
 	private static final long serialVersionUID = -2247411121328805905L;
 
@@ -40,6 +40,17 @@ public class RoutingConstraint extends ChouetteIdentifiedObject {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
+
+	
 	/**
 	 * name
 	 * 

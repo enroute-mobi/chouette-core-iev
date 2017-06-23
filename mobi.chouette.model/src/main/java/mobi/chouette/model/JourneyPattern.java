@@ -41,7 +41,7 @@ import mobi.chouette.model.type.SectionStatusEnum;
 @Table(name = "journey_patterns")
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = { "route" })
-public class JourneyPattern extends ChouetteIdentifiedObject {
+public class JourneyPattern extends ChouetteIdentifiedObject implements SignedChouetteObject {
 	private static final long serialVersionUID = 7895941111990419404L;
 
 	@Getter
@@ -55,6 +55,16 @@ public class JourneyPattern extends ChouetteIdentifiedObject {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 	
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
+
 	/**
 	 * name
 	 * 
