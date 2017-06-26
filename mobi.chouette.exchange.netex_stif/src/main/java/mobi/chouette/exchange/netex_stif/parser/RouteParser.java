@@ -33,8 +33,8 @@ public class RouteParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		
-		RouteValidator routeValidator = new RouteValidator(context);
-		routeValidator.checkNetexId(context, ROUTE, id, lineNumber, columnNumber);
+		RouteValidator validator = new RouteValidator(context);
+		validator.checkNetexId(context, ROUTE, id, lineNumber, columnNumber);
 		
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
@@ -76,6 +76,7 @@ public class RouteParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(INVERSE_ROUTE_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);
+				validator.addInverseRouteRef(context, route.getObjectId(), tmp);
 				Route wayBackRoute = ObjectFactory.getRoute(referential, tmp);
 				if (wayBackRoute != null) {
 					wayBackRoute.setOppositeRoute(route);

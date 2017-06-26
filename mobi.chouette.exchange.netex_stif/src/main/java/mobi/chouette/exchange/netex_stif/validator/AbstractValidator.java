@@ -1,16 +1,21 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
-import mobi.chouette.common.Constant;
+import java.util.HashSet;
+import java.util.Set;
+
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
-public abstract class AbstractValidator implements NetexCheckPoints {
+public abstract class AbstractValidator implements NetexCheckPoints, Constant {
+
+	private static final String REGEX_ID_PREFIX = "^[\\w-]+:";
+	private static final String REGEX_ID_SUFFIX = ":[\\w-]+:LOC$";
+
+	protected static final String OBJECT_IDS = "encontered_ids";
+
 	
-	private static final String REGEX_ID_PREFIX="^[\\w-]+:";
-	private static final String REGEX_ID_SUFFIX=":[\\w-]+:LOC$";
-
-
 	public AbstractValidator() {
 
 	}
@@ -32,10 +37,10 @@ public abstract class AbstractValidator implements NetexCheckPoints {
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_8, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_9, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_10, "E");
-		
+
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Notice_1, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Notice_2, "W");
-		
+
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_DayTypeAssignment_1, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_DayTypeAssignment_2, "E");
 
@@ -69,9 +74,36 @@ public abstract class AbstractValidator implements NetexCheckPoints {
 
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassingTime_1, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassingTime_2, "E");
-		
-		// prepare local chekpoints 
+
+		// prepare local chekpoints
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_4);
+
+	}
+
+	@SuppressWarnings("unchecked")
+	protected static Context getObjectContext(Context context, String localContextName, String objectId) {
+		Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
+		if (validationContext == null) {
+			validationContext = new Context();
+			context.put(VALIDATION_CONTEXT, validationContext);
+			validationContext.put(OBJECT_IDS, new HashSet<String>());
+		}
+
+		// TODO à retirer si non utilisé (contrôle d'existence des objectIds) 
+		Set<String> objectIds = (Set<String>) validationContext.get(OBJECT_IDS);
+		objectIds.add(objectId);
+
+		Context localContext = (Context) validationContext.get(localContextName);
+		if (localContext == null) {
+			localContext = new Context();
+			validationContext.put(localContextName, localContext);
+		}
+		Context objectContext = (Context) localContext.get(objectId);
+		if (objectContext == null) {
+			objectContext = new Context();
+			localContext.put(objectId, objectContext);
+		}
+		return objectContext;
 
 	}
 
@@ -96,16 +128,16 @@ public abstract class AbstractValidator implements NetexCheckPoints {
 	 */
 	public boolean checkNetexId(Context context, String type, String id, int lineNumber, int columnNumber) {
 
-		String regex = REGEX_ID_PREFIX+type+REGEX_ID_SUFFIX;
+		String regex = REGEX_ID_PREFIX + type + REGEX_ID_SUFFIX;
 		boolean result = id.matches(regex);
-		
+
 		if (!result) {
 
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, id,regex);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, id, regex);
 		}
 		return result;
 	}

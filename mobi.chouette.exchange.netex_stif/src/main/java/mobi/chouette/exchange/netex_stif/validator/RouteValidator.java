@@ -13,6 +13,8 @@ import mobi.chouette.model.StopPoint;
 
 public class RouteValidator extends AbstractValidator {
 
+	public static final String LOCAL_CONTEXT = "Route";
+
 	public RouteValidator(Context context) {
 		init(context);
 
@@ -30,6 +32,12 @@ public class RouteValidator extends AbstractValidator {
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_4);
 	}
 
+	
+	public void addInverseRouteRef(Context context, String objectId, String inverseRouteRef)
+	{
+		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
+		objectContext.put(INVERSE_ROUTE_REF, inverseRouteRef);
+	}
 	/**
 	 * <a target="_blank" href="https://projects.af83.io/issues/2308" >Carte #2308</a>
 	 * <p>
@@ -100,9 +108,13 @@ public class RouteValidator extends AbstractValidator {
 	public boolean check2NeTExSTIFRoute2_1(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
 
-		if (route.getOppositeRoute() != null && route.getOppositeRoute().getOppositeRoute() != null
-				&& route.getId() != route.getOppositeRoute().getOppositeRoute().getId()) {
-			result = false;
+		if (route.getOppositeRoute() != null) 
+		{
+			Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
+			Context localContext = (Context) validationContext.get(LOCAL_CONTEXT);
+            Context waybackContext = (Context) localContext.get(route.getOppositeRoute().getObjectId());
+            String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
+            result = !wayBackInverseRouteRef.equals(route.getObjectId());
 		}
 
 		if (!result) {
