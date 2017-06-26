@@ -63,7 +63,7 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_1, location, wayback);
 		}
 		return result;
@@ -108,9 +108,9 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_2, "1", location,
-					route.getObjectId());
+					route.getOppositeRoute().getObjectId());
 		}
 
 		return result;
@@ -136,9 +136,9 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_2, "2", location,
-					route.getObjectId());
+					route.getOppositeRoute().getObjectId());
 		}
 
 		return result;
@@ -184,8 +184,8 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_3, location, route.getObjectId());
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_3, location, lastPosition.toString());
 		}
 
 		return result;
