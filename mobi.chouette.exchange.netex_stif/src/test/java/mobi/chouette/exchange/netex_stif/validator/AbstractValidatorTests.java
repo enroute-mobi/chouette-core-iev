@@ -26,9 +26,25 @@ import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
+
 public class AbstractValidatorTests implements Constant {
 
 	protected static InitialContext initialContext;
+	@BeforeSuite
+	public void init() {
+		BasicConfigurator.resetConfiguration();
+		BasicConfigurator.configure();
+		Locale.setDefault(Locale.ENGLISH);
+		if (initialContext == null) {
+			try {
+				initialContext = new InitialContext();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
 
 	protected Context initImportContext() {
 
@@ -118,21 +134,6 @@ public class AbstractValidatorTests implements Constant {
 
 	}
 
-	@BeforeSuite
-	public void init() {
-		BasicConfigurator.resetConfiguration();
-		BasicConfigurator.configure();
-		Locale.setDefault(Locale.ENGLISH);
-		if (initialContext == null) {
-			try {
-				initialContext = new InitialContext();
-			} catch (NamingException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-	}
 
 	@Test(groups = { "Cas erreur 1" }, description = "nombre de champs composant ObjectId incorrect", priority = 3)
 	public void verifiyIdNumberOfFieldsIncorrect() throws Exception {
@@ -152,15 +153,6 @@ public class AbstractValidatorTests implements Constant {
 
 		boolean result = validateId(id, expectedType);
 
-		Assert.assertFalse(result);
-	}
-
-	@Test(groups = { "Cas erreur 3" }, description = "Le champ #4 n'est pas 'LOC'", priority = 3)
-	public void verifiyIdField4NotLOC() throws Exception {
-		String id = "Code_Space-1:montype:identifiant-Technique_1:COL";
-		String expectedType = "montype";
-
-		boolean result = validateId(id, expectedType);
 		Assert.assertFalse(result);
 	}
 

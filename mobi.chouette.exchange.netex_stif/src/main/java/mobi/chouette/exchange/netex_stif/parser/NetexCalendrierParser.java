@@ -80,9 +80,10 @@ public class NetexCalendrierParser implements Parser, Constant {
 	static {
 
 		// init used members
-		members.put(DAY_TYPES, DAY_TYPE);
-		members.put(DAY_TYPE_ASSIGNMENTS, DAY_TYPE_ASSIGNMENT);
-		members.put(OPERATING_PERIODS, OPERATING_PERIOD);
+		// not yet implemented in XSD
+//		members.put(DAY_TYPES, DAY_TYPE);
+//		members.put(DAY_TYPE_ASSIGNMENTS, DAY_TYPE_ASSIGNMENT);
+//		members.put(OPERATING_PERIODS, OPERATING_PERIOD);
 
 		// init used parsers
 		parsers.put(DAY_TYPE, DayTypeParser.class.getName());

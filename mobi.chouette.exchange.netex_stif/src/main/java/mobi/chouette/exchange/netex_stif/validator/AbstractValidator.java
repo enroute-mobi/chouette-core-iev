@@ -6,6 +6,10 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public abstract class AbstractValidator implements NetexCheckPoints {
+	
+	private static final String REGEX_ID_PREFIX="^[\\w-]+:";
+	private static final String REGEX_ID_SUFFIX=":[\\w-]+:LOC$";
+
 
 	public AbstractValidator() {
 
@@ -65,6 +69,10 @@ public abstract class AbstractValidator implements NetexCheckPoints {
 
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassingTime_1, "E");
 		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassingTime_2, "E");
+		
+		// prepare local chekpoints 
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_4);
+
 	}
 
 	/*
@@ -87,19 +95,17 @@ public abstract class AbstractValidator implements NetexCheckPoints {
 	 * Criticité : error
 	 */
 	public boolean checkNetexId(Context context, String type, String id, int lineNumber, int columnNumber) {
-		boolean result = true;
 
-		String[] token = id.split(":");
-		if (token.length != 4 || !token[1].equals(type) || !token[3].equals("LOC")) {
-			result = false;
-		}
+		String regex = REGEX_ID_PREFIX+type+REGEX_ID_SUFFIX;
+		boolean result = id.matches(regex);
+		
 		if (!result) {
 
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, id);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, id,regex);
 		}
 		return result;
 	}

@@ -1,32 +1,28 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
+import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifImportParameters;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.util.Referential;
@@ -34,6 +30,15 @@ import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
 public class FrameValidatorTests implements Constant {
+
+	private static final String FRAME_HORAIRE = "NETEX_HORAIRE";
+	private static final String FRAME_STRUCTURE = "NETEX_STRUCTURE";
+	private static final String FRAME_OFFRE_LIGNE = "NETEX_OFFRE_LIGNE";
+	private static final String FRAME_COMMUN = "NETEX_COMMUN";
+	private static final String FRAME_CALENDRIER = "NETEX_CALENDRIER";
+	private static final String OFFRE_FILE_NAME = "offre_test.xml";
+	private static final String COMMUN_FILE_NAME = "commun.xml";
+	private static final String CALENDRIER_FILE_NAME = "calendrier.xml";
 
 	protected static InitialContext initialContext;
 
@@ -73,16 +78,6 @@ public class FrameValidatorTests implements Constant {
 		JobDataTest test = new JobDataTest();
 		context.put(JOB_DATA, test);
 
-		// test.setPathName("target/referential/test");
-		// File f = new File("target/referential/test");
-		// if (f.exists())
-		// try {
-		// FileUtils.deleteDirectory(f);
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// f.mkdirs();
-		// test.setReferential("chouette_gui");
 		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
 		context.put(TESTNG, "true");
@@ -133,15 +128,15 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCalendrierRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "calendrier.xml");
+		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "calendrier.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
 		
 		ArrayList<String> frames = new ArrayList<>();
-		frames.add("NETEX_CALENDRIER");
+		frames.add(FRAME_CALENDRIER);
 		boolean result = validator.checkMandatoryGeneralFrames(context, frames, 1, 2);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "calendrier.xml");
+		checkNoReports(context, CALENDRIER_FILE_NAME);
 
 	}
 
@@ -149,13 +144,13 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCalendrierValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "calendrier.xml");
+		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "calendrier.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_CALENDRIER";
+		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
+		String frame = FRAME_CALENDRIER;
 		boolean result = validator.checkForbiddenGeneralFrames(context, frame, 1, 2);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "calendrier.xml");
+		checkNoReports(context, CALENDRIER_FILE_NAME);
 
 	}
 
@@ -163,15 +158,15 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCalendrierWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "calendrier.xml");
+		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "calendrier.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
 		frames.add("NETEX_CALENDRER");
 		boolean result = validator.checkMandatoryGeneralFrames(context, frames, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "calendrier.xml",NetexCheckPoints.L2_NeTExSTIF_2,"2_netexstif_2_1",null);
-		frames.add("NETEX_CALENDRIER");
+		checkReports(context, CALENDRIER_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_2,"2_netexstif_2_1",null);
+		frames.add(FRAME_CALENDRIER);
 		result = validator.checkMandatoryGeneralFrames(context, frames, 1, 2);
 		Assert.assertTrue(result, "validator result ");
 
@@ -181,13 +176,13 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCalendrierForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "calendrier.xml");
+		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "calendrier.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_CALENDRER";
-		boolean result = validator.checkForbiddenGeneralFrames(context, frame, 1, 2);
+		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
+		String frameWithIncorrectName = "NETEX_CALENDRER";
+		boolean result = validator.checkForbiddenGeneralFrames(context, frameWithIncorrectName, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "calendrier.xml",NetexCheckPoints.L2_NeTExSTIF_2,"2_netexstif_2_2","NETEX_CALENDRER");
+		checkReports(context, CALENDRIER_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_2,"2_netexstif_2_2","NETEX_CALENDRER");
 
 	}
 
@@ -195,13 +190,13 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCalendrierRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "calendrier.xml");
+		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "calendrier.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
 		boolean result = validator.checkMandatoryCompositeFrames(context, frames, 1, 2);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "calendrier.xml");
+		checkNoReports(context, CALENDRIER_FILE_NAME);
 
 	}
 
@@ -209,14 +204,14 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCalendrierForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "calendrier.xml");
+		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "calendrier.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
 		String frame = "NETEX_CALENDRER";
 		boolean result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "calendrier.xml",NetexCheckPoints.L2_NeTExSTIF_2,"2_netexstif_2_2","CompositeFrame");
-		frame = "NETEX_OFFRE_LIGNE";
+		checkReports(context, CALENDRIER_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_2,"2_netexstif_2_2","CompositeFrame");
+		frame = FRAME_OFFRE_LIGNE;
 		result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
 	}
@@ -225,14 +220,14 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCommunRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
-		frames.add("NETEX_COMMUN");
+		frames.add(FRAME_COMMUN);
 		boolean result = validator.checkMandatoryGeneralFrames(context, frames, 1, 6);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "commun.xml");
+		checkNoReports(context, COMMUN_FILE_NAME);
 
 	}
 
@@ -240,13 +235,13 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCommunValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_COMMUN";
+		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
+		String frame = FRAME_COMMUN;
 		boolean result = validator.checkForbiddenGeneralFrames(context, frame, 1, 2);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "commun.xml");
+		checkNoReports(context, COMMUN_FILE_NAME);
 
 	}
 
@@ -254,15 +249,15 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCommunWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
 		frames.add("NETEX_COMMN");
 		boolean result = validator.checkMandatoryGeneralFrames(context, frames, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "commun.xml",NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_1",null);
-		frames.add("NETEX_COMMUN");
+		checkReports(context, COMMUN_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_1",null);
+		frames.add(FRAME_COMMUN);
 		result = validator.checkMandatoryGeneralFrames(context, frames, 1, 2);
 		Assert.assertTrue(result, "validator result ");
 
@@ -272,13 +267,13 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCommunForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_COMMN";
-		boolean result = validator.checkForbiddenGeneralFrames(context, frame, 1, 2);
+		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
+		String frameWithIncorrecName = "NETEX_COMMN";
+		boolean result = validator.checkForbiddenGeneralFrames(context, frameWithIncorrecName, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "commun.xml",NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_2","NETEX_COMMN");
+		checkReports(context, COMMUN_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_2", "NETEX_COMMN");
 
 	}
 
@@ -286,13 +281,13 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCommunRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
 		boolean result = validator.checkMandatoryCompositeFrames(context, frames, 1, 2);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "commun.xml");
+		checkNoReports(context, COMMUN_FILE_NAME);
 
 	}
 
@@ -300,14 +295,14 @@ public class FrameValidatorTests implements Constant {
 	public void verifyCommunForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_COMMUN";
+		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
+		String frame = FRAME_COMMUN;
 		boolean result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "commun.xml",NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_2","CompositeFrame");
-		frame = "NETEX_OFFRE_LIGNE";
+		checkReports(context, COMMUN_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_2","CompositeFrame");
+		frame = FRAME_OFFRE_LIGNE;
 		result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
 	}
@@ -316,103 +311,111 @@ public class FrameValidatorTests implements Constant {
 	
 	
 	
-	
-	/*
-	
-	
-	
-	
-	@Test(groups = { "Offre" }, description = "Good GeneralFrames list ", priority = 7)
+	@Test(groups = { "Offre" }, description = "Good GeneralFrames list ", priority = 13)
 	public void verifyOffreRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
-		frames.add("NETEX_COMMUN");
+		frames.add(FRAME_STRUCTURE);
+		frames.add(FRAME_HORAIRE);
 		boolean result = validator.checkMandatoryGeneralFrames(context, frames, 1, 6);
+		ActionReport report = (ActionReport) context.get(REPORT);
+
+		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		log.info(report);
+		log.info(valReport);
+
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "commun.xml");
+		checkNoReports(context, OFFRE_FILE_NAME);
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Good GeneralFrame ", priority = 8)
-	public void verifyCommunValidGeneralFrame() throws Exception {
+	@Test(groups = { "Offre" }, description = "Good GeneralFrame ", priority = 14)
+	public void verifyOffreValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_COMMUN";
+		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
+		String frame = FRAME_STRUCTURE;
 		boolean result = validator.checkForbiddenGeneralFrames(context, frame, 1, 2);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "commun.xml");
+		checkNoReports(context, OFFRE_FILE_NAME);
+		frame = FRAME_HORAIRE;
+		result = validator.checkForbiddenGeneralFrames(context, frame, 1, 2);
+		Assert.assertTrue(result, "validator result");
+		checkNoReports(context, OFFRE_FILE_NAME);
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Bad GeneralFrames list ", priority = 9)
-	public void verifyCommunWrongtMandatoryGeneralFrame() throws Exception {
+	@Test(groups = { "Offre" }, description = "Bad GeneralFrames list ", priority = 15)
+	public void verifyOffreWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
-		frames.add("NETEX_COMMN");
+		frames.add(FRAME_STRUCTURE);
 		boolean result = validator.checkMandatoryGeneralFrames(context, frames, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "commun.xml",NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_1",null);
-		frames.add("NETEX_COMMUN");
+		checkReports(context, OFFRE_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_3,"2_netexstif_3_3",FRAME_HORAIRE);
+		frames.add(FRAME_HORAIRE);
 		result = validator.checkMandatoryGeneralFrames(context, frames, 1, 2);
 		Assert.assertTrue(result, "validator result ");
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Bad GeneralFrame ", priority = 10)
-	public void verifyCommunForbiddenGeneralFrame() throws Exception {
+	@Test(groups = { "Offre" }, description = "Bad GeneralFrame ", priority = 16)
+	public void verifyOffreForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_COMMN";
+		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
+		String frame = "NETEX_SCTE";
 		boolean result = validator.checkForbiddenGeneralFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "commun.xml",NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_2","NETEX_COMMN");
+		checkReports(context, OFFRE_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_3,"2_netexstif_3_4",frame);
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Good CompositeFrames list ", priority = 11)
-	public void verifyCommunRightMandatoryCompositeFrame() throws Exception {
+	@Test(groups = { "Offre" }, description = "Good CompositeFrames list ", priority = 17)
+	public void verifyOffreRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
+		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
 		ArrayList<String> frames = new ArrayList<>();
+		frames.add(FRAME_OFFRE_LIGNE);
 		boolean result = validator.checkMandatoryCompositeFrames(context, frames, 1, 2);
 		Assert.assertTrue(result, "validator result");
-		checkNoReports(context, "commun.xml");
+		checkNoReports(context, OFFRE_FILE_NAME);
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Bad CompositeFrame ", priority = 12)
-	public void verifyCommunForbiddenCompositeFrame() throws Exception {
+	// TODO
+	
+	@Test(groups = { "Offre" }, description = "Bad CompositeFrame ", priority = 18)
+	public void verifyOffreForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		FrameValidator validator = new FrameValidator(context);
-		context.put(FILE_NAME, "commun.xml");
+		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addFileReport(context, "commun.xml", IO_TYPE.INPUT);
-		String frame = "NETEX_COMMUN";
+		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
+		String frame = FRAME_COMMUN;
 		boolean result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, "commun.xml",NetexCheckPoints.L2_NeTExSTIF_1,"2_netexstif_1_2","CompositeFrame");
-		frame = "NETEX_OFFRE_LIGNE";
+		checkReports(context, OFFRE_FILE_NAME,NetexCheckPoints.L2_NeTExSTIF_3,"2_netexstif_3_2",frame);
+		frame = FRAME_OFFRE_LIGNE;
 		result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
-		Assert.assertFalse(result, "validator result");
+		Assert.assertTrue(result, "validator result");
 	}
-*/
+
 	
 	
 }
