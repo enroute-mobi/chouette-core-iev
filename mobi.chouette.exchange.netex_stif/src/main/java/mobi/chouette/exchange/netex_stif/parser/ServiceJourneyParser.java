@@ -16,6 +16,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.validator.PassingTimeValidator;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
@@ -216,6 +217,9 @@ public class ServiceJourneyParser implements Parser, Constant {
 	private void parsePassingTimes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney) throws Exception {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
+				int columnNumber = xpp.getColumnNumber();
+				int lineNumber = xpp.getLineNumber();	
+				PassingTimeValidator validator = new PassingTimeValidator(context);
 				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
 				int rank = vehicleJourney.getVehicleJourneyAtStops().size();
 				vjas.setVehicleJourney(vehicleJourney);
@@ -236,6 +240,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
+				validator.validate(context, vjas, lineNumber, columnNumber, rank);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}

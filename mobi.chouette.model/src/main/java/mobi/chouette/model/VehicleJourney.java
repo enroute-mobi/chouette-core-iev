@@ -46,7 +46,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "vehicle_journeys")
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "journeyPattern", "route", "timetables" })
-public class VehicleJourney extends ChouetteIdentifiedObject {
+public class VehicleJourney extends ChouetteIdentifiedObject implements SignedChouetteObject {
 
 	private static final long serialVersionUID = 304336286208135064L;
 
@@ -60,6 +60,17 @@ public class VehicleJourney extends ChouetteIdentifiedObject {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
+
+	
 	/**
 	 * comment
 	 * 

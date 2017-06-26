@@ -34,7 +34,7 @@ import org.hibernate.annotations.Parameter;
 		"vehicle_journey_id", "stop_point_id" }, name = "index_vehicle_journey_at_stops_on_stop_point_id"))
 @NoArgsConstructor
 @ToString(callSuper=true, exclude = { "vehicleJourney" })
-public class VehicleJourneyAtStop extends ChouetteObject {
+public class VehicleJourneyAtStop extends ChouetteObject implements SignedChouetteObject {
 
 	private static final long serialVersionUID = 194243517715939830L;
 
@@ -49,20 +49,17 @@ public class VehicleJourneyAtStop extends ChouetteObject {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 	
-	/**
-	 * connecting Service Id
-	 * 
-	 * @param connectingServiceId
-	 *            New value
-	 * @return The actual value
-	 */
-	@Deprecated
 	@Getter
 	@Setter
 	@Transient
-	// @Column(name = "connecting_service_id")
-	private String connectingServiceId;
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
 
+	
 	/**
 	 * not saved, boarding alighting possibility
 	 * 
@@ -112,7 +109,7 @@ public class VehicleJourneyAtStop extends ChouetteObject {
 	@Getter
 	@Setter
 	@Column(name = "departure_day_offset")
-	private int departureDayOffset;
+	private Integer departureDayOffset = 0;
 	
 	
 	/**
@@ -125,7 +122,7 @@ public class VehicleJourneyAtStop extends ChouetteObject {
 	@Getter
 	@Setter
 	@Column(name = "arrival_day_offset")
-	private int arrivalDayOffset;
+	private Integer arrivalDayOffset = 0;
 	
 	/*
 	 * waiting time

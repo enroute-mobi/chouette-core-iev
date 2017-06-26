@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,19 @@ import lombok.Setter;
 @Embeddable
 @NoArgsConstructor
 
-public class CalendarDay implements Serializable, Comparable<CalendarDay> {
+public class CalendarDay implements Serializable, Comparable<CalendarDay> , SignedChouetteObject{
 
 	private static final long serialVersionUID = -1964071056103739954L;
+
+	@Getter
+	@Setter
+	@Transient
+	private String checksum ;
+	
+	@Getter
+	@Setter 
+	@Transient
+	private String checksumSource;
 
 	/**
 	 * date
