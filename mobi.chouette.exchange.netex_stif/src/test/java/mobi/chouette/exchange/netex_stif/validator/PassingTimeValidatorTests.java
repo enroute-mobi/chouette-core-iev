@@ -174,7 +174,7 @@ public class PassingTimeValidatorTests implements Constant {
 	}
 
 	@Test(groups = { "PassingTime" }, description = "arrival time after departure time", priority = 3)
-	public void verifyarrivalTimeAfterDepartureTime() throws Exception {
+	public void verifyArrivalTimeAfterDepartureTime() throws Exception {
 		Context context = initImportContext();
 		PassingTimeValidator validator = new PassingTimeValidator(context);
 		context.put(FILE_NAME, "offre_xxx.xml");
@@ -183,6 +183,22 @@ public class PassingTimeValidatorTests implements Constant {
 		VehicleJourneyAtStop vjas = buildVehicleJourneyAtStop();
 		vjas.setDepartureTime(new Time(15,18,00));
 		vjas.setArrivalTime(new Time(15,18,01));
+		boolean result = validator.validate(context, vjas, 1, 2, 0);
+		Assert.assertFalse(result, "validator result");
+		checkReports(context, "offre_xxx.xml",NetexCheckPoints.L2_NeTExSTIF_PassingTime_2,"2_netexstif_passingtime_2","0");
+	}
+
+	@Test(groups = { "PassingTime" }, description = "arrival offest after departure offset", priority = 3)
+	public void verifyArrivalDayOffestAfterDepartureDayOffset() throws Exception {
+		Context context = initImportContext();
+		PassingTimeValidator validator = new PassingTimeValidator(context);
+		context.put(FILE_NAME, "offre_xxx.xml");
+		ActionReporter reporter = ActionReporter.Factory.getInstance();
+		reporter.addFileReport(context, "offre_xxx.xml", IO_TYPE.INPUT);
+		VehicleJourneyAtStop vjas = buildVehicleJourneyAtStop();
+		vjas.setDepartureTime(new Time(15,18,00));
+		vjas.setArrivalTime(new Time(15,17,00));
+		vjas.setArrivalDayOffset(1);
 		boolean result = validator.validate(context, vjas, 1, 2, 0);
 		Assert.assertFalse(result, "validator result");
 		checkReports(context, "offre_xxx.xml",NetexCheckPoints.L2_NeTExSTIF_PassingTime_2,"2_netexstif_passingtime_2","0");
