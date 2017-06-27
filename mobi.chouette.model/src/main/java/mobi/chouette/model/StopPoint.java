@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ import mobi.chouette.model.type.BoardingPossibilityEnum;
 @Entity
 @Table(name = "stop_points")
 @NoArgsConstructor
+@EqualsAndHashCode(of = { "position" }, callSuper = false)
 @ToString(callSuper=true, exclude = { "route" })
 public class StopPoint extends ChouetteIdentifiedObject {
 

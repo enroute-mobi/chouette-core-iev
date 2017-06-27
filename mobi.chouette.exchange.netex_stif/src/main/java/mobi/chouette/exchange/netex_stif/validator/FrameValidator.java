@@ -85,24 +85,28 @@ public class FrameValidator extends AbstractValidator implements Constant{
 		}
 	}
 
-	/*
-	 * https://projects.af83.io/issues/2113
-	 * 
-	 * Code : 2-NeTExSTIF-1
-	 * 
-	 * Variables : néant
-	 * 
-	 * Prérequis : présence du fichier commun.xml
-	 * 
-	 * Prédicat : le fichier commun doit respecter l'organisation en frame de la
+	/**
+	 * <a target="_blank" href="https://projects.af83.io/issues/2113" >Carte #2113</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-1
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : présence du fichier commun.xml
+	 * <p>
+	 * <b>Prédicat</b> : le fichier commun doit respecter l'organisation en frame de la
 	 * NT44
-	 * 
-	 * Message : 1- Le fichier commun.xml ne contient pas de frame nommée
-	 * NETEX_COMMUN 2- Le fichier commun.xml contient une frame nommée
-	 * {nomFrame} non acceptée
-	 * 
-	 * Criticité : error
-	 * 
+	 * <p>
+	 * <b>Message</b> : 
+	 * <ol>
+	 * <li>Le fichier commun.xml ne contient pas de frame nommée
+	 * NETEX_COMMUN</li>
+	 * <li>Le fichier commun.xml contient une frame nommée
+	 * {nomFrame} non acceptée</li>
+	 * </ol>
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
 	 */
 
 	private boolean check2NeTExSTIF1_1(Context context, Collection<String> frameNames, int lineNumber,
@@ -134,26 +138,27 @@ public class FrameValidator extends AbstractValidator implements Constant{
 		return result;
 	}
 
-	/*
-	 * https://projects.af83.io/issues/2114
-	 * 
-	 * Code : 2-NeTExSTIF-2
-	 * 
-	 * Variables : néant
-	 * 
-	 * Prérequis : néant
-	 * 
-	 * Prédicat : le fichier de calendrier doit respecter l'organisation en
+	/**
+	 * <a target="_blank" href="https://projects.af83.io/issues/2114" >Carte #2114</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-2
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : néant
+	 * <p>
+	 * <b>Prédicat</b> : le fichier de calendrier doit respecter l'organisation en
 	 * frame de la NT44
-	 * 
-	 * Message : 
-	 * 1- Le fichier calendriers.xml ne contient pas de frame nommée
-	 * NETEX_CALENDRIER 
-	 * 2- Le fichier calendriers.xml contient une frame nommée
-	 * {nomFrame} non acceptée
-	 * 
-	 * Criticité : error
-	 * 
+	 * <p>
+	 * <b>Message</b> : 
+	 * <ol>
+	 * <li>Le fichier calendriers.xml ne contient pas de frame nommée
+	 * NETEX_CALENDRIER </li>
+	 * <li>Le fichier calendriers.xml contient une frame nommée
+	 * {nomFrame} non acceptée</li>
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
 	 */
 	private boolean check2NeTExSTIF2_1(Context context, Collection<String> frameNames, int lineNumber,
 			int columnNumber) {
@@ -184,32 +189,33 @@ public class FrameValidator extends AbstractValidator implements Constant{
 		return result;
 	}
 
-	/*
-	 * https://projects.af83.io/issues/2115
-	 *
-	 * Code : 2-NeTExSTIF-3
-	 * 
-	 * Variables : néant
-	 * 
-	 * Prérequis : néant
-	 * 
-	 * Prédicat : les fichiers d'offre doivent respecter l'organisation en frame
+	/**
+	 * <a target="_blank" href="https://projects.af83.io/issues/2115" >Carte #2115</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-3
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : néant
+	 * <p>
+	 * <b>Prédicat</b> : les fichiers d'offre doivent respecter l'organisation en frame
 	 * de la NT44
-	 * 
-	 * Message :
-	 * 
-	 * 1- Le fichier {nomFichier} ne contient pas de frame nommée
-	 * NETEX_OFFRE_LIGNE 
-	 * 2- Le fichier {nomFichier} contient une frame nommée
-	 * {nomFrame} non acceptée 
-	 * 3- la frame NETEX_OFFRE_LIGNE du fichier
+	 * <p>
+	 * <b>Message</b> :
+	 * <ol>
+	 * <li>Le fichier {nomFichier} ne contient pas de frame nommée
+	 * NETEX_OFFRE_LIGNE </li>
+	 * <li>Le fichier {nomFichier} contient une frame nommée
+	 * {nomFrame} non acceptée </li>
+	 * <li>la frame NETEX_OFFRE_LIGNE du fichier
 	 * {nomFichier} ne contient pas la frame {NETEX_STRUCTURE|NETEX_HORAIRE}
-	 * obligatoire 
-	 * 4- la frame NETEX_OFFRE_LIGNE du fichier {nomFichier}
-	 * contient une frame {nomFrame} non acceptée
-	 * 
-	 * Criticité : error
-	 * 
+	 * obligatoire </li>
+	 * <li>la frame NETEX_OFFRE_LIGNE du fichier {nomFichier}
+	 * contient une frame {nomFrame} non acceptée </li>
+	 * </ol>
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
 	 */
 	private boolean check2NeTExSTIF3_1(Context context, Collection<String> frameNames, int lineNumber,
 			int columnNumber) {

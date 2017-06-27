@@ -107,24 +107,24 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	}
 
-	/*
-	 * https://projects.af83.io/issues/2293 Description
-	 * 
-	 * 
-	 * Code : 2-NeTExSTIF-4
-	 * 
-	 * Variables : néant
-	 * 
-	 * Prérequis : néant
-	 * 
-	 * Prédicat : L'identifiant d'un objet NeTEx doit respecter la syntaxe
+	/**
+	 * <a target="_blank" href="https://projects.af83.io/issues/2293" >Carte #2293</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-4
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : néant
+	 * <p>
+	 * <b>Prédicat</b> : L'identifiant d'un objet NeTEx doit respecter la syntaxe
 	 * définie et le type d'objet doit correspondre à la balise NeTEx de l'objet
-	 * 
-	 * Message : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'identifiant
+	 * <p>
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'identifiant
 	 * {objectId} de l'objet {typeNeTEx} ne respecte pas la syntaxe
 	 * [CODESPACE]:{typeNeTEx}:[identifiant Technique]:LOC
-	 * 
-	 * Criticité : error
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
 	 */
 	public boolean checkNetexId(Context context, String type, String id, int lineNumber, int columnNumber) {
 

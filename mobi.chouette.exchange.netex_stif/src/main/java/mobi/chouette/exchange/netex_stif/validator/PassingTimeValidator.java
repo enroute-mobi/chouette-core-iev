@@ -40,24 +40,24 @@ public class PassingTimeValidator extends AbstractValidator {
 	}
 
 	/**
-	 * https://projects.af83.io/issues/2325
-	 * 
-	 * Code : 2-NeTExSTIF-PassingTime-1
-	 * 
-	 * Variables : néant
-	 * 
-	 * Prérequis : L'attribut DepartureTime de l'objet PassingTime doit être
+	 * <a target="_blank" href="https://projects.af83.io/issues/2325" >Carte #2325</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-1
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : L'attribut DepartureTime de l'objet PassingTime doit être
 	 * renseigné.
-	 * 
-	 * Prédicat : L'attribut DirectionType doit prendre l'une des 2 valeurs
+	 * <p>
+	 * <b>Prédicat</b> : L'attribut DirectionType doit prendre l'une des 2 valeurs
 	 * 'outbound' ou 'inbound'
-	 * 
-	 * Message : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
+	 * <p>
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
 	 * ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang}
 	 * ne dispose pas de DepartureTime
-	 * 
-	 * Criticité : error
-	 * 
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
 	 * @param context
 	 * @param passingTime
 	 * @param lineNumber
@@ -82,23 +82,23 @@ public class PassingTimeValidator extends AbstractValidator {
 	}
 
 	/**
-	 * https://projects.af83.io/issues/2326
-	 * 
-	 * Code : 2-NeTExSTIF-PassingTime-2
-	 * 
-	 * Variables : néant
-	 * 
-	 * Prérequis : Attribut ArrivalTime renseigné
-	 * 
-	 * Prédicat : l'Attribut DepartureTime de l'objet PassingTime doit être
+	 * <a target="_blank" href="https://projects.af83.io/issues/2326" >Carte #2326</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-2
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : Attribut ArrivalTime renseigné
+	 * <p>
+	 * <b>Prédicat</b> : l'Attribut DepartureTime de l'objet PassingTime doit être
 	 * supérieur ou égal à l'attribut ArrivalTIme
-	 * 
-	 * Message : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
+	 * <p>
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
 	 * ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang}
 	 * fournit un ArrivalTime supérieur à son DepartureTime
-	 * 
-	 * Criticité : error
-	 * 
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
 	 * @param context
 	 * @param passingTime
 	 * @param lineNumber

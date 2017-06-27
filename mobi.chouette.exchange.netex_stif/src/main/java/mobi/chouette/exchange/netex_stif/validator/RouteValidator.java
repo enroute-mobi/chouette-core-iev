@@ -98,6 +98,7 @@ public class RouteValidator extends AbstractValidator {
 	 * </ul>
 	 * Criticité : warning
 	 * <p>
+	 * @see #addInverseRouteRef(Context, String, String) to preserve InverseRouteRef value
 	 * 
 	 * @param context
 	 * @param route
@@ -110,9 +111,13 @@ public class RouteValidator extends AbstractValidator {
 
 		if (route.getOppositeRoute() != null) 
 		{
+			// récupération du contexte de validation
 			Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
+			// récupération du sous contexte de validation des Routes (LOCAL_CONTEXT) 
 			Context localContext = (Context) validationContext.get(LOCAL_CONTEXT);
+			// récupération du contexte de l'objet Route 'wayback'
             Context waybackContext = (Context) localContext.get(route.getOppositeRoute().getObjectId());
+            // récupération de la valeur d'attribut sauvegardée
             String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
             result = !wayBackInverseRouteRef.equals(route.getObjectId());
 		}

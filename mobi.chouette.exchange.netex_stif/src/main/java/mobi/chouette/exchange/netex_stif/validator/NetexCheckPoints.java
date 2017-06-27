@@ -2,7 +2,7 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 public interface NetexCheckPoints {
 
-	static final String L1_NetexStif_1 = "1-NeTExStif-1"; // NetexStifUncompressCommand
+	static final String L1_NetexStif_1 = "1-NeTExStif-1"; // NetexStifUncompressCommand => IHM 
 	static final String L1_NetexStif_2 = "1-NeTExStif-2"; // NetexStifSAXErrorHandler
 
 	static final String L2_NeTExSTIF_1 = "2-NeTExSTIF-1"; // FrameValidator
@@ -45,12 +45,12 @@ public interface NetexCheckPoints {
 	static final String L2_NeTExSTIF_RoutingConstraintZone_1 = "2-NeTExSTIF-RoutingConstraintZone-1";
 	static final String L2_NeTExSTIF_RoutingConstraintZone_2 = "2-NeTExSTIF-RoutingConstraintZone-2";
 
-	static final String L2_NeTExSTIF_ServiceJourney_1 = "2-NeTExSTIF-ServiceJourney-1";
-	static final String L2_NeTExSTIF_ServiceJourney_2 = "2-NeTExSTIF-ServiceJourney-2";
-	static final String L2_NeTExSTIF_ServiceJourney_3 = "2-NeTExSTIF-ServiceJourney-3";
-	static final String L2_NeTExSTIF_ServiceJourney_4 = "2-NeTExSTIF-ServiceJourney-4";
+	static final String L2_NeTExSTIF_ServiceJourney_1 = "2-NeTExSTIF-ServiceJourney-1"; // ServiceJourneyValidator
+	static final String L2_NeTExSTIF_ServiceJourney_2 = "2-NeTExSTIF-ServiceJourney-2"; // ServiceJourneyValidator
+	static final String L2_NeTExSTIF_ServiceJourney_3 = "2-NeTExSTIF-ServiceJourney-3"; // ServiceJourneyValidator
+	static final String L2_NeTExSTIF_ServiceJourney_4 = "2-NeTExSTIF-ServiceJourney-4"; // ServiceJourneyValidator
 
-	static final String L2_NeTExSTIF_PassingTime_1 = "2-NeTExSTIF-PassingTime-1";
-	static final String L2_NeTExSTIF_PassingTime_2 = "2-NeTExSTIF-PassingTime-2";
+	static final String L2_NeTExSTIF_PassingTime_1 = "2-NeTExSTIF-PassingTime-1"; // PassingTimeValidator
+	static final String L2_NeTExSTIF_PassingTime_2 = "2-NeTExSTIF-PassingTime-2"; // PassingTimeValidator
 	
 }
