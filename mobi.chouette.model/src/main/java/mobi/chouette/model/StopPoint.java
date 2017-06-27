@@ -33,7 +33,6 @@ import mobi.chouette.model.type.BoardingPossibilityEnum;
 @Entity
 @Table(name = "stop_points")
 @NoArgsConstructor
-@EqualsAndHashCode(of = { "position" }, callSuper = false)
 @ToString(callSuper=true, exclude = { "route" })
 public class StopPoint extends ChouetteIdentifiedObject {
 

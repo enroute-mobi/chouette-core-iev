@@ -130,9 +130,11 @@ public class ServiceJourneyValidatorTests implements Constant {
 		route.setName("My Route");
 		StopPoint sp1 = new StopPoint();
 		sp1.setPosition(0);
+		sp1.setObjectId("CITYWAY:StopPoint:1:LOC");
 	    sp1.setRoute(route);
 	    StopPoint sp2 =  new StopPoint();
 		sp2.setPosition(1);
+		sp2.setObjectId("CITYWAY:StopPoint:2:LOC");
 	    sp2.setRoute(route);
 		JourneyPattern jp = new JourneyPattern();
 		jp.setObjectId("CITYWAY:ServiceJourneyPattern:1234:LOC");

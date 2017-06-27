@@ -27,10 +27,10 @@ public interface NetexCheckPoints {
 
 	static final String L2_NeTExSTIF_OperatingPeriod_1 = "2-NeTExSTIF-OperatingPeriod-1";
 
-	static final String L2_NeTExSTIF_Route_1 = "2-NeTExSTIF-Route-1";
-	static final String L2_NeTExSTIF_Route_2 = "2-NeTExSTIF-Route-2";
-	static final String L2_NeTExSTIF_Route_3 = "2-NeTExSTIF-Route-3";
-	static final String L2_NeTExSTIF_Route_4 = "2-NeTExSTIF-Route-4";
+	static final String L2_NeTExSTIF_Route_1 = "2-NeTExSTIF-Route-1"; // RouteValidator
+	static final String L2_NeTExSTIF_Route_2 = "2-NeTExSTIF-Route-2"; // RouteValidator
+	static final String L2_NeTExSTIF_Route_3 = "2-NeTExSTIF-Route-3"; // RouteValidator
+	static final String L2_NeTExSTIF_Route_4 = "2-NeTExSTIF-Route-4"; // RouteValidator
 
 	static final String L2_NeTExSTIF_Direction_1 = "2-NeTExSTIF-Direction-1";
 	static final String L2_NeTExSTIF_Direction_2 = "2-NeTExSTIF-Direction-2";
