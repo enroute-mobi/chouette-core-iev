@@ -15,10 +15,6 @@ public class RouteValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = "Route";
 
-	public RouteValidator(Context context) {
-		init(context);
-
-	}
 
 	@Override
 	public void init(Context context) {

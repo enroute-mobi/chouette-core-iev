@@ -12,10 +12,6 @@ public class FrameValidator extends AbstractValidator implements Constant{
 	private static final String CALENDRIER_FILE_NAME = "calendrier.xml";
 	private static final String COMMUN_FILE_NAME = "commun.xml";
 
-	public FrameValidator(Context context) {
-		init(context);
-
-	}
 
 	public void init(Context context) {
 		super.init(context);

@@ -65,20 +65,6 @@ public class ServiceJourneyValidatorTests implements Constant {
 
 	}
 
-	private void checkNoReports(Context context, String fileName) {
-		ActionReport report = (ActionReport) context.get(REPORT);
-
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		log.info(report);
-		log.info(valReport.getCheckPointErrors());
-		Assert.assertEquals(report.getResult(), "OK", "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
-		FileReport file = report.getFiles().get(0);
-		Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
-		Assert.assertEquals(file.getCheckPointErrorCount(), 0, "no file error reported");
-
-	}
-
 	protected Context initImportContext() {
 
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
@@ -131,11 +117,11 @@ public class ServiceJourneyValidatorTests implements Constant {
 		StopPoint sp1 = new StopPoint();
 		sp1.setPosition(0);
 		sp1.setObjectId("CITYWAY:StopPoint:1:LOC");
-	    sp1.setRoute(route);
-	    StopPoint sp2 =  new StopPoint();
+		sp1.setRoute(route);
+		StopPoint sp2 = new StopPoint();
 		sp2.setPosition(1);
 		sp2.setObjectId("CITYWAY:StopPoint:2:LOC");
-	    sp2.setRoute(route);
+		sp2.setRoute(route);
 		JourneyPattern jp = new JourneyPattern();
 		jp.setObjectId("CITYWAY:ServiceJourneyPattern:1234:LOC");
 		jp.setName("My Journey Pattern");
@@ -158,7 +144,8 @@ public class ServiceJourneyValidatorTests implements Constant {
 	@Test(groups = { "PassingTimeComparator" }, description = "valid comparator", priority = 1)
 	public void validatePassingTimeComparator() throws Exception {
 		Context context = initImportContext();
-		ServiceJourneyValidator validator = new ServiceJourneyValidator(context);
+		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyValidator.class);
 		PassingTimeComparator comparator = validator.new PassingTimeComparator();
 
 		VehicleJourneyAtStop vjas1 = new VehicleJourneyAtStop();
@@ -197,42 +184,52 @@ public class ServiceJourneyValidatorTests implements Constant {
 		Context context = initImportContext();
 		VehicleJourney journey = new VehicleJourney();
 		journey.setObjectId("CITYWAY:ServiceJourney:1234:LOC");
-		ServiceJourneyValidator validator = new ServiceJourneyValidator(context);
-        
+		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyValidator.class);
+
 		boolean res = validator.check2NeTExSTIFServiceJourney1(context, journey, 1, 2);
-		Assert.assertFalse(res,"validation should be not ok");
-		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1, "2_netexstif_servicejourney_1", null);
-	
+		Assert.assertFalse(res, "validation should be not ok");
+		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1,
+				"2_netexstif_servicejourney_1", null);
+
 	}
 
 	@Test(groups = { "ServiceJourney" }, description = "too many train numbers", priority = 3)
 	public void validateTooManyTrainNumbers() throws Exception {
+
 		Context context = initImportContext();
 		VehicleJourney journey = buildVehicleJourney();
-		ServiceJourneyValidator validator = new ServiceJourneyValidator(context);
+		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyValidator.class);
 		validator.addTrainNumberRef(context, journey.getObjectId(), "ref1");
 		validator.addTrainNumberRef(context, journey.getObjectId(), "ref2");
 		boolean res = validator.check2NeTExSTIFServiceJourney2(context, journey, 1, 2);
-		Assert.assertFalse(res,"validation should be not ok");
-		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2, "2_netexstif_servicejourney_2", null);
-	
+		Assert.assertFalse(res, "validation should be not ok");
+		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2,
+				"2_netexstif_servicejourney_2", null);
+
 	}
+
 	@Test(groups = { "ServiceJourney" }, description = "wrong passingTime count", priority = 4)
 	public void validateWrongPassingTimeCount() throws Exception {
 		Context context = initImportContext();
-		ServiceJourneyValidator validator = new ServiceJourneyValidator(context);
+		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyValidator.class);
 		VehicleJourney journey = buildVehicleJourney();
 		journey.getVehicleJourneyAtStops().remove(1);
 		boolean res = validator.check2NeTExSTIFServiceJourney3(context, journey, 1, 2);
-		Assert.assertFalse(res,"validation should be not ok");
-		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3, "2_netexstif_servicejourney_3", "1");
-	
+		Assert.assertFalse(res, "validation should be not ok");
+		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3,
+				"2_netexstif_servicejourney_3", "1");
+
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test(groups = { "ServiceJourney" }, description = "wrong passingTime times", priority = 5)
 	public void validateWrongPassingTimes() throws Exception {
 		Context context = initImportContext();
-		ServiceJourneyValidator validator = new ServiceJourneyValidator(context);
+		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyValidator.class);
 		VehicleJourney journey = buildVehicleJourney();
 		VehicleJourneyAtStop vjas1 = journey.getVehicleJourneyAtStops().get(0);
 		VehicleJourneyAtStop vjas2 = journey.getVehicleJourneyAtStops().get(1);
@@ -240,11 +237,12 @@ public class ServiceJourneyValidatorTests implements Constant {
 		vjas1.setDepartureTime(new Time(15, 10, 00));
 		vjas2.setArrivalDayOffset(0);
 		vjas2.setArrivalTime(new Time(15, 9, 00));
-		
+
 		boolean res = validator.check2NeTExSTIFServiceJourney4(context, journey, 1, 2);
-		Assert.assertFalse(res,"validation should be not ok");
-		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4, "2_netexstif_servicejourney_4", "1");
-	
+		Assert.assertFalse(res, "validation should be not ok");
+		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4,
+				"2_netexstif_servicejourney_4", "1");
+
 	}
 
 }

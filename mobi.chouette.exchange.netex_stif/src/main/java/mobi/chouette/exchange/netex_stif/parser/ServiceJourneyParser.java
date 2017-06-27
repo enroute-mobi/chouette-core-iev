@@ -17,6 +17,8 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.validator.PassingTimeValidator;
+import mobi.chouette.exchange.netex_stif.validator.ServiceJourneyValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
@@ -40,6 +42,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
+		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyValidator.class);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		Long version = (Long) context.get(VERSION);
 
@@ -93,12 +97,15 @@ public class ServiceJourneyParser implements Parser, Constant {
 			}
 		}
 
-		// affect timetables
-		affectTimetables(context, referential, vehicleJourney, timetableRefs);
+		if (validator.validate(context, vehicleJourney, lineNumber, columnNumber)) {
+			// affect timetables
+			affectTimetables(context, referential, vehicleJourney, timetableRefs);
+		}
 
 	}
 
-	private Collection<String> parseDayTypes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney) throws XmlPullParserException, IOException {
+	private Collection<String> parseDayTypes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney)
+			throws XmlPullParserException, IOException {
 		Set<String> result = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(DAY_TYPE_REF)) {
@@ -218,8 +225,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
 				int columnNumber = xpp.getColumnNumber();
-				int lineNumber = xpp.getLineNumber();	
-				PassingTimeValidator validator = new PassingTimeValidator(context);
+				int lineNumber = xpp.getLineNumber();
+				PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context, PassingTimeValidator.class);
 				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
 				int rank = vehicleJourney.getVehicleJourneyAtStops().size();
 				vjas.setVehicleJourney(vehicleJourney);

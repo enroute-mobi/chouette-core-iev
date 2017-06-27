@@ -63,7 +63,7 @@ public class RouteValidatorTests implements Constant {
 		TestContext tc = new TestContext();
 		tc.getFakeRoute().setWayBack(directionType);
 
-		RouteValidator validator = new RouteValidator(tc.getContext()); // --
+		RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(tc.getContext(), RouteValidator.class);
 
 		boolean result = validator.check2NeTExSTIFRoute1(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());
@@ -167,7 +167,7 @@ public class RouteValidatorTests implements Constant {
 
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 
-		RouteValidator validator = new RouteValidator(tc.getContext()); // --
+		RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(tc.getContext(), RouteValidator.class);
 
 		boolean result = validator.check2NeTExSTIFRoute2_1(tc.getContext(), tc.getFakeRoute(), lineNumber,
 				columnNumber);
@@ -212,7 +212,7 @@ public class RouteValidatorTests implements Constant {
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 		tc.getFakeRoute().setWayBack(wayback);
 
-		RouteValidator validator = new RouteValidator(tc.getContext()); // --
+		RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(tc.getContext(), RouteValidator.class);
 
 		boolean result = validator.check2NeTExSTIFRoute2_2(tc.getContext(), tc.getFakeRoute(), lineNumber,
 				columnNumber);
@@ -286,7 +286,7 @@ public class RouteValidatorTests implements Constant {
 
 		tc.getFakeRoute().setStopPoints(list);
 
-		RouteValidator validator = new RouteValidator(tc.getContext()); // --
+		RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(tc.getContext(), RouteValidator.class);
 
 		boolean result = validator.check2NeTExSTIFRoute3(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());

@@ -86,11 +86,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (validationContext == null) {
 			validationContext = new Context();
 			context.put(VALIDATION_CONTEXT, validationContext);
-			validationContext.put(OBJECT_IDS, new HashSet<String>());
+			
 		}
 
 		// TODO à retirer si non utilisé (contrôle d'existence des objectIds) 
 		Set<String> objectIds = (Set<String>) validationContext.get(OBJECT_IDS);
+		if (objectIds == null)
+		{
+			objectIds = new HashSet<String>();
+			validationContext.put(OBJECT_IDS, objectIds);
+		}
 		objectIds.add(objectId);
 
 		Context localContext = (Context) validationContext.get(localContextName);

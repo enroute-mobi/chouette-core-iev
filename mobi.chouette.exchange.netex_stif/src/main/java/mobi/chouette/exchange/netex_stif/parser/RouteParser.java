@@ -11,6 +11,7 @@ import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.type.PTDirectionEnum;
@@ -33,7 +34,7 @@ public class RouteParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		
-		RouteValidator validator = new RouteValidator(context);
+		RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(context, RouteValidator.class);
 		validator.checkNetexId(context, ROUTE, id, lineNumber, columnNumber);
 		
 		Route route = ObjectFactory.getRoute(referential, id);

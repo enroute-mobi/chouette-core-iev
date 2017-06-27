@@ -11,6 +11,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.validator.FrameValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 
 @Log4j
 public class CompositeFrameParser implements Constant, Parser {
@@ -21,7 +22,7 @@ public class CompositeFrameParser implements Constant, Parser {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		xpp.require(XmlPullParser.START_TAG, null, COMPOSITE_FRAME);
 
-		FrameValidator validator = new FrameValidator(context); 
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		String type = null;
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();

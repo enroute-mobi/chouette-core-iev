@@ -15,11 +15,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = "ServiceJourney";
 
-	public ServiceJourneyValidator(Context context) {
-		init(context);
-
-	}
-
+	@Override
 	public void init(Context context) {
 		super.init(context);
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();

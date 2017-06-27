@@ -75,7 +75,7 @@ public class AbstractValidatorTests implements Constant {
 
 	private boolean validateId(String id, String type) {
 		Context context = initImportContext();
-		AbstractValidator validator = new RouteValidator(context); // --
+		AbstractValidator validator = ValidatorFactory.getValidator(context, RouteValidator.class); // --
 																	// RouteValidator
 																	// étend
 																	// AbstractParsingValidator
@@ -94,13 +94,13 @@ public class AbstractValidatorTests implements Constant {
 		return result;
 	}
 
-	private void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
+	protected void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
 			String value) {
 		ActionReport report = (ActionReport) context.get(REPORT);
 
 		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		log.info(report);
-		log.info(valReport);
+		log.info(valReport.getCheckPointErrors());
 		Assert.assertEquals(report.getResult(), "OK", "result");
 		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
 		FileReport file = report.getFiles().get(0);
@@ -120,12 +120,12 @@ public class AbstractValidatorTests implements Constant {
 
 	}
 
-	private void checkNoReports(Context context, String fileName) {
+	protected void checkNoReports(Context context, String fileName) {
 		ActionReport report = (ActionReport) context.get(REPORT);
 
 		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		log.info(report);
-		log.info(valReport);
+		log.info(valReport.getCheckPointErrors());
 		Assert.assertEquals(report.getResult(), "OK", "result");
 		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
 		FileReport file = report.getFiles().get(0);

@@ -12,6 +12,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.validator.FrameValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 
 @Log4j
 public class PublicationDeliveryParser implements Parser, Constant {
@@ -53,7 +54,7 @@ public class PublicationDeliveryParser implements Parser, Constant {
 			}
 		}
 		// check frames completion
-		FrameValidator validator = new FrameValidator(context); 
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class); 
 		validator.checkMandatoryCompositeFrames(context, compositeFrameNames, lineNumber, columnNumber);
 		validator.checkMandatoryGeneralFrames(context, generalFrameNames, lineNumber, columnNumber);
 		

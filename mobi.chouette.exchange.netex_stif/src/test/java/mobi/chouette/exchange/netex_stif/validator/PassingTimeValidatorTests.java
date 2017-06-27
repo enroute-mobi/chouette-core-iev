@@ -1,7 +1,6 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.naming.InitialContext;
@@ -138,10 +137,11 @@ public class PassingTimeValidatorTests implements Constant {
 		return vjas;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test(groups = { "PassingTime" }, description = "GoodPassingTime", priority = 1)
 	public void verifyGoodPassingTime() throws Exception {
 		Context context = initImportContext();
-		PassingTimeValidator validator = new PassingTimeValidator(context);
+		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context, PassingTimeValidator.class);
 		context.put(FILE_NAME, "offre_xxx.xml");
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, "offre_xxx.xml", IO_TYPE.INPUT);
@@ -163,7 +163,7 @@ public class PassingTimeValidatorTests implements Constant {
 	@Test(groups = { "PassingTime" }, description = "missing departure time", priority = 2)
 	public void verifyMissingDepartureTime() throws Exception {
 		Context context = initImportContext();
-		PassingTimeValidator validator = new PassingTimeValidator(context);
+		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context, PassingTimeValidator.class);
 		context.put(FILE_NAME, "offre_xxx.xml");
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, "offre_xxx.xml", IO_TYPE.INPUT);
@@ -173,10 +173,11 @@ public class PassingTimeValidatorTests implements Constant {
 		checkReports(context, "offre_xxx.xml",NetexCheckPoints.L2_NeTExSTIF_PassingTime_1,"2_netexstif_passingtime_1","0");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test(groups = { "PassingTime" }, description = "arrival time after departure time", priority = 3)
 	public void verifyArrivalTimeAfterDepartureTime() throws Exception {
 		Context context = initImportContext();
-		PassingTimeValidator validator = new PassingTimeValidator(context);
+		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context, PassingTimeValidator.class);
 		context.put(FILE_NAME, "offre_xxx.xml");
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, "offre_xxx.xml", IO_TYPE.INPUT);
@@ -188,10 +189,11 @@ public class PassingTimeValidatorTests implements Constant {
 		checkReports(context, "offre_xxx.xml",NetexCheckPoints.L2_NeTExSTIF_PassingTime_2,"2_netexstif_passingtime_2","0");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test(groups = { "PassingTime" }, description = "arrival offest after departure offset", priority = 3)
 	public void verifyArrivalDayOffestAfterDepartureDayOffset() throws Exception {
 		Context context = initImportContext();
-		PassingTimeValidator validator = new PassingTimeValidator(context);
+		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context, PassingTimeValidator.class);
 		context.put(FILE_NAME, "offre_xxx.xml");
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, "offre_xxx.xml", IO_TYPE.INPUT);

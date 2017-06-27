@@ -96,5 +96,6 @@ public interface Constant extends mobi.chouette.common.Constant {
 	
 	public static final String COMPOSITE_FRAMES = "composite_frames";
 	public static final String GENERAL_FRAMES = "general_frames";
+	public static final String VALIDATORS = "validators";
 
 }

@@ -8,10 +8,6 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 
 public class PassingTimeValidator extends AbstractValidator {
 
-	public PassingTimeValidator(Context context) {
-		init(context);
-
-	}
 
 	public void init(Context context) {
 		super.init(context);
