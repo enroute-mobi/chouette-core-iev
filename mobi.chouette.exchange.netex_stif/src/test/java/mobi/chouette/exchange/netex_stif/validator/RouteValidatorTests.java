@@ -20,8 +20,10 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.exchange.validation.ValidatorFactory;
 import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.model.Line;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 
@@ -34,7 +36,9 @@ public class RouteValidatorTests implements Constant {
 		Context context = new Context();
 		ValidationReport validationReport = new ValidationReport();
 		ActionReport actionReport = new ActionReport();
+		Context validationContext = new Context();
 		Route fakeRoute = new Route();
+		Context localContext = new Context();
 
 		public TestContext() {
 			context.put(Constant.REPORT, actionReport);
@@ -42,6 +46,13 @@ public class RouteValidatorTests implements Constant {
 			context.put(Constant.FILE_NAME, "fakeFilename");
 			ActionReporter reporter = ActionReporter.Factory.getInstance();
 			reporter.addFileReport(context, NETEX_STRUCTURE, IO_TYPE.INPUT);
+
+			context.put(VALIDATION_CONTEXT, validationContext);
+			validationContext.put(RouteValidator.LOCAL_CONTEXT, localContext);
+
+			Line fakeLine = new Line();
+			fakeLine.setObjectId("STIF:line:1234:LOC");
+			fakeRoute.setLine(fakeLine);
 		}
 
 		boolean result = false;
@@ -55,12 +66,11 @@ public class RouteValidatorTests implements Constant {
 		Locale.setDefault(Locale.ENGLISH);
 	}
 
-	private TestContext validateRouteDirectionType(String directionType) {
+	private void validateRouteDirectionType(TestContext tc, String directionType) {
 
 		int lineNumber = 0;
 		int columnNumber = 0;
 
-		TestContext tc = new TestContext();
 		tc.getFakeRoute().setWayBack(directionType);
 
 		RouteValidator validator = new RouteValidator(tc.getContext()); // --
@@ -72,7 +82,6 @@ public class RouteValidatorTests implements Constant {
 		log.info("Action Report Result = " + tc.getActionReport().getResult());
 
 		tc.setResult(result);
-		return tc;
 	}
 
 	private void checkNoReports(Context context, String fileName) {
@@ -88,7 +97,7 @@ public class RouteValidatorTests implements Constant {
 		Assert.assertEquals(file.getCheckPointErrorCount(), 0, "no file error reported");
 
 	}
-	
+
 	private void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
 			String value) {
 		ActionReport report = (ActionReport) context.get(REPORT);
@@ -120,7 +129,9 @@ public class RouteValidatorTests implements Constant {
 	public void verifyRouteDirectionTypeIncorrect() throws Exception {
 
 		String directionType = "xxxx";
-		TestContext tc = validateRouteDirectionType(directionType);
+		TestContext tc = new TestContext();
+
+		validateRouteDirectionType(tc, directionType);
 
 		checkNoReports(tc.getContext(), "roaoul");
 
@@ -132,7 +143,8 @@ public class RouteValidatorTests implements Constant {
 	public void verifyRouteDirectionTypeNull() throws Exception {
 
 		String directionType = null;
-		TestContext tc = validateRouteDirectionType(directionType);
+		TestContext tc = new TestContext();
+		validateRouteDirectionType(tc, directionType);
 
 		Assert.assertFalse(tc.isResult());
 	}
@@ -142,7 +154,8 @@ public class RouteValidatorTests implements Constant {
 	public void verifyRouteDirectionTypeWithInbound() throws Exception {
 
 		String directionType = "inbound";
-		TestContext tc = validateRouteDirectionType(directionType);
+		TestContext tc = new TestContext();
+		validateRouteDirectionType(tc, directionType);
 
 		Assert.assertTrue(tc.isResult());
 	}
@@ -152,19 +165,18 @@ public class RouteValidatorTests implements Constant {
 	public void verifyRouteDirectionTypeWithOutbound() throws Exception {
 
 		String directionType = "outbound";
-		TestContext tc = validateRouteDirectionType(directionType);
+		TestContext tc = new TestContext();
+		validateRouteDirectionType(tc, directionType);
 
 		Assert.assertTrue(tc.isResult());
 	}
 
-	private TestContext validateInverseRouteRef(Route oppositeRoute) {
+	private TestContext validateInverseRouteRef(TestContext tc, Route oppositeRoute) {
 
 		int lineNumber = 0;
 		int columnNumber = 0;
 
-		TestContext tc = new TestContext();
 		tc.getFakeRoute().setId(System.currentTimeMillis());
-
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 
 		RouteValidator validator = new RouteValidator(tc.getContext()); // --
@@ -188,7 +200,13 @@ public class RouteValidatorTests implements Constant {
 		oppositeRoute.setId(System.currentTimeMillis());
 		oppositeRoute.setOppositeRoute(oppositeRoute);
 
-		TestContext tc = validateInverseRouteRef(oppositeRoute);
+		TestContext tc = new TestContext();
+		Context waybackContext = new Context();
+		oppositeRoute.setObjectId("Codespace:type:identifierAABB:LOC");
+		waybackContext.put(INVERSE_ROUTE_REF, oppositeRoute.getObjectId());
+		tc.getLocalContext().put(oppositeRoute.getObjectId(), waybackContext);
+
+		validateInverseRouteRef(tc, oppositeRoute);
 
 		Assert.assertTrue(tc.isResult());
 	}
@@ -196,7 +214,8 @@ public class RouteValidatorTests implements Constant {
 	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal 2 : No Opposite Route ", priority = 1)
 	public void verifyRouteInverseRouteRefOnNoOppositeRoute() throws Exception {
 
-		TestContext tc = validateInverseRouteRef(null);
+		TestContext tc = new TestContext();
+		validateInverseRouteRef(tc, null);
 
 		Assert.assertTrue(tc.isResult());
 	}
@@ -212,7 +231,8 @@ public class RouteValidatorTests implements Constant {
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 		tc.getFakeRoute().setWayBack(wayback);
 
-		RouteValidator validator = new RouteValidator(tc.getContext()); // --
+		RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(tc.getContext(),
+				RouteValidator.class);
 
 		boolean result = validator.check2NeTExSTIFRoute2_2(tc.getContext(), tc.getFakeRoute(), lineNumber,
 				columnNumber);
@@ -229,22 +249,20 @@ public class RouteValidatorTests implements Constant {
 			"InverseRouteRef" }, description = "Error : Opposite Route of a given Route is not correct ", priority = 1)
 	public void verifyInverseWaybackValueIncorrect() throws Exception {
 
-		//-- error : 'inbound' twice
+		// -- error : 'inbound' twice
 		Route oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
 		oppositeRoute.setWayBack("inbound");
 		TestContext tc = validateInverseWaybackValue(oppositeRoute, "inbound");
 		Assert.assertFalse(tc.isResult());
-		//checkReports(tc.getContext(), "bliiiip",NetexCheckPoints.L2_NeTExSTIF_Route_2,"2_netexstif_1_1",null);
 
-		//-- error : 'outbound' twice
+		// -- error : 'outbound' twice
 		oppositeRoute.setId(System.currentTimeMillis());
 		oppositeRoute.setWayBack("outbound");
 		tc = validateInverseWaybackValue(oppositeRoute, "outbound");
 		Assert.assertFalse(tc.isResult());
 
-		
-		//-- error : 'outbound' twice, default value for route wayback (null) is 'outbound'
+		// -- error : 'outbound' twice, default value for route wayback (null) is 'outbound'
 		oppositeRoute.setId(System.currentTimeMillis());
 		oppositeRoute.setWayBack(null);
 		tc = validateInverseWaybackValue(oppositeRoute, null);
@@ -259,7 +277,6 @@ public class RouteValidatorTests implements Constant {
 		oppositeRoute.setWayBack("inbound");
 		TestContext tc = validateInverseWaybackValue(oppositeRoute, null);
 		Assert.assertTrue(tc.isResult());
-		
 
 		//
 		oppositeRoute = new Route();
@@ -286,7 +303,8 @@ public class RouteValidatorTests implements Constant {
 
 		tc.getFakeRoute().setStopPoints(list);
 
-		RouteValidator validator = new RouteValidator(tc.getContext()); // --
+		RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(tc.getContext(),
+				RouteValidator.class);
 
 		boolean result = validator.check2NeTExSTIFRoute3(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());
