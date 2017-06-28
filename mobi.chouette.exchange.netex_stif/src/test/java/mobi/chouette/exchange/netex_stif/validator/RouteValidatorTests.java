@@ -22,9 +22,12 @@ import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.type.AlightingPossibilityEnum;
+import mobi.chouette.model.type.BoardingPossibilityEnum;
 
 @Log4j
 public class RouteValidatorTests implements Constant {
@@ -34,11 +37,12 @@ public class RouteValidatorTests implements Constant {
 	@Getter
 	@Setter
 	class TestContext {
-		RouteValidator validator;
+		RouteValidator routeValidator;
 		Context context = new Context();
 		ValidationReport validationReport = new ValidationReport();
 		ActionReport actionReport = new ActionReport();
 		Route fakeRoute = new Route();
+		ServiceJourneyPatternValidator serviceJourneyPatternValidator;
 
 		public TestContext() {
 			context.put(Constant.REPORT, actionReport);
@@ -48,12 +52,22 @@ public class RouteValidatorTests implements Constant {
 			ActionReporter reporter = ActionReporter.Factory.getInstance();
 			reporter.addFileReport(context, TEST_FILENAME, IO_TYPE.INPUT);
 
-			validator = (RouteValidator) ValidatorFactory.getValidator(context, RouteValidator.class);
+			routeValidator = (RouteValidator) ValidatorFactory.getValidator(context, RouteValidator.class);
+			serviceJourneyPatternValidator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
+					ServiceJourneyPatternValidator.class);
 
 			Line fakeLine = new Line();
 			fakeLine.setObjectId("STIF:line:1234:LOC");
 			fakeRoute.setLine(fakeLine);
 			fakeRoute.setObjectId("CITYWAY:Route:1234:LOC");
+		}
+
+		public void addStopPointAlighting(String objectId, Integer position, Boolean alighting) {
+			serviceJourneyPatternValidator.addStopPointAlighting(context, objectId, position, alighting);
+		}
+
+		public void addStopPointBoarding(String objectId, Integer position, Boolean boarding) {
+			serviceJourneyPatternValidator.addStopPointBoarding(context, objectId, position, boarding);
 		}
 
 		boolean result = false;
@@ -74,7 +88,7 @@ public class RouteValidatorTests implements Constant {
 
 		tc.getFakeRoute().setWayBack(directionType);
 
-		RouteValidator validator = tc.getValidator();
+		RouteValidator validator = tc.getRouteValidator();
 
 		boolean result = validator.check2NeTExSTIFRoute1(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());
@@ -132,7 +146,6 @@ public class RouteValidatorTests implements Constant {
 
 	}
 
-
 	@Test(groups = { "Route",
 			"DirectionType" }, description = "Cas erreur 1: Route DirectionType incorrect : neither 'inboud', nor 'outbound' ", priority = 1)
 	public void verifyRouteDirectionTypeIncorrect() throws Exception {
@@ -152,15 +165,14 @@ public class RouteValidatorTests implements Constant {
 		validateRouteDirectionType(tc, directionType);
 
 		Assert.assertFalse(tc.isResult());
-		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_1, "2_netexstif_route_1",
-				null, FILE_STATE.ERROR);
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_1, "2_netexstif_route_1", null,
+				FILE_STATE.ERROR);
 
 	}
 
 	@Test(groups = { "Route",
 			"DirectionType" }, description = "Cas nominal 1 : Route DirectionType is inbound", priority = 1)
 	public void verifyRouteDirectionTypeWithInbound() throws Exception {
-
 		String directionType = DIRECTION_INBOUND;
 		TestContext tc = new TestContext();
 		validateRouteDirectionType(tc, directionType);
@@ -186,7 +198,7 @@ public class RouteValidatorTests implements Constant {
 
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 
-		boolean result = tc.getValidator().check2NeTExSTIFRoute2_1(tc.getContext(), tc.getFakeRoute(), lineNumber,
+		boolean result = tc.getRouteValidator().check2NeTExSTIFRoute2_1(tc.getContext(), tc.getFakeRoute(), lineNumber,
 				columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());
 		log.info("Validation Report Result = " + tc.getValidationReport().getResult());
@@ -205,7 +217,7 @@ public class RouteValidatorTests implements Constant {
 		oppositeRoute.setOppositeRoute(oppositeRoute);
 		oppositeRoute.setObjectId("Codespace:type:identifierAABB:LOC");
 		TestContext tc = new TestContext();
-		tc.getValidator().addInverseRouteRef(tc.getContext(), oppositeRoute.getObjectId(),
+		tc.getRouteValidator().addInverseRouteRef(tc.getContext(), oppositeRoute.getObjectId(),
 				"Codespace:type:identifierAABB_INCORRECT:LOC");
 		validateInverseRouteRef(tc, oppositeRoute);
 		Assert.assertFalse(tc.isResult());
@@ -230,7 +242,7 @@ public class RouteValidatorTests implements Constant {
 
 		TestContext tc = new TestContext();
 		oppositeRoute.setObjectId("Codespace:type:identifierAABB:LOC");
-		tc.getValidator().addInverseRouteRef(tc.getContext(), oppositeRoute.getObjectId(),
+		tc.getRouteValidator().addInverseRouteRef(tc.getContext(), oppositeRoute.getObjectId(),
 				tc.getFakeRoute().getObjectId());
 
 		validateInverseRouteRef(tc, oppositeRoute);
@@ -249,7 +261,7 @@ public class RouteValidatorTests implements Constant {
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 		tc.getFakeRoute().setWayBack(wayback);
 
-		RouteValidator validator = tc.getValidator();
+		RouteValidator validator = tc.getRouteValidator();
 
 		boolean result = validator.check2NeTExSTIFRoute2_2(tc.getContext(), tc.getFakeRoute(), lineNumber,
 				columnNumber);
@@ -304,7 +316,7 @@ public class RouteValidatorTests implements Constant {
 		oppositeRoute.setWayBack(null);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_INBOUND);
 		Assert.assertTrue(tc.isResult());
-		checkNoReports(tc.getContext(),TEST_FILENAME);
+		checkNoReports(tc.getContext(), TEST_FILENAME);
 		//
 		oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
@@ -314,13 +326,16 @@ public class RouteValidatorTests implements Constant {
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 	}
 
+	/*
+	 * StopPoint Order
+	 */
+
 	private TestContext validateRouteStopPointOrder(List<StopPoint> list) {
 		int lineNumber = 0;
 		int columnNumber = 0;
 		TestContext tc = new TestContext();
-		tc.getFakeRoute().setId(System.currentTimeMillis());
 		tc.getFakeRoute().setStopPoints(list);
-		RouteValidator validator = tc.getValidator();
+		RouteValidator validator = tc.getRouteValidator();
 		boolean result = validator.check2NeTExSTIFRoute3(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());
 		log.info("Validation Report Result = " + tc.getValidationReport().getResult());
@@ -333,9 +348,7 @@ public class RouteValidatorTests implements Constant {
 	@Test(groups = { "Route",
 			"StopPointOrder" }, description = "Error 1 : StopPoint Order in Route is incorrect  ", priority = 1)
 	public void verifyRouteStopPointOrderIncorrect() throws Exception {
-		
-		
-		
+
 		List<StopPoint> list = new ArrayList<StopPoint>(
 				Arrays.asList(StopPointBuilder.newInstance().id(0L).position(10).build(),
 						StopPointBuilder.newInstance().id(1L).position(20).build(),
@@ -364,6 +377,10 @@ public class RouteValidatorTests implements Constant {
 	static class StopPointBuilder {
 		protected Long id;
 		private Integer position;
+		private AlightingPossibilityEnum forAlighting = AlightingPossibilityEnum.normal;
+		private BoardingPossibilityEnum forBoarding = BoardingPossibilityEnum.normal;
+		private String oid;
+		private String comment;
 
 		public static StopPointBuilder newInstance() {
 			return new StopPointBuilder();
@@ -374,6 +391,26 @@ public class RouteValidatorTests implements Constant {
 			return this;
 		}
 
+		public StopPointBuilder objectId(String oid) {
+			this.oid = oid;
+			return this;
+		}
+
+		public StopPointBuilder comment(String comment) {
+			this.comment = comment;
+			return this;
+		}
+
+		public StopPointBuilder forBoarding(boolean b) {
+			this.forBoarding = b ? BoardingPossibilityEnum.normal : BoardingPossibilityEnum.forbidden;
+			return this;
+		}
+
+		public StopPointBuilder forAlighting(boolean b) {
+			this.forAlighting = b ? AlightingPossibilityEnum.normal : AlightingPossibilityEnum.forbidden;
+			return this;
+		}
+
 		public StopPointBuilder position(Integer pos) {
 			this.position = pos;
 			return this;
@@ -381,10 +418,135 @@ public class RouteValidatorTests implements Constant {
 
 		public StopPoint build() {
 			StopPoint p = new StopPoint();
+			p.setObjectId(this.oid);
 			p.setId(this.id);
 			p.setPosition(this.position);
+			p.setComment(this.comment);
+			p.setForAlighting(this.forAlighting);
+			p.setForBoarding(this.forBoarding);
 			return p;
 		}
+	}
+
+	/*
+	 * StopPoint Alighting/Boarding in route match those in JourneyPatterns NeTExSTIF_Route_3
+	 */
+
+	private void validateRouteStopPointAlightingBoarding(TestContext tc, List<StopPoint> list) {
+		int lineNumber = 1;
+		int columnNumber = 2;
+		tc.getFakeRoute().setStopPoints(list);
+		RouteValidator validator = tc.getRouteValidator();
+		boolean result = validator.check2NeTExSTIFRoute4(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
+		log.info("Validation Report ===>" + tc.getValidationReport().toString());
+		log.info("Validation Report Result = " + tc.getValidationReport().getResult());
+		log.info("Action Report ===>" + tc.getActionReport().toString());
+		log.info("Action Report Result = " + tc.getActionReport().getResult());
+		tc.setResult(result);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test(groups = { "Route",
+			"AlightingBoarding" }, description = "Error 1 : AlightingBoarding in Route vs JourneyPattern is incorrect  ", priority = 1)
+	public void verifyRouteStopPointAlightingBoardingIncorrect() throws Exception {
+
+		List<StopPoint> list = new ArrayList<StopPoint>(Arrays.asList(
+				StopPointBuilder.newInstance().id(0L).objectId("CSP:TYP:10:LOC").comment("p10").position(10).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(1L).objectId("CSP:TYP:20:LOC").comment("p20").position(20).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(2L).objectId("CSP:TYP:30:LOC").comment("p30").position(30).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(3L).objectId("CSP:TYP:40:LOC").comment("p40").position(40).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(4L).objectId("CSP:TYP:50:LOC").comment("p50").position(50).forAlighting(false).forBoarding(true).build()));
+		TestContext tc = new TestContext();
+
+		JourneyPattern jp1 = new JourneyPattern();
+		jp1.setObjectId("Cityway:journeypattern:JP1_AABBCC:LOC");
+		String obj = jp1.getObjectId();
+		tc.addStopPointAlighting(obj, 10, false);
+		tc.addStopPointAlighting(obj, 20, false);
+		tc.addStopPointAlighting(obj, 30, false);
+		tc.addStopPointAlighting(obj, 40, false);
+		tc.addStopPointAlighting(obj, 50, false);
+		//
+		tc.addStopPointBoarding(obj, 10, true);
+		tc.addStopPointBoarding(obj, 20, true);
+		tc.addStopPointBoarding(obj, 30, true);
+		tc.addStopPointBoarding(obj, 40, true);
+		tc.addStopPointBoarding(obj, 50, true);
+
+		JourneyPattern jp2 = new JourneyPattern();
+		jp2.setObjectId("Cityway:journeypattern:JP2_AABBCC:LOC");
+		obj = jp2.getObjectId();
+		tc.addStopPointAlighting(obj, 10, false);
+		tc.addStopPointAlighting(obj, 20, false);
+		tc.addStopPointAlighting(obj, 30, false);
+		tc.addStopPointAlighting(obj, 40, false);
+		tc.addStopPointAlighting(obj, 50, false);
+		//
+		tc.addStopPointBoarding(obj, 10, true);
+		tc.addStopPointBoarding(obj, 20, true);
+		tc.addStopPointBoarding(obj, 30, true);
+		tc.addStopPointBoarding(obj, 40, false); //incorrect
+		tc.addStopPointBoarding(obj, 50, true);
+
+		tc.getFakeRoute().getJourneyPatterns().add(jp1);
+		tc.getFakeRoute().getJourneyPatterns().add(jp2);
+
+		validateRouteStopPointAlightingBoarding(tc, list);
+		Assert.assertFalse(tc.isResult());
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_4, "2_netexstif_route_4",
+				"CSP:TYP:40:LOC", FILE_STATE.OK);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Test(groups = { "Route",
+			"AlightingBoarding" }, description = "Nominal 1 : AlightingBoarding in Route vs JourneyPattern correct  ", priority = 1)
+	public void verifyRouteStopPointAlightingBoardingcorrect() throws Exception {
+
+		List<StopPoint> list = new ArrayList<StopPoint>(Arrays.asList(
+				StopPointBuilder.newInstance().id(0L).comment("p10").position(10).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(1L).comment("p20").position(20).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(2L).comment("p30").position(30).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(3L).comment("p40").position(40).forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(4L).comment("p50").position(50).forAlighting(false).forBoarding(true).build()));
+		TestContext tc = new TestContext();
+
+		JourneyPattern jp1 = new JourneyPattern();
+		jp1.setObjectId("Cityway:journeypattern:JP1_AABBCC:LOC");
+		String obj = jp1.getObjectId();
+		tc.addStopPointAlighting(obj, 10, false);
+		tc.addStopPointAlighting(obj, 20, false);
+		tc.addStopPointAlighting(obj, 30, false);
+		tc.addStopPointAlighting(obj, 40, false);
+		tc.addStopPointAlighting(obj, 50, false);
+		//
+		tc.addStopPointBoarding(obj, 10, true);
+		tc.addStopPointBoarding(obj, 20, true);
+		tc.addStopPointBoarding(obj, 30, true);
+		tc.addStopPointBoarding(obj, 40, true);
+		tc.addStopPointBoarding(obj, 50, true);
+
+		JourneyPattern jp2 = new JourneyPattern();
+		jp2.setObjectId("Cityway:journeypattern:JP2_AABBCC:LOC");
+		obj = jp2.getObjectId();
+		tc.addStopPointAlighting(obj, 10, false);
+		tc.addStopPointAlighting(obj, 20, false);
+		tc.addStopPointAlighting(obj, 30, false);
+		tc.addStopPointAlighting(obj, 40, false);
+		tc.addStopPointAlighting(obj, 50, false);
+		//
+		tc.addStopPointBoarding(obj, 10, true);
+		tc.addStopPointBoarding(obj, 20, true);
+		tc.addStopPointBoarding(obj, 30, true);
+		tc.addStopPointBoarding(obj, 40, true);
+		tc.addStopPointBoarding(obj, 50, true);
+
+		tc.getFakeRoute().getJourneyPatterns().add(jp1);
+		tc.getFakeRoute().getJourneyPatterns().add(jp2);
+
+		validateRouteStopPointAlightingBoarding(tc, list);
+		Assert.assertTrue(tc.isResult());
+		checkNoReports(tc.getContext(), TEST_FILENAME);
 	}
 
 }

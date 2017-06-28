@@ -261,18 +261,21 @@ public class RouteValidator extends AbstractValidator {
 	@SuppressWarnings("unchecked")
 	public boolean check2NeTExSTIFRoute4(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
+		
+		StopPoint stopPointOnError = null;
 
 		for (JourneyPattern jp : route.getJourneyPatterns()) {
 
 			Context objectContext = getObjectContext(context, ServiceJourneyPatternValidator.LOCAL_CONTEXT,
 					jp.getObjectId());
 			Map<Integer, Boolean> mapAlighting = (Map<Integer, Boolean>) objectContext.get(FOR_ALIGHTING);
-			Map<Integer, Boolean> mapBoarding = (Map<Integer, Boolean>) objectContext.get(FOR_ALIGHTING);
+			Map<Integer, Boolean> mapBoarding = (Map<Integer, Boolean>) objectContext.get(FOR_BOARDING);
 			for (StopPoint sp : route.getStopPoints()) {
 				if (mapAlighting.containsKey(sp.getPosition())) {
 					Boolean alighting = mapAlighting.get(sp.getPosition());
 					if (!compare(alighting, sp.getForAlighting())) {
 						result = false;
+						stopPointOnError=sp;
 						break;
 					}
 				}
@@ -280,6 +283,7 @@ public class RouteValidator extends AbstractValidator {
 					Boolean boarding = mapBoarding.get(sp.getPosition());
 					if (!compare(boarding, sp.getForBoarding())) {
 						result = false;
+						stopPointOnError=sp;
 						break;
 					}
 				}
@@ -295,7 +299,7 @@ public class RouteValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_4, location);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_4, location, stopPointOnError.getObjectId());
 		}
 
 		return result;
