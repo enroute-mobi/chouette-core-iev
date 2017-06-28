@@ -9,6 +9,11 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 public class ServiceJourneyPatternValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = SERVICE_JOURNEY_PATTERN;
+	
+	protected String getLocalContext()
+	{
+		return LOCAL_CONTEXT;
+	}
 
 	@Override
 	public void init(Context context) {
@@ -16,10 +21,10 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		// validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_1);
-		// validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_2);
-		// validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_3);
-		// validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_4);
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_1);
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_2);
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_3);
+		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_4);
 	}
 
 	@SuppressWarnings("unchecked")
