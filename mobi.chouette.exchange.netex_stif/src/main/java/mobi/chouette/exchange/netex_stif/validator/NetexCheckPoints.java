@@ -9,12 +9,12 @@ public interface NetexCheckPoints {
 	static final String L2_NeTExSTIF_2 = "2-NeTExSTIF-2"; // FrameValidator
 	static final String L2_NeTExSTIF_3 = "2-NeTExSTIF-3"; // FrameValidator
 	static final String L2_NeTExSTIF_4 = "2-NeTExSTIF-4"; // AbstractValidator
-	static final String L2_NeTExSTIF_5 = "2-NeTExSTIF-5";
-	static final String L2_NeTExSTIF_6 = "2-NeTExSTIF-6";
-	static final String L2_NeTExSTIF_7 = "2-NeTExSTIF-7";
-	static final String L2_NeTExSTIF_8 = "2-NeTExSTIF-8";
-	static final String L2_NeTExSTIF_9 = "2-NeTExSTIF-9";
-	static final String L2_NeTExSTIF_10 = "2-NeTExSTIF-10";
+	static final String L2_NeTExSTIF_5 = "2-NeTExSTIF-5"; // AbstractValidator
+	static final String L2_NeTExSTIF_6 = "2-NeTExSTIF-6"; // AbstractValidator
+	static final String L2_NeTExSTIF_7 = "2-NeTExSTIF-7"; // AbstractValidator
+	static final String L2_NeTExSTIF_8 = "2-NeTExSTIF-8"; // AbstractValidator
+	static final String L2_NeTExSTIF_9 = "2-NeTExSTIF-9"; // AbstractValidator
+	static final String L2_NeTExSTIF_10 = "2-NeTExSTIF-10"; // AbstractValidator
 	
 	static final String L2_NeTExSTIF_Notice_1 = "2-NeTExSTIF-Notice-1";
 	static final String L2_NeTExSTIF_Notice_2 = "2-NeTExSTIF-Notice-2";

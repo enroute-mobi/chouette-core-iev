@@ -1,5 +1,7 @@
 package mobi.chouette.model.util;
 
+import java.util.Calendar;
+
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
@@ -27,6 +29,8 @@ public class ObjectFactory {
 			result = new AccessLink();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedAccessLinks().put(objectId, result);
 		}
 		if (!referential.getAccessLinks().containsKey(objectId)) {
@@ -44,6 +48,8 @@ public class ObjectFactory {
 			result = new AccessPoint();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedAccessPoints().put(objectId, result);
 		}
 		if (!referential.getAccessPoints().containsKey(objectId)) {
@@ -60,6 +66,8 @@ public class ObjectFactory {
 			result = new Timetable();
 			result.setDetached(true);
 			result.setObjectId(objectId);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedTimetables().put(objectId, result);
 		}
 		if (!referential.getTimetables().containsKey(objectId)) {
@@ -82,6 +90,8 @@ public class ObjectFactory {
 			result = new Network();
 			result.setDetached(true);
 			result.setObjectId(objectId);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedPTNetworks().put(objectId, result);
 		}
 		if (!referential.getPtNetworks().containsKey(objectId)) {
@@ -97,6 +107,8 @@ public class ObjectFactory {
 			result = new Company();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedCompanies().put(objectId, result);
 		}
 		if (!referential.getCompanies().containsKey(objectId)) {
@@ -112,6 +124,8 @@ public class ObjectFactory {
 			result = new Route();
 			result.setDetached(true);
 			result.setObjectId(objectId);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getRoutes().put(objectId, result);
 		}
 		return result;
@@ -123,6 +137,8 @@ public class ObjectFactory {
 			result = new RoutingConstraint();
 			result.setDetached(true);
 			result.setObjectId(objectId);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getRoutingConstraints().put(objectId, result);
 		}
 		return result;
@@ -134,6 +150,8 @@ public class ObjectFactory {
 			result = new Line();
 			result.setDetached(true);
 			result.setObjectId(objectId);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getLines().put(objectId, result);
 		}
 		return result;
@@ -146,6 +164,8 @@ public class ObjectFactory {
 			result = new JourneyPattern();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getJourneyPatterns().put(objectId, result);
 		}
 		return result;
@@ -159,6 +179,8 @@ public class ObjectFactory {
 			result = new ConnectionLink();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedConnectionLinks().put(objectId, result);
 		}
 		if (!referential.getConnectionLinks().containsKey(objectId)) {
@@ -174,6 +196,8 @@ public class ObjectFactory {
 			result = new StopArea();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedStopAreas().put(objectId, result);
 		} 
 		if (!referential.getStopAreas().containsKey(objectId)) {
@@ -190,6 +214,8 @@ public class ObjectFactory {
 			result = new GroupOfLine();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getSharedGroupOfLines().put(objectId, result);
 		}
 		if (!referential.getGroupOfLines().containsKey(objectId)) {
@@ -206,6 +232,8 @@ public class ObjectFactory {
 			result = new StopPoint();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
 			referential.getStopPoints().put(objectId, result);
 		}
 		return result;
@@ -218,32 +246,35 @@ public class ObjectFactory {
 			result = new VehicleJourney();
 			result.setObjectId(objectId);
 			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
 			referential.getVehicleJourneys().put(objectId, result);
 		}
 		return result;
 	}
 	
 	public static Timeband getTimeband(Referential referential, String objectId) {
-		Timeband timeband = referential.getTimebands().get(objectId);
-		if (timeband == null) {
-			timeband = new Timeband();
-			timeband.setObjectId(objectId);
-			timeband.setDetached(true);
-			referential.getTimebands().put(objectId, timeband);
+		Timeband result = referential.getTimebands().get(objectId);
+		if (result == null) {
+			result = new Timeband();
+			result.setObjectId(objectId);
+			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+			referential.getTimebands().put(objectId, result);
 		}
-		return timeband;
+		return result;
 	}
 
 
 	public static RouteSection getRouteSection(Referential referential, String objectId) {
-		RouteSection section = referential.getRouteSections().get(objectId);
-		if (section == null) {
-			section = new RouteSection();
-			section.setObjectId(objectId);
-			section.setDetached(true);
-			referential.getRouteSections().put(objectId, section);
+		RouteSection result = referential.getRouteSections().get(objectId);
+		if (result == null) {
+			result = new RouteSection();
+			result.setObjectId(objectId);
+			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+			referential.getRouteSections().put(objectId, result);
 		}
-		return section;
+		return result;
 	}
 
 }

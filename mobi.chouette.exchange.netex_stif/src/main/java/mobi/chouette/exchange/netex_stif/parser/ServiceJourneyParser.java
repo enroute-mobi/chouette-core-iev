@@ -49,6 +49,12 @@ public class ServiceJourneyParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);
+		String changed = xpp.getAttributeValue(null, CHANGED);
+		if (changed != null) {
+			vehicleJourney.setCreationTime(NetexStifUtils.getDate(changed));
+		}
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		validator.addModificationf(context, id, modification);
 		vehicleJourney.setObjectVersion(version);
 		LineLite line = (LineLite) context.get(LINE);
 		if (line != null)
@@ -226,7 +232,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 			if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
 				int columnNumber = xpp.getColumnNumber();
 				int lineNumber = xpp.getLineNumber();
-				PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context, PassingTimeValidator.class);
+				PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context,
+						PassingTimeValidator.class);
 				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
 				int rank = vehicleJourney.getVehicleJourneyAtStops().size();
 				vjas.setVehicleJourney(vehicleJourney);

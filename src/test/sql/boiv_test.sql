@@ -9310,6 +9310,8 @@ CREATE TABLE footnotes (
     line_id bigint,
     code character varying(255),
     label character varying(255),
+    checksum character varying(255),
+    checksum_source text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -9388,6 +9390,8 @@ CREATE TABLE journey_patterns (
     departure_stop_point_id bigint,
     arrival_stop_point_id bigint,
     section_status integer DEFAULT 0 NOT NULL,
+    checksum character varying(255),
+    checksum_source text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -9427,6 +9431,8 @@ CREATE TABLE routes (
     number character varying(255),
     direction character varying(255),
     wayback character varying(255),
+    checksum character varying(255),
+    checksum_source text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -9447,11 +9453,13 @@ CREATE TABLE routing_constraint_zones (
     name character varying(255),
     stop_point_ids bigint[],
     route_id bigint,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
     objectid character varying(255) NOT NULL,
     object_version bigint,
-    creator_id character varying(255)
+    creator_id character varying(255),
+    checksum character varying(255),
+    checksum_source text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 ALTER TABLE chouette_gui.routing_constraint_zones OWNER TO chouette;
 CREATE SEQUENCE routing_constraint_zones_id_seq
@@ -9495,7 +9503,9 @@ CREATE TABLE time_table_dates (
     date date,
     "position" integer NOT NULL,
     id bigint NOT NULL,
-    in_out boolean
+    in_out boolean,
+    checksum character varying(255),
+    checksum_source text
 );
 ALTER TABLE chouette_gui.time_table_dates OWNER TO chouette;
 CREATE SEQUENCE time_table_dates_id_seq
@@ -9514,7 +9524,9 @@ CREATE TABLE time_table_periods (
     period_start date,
     period_end date,
     "position" integer NOT NULL,
-    id bigint NOT NULL
+    id bigint NOT NULL,
+    checksum character varying(255),
+    checksum_source text
 );
 ALTER TABLE chouette_gui.time_table_periods OWNER TO chouette;
 CREATE SEQUENCE time_table_periods_id_seq
@@ -9539,6 +9551,8 @@ CREATE TABLE time_tables (
     start_date date,
     end_date date,
     calendar_id integer,
+    checksum character varying(255),
+    checksum_source text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -9597,7 +9611,9 @@ CREATE TABLE vehicle_journey_at_stops (
     for_boarding character varying(255),
     for_alighting character varying(255),
     departure_day_offset int not null default 0,
-    arrival_day_offset int not null default 0
+    arrival_day_offset int not null default 0,
+    checksum character varying(255),
+    checksum_source text
 );
 ALTER TABLE chouette_gui.vehicle_journey_at_stops OWNER TO chouette;
 CREATE SEQUENCE vehicle_journey_at_stops_id_seq
@@ -9630,6 +9646,8 @@ CREATE TABLE vehicle_journeys (
     mobility_restricted_suitability boolean,
     flexible_service boolean,
     journey_category integer DEFAULT 0 NOT NULL,
+    checksum character varying(255),
+    checksum_source text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -9722,8 +9740,6 @@ CREATE UNIQUE INDEX routes_objectid_key ON routes USING btree (objectid);
 CREATE UNIQUE INDEX stop_points_objectid_key ON stop_points USING btree (objectid);
 CREATE UNIQUE INDEX time_tables_objectid_key ON time_tables USING btree (objectid);
 CREATE UNIQUE INDEX vehicle_journeys_objectid_key ON vehicle_journeys USING btree (objectid);
-
-
 
 
 ALTER TABLE ONLY journey_frequencies

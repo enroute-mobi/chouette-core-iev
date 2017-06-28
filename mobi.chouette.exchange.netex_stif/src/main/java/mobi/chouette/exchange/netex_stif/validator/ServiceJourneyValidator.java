@@ -13,7 +13,12 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 
 public class ServiceJourneyValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = "ServiceJourney";
+	public static final String LOCAL_CONTEXT = SERVICE_JOURNEY;
+	
+	protected String getLocalContext()
+	{
+		return LOCAL_CONTEXT;
+	}
 
 	@Override
 	public void init(Context context) {
@@ -48,14 +53,17 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean validate(Context context, VehicleJourney journey, int lineNumber, int columnNumber) {
-		boolean result = check2NeTExSTIFServiceJourney1(context, journey, lineNumber, columnNumber);
-		if (result)
-			result = check2NeTExSTIFServiceJourney2(context, journey, lineNumber, columnNumber);
-		if (result)
-			result = check2NeTExSTIFServiceJourney3(context, journey, lineNumber, columnNumber);
-		if (result)
-			result = check2NeTExSTIFServiceJourney4(context, journey, lineNumber, columnNumber);
-		return result;
+		boolean result1 = checkNetexId(context, SERVICE_JOURNEY, journey.getObjectId(), lineNumber, columnNumber);
+		checkChanged(context, SERVICE_JOURNEY, journey, lineNumber, columnNumber);
+		boolean result2 = checkModification(context, SERVICE_JOURNEY, journey, lineNumber, columnNumber);
+		boolean result3 = check2NeTExSTIFServiceJourney1(context, journey, lineNumber, columnNumber);
+		if (result3)
+			result3 = check2NeTExSTIFServiceJourney2(context, journey, lineNumber, columnNumber);
+		if (result3)
+			result3 = check2NeTExSTIFServiceJourney3(context, journey, lineNumber, columnNumber);
+		if (result3)
+			result3 = check2NeTExSTIFServiceJourney4(context, journey, lineNumber, columnNumber);
+		return result1 && result2 && result3;
 	}
 
 	/**
@@ -212,7 +220,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 		int res = 0;
 		int rank = 0;
 		Comparator<VehicleJourneyAtStop> cmp = new PassingTimeComparator();
-		while (res <= 0 && rank < journey.getVehicleJourneyAtStops().size())
+		while (res <= 0 && rank < journey.getVehicleJourneyAtStops().size() -1)
 		{
 			rank ++;
 			res = cmp.compare(journey.getVehicleJourneyAtStops().get(rank -1), journey.getVehicleJourneyAtStops().get(rank));

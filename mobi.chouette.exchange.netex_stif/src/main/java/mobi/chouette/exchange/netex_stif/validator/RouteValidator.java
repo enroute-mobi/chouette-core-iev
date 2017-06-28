@@ -13,7 +13,12 @@ import mobi.chouette.model.StopPoint;
 
 public class RouteValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = "Route";
+	public static final String LOCAL_CONTEXT = ROUTE;
+	
+	protected String getLocalContext()
+	{
+		return LOCAL_CONTEXT;
+	}
 
 
 	@Override
@@ -107,15 +112,10 @@ public class RouteValidator extends AbstractValidator {
 
 		if (route.getOppositeRoute() != null) 
 		{
-			// récupération du contexte de validation
-			Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
-			// récupération du sous contexte de validation des Routes (LOCAL_CONTEXT) 
-			Context localContext = (Context) validationContext.get(LOCAL_CONTEXT);
-			// récupération du contexte de l'objet Route 'wayback'
-            Context waybackContext = (Context) localContext.get(route.getOppositeRoute().getObjectId());
+			Context waybackContext = getObjectContext(context, LOCAL_CONTEXT, route.getOppositeRoute().getObjectId());
             // récupération de la valeur d'attribut sauvegardée
             String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
-            result = !wayBackInverseRouteRef.equals(route.getObjectId());
+            result = !route.getObjectId().equals(wayBackInverseRouteRef);
 		}
 
 		if (!result) {

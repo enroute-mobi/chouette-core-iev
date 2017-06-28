@@ -126,4 +126,9 @@ public class PassingTimeValidator extends AbstractValidator {
 		return result;
 	}
 
+	@Override
+	protected String getLocalContext() {
+		return TIMETABLED_PASSING_TIME;
+	}
+
 }

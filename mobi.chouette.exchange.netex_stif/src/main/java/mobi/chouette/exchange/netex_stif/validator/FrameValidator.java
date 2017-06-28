@@ -286,4 +286,9 @@ public class FrameValidator extends AbstractValidator implements Constant{
 
 		return result;
 	}
+
+	@Override
+	protected String getLocalContext() {
+		return "FRAMES";
+	}
 }
