@@ -170,6 +170,15 @@ public class PassingTimeValidatorTests implements Constant {
 		VehicleJourneyAtStop vjas = buildVehicleJourneyAtStop();
 		boolean result = validator.validate(context, vjas, 1, 2, 0);
 		Assert.assertFalse(result, "validator result");
+		
+		
+		ValidationReport vr = (ValidationReport) context.get(VALIDATION_REPORT);
+		ActionReport ar = (ActionReport) context.get(REPORT);
+
+		log.info("Validation Report ===>" + vr.toString());
+		log.info("Validation Report Result = " + vr.getResult());
+		log.info("Action Report ===>" + ar.toString());
+		log.info("Action Report Result = " + ar.getResult());
 		checkReports(context, "offre_xxx.xml",NetexCheckPoints.L2_NeTExSTIF_PassingTime_1,"2_netexstif_passingtime_1","0");
 	}
 
