@@ -10,6 +10,8 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.validator.ServiceJourneyPatternValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
@@ -83,6 +85,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context, ServiceJourneyPatternValidator.class);
 		Long version = (Long) context.get(VERSION);
 		String scheduledStopPointId = null;
 		String order = xpp.getAttributeValue(null, ORDER);
@@ -110,12 +113,21 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			// log.info("set position : " + order);
 			stopPoint.setPosition(Integer.parseInt(order));
 			if (forAlighting != null) {
+				validator.addStopPointAlighting(context, journeyPattern.getObjectId(), stopPoint.getPosition(), forAlighting);
 				stopPoint.setForAlighting(
 						forAlighting ? AlightingPossibilityEnum.normal : AlightingPossibilityEnum.forbidden);
 			}
+			else{
+				validator.addStopPointAlighting(context, journeyPattern.getObjectId(), stopPoint.getPosition(), Boolean.TRUE);
+			}
+			
 			if (forBoarding != null) {
+				validator.addStopPointBoarding(context, journeyPattern.getObjectId(), stopPoint.getPosition(), forBoarding);
 				stopPoint.setForBoarding(
 						forBoarding ? BoardingPossibilityEnum.normal : BoardingPossibilityEnum.forbidden);
+			}
+			else{
+				validator.addStopPointBoarding(context, journeyPattern.getObjectId(), stopPoint.getPosition(), Boolean.TRUE);
 			}
 			factory.addStopPoint(scheduledStopPointId, stopPoint);
 			journeyPattern.addStopPoint(stopPoint);

@@ -1,7 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
@@ -10,15 +10,12 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.type.AlightingPossibilityEnum;
+import mobi.chouette.model.type.BoardingPossibilityEnum;
 
 public class RouteValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = "Route";
-
-	public RouteValidator(Context context) {
-		init(context);
-
-	}
 
 	@Override
 	public void init(Context context) {
@@ -32,12 +29,11 @@ public class RouteValidator extends AbstractValidator {
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_4);
 	}
 
-	
-	public void addInverseRouteRef(Context context, String objectId, String inverseRouteRef)
-	{
+	public void addInverseRouteRef(Context context, String objectId, String inverseRouteRef) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
 		objectContext.put(INVERSE_ROUTE_REF, inverseRouteRef);
 	}
+
 	/**
 	 * <a target="_blank" href="https://projects.af83.io/issues/2308" >Carte #2308</a>
 	 * <p>
@@ -64,7 +60,7 @@ public class RouteValidator extends AbstractValidator {
 	public boolean check2NeTExSTIFRoute1(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
 		String wayback = route.getWayBack();
-		if (wayback == null || (!wayback.equals("outbound") && !wayback.equals("inbound"))) {
+		if (wayback == null || (!wayback.equals(DIRECTION_OUTBOUND) && !wayback.equals(DIRECTION_INBOUND))) {
 			result = false;
 		}
 
@@ -99,6 +95,8 @@ public class RouteValidator extends AbstractValidator {
 	 * Criticité : warning
 	 * <p>
 	 * 
+	 * @see #addInverseRouteRef(Context, String, String) to preserve InverseRouteRef value
+	 * 
 	 * @param context
 	 * @param route
 	 * @param lineNumber
@@ -108,13 +106,13 @@ public class RouteValidator extends AbstractValidator {
 	public boolean check2NeTExSTIFRoute2_1(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
 
-		if (route.getOppositeRoute() != null) 
-		{
-			Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
-			Context localContext = (Context) validationContext.get(LOCAL_CONTEXT);
-            Context waybackContext = (Context) localContext.get(route.getOppositeRoute().getObjectId());
-            String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
-            result = !wayBackInverseRouteRef.equals(route.getObjectId());
+		if (route.getOppositeRoute() != null) {
+
+			Context waybackContext = getObjectContext(context, LOCAL_CONTEXT, route.getOppositeRoute().getObjectId());
+
+			// récupération de la valeur d'attribut sauvegardée
+			String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
+			result = route.getObjectId().equals(wayBackInverseRouteRef);
 		}
 
 		if (!result) {
@@ -131,8 +129,8 @@ public class RouteValidator extends AbstractValidator {
 	public boolean check2NeTExSTIFRoute2_2(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
 
-		String wayback = "outbound";
-		String oppositeWayback = "outbound";
+		String wayback = DIRECTION_OUTBOUND;
+		String oppositeWayback = DIRECTION_OUTBOUND;
 
 		if (route.getWayBack() != null) {
 			wayback = route.getWayBack();
@@ -197,10 +195,38 @@ public class RouteValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_3, location, lastPosition.toString());
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_3, location,
+					lastPosition.toString());
 		}
 
 		return result;
+	}
+
+	private boolean compare(Boolean boolAlighting, AlightingPossibilityEnum enumAlighting) {
+
+		if (enumAlighting == null) {
+			return boolAlighting;
+		} else if (enumAlighting.equals(AlightingPossibilityEnum.normal)) {
+			return boolAlighting;
+		} else if (enumAlighting.equals(AlightingPossibilityEnum.forbidden)) {
+			return !boolAlighting;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean compare(Boolean boolBoarding, BoardingPossibilityEnum enumBoarding) {
+
+		if (enumBoarding == null) {
+			return boolBoarding;
+		} else if (enumBoarding.equals(BoardingPossibilityEnum.normal)) {
+			return boolBoarding;
+		} else if (enumBoarding.equals(BoardingPossibilityEnum.forbidden)) {
+			return !boolBoarding;
+		} else {
+			return false;
+		}
+
 	}
 
 	/**
@@ -229,25 +255,44 @@ public class RouteValidator extends AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean check2NeTExSTIFRoute4(Context context, Route route, int lineNumber, int columnNumber) {
-		Boolean result = true;
+		boolean result = true;
 
-		result = route.getStopPoints().stream().anyMatch(sp -> {
+		for (JourneyPattern jp : route.getJourneyPatterns()) {
 
-			Optional<JourneyPattern> incorrectJourneyPattern = route.getJourneyPatterns().stream().filter(
-					jp -> (!sp.getForAlighting().equals(jp.getStopPoints().get(sp.getPosition()).getForAlighting()))
-							|| (!sp.getForBoarding().equals(jp.getStopPoints().get(sp.getPosition()).getForBoarding())))
-					.findFirst();
+			Context objectContext = getObjectContext(context, ServiceJourneyPatternValidator.LOCAL_CONTEXT,
+					jp.getObjectId());
+			Map<Integer, Boolean> mapAlighting = (Map<Integer, Boolean>) objectContext.get(FOR_ALIGHTING);
+			Map<Integer, Boolean> mapBoarding = (Map<Integer, Boolean>) objectContext.get(FOR_ALIGHTING);
+			for (StopPoint sp : route.getStopPoints()) {
+				if (mapAlighting.containsKey(sp.getPosition())) {
+					Boolean alighting = mapAlighting.get(sp.getPosition());
+					if (!compare(alighting, sp.getForAlighting())) {
+						result = false;
+						break;
+					}
+				}
+				if (mapBoarding.containsKey(sp.getPosition())) {
+					Boolean boarding = mapBoarding.get(sp.getPosition());
+					if (!compare(boarding, sp.getForBoarding())) {
+						result = false;
+						break;
+					}
+				}
+			}
 
-			return incorrectJourneyPattern.isPresent();
+			if (!result) {
+				break;
+			}
 
-		});
+		}
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_4, location, route.getObjectId());
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_4, location);
 		}
 
 		return result;

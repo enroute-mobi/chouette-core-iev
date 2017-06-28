@@ -127,7 +127,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Calendrier" }, description = "Good GeneralFrames list ", priority = 1)
 	public void verifyCalendrierRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
@@ -143,7 +143,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Calendrier" }, description = "Good GeneralFrame ", priority = 2)
 	public void verifyCalendrierValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
@@ -157,7 +157,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Calendrier" }, description = "Bad GeneralFrames list ", priority = 3)
 	public void verifyCalendrierWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
@@ -175,7 +175,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Calendrier" }, description = "Bad GeneralFrame ", priority = 4)
 	public void verifyCalendrierForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
@@ -189,7 +189,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Calendrier" }, description = "Good CompositeFrames list ", priority = 5)
 	public void verifyCalendrierRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
@@ -203,7 +203,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Calendrier" }, description = "Bad CompositeFrame ", priority = 6)
 	public void verifyCalendrierForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, CALENDRIER_FILE_NAME, IO_TYPE.INPUT);
@@ -219,7 +219,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Commun" }, description = "Good GeneralFrames list ", priority = 7)
 	public void verifyCommunRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
@@ -234,7 +234,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Commun" }, description = "Good GeneralFrame ", priority = 8)
 	public void verifyCommunValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
@@ -248,7 +248,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Commun" }, description = "Bad GeneralFrames list ", priority = 9)
 	public void verifyCommunWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
@@ -266,7 +266,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Commun" }, description = "Bad GeneralFrame ", priority = 10)
 	public void verifyCommunForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
@@ -280,7 +280,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Commun" }, description = "Good CompositeFrames list ", priority = 11)
 	public void verifyCommunRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
@@ -294,7 +294,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Commun" }, description = "Bad CompositeFrame ", priority = 12)
 	public void verifyCommunForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, COMMUN_FILE_NAME, IO_TYPE.INPUT);
@@ -314,7 +314,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Offre" }, description = "Good GeneralFrames list ", priority = 13)
 	public void verifyOffreRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
@@ -336,7 +336,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Offre" }, description = "Good GeneralFrame ", priority = 14)
 	public void verifyOffreValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
@@ -354,7 +354,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Offre" }, description = "Bad GeneralFrames list ", priority = 15)
 	public void verifyOffreWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
@@ -372,7 +372,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Offre" }, description = "Bad GeneralFrame ", priority = 16)
 	public void verifyOffreForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
@@ -386,7 +386,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Offre" }, description = "Good CompositeFrames list ", priority = 17)
 	public void verifyOffreRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
@@ -403,7 +403,7 @@ public class FrameValidatorTests implements Constant {
 	@Test(groups = { "Offre" }, description = "Bad CompositeFrame ", priority = 18)
 	public void verifyOffreForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
-		FrameValidator validator = new FrameValidator(context);
+		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
