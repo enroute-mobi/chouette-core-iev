@@ -36,24 +36,23 @@ public class PassingTimeValidator extends AbstractValidator {
 	}
 
 	/**
-	 * <a target="_blank" href="https://projects.af83.io/issues/2325" >Carte #2325</a>
-	 * <p>
-	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-1
-	 * <p>
-	 * <b>Variables</b> : néant
-	 * <p>
-	 * <b>Prérequis</b> : L'attribut DepartureTime de l'objet PassingTime doit être
-	 * renseigné.
-	 * <p>
-	 * <b>Prédicat</b> : L'attribut DirectionType doit prendre l'une des 2 valeurs
-	 * 'outbound' ou 'inbound'
-	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
-	 * ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang}
-	 * ne dispose pas de DepartureTime
-	 * <p>
-	 * <b>Criticité</b> : error
-	 * <p>
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : complétude
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2325">Cartes #2325</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-1
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  L'attribut DepartureTime de l'objet PassingTime doit être renseigné.
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} , objet ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang} ne dispose pas de DepartureTime
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
 	 * @param context
 	 * @param passingTime
 	 * @param lineNumber
@@ -77,24 +76,24 @@ public class PassingTimeValidator extends AbstractValidator {
 		return result;
 	}
 
-	/**
-	 * <a target="_blank" href="https://projects.af83.io/issues/2326" >Carte #2326</a>
-	 * <p>
-	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-2
-	 * <p>
-	 * <b>Variables</b> : néant
-	 * <p>
-	 * <b>Prérequis</b> : Attribut ArrivalTime renseigné
-	 * <p>
-	 * <b>Prédicat</b> : l'Attribut DepartureTime de l'objet PassingTime doit être
-	 * supérieur ou égal à l'attribut ArrivalTIme
-	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
-	 * ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang}
-	 * fournit un ArrivalTime supérieur à son DepartureTime
-	 * <p>
-	 * <b>Criticité</b> : error
-	 * <p>
+ 	/** 
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : chronologie
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2326">Cartes #2326</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-2
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  Atrribut ArrivalTime renseigné
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  l'Attribut DepartureTime de l'objet PassingTime doit être supérieur ou égal à l'attribut ArrivalTIme
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} , objet ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang} fournit un ArrivalTime {arrival} supérieur à son DepartureTime {departure}
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
 	 * @param context
 	 * @param passingTime
 	 * @param lineNumber

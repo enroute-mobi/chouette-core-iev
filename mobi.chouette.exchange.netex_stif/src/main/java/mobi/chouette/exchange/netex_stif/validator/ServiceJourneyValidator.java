@@ -67,23 +67,23 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	}
 
 	/**
-	 * <a target="_blank" href="https://projects.af83.io/issues/2321" >Carte
-	 * #2321</a>
-	 * <p>
-	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-1
-	 * <p>
-	 * <b>Prérequis</b> : néant
-	 * <p>
-	 * <b>Prédicat</b> : L'attribut JourneyPatternRef de l'objet ServiceJourney
-	 * doit être renseigné.
-	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
-	 * ServiceJourney d'identifiant {objectId} ne référence pas de
-	 * ServiceJourneyPattern
-	 * <p>
-	 * <b>Criticité</b> : error
-	 * <p>
-	 * 
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : JourneyPatternRef
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2321">Cartes #2321</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-1
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  L'attribut JourneyPatternRef de l'objet ServiceJourney doit être renseigné.
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet ServiceJourney d'identifiant {objectId} ne référence pas de ServiceJourneyPattern
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
 	 * @see #addJourneyPatternRef(Context, String, String)
 	 * 
 	 * @param context
@@ -108,22 +108,23 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	}
 
 	/**
-	 * <a target="_blank" href="https://projects.af83.io/issues/2322" >Carte
-	 * #2322</a>
-	 * <p>
-	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-2
-	 * <p>
-	 * <b>Prérequis</b> : néant
-	 * <p>
-	 * <b>Prédicat</b> : L'attribut trainNumbers de l'objet ServiceJourney ne
-	 * peut pas être définit plusieurs fois.
-	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
-	 * ServiceJourney d'identifiant {objectId} fournit plus d'un trainNumber
-	 * <p>
-	 * <b>Criticité</b> : error
-	 * <p>
-	 * 
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : trainNumbers
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2322">Cartes #2322</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-2
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  L'attribut trainNumbers de l'objet ServiceJourney ne peut pas être définit plusieurs fois
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet ServiceJourney d'identifiant {objectId} fournit plus d'un trainNumber
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
 	 * @see #addTrainNumberRef(Context, String, String)
 	 * @param context
 	 * @param journey
@@ -148,23 +149,22 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	}
 
 	/**
-	 * <a target="_blank" href="https://projects.af83.io/issues/2323" >Carte
-	 * #2323</a>
-	 * <p>
-	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-3
-	 * <p>
-	 * <b>Prérequis</b> : néant
-	 * <p>
-	 * <b>Prédicat</b> : La liste des PassingTime du ServiceJourney doit
-	 * contenir le même nombre d'éléments que la liste des
-	 * StopPointInJourneyPattern du ServiceJourneyPattern associé.
-	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : Le nombre
-	 * d'horaires (passingTimes) de l'objet ServiceJourney d'identifiant
-	 * {objectId} n'est pas cohérent avec le ServiceJourneyPattern associé.
-	 * <p>
-	 * <b>Criticité</b> : error
-	 * <p>
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : complétude des passingTimes
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2323">Cartes #2323</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-3
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  La liste des PassingTime du ServiceJourney doit contenir le même nombre d'éléments que la liste des StopPointInJourneyPattern du ServiceJourneyPattern associé.
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : Le nombre d'horaires (passingTimes) de l'objet ServiceJourney d'identifiant {objectId} n'est pas cohérent avec le ServiceJourneyPattern associé.
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
 	 * 
 	 * @param context
 	 * @param journey
@@ -186,27 +186,22 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	}
 
 	/**
-	 * <a target="_blank" href="https://projects.af83.io/issues/2324" >Carte
-	 * #2324</a>
-	 * <p>
-	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-4
-	 * <p>
-	 * <b>Prédicat</b> : La chronologie horaires des PassingTime du
-	 * ServiceJourney doit être croissante. Pour chaque PassingTime de rang > 1,
-	 * la valeur ArrivalTime doit être supérieure ou égale à la valeur
-	 * DepartureTime du PassingTime précédent. <br>
-	 * <b>Note</b> : lorsque ArrivalTime n'est pas renseigné, on considère
-	 * ArrivalTime=DepartureTime
-	 * <p>
-	 * <b>Prédicat</b> : L'attribut trainNumbers de l'objet ServiceJourney ne
-	 * peut pas être définit plusieurs fois.
-	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
-	 * ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang}
-	 * fournit des horaires antérieurs au passingTime précédent.
-	 * <p>
-	 * <b>Criticité</b> : error
-	 * <p>
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : chronologie des passingTimes
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2324">Cartes #2324</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-4
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  La chronologie horaires des PassingTime du ServiceJourney doit être croissante.. Pour chaque PassingTime de rang > 1, la valeur ArrivalTime doit être supérieure ou égale à la valeur DepartureTime du PassingTime précédent.. Note : lorsque ArrivalTime n'est pas renseigné, on considère ArrivalTime=DepartureTime
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} , objet ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang} fournit des horaires antérieurs au passingTime précédent.
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
 	 * 
 	 * @param context
 	 * @param journey

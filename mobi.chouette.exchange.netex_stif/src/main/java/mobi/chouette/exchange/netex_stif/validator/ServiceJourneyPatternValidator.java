@@ -49,4 +49,123 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 		map.put(position, boarding);
 	}
 
+	/** 
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2313">Cartes #2313</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-1
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  L'attribut RouteRef de l'objet ServiceJourneyPattern doit être renseigné.
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet ServiceJourneyPattern d'identifiant {objectId} ne référence pas de Route
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
+ 	 *
+ 	 * @param context
+ 	 * @return
+ 	 */
+ 	public boolean check2NeTExSTIFServiceJourneyPattern1(Context context, int lineNumber, int columnNumber) {
+ 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
+ 		boolean result = true;
+ 		return result;
+ 	}
+ 
+ 
+ 
+ 	/** 
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2314">Cartes #2314</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-2
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  L'attribut pointsInSequence de l'objet ServiceJourneyPattern doit contenir au moins 2 StopPointInJourneyPattern
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet ServiceJourneyPattern d'identifiant {objectId} doit contenir au moins 2 StopPointInJourneyPattern
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
+ 	 *
+ 	 * @param context
+ 	 * @return
+ 	 */
+ 	public boolean check2NeTExSTIFServiceJourneyPattern2(Context context, int lineNumber, int columnNumber) {
+ 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-2 : [Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
+ 		boolean result = true;
+ 		return result;
+ 	}
+ 
+ 
+ 
+ 	/** 
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2315">Cartes #2315</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-3
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  L'objet ServiceJourneyPattern doit avoir son attribut ServiceJourneyPatternType renseigné.
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet ServiceJourneyPattern d'identifiant {objectId} n'a pas de valeur pour l'attribut ServiceJourneyPatternType
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
+ 	 *
+ 	 * @param context
+ 	 * @return
+ 	 */
+ 	public boolean check2NeTExSTIFServiceJourneyPattern3(Context context, int lineNumber, int columnNumber) {
+ 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-3 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
+ 		boolean result = true;
+ 		return result;
+ 	}
+ 
+ 
+ 
+ 	/** 
+ 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
+ 	 * <p>
+ 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2316">Cartes #2316</a>
+ 	 * <p>
+ 	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-4
+ 	 * <p>
+ 	 * <b>Variables</b> :  néant
+ 	 * <p>
+ 	 * <b>Prérequis</b> :  néant
+ 	 * <p>
+ 	 * <b>Prédicat</b> :  Les "order" des StopPointInJourneyPattern peuvent être discontinus mais ils doivent toujours croissants
+ 	 * <p>
+ 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne}, objet ServiceJourneyPattern d'identifiant {objectId} : les attributs 'order' des StopPointInJourneyPattern ne sont pas croissants.
+ 	 * <p>
+ 	 * <b>Criticité</b> :  error
+ 	 * <p>
+ 	 * 
+ 	 *
+ 	 * @param context
+ 	 * @return
+ 	 */
+ 	public boolean check2NeTExSTIFServiceJourneyPattern4(Context context, int lineNumber, int columnNumber) {
+ 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
+ 		boolean result = true;
+ 		return result;
+ 	}
+ 
+
 }
