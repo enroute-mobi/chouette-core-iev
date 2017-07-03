@@ -3,7 +3,7 @@ public class Controles { class Context{}
 /** 
  	 * <b>Titre</b> :[Netex] Conformité du zip importé
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2110">Cartes #2110</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2110">Cartes #2110</a>
  	 * <p>
  	 * <b>Code</b> : 1-NeTExStif-1
  	 * <p>
@@ -33,7 +33,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Conformité XML
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2111">Cartes #2111</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2111">Cartes #2111</a>
  	 * <p>
  	 * <b>Code</b> : 1-NeTExStif-2
  	 * <p>
@@ -63,7 +63,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Conformité XSD NeTEx
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2112">Cartes #2112</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2112">Cartes #2112</a>
  	 * <p>
  	 * <b>Code</b> : 1-NeTExStif-3
  	 * <p>
@@ -93,7 +93,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Organisation des frames du fichier commun.xml
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2113">Cartes #2113</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2113">Cartes #2113</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExStif-1
  	 * <p>
@@ -123,7 +123,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Organisation des frames du fichier calendriers.xml
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2114">Cartes #2114</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2114">Cartes #2114</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExStif-2
  	 * <p>
@@ -153,7 +153,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Organisation des frames des fichiers offre_xxx.xml
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2115">Cartes #2115</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2115">Cartes #2115</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExStif-3
  	 * <p>
@@ -183,7 +183,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des identifiants
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2293">Cartes #2293</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2293">Cartes #2293</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-4
  	 * <p>
@@ -213,7 +213,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'attribut 'changed'
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2294">Cartes #2294</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2294">Cartes #2294</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-5
  	 * <p>
@@ -243,7 +243,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'attribut 'modification'
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2295">Cartes #2295</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2295">Cartes #2295</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-6
  	 * <p>
@@ -273,7 +273,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des références
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2296">Cartes #2296</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2296">Cartes #2296</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-7
  	 * <p>
@@ -303,7 +303,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des références internes
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2297">Cartes #2297</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2297">Cartes #2297</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-8
  	 * <p>
@@ -333,7 +333,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des références externes
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2298">Cartes #2298</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2298">Cartes #2298</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-9
  	 * <p>
@@ -363,7 +363,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'existence des références internes
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2299">Cartes #2299</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2299">Cartes #2299</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-10
  	 * <p>
@@ -393,7 +393,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des références externes
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2300">Cartes #2300</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2300">Cartes #2300</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-11
  	 * <p>
@@ -423,7 +423,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet DayType : complétude
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2305">Cartes #2305</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2305">Cartes #2305</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-DayType-1
  	 * <p>
@@ -453,7 +453,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet DayType : types de jour sur période
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2307">Cartes #2307</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2307">Cartes #2307</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-DayType-2
  	 * <p>
@@ -483,7 +483,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet DayTypeAssignment : OperatingDayRef
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2303">Cartes #2303</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2303">Cartes #2303</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-DayTypeAssignment-1
  	 * <p>
@@ -513,7 +513,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet DayTypeAssignment : IsAvailable
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2304">Cartes #2304</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2304">Cartes #2304</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-DayTypeAssignment-2
  	 * <p>
@@ -543,7 +543,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet Direction : Name
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2311">Cartes #2311</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2311">Cartes #2311</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-Direction-1
  	 * <p>
@@ -573,7 +573,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet Direction : Attributs interdits
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2312">Cartes #2312</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2312">Cartes #2312</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-Direction-2
  	 * <p>
@@ -603,7 +603,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet Notice : présence de l'attribut Text
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2301">Cartes #2301</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2301">Cartes #2301</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-Notice-1
  	 * <p>
@@ -633,7 +633,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet Notice : TypeOfNoticeRef
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2302">Cartes #2302</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2302">Cartes #2302</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-Notice-2
  	 * <p>
@@ -663,7 +663,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet OperatingPeriod : chronologie
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2306">Cartes #2306</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2306">Cartes #2306</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-OperatingPeriod-1
  	 * <p>
@@ -693,7 +693,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassengerStopAssignment : complétude
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2318">Cartes #2318</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2318">Cartes #2318</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-PassengerStopAssignment-1
  	 * <p>
@@ -723,7 +723,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : complétude
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2325">Cartes #2325</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2325">Cartes #2325</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-1
  	 * <p>
@@ -753,7 +753,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : chronologie
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2326">Cartes #2326</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2326">Cartes #2326</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-2
  	 * <p>
@@ -779,131 +779,10 @@ public class Controles { class Context{}
  	}
  
  
- 
- 	/** 
- 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Route : DirectionType
- 	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2308">Cartes #2308</a>
- 	 * <p>
- 	 * <b>Code</b> : 2-NeTExSTIF-Route-1
- 	 * <p>
- 	 * <b>Variables</b> :  néant
- 	 * <p>
- 	 * <b>Prérequis</b> :  Attribut DirectionType renseigné
- 	 * <p>
- 	 * <b>Prédicat</b> :  L'attribut DirectionType doit prendre l'une des 2 valeurs 'outbound' ou 'inbound'
- 	 * <p>
- 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet Route d'identifiant {objectId} a une valeur de l'attribut DirectionType interdite : {directionType}
- 	 * <p>
- 	 * <b>Criticité</b> :  error
- 	 * <p>
- 	 * 
- 	 *
- 	 * @param context
- 	 * @return
- 	 */
- 	@SuppressWarnings("unchecked")
- 	public boolean check2NeTExSTIFRoute1(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-1 : [Netex] Contrôle de l'objet Route : DirectionType
- 		boolean result = true;
- 	}
- 
- 
- 
- 	/** 
- 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Route : cohérence des routes inverses
- 	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2309">Cartes #2309</a>
- 	 * <p>
- 	 * <b>Code</b> : 2-NeTExSTIF-Route-2
- 	 * <p>
- 	 * <b>Variables</b> :  néant
- 	 * <p>
- 	 * <b>Prérequis</b> :  Attribut InverseRouteRef renseigné
- 	 * <p>
- 	 * <b>Prédicat</b> :  Les Routes associées comme routes inverses doivent se référencer mutuellement.Les DirectionType des Routes en sens opposés doivent être différent (Note : DirectionType non renseigné = outbound)
- 	 * <p>
- 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet Route d'identifiant {objectId} référence un objet Route inverse {InverseRouteRef.ref} qui ne le référence pas. {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet Route d'identifiant {objectId} référence un objet Route inverse {InverseRouteRef.ref} de même DirectionType
- 	 * <p>
- 	 * <b>Criticité</b> :  warning
- 	 * <p>
- 	 * 
- 	 *
- 	 * @param context
- 	 * @return
- 	 */
- 	@SuppressWarnings("unchecked")
- 	public boolean check2NeTExSTIFRoute2(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-2 : [Netex] Contrôle de l'objet Route : cohérence des routes inverses
- 		boolean result = true;
- 	}
- 
- 
- 
- 	/** 
- 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Route : Séquence des arrêts
- 	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2310">Cartes #2310</a>
- 	 * <p>
- 	 * <b>Code</b> : 2-NeTExSTIF-Route-3
- 	 * <p>
- 	 * <b>Variables</b> :  néant
- 	 * <p>
- 	 * <b>Prérequis</b> :  néant
- 	 * <p>
- 	 * <b>Prédicat</b> :  L'ordre des arrêts (ScheduledStopPoint) issus des StopPointInJourneyPattern des ServiceJourneyPattern de la Route doit être croissant 
- 	 * <p>
- 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} : Les ServiceJourneyPattern de l'objet Route d'identifiant {objectId} ne permettent pas de reconstituer la séquence des arrêts de celui-ci
- 	 * <p>
- 	 * <b>Criticité</b> :  error
- 	 * <p>
- 	 * 
- 	 *
- 	 * @param context
- 	 * @return
- 	 */
- 	@SuppressWarnings("unchecked")
- 	public boolean check2NeTExSTIFRoute3(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-3 : [Netex] Contrôle de l'objet Route : Séquence des arrêts
- 		boolean result = true;
- 	}
- 
- 
- 
- 	/** 
- 	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : Interdictions de montée et descente
- 	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2317">Cartes #2317</a>
- 	 * <p>
- 	 * <b>Code</b> : 2-NeTExSTIF-Route-4
- 	 * <p>
- 	 * <b>Variables</b> :  néant
- 	 * <p>
- 	 * <b>Prérequis</b> :  néant
- 	 * <p>
- 	 * <b>Prédicat</b> :  Les attributs ForAlighting et ForBoarding d'un StopPointInJourneyPattern doivent être identiques pour des arrêts partagés entre plusieurs ServiceJourneyPattern de la même Route
- 	 * <p>
- 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne}, Les informations de montée/Descente à l'arrêt {id arrêt} de la Route {objectId} diffèrent sur plusieurs ServiceJourneyPattern, ces informations ne sont pas importées
- 	 * <p>
- 	 * <b>Criticité</b> :  warning
- 	 * <p>
- 	 * Note : si plusieurs ServiceJourneyPattern sont concernées, le message n'apparait qu'une seule fois
- 	 *
- 	 * @param context
- 	 * @return
- 	 */
- 	@SuppressWarnings("unchecked")
- 	public boolean check2NeTExSTIFRoute4(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : Interdictions de montée et descente
- 		boolean result = true;
- 	}
- 
- 
- 
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet RoutingConstraintZone : complétude
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2319">Cartes #2319</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2319">Cartes #2319</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-RoutingConstraintZone-1
  	 * <p>
@@ -933,7 +812,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet RoutingConstraintZone : attribut ZoneUse
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2320">Cartes #2320</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2320">Cartes #2320</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-RoutingConstraintZone-2
  	 * <p>
@@ -963,7 +842,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : JourneyPatternRef
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2321">Cartes #2321</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2321">Cartes #2321</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-1
  	 * <p>
@@ -993,7 +872,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : trainNumbers
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2322">Cartes #2322</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2322">Cartes #2322</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-2
  	 * <p>
@@ -1023,7 +902,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : complétude des passingTimes
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2323">Cartes #2323</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2323">Cartes #2323</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-3
  	 * <p>
@@ -1053,7 +932,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourney : chronologie des passingTimes
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2324">Cartes #2324</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2324">Cartes #2324</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourney-4
  	 * <p>
@@ -1083,7 +962,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2313">Cartes #2313</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2313">Cartes #2313</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-1
  	 * <p>
@@ -1113,7 +992,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2314">Cartes #2314</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2314">Cartes #2314</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-2
  	 * <p>
@@ -1143,7 +1022,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2315">Cartes #2315</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2315">Cartes #2315</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-3
  	 * <p>
@@ -1173,7 +1052,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2316">Cartes #2316</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2316">Cartes #2316</a>
  	 * <p>
  	 * <b>Code</b> : 2-NeTExSTIF-ServiceJourneyPattern-4
  	 * <p>
@@ -1203,7 +1082,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Génériques] Contrôle du contenu  selon un pattern
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes #2192</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes #2192</a>
  	 * <p>
  	 * <b>Code</b> : 3-Générique-1
  	 * <p>
@@ -1233,7 +1112,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Génériques] Valeur min
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes #2193</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes #2193</a>
  	 * <p>
  	 * <b>Code</b> : 3-Générique-2
  	 * <p>
@@ -1263,7 +1142,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une ligne
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes #2194</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes #2194</a>
  	 * <p>
  	 * <b>Code</b> : 3-Générique-3
  	 * <p>
@@ -1293,7 +1172,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[ITL] ITL & arret désactivé
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2109">Cartes #2109</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2109">Cartes #2109</a>
  	 * <p>
  	 * <b>Code</b> : 3-ITL-1
  	 * <p>
@@ -1323,7 +1202,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[ITL] Couverture de l'itinéraire
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2510">Cartes #2510</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2510">Cartes #2510</a>
  	 * <p>
  	 * <b>Code</b> : 3-ITL-2
  	 * <p>
@@ -1353,7 +1232,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[ITL] Définition minimale d'une ITL
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2511">Cartes #2511</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2511">Cartes #2511</a>
  	 * <p>
  	 * <b>Code</b> : 3-ITL-3
  	 * <p>
@@ -1383,7 +1262,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Mission] Doublon de missions dans une ligne
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2102">Cartes #2102</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2102">Cartes #2102</a>
  	 * <p>
  	 * <b>Code</b> : 3-JourneyPattern-1
  	 * <p>
@@ -1413,7 +1292,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Mission] Présence de courses
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2625">Cartes #2625</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2625">Cartes #2625</a>
  	 * <p>
  	 * <b>Code</b> : 3-JourneyPattern-2
  	 * <p>
@@ -1443,7 +1322,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Ligne] Appariement des itinéraires
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2121">Cartes #2121</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2121">Cartes #2121</a>
  	 * <p>
  	 * <b>Code</b> : 3-Line-1
  	 * <p>
@@ -1473,7 +1352,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Deux arrêts d'une même ZDL ne peuvent pas se succéder dans un itinéraire
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2092">Cartes #2092</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2092">Cartes #2092</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-1
  	 * <p>
@@ -1503,7 +1382,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Vérification de l'itinéraire inverse
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2093">Cartes #2093</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2093">Cartes #2093</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-2
  	 * <p>
@@ -1533,7 +1412,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Présence de missions
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2624">Cartes #2624</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2624">Cartes #2624</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-3
  	 * <p>
@@ -1563,7 +1442,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Détection de double définition d'itinéraire
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2095">Cartes #2095</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2095">Cartes #2095</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-4
  	 * <p>
@@ -1593,7 +1472,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Vérification des terminus de l'itinéraire inverse
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2120">Cartes #2120</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2120">Cartes #2120</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-5
  	 * <p>
@@ -1623,7 +1502,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Un itinéraire doit contenir au moins 2 arrêts
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2097">Cartes #2097</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2097">Cartes #2097</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-6
  	 * <p>
@@ -1653,7 +1532,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Un itinéraire doit contenir au moins 1 mission
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2098">Cartes #2098</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2098">Cartes #2098</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-7
  	 * <p>
@@ -1683,7 +1562,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Utilisation des arrêts par les missions
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2099">Cartes #2099</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2099">Cartes #2099</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-8
  	 * <p>
@@ -1713,7 +1592,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Existence d'une mission passant par tous les arrêts de l'itinéraire
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2100">Cartes #2100</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2100">Cartes #2100</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-9
  	 * <p>
@@ -1743,7 +1622,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Itinéraire & arrêt désactivé
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2101">Cartes #2101</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2101">Cartes #2101</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-10
  	 * <p>
@@ -1773,7 +1652,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Itinéraire] Présence de tracé
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2419">Cartes #2419</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2419">Cartes #2419</a>
  	 * <p>
  	 * <b>Code</b> : 3-Route-11
  	 * <p>
@@ -1803,7 +1682,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Tracé] Proximité d'un tracé avec l'itinéraire associé
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2421">Cartes #2421</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2421">Cartes #2421</a>
  	 * <p>
  	 * <b>Code</b> : 3-Shape-1
  	 * <p>
@@ -1833,7 +1712,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Tracé] Cohérence d'un tracé avec l'itinéraire associé
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2562">Cartes #2562</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2562">Cartes #2562</a>
  	 * <p>
  	 * <b>Code</b> : 3-Shape-2
  	 * <p>
@@ -1863,7 +1742,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Tracés] Impact lors de la mise à jour de la  BD-TOPO
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2565">Cartes #2565</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2565">Cartes #2565</a>
  	 * <p>
  	 * <b>Code</b> : 3-Shape-3
  	 * <p>
@@ -1893,7 +1772,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Course] La durée d'attente à un arrêt ne doit pas être trop grande
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2103">Cartes #2103</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2103">Cartes #2103</a>
  	 * <p>
  	 * <b>Code</b> : 3-VehicleJourney-1
  	 * <p>
@@ -1923,7 +1802,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Course] La vitesse entre deux arrêts doit être dans une fourchette paramétrable
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2104">Cartes #2104</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2104">Cartes #2104</a>
  	 * <p>
  	 * <b>Code</b> : 3-VehicleJourney-2
  	 * <p>
@@ -1953,7 +1832,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Course] Les vitesses entre 2 arrêts doivent être similaires pour toutes les courses d'une même mission
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2105">Cartes #2105</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2105">Cartes #2105</a>
  	 * <p>
  	 * <b>Code</b> : 3-VehicleJourney-3
  	 * <p>
@@ -1983,7 +1862,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Course] Une course doit avoir au moins un calendrier d'application
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2106">Cartes #2106</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2106">Cartes #2106</a>
  	 * <p>
  	 * <b>Code</b> : 3-VehicleJourney-4
  	 * <p>
@@ -2013,7 +1892,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :[Course] Chronologie croissante des horaires
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2107">Cartes #2107</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2107">Cartes #2107</a>
  	 * <p>
  	 * <b>Code</b> : 3-VehicleJourney-5
  	 * <p>
@@ -2043,7 +1922,7 @@ public class Controles { class Context{}
  	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :2-NeTExSTIF-PassengerStopAssignment-2
  	 * <p>
