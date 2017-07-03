@@ -1,6 +1,6 @@
 public class Controles { class Context{} 
 
-/** 
+    /** 
  	 * <b>Titre</b> :[Netex] Conformité du zip importé
  	 * <p>
  	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2110">Cartes #2110</a>
@@ -22,7 +22,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check1NeTExStif1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  1-NeTExStif-1 : [Netex] Conformité du zip importé
  		boolean result = true;
@@ -52,7 +51,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check1NeTExStif2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  1-NeTExStif-2 : [Netex] Conformité XML
  		boolean result = true;
@@ -82,7 +80,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check1NeTExStif3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  1-NeTExStif-3 : [Netex] Conformité XSD NeTEx
  		boolean result = true;
@@ -112,7 +109,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExStif1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExStif-1 : [Netex] Organisation des frames du fichier commun.xml
  		boolean result = true;
@@ -142,7 +138,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExStif2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExStif-2 : [Netex] Organisation des frames du fichier calendriers.xml
  		boolean result = true;
@@ -172,7 +167,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExStif3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExStif-3 : [Netex] Organisation des frames des fichiers offre_xxx.xml
  		boolean result = true;
@@ -202,7 +196,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF4(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-4 : [Netex] Contrôle de la syntaxe des identifiants
  		boolean result = true;
@@ -232,7 +225,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF5(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-5 : [Netex] Contrôle de l'attribut 'changed'
  		boolean result = true;
@@ -262,7 +254,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF6(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-6 : [Netex] Contrôle de l'attribut 'modification'
  		boolean result = true;
@@ -292,7 +283,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF7(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-7 : [Netex] Contrôle de la syntaxe des références
  		boolean result = true;
@@ -322,7 +312,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF8(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-8 : [Netex] Contrôle de la syntaxe des références internes
  		boolean result = true;
@@ -352,7 +341,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF9(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-9 : [Netex] Contrôle de la syntaxe des références externes
  		boolean result = true;
@@ -382,7 +370,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF10(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-10 : [Netex] Contrôle de l'existence des références internes
  		boolean result = true;
@@ -412,7 +399,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIF11(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-11 : [Netex] Contrôle de la syntaxe des références externes
  		boolean result = true;
@@ -442,7 +428,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFDayType1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-DayType-1 : [Netex] Contrôle de l'objet DayType : complétude
  		boolean result = true;
@@ -472,7 +457,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFDayType2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-DayType-2 : [Netex] Contrôle de l'objet DayType : types de jour sur période
  		boolean result = true;
@@ -502,10 +486,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFDayTypeAssignment1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-DayTypeAssignment-1 : [Netex] Contrôle de l'objet DayTypeAssignment : OperatingDayRef
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -532,10 +516,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFDayTypeAssignment2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-DayTypeAssignment-2 : [Netex] Contrôle de l'objet DayTypeAssignment : IsAvailable
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -562,10 +546,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFDirection1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Direction-1 : [Netex] Contrôle de l'objet Direction : Name
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -592,10 +576,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFDirection2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Direction-2 : [Netex] Contrôle de l'objet Direction : Attributs interdits
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -622,10 +606,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFNotice1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Notice-1 : [Netex] Contrôle de l'objet Notice : présence de l'attribut Text
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -652,10 +636,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFNotice2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice : TypeOfNoticeRef
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -682,10 +666,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFOperatingPeriod1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-OperatingPeriod-1 : [Netex] Contrôle de l'objet OperatingPeriod : chronologie
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -712,10 +696,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFPassengerStopAssignment1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-PassengerStopAssignment-1 : [Netex] Contrôle de l'objet PassengerStopAssignment : complétude
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -742,10 +726,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFPassingTime1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-PassingTime-1 : [Netex] Contrôle de l'objet PassingTime : complétude
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -772,10 +756,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFPassingTime2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-PassingTime-2 : [Netex] Contrôle de l'objet PassingTime : chronologie
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -802,10 +786,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFRoute1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-1 : [Netex] Contrôle de l'objet Route : DirectionType
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -832,10 +816,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFRoute2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-2 : [Netex] Contrôle de l'objet Route : cohérence des routes inverses
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -862,10 +846,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFRoute3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-3 : [Netex] Contrôle de l'objet Route : Séquence des arrêts
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -892,10 +876,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFRoute4(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Route-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : Interdictions de montée et descente
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -922,10 +906,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFRoutingConstraintZone1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-RoutingConstraintZone-1 : [Netex] Contrôle de l'objet RoutingConstraintZone : complétude
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -952,10 +936,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFRoutingConstraintZone2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-RoutingConstraintZone-2 : [Netex] Contrôle de l'objet RoutingConstraintZone : attribut ZoneUse
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -982,10 +966,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourney1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourney-1 : [Netex] Contrôle de l'objet ServiceJourney : JourneyPatternRef
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1012,10 +996,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourney2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourney-2 : [Netex] Contrôle de l'objet ServiceJourney : trainNumbers
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1042,10 +1026,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourney3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourney-3 : [Netex] Contrôle de l'objet ServiceJourney : complétude des passingTimes
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1072,10 +1056,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourney4(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourney-4 : [Netex] Contrôle de l'objet ServiceJourney : chronologie des passingTimes
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1102,10 +1086,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourneyPattern1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1132,10 +1116,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourneyPattern2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-2 : [Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1162,10 +1146,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourneyPattern3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-3 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1192,10 +1176,10 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFServiceJourneyPattern4(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
  		boolean result = true;
+ 		return result;
  	}
  
  
@@ -1222,7 +1206,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Générique1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Générique-1 : [Génériques] Contrôle du contenu  selon un pattern
  		boolean result = true;
@@ -1252,7 +1235,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Générique2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Générique-2 : [Génériques] Valeur min
  		boolean result = true;
@@ -1282,7 +1264,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Générique3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Générique-3 : [Génériques] Unicité d'un attribut d'un objet dans une ligne
  		boolean result = true;
@@ -1312,7 +1293,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3ITL1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-ITL-1 : [ITL] ITL & arret désactivé
  		boolean result = true;
@@ -1342,7 +1322,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3ITL2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-ITL-2 : [ITL] Couverture de l'itinéraire
  		boolean result = true;
@@ -1372,7 +1351,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3ITL3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-ITL-3 : [ITL] Définition minimale d'une ITL
  		boolean result = true;
@@ -1402,7 +1380,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3JourneyPattern1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-JourneyPattern-1 : [Mission] Doublon de missions dans une ligne
  		boolean result = true;
@@ -1432,7 +1409,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3JourneyPattern2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-JourneyPattern-2 : [Mission] Présence de courses
  		boolean result = true;
@@ -1462,7 +1438,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Line1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Line-1 : [Ligne] Appariement des itinéraires
  		boolean result = true;
@@ -1492,7 +1467,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-1 : [Itinéraire] Deux arrêts d'une même ZDL ne peuvent pas se succéder dans un itinéraire
  		boolean result = true;
@@ -1522,7 +1496,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-2 : [Itinéraire] Vérification de l'itinéraire inverse
  		boolean result = true;
@@ -1552,7 +1525,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-3 : [Itinéraire] Présence de missions
  		boolean result = true;
@@ -1582,7 +1554,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route4(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-4 : [Itinéraire] Détection de double définition d'itinéraire
  		boolean result = true;
@@ -1612,7 +1583,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route5(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-5 : [Itinéraire] Vérification des terminus de l'itinéraire inverse
  		boolean result = true;
@@ -1642,7 +1612,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route6(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-6 : [Itinéraire] Un itinéraire doit contenir au moins 2 arrêts
  		boolean result = true;
@@ -1672,7 +1641,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route7(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-7 : [Itinéraire] Un itinéraire doit contenir au moins 1 mission
  		boolean result = true;
@@ -1702,7 +1670,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route8(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-8 : [Itinéraire] Utilisation des arrêts par les missions
  		boolean result = true;
@@ -1732,7 +1699,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route9(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-9 : [Itinéraire] Existence d'une mission passant par tous les arrêts de l'itinéraire
  		boolean result = true;
@@ -1762,7 +1728,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route10(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-10 : [Itinéraire] Itinéraire & arrêt désactivé
  		boolean result = true;
@@ -1792,7 +1757,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Route11(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Route-11 : [Itinéraire] Présence de tracé
  		boolean result = true;
@@ -1822,7 +1786,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Shape1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Shape-1 : [Tracé] Proximité d'un tracé avec l'itinéraire associé
  		boolean result = true;
@@ -1852,7 +1815,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Shape2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Shape-2 : [Tracé] Cohérence d'un tracé avec l'itinéraire associé
  		boolean result = true;
@@ -1882,7 +1844,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3Shape3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-Shape-3 : [Tracés] Impact lors de la mise à jour de la  BD-TOPO
  		boolean result = true;
@@ -1912,7 +1873,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3VehicleJourney1(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-VehicleJourney-1 : [Course] La durée d'attente à un arrêt ne doit pas être trop grande
  		boolean result = true;
@@ -1942,7 +1902,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3VehicleJourney2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-VehicleJourney-2 : [Course] La vitesse entre deux arrêts doit être dans une fourchette paramétrable
  		boolean result = true;
@@ -1972,7 +1931,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3VehicleJourney3(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-VehicleJourney-3 : [Course] Les vitesses entre 2 arrêts doivent être similaires pour toutes les courses d'une même mission
  		boolean result = true;
@@ -2002,7 +1960,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3VehicleJourney4(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-VehicleJourney-4 : [Course] Une course doit avoir au moins un calendrier d'application
  		boolean result = true;
@@ -2032,7 +1989,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check3VehicleJourney5(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle  3-VehicleJourney-5 : [Course] Chronologie croissante des horaires
  		boolean result = true;
@@ -2062,7 +2018,6 @@ public class Controles { class Context{}
  	 * @param context
  	 * @return
  	 */
- 	@SuppressWarnings("unchecked")
  	public boolean check2NeTExSTIFPassengerStopAssignment2(Context context, int lineNumber, int columnNumber) {
  		// TODO : [STIF] Implementation Controle 2-NeTExSTIF-PassengerStopAssignment-2 : Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  		boolean result = true;
