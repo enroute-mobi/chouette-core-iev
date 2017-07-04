@@ -304,6 +304,7 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 		String type = typeRef;
 		if (type.endsWith("Ref")) type = type.substring(0, type.length()-3);
+		if (type.equals("JourneyPattern")) type = "ServiceJourneyPattern"; 
 		String regex = REGEX_ID_PREFIX + type + REGEX_ID_SUFFIX;
 		if (CodifLigneTypes.contains(type)) {
 			regex = REGEX_CODIFLIGNE_PREFIX + type + REGEX_CODIFLIGNE_SUFFIX;

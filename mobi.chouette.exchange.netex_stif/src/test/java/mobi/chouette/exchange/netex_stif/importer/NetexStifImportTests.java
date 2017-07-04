@@ -225,6 +225,10 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 			throw ex;
 		}
 
+        ActionReport report = (ActionReport) context.get(REPORT);
+        ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		log.info(report);
+		log.info(valReport.getCheckPointErrors());
 		// line should be saved
 		utx.begin();
 		em.joinTransaction();
