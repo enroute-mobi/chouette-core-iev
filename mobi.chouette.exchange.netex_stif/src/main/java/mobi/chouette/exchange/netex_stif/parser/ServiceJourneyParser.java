@@ -66,9 +66,9 @@ public class ServiceJourneyParser implements Parser, Constant {
 			if (xpp.getName().equals(NAME)) {
 				vehicleJourney.setPublishedJourneyName(xpp.nextText());
 			} else if (xpp.getName().equals(NOTICE_ASSIGNMENTS)) {
-				parseNoticeAssignements(xpp, context, vehicleJourney);
+				parseNoticeAssignements(xpp, context, vehicleJourney, validator);
 			} else if (xpp.getName().equals(DAY_TYPES)) {
-				timetableRefs.addAll(parseDayTypes(xpp, context, vehicleJourney));
+				timetableRefs.addAll(parseDayTypes(xpp, context, vehicleJourney, validator));
 			} else if (xpp.getName().equals(JOURNEY_PATTERN_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
 				pattern = ObjectFactory.getJourneyPattern(referential, ref);
@@ -77,6 +77,17 @@ public class ServiceJourneyParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(OPERATOR_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
+				String op_version = xpp.getAttributeValue(null, VERSION);
+				String content = xpp.nextText();
+				// check external reference
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, OPERATOR_REF, ref, lineNumber,
+						columnNumber);
+				if (checked)
+					checked = validator.checkExternalRef(context, vehicleJourney, OPERATOR_REF, ref, op_version, content,
+							lineNumber, columnNumber);
+				if (checked)
+					checked = validator.checkExistsRef(context, vehicleJourney, OPERATOR_REF, ref, op_version, content,
+							lineNumber, columnNumber);
 				CompanyLite company = referential.getSharedReadOnlyCompanies().get(ref);
 				if (company != null) {
 					vehicleJourney.setCompanyId(company.getId());
@@ -84,7 +95,6 @@ public class ServiceJourneyParser implements Parser, Constant {
 					if (line != null && company.getId().equals(line.getCompanyId()))
 						vehicleJourney.setCompanyId(null);
 				}
-				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(TRAIN_NUMBERS)) {
 				parseTrainNumber(xpp, context, vehicleJourney);
 			} else if (xpp.getName().equals(PASSING_TIMES)) {
@@ -110,14 +120,27 @@ public class ServiceJourneyParser implements Parser, Constant {
 
 	}
 
-	private Collection<String> parseDayTypes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney)
-			throws XmlPullParserException, IOException {
+	private Collection<String> parseDayTypes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney,
+			ServiceJourneyValidator validator) throws XmlPullParserException, IOException {
 		Set<String> result = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
+			int lineNumber = xpp.getLineNumber();
+			int columnNumber = xpp.getColumnNumber();
 			if (xpp.getName().equals(DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
+				String version = xpp.getAttributeValue(null, VERSION);
+				String content = xpp.nextText();
+				// check external reference
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, DAY_TYPE_REF, ref, lineNumber,
+						columnNumber);
+				if (checked)
+					checked = validator.checkExternalRef(context, vehicleJourney, DAY_TYPE_REF, ref, version, content,
+							lineNumber, columnNumber);
+				if (checked)
+					checked = validator.checkExistsRef(context, vehicleJourney, DAY_TYPE_REF, ref, version, content,
+							lineNumber, columnNumber);
 				result.add(ref);
-				XPPUtil.skipSubTree(log, xpp);
+				// XPPUtil.skipSubTree(log, xpp);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
@@ -278,13 +301,26 @@ public class ServiceJourneyParser implements Parser, Constant {
 		}
 	}
 
-	private void parseNoticeAssignements(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney)
-			throws Exception {
+	private void parseNoticeAssignements(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney,
+			ServiceJourneyValidator validator) throws Exception {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NOTICE_ASSIGNMENT)) {
+				int lineNumber = xpp.getLineNumber();
+				int columnNumber = xpp.getColumnNumber();
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(NOTICE_REF)) {
 						String ref = xpp.getAttributeValue(null, REF);
+						String version = xpp.getAttributeValue(null, VERSION);
+						String content = xpp.nextText();
+						// check external reference
+						boolean checked = validator.checkNetexRef(context, vehicleJourney, NOTICE_REF, ref,
+								lineNumber, columnNumber);
+						if (checked)
+							checked = validator.checkExternalRef(context, vehicleJourney, NOTICE_REF, ref, version,
+									content, lineNumber, columnNumber);
+						if (checked)
+							checked = validator.checkExistsRef(context, vehicleJourney, NOTICE_REF, ref, version,
+									content, lineNumber, columnNumber);
 						Referential referential = (Referential) context.get(REFERENTIAL);
 						Footnote footnote = referential.getFootnotes().get(ref);
 						if (footnote == null) {
@@ -299,7 +335,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 						if (footnote != null) {
 							vehicleJourney.getFootnotes().add(footnote);
 						}
-						XPPUtil.skipSubTree(log, xpp);
+						// XPPUtil.skipSubTree(log, xpp);
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
 					}

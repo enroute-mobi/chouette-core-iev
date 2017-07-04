@@ -6,25 +6,23 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.ChouetteIdentifiedObject;
+import mobi.chouette.model.util.Referential;
 
+@Log4j
 public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	private static final String REGEX_ID_PREFIX = "^[\\w-]+:";
 	private static final String REGEX_ID_SUFFIX = ":[\\w-]+:LOC$";
-	private static final String REGEX_CODIFLIGNE_PREFIX = "^[STIF:LIGNE|STIF-LIGNE]:"; // ATTENTION,
-																						// code
-																						// adapté
-																						// aux
-																						// 2
-																						// versions
-																						// de
-																						// CodifLigne
-	private static final String REGEX_CODIFLIGNE_SUFFIX = ":[\\w-]+:STIF$";
+	// ATTENTION, regex: adapté aux 2 versions de CodifLigne
+	private static final String REGEX_CODIFLIGNE_PREFIX = "^(STIF:CODIFLIGNE|STIF-LIGNE):"; 
+	private static final String REGEX_CODIFLIGNE_SUFFIX = ":[\\w-]+(:STIF|)$";
+	
 	private static final String REGEX_REFLEX_PREFIX = "^FR:[\\d]{5}:";
 	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:STIF$";
 
@@ -218,16 +216,15 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		Calendar c = Calendar.getInstance();
 		c.add(1, Calendar.DATE);
 
-		boolean result = object.getCreationTime().after(c.getTime());
+		boolean result = object.getCreationTime().before(c.getTime());
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_5, location, type);
-			object.setCreationTime(Calendar.getInstance().getTime()); // reset
-																		// to
-																		// now
+			// reset creation time to now 
+			object.setCreationTime(Calendar.getInstance().getTime()); 
 		}
 		return result;
 	}
@@ -299,27 +296,29 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	 * @param context
 	 * @param object
 	 * @param type
-	 * @param id
+	 * @param ref
 	 * @param lineNumber
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkNetexRef(Context context, ChouetteIdentifiedObject object, String type, String id,
+	public boolean checkNetexRef(Context context, ChouetteIdentifiedObject object, String typeRef, String ref,
 			int lineNumber, int columnNumber) {
 
+		String type = typeRef;
+		if (type.endsWith("Ref")) type = type.substring(0, type.length()-3);
 		String regex = REGEX_ID_PREFIX + type + REGEX_ID_SUFFIX;
 		if (CodifLigneTypes.contains(type)) {
 			regex = REGEX_CODIFLIGNE_PREFIX + type + REGEX_CODIFLIGNE_SUFFIX;
 		} else if (ReflexTypes.contains(type)) {
 			regex = REGEX_REFLEX_PREFIX + type + REGEX_REFLEX_SUFFIX;
 		}
-		boolean result = id.matches(regex);
+		boolean result = ref.matches(regex);
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_7, location, id, type);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_7, location, ref, typeRef);
 		}
 		return result;
 	}
@@ -359,7 +358,7 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			String versionAttribute, String content, int lineNumber, int columnNumber) {
 
 		boolean result1 = versionAttribute != null && !versionAttribute.isEmpty();
-		boolean result2 = content == null || content.isEmpty();
+		boolean result2 = content == null || content.trim().isEmpty();
 
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
@@ -400,30 +399,30 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	 * @param context
 	 * @param object
 	 * @param type
-	 * @param id
+	 * @param ref
 	 * @param versionAttribute
 	 * @param content
 	 * @param lineNumber
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkExternalRef(Context context, ChouetteIdentifiedObject object, String type, String id,
+	public boolean checkExternalRef(Context context, ChouetteIdentifiedObject object, String type, String ref,
 			String versionAttribute, String content, int lineNumber, int columnNumber) {
 
 		boolean result1 = versionAttribute == null || versionAttribute.isEmpty();
-		boolean result2 = content != null && content.matches("^version=\".+\"$");
+		boolean result2 = content != null && content.trim().matches("^version=\".+\"$");
 
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_9, "1", location, id, type);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_9, "1", location, ref, type);
 		}
 		if (!result2) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_9, "2", location, id, type);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_9, "2", location, ref, type);
 		}
 		return result1 && result2;
 	}
@@ -449,18 +448,49 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	 * @param context
 	 * @param object
 	 * @param type
-	 * @param id
+	 * @param ref
 	 * @param versionAttribute
 	 * @param content
 	 * @param lineNumber
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkExistsRef(Context context, ChouetteIdentifiedObject object, String type, String id,
+	public boolean checkExistsRef(Context context, ChouetteIdentifiedObject object, String type, String ref,
 			String versionAttribute, String content, int lineNumber, int columnNumber) {
 
-		// TODO !
-		return true;
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		boolean result = false;
+		switch (type)
+		{
+		case DAY_TYPE_REF : 
+			log.info("dayTypes "+referential.getSharedTimetableTemplates().keySet());
+			result = referential.getSharedTimetableTemplates().containsKey(ref);
+			break;
+		case NOTICE_REF : 
+			log.info("footnotes "+referential.getSharedFootnotes().keySet());
+			result = referential.getSharedFootnotes().containsKey(ref);
+			break;
+		case LINE_REF : 
+			log.info("lines "+referential.getSharedReadOnlyLines().keySet());
+			result = referential.getSharedReadOnlyLines().containsKey(ref);
+			break;
+		case OPERATOR_REF : 
+			log.info("operators "+referential.getSharedReadOnlyCompanies().keySet());
+			result = referential.getSharedReadOnlyCompanies().containsKey(ref);
+			break;
+		case QUAY_REF : 
+			log.info("quays "+referential.getSharedReadOnlyStopAreas().keySet());
+			result = referential.getSharedReadOnlyStopAreas().containsKey(ref);
+			break;
+		}
+		if (!result)
+		{
+			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_10, location, ref, type);			
+		}
+		return result;
 	}
 
 }

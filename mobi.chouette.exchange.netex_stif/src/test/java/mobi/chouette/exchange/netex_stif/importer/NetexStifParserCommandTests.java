@@ -15,6 +15,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
@@ -41,6 +42,7 @@ import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
+@Log4j
 public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private static final String path = "src/test/data/";
@@ -141,7 +143,8 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	//@Test(groups = { "Nominal" }, description = "offre", priority = 3)
 	public void verifiyOfferParser(String calendrier, String commun, String offre) throws Exception {
 		Context context = initImportContext();
-
+        ActionReport report = (ActionReport) context.get(REPORT);
+        ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		Referential referential = (Referential) context.get(REFERENTIAL);
@@ -149,18 +152,24 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 			File f = new File(path, calendrier);
 			parser.setFileURL("file://" + f.getAbsolutePath());
 			parser.execute(context);
+			log.info(report);
+			log.info(valReport.getCheckPointErrors());
 			Assert.assertFalse(referential.getSharedTimetableTemplates().isEmpty(), " no timetables");
 		}
 		{
 			File f = new File(path, "commun.xml");
 			parser.setFileURL("file://" + f.getAbsolutePath());
 			parser.execute(context);
+			log.info(report);
+			log.info(valReport.getCheckPointErrors());
 			Assert.assertFalse(referential.getSharedFootnotes().isEmpty(), " no footnotes");
 			Assert.assertFalse(referential.getSharedTimetableTemplates().isEmpty(), " no timetables");
 		}
 		File f = new File(path, "offre.xml");
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
+		log.info(report);
+		log.info(valReport.getCheckPointErrors());
 		assertRoute(referential, "CITYWAY:Route:1:LOC", "CITYWAY:Route:C00108-1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
 				"Par ici", "CITYWAY:Route:C00108-2:LOC");
 		assertRoute(referential, "CITYWAY:Route:2:LOC", "CITYWAY:Route:C00108-2:LOC", "route 2", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.R,
