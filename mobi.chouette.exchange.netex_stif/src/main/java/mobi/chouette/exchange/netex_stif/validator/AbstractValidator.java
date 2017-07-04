@@ -463,23 +463,18 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		switch (type)
 		{
 		case DAY_TYPE_REF : 
-			log.info("dayTypes "+referential.getSharedTimetableTemplates().keySet());
 			result = referential.getSharedTimetableTemplates().containsKey(ref);
 			break;
 		case NOTICE_REF : 
-			log.info("footnotes "+referential.getSharedFootnotes().keySet());
 			result = referential.getSharedFootnotes().containsKey(ref);
 			break;
 		case LINE_REF : 
-			log.info("lines "+referential.getSharedReadOnlyLines().keySet());
 			result = referential.getSharedReadOnlyLines().containsKey(ref);
 			break;
 		case OPERATOR_REF : 
-			log.info("operators "+referential.getSharedReadOnlyCompanies().keySet());
 			result = referential.getSharedReadOnlyCompanies().containsKey(ref);
 			break;
 		case QUAY_REF : 
-			log.info("quays "+referential.getSharedReadOnlyStopAreas().keySet());
 			result = referential.getSharedReadOnlyStopAreas().containsKey(ref);
 			break;
 		}
