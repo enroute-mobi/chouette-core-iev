@@ -9,6 +9,8 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.validator.NoticeValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.util.Referential;
 
@@ -26,13 +28,12 @@ public class NoticeParser implements Parser, Constant {
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		String text = null;
 		String publicCode = null;
-		boolean validType = false;
+		String typeOfNoticeRef = null;
+
+		NoticeValidator validator = (NoticeValidator) ValidatorFactory.getValidator(context, NoticeValidator.class);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_NOTICE_REF)) {
-				String type = xpp.getAttributeValue(null, REF);
-				if (type.equals(SERVICE_JOURNEY_NOTICE)) {
-					validType = true;
-				}
+				typeOfNoticeRef = xpp.getAttributeValue(null, REF);
 				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(TEXT)) {
 				text = xpp.nextText();
@@ -43,14 +44,16 @@ public class NoticeParser implements Parser, Constant {
 			}
 		}
 		// log.info("valid " + validType);
-		if (validType) {
-			Footnote footnote = factory.getFootnote(id);
-			footnote.setObjectVersion(version);
-			footnote.setLabel(text);
-			footnote.setCode(publicCode);
-			Referential referential = (Referential) context.get(REFERENTIAL);
-			referential.getSharedFootnotes().put(id, footnote);
-		}
+		Footnote footnote = factory.getFootnote(id);
+		footnote.setObjectVersion(version);
+		footnote.setLabel(text);
+		footnote.setCode(publicCode);
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		referential.getSharedFootnotes().put(id, footnote);
+		//TODO @Michel to check
+		validator.addTypeOfNoticeRef(context, footnote.getObjectId(), typeOfNoticeRef);
+		validator.check2NeTExSTIFNotice1(context, footnote, lineNumber, columnNumber);
+
 	}
 
 	static {

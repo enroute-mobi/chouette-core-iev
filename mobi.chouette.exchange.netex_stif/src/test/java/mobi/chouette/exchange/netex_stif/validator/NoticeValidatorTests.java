@@ -53,6 +53,11 @@ public class NoticeValidatorTests implements Constant {
 			fakeFootnote.setObjectId("CITYWAY:Footnote:1234:LOC");
 		}
 
+		public void addTypeOfNoticeRef(String typeOfNoticeRef) {
+			noticeValidator.addTypeOfNoticeRef(context, fakeFootnote.getObjectId(), typeOfNoticeRef);
+
+		}
+
 	}
 
 	@BeforeSuite
@@ -138,11 +143,77 @@ public class NoticeValidatorTests implements Constant {
 	@Test(groups = { "Notice", "Label" }, description = "Error : Footnote label is not set or empty", priority = 1)
 	public void verifyNoticeLabelIsNotSetOrEmpty() throws Exception {
 		TestContext tc = new TestContext();
+
+		// case of null value
 		tc.getFakeFootnote().setLabel(null); //
+		validateLabelInFootNote(tc);
+		Assert.assertFalse(tc.isResult());
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_1, "2_netexstif_notice_1",
+				null, FILE_STATE.ERROR);
+
+		// case of empty value
+		tc = new TestContext();
+		tc.getFakeFootnote().setLabel(""); //
 		validateLabelInFootNote(tc);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_1, "2_netexstif_notice_1",
 				null, FILE_STATE.ERROR);
 	}
 
+	private void validateTypeOfNoticeRefOfFootNote(TestContext tc, String typeOfNoticeRef) {
+
+		int lineNumber = 1;
+		int columnNumber = 2;
+
+		NoticeValidator validator = tc.getNoticeValidator();
+
+		if (typeOfNoticeRef != null) {
+			tc.addTypeOfNoticeRef(typeOfNoticeRef);
+		}
+
+		boolean result = validator.check2NeTExSTIFNotice2(tc.getContext(), tc.getFakeFootnote(), lineNumber,
+				columnNumber);
+		log.info("Validation Report ===>" + tc.getValidationReport().toString());
+		log.info("Validation Report Result = " + tc.getValidationReport().getResult());
+		log.info("Action Report ===>" + tc.getActionReport().toString());
+		log.info("Action Report Result = " + tc.getActionReport().getResult());
+
+		tc.setResult(result);
+	}
+
+	@Test(groups = { "Notice",
+			"TypeOfNoticeRef" }, description = "Nominal : Footnote  TypeOfNoticeRef is incorrect", priority = 1)
+	public void verifyTypeOfNoticeRefForGivenFootNoteCorrect() throws Exception {
+		TestContext tc = new TestContext();
+
+		validateTypeOfNoticeRefOfFootNote(tc, SERVICE_JOURNEY_NOTICE);
+		Assert.assertTrue(tc.isResult());
+		checkNoReports(tc.getContext(), TEST_FILENAME);
+	}
+
+	@Test(groups = { "Notice",
+			"TypeOfNoticeRef" }, description = "Error : Footnote  TypeOfNoticeRef is incorrect", priority = 1)
+	public void verifyTypeOfNoticeRefForGivenFootNoteNotCorrect() throws Exception {
+		TestContext tc = new TestContext();
+
+		// case TypeOfNoticeRef null
+		validateTypeOfNoticeRefOfFootNote(tc, null);
+		Assert.assertFalse(tc.isResult());
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
+				"null", FILE_STATE.OK); // TODO : @Michel "null" ou null ou ???
+		
+		// case TypeOfNoticeRef empty
+		tc = new TestContext();
+		validateTypeOfNoticeRefOfFootNote(tc, "");
+		Assert.assertFalse(tc.isResult());
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
+				"", FILE_STATE.OK);
+		
+		// case TypeOfNoticeRef is not SERVICE_JOURNEY_NOTICE
+		tc = new TestContext();
+		validateTypeOfNoticeRefOfFootNote(tc, "bidule");
+		Assert.assertFalse(tc.isResult());
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
+				"bidule", FILE_STATE.OK);
+	}
 }

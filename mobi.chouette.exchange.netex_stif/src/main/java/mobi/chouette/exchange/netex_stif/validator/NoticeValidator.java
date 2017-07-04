@@ -24,9 +24,9 @@ public class NoticeValidator extends AbstractValidator {
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Notice_2);
 	}
 
-	public void addTypeOfNoticeRef(Context context, String objectId, String inverseRouteRef) {
+	public void addTypeOfNoticeRef(Context context, String objectId, String typeOfNoticeRef) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		objectContext.put(TYPE_OF_NOTICE_REF, inverseRouteRef);
+		objectContext.put(TYPE_OF_NOTICE_REF, typeOfNoticeRef);
 
 	}
 
@@ -109,7 +109,7 @@ public class NoticeValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(footnote.getObjectId());
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, type);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, ""+type);
 		}
 
 		return result;
