@@ -45,7 +45,7 @@ public class NoticeValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFNotice1(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Notice-1 : [Netex] Contrôle de l'objet Notice : présence de l'attribut Text
+ 		// TODO : [STIF] @Didier Implementation Controle  2-NeTExSTIF-Notice-1 : [Netex] Contrôle de l'objet Notice : présence de l'attribut Text
  		boolean result = true;
  		return result;
  	}
@@ -75,7 +75,7 @@ public class NoticeValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFNotice2(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice : TypeOfNoticeRef
+ 		// TODO : [STIF] @Didier Implementation Controle  2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice : TypeOfNoticeRef
  		boolean result = true;
  		return result;
  	}
