@@ -26,7 +26,7 @@ public class NetexStifObjectFactory {
 	private Map<String, String> routeDirections = new HashMap<>();
 
 	@Getter
-	private Map<String, String> JourneyPatternDestinations = new HashMap<>();
+	private Map<String, String> journeyPatternDestinations = new HashMap<>();
 
 	@Getter
 	private Map<String, List<StopPoint>> stopPointInitIdToStopPoints = new HashMap<>();
@@ -85,7 +85,7 @@ public class NetexStifObjectFactory {
 	}
 
 	public void addJourneyPatternDestination(String journeyPatternId, String destinationId) {
-		this.JourneyPatternDestinations.put(journeyPatternId, destinationId);
+		this.journeyPatternDestinations.put(journeyPatternId, destinationId);
 	}
 
 	public void addStopPoint(String initId, StopPoint stopPoint) {
@@ -108,7 +108,7 @@ public class NetexStifObjectFactory {
 		scheduledStopPoint.clear();
 		operatingPeriods.clear();
 		routeDirections.clear();
-		JourneyPatternDestinations.clear();
+		journeyPatternDestinations.clear();
 		stopPointInitIdToStopPoints.clear();
 	}
 

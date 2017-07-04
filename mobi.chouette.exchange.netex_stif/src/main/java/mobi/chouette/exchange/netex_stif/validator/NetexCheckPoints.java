@@ -42,8 +42,8 @@ public interface NetexCheckPoints {
 
 	static final String L2_NeTExSTIF_PassengerStopAssignment_1 = "2-NeTExSTIF-PassengerStopAssignment-1";
 
-	static final String L2_NeTExSTIF_RoutingConstraintZone_1 = "2-NeTExSTIF-RoutingConstraintZone-1";
-	static final String L2_NeTExSTIF_RoutingConstraintZone_2 = "2-NeTExSTIF-RoutingConstraintZone-2";
+	static final String L2_NeTExSTIF_RoutingConstraintZone_1 = "2-NeTExSTIF-RoutingConstraintZone-1"; // RoutingConstraintZoneValidator
+	static final String L2_NeTExSTIF_RoutingConstraintZone_2 = "2-NeTExSTIF-RoutingConstraintZone-2"; // RoutingConstraintZoneValidator
 
 	static final String L2_NeTExSTIF_ServiceJourney_1 = "2-NeTExSTIF-ServiceJourney-1"; // ServiceJourneyValidator
 	static final String L2_NeTExSTIF_ServiceJourney_2 = "2-NeTExSTIF-ServiceJourney-2"; // ServiceJourneyValidator

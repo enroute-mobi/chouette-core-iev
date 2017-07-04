@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -14,7 +13,6 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
 public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	private static final String REGEX_ID_PREFIX = "^[\\w-]+:";
