@@ -74,7 +74,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				String attr_version = xpp.getAttributeValue(null, VERSION);
 				String content = xpp.nextText();
 				// check internal reference
-				boolean checked = validator.checkNetexRef(context, vehicleJourney, "Service"+JOURNEY_PATTERN_REF, ref, lineNumber,
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, JOURNEY_PATTERN_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
 					checked = validator.checkInternalRef(context, vehicleJourney, JOURNEY_PATTERN_REF, ref,
