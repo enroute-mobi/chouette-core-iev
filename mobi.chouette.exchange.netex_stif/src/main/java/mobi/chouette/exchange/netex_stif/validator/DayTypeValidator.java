@@ -45,7 +45,7 @@ public class DayTypeValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFDayType1(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-DayType-1 : [Netex] Contrôle de l'objet DayType : complétude
+ 		// TODO : @Michel [STIF] Implementation Controle  2-NeTExSTIF-DayType-1 : [Netex] Contrôle de l'objet DayType : complétude
  		boolean result = true;
  		return result;
  	}

@@ -97,15 +97,16 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * <b>Criticité</b> :  error
  	 * <p>
  	 * 
+ 	 *  à supprimer : contrôlé par la XSD
  	 *
  	 * @param context
  	 * @return
  	 */
- 	public boolean check2NeTExSTIFServiceJourneyPattern2(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-2 : [Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
- 		boolean result = true;
- 		return result;
- 	}
+// 	public boolean check2NeTExSTIFServiceJourneyPattern2(Context context, int lineNumber, int columnNumber) {
+// 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-2 : [Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
+// 		boolean result = true;
+// 		return result;
+// 	}
  
  
  

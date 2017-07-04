@@ -44,7 +44,7 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFPassengerStopAssignment1(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-PassengerStopAssignment-1 : [Netex] Contrôle de l'objet PassengerStopAssignment : complétude
+ 		// TODO : @Michel [STIF] Implementation Controle  2-NeTExSTIF-PassengerStopAssignment-1 : [Netex] Contrôle de l'objet PassengerStopAssignment : complétude
  		boolean result = true;
  		return result;
  	}
