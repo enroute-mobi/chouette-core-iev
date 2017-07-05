@@ -52,14 +52,14 @@ public class PassengerStopAssignmentParser implements Parser, Constant {
 				String ref = xpp.getAttributeValue(null, REF);
 				String attr_version = xpp.getAttributeValue(null, VERSION);
 				String content = xpp.nextText();
-				// check internal reference
+				// check external reference
 				boolean checked = validator.checkNetexRef(context, stopAssignment, QUAY_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
 					checked = validator.checkExternalRef(context, stopAssignment, QUAY_REF, ref,
 							attr_version, content, lineNumber, columnNumber);
 				if (checked) 
-					checked = validator.checkExternalRef(context, stopAssignment, QUAY_REF, ref, attr_version, content, lineNumber, columnNumber);
+					checked = validator.checkExistsRef(context, stopAssignment, QUAY_REF, ref, attr_version, content, lineNumber, columnNumber);
 				stopAssignment.setQuayRef(ref);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);

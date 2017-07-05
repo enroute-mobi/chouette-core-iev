@@ -29,35 +29,10 @@ import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class RoutingConstraintZoneValidatorTests implements Constant {
+public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 
 	protected static InitialContext initialContext;
 
-	private void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
-			String value) {
-		ActionReport report = (ActionReport) context.get(REPORT);
-
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		log.info(report);
-		log.info(valReport.getCheckPointErrors());
-		Assert.assertEquals(report.getResult(), "OK", "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
-		FileReport file = report.getFiles().get(0);
-		Assert.assertEquals(file.getStatus(), FILE_STATE.ERROR, "file status reported");
-		Assert.assertEquals(file.getCheckPointErrorCount(), 1, "file error reported");
-		CheckPointErrorReport error = valReport.getCheckPointErrors()
-				.get(file.getCheckPointErrorKeys().get(0).intValue());
-		Assert.assertEquals(error.getTestId(), checkPointCode, "checkpoint code");
-		Assert.assertEquals(error.getKey(), messageCode, "message code");
-		if (value == null)
-			Assert.assertNull(error.getValue(), "value");
-		else
-			Assert.assertEquals(error.getValue(), value, "value");
-		Assert.assertEquals(error.getSource().getFile().getFilename(), fileName, "source filename");
-		Assert.assertEquals(error.getSource().getFile().getLineNumber(), Integer.valueOf(1), "source line number");
-		Assert.assertEquals(error.getSource().getFile().getColumnNumber(), Integer.valueOf(2), "source column number");
-
-	}
 
 	protected Context initImportContext() {
 
