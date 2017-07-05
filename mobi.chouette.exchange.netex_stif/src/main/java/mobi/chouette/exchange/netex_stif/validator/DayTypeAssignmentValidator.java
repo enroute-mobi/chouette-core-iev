@@ -45,7 +45,7 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFDayTypeAssignment1(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-DayTypeAssignment-1 : [Netex] Contrôle de l'objet DayTypeAssignment : OperatingDayRef
+ 		// TODO : [STIF] @Michel Implementation Controle  2-NeTExSTIF-DayTypeAssignment-1 : [Netex] Contrôle de l'objet DayTypeAssignment : OperatingDayRef
  		boolean result = true;
  		return result;
  	}
@@ -75,7 +75,7 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFDayTypeAssignment2(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-DayTypeAssignment-2 : [Netex] Contrôle de l'objet DayTypeAssignment : IsAvailable
+ 		// TODO : [STIF] @Michel Implementation Controle  2-NeTExSTIF-DayTypeAssignment-2 : [Netex] Contrôle de l'objet DayTypeAssignment : IsAvailable
  		boolean result = true;
  		return result;
  	}

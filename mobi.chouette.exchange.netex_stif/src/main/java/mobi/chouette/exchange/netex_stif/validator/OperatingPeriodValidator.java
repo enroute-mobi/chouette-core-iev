@@ -44,7 +44,7 @@ public class OperatingPeriodValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFOperatingPeriod1(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-OperatingPeriod-1 : [Netex] Contrôle de l'objet OperatingPeriod : chronologie
+ 		// TODO : [STIF] @Michel Implementation Controle  2-NeTExSTIF-OperatingPeriod-1 : [Netex] Contrôle de l'objet OperatingPeriod : chronologie
  		boolean result = true;
  		return result;
  	}

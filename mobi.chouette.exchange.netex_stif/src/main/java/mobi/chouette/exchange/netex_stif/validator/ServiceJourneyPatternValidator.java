@@ -72,7 +72,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFServiceJourneyPattern1(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
+ 		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
  		boolean result = true;
  		return result;
  	}
@@ -103,7 +103,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @return
  	 */
 // 	public boolean check2NeTExSTIFServiceJourneyPattern2(Context context, int lineNumber, int columnNumber) {
-// 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-2 : [Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
+// 		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-2 : [Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence
 // 		boolean result = true;
 // 		return result;
 // 	}
@@ -133,7 +133,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFServiceJourneyPattern3(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-3 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
+ 		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-3 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
  		boolean result = true;
  		return result;
  	}
@@ -163,7 +163,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFServiceJourneyPattern4(Context context, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
+ 		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
  		boolean result = true;
  		return result;
  	}
