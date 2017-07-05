@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.model.OperatingPeriod;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public class OperatingPeriodValidator extends AbstractValidator {
@@ -21,6 +22,11 @@ public class OperatingPeriodValidator extends AbstractValidator {
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_OperatingPeriod_1);
 	}
 
+	public boolean validate(Context context, OperatingPeriod period, int lineNumber, int columnNumber)
+	{
+		return check2NeTExSTIFOperatingPeriod1(context, period, lineNumber, columnNumber);
+	}
+	
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet OperatingPeriod : chronologie
  	 * <p>
@@ -43,7 +49,7 @@ public class OperatingPeriodValidator extends AbstractValidator {
  	 * @param context
  	 * @return
  	 */
- 	public boolean check2NeTExSTIFOperatingPeriod1(Context context, int lineNumber, int columnNumber) {
+ 	public boolean check2NeTExSTIFOperatingPeriod1(Context context, OperatingPeriod period, int lineNumber, int columnNumber) {
  		// TODO : [STIF] @Michel Implementation Controle  2-NeTExSTIF-OperatingPeriod-1 : [Netex] Contrôle de l'objet OperatingPeriod : chronologie
  		boolean result = true;
  		return result;

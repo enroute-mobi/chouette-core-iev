@@ -12,8 +12,8 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.model.OperatingPeriod;
 import mobi.chouette.model.CalendarDay;
-import mobi.chouette.model.Period;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -30,7 +30,7 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
 		Timetable timetable = null;
-		Period period = null;
+		OperatingPeriod period = null;
 		CalendarDay day = null;
 		String isAvailable = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -63,7 +63,7 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 			if (period != null) {
 				// log.info("add period to timetable "+timetable.getObjectId());
 				// bypass method add to avoid identical content for uninitialized period 
-				timetable.getPeriods().add(period);
+				timetable.getPeriods().add(period.getPeriod());
 			}
 			if (day != null) {
 				// log.info("add date to timetable "+timetable.getObjectId());

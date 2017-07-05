@@ -20,7 +20,7 @@ public class NetexStifObjectFactory {
 
 	private Map<String, ScheduledStopPoint> scheduledStopPoint = new HashMap<>();
 
-	private Map<String, Period> operatingPeriods = new HashMap<>();
+	private Map<String, OperatingPeriod> operatingPeriods = new HashMap<>();
 
 	@Getter
 	private Map<String, String> routeDirections = new HashMap<>();
@@ -36,7 +36,7 @@ public class NetexStifObjectFactory {
 	
 	// singleton for local parsing use
 	private RoutingConstraintZone zone = new RoutingConstraintZone();
-	
+		
 	public PassengerStopAssignment getPassengerStopAssignment(String objectId)
 	{
 		stopAssignment.clear();
@@ -50,7 +50,7 @@ public class NetexStifObjectFactory {
 		zone.setObjectId(objectId);
 		return zone;
 	}
-
+	
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);
 		if (result == null) {
@@ -91,10 +91,10 @@ public class NetexStifObjectFactory {
 		return result;
 	}
 
-	public Period getOperatingPeriod(String objectId) {
-		Period result = operatingPeriods.get(objectId);
+	public OperatingPeriod getOperatingPeriod(String objectId) {
+		OperatingPeriod result = operatingPeriods.get(objectId);
 		if (result == null) {
-			result = new Period();
+			result = new OperatingPeriod();
 			operatingPeriods.put(objectId, result);
 		}
 		return result;

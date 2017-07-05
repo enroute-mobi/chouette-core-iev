@@ -11,7 +11,7 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
-import mobi.chouette.model.Period;
+import mobi.chouette.exchange.netex_stif.model.OperatingPeriod;
 
 @Log4j
 public class OperatingPeriodParser implements Parser, Constant {
@@ -23,17 +23,17 @@ public class OperatingPeriodParser implements Parser, Constant {
 		int lineNumber = xpp.getLineNumber();
 		String id = xpp.getAttributeValue(null, ID);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-		Period period = factory.getOperatingPeriod(id);
+		OperatingPeriod period = factory.getOperatingPeriod(id);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			// log.info("OperatingPeriodParser tag : " + xpp.getName());
 			if (xpp.getName().equals(FROM_DATE)) {
 				Date date = sdf.parse(xpp.nextText());
-				period.setStartDate(new java.sql.Date(date.getTime()));
+				period.getPeriod().setStartDate(new java.sql.Date(date.getTime()));
 			} else if (xpp.getName().equals(TO_DATE)) {
 				Date date = sdf.parse(xpp.nextText());
-				period.setEndDate(new java.sql.Date(date.getTime()));
+				period.getPeriod().setEndDate(new java.sql.Date(date.getTime()));
 			}
 		}
 
