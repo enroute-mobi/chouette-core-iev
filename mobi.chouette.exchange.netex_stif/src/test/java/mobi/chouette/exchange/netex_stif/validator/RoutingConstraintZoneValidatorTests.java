@@ -10,10 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifImportParameters;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
@@ -21,18 +19,14 @@ import mobi.chouette.exchange.netex_stif.model.RoutingConstraintZone;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
-import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
-@Log4j
 public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 
 	protected static InitialContext initialContext;
-
 
 	protected Context initImportContext() {
 
@@ -86,16 +80,15 @@ public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 		zone.setObjectId("CITYWAY:RoutingConstraintZone:1234:LOC");
 		zone.setName("nom de la zone");
 		zone.getStopPointsRef().add("st1");
-		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory.getValidator(context,
-				RoutingConstraintZoneValidator.class);
+		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory
+				.getValidator(context, RoutingConstraintZoneValidator.class);
 
 		boolean res = validator.check2NeTExSTIFRoutingConstraintZone1(context, zone, 1, 2);
 		Assert.assertFalse(res, "validation should be not ok");
 		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_1,
-				"2_netexstif_routingconstraintzone_1", null);
+				"2_netexstif_routingconstraintzone_1", null, FILE_STATE.ERROR);
 
 	}
-
 
 	@Test(groups = { "RoutingConstraintZone" }, description = "missing zoneUse", priority = 1)
 	public void validateMissingZoneUse() throws Exception {
@@ -103,13 +96,13 @@ public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 		RoutingConstraintZone zone = new RoutingConstraintZone();
 		zone.setObjectId("CITYWAY:RoutingConstraintZone:1234:LOC");
 		zone.setName("nom de la zone");
-		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory.getValidator(context,
-				RoutingConstraintZoneValidator.class);
+		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory
+				.getValidator(context, RoutingConstraintZoneValidator.class);
 
 		boolean res = validator.check2NeTExSTIFRoutingConstraintZone2(context, zone, 1, 2);
 		Assert.assertFalse(res, "validation should be not ok");
 		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2,
-				"2_netexstif_routingconstraintzone_2", "null");
+				"2_netexstif_routingconstraintzone_2", "null", FILE_STATE.ERROR);
 
 	}
 
@@ -121,15 +114,14 @@ public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 		zone.setObjectId("CITYWAY:RoutingConstraintZone:1234:LOC");
 		zone.setName("nom de la zone");
 		zone.setZoneUse("autre");
-		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory.getValidator(context,
-				RoutingConstraintZoneValidator.class);
+		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory
+				.getValidator(context, RoutingConstraintZoneValidator.class);
 
 		boolean res = validator.check2NeTExSTIFRoutingConstraintZone2(context, zone, 1, 2);
 		Assert.assertFalse(res, "validation should be not ok");
 		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2,
-				"2_netexstif_routingconstraintzone_2", "autre");
+				"2_netexstif_routingconstraintzone_2", "autre", FILE_STATE.ERROR);
 
 	}
-
 
 }

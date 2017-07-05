@@ -18,9 +18,7 @@ import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
-import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
@@ -30,7 +28,7 @@ import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
 
 @Log4j
-public class RouteValidatorTests implements Constant {
+public class RouteValidatorTests extends AbstractTest {
 
 	public static String TEST_FILENAME = "offre_xxx.xml";
 
@@ -97,53 +95,6 @@ public class RouteValidatorTests implements Constant {
 		log.info("Action Report Result = " + tc.getActionReport().getResult());
 
 		tc.setResult(result);
-	}
-
-	private void checkNoReports(Context context, String fileName) {
-		ActionReport report = (ActionReport) context.get(REPORT);
-
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		log.info(report);
-		log.info(valReport);
-		Assert.assertEquals(report.getResult(), "OK", "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
-		FileReport file = report.getFiles().get(0);
-		Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
-		Assert.assertEquals(file.getCheckPointErrorCount(), 0, "no file error reported");
-
-	}
-
-	private void checkReports(Context context, String fileName, String checkPointCode, String messageCode, String value,
-			FILE_STATE fileState) {
-		ActionReport report = (ActionReport) context.get(REPORT);
-
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		log.info(report);
-		log.info(valReport.getCheckPointErrors());
-		Assert.assertEquals(report.getResult(), "OK", "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
-		FileReport file = report.getFiles().get(0);
-		CheckPointErrorReport error = null;
-		if (fileState.equals(FILE_STATE.ERROR)) {
-			Assert.assertEquals(file.getStatus(), FILE_STATE.ERROR, "file status reported");
-			Assert.assertEquals(file.getCheckPointErrorCount(), 1, "file error reported");
-			error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
-		} else {
-			Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
-			Assert.assertEquals(file.getCheckPointWarningCount(), 1, "file warning reported");
-			error = valReport.getCheckPointErrors().get(file.getCheckPointWarningKeys().get(0).intValue());
-		}
-		Assert.assertEquals(error.getTestId(), checkPointCode, "checkpoint code");
-		Assert.assertEquals(error.getKey(), messageCode, "message code");
-		if (value == null)
-			Assert.assertNull(error.getValue(), "value");
-		else
-			Assert.assertEquals(error.getValue(), value, "value");
-		Assert.assertNotNull(error.getSource().getObjectId(), "source objectId");
-		Assert.assertEquals(error.getSource().getFile().getFilename(), fileName, "source filename");
-		Assert.assertEquals(error.getSource().getFile().getLineNumber(), Integer.valueOf(1), "source line number");
-		Assert.assertEquals(error.getSource().getFile().getColumnNumber(), Integer.valueOf(2), "source column number");
-
 	}
 
 	@Test(groups = { "Route",
@@ -445,17 +396,21 @@ public class RouteValidatorTests implements Constant {
 		tc.setResult(result);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(groups = { "Route",
 			"AlightingBoarding" }, description = "Error 1 : AlightingBoarding in Route vs JourneyPattern is incorrect  ", priority = 1)
 	public void verifyRouteStopPointAlightingBoardingIncorrect() throws Exception {
 
 		List<StopPoint> list = new ArrayList<StopPoint>(Arrays.asList(
-				StopPointBuilder.newInstance().id(0L).objectId("CSP:TYP:10:LOC").comment("p10").position(10).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(1L).objectId("CSP:TYP:20:LOC").comment("p20").position(20).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(2L).objectId("CSP:TYP:30:LOC").comment("p30").position(30).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(3L).objectId("CSP:TYP:40:LOC").comment("p40").position(40).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(4L).objectId("CSP:TYP:50:LOC").comment("p50").position(50).forAlighting(false).forBoarding(true).build()));
+				StopPointBuilder.newInstance().id(0L).objectId("CSP:TYP:10:LOC").comment("p10").position(10)
+						.forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(1L).objectId("CSP:TYP:20:LOC").comment("p20").position(20)
+						.forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(2L).objectId("CSP:TYP:30:LOC").comment("p30").position(30)
+						.forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(3L).objectId("CSP:TYP:40:LOC").comment("p40").position(40)
+						.forAlighting(false).forBoarding(true).build(),
+				StopPointBuilder.newInstance().id(4L).objectId("CSP:TYP:50:LOC").comment("p50").position(50)
+						.forAlighting(false).forBoarding(true).build()));
 		TestContext tc = new TestContext();
 
 		JourneyPattern jp1 = new JourneyPattern();
@@ -485,7 +440,7 @@ public class RouteValidatorTests implements Constant {
 		tc.addStopPointBoarding(obj, 10, true);
 		tc.addStopPointBoarding(obj, 20, true);
 		tc.addStopPointBoarding(obj, 30, true);
-		tc.addStopPointBoarding(obj, 40, false); //incorrect
+		tc.addStopPointBoarding(obj, 40, false); // incorrect
 		tc.addStopPointBoarding(obj, 50, true);
 
 		tc.getFakeRoute().getJourneyPatterns().add(jp1);
@@ -496,19 +451,22 @@ public class RouteValidatorTests implements Constant {
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_4, "2_netexstif_route_4",
 				"CSP:TYP:40:LOC", FILE_STATE.OK);
 	}
-	
-	
-	@SuppressWarnings("unchecked")
+
 	@Test(groups = { "Route",
 			"AlightingBoarding" }, description = "Nominal 1 : AlightingBoarding in Route vs JourneyPattern correct  ", priority = 1)
 	public void verifyRouteStopPointAlightingBoardingcorrect() throws Exception {
 
 		List<StopPoint> list = new ArrayList<StopPoint>(Arrays.asList(
-				StopPointBuilder.newInstance().id(0L).comment("p10").position(10).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(1L).comment("p20").position(20).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(2L).comment("p30").position(30).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(3L).comment("p40").position(40).forAlighting(false).forBoarding(true).build(),
-				StopPointBuilder.newInstance().id(4L).comment("p50").position(50).forAlighting(false).forBoarding(true).build()));
+				StopPointBuilder.newInstance().id(0L).comment("p10").position(10).forAlighting(false).forBoarding(true)
+						.build(),
+				StopPointBuilder.newInstance().id(1L).comment("p20").position(20).forAlighting(false).forBoarding(true)
+						.build(),
+				StopPointBuilder.newInstance().id(2L).comment("p30").position(30).forAlighting(false).forBoarding(true)
+						.build(),
+				StopPointBuilder.newInstance().id(3L).comment("p40").position(40).forAlighting(false).forBoarding(true)
+						.build(),
+				StopPointBuilder.newInstance().id(4L).comment("p50").position(50).forAlighting(false).forBoarding(true)
+						.build()));
 		TestContext tc = new TestContext();
 
 		JourneyPattern jp1 = new JourneyPattern();

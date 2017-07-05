@@ -30,7 +30,7 @@ import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
 
-public class AbstractValidatorTests implements Constant {
+public class AbstractValidatorTests extends AbstractTest {
 
 	private static final String FAKE_FILENAME = "fakeFilename";
 	protected static InitialContext initialContext;
@@ -122,19 +122,6 @@ public class AbstractValidatorTests implements Constant {
 
 	}
 
-	protected void checkNoReports(Context context, String fileName) {
-		ActionReport report = (ActionReport) context.get(REPORT);
-
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		log.info(report);
-		log.info(valReport.getCheckPointErrors());
-		Assert.assertEquals(report.getResult(), "OK", "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
-		FileReport file = report.getFiles().get(0);
-		Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
-		Assert.assertEquals(file.getCheckPointErrorCount(), 0, "no file error reported");
-
-	}
 
 	@Test(groups = { "Cas erreur 1" }, description = "nombre de champs composant ObjectId incorrect", priority = 3)
 	public void verifyIdNumberOfFieldsIncorrect() throws Exception {
