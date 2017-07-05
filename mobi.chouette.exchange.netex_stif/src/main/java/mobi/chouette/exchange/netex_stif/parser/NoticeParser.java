@@ -31,6 +31,8 @@ public class NoticeParser implements Parser, Constant {
 		String typeOfNoticeRef = null;
 
 		NoticeValidator validator = (NoticeValidator) ValidatorFactory.getValidator(context, NoticeValidator.class);
+		validator.checkNetexId(context, NOTICE, id, lineNumber, columnNumber);
+
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_NOTICE_REF)) {
 				typeOfNoticeRef = xpp.getAttributeValue(null, REF);

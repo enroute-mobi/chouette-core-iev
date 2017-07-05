@@ -48,7 +48,8 @@ public class DirectionValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFDirection1(Context context, Direction direction, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Direction-1 : [Netex] Contrôle de l'objet Direction
+		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Direction-1 : [Netex] Contrôle de l'objet
+		// Direction
 		// : Name
 		boolean result = true;
 
@@ -91,7 +92,8 @@ public class DirectionValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFDirection2(Context context, Direction direction, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Direction-2 : [Netex] Contrôle de l'objet Direction
+		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Direction-2 : [Netex] Contrôle de l'objet
+		// Direction
 		// : Attributs interdits
 		boolean result = true;
 
@@ -113,6 +115,16 @@ public class DirectionValidator extends AbstractValidator {
 		}
 
 		return result;
+	}
+
+	public boolean validate(Context context, Direction direction, int lineNumber, int columnNumber) {
+		boolean result = check2NeTExSTIFDirection1(context, direction, lineNumber, columnNumber);
+		if (result) {
+			result = check2NeTExSTIFDirection2(context, direction, lineNumber, columnNumber);
+		}
+
+		return result;
+
 	}
 
 }

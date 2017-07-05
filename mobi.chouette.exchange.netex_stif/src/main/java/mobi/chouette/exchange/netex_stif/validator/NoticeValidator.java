@@ -54,6 +54,7 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFNotice1(Context context, Footnote footnote, int lineNumber, int columnNumber) {
+		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-1 : [Netex] Contrôle de l'objet Notice : présence de l'attribut Text
 		boolean result = footnote.getLabel() != null && !footnote.getLabel().isEmpty();
 
 		if (!result) {
@@ -90,7 +91,7 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFNotice2(Context context, Footnote footnote, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier Implementation Controle 2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice :
+		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice :
 		// TypeOfNoticeRef
 		boolean result = true;
 
@@ -107,7 +108,7 @@ public class NoticeValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(footnote.getObjectId());
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, ""+type);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, ""+type); // TODO : @Michel cas du Type null ==> le message utilisateur doit préciser "null" ou null ou "<vide>" ou ??? -> see with AF83 
 		}
 
 		return result;
