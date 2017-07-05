@@ -22,6 +22,7 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.dao.TimetableDAO;
+import mobi.chouette.exchange.parameters.AbstractImportParameter;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
@@ -48,12 +49,12 @@ public class RouteRegisterCommand implements Command {
 	@EJB
 	private RoutingConstraintDAO routingConstraintDAO;
 
-	// @EJB(beanName = RouteInserter.BEAN_NAME)
-	// private Inserter<Route> routeInserter;
-
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
+        // save has been abandoned
+		AbstractImportParameter parameters = (AbstractImportParameter) context.get(CONFIGURATION);
+		if (parameters.isNoSave()) return false;
 
 		if (!context.containsKey(OPTIMIZED)) {
 			context.put(OPTIMIZED, Boolean.TRUE);

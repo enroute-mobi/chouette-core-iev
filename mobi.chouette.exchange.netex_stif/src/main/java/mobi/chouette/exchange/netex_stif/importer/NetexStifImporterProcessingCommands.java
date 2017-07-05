@@ -91,6 +91,8 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 				NetexStifParserCommand.class.getName());
 		parser.setFileURL(url);
 		chain.add(parser);
+		Command validation = CommandFactory.create(initialContext, NetexStifValidationCommand.class.getName());
+		chain.add(validation);
 		return chain;
 	}
 

@@ -209,7 +209,7 @@ public class AbstractValidatorTests implements Constant {
 		Assert.assertTrue(result, "new fashion operator ref ok");
 
 		type = QUAY_REF;
-		ref = "FR:14526:Quay:1234:STIF"; // quay ref
+		ref = "FR:14526:ZDE:1234:STIF"; // quay ref
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "old fashion operator ref ok");
 
@@ -243,7 +243,7 @@ public class AbstractValidatorTests implements Constant {
 		Assert.assertFalse(result, "new fashion operator ref");
 
 		type = QUAY_REF;
-		ref = "FR:14526:Quai:1234:STIF"; // quay ref
+		ref = "FR:14526:ZDEs:1234:STIF"; // quay ref
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "stop ref");
 

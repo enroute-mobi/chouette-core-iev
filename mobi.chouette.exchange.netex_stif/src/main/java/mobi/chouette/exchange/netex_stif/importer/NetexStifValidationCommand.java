@@ -13,6 +13,8 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.validator.DayTypeValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
@@ -38,11 +40,21 @@ public class NetexStifValidationCommand implements Command, Constant {
 			Referential referential = (Referential) context.get(REFERENTIAL);
 
 			// Tests are done during parsing just check file status
+			if (fileName.equals("calendrier.xml"))
+			{
+				boolean res = validateCalendrier(context);
+				if (!res)
+				{
+					// block save mode to check other files
+					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+					parameters.setNoSave(true);
+				}
+			}
 
 			if (!reporter.hasFileValidationErrors(context, fileName))
 				result = SUCCESS;
 			
-			if (result) {
+			if (result && fileName.startsWith("offre")) {
 				addStats(context, reporter, referential);
 			}
 
@@ -57,6 +69,11 @@ public class NetexStifValidationCommand implements Command, Constant {
 					"Netex Stif compliance failed");
 		}
 		return result;
+	}
+
+	private boolean validateCalendrier(Context context) {
+		DayTypeValidator validator = (DayTypeValidator) ValidatorFactory.getValidator(context, DayTypeValidator.class);
+		return validator.validateAll(context);
 	}
 
 	private void addStats(Context context, ActionReporter reporter, Referential referential) {

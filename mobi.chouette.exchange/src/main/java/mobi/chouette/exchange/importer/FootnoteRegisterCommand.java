@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.FootnoteDAO;
+import mobi.chouette.exchange.parameters.AbstractImportParameter;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.util.Referential;
 
@@ -30,8 +31,11 @@ public class FootnoteRegisterCommand implements Command {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(mobi.chouette.common.Context context) throws Exception {
+		
+        // save has been abandoned
+		AbstractImportParameter parameters = (AbstractImportParameter) context.get(CONFIGURATION);
+		if (parameters.isNoSave()) return false;
 		Referential referential = (Referential) context.get(REFERENTIAL);
-
 		Map<String, Footnote> footnotes = referential.getFootnotes();
 		log.info("footnotes:" + footnotes.size());
 		Iterator<Footnote> iterator = footnotes.values().iterator();

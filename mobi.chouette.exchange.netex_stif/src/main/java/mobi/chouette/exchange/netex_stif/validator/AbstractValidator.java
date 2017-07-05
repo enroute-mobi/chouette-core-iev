@@ -8,6 +8,7 @@ import java.util.Set;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.ChouetteIdentifiedObject;
@@ -103,6 +104,49 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	protected abstract String getLocalContext();
 
+	public  void addLocation(Context context, ChouetteIdentifiedObject object, int lineNumber, int columnNumber)
+	{
+		addLocation(context,getLocalContext(),object,lineNumber,columnNumber);
+	}
+
+	/**
+	 * add location for local validation (level 1 and 2) and for general
+	 * validation (level 3 and more)
+	 * 
+	 * @param context
+	 * @param localContext
+	 * @param objectId
+	 * @param lineNumber
+	 * @param columnNumber
+	 */
+	protected void addLocation(Context context, String localContext, ChouetteIdentifiedObject object, int lineNumber,
+			int columnNumber) {
+		String objectId = object.getObjectId();
+//		Context objectContext = getObjectContext(context, localContext, objectId);
+//		objectContext.put(LINE_NUMBER, Integer.valueOf(lineNumber));
+//		objectContext.put(COLUMN_NUMBER, Integer.valueOf(columnNumber));
+		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		if (data == null) 
+		{
+			data = new ValidationData();
+			context.put(VALIDATION_DATA,data);
+		}
+		String fileName = (String) context.get(FILE_NAME);
+		if (data != null && fileName != null) {
+			DataLocation loc = new DataLocation(fileName, lineNumber, columnNumber, object);
+			loc.setName(DataLocation.buildName(object));
+			data.getDataLocations().put(objectId, loc);
+		}
+
+	}
+
+	public DataLocation getLocation(Context context, String objectId)
+	{
+		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+        if (data == null) return null;
+        return data.getDataLocations().get(objectId);
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected static Context getObjectContext(Context context, String localContextName, String objectId) {
 		Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
@@ -309,7 +353,9 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (CodifLigneTypes.contains(type)) {
 			regex = REGEX_CODIFLIGNE_PREFIX + type + REGEX_CODIFLIGNE_SUFFIX;
 		} else if (ReflexTypes.contains(type)) {
-			regex = REGEX_REFLEX_PREFIX + type + REGEX_REFLEX_SUFFIX;
+			String code = "ZDE"; // todo manage when StopPlaceRef should be checked
+			regex = REGEX_REFLEX_PREFIX + code + REGEX_REFLEX_SUFFIX;
+			
 		}
 		boolean result = ref.matches(regex);
 

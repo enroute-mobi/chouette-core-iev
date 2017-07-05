@@ -8,6 +8,8 @@ import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.validator.DayTypeValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.util.ObjectFactory;
@@ -23,11 +25,15 @@ public class DayTypeParser implements Parser, Constant {
 		xpp.require(XmlPullParser.START_TAG, null, DAY_TYPE);
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
+		DayTypeValidator validator = (DayTypeValidator) ValidatorFactory.getValidator(context, DayTypeValidator.class);
 		String id = xpp.getAttributeValue(null, ID);
 		Timetable timeTable = ObjectFactory.getTimetable(referential, id);
 		Long version = (Long)context.get(VERSION);
 		timeTable.setObjectVersion(version);
 
+		// for post import checkPoints
+		validator.addLocation(context, timeTable, lineNumber, columnNumber);
+		
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			// log.info("DayTypeParser tag : "+ xpp.getName());
 			if (xpp.getName().equals(NAME)) {
