@@ -11,8 +11,11 @@ import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.model.DayTypeAssignment;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.model.OperatingPeriod;
+import mobi.chouette.exchange.netex_stif.validator.DayTypeAssignmentValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.util.ObjectFactory;
@@ -29,6 +32,9 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
+		DayTypeAssignmentValidator validator = (DayTypeAssignmentValidator) ValidatorFactory.getValidator(context, DayTypeAssignmentValidator.class);
+		String id = xpp.getAttributeValue(null, ID);
+		DayTypeAssignment dayTypeAssignment = factory.getDayTypeAssignment(id); 
 		Timetable timetable = null;
 		OperatingPeriod period = null;
 		CalendarDay day = null;
@@ -36,28 +42,46 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(OPERATING_PERIOD_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
+				String attr_version = xpp.getAttributeValue(null, VERSION);
+				String content = xpp.nextText();
+				// check internal reference
+				boolean checked = validator.checkNetexRef(context, dayTypeAssignment, OPERATING_PERIOD_REF, ref, lineNumber,
+						columnNumber);
+				if (checked)
+					checked = validator.checkInternalRef(context, dayTypeAssignment, OPERATING_PERIOD_REF, ref,
+							attr_version, content, lineNumber, columnNumber);
+				dayTypeAssignment.setOperatingPeriodRef(ref);
 				period = factory.getOperatingPeriod(ref);
-				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(DATE)) {
 				String value = isAvailable = xpp.nextText();
 				Date date = ParserUtils.getSQLDate(value);
 				day = new CalendarDay();
 				day.setDate(date);
+				dayTypeAssignment.setDay(day);
 			}else if (xpp.getName().equals(DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
+				String attr_version = xpp.getAttributeValue(null, VERSION);
+				String content = xpp.nextText();
+				// check internal reference
+				boolean checked = validator.checkNetexRef(context, dayTypeAssignment, DAY_TYPE_REF, ref, lineNumber,
+						columnNumber);
+				if (checked)
+					checked = validator.checkInternalRef(context, dayTypeAssignment, DAY_TYPE_REF, ref,
+							attr_version, content, lineNumber, columnNumber);
 				timetable = ObjectFactory.getTimetable(referential, ref);
-				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(IS_AVAILABLE)) {
 				isAvailable = xpp.nextText();
+				Boolean included = ParserUtils.getBoolean(isAvailable);
+				dayTypeAssignment.setIsAvailable(included);
 				if (day != null)
 				{
-					Boolean included = ParserUtils.getBoolean(isAvailable);
 					day.setIncluded(included);
 				}
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		validator.validate(context,dayTypeAssignment,lineNumber,columnNumber);
 		if (timetable != null) {
 			if (period != null) {
 				// log.info("add period to timetable "+timetable.getObjectId());

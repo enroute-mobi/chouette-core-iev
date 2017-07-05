@@ -36,7 +36,10 @@ public class NetexStifObjectFactory {
 	
 	// singleton for local parsing use
 	private RoutingConstraintZone zone = new RoutingConstraintZone();
-		
+
+	// singleton for local parsing use
+	private DayTypeAssignment dayTypeAssignment = new DayTypeAssignment();
+
 	public PassengerStopAssignment getPassengerStopAssignment(String objectId)
 	{
 		stopAssignment.clear();
@@ -49,6 +52,13 @@ public class NetexStifObjectFactory {
 		zone.clear();
 		zone.setObjectId(objectId);
 		return zone;
+	}
+	
+	public DayTypeAssignment getDayTypeAssignment(String objectId)
+	{
+		dayTypeAssignment.clear();
+		dayTypeAssignment.setObjectId(objectId);
+		return dayTypeAssignment;
 	}
 	
 	public Direction getDirection(String objectId) {
@@ -95,6 +105,7 @@ public class NetexStifObjectFactory {
 		OperatingPeriod result = operatingPeriods.get(objectId);
 		if (result == null) {
 			result = new OperatingPeriod();
+			result.setObjectId(objectId);
 			operatingPeriods.put(objectId, result);
 		}
 		return result;
