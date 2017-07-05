@@ -54,7 +54,6 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 					Boolean included = ParserUtils.getBoolean(isAvailable);
 					day.setIncluded(included);
 				}
-				
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
