@@ -30,6 +30,26 @@ public class NetexStifObjectFactory {
 
 	@Getter
 	private Map<String, List<StopPoint>> stopPointInitIdToStopPoints = new HashMap<>();
+	
+	// singleton for local parsing use
+	private PassengerStopAssignment stopAssignment = new PassengerStopAssignment();
+	
+	// singleton for local parsing use
+	private RoutingConstraintZone zone = new RoutingConstraintZone();
+	
+	public PassengerStopAssignment getPassengerStopAssignment(String objectId)
+	{
+		stopAssignment.clear();
+		stopAssignment.setObjectId(objectId);
+		return stopAssignment;
+	}
+
+	public RoutingConstraintZone getRoutingConstraintZone(String objectId)
+	{
+		zone.clear();
+		zone.setObjectId(objectId);
+		return zone;
+	}
 
 	public Direction getDirection(String objectId) {
 		Direction result = direction.get(objectId);

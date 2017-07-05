@@ -1,6 +1,9 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.model.PassengerStopAssignment;
+import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public class PassengerStopAssignmentValidator extends AbstractValidator {
@@ -21,6 +24,10 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_PassengerStopAssignment_1);
 	}
 
+	public boolean validate(Context context, PassengerStopAssignment stopAssignment, int lineNumber, int columnNumber)
+	{
+		return check2NeTExSTIFPassengerStopAssignment1(context, stopAssignment, lineNumber, columnNumber);
+	}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassengerStopAssignment : complétude
  	 * <p>
@@ -43,10 +50,28 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
  	 * @param context
  	 * @return
  	 */
- 	public boolean check2NeTExSTIFPassengerStopAssignment1(Context context, int lineNumber, int columnNumber) {
+ 	public boolean check2NeTExSTIFPassengerStopAssignment1(Context context, PassengerStopAssignment stopAssignment, int lineNumber, int columnNumber) {
  		// TODO : @Michel [STIF] Implementation Controle  2-NeTExSTIF-PassengerStopAssignment-1 : [Netex] Contrôle de l'objet PassengerStopAssignment : complétude
- 		boolean result = true;
- 		return result;
+ 		boolean result1 = stopAssignment.getScheduledStopPointRef() != null && !stopAssignment.getScheduledStopPointRef().isEmpty();
+ 		boolean result2 = stopAssignment.getQuayRef() != null && !stopAssignment.getQuayRef().isEmpty();
+ 		if (!result1)
+ 		{
+			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, stopAssignment);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassingTime_1, location, "ScheduledStopPointRef");
+
+ 		}
+ 		if (!result2)
+ 		{
+			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, stopAssignment);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassingTime_1, location, "QuayRef");
+
+ 		}
+
+ 		return result1 && result2;
  	}
  
 

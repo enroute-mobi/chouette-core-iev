@@ -40,8 +40,7 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory.getValidator(context, RoutingConstraintZoneValidator.class);
 
 		String id = xpp.getAttributeValue(null, ID);
-		RoutingConstraintZone zone = new RoutingConstraintZone();
-		zone.setObjectId(id);
+		RoutingConstraintZone zone = factory.getRoutingConstraintZone(id);
 		String changed = xpp.getAttributeValue(null, CHANGED);
 		if (changed != null) {
 			zone.setCreationTime(NetexStifUtils.getDate(changed));

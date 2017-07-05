@@ -1,5 +1,6 @@
 package mobi.chouette.exchange.netex_stif.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,5 +26,13 @@ public class RoutingConstraintZone extends ChouetteIdentifiedObject {
 	@Getter @Setter 
 	Set<String> stopPointsRef = new HashSet<>();
 	
+	public void clear()
+	{
+		objectId = null;
+		name = null;
+		zoneUse = null;
+		stopPointsRef.clear();
+		creationTime = new Date();
+	}
 
 }
