@@ -15,8 +15,35 @@ import mobi.chouette.exchange.validation.report.ValidationReport;
 
 public abstract class AbstractTest implements Constant {
 
-	protected final void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
-			String value) {
+//	protected final void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
+//			String value) {
+//		ActionReport report = (ActionReport) context.get(REPORT);
+//
+//		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+//		log.info(report);
+//		log.info(valReport.getCheckPointErrors());
+//		Assert.assertEquals(report.getResult(), "OK", "result");
+//		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
+//		FileReport file = report.getFiles().get(0);
+//		Assert.assertEquals(file.getStatus(), FILE_STATE.ERROR, "file status reported");
+//		Assert.assertEquals(file.getCheckPointErrorCount(), 1, "file error reported");
+//		CheckPointErrorReport error = valReport.getCheckPointErrors()
+//				.get(file.getCheckPointErrorKeys().get(0).intValue());
+//		Assert.assertEquals(error.getTestId(), checkPointCode, "checkpoint code");
+//		Assert.assertEquals(error.getKey(), messageCode, "message code");
+//		if (value == null)
+//			Assert.assertNull(error.getValue(), "value");
+//		else
+//			Assert.assertEquals(error.getValue(), value, "value");
+//		Assert.assertEquals(error.getSource().getFile().getFilename(), fileName, "source filename");
+//		Assert.assertEquals(error.getSource().getFile().getLineNumber(), Integer.valueOf(1), "source line number");
+//		Assert.assertEquals(error.getSource().getFile().getColumnNumber(), Integer.valueOf(2), "source column number");
+//
+//	} //removed by Didier
+	
+	// added by Didier
+	protected void checkReports(Context context, String fileName, String checkPointCode, String messageCode, String value,
+			FILE_STATE fileState) {
 		ActionReport report = (ActionReport) context.get(REPORT);
 
 		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
@@ -25,21 +52,29 @@ public abstract class AbstractTest implements Constant {
 		Assert.assertEquals(report.getResult(), "OK", "result");
 		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
 		FileReport file = report.getFiles().get(0);
-		Assert.assertEquals(file.getStatus(), FILE_STATE.ERROR, "file status reported");
-		Assert.assertEquals(file.getCheckPointErrorCount(), 1, "file error reported");
-		CheckPointErrorReport error = valReport.getCheckPointErrors()
-				.get(file.getCheckPointErrorKeys().get(0).intValue());
+		CheckPointErrorReport error = null;
+		if (fileState.equals(FILE_STATE.ERROR)) {
+			Assert.assertEquals(file.getStatus(), FILE_STATE.ERROR, "file status reported");
+			Assert.assertEquals(file.getCheckPointErrorCount(), 1, "file error reported");
+			error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
+		} else {
+			Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
+			Assert.assertEquals(file.getCheckPointWarningCount(), 1, "file warning reported");
+			error = valReport.getCheckPointErrors().get(file.getCheckPointWarningKeys().get(0).intValue());
+		}
 		Assert.assertEquals(error.getTestId(), checkPointCode, "checkpoint code");
 		Assert.assertEquals(error.getKey(), messageCode, "message code");
 		if (value == null)
 			Assert.assertNull(error.getValue(), "value");
 		else
 			Assert.assertEquals(error.getValue(), value, "value");
+		Assert.assertNotNull(error.getSource().getObjectId(), "source objectId");
 		Assert.assertEquals(error.getSource().getFile().getFilename(), fileName, "source filename");
 		Assert.assertEquals(error.getSource().getFile().getLineNumber(), Integer.valueOf(1), "source line number");
 		Assert.assertEquals(error.getSource().getFile().getColumnNumber(), Integer.valueOf(2), "source column number");
 
 	}
+
 
 	protected final void checkNoReports(Context context, String fileName) {
 		ActionReport report = (ActionReport) context.get(REPORT);

@@ -15,15 +15,13 @@ import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
-import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.Line;
 
 @Log4j
-public class NoticeValidatorTests implements Constant {
+public class NoticeValidatorTests extends AbstractTest {
 
 	public static String TEST_FILENAME = "offre_xxx.xml";
 
@@ -65,53 +63,6 @@ public class NoticeValidatorTests implements Constant {
 		BasicConfigurator.resetConfiguration();
 		BasicConfigurator.configure();
 		Locale.setDefault(Locale.ENGLISH);
-	}
-
-	private void checkNoReports(Context context, String fileName) {
-		ActionReport report = (ActionReport) context.get(REPORT);
-
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		log.info(report);
-		log.info(valReport);
-		Assert.assertEquals(report.getResult(), "OK", "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
-		FileReport file = report.getFiles().get(0);
-		Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
-		Assert.assertEquals(file.getCheckPointErrorCount(), 0, "no file error reported");
-
-	}
-
-	private void checkReports(Context context, String fileName, String checkPointCode, String messageCode, String value,
-			FILE_STATE fileState) {
-		ActionReport report = (ActionReport) context.get(REPORT);
-
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		log.info(report);
-		log.info(valReport.getCheckPointErrors());
-		Assert.assertEquals(report.getResult(), "OK", "result");
-		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
-		FileReport file = report.getFiles().get(0);
-		CheckPointErrorReport error = null;
-		if (fileState.equals(FILE_STATE.ERROR)) {
-			Assert.assertEquals(file.getStatus(), FILE_STATE.ERROR, "file status reported");
-			Assert.assertEquals(file.getCheckPointErrorCount(), 1, "file error reported");
-			error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
-		} else {
-			Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
-			Assert.assertEquals(file.getCheckPointWarningCount(), 1, "file warning reported");
-			error = valReport.getCheckPointErrors().get(file.getCheckPointWarningKeys().get(0).intValue());
-		}
-		Assert.assertEquals(error.getTestId(), checkPointCode, "checkpoint code");
-		Assert.assertEquals(error.getKey(), messageCode, "message code");
-		if (value == null)
-			Assert.assertNull(error.getValue(), "value");
-		else
-			Assert.assertEquals(error.getValue(), value, "value");
-		Assert.assertNotNull(error.getSource().getObjectId(), "source objectId");
-		Assert.assertEquals(error.getSource().getFile().getFilename(), fileName, "source filename");
-		Assert.assertEquals(error.getSource().getFile().getLineNumber(), Integer.valueOf(1), "source line number");
-		Assert.assertEquals(error.getSource().getFile().getColumnNumber(), Integer.valueOf(2), "source column number");
-
 	}
 
 	private void validateLabelInFootNote(TestContext tc) {
@@ -200,15 +151,15 @@ public class NoticeValidatorTests implements Constant {
 		validateTypeOfNoticeRefOfFootNote(tc, null);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
-				"null", FILE_STATE.OK); // TODO : @Michel "null" ou null ou ??? -> see with AF83 
-		
+				"null", FILE_STATE.OK);
+
 		// case TypeOfNoticeRef empty
 		tc = new TestContext();
 		validateTypeOfNoticeRefOfFootNote(tc, "");
 		Assert.assertFalse(tc.isResult());
-		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
-				"", FILE_STATE.OK);
-		
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2", "",
+				FILE_STATE.OK);
+
 		// case TypeOfNoticeRef is not SERVICE_JOURNEY_NOTICE
 		tc = new TestContext();
 		validateTypeOfNoticeRefOfFootNote(tc, "bidule");
