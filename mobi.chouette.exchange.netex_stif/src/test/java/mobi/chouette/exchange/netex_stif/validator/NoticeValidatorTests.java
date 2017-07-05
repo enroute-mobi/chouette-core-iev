@@ -200,7 +200,7 @@ public class NoticeValidatorTests implements Constant {
 		validateTypeOfNoticeRefOfFootNote(tc, null);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
-				"null", FILE_STATE.OK); // TODO : @Michel "null" ou null ou ???
+				"null", FILE_STATE.OK); // TODO : @Michel "null" ou null ou ??? -> see with AF83 
 		
 		// case TypeOfNoticeRef empty
 		tc = new TestContext();

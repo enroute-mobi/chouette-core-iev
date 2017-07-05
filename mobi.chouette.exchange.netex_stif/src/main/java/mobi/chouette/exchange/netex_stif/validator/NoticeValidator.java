@@ -54,8 +54,6 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFNotice1(Context context, Footnote footnote, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=dev-in-progress @Michel=to-check Implementation Controle 2-NeTExSTIF-Notice-1 : [Netex]
-		// Contrôle de l'objet Notice : présence de l'attribut Text
 		boolean result = footnote.getLabel() != null && !footnote.getLabel().isEmpty();
 
 		if (!result) {

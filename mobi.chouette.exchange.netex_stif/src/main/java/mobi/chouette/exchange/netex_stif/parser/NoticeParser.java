@@ -50,7 +50,6 @@ public class NoticeParser implements Parser, Constant {
 		footnote.setCode(publicCode);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		referential.getSharedFootnotes().put(id, footnote);
-		//TODO @Michel to check
 		validator.addTypeOfNoticeRef(context, footnote.getObjectId(), typeOfNoticeRef);
 		validator.check2NeTExSTIFNotice1(context, footnote, lineNumber, columnNumber);
 
