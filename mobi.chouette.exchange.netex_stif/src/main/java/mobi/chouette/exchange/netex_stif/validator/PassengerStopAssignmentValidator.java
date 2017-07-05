@@ -51,7 +51,6 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFPassengerStopAssignment1(Context context, PassengerStopAssignment stopAssignment, int lineNumber, int columnNumber) {
- 		// TODO : @Michel [STIF] Implementation Controle  2-NeTExSTIF-PassengerStopAssignment-1 : [Netex] Contrôle de l'objet PassengerStopAssignment : complétude
  		boolean result1 = stopAssignment.getScheduledStopPointRef() != null && !stopAssignment.getScheduledStopPointRef().isEmpty();
  		boolean result2 = stopAssignment.getQuayRef() != null && !stopAssignment.getQuayRef().isEmpty();
  		if (!result1)
