@@ -30,15 +30,18 @@ public class DirectionParser implements Parser, Constant {
 		DirectionValidator validator = (DirectionValidator) ValidatorFactory.getValidator(context,
 				DirectionValidator.class);
 		validator.checkNetexId(context, DIRECTION, id, lineNumber, columnNumber);
-		
-		
-		direction.setOppositeDirectionRef(null); // TODO Didier : check how to get OppositeDirectionRef
-		direction.setDirectionType(null); // TODO Didier : check how to get DirectionType 
+
+		direction.setOppositeDirectionRef(null); 
+		direction.setDirectionType(null); 
 
 		direction.setObjectVersion(version);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
 				direction.setName(xpp.nextText());
+			} else if (xpp.getName().equals(DIRECTION_TYPE)) {// TODO Michel : is it ok ?
+				direction.setDirectionType(xpp.nextText());
+			} else if (xpp.getName().equals(OPPOSITE_DIRECTION_REF)) {// TODO  Michel : is it ok ?
+				direction.setOppositeDirectionRef(xpp.nextText());
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
