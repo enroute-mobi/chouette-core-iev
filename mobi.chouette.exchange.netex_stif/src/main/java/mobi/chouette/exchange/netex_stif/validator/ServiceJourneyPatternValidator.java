@@ -3,8 +3,11 @@ package mobi.chouette.exchange.netex_stif.validator;
 import java.util.HashMap;
 import java.util.Map;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.model.JourneyPattern;
 
 public class ServiceJourneyPatternValidator extends AbstractValidator {
 
@@ -71,9 +74,18 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @param context
  	 * @return
  	 */
- 	public boolean check2NeTExSTIFServiceJourneyPattern1(Context context, int lineNumber, int columnNumber) {
+ 	public boolean check2NeTExSTIFServiceJourneyPattern1(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
  		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
  		boolean result = true;
+ 		result = journeyPattern.getRoute() != null;
+ 		if (!result){
+ 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
+			location.setObjectId(journeyPattern.getObjectId());
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_ServiceJourney_1, location, " ne référence pas de Route");
+ 		}
+ 		
  		return result;
  	}
  
@@ -132,9 +144,18 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @param context
  	 * @return
  	 */
- 	public boolean check2NeTExSTIFServiceJourneyPattern3(Context context, int lineNumber, int columnNumber) {
+ 	public boolean check2NeTExSTIFServiceJourneyPattern3(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
  		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-3 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
  		boolean result = true;
+ 		String patternType = journeyPattern.getPatternType();
+ 		result = patternType != null && ! patternType.isEmpty();
+ 		if (! result){
+ 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
+			location.setObjectId(journeyPattern.getObjectId());
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_ServiceJourney_3, location, " n'a pas de valeur pour l'attribut ServiceJourneyPatternType");
+ 		}
  		return result;
  	}
  
