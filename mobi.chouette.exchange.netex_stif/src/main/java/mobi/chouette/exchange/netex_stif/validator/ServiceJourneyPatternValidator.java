@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import mobi.chouette.common.Constant;
@@ -8,6 +9,8 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.VehicleJourney;
 
 public class ServiceJourneyPatternValidator extends AbstractValidator {
 
@@ -28,6 +31,17 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_2);
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_3);
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_4);
+	}
+	
+	
+	public boolean validate(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
+		boolean result1 = checkNetexId(context, SERVICE_JOURNEY_PATTERN, journeyPattern.getObjectId(), lineNumber, columnNumber);
+		checkChanged(context, SERVICE_JOURNEY_PATTERN, journeyPattern, lineNumber, columnNumber);
+		boolean result2 = checkModification(context, SERVICE_JOURNEY_PATTERN, journeyPattern, lineNumber, columnNumber);
+		boolean result3 = check2NeTExSTIFServiceJourneyPattern1(context, journeyPattern, lineNumber, columnNumber);
+		result3 &= check2NeTExSTIFServiceJourneyPattern3(context, journeyPattern, lineNumber, columnNumber);
+		result3 &= check2NeTExSTIFServiceJourneyPattern4(context, journeyPattern, lineNumber, columnNumber);
+		return result1 && result2 && result3;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -183,9 +197,26 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @param context
  	 * @return
  	 */
- 	public boolean check2NeTExSTIFServiceJourneyPattern4(Context context, int lineNumber, int columnNumber) {
+ 	public boolean check2NeTExSTIFServiceJourneyPattern4(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
  		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
  		boolean result = true;
+ 		int lastOrder=-1;
+ 		List<StopPoint> stopPoints = journeyPattern.getStopPoints();
+ 		for (StopPoint stopPoint : stopPoints) {
+			if (stopPoint.getPosition() <= lastOrder)
+			{
+				result = false;
+				break;
+			}
+			lastOrder = stopPoint.getPosition();
+		}
+ 		if (!result){
+ 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
+			location.setObjectId(journeyPattern.getObjectId());
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_ServiceJourney_4, location, " les attributs 'order' des StopPointInJourneyPattern ne sont pas croissants.");
+ 		}
  		return result;
  	}
  
