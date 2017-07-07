@@ -10,6 +10,7 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.validator.DirectionValidator;
 import mobi.chouette.exchange.netex_stif.validator.ServiceJourneyPatternValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.JourneyPattern;
@@ -32,6 +33,8 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		xpp.require(XmlPullParser.START_TAG, null, SERVICE_JOURNEY_PATTERN);
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
+		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyPatternValidator.class);
 		String id = xpp.getAttributeValue(null, ID);
 		JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, id);
 		Long version = (Long) context.get(VERSION);
@@ -46,7 +49,6 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				journeyPattern.setName(xpp.nextText());
 			} else if (xpp.getName().equals(DESTINATION_DISPLAY_REF)) {
 				String tmp = xpp.getAttributeValue(null, REF);
-				// TODO FL check ref here
 				DestinationDisplay display = factory.getDestinationDisplay(tmp);
 				if (display.isFilled()) {
 					journeyPattern.setPublishedName(display.getFrontText());
@@ -54,7 +56,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				} else {
 					factory.addJourneyPatternDestination(id, tmp);
 				}
-				XPPUtil.skipSubTree(log, xpp); // TODO FL remove when check ref implemented
+				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(POINTS_IN_SEQUENCE)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(STOP_POINT_IN_JOURNEY_PATTERN)) {
@@ -76,6 +78,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		validator.validate(context, journeyPattern, lineNumber, columnNumber);
 		if (context.contains(ROUTE_FROM_SERVICE_JOURNEY_PATTERN)) {
 			context.remove(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
 		}
