@@ -28,7 +28,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 
 		// -- preset checkpoints to OK if uncheck
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_2);
+		//validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_2);
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_3);
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourneyPattern_4);
 	}
@@ -89,7 +89,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFServiceJourneyPattern1(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
+ 		// TODO : [STIF] @Florent=done Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef
  		boolean result = true;
  		result = journeyPattern.getRoute() != null;
  		if (!result){
@@ -159,7 +159,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFServiceJourneyPattern3(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-3 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
+ 		// TODO : [STIF] @Florent=done Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-3 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ServiceJourneyPatternType
  		boolean result = true;
  		String patternType = journeyPattern.getPatternType();
  		result = patternType != null && ! patternType.isEmpty();
@@ -198,7 +198,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
  	 * @return
  	 */
  	public boolean check2NeTExSTIFServiceJourneyPattern4(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
- 		// TODO : [STIF] @Florent Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
+ 		// TODO : [STIF] @Florent=done Implementation Controle  2-NeTExSTIF-ServiceJourneyPattern-4 : [Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern
  		boolean result = true;
  		int lastOrder=-1;
  		List<StopPoint> stopPoints = journeyPattern.getStopPoints();
