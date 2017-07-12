@@ -7,7 +7,6 @@ import java.util.Map;
 
 import lombok.Getter;
 import mobi.chouette.model.Footnote;
-import mobi.chouette.model.Period;
 import mobi.chouette.model.StopPoint;
 
 public class NetexStifObjectFactory {

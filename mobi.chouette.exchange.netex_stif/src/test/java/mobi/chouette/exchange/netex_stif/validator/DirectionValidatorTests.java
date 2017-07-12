@@ -74,7 +74,7 @@ public class DirectionValidatorTests extends AbstractTest {
 
 		boolean result = validator.check2NeTExSTIFDirection2(tc.getContext(), tc.getFakeDirection(), lineNumber,
 				columnNumber);
-		log.info("Validation Report ===>" + tc.getValidationReport().toString());
+		log.info("Validation Report ===>" + tc.getValidationReport().getCheckPointErrors());
 		log.info("Validation Report Result = " + tc.getValidationReport().getResult());
 		log.info("Action Report ===>" + tc.getActionReport().toString());
 		log.info("Action Report Result = " + tc.getActionReport().getResult());
@@ -95,21 +95,21 @@ public class DirectionValidatorTests extends AbstractTest {
 		validateAbsenceOfDirectionAttributes(tc, directionType, oppositeDirectionRef);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Direction_2,
-				"2_netexstif_direction_2", oppositeDirectionRef, FILE_STATE.ERROR);
+				"2_netexstif_direction_2", OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR);
 
 		// -- DirectionType is incorrect
 		tc = new TestContext();
 		validateAbsenceOfDirectionAttributes(tc, directionType, null);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Direction_2,
-				"2_netexstif_direction_2", directionType, FILE_STATE.ERROR);
+				"2_netexstif_direction_2", DIRECTION_TYPE, FILE_STATE.ERROR);
 
 		// -- OppositeDirectionRef is incorrect
 		tc = new TestContext();
 		validateAbsenceOfDirectionAttributes(tc, null, oppositeDirectionRef);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Direction_2,
-				"2_netexstif_direction_2", oppositeDirectionRef, FILE_STATE.ERROR);
+				"2_netexstif_direction_2", OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR);
 	}
 
 	@Test(groups = { "Direction",

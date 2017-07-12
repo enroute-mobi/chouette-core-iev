@@ -76,13 +76,14 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 	}
 
 
-	@SuppressWarnings("deprecation")
 	@Test(groups = { "RouteRef" }, description = "test routeRef", priority = 1)
 	public void validateRouteRef() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
 				ServiceJourneyPatternValidator.class);
 		JourneyPattern jp = new JourneyPattern();
+		String jpId = "CITYWAY:ServiceJourneyPattern:1234:LOC";
+		jp.setObjectId(jpId);
 		jp.setRoute(new Route());
 		boolean res = validator.check2NeTExSTIFServiceJourneyPattern1 (context, jp, 1, 2);
 		Assert.assertTrue(res, "validation should be ok");
@@ -90,59 +91,71 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 		res = validator.check2NeTExSTIFServiceJourneyPattern1(context, jp, 1, 2);
 		Assert.assertFalse(res, "validation should be nok");
 		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_1,
-				"2_netexstif_servicejourneyPattern_1", null, FILE_STATE.ERROR);
+				"2_netexstif_servicejourneypattern_1", null, FILE_STATE.ERROR);
 	}
 
 
-	@SuppressWarnings("deprecation")
 	@Test(groups = { "PatternType" }, description = "test patternType", priority = 1)
 	public void validatePatternType() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
 				ServiceJourneyPatternValidator.class);
 		JourneyPattern jp = new JourneyPattern();
-		jp.setPatternType("test");
+		String jpId = "CITYWAY:ServiceJourneyPattern:1234:LOC";
+		jp.setObjectId(jpId);
 		boolean res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
+		Assert.assertFalse(res, "validation should be nok");
+		context = initImportContext();
+		validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyPatternValidator.class);
+		validator.addPatternType(context, jpId, "");
+		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
+		Assert.assertFalse(res, "validation should be nok");
+		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3,
+				"2_netexstif_servicejourneypattern_3", null, FILE_STATE.ERROR);
+		context = initImportContext();
+		validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyPatternValidator.class);
+		validator.addPatternType(context, jpId, "test");
+		checkNoReports(context, "offre_xxx.xml");
+		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
 		Assert.assertTrue(res, "validation should be ok");
-		jp.setPatternType(null);
-		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
-		Assert.assertFalse(res, "validation should be nok");
-		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3,
-				"2_netexstif_servicejourneyPattern_3", null, FILE_STATE.ERROR);
-		jp.setPatternType("");
-		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
-		Assert.assertFalse(res, "validation should be nok");
-		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3,
-				"2_netexstif_servicejourneyPattern_3", null, FILE_STATE.ERROR);
 	}
 
 	
-	@SuppressWarnings("deprecation")
 	@Test(groups = { "Order" }, description = "test order", priority = 1)
 	public void validateOrder() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
 				ServiceJourneyPatternValidator.class);
 		JourneyPattern jp = new JourneyPattern();
+		jp.setObjectId("CITYWAY:ServiceJourneyPattern:1234:LOC");
 		for (int i = 0; i < 100; ++i){
 			StopPoint p = new StopPoint();
+			p.setObjectId("CITYWAY:StopPoint:"+i+":LOC");
 			p.setPosition(i);
 			jp.addStopPoint(p);
 		}
 		boolean res = validator.check2NeTExSTIFServiceJourneyPattern4(context, jp, 1, 2);
 		Assert.assertTrue(res, "validation should be ok");
 		jp.getStopPoints().get(50).setPosition(3);
-		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
+		res = validator.check2NeTExSTIFServiceJourneyPattern4(context, jp, 1, 2);
 		Assert.assertFalse(res, "validation should be nok");
 		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4,
-				"2_netexstif_servicejourneyPattern_4", null, FILE_STATE.ERROR);
+				"2_netexstif_servicejourneypattern_4", null, FILE_STATE.ERROR);
+		context = initImportContext();
+	    validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyPatternValidator.class);
 		jp = new JourneyPattern();
+		jp.setObjectId("CITYWAY:ServiceJourneyPattern:1234:LOC");
 		for (int i = 0; i < 100; ++i){
 			StopPoint p = new StopPoint();
+			p.setObjectId("CITYWAY:StopPoint:"+i+":LOC");
 			p.setPosition(i);
 			i++;
 			jp.addStopPoint(p);
 		}
+		res = validator.check2NeTExSTIFServiceJourneyPattern4(context, jp, 1, 2);
 		Assert.assertTrue(res, "validation should be ok");
 	}
 		

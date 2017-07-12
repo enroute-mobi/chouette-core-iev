@@ -38,9 +38,9 @@ public class DirectionParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NAME)) {
 				direction.setName(xpp.nextText());
-			} else if (xpp.getName().equals(DIRECTION_TYPE)) {// TODO Michel : is it ok ?
+			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
 				direction.setDirectionType(xpp.nextText());
-			} else if (xpp.getName().equals(OPPOSITE_DIRECTION_REF)) {// TODO  Michel : is it ok ?
+			} else if (xpp.getName().equals(OPPOSITE_DIRECTION_REF)) {
 				direction.setOppositeDirectionRef(xpp.nextText());
 			} else {
 				XPPUtil.skipSubTree(log, xpp);

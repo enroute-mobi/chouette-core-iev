@@ -382,7 +382,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	// TODO
+
 
 	@Test(groups = { "Offre" }, description = "Bad CompositeFrame ", priority = 18)
 	public void verifyOffreForbiddenCompositeFrame() throws Exception {

@@ -1,6 +1,5 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
-import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;

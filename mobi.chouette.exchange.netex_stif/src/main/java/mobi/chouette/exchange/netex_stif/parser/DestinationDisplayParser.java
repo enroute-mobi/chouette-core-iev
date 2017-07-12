@@ -18,9 +18,8 @@ public class DestinationDisplayParser implements Parser, Constant {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
 		xpp.require(XmlPullParser.START_TAG, null, DESTINATION_DISPLAY);
-		int columnNumber = xpp.getColumnNumber();
-		int lineNumber = xpp.getLineNumber();
 		String id = xpp.getAttributeValue(null, ID);
+		// to be checked?
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		DestinationDisplay destinationDisplay = factory.getDestinationDisplay(id);
 		Long version = (Long)context.get(VERSION);

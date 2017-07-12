@@ -135,16 +135,16 @@ public class ServiceJourneyParser implements Parser, Constant {
 			int columnNumber = xpp.getColumnNumber();
 			if (xpp.getName().equals(DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
-				String version = xpp.getAttributeValue(null, VERSION);
+				String att_version = xpp.getAttributeValue(null, VERSION);
 				String content = xpp.nextText();
 				// check external reference
 				boolean checked = validator.checkNetexRef(context, vehicleJourney, DAY_TYPE_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkExternalRef(context, vehicleJourney, DAY_TYPE_REF, ref, version, content,
+					checked = validator.checkExternalRef(context, vehicleJourney, DAY_TYPE_REF, ref, att_version, content,
 							lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkExistsRef(context, vehicleJourney, DAY_TYPE_REF, ref, version, content,
+					checked = validator.checkExistsRef(context, vehicleJourney, DAY_TYPE_REF, ref, att_version, content,
 							lineNumber, columnNumber);
 				result.add(ref);
 			} else {
@@ -328,16 +328,16 @@ public class ServiceJourneyParser implements Parser, Constant {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(NOTICE_REF)) {
 						String ref = xpp.getAttributeValue(null, REF);
-						String version = xpp.getAttributeValue(null, VERSION);
+						String att_version = xpp.getAttributeValue(null, VERSION);
 						String content = xpp.nextText();
 						// check external reference
 						boolean checked = validator.checkNetexRef(context, vehicleJourney, NOTICE_REF, ref, lineNumber,
 								columnNumber);
 						if (checked)
-							checked = validator.checkExternalRef(context, vehicleJourney, NOTICE_REF, ref, version,
+							checked = validator.checkExternalRef(context, vehicleJourney, NOTICE_REF, ref, att_version,
 									content, lineNumber, columnNumber);
 						if (checked)
-							checked = validator.checkExistsRef(context, vehicleJourney, NOTICE_REF, ref, version,
+							checked = validator.checkExistsRef(context, vehicleJourney, NOTICE_REF, ref, att_version,
 									content, lineNumber, columnNumber);
 						Referential referential = (Referential) context.get(REFERENTIAL);
 						Footnote footnote = referential.getFootnotes().get(ref);

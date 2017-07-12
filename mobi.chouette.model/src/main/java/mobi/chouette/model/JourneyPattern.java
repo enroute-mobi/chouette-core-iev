@@ -255,10 +255,6 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 //	@JoinTable(name = "journey_pattern_sections", joinColumns = { @JoinColumn(name = "journey_pattern_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "route_section_id", nullable = false, updatable = false) })
 	private List<RouteSection> routeSections = new ArrayList<RouteSection>(0);
 	
-	@Getter
-	@Setter
-	private String patternType;
-	
 	/**
 	 * add a stop point if not already present
 	 * 

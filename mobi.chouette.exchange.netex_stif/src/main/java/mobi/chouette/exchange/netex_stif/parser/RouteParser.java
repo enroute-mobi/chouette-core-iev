@@ -45,14 +45,24 @@ public class RouteParser implements Parser, Constant {
 			if (xpp.getName().equals(NAME)) {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(LINE_REF)) {
-				String tmp = xpp.getAttributeValue(null, REF);
-				LineLite line = referential.getSharedReadOnlyLines().get(tmp);
+				String ref = xpp.getAttributeValue(null, REF);
+				String att_version = xpp.getAttributeValue(null, VERSION);
+				String content = xpp.nextText();
+				// check external reference
+				boolean checked = validator.checkNetexRef(context, route, LINE_REF, ref, lineNumber,
+						columnNumber);
+				if (checked)
+					checked = validator.checkExternalRef(context, route, LINE_REF, ref, att_version,
+							content, lineNumber, columnNumber);
+				if (checked)
+					checked = validator.checkExistsRef(context, route, LINE_REF, ref, att_version,
+							content, lineNumber, columnNumber);
+				LineLite line = referential.getSharedReadOnlyLines().get(ref);
 				if (line != null) {
 					route.setLineId(line.getId());
 					NetexStifUtils.uniqueObjectIdOnLine(route, line);
 					context.put(LINE, line);
 				}
-				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
 
 				String tmpDirType = xpp.nextText();
@@ -62,26 +72,40 @@ public class RouteParser implements Parser, Constant {
 				} else if (tmpDirType.equals(DIRECTION_OUTBOUND)) {
 					route.setDirection(PTDirectionEnum.A);
 				} else {
-					// todo error
+					// error will be returned by validator
 				}
 			} else if (xpp.getName().equals(DIRECTION_REF)) {
 				NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-				String tmp = xpp.getAttributeValue(null, REF);
-				Direction direction = factory.getDirection(tmp);
-				if (direction.isDetached()) {
+				String ref = xpp.getAttributeValue(null, REF);
+				String att_version = xpp.getAttributeValue(null, VERSION);
+				String content = xpp.nextText();
+				// check internal reference
+				boolean checked = validator.checkNetexRef(context, route, DIRECTION_REF, ref, lineNumber,
+						columnNumber);
+				if (checked)
+					checked = validator.checkInternalRef(context, route, DIRECTION_REF, ref, att_version, content,
+							lineNumber, columnNumber);
+				Direction direction = factory.getDirection(ref);
+				if (direction.isFilled()) {
 					route.setPublishedName(direction.getName());
 				} else {
-					factory.addRouteDirection(id, tmp);
+					factory.addRouteDirection(id, ref);
 				}
-				XPPUtil.skipSubTree(log, xpp);
 			} else if (xpp.getName().equals(INVERSE_ROUTE_REF)) {
-				String tmp = xpp.getAttributeValue(null, REF);
-				validator.addInverseRouteRef(context, route.getObjectId(), tmp);
-				Route wayBackRoute = ObjectFactory.getRoute(referential, tmp);
+				String ref = xpp.getAttributeValue(null, REF);
+				String att_version = xpp.getAttributeValue(null, VERSION);
+				String content = xpp.nextText();
+				// check internal reference
+				boolean checked = validator.checkNetexRef(context, route, ROUTE_REF, ref, lineNumber,
+						columnNumber);
+				if (checked)
+					checked = validator.checkInternalRef(context, route, ROUTE_REF, ref, att_version, content,
+							lineNumber, columnNumber);
+				validator.addInverseRouteRef(context, route.getObjectId(), ref);
+				Route wayBackRoute = ObjectFactory.getRoute(referential, ref);
 				if (wayBackRoute != null) {
 					wayBackRoute.setOppositeRoute(route);
 				}
-				XPPUtil.skipSubTree(log, xpp);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}

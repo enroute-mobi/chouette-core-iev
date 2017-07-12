@@ -27,7 +27,9 @@ public class DirectionValidator extends AbstractValidator {
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Direction : Name
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2311">Cartes #2311</a>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2311">Cartes
+	 * #2311</a>
 	 * <p>
 	 * <b>Code</b> : 2-NeTExSTIF-Direction-1
 	 * <p>
@@ -35,10 +37,11 @@ public class DirectionValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : L'objet Direction doit avoir son attribut Name renseigné.
+	 * <b>Prédicat</b> : L'objet Direction doit avoir son attribut Name
+	 * renseigné.
 	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet Direction d'identifiant {objectId} n'a pas
-	 * de valeur pour l'attribut Name
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
+	 * Direction d'identifiant {objectId} n'a pas de valeur pour l'attribut Name
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
@@ -48,12 +51,9 @@ public class DirectionValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFDirection1(Context context, Direction direction, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Direction-1 : [Netex] Contrôle de l'objet
-		// Direction
-		// : Name
 		boolean result = true;
 
-		if (direction.getName() == null) {
+		if (direction.getName() == null || direction.getName().trim().isEmpty()) {
 			result = false;
 		}
 
@@ -70,7 +70,9 @@ public class DirectionValidator extends AbstractValidator {
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Direction : Attributs interdits
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2312">Cartes #2312</a>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2312">Cartes
+	 * #2312</a>
 	 * <p>
 	 * <b>Code</b> : 2-NeTExSTIF-Direction-2
 	 * <p>
@@ -78,11 +80,12 @@ public class DirectionValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : L'objet Direction doit avoir ses attributs DirectionType et OppositeDirectionRef non
-	 * renseignés.
+	 * <b>Prédicat</b> : L'objet Direction doit avoir ses attributs
+	 * DirectionType et OppositeDirectionRef non renseignés.
 	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet Direction d'identifiant {objectId} définit
-	 * un attribut {attribut interdit} non autorisé
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
+	 * Direction d'identifiant {objectId} définit un attribut {attribut
+	 * interdit} non autorisé
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
@@ -92,17 +95,15 @@ public class DirectionValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFDirection2(Context context, Direction direction, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Direction-2 : [Netex] Contrôle de l'objet
-		// Direction
-		// : Attributs interdits
 		boolean result = true;
+		boolean forbiddenDirectionType = false;
+		boolean forbiddenOppositeDirectionRef = false;
 
-		String forbiddenAttribute = null;
 		if (direction.getOppositeDirectionRef() != null) {
-			forbiddenAttribute = direction.getOppositeDirectionRef();
+			forbiddenOppositeDirectionRef = true;
 			result = false;
 		} else if (direction.getDirectionType() != null) {
-			forbiddenAttribute = direction.getDirectionType();
+			forbiddenDirectionType = true;
 			result = false;
 		}
 
@@ -110,20 +111,29 @@ public class DirectionValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, direction);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_2, location,
-					forbiddenAttribute);
+			if (forbiddenDirectionType)
+				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_2, location,
+						DIRECTION_TYPE);
+			if (forbiddenOppositeDirectionRef)
+				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_2, location,
+						OPPOSITE_DIRECTION_REF);
 		}
 
 		return result;
 	}
 
+	/**
+	 * @param context
+	 * @param direction
+	 * @param lineNumber
+	 * @param columnNumber
+	 * @return
+	 */
 	public boolean validate(Context context, Direction direction, int lineNumber, int columnNumber) {
-		boolean result = check2NeTExSTIFDirection1(context, direction, lineNumber, columnNumber);
-		if (result) {
-			result = check2NeTExSTIFDirection2(context, direction, lineNumber, columnNumber);
-		}
+		boolean result1 = check2NeTExSTIFDirection1(context, direction, lineNumber, columnNumber);
+		boolean result2 = check2NeTExSTIFDirection2(context, direction, lineNumber, columnNumber);
 
-		return result;
+		return result1 && result2;
 
 	}
 
