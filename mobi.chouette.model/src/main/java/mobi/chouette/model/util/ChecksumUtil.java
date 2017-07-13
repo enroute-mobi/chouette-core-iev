@@ -273,10 +273,16 @@ public class ChecksumUtil {
 	public static void checksum(Context context, Timetable timetable) {
 		StringBuilder cs = new StringBuilder();
 		cs.append(getValue(timetable.getIntDayTypes()));
+		for (CalendarDay day : timetable.getCalendarDays()) {
+			checksum(context, day);
+		}
 		List<String> calcs = collectChecksums(timetable.getCalendarDays(), true);
 		for (String value : calcs) {
 			cs.append(SEP);
 			cs.append(value);
+		}
+		for (Period period : timetable.getPeriods()) {
+			checksum(context, period);
 		}
 		List<String> periodcs = collectChecksums(timetable.getPeriods(), true);
 		for (String value : periodcs) {
@@ -365,9 +371,10 @@ public class ChecksumUtil {
 	private static List<String> collectChecksums(Collection<? extends SignedChouetteObject> objects, boolean sorted) {
 		List<String> result = new ArrayList<>();
 		for (SignedChouetteObject object : objects) {
+			if (object != null)
 			result.add(object.getChecksum());
 		}
-		if (sorted)
+		if (!result.isEmpty() && sorted)
 			Collections.sort(result);
 		return result;
 	}
