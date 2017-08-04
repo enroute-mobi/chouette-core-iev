@@ -5,6 +5,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.model.LineLite;
 
 public class DirectionValidator extends AbstractValidator {
 
@@ -60,7 +61,8 @@ public class DirectionValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, direction);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, direction);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_1, location);
 		}
 
@@ -110,7 +112,8 @@ public class DirectionValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, direction);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, direction);
 			if (forbiddenDirectionType)
 				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_2, location,
 						DIRECTION_TYPE);

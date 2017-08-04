@@ -5,6 +5,7 @@ import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.RoutingConstraintZone;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.model.LineLite;
 
 public class RoutingConstraintZoneValidator extends AbstractValidator {
 
@@ -68,7 +69,8 @@ public class RoutingConstraintZoneValidator extends AbstractValidator {
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, zone);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, zone);
 			location.setName(zone.getName());
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_RoutingConstraintZone_1, location);
  		}
@@ -106,7 +108,8 @@ public class RoutingConstraintZoneValidator extends AbstractValidator {
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, zone);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line,  zone);
 			location.setName(zone.getName());
 			String zoneUse = zone.getZoneUse();
 			if (zoneUse == null) zoneUse = "null";

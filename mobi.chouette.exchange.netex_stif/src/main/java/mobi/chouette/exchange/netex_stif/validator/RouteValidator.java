@@ -8,6 +8,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
@@ -71,7 +72,8 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_1, location, wayback);
 		}
 		return result;
@@ -116,7 +118,8 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_2, "1", location,
 					route.getOppositeRoute().getObjectId());
 		}
@@ -144,7 +147,8 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_2, "2", location,
 					route.getOppositeRoute().getObjectId());
 		}
@@ -192,7 +196,8 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_3, location,
 					lastPosition.toString());
 		}
@@ -292,7 +297,8 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, route);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_4, location,
 					stopPointOnError.getObjectId());
 		}

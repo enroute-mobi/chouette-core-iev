@@ -162,7 +162,12 @@ public class ValidationReporterImpl implements ValidationReporter, Constant {
 					ret = true;
 			}
 		}
-		if (!location.getPath().isEmpty()) {
+		if (location.getLine() != null) {
+			OBJECT_TYPE type = OBJECT_TYPE.LINE;
+			String objectId = location.getLine().getObjectId();
+			if (reporter.addValidationErrorToObjectReport(context, objectId, type, code, severity))
+				ret = true;
+		} else if (!location.getPath().isEmpty()) {
 			DataLocation.Path object = location.getPath().get(location.getPath().size() - 1);
 			OBJECT_TYPE type = getType(object);
 			if (type != null) {

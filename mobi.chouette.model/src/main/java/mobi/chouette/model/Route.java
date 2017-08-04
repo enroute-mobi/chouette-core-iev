@@ -238,6 +238,16 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	// @ManyToOne(fetch = FetchType.LAZY)
 	// @JoinColumn(name = "line_id")
 	private Line line;
+	
+	/**
+	 * line reverse reference
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Transient
+	private LineLite lineLite;
 
 	/**
 	 * set line reverse reference

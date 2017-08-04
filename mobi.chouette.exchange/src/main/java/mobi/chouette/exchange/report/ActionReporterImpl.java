@@ -118,6 +118,20 @@ public class ActionReporterImpl implements ActionReporter, Constant {
 			}
 		}
 	}
+	
+	@Override
+	public void setObjectStatus(Context context, String objectId, OBJECT_TYPE type, OBJECT_STATE state)
+	{
+		ActionReport actionReport = (ActionReport) context.get(REPORT);
+		if (actionReport != null) {
+			
+			ObjectReport object = actionReport.findObjectReport(objectId, type);
+			if (object != null) {
+				object.setStatus(state);
+			}
+		}
+		
+	}
 
 	@Override
 	public void addStatToObjectReport(Context context, String objectId, OBJECT_TYPE type, OBJECT_TYPE statType,

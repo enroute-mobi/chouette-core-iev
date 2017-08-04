@@ -19,7 +19,7 @@ public interface ActionReporter {
 	};
 	
 	public enum FILE_STATE {
-		IGNORED, OK, ERROR
+		IGNORED, OK, WARNING, ERROR
 	};
 	
 	public enum ERROR_CODE 
@@ -36,6 +36,7 @@ public interface ActionReporter {
 	
 	public enum OBJECT_STATE 
 	{
+		IGNORED,
 		OK,
 		WARNING,
 		ERROR
@@ -196,6 +197,13 @@ public interface ActionReporter {
 	 */
 	boolean hasFileValidationErrors(Context context, String filename);
 	
+	/**
+	 * @param context
+	 * @param objectId
+	 * @param type
+	 * @param state
+	 */
+	void setObjectStatus(Context context, String objectId, OBJECT_TYPE type, OBJECT_STATE state);
 	
 	/**
 	 * Factory for using action reporter instance

@@ -12,6 +12,7 @@ import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.ChouetteIdentifiedObject;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.Referential;
 
 public abstract class AbstractValidator implements NetexCheckPoints, Constant {
@@ -122,18 +123,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	protected void addLocation(Context context, String localContext, ChouetteIdentifiedObject object, int lineNumber,
 			int columnNumber) {
 		String objectId = object.getObjectId();
-//		Context objectContext = getObjectContext(context, localContext, objectId);
-//		objectContext.put(LINE_NUMBER, Integer.valueOf(lineNumber));
-//		objectContext.put(COLUMN_NUMBER, Integer.valueOf(columnNumber));
 		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
 		if (data == null) 
 		{
 			data = new ValidationData();
 			context.put(VALIDATION_DATA,data);
 		}
+		LineLite line = (LineLite) context.get(LINE);
 		String fileName = (String) context.get(FILE_NAME);
 		if (data != null && fileName != null) {
-			DataLocation loc = new DataLocation(fileName, lineNumber, columnNumber, object);
+			DataLocation loc = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			loc.setName(DataLocation.buildName(object));
 			data.getDataLocations().put(objectId, loc);
 		}
@@ -263,7 +262,8 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_5, location, type);
 			// reset creation time to now 
 			object.setCreationTime(Calendar.getInstance().getTime()); 
@@ -311,7 +311,8 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_6, location, type);
 		}
 		return result;
@@ -362,7 +363,8 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_7, location, ref, typeRef);
 		}
 		return result;
@@ -408,13 +410,15 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_8, "1", location, id, type);
 		}
 		if (!result2) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_8, "2", location, id, type);
 		}
 		return result1 && result2;
@@ -460,13 +464,15 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_9, "1", location, ref, type);
 		}
 		if (!result2) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_9, "2", location, ref, type);
 		}
 		return result1 && result2;
@@ -527,7 +533,8 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_10, location, ref, type);			
 		}
 		return result;

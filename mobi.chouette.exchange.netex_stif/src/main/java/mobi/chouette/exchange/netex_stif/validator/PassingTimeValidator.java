@@ -4,6 +4,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.VehicleJourneyAtStop;
 
 public class PassingTimeValidator extends AbstractValidator {
@@ -67,7 +68,8 @@ public class PassingTimeValidator extends AbstractValidator {
 			result = false;
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber,
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, 
 					passingTime.getVehicleJourney());
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassingTime_1, location,
 					Integer.toString(rank));
@@ -115,7 +117,8 @@ public class PassingTimeValidator extends AbstractValidator {
 			if (!result) {
 				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 				String fileName = (String) context.get(Constant.FILE_NAME);
-				DataLocation location = new DataLocation(fileName, lineNumber, columnNumber,
+				LineLite line = (LineLite) context.get(LINE);
+				DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, 
 						passingTime.getVehicleJourney());
 				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassingTime_2, location,
 						Integer.toString(rank));

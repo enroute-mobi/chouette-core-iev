@@ -117,10 +117,10 @@ public class AbstractImporterCommand implements Constant {
 				}
 			}
 
-			if (mode.equals(Mode.line) && !reporter.hasInfo(context, OBJECT_TYPE.LINE)) {
-				if (!reporter.hasActionError(context))
-					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data");
-			}
+//			if (mode.equals(Mode.line) && !reporter.hasInfo(context, OBJECT_TYPE.LINE)) {
+//				if (!reporter.hasActionError(context))
+//					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data");
+//			}
 		} finally {
 			// call dispose commmands
 			try {

@@ -27,7 +27,10 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.exchange.report.ActionReporter.FILE_ERROR_CODE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
 
 @Log4j
@@ -71,9 +74,15 @@ public class NetexStifSAXParserCommand implements Command, Constant {
 			Validator validator = schema.newValidator();
 			validator.setErrorHandler(handler);
 			validator.validate(file);
+			if (handler.isHasErrors()) {
+				addLineEntry(context, reporter, fileName,"XML/XSD errors");
+				reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, "XML/XSD errors");
+				return result;
+			}
 			result = SUCCESS;
 		} catch (IOException | SAXException e) {
 			log.error(e.getMessage());
+			addLineEntry(context, reporter, fileName,e.getMessage());
 			reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT,e.getMessage());
 		} finally {
 			if (reader != null ) reader.close();
@@ -81,6 +90,18 @@ public class NetexStifSAXParserCommand implements Command, Constant {
 		}
 
 		return result;
+	}
+
+	private void addLineEntry(Context context, ActionReporter reporter, String fileName, String description) {
+		if (fileName.startsWith("offre_"))
+		{
+			// insert dummy line entry in report
+			String name = fileName.replace(".xml", "");
+			String[] tokens = name.split("_");
+			reporter.addObjectReport(context, "STIF:CODIFLIGNE:Line:"+tokens[1], OBJECT_TYPE.LINE, tokens[2], OBJECT_STATE.OK, IO_TYPE
+			.INPUT);
+			reporter.addErrorToObjectReport(context, "STIF:CODIFLIGNE:Line:"+tokens[1], OBJECT_TYPE.LINE, ERROR_CODE.INVALID_FORMAT , description);
+		}
 	}
 
 	public static class DefaultCommandFactory extends CommandFactory {

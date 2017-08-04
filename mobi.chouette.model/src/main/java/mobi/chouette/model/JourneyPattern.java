@@ -58,11 +58,13 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@Transient
+	// @Column(name = "checksum")
 	private String checksum ;
 	
 	@Getter
 	@Setter 
 	@Transient
+	// @Column(name = "checksum_source")
 	private String checksumSource;
 
 	/**

@@ -218,7 +218,7 @@ CREATE TABLE import_messages (
     id bigint NOT NULL,
     criticity integer,
     message_key character varying(255),
-    message_attributs shared_extensions.hstore,
+    message_attributes shared_extensions.hstore,
     import_id bigint,
     resource_id bigint,
     created_at timestamp without time zone,
@@ -269,7 +269,10 @@ CREATE TABLE imports (
     file character varying(255),
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
-    token_download character varying(255)
+    token_download character varying(255),
+    notified_parent_at timestamp without time zone,
+    current_step integer DEFAULT 0,
+    total_steps integer DEFAULT 0
 );
 
 ALTER TABLE imports OWNER TO chouette;

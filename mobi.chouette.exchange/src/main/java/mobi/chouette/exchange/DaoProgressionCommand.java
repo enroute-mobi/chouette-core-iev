@@ -153,12 +153,12 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 
 		for (ObjectReport objectReport : report.getObjects().values()) {
 			ActionResource actionResource = actionResourceDAO.createResource(job);
-			actionResource.setType(objectReport.getType().name());
+			actionResource.setType(objectReport.getType().name().toLowerCase());
 			actionResource.setName(objectReport.getDescription());
 			actionResource.setStatus(objectReport.getStatus().name());
 			actionResource.setReference("merged");
 			for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
-				actionResource.getMetrics().put(entry.getKey().name(), entry.getValue().toString());
+				actionResource.getMetrics().put(entry.getKey().name().toLowerCase(), entry.getValue().toString());
 			}
 			actionResourceDAO.saveResource(actionResource);
 			addMessages(context, objectReport, actionResource);
@@ -168,12 +168,12 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		for (ObjectCollectionReport collection : report.getCollections().values()) {
 			for (ObjectReport objectReport : collection.getObjectReports()) {
 				ActionResource actionResource = actionResourceDAO.createResource(job);
-				actionResource.setType(objectReport.getType().name());
+				actionResource.setType(objectReport.getType().name().toLowerCase());
 				actionResource.setName(objectReport.getDescription());
 				actionResource.setStatus(objectReport.getStatus().name());
 				actionResource.setReference(objectReport.getObjectId());
 				for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
-					actionResource.getMetrics().put(entry.getKey().name(), entry.getValue().toString());
+					actionResource.getMetrics().put(entry.getKey().name().toLowerCase(), entry.getValue().toString());
 				}
 				actionResourceDAO.saveResource(actionResource);
 			}
@@ -209,8 +209,10 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 	private void populateMessage(ActionMessage message, CheckPointErrorReport error) {
 		message.setMessageKey(error.getKey());
 		Map<String, String> map = message.getMessageAttributs();
+		Map<String, String> mapResource = message.getResourceAttributs();
 		map.put("test_id", error.getTestId());
 		addLocation(map, "source", error.getSource());
+		addLocation(mapResource, "", error.getSource());
 		for (int i = 0; i < error.getTargets().size(); i++) {
 			addLocation(map, "target_"+i, error.getTargets().get(i));
 		}
@@ -219,13 +221,14 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 	}
 
 	private void addLocation(Map<String, String> map, String prefix, Location location) {
+		if (!prefix.isEmpty()) prefix = prefix+".";
 		if (location.getFile() != null) {
-			map.put(prefix + ".filename", asString(location.getFile().getFilename()));
-			map.put(prefix + ".line_number", asString(location.getFile().getLineNumber()));
-			map.put(prefix + ".column_number", asString(location.getFile().getColumnNumber()));
+			map.put(prefix + "filename", asString(location.getFile().getFilename()));
+			map.put(prefix + "line_number", asString(location.getFile().getLineNumber()));
+			map.put(prefix + "column_number", asString(location.getFile().getColumnNumber()));
 		}
-		map.put(prefix + ".label", asString(location.getName()));
-		map.put(prefix + ".objectid", asString(location.getObjectId()));
+		map.put(prefix + "label", asString(location.getName()));
+		map.put(prefix + "objectid", asString(location.getObjectId()));
         if (!location.getObjectRefs().isEmpty())
         {
         	// TODO save path

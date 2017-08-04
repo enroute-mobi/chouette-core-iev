@@ -86,6 +86,15 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 		errors.add(error);
 	}
 
+	/** 
+	 * set status if not worst
+	 */
+	public void setStatus(OBJECT_STATE newStatus)
+	{
+		if (newStatus.ordinal() > status.ordinal() || (newStatus.equals(OBJECT_STATE.IGNORED) && !status.equals(OBJECT_STATE.ERROR))) 
+			status = newStatus;
+	}
+	
 	/**
 	 * 
 	 * @param checkPointErrorId

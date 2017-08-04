@@ -8,12 +8,13 @@ import lombok.Getter;
 import lombok.ToString;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.ChouetteIdentifiedObject;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
@@ -22,7 +23,7 @@ import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.util.NamingUtil;
 
 @Data
-@ToString (exclude={"object"})
+@ToString /*(exclude={"object"})*/
 public class DataLocation {
 	private String objectType; // Line route stop area..
 	private String filename;
@@ -31,7 +32,7 @@ public class DataLocation {
 	private String objectId = "";
 	private String name = "";
 	private ChouetteIdentifiedObject object;
-	// private Line line;
+	private LineLite line;
 	private List<Path> path = new ArrayList<>();
 
 	public DataLocation(String fileName) {
@@ -78,7 +79,12 @@ public class DataLocation {
 	}
 
 	public DataLocation(String fileName, int lineNumber, int columnNumber, ChouetteIdentifiedObject chouetteObject) {
+		this(fileName, lineNumber, columnNumber, null, chouetteObject);
+	}
+
+	public DataLocation(String fileName, int lineNumber, int columnNumber, LineLite line, ChouetteIdentifiedObject chouetteObject) {
 		this(chouetteObject);
+		this.line = line;
 		this.filename = fileName;
 		this.lineNumber = lineNumber;
 		this.columnNumber = columnNumber;
@@ -89,7 +95,7 @@ public class DataLocation {
 		this.object = chouetteObject;
 		this.name = buildName(chouetteObject);
 		if (chouetteObject.getObjectId() != null) {
-			path.add(new Path(object));
+			path.add(new Path(chouetteObject));
 			if (chouetteObject instanceof VehicleJourney) {
 				VehicleJourney object = (VehicleJourney) chouetteObject;
 				if (object.getJourneyPattern() != null) {
@@ -98,6 +104,9 @@ public class DataLocation {
 						path.add(new Path(object.getJourneyPattern().getRoute()));
 						if (object.getJourneyPattern().getRoute().getLine() != null) {
 							path.add(new Path(object.getJourneyPattern().getRoute().getLine()));
+						}
+						else if (object.getJourneyPattern().getRoute().getLineLite() != null) {
+							path.add(new Path(object.getJourneyPattern().getRoute().getLineLite()));
 						}
 					}
 				}
@@ -108,11 +117,17 @@ public class DataLocation {
 					if (object.getRoute().getLine() != null) {
 						path.add(new Path(object.getRoute().getLine()));
 					}
+					else if (object.getRoute().getLineLite() != null) {
+						path.add(new Path(object.getRoute().getLineLite()));
+					}
 				}
 			} else if (chouetteObject instanceof Route) {
 				Route object = (Route) chouetteObject;
 				if (object.getLine() != null) {
 					path.add(new Path(object.getLine()));
+				}
+				else if (object.getLineLite() != null) {
+					path.add(new Path(object.getLineLite()));
 				}
 			} else if (chouetteObject instanceof AccessLink) {
 				AccessLink object = (AccessLink) chouetteObject;
@@ -211,6 +226,10 @@ public class DataLocation {
 
 		public Path(String className, String objectId) {
 			this.objectClass = className;
+			if (this.objectClass.endsWith("Lite"))
+			{
+				this.objectClass = this.objectClass.substring(0, this.objectClass.lastIndexOf("Lite"));
+			}
 			this.objectId = objectId;
 		}
 

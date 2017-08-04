@@ -35,9 +35,6 @@ public class Scheduler {
 
 	public static final String BEAN_NAME = "Scheduler";
 
-	// @EJB
-	// JobDAO jobDAO;
-
 	@EJB
 	JobServiceManager jobManager;
 
@@ -88,17 +85,26 @@ public class Scheduler {
 		try {
 			List<JobService> scheduled = jobManager.findAll(JobService.STATUS.RUNNING);
 
-			
 			for (JobService jobService : scheduled) {
 				jobManager.abort(jobService);
 
+			}
+
+			// manage new imported data
+			List<JobService> newJobs = jobManager.findAll(JobService.STATUS.NEW);
+			for (JobService job : newJobs) {
+				try {
+					jobManager.createJob(job.getAction().name(), job.getId());
+				} catch (Exception ex) {
+					log.error("cannot manage new job : " + job.getAction().name() + " " + job.getId());
+				}
 			}
 
 			while (schedule()) {
 				log.info("schedule pending tasks");
 			}
 		} catch (RuntimeException ex) {
-			log.fatal("cannot start scheduler",ex);
+			log.fatal("cannot start scheduler", ex);
 			throw ex;
 		}
 	}

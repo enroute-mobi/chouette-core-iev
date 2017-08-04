@@ -5,6 +5,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.model.PassengerStopAssignment;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.model.LineLite;
 
 public class PassengerStopAssignmentValidator extends AbstractValidator {
 
@@ -57,7 +58,8 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, stopAssignment);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, stopAssignment);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassingTime_1, location, "ScheduledStopPointRef");
 
  		}
@@ -65,7 +67,8 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, stopAssignment);
+			LineLite line = (LineLite) context.get(LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, stopAssignment);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassingTime_1, location, "QuayRef");
 
  		}

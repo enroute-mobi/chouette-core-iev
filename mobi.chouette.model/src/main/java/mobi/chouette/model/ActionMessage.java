@@ -46,7 +46,7 @@ public abstract class ActionMessage implements Serializable{
 	
 	@Getter
 	@Setter
-	@Column(name="message_attributs")
+	@Column(name="message_attributes")
 	@CollectionType(type="java.util.HashMap")
    	@Convert(converter = HstoreConverter.class)
 	private Map<String, String> messageAttributs = new HashMap<String, String>();
@@ -55,6 +55,13 @@ public abstract class ActionMessage implements Serializable{
 	@Setter
 	@Column(name="resource_id")
 	private Long resourceId;
+
+	@Getter
+	@Setter
+	@Column(name="resource_attributes")
+	@CollectionType(type="java.util.HashMap")
+   	@Convert(converter = HstoreConverter.class)
+	private Map<String, String> resourceAttributs = new HashMap<String, String>();
 
 	@Getter
 	@Setter

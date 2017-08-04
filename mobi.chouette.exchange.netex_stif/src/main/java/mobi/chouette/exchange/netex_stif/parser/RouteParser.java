@@ -60,6 +60,7 @@ public class RouteParser implements Parser, Constant {
 				LineLite line = referential.getSharedReadOnlyLines().get(ref);
 				if (line != null) {
 					route.setLineId(line.getId());
+					route.setLineLite(line);
 					NetexStifUtils.uniqueObjectIdOnLine(route, line);
 					context.put(LINE, line);
 				}

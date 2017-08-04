@@ -52,16 +52,23 @@ public class MainCommand implements Command, Constant {
 
 			InitialContext ctx = (InitialContext) context.get(INITIAL_CONTEXT);
 			Command command = CommandFactory.create(ctx, name);
-			command.execute(context);
+			result = command.execute(context);
 
 			ActionReport report = (ActionReport) context.get(REPORT);
+			log.info(report);
 			if (report.getResult().equals(ReportConstant.STATUS_ERROR)
 					&& report.getFailure().getCode().equals(ActionReporter.ERROR_CODE.INTERNAL_ERROR))
+			{
 				jobManager.abort(jobService);
+			}
 			else if (report.getResult().equals(ReportConstant.STATUS_ERROR))
+			{
 				jobManager.terminate(jobService,JobService.STATUS.FAILED);
+			}
 			else
+			{
 				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFUL);
+			}
 
 		} catch (javax.ejb.EJBTransactionRolledbackException ex) {
 			log.warn("exception bypassed " + ex);

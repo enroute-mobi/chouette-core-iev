@@ -104,6 +104,7 @@ public class JobServiceManager {
 		return jobService;
 	}
 
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public JobService createJob(String action, Long id) throws ServiceException {
 
 		// Instancier le modèle du service 'upload'
@@ -122,6 +123,9 @@ public class JobServiceManager {
 			if (importTask == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
+			if (!importTask.getStatus().equals(JobService.STATUS.NEW.name().toLowerCase())) {
+				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
+			}
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
 
 			log.info("job " + jobService.getId() + " found for import ");
@@ -137,7 +141,8 @@ public class JobServiceManager {
 			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
 			if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
 				// build url with token
-				urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/" + importTask.getId() + "/download?token=" + urlName;
+				urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/" + importTask.getId()
+						+ "/download?token=" + urlName;
 			}
 			try {
 				URL url = new URL(urlName);
@@ -145,8 +150,7 @@ public class JobServiceManager {
 				FileUtils.copyURLToFile(url, dest);
 			} catch (Exception ex) {
 				log.error("fail to get file for import job " + ex.getMessage());
-				throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR,
-						"cannot manage URL " + urlName);
+				throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
 			}
 
 			jobService.setStatus(JobService.STATUS.PENDING);
@@ -302,8 +306,8 @@ public class JobServiceManager {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public List<JobService> findAll(STATUS status) {
 		List<JobService> jobs = new ArrayList<>();
-		List<ImportTask> startedImportTasks = importTaskDAO.getTasks(status.name().toLowerCase());
-		for (ImportTask importTask : startedImportTasks) {
+		List<ImportTask> importTasks = importTaskDAO.getTasks(status.name().toLowerCase());
+		for (ImportTask importTask : importTasks) {
 
 			try {
 				JobService job = new JobService(APPLICATION_NAME, rootDirectory, importTask);

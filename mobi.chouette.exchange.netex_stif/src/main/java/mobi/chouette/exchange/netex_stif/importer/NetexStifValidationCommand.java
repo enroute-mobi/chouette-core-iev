@@ -95,6 +95,13 @@ public class NetexStifValidationCommand implements Command, Constant {
 
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
 					referential.getJourneyPatterns().size());
+			
+			NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+			if (parameters.isNoSave())
+			{
+				reporter.setObjectStatus(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_STATE.IGNORED);
+			}
+			
 		}
 	}
 

@@ -67,7 +67,7 @@ public class NetexStifImporterCommand extends AbstractImporterCommand implements
 
 		} finally {
 			progression.dispose(context);
-			log.info(Color.YELLOW + monitor.stop() + Color.NORMAL);
+			log.info(Color.YELLOW + monitor.stop() +(result? " OK":" FAILED")+ Color.NORMAL);
 		}
 
 		return result;
