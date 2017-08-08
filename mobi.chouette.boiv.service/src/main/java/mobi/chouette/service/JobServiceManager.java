@@ -313,7 +313,9 @@ public class JobServiceManager {
 				JobService job = new JobService(APPLICATION_NAME, rootDirectory, importTask);
 				jobs.add(job);
 			} catch (ServiceException e) {
-				log.error("fail to manage import task " + importTask.getId());
+				log.error("fail to manage import task " + importTask);
+			} catch (Exception e) {
+				log.error("fail to manage import task " + importTask,e);
 			}
 		}
 		return jobs;

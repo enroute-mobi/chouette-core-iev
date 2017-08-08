@@ -33,7 +33,7 @@ public class ImportTaskDAOImpl extends GenericDAOImpl<ImportTask> implements Imp
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<ImportTask> criteria = builder.createQuery(type);
 		Root<ImportTask> root = criteria.from(type);
-		Predicate predicate = builder.equal(root.get(ImportTask_.status), status);
+		Predicate predicate = builder.and(builder.isNotNull(root.get(ImportTask_.referential)),builder.equal(root.get(ImportTask_.status), status));
 		criteria.where(predicate);
 		criteria.orderBy(builder.asc(root.get(ImportTask_.createdAt)));
 		TypedQuery<ImportTask> query = em.createQuery(criteria);
