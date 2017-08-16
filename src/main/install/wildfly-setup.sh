@@ -54,6 +54,7 @@ sudo bin/jboss-cli.sh <<EOS
 connect
 /subsystem=datasources/jdbc-driver=postgresql:add(driver-name="postgresql",driver-module-name="org.postgres",driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
 data-source add --jndi-name=java:jboss/datasources/chouette --name=chouette --connection-url=jdbc:postgresql_postGIS://localhost:5432/chouette2 --driver-class=org.postgis.DriverWrapper --driver-name=postgresql --user-name=chouette --password=chouette --max-pool-size=30
+/subsystem=datasources/data-source=chouette/connection-properties=stringtype:add(value=unspecified)
 /subsystem=ee/managed-executor-service=default/ :write-attribute(name=max-threads,value=20)
 /subsystem=ee/managed-executor-service=default/ :write-attribute(name=queue-length,value=20)
 EOS
