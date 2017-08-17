@@ -278,7 +278,10 @@ public abstract class AbstractValidation<T extends ChouetteIdentifiedObject> imp
 				continue;
 			}
 			if (underChar)
+			{
 				b.append(Character.toUpperCase(c));
+				underChar = false;
+			}
 			else
 				b.append(c);
 		}
