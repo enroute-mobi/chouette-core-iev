@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.ValidationData;
