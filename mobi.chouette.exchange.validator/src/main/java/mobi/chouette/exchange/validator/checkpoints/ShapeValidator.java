@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.validator.checkpoints;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validator.ValidateParameters;
+import mobi.chouette.model.Shape;
 
 public class ShapeValidator extends GenericValidator<Shape> implements CheckPointConstant {
 
