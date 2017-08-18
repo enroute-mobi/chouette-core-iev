@@ -12,11 +12,11 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
 		super.validate( context,  object,  parameters,transportMode,codes);
 	}
 
- 
+
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-Shape-1
  	 * <p>
@@ -32,10 +32,11 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3Shape1(Context context, Shape object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3Shape1(Context context, Shape object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -44,7 +45,7 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-Shape-2
  	 * <p>
@@ -60,10 +61,11 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3Shape2(Context context, Shape object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3Shape2(Context context, Shape object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -72,7 +74,7 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-Shape-3
  	 * <p>
@@ -88,10 +90,11 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3Shape3(Context context, Shape object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3Shape3(Context context, Shape object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}

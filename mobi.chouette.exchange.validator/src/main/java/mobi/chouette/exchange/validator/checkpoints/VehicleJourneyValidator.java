@@ -12,11 +12,11 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 		super.validate( context,  object,  parameters,transportMode,codes);
 	}
 
- 
+
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-VehicleJourney-1
  	 * <p>
@@ -33,10 +33,11 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3VehicleJourney1(Context context, VehicleJourney object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3VehicleJourney1(Context context, VehicleJourney object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -45,7 +46,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-VehicleJourney-2
  	 * <p>
@@ -64,10 +65,11 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3VehicleJourney2(Context context, VehicleJourney object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3VehicleJourney2(Context context, VehicleJourney object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -76,7 +78,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-VehicleJourney-3
  	 * <p>
@@ -92,10 +94,11 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3VehicleJourney3(Context context, VehicleJourney object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3VehicleJourney3(Context context, VehicleJourney object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -104,7 +107,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-VehicleJourney-4
  	 * <p>
@@ -120,10 +123,11 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3VehicleJourney4(Context context, VehicleJourney object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3VehicleJourney4(Context context, VehicleJourney object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -132,7 +136,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-VehicleJourney-5
  	 * <p>
@@ -149,10 +153,11 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3VehicleJourney5(Context context, VehicleJourney object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3VehicleJourney5(Context context, VehicleJourney object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}

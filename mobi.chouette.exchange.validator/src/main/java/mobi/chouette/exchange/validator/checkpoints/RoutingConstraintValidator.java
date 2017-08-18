@@ -12,11 +12,11 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 		super.validate( context,  object,  parameters,transportMode,codes);
 	}
 
-  
+
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-ITL-1
  	 * <p>
@@ -32,10 +32,11 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3ITL1(Context context, RoutingConstraint object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3ITL1(Context context, RoutingConstraint object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -44,7 +45,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-ITL-2
  	 * <p>
@@ -60,10 +61,11 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3ITL2(Context context, RoutingConstraint object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3ITL2(Context context, RoutingConstraint object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
@@ -72,7 +74,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	/** 
  	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de l'Organisation
  	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+ 	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
  	 * <p>
  	 * <b>Code</b> :3-ITL-3
  	 * <p>
@@ -88,10 +90,11 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
  	 * <p>
  	 * Note :  
  	 *
- 	 * @param context
- 	 * @return
- 	 */
-	private void check3ITL3(Context context, RoutingConstraint object, CheckpointParameters parameters)
+ 	 * @param context context de validation
+ 	 * @param object objet à contrôler
+ 	 * @param parameters paramètres du point de contrôle
+	 */
+	protected void check3ITL3(Context context, RoutingConstraint object, CheckpointParameters parameters)
 	{
 	     // TODO 	
 	}
