@@ -15,10 +15,9 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[ITL] ITL & arret désactivé
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2109">Cartes #2109</a>
 	 * <p>
 	 * <b>Code</b> :3-ITL-1
 	 * <p>
@@ -32,7 +31,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -46,10 +45,9 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[ITL] Couverture de l'itinéraire
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2510">Cartes #2510</a>
 	 * <p>
 	 * <b>Code</b> :3-ITL-2
 	 * <p>
@@ -63,7 +61,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -77,10 +75,9 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[ITL] Définition minimale d'une ITL
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2511">Cartes #2511</a>
 	 * <p>
 	 * <b>Code</b> :3-ITL-3
 	 * <p>
@@ -94,7 +91,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation

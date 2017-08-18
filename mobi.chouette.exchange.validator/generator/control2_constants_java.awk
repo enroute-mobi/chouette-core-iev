@@ -8,7 +8,7 @@ BEGIN{
 function createValidatorClass(class, codes, objectType)
 {
 	result = ""
-     	result = result "package "PACKAGE";\n"
+     	result = result "package "PACKAGE";\n\n"
 
 	result = result  "import mobi.chouette.common.Context;\n"
 	result = result  "import mobi.chouette.exchange.validator.ValidateParameters;\n"
@@ -46,18 +46,22 @@ function addValidatorMethod(code, class, objectType){
 	code_tag=code	
 	gsub(/-/, "", code_tag)
 
+
+
+	label=labelListByCode[code]
+	id=labelListByTicketId[code]
 	message=labelListByMessage[code]	
 	variable=labelListByVariable[code]	
 	prerequis=labelListByPrerequis[code]	
 	predicat=labelListByPredicat[code]	
 	criticite=labelListByCriticite[code]
-	notelabelListByNote[code]	
+	note=labelListByNote[code]	
 
 	res = "\n"
 	res = res "	/** \n \
 	 * <b>Titre</b> :"label"\n \
 	 * <p>\n \
-	 * <b>Réference Redmine</b> : <a target=\"_blank\" href=\"https://projects.af83.io/issues/"id"\">Cartes #"id"</a>\n \
+	 * <b>Référence Redmine</b> : <a target=\"_blank\" href=\"https://projects.af83.io/issues/"id"\">Cartes #"id"</a>\n \
 	 * <p>\n \
 	 * <b>Code</b> :"code"\n \
 	 * <p>\n \
@@ -145,13 +149,13 @@ NR < 2 { next }
 	gsub(/_CRLF_/,CRLF, predicat)
 	
 	if (class != ""){
-		labelListByCode[code]=label
 		code_tag="L"code	
 		gsub(/-/, "_", code_tag)
 		labelListByCodeTag[code]=code_tag
 
 		
-
+		labelListByTicketId[code]=id
+		labelListByCode[code]=label
 		labelListByMessage[code]=message	
 		labelListByVariable[code]=variable	
 		labelListByPrerequis[code]=prerequis	

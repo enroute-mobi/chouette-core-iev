@@ -104,10 +104,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Génériques] Contrôle du contenu selon un pattern
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes #2192</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-1
 	 * <p>
@@ -123,7 +122,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -137,10 +136,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Génériques] Valeur min
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes #2193</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-2
 	 * <p>
@@ -158,7 +156,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -172,10 +170,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une ligne
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes #2194</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-3
 	 * <p>
@@ -189,7 +186,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
