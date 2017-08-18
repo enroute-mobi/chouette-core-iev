@@ -5,7 +5,7 @@ BEGIN{
 	
 }
 
-function createValidatorClass(class, codes)
+function createValidatorClass(class, codes, objectType)
 {
 	result = ""
      	result = result "package "PACKAGE";\n"
@@ -14,7 +14,7 @@ function createValidatorClass(class, codes)
 	result = result  "import mobi.chouette.exchange.validator.ValidateParameters;\n"
 	result = result  "import mobi.chouette.model."class";\n\n"
 
-	result = result  "public class "class"Validator extends GenericValidator<"class"> implements "CONST_CLASS_NAME" {\n\n"
+	result = result  "public class "class"Validator extends GenericValidator<"objectType"> implements "CONST_CLASS_NAME" {\n\n"
 
 	split(codes,codelist,";")
 	
@@ -30,11 +30,11 @@ function createValidatorClass(class, codes)
 
 	result = result  "	private static final String[] codes = {"list"};\n\n"
 	result = result  "	@Override\n"
-	result = result  "	public void validate(Context context, "class" object, ValidateParameters parameters, String transportMode) {\n"
+	result = result  "	public void validate(Context context, "objectType" object, ValidateParameters parameters, String transportMode) {\n"
 	result = result  "		super.validate( context,  object,  parameters,transportMode,codes);\n"
 	result = result  "	}\n\n"
 	for (x in codelist) {
-		result = result addValidatorMethod(codelist[x], class)
+		result = result addValidatorMethod(codelist[x], class, objectType)
 	}
 	
 	result = result  "}\n"
@@ -42,7 +42,7 @@ function createValidatorClass(class, codes)
 	return (result)
 }
 
-function addValidatorMethod(code, class){
+function addValidatorMethod(code, class, objectType){
 	code_tag=code	
 	gsub(/-/, "", code_tag)
 
@@ -57,7 +57,7 @@ function addValidatorMethod(code, class){
 	res = res "	/** \n \
 	 * <b>Titre</b> :"label"\n \
 	 * <p>\n \
-	 * <b>R&eacute;ference Redmine</b> : <a target=\"_blank\" href=\"https://projects.af83.io/issues/"id"\">Cartes #"id"</a>\n \
+	 * <b>Réference Redmine</b> : <a target=\"_blank\" href=\"https://projects.af83.io/issues/"id"\">Cartes #"id"</a>\n \
 	 * <p>\n \
 	 * <b>Code</b> :"code"\n \
 	 * <p>\n \
@@ -73,14 +73,15 @@ function addValidatorMethod(code, class){
 	 * <p>\n \
 	 * "note"\n \
 	 *\n \
-	 * @param context\n \
-	 * @return\n \
+	 * @param context context de validation\n \
+	 * @param object objet à contrôler\n \
+	 * @param parameters paramètres du point de contrôle\n\
 	 */\n"
 
 
 
 
-	res = res  "	private void check"code_tag"(Context context, "class" object, CheckpointParameters parameters)\n"
+	res = res  "	protected void check"code_tag"(Context context, "objectType" object, CheckpointParameters parameters)\n"
 	res = res  "	{\n"
 	res = res  "	     // TODO 	\n"
 	res = res  "	}\n\n"
@@ -149,6 +150,7 @@ NR < 2 { next }
 		gsub(/-/, "_", code_tag)
 		labelListByCodeTag[code]=code_tag
 
+		
 
 		labelListByMessage[code]=message	
 		labelListByVariable[code]=variable	
@@ -178,8 +180,19 @@ END{
 	
 
 	for (class in codeListByClass) {
-		res = createValidatorClass(class, codeListByClass[class]) 
-		filename= packageDir "/" class"Validator.java"
+
+
+		# pour ne pas écraser la classe GenericValidator.java existante
+		objectType=class
+		className=class
+		if (class=="Generic"){
+			className="ZGeneric"
+			objectType="T"
+		}
+
+
+		res = createValidatorClass(className, codeListByClass[class], objectType) 
+		filename= packageDir "/" className"Validator.java"
 		print res > filename
 	}
 

@@ -11,13 +11,13 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	@Override
 	public void validate(Context context, JourneyPattern object, ValidateParameters parameters, String transportMode) {
 		super.validate(context, object, parameters, transportMode, codes);
-	} 
+	}
 
 	/**
 	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
 	 * l'Organisation
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
 	 * <p>
 	 * <b>Code</b> :3-JourneyPattern-1
 	 * <p>
@@ -34,9 +34,13 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 * Note :
 	 *
 	 * @param context
-	 * @return
+	 *            context de validation
+	 * @param object
+	 *            objet à contrôler
+	 * @param parameters
+	 *            paramètres du point de contrôle
 	 */
-	private void check3JourneyPattern1(Context context, JourneyPattern object, CheckpointParameters parameters) {
+	protected void check3JourneyPattern1(Context context, JourneyPattern object, CheckpointParameters parameters) {
 		// TODO
 	}
 
@@ -44,7 +48,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
 	 * l'Organisation
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
 	 * <p>
 	 * <b>Code</b> :3-JourneyPattern-2
 	 * <p>
@@ -61,9 +65,13 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 * Note :
 	 *
 	 * @param context
-	 * @return
+	 *            context de validation
+	 * @param object
+	 *            objet à contrôler
+	 * @param parameters
+	 *            paramètres du point de contrôle
 	 */
-	private void check3JourneyPattern2(Context context, JourneyPattern object, CheckpointParameters parameters) {
+	protected void check3JourneyPattern2(Context context, JourneyPattern object, CheckpointParameters parameters) {
 		// TODO
 	}
 
