@@ -14,10 +14,9 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Mission] Doublon de missions dans une ligne
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2102">Cartes #2102</a>
 	 * <p>
 	 * <b>Code</b> :3-JourneyPattern-1
 	 * <p>
@@ -31,7 +30,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -45,10 +44,9 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Mission] Présence de courses
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2625">Cartes #2625</a>
 	 * <p>
 	 * <b>Code</b> :3-JourneyPattern-2
 	 * <p>
@@ -62,7 +60,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation

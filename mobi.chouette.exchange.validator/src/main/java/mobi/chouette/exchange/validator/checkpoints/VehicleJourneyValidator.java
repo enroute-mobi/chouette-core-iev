@@ -15,10 +15,9 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Course] La durée d'attente à un arrêt ne doit pas être trop grande
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2103">Cartes #2103</a>
 	 * <p>
 	 * <b>Code</b> :3-VehicleJourney-1
 	 * <p>
@@ -34,7 +33,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -48,10 +47,9 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Course] La vitesse entre deux arrêts doit être dans une fourchette paramétrable
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2104">Cartes #2104</a>
 	 * <p>
 	 * <b>Code</b> :3-VehicleJourney-2
 	 * <p>
@@ -70,7 +68,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -84,10 +82,10 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Course] Les vitesses entre 2 arrêts doivent être similaires pour toutes les courses d'une même
+	 * mission
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2105">Cartes #2105</a>
 	 * <p>
 	 * <b>Code</b> :3-VehicleJourney-3
 	 * <p>
@@ -103,7 +101,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * Note : Le calcul se fait à l'aide d'un temps de parcours moyen calculé sur toutes les courses de la mission puis
+	 * d'une mesure de l'écart entre les temps de parcours de chaque course avec ce temps moyen
 	 *
 	 * @param context
 	 *            context de validation
@@ -117,10 +116,9 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Course] Une course doit avoir au moins un calendrier d'application
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2106">Cartes #2106</a>
 	 * <p>
 	 * <b>Code</b> :3-VehicleJourney-4
 	 * <p>
@@ -134,7 +132,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -148,10 +146,9 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Course] Chronologie croissante des horaires
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2107">Cartes #2107</a>
 	 * <p>
 	 * <b>Code</b> :3-VehicleJourney-5
 	 * <p>
@@ -169,7 +166,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation

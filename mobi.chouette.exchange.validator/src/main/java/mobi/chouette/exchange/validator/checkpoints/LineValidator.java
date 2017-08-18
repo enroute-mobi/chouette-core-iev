@@ -14,10 +14,9 @@ public class LineValidator extends GenericValidator<Line> implements CheckPointC
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Ligne] Appariement des itinéraires
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2121">Cartes #2121</a>
 	 * <p>
 	 * <b>Code</b> :3-Line-1
 	 * <p>
@@ -31,7 +30,7 @@ public class LineValidator extends GenericValidator<Line> implements CheckPointC
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation

@@ -15,10 +15,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Deux arrêts d'une même ZDL ne peuvent pas se succéder dans un itinéraire
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2092">Cartes #2092</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-1
 	 * <p>
@@ -33,7 +32,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -47,10 +46,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Vérification de l'itinéraire inverse
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2093">Cartes #2093</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-2
 	 * <p>
@@ -66,7 +64,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -80,10 +78,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Présence de missions
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2624">Cartes #2624</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-3
 	 * <p>
@@ -97,7 +94,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -111,10 +108,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Détection de double définition d'itinéraire
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2095">Cartes #2095</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-4
 	 * <p>
@@ -129,7 +125,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -143,10 +139,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Vérification des terminus de l'itinéraire inverse
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2120">Cartes #2120</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-5
 	 * <p>
@@ -161,7 +156,8 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * Note : le test à l'arrivée est équivalent au test au départ sur l'itinéraire inverse, il est inutile de le faire
+	 * 2 fois.
 	 *
 	 * @param context
 	 *            context de validation
@@ -175,10 +171,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Un itinéraire doit contenir au moins 2 arrêts
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2097">Cartes #2097</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-6
 	 * <p>
@@ -192,7 +187,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -206,10 +201,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Un itinéraire doit contenir au moins 1 mission
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2098">Cartes #2098</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-7
 	 * <p>
@@ -223,7 +217,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -237,10 +231,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Utilisation des arrêts par les missions
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2099">Cartes #2099</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-8
 	 * <p>
@@ -254,7 +247,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -268,10 +261,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Existence d'une mission passant par tous les arrêts de l'itinéraire
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2100">Cartes #2100</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-9
 	 * <p>
@@ -285,7 +277,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -299,10 +291,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Itinéraire & arrêt désactivé
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2101">Cartes #2101</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-10
 	 * <p>
@@ -316,7 +307,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
@@ -330,10 +321,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	}
 
 	/**
-	 * <b>Titre</b> :Validation de l'appartenance de l'arrêt à une Organisation donc à un site de saisie de
-	 * l'Organisation
+	 * <b>Titre</b> :[Itinéraire] Présence de tracé
 	 * <p>
-	 * <b>Réference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2838">Cartes #2838</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2419">Cartes #2419</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-11
 	 * <p>
@@ -347,7 +337,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note :
+	 * 
 	 *
 	 * @param context
 	 *            context de validation
