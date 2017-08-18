@@ -255,6 +255,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 	 * @param checkPoint
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	private Method findCheckMethod(Class<? extends GenericValidator> class1, String checkPoint) {
 		String methodName = "check" + checkPoint.replaceAll("-", "");
 		Method[] methods = class1.getMethods();
