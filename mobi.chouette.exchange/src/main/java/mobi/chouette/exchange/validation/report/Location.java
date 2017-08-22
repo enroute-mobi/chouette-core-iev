@@ -16,15 +16,17 @@ import mobi.chouette.exchange.report.AbstractReport;
 import mobi.chouette.exchange.validation.report.DataLocation.Path;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
+import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
-import mobi.chouette.model.ChouetteIdentifiedObject;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.util.NamingUtil;
@@ -116,18 +118,21 @@ public class Location extends AbstractReport {
 			objectRefs.add(new ObjectReference(object));
 			objectRefs.add(new ObjectReference(object.getJourneyPattern()));
 			objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute()));
-			objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute().getLine()));
+			objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute().getLineLite()));
 		} else if (chouetteObject instanceof JourneyPattern) {
 			JourneyPattern object = (JourneyPattern) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
 			objectRefs.add(new ObjectReference(object.getRoute()));
-			objectRefs.add(new ObjectReference(object.getRoute().getLine()));
+			objectRefs.add(new ObjectReference(object.getRoute().getLineLite()));
 		} else if (chouetteObject instanceof Route) {
 			Route object = (Route) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
-			objectRefs.add(new ObjectReference(object.getLine()));
+			objectRefs.add(new ObjectReference(object.getLineLite()));
 		} else if (chouetteObject instanceof Line) {
 			Line object = (Line) chouetteObject;
+			objectRefs.add(new ObjectReference(object));
+		} else if (chouetteObject instanceof LineLite) {
+			LineLite object = (LineLite) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
 		} else if (chouetteObject instanceof AccessLink) {
 			AccessLink object = (AccessLink) chouetteObject;
@@ -140,6 +145,9 @@ public class Location extends AbstractReport {
 			objectRefs.add(new ObjectReference(object.getContainedIn()));
 		} else if (chouetteObject instanceof StopArea) {
 			StopArea object = (StopArea) chouetteObject;
+			objectRefs.add(new ObjectReference(object));
+		} else if (chouetteObject instanceof StopAreaLite) {
+			StopAreaLite object = (StopAreaLite) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
 		} else if (chouetteObject instanceof ConnectionLink) {
 			ConnectionLink object = (ConnectionLink) chouetteObject;

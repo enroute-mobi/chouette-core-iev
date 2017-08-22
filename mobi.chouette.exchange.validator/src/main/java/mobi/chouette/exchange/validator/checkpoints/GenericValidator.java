@@ -63,12 +63,13 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 								try {
 									validationReporter.addItemToValidationReport(context, code, checkParam.isErrorType()?"E":"W");
 									method.invoke(this, context, object, param);
-								} catch (IllegalAccessException | IllegalArgumentException
-										| InvocationTargetException e) {
-									// TODO : log problem
+								} catch (IllegalAccessException | IllegalArgumentException e) {
+									log.error("method for "+checkParam.getCode()+" not accessible",e);
+								} catch (InvocationTargetException e) {
+									log.error("method for "+checkParam.getCode()+" failed ",e);
 								}
 							} else {
-								// TODO : log unknown test
+								log.error("method for "+checkParam.getCode()+" not found");
 							}
 						}
 					}
@@ -77,7 +78,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		}
 
 		// then check specific codes
-		log.info(Arrays.asList(codes));
+		// log.info(Arrays.asList(codes));
 		for (String code : codes) {
 			// find checkpoint for code
 			Collection<CheckpointParameters> checkParams = null;
@@ -85,27 +86,29 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			Map<String, Collection<CheckpointParameters>> modeParameters = controlParameters
 					.getTransportModeCheckpoints().get(transportMode);
 			if (modeParameters != null) {
-				log.info("check mode parameter");
+				// log.info("check mode parameter");
 				checkParams = modeParameters.get(code);
 			}
 			// else in global
 			if (isEmpty(checkParams)) {
-				log.info("no mode parameter, check global");
+				// log.info("no mode parameter, check global");
 				checkParams = controlParameters.getGlobalCheckPoints().get(code);
 			}
 			// if tests are found
 			if (!isEmpty(checkParams)) {
-				log.info("checkpoints found");
+				// log.info("checkpoints found");
 				for (CheckpointParameters checkParam : checkParams) {
 
 					Method method = findCheckMethod(this.getClass(), checkParam.getCode());
 					if (method != null) {
 						try {
 							validationReporter.addItemToValidationReport(context, code, checkParam.isErrorType()?"E":"W");
-							log.info("call test for "+ checkParam.getCode());
+							// log.info("call test for "+ checkParam.getCode());
 							method.invoke(this, context, object, checkParam);
-						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						} catch (IllegalAccessException | IllegalArgumentException e) {
 							log.error("method for "+checkParam.getCode()+" not accessible",e);
+						} catch (InvocationTargetException e) {
+							log.error("method for "+checkParam.getCode()+" failed ",e);
 						}
 					} else {
 						log.error("method for "+checkParam.getCode()+" not found");
@@ -366,11 +369,11 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	@SuppressWarnings("rawtypes")
 	private Method findCheckMethod(Class<? extends GenericValidator> class1, String checkPoint) {
 		String methodName = "check" + checkPoint.replaceAll("-", "");
-		log.info("search "+methodName+" method in "+class1.getName());
+		// log.info("search "+methodName+" method in "+class1.getName());
 		Method[] methods = class1.getDeclaredMethods();
 		Method check = null;
 		for (Method method : methods) {
-			log.info(" method checked is "+method.getName());
+			// log.info(" method checked is "+method.getName());
 			if (method.getName().equalsIgnoreCase(methodName)) {
 				check = method;
 				break;

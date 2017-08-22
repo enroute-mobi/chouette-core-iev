@@ -65,7 +65,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 			StopAreaLite zdep1 = r.findStopArea(stopId);
 			if (zdep1 == null)
 			{
-				log.error("stop Area ID = "+stopId+ "not found for stopPoint rank 0");
+				log.error("stop Area ID = "+stopId+ " not found for stopPoint rank 0");
 				return;
 			}
 			for (int i = 1; i < points.size(); i++)
@@ -74,8 +74,14 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 				StopAreaLite zdep2 = r.findStopArea(stopId);
 				if (zdep2 == null)
 				{
-					log.error("stop Area ID = "+stopId+ "not found for stopPoint rank "+i);
+					log.error("stop Area ID = "+stopId+ " not found for stopPoint rank "+i);
 					return;
+				}
+				if (zdep2.getParentId() == null)
+				{
+					log.error("stop Area ID = "+stopId+ " has no parent");
+					return;
+					
 				}
 				if (zdep2.getParentId().equals(zdep1.getParentId()))
 				{
