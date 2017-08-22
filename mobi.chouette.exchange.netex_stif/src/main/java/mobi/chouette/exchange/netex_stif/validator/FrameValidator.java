@@ -9,7 +9,7 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public class FrameValidator extends AbstractValidator implements Constant{
 
-	private static final String CALENDRIER_FILE_NAME = "calendrier.xml";
+	private static final String CALENDRIER_FILE_NAME = "calendriers.xml";
 	private static final String COMMUN_FILE_NAME = "commun.xml";
 
 
@@ -23,7 +23,7 @@ public class FrameValidator extends AbstractValidator implements Constant{
 																				// commun.xml
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_2); // Frames
 																				// de
-																				// calendrier.xml
+																				// calendriers.xml
 		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_3); // Frames
 																				// de
 																				// Offre_xxx.xml

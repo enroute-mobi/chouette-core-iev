@@ -318,7 +318,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		CheckPointErrorReport error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
 		Assert.assertEquals(error.getTestId(),"1-NeTExStif-1","checkpoint code");
 		Assert.assertEquals(error.getKey(),"1_netexstif_1_2","message code");
-		Assert.assertEquals(error.getValue(),"calendrier.xml","value");
+		Assert.assertEquals(error.getValue(),"calendriers.xml","value");
 		Assert.assertEquals(error.getSource().getFile().getFilename(),zipFile,"source filename");
 		
 

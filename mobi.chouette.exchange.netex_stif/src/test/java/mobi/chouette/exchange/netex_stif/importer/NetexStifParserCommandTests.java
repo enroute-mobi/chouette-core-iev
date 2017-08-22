@@ -135,7 +135,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	@Test(groups = { "Nominal" }, description = "offre", priority = 3)
 	public void verifiyOfferParser() throws Exception{
-		verifiyOfferParser("calendrier.xml", "commun.xml", "offre.xml");
+		verifiyOfferParser("calendriers.xml", "commun.xml", "offre.xml");
 		
 	}
 
@@ -294,7 +294,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
-		File f = new File(path, "calendrier.xml");
+		File f = new File(path, "calendriers.xml");
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
 		Referential referential = (Referential) context.get(REFERENTIAL);
