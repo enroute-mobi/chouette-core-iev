@@ -105,7 +105,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 		List<Command> commands = new ArrayList<>();
 		JobData jobData = (JobData) context.get(JOB_DATA);
 		try {
-			Chain tmp = treatOneFile(context, "calendrier.xml", jobData, true);
+			Chain tmp = treatOneFile(context, "calendriers.xml", jobData, true);
 			commands.add(tmp);
 			tmp = treatOneFile(context, "commun.xml", jobData, false);
 			commands.add(tmp);
