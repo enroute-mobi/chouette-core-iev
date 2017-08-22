@@ -119,9 +119,14 @@
       </dependency>
 
 	</dependencies>
-<!--  <build> 
+  <build> 
 	<plugins>
-	<plugin>
+    		<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+			</plugin>
+
+	<!--<plugin>
 	<groupId>org.codehaus.mojo</groupId>
 	<artifactId>jaxb2-maven-plugin</artifactId>
 	<version>1.6</version>
@@ -141,7 +146,7 @@
 	</configuration>
 	</execution>
 	</executions>
-	</plugin>
+	</plugin>-->
 	</plugins>
-	</build> -->
+	</build> 
 </project>

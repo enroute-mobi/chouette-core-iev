@@ -5,7 +5,9 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.ChouetteLocalizedObject;
@@ -15,7 +17,7 @@ import mobi.chouette.model.ChouetteLocalizedObject;
  *
  * @param <T>
  */
-public abstract class GenericValidator<T extends ChouetteIdentifiedObject> implements CheckPointConstant {
+public abstract class GenericValidator<T extends ChouetteIdentifiedObject> implements CheckPointConstant,Constant {
 
 	private static final String[] genericCodes = { L3_Generique_1, L3_Generique_2, L3_Generique_3 };
 
@@ -30,7 +32,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 */
 	public void validate(Context context, T object, ValidateParameters parameters, String transportMode,
 			String[] codes) {
-
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		ControlParameters controlParameters = parameters.getControlParameters();
 		String className = object.getClass().getSimpleName();
 		// first check generic codes for class
@@ -56,6 +58,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 							Method method = findCheckMethod(this.getClass(), param.getCode());
 							if (method != null) {
 								try {
+									validationReporter.addItemToValidationReport(context, code, checkParam.isErrorType()?"E":"W");
 									method.invoke(this, context, object, param);
 								} catch (IllegalAccessException | IllegalArgumentException
 										| InvocationTargetException e) {
@@ -91,6 +94,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 					Method method = findCheckMethod(this.getClass(), checkParam.getCode());
 					if (method != null) {
 						try {
+							validationReporter.addItemToValidationReport(context, code, checkParam.isErrorType()?"E":"W");
 							method.invoke(this, context, object, checkParam);
 						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 							// TODO : log problem

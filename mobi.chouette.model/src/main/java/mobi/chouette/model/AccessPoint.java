@@ -29,9 +29,9 @@ import mobi.chouette.model.type.AccessPointTypeEnum;
 
 /**
  * Chouette AccessPoint : relation between an AccessPoint and a StopArea
- * <p/>
- * Neptune mapping : PTAccessPoint <br/>
- * Gtfs mapping : none <br/>
+ * <p>
+ * Neptune mapping : PTAccessPoint <br>
+ * Gtfs mapping : none <br>
  * 
  */
 
@@ -61,7 +61,7 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -81,7 +81,7 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -129,7 +129,7 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	private AccessPointTypeEnum type;
 
 	/**
-	 * lift indicator <br/>
+	 * lift indicator <br>
 	 * 
 	 * <ul>
 	 * <li>true if a lift is available on this access point</li>
@@ -146,7 +146,7 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	private Boolean liftAvailable = false;
 
 	/**
-	 * mobility restriction indicator (such as wheel chairs) <br/>
+	 * mobility restriction indicator (such as wheel chairs) <br>
 	 * 
 	 * <ul>
 	 * <li>true if wheel chairs can follow this access point</li>
@@ -163,7 +163,7 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	private Boolean mobilityRestrictedSuitable = false;
 
 	/**
-	 * stairs indicator <br/>
+	 * stairs indicator <br>
 	 * 
 	 * <ul>
 	 * <li>true if a stairs are presents on this access point</li>
@@ -180,8 +180,8 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	private Boolean stairsAvailable = false;
 
 	/**
-	 * access point owner <br/>
-	 * should be a logical stop area such as commercial stop point or stop place <br/>
+	 * access point owner <br>
+	 * should be a logical stop area such as commercial stop point or stop place <br>
 	 * access links from or to this access should reach only this stop area or
 	 * it's children
 	 * 
@@ -208,7 +208,7 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	}
 
 	/**
-	 * access links reaching this access point <br/>
+	 * access links reaching this access point <br>
 	 * 
 	 * @param accessLinks
 	 *            New value

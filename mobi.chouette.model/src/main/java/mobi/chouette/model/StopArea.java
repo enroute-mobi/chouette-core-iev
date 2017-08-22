@@ -50,10 +50,10 @@ import mobi.chouette.model.type.UserNeedEnum;
  * <li>stop places can have only stop place and commercial stop point children</li>
  * <li>routing constraint stops can't have routing constraint stops children</li>
  * </ol>
- * <p/>
- * Neptune mapping : ChouetteStopArea, AreaCentroid <br/>
+ * <p>
+ * Neptune mapping : ChouetteStopArea, AreaCentroid <br>
  * Gtfs mapping : Stop (only for BoardingPosition, Quay and CommercialStopPoint
- * types) <br/>
+ * types) <br>
  */
 
 @Entity
@@ -84,7 +84,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -104,7 +104,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -137,7 +137,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private String registrationNumber;
 
 	/**
-	 * set registration number <br/>
+	 * set registration number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -158,7 +158,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private String nearestTopicName;
 
 	/**
-	 * set nearest topic name <br/>
+	 * set nearest topic name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -179,7 +179,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private String url;
 
 	/**
-	 * set web site url <br/>
+	 * set web site url <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -199,7 +199,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private String timeZone;
 
 	/**
-	 * set timezone <br/>
+	 * set timezone <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -222,7 +222,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private Integer fareCode;
 
 	/**
-	 * lift indicator <br/>
+	 * lift indicator <br>
 	 * 
 	 * <ul>
 	 * <li>true if a lift is available at this stop</li>
@@ -239,7 +239,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private Boolean liftAvailable = false;
 
 	/**
-	 * mobility restriction indicator (such as wheel chairs) <br/>
+	 * mobility restriction indicator (such as wheel chairs) <br>
 	 * 
 	 * <ul>
 	 * <li>true if wheel chairs can access this stop</li>
@@ -256,7 +256,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private Boolean mobilityRestrictedSuitable = false;
 
 	/**
-	 * stairs indicator <br/>
+	 * stairs indicator <br>
 	 * 
 	 * <ul>
 	 * <li>true if a stairs are presents at this stop</li>
@@ -273,7 +273,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private Boolean stairsAvailable = false;
 
 	/**
-	 * coded user needs as binary map<br/>
+	 * coded user needs as binary map<br>
 	 * 
 	 * use following methods for easier access :
 	 * <ul>
@@ -326,7 +326,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	}
 
 	/**
-	 * stop area parent<br/>
+	 * stop area parent<br>
 	 * unavailable for areaType = ITL
 	 * 
 	 * @return The actual value
@@ -356,7 +356,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	}
 
 	/**
-	 * lines concerned by routing constraints <br/>
+	 * lines concerned by routing constraints <br>
 	 * only for areaType = ITL
 	 * 
 	 * @param routingConstraintLines
@@ -370,8 +370,8 @@ public class StopArea extends ChouetteLocalizedObject {
 	private List<Line> routingConstraintLines = new ArrayList<Line>(0);
 
 	/**
-	 * stops grouped in a routing constraints <br/>
-	 * only for areaType = ITL<br/>
+	 * stops grouped in a routing constraints <br>
+	 * only for areaType = ITL<br>
 	 * stops in this list can't be of ITL type
 	 * 
 	 * @param routingConstraintAreas
@@ -385,7 +385,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private List<StopArea> routingConstraintAreas = new ArrayList<StopArea>(0);
 
 	/**
-	 * stop area children<br/>
+	 * stop area children<br>
 	 * unavailable for areaType = ITL, BoardingPosition and Quay
 	 * 
 	 * @param containedStopAreas
@@ -398,7 +398,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private List<StopArea> containedStopAreas = new ArrayList<StopArea>(0);
 
 	/**
-	 * stop points children<br/>
+	 * stop points children<br>
 	 * only for areaType = BoardingPosition and Quay
 	 * 
 	 * @param containedStopPoints
@@ -412,7 +412,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private List<StopPoint> containedStopPoints = new ArrayList<StopPoint>(0);
 
 	/**
-	 * access links<br/>
+	 * access links<br>
 	 * only for areaType != ITL
 	 * 
 	 * @param accessLinks
@@ -426,7 +426,7 @@ public class StopArea extends ChouetteLocalizedObject {
 	private List<AccessLink> accessLinks = new ArrayList<AccessLink>(0);
 
 	/**
-	 * routeSections where this stop is at start position<br/>
+	 * routeSections where this stop is at start position<br>
 	 * only for areaType == BoardingPosition or Quay
 	 * 
 	 * @param routeSectionDepartures
@@ -443,7 +443,7 @@ public class StopArea extends ChouetteLocalizedObject {
 			0);
 
 	/**
-	 * routeSections where this stop is at end position<br/>
+	 * routeSections where this stop is at end position<br>
 	 * only for areaType == BoardingPosition or Quay
 	 * 
 	 * @param routeSectionArrivals
@@ -460,7 +460,7 @@ public class StopArea extends ChouetteLocalizedObject {
 			0);
 
 	/**
-	 * connection links where this stop is at start position<br/>
+	 * connection links where this stop is at start position<br>
 	 * only for areaType != ITL
 	 * 
 	 * @param connectionStartLinks
@@ -475,7 +475,7 @@ public class StopArea extends ChouetteLocalizedObject {
 			0);
 
 	/**
-	 * connection links where this stop is at end position<br/>
+	 * connection links where this stop is at end position<br>
 	 * only for areaType != ITL
 	 * 
 	 * @param connectionEndLinks
@@ -490,7 +490,7 @@ public class StopArea extends ChouetteLocalizedObject {
 			0);
 
 	/**
-	 * access points<br/>
+	 * access points<br>
 	 * only for areaType != ITL
 	 * 
 	 * @param accessPoints

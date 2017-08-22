@@ -32,8 +32,8 @@ import mobi.chouette.model.type.SectionStatusEnum;
 
 /**
  * Chouette Journey Pattern : pattern for vehicle journeys in a route
- * <p/>
- * Neptune mapping : JourneyPattern <br/>
+ * <p>
+ * Neptune mapping : JourneyPattern <br>
  * Gtfs mapping : none
  * 
  */
@@ -77,7 +77,7 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -97,7 +97,7 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -117,7 +117,7 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	private String registrationNumber;
 
 	/**
-	 * set registration number <br/>
+	 * set registration number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -137,7 +137,7 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	private String publishedName;
 
 	/**
-	 * set published name <br/>
+	 * set published name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value

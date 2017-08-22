@@ -112,7 +112,7 @@ public abstract class ChouetteModelUtil {
 	}
 
 	/**
-	 * project latitude and longitude on x and y if not already set<br/>
+	 * project latitude and longitude on x and y if not already set<br>
 	 * clears projection if no projection is given
 	 * 
 	 * @param projectionType
@@ -191,7 +191,7 @@ public abstract class ChouetteModelUtil {
 	}
 
 	/**
-	 * update departure and arrival of JourneyPattern <br/>
+	 * update departure and arrival of JourneyPattern <br>
 	 * to be used after stopPoints update
 	 */
 	public static void refreshDepartureArrivals(JourneyPattern jp) {

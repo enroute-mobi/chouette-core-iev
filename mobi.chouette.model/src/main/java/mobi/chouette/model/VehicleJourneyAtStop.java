@@ -24,9 +24,9 @@ import org.hibernate.annotations.Parameter;
 
 /**
  * Chouette VehicleJourneyAtStop : passing time on stops
- * <p/>
- * Neptune mapping : VehicleJourneyAtStop <br/>
- * Gtfs mapping : StopTime <br/>
+ * <p>
+ * Neptune mapping : VehicleJourneyAtStop <br>
+ * Gtfs mapping : StopTime <br>
  */
 
 @Entity
@@ -139,8 +139,8 @@ public class VehicleJourneyAtStop extends ChouetteObject implements SignedChouet
 	//private Time waitingTime;
 
 	/*
-	 * elapse duration <br/>
-	 * for vehicle journey with time slots<br/>
+	 * elapse duration <br>
+	 * for vehicle journey with time slots<br>
 	 * definition should change in next release
 	 * 
 	 * @param elapseDuration
@@ -155,8 +155,8 @@ public class VehicleJourneyAtStop extends ChouetteObject implements SignedChouet
 	//private Time elapseDuration;
 
 	/*
-	 * headway frequnecy <br/>
-	 * for vehicle journey with time slots<br/>
+	 * headway frequnecy <br>
+	 * for vehicle journey with time slots<br>
 	 * field should move to vehicleJourney in next release
 	 * 
 	 * @param headwayFrequency
@@ -171,7 +171,7 @@ public class VehicleJourneyAtStop extends ChouetteObject implements SignedChouet
 	//private Time headwayFrequency;
 
 	/**
-	 * vehicle journey reference <br/>
+	 * vehicle journey reference <br>
 	 * 
 	 * @return The actual value
 	 */
@@ -196,7 +196,7 @@ public class VehicleJourneyAtStop extends ChouetteObject implements SignedChouet
 	}
 
 	/**
-	 * stop point reference <br/>
+	 * stop point reference <br>
 	 * 
 	 * @param stopPoint
 	 *            New value

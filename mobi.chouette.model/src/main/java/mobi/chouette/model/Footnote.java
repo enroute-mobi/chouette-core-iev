@@ -19,9 +19,9 @@ import lombok.Setter;
 
 /**
  * Chouette Footnote : a note for vehicle journeys
- * <p/>
- * Neptune mapping : non (extension in comments <br/>
- * Gtfs mapping : none <br/>
+ * <p>
+ * Neptune mapping : non (extension in comments <br>
+ * Gtfs mapping : none <br>
  * Hub mapping : 
  * 
  * @since 2.5.3
@@ -120,7 +120,7 @@ public class Footnote extends ChouetteObject implements SignedChouetteObject {
 	private String label;
 
 	/**
-	 * set label <br/>
+	 * set label <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -140,7 +140,7 @@ public class Footnote extends ChouetteObject implements SignedChouetteObject {
 	private String code;
 
 	/**
-	 * set code <br/>
+	 * set code <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value

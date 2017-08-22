@@ -32,9 +32,9 @@ import mobi.chouette.model.type.UserNeedEnum;
 
 /**
  * Chouette AccessLink : relation between an AccessPoint and a StopArea
- * <p/>
- * Neptune mapping : PTAccessLink <br/>
- * Gtfs mapping : none <br/>
+ * <p>
+ * Neptune mapping : PTAccessLink <br>
+ * Gtfs mapping : none <br>
  * 
  */
 @Entity
@@ -64,7 +64,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -84,7 +84,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -106,7 +106,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private BigDecimal linkDistance;
 
 	/**
-	 * lift indicator <br/>
+	 * lift indicator <br>
 	 * 
 	 * <ul>
 	 * <li>true if a lift is available on this link</li>
@@ -122,7 +122,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private Boolean liftAvailable = false;
 
 	/**
-	 * mobility restriction indicator (such as wheel chairs) <br/>
+	 * mobility restriction indicator (such as wheel chairs) <br>
 	 * 
 	 * <ul>
 	 * <li>true if wheel chairs can follow this link</li>
@@ -138,7 +138,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private Boolean mobilityRestrictedSuitable = false;
 
 	/**
-	 * stairs indicator <br/>
+	 * stairs indicator <br>
 	 * 
 	 * <ul>
 	 * <li>true if a stairs are presents on this link</li>
@@ -154,7 +154,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private Boolean stairsAvailable = false;
 
 	/**
-	 * medium time to follow the link <br/>
+	 * medium time to follow the link <br>
 	 * null if unknown
 	 * 
 	 * @param defaultDuration New value
@@ -166,7 +166,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private Time defaultDuration;
 
 	/**
-	 * time to follow the link for a frequent traveller <br/>
+	 * time to follow the link for a frequent traveller <br>
 	 * null if unknown
 	 * 
 	 * @param frequentTravellerDuration New value
@@ -178,7 +178,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private Time frequentTravellerDuration;
 
 	/**
-	 * time to follow the link for an occasional traveller <br/>
+	 * time to follow the link for an occasional traveller <br>
 	 * null if unknown
 	 * 
 	 * @param occasionalTravellerDuration
@@ -191,7 +191,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private Time occasionalTravellerDuration;
 
 	/**
-	 * time to follow the link for a traveller with mobility restriction <br/>
+	 * time to follow the link for a traveller with mobility restriction <br>
 	 * null if unknown
 	 * 
 	 * @param mobilityRestrictedTravellerDuration New value
@@ -217,7 +217,7 @@ public class AccessLink extends ChouetteIdentifiedObject {
 	private ConnectionLinkTypeEnum linkType;
 
 	/**
-	 * coded user needs as binary map<br/>
+	 * coded user needs as binary map<br>
 	 * 
 	 * use following methods for easier access :
 	 * <ul>

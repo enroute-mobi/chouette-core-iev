@@ -37,8 +37,8 @@ import mobi.chouette.model.type.PTNetworkSourceTypeEnum;
 
 /**
  * Chouette Public Transport Network : a set of lines
- * <p/>
- * Neptune mapping : PTNetwork <br/>
+ * <p>
+ * Neptune mapping : PTNetwork <br>
  * Gtfs mapping : none
  */
 @Entity
@@ -68,7 +68,7 @@ public class Network extends ChouetteIdentifiedObject {
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -88,7 +88,7 @@ public class Network extends ChouetteIdentifiedObject {
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -121,7 +121,7 @@ public class Network extends ChouetteIdentifiedObject {
 	private String description;
 
 	/**
-	 * set description <br/>
+	 * set description <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -141,7 +141,7 @@ public class Network extends ChouetteIdentifiedObject {
 	private String registrationNumber;
 
 	/**
-	 * set registration number <br/>
+	 * set registration number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -175,7 +175,7 @@ public class Network extends ChouetteIdentifiedObject {
 	private String sourceName;
 
 	/**
-	 * set source name <br/>
+	 * set source name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -195,7 +195,7 @@ public class Network extends ChouetteIdentifiedObject {
 	private String sourceIdentifier;
 
 	/**
-	 * set source identifier <br/>
+	 * set source identifier <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value

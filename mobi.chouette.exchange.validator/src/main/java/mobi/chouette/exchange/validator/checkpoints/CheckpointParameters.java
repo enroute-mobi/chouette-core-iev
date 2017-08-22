@@ -5,11 +5,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Data
 @XmlType(propOrder = { "code", "errorType", "firstValue", "secondValue" })
+@AllArgsConstructor
+@NoArgsConstructor
 public class CheckpointParameters {
 	@XmlElement(name = "code")
 	private String code;

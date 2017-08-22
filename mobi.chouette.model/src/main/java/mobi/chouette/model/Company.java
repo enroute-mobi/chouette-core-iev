@@ -29,9 +29,9 @@ import lombok.ToString;
 
 /**
  * Chouette Company : a company providing public transport services.
- * <p/>
- * Neptune mapping : Company <br/>
- * Gtfs mapping : Agency <br/>
+ * <p>
+ * Neptune mapping : Company <br>
+ * Gtfs mapping : Agency <br>
  */
 
 @Entity
@@ -61,7 +61,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -81,7 +81,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String shortName;
 
 	/**
-	 * set short name <br/>
+	 * set short name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -101,7 +101,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String organisationalUnit;
 
 	/**
-	 * set organizational unit <br/>
+	 * set organizational unit <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -122,7 +122,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String operatingDepartmentName;
 
 	/**
-	 * set operating department name <br/>
+	 * set operating department name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -134,7 +134,7 @@ public class Company extends ChouetteIdentifiedObject {
 	}
 
 	/**
-	 * organization code <br/>
+	 * organization code <br>
 	 * usually fixed by Transport Authority
 	 * 
 	 * @return The actual value
@@ -144,7 +144,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String code;
 
 	/**
-	 * set organization code <br/>
+	 * set organization code <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -164,7 +164,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String phone;
 
 	/**
-	 * set phone number <br/>
+	 * set phone number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -184,7 +184,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String fax;
 
 	/**
-	 * set fax number <br/>
+	 * set fax number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -204,7 +204,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String email;
 
 	/**
-	 * set email <br/>
+	 * set email <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -224,7 +224,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String registrationNumber;
 
 	/**
-	 * set registration number <br/>
+	 * set registration number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -245,7 +245,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String url;
 
 	/**
-	 * set web site url <br/>
+	 * set web site url <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -265,7 +265,7 @@ public class Company extends ChouetteIdentifiedObject {
 	private String timeZone;
 
 	/**
-	 * set default timezone <br/>
+	 * set default timezone <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value

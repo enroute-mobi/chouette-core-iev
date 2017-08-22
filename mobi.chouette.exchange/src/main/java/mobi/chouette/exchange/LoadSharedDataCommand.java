@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.netex_stif.importer;
+package mobi.chouette.exchange;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,13 +16,13 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.CompanyLiteDAO;
 import mobi.chouette.dao.LineLiteDAO;
 import mobi.chouette.dao.StopAreaLiteDAO;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.LineLite;
@@ -30,10 +30,10 @@ import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-@Stateless(name = NetexStifLoadSharedDataCommand.COMMAND)
-public class NetexStifLoadSharedDataCommand implements Command, Constant {
+@Stateless(name = LoadSharedDataCommand.COMMAND)
+public class LoadSharedDataCommand implements Command, Constant {
 
-	public static final String COMMAND = "NetexStifLoadSharedDataCommand";
+	public static final String COMMAND = "LoadSharedDataCommand";
 
 	@EJB
 	private LineLiteDAO lineDAO;
@@ -72,6 +72,10 @@ public class NetexStifLoadSharedDataCommand implements Command, Constant {
 				referential.getSharedReadOnlyStopAreas().put(stopArea.getObjectId(), stopArea);
 				stopAreaDAO.detach(stopArea);
 			}
+			for (StopAreaLite stopArea : stopAreaDAO.findByType(parameters.getStopAreaReferentialId(), "zdlp")) {
+				referential.getSharedReadOnlyStopAreas().put(stopArea.getObjectId(), stopArea);
+				stopAreaDAO.detach(stopArea);
+			}
 
 			result = SUCCESS;
 
@@ -91,7 +95,7 @@ public class NetexStifLoadSharedDataCommand implements Command, Constant {
 		protected Command create(InitialContext context) throws IOException {
 			Command result = null;
 			try {
-				String name = "java:app/mobi.chouette.exchange.netex_stif/" + COMMAND;
+				String name = "java:app/mobi.chouette.exchange/" + COMMAND;
 				result = (Command) context.lookup(name);
 			} catch (NamingException e) {
 				// try another way on test context
@@ -107,7 +111,7 @@ public class NetexStifLoadSharedDataCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifLoadSharedDataCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.factories.put(LoadSharedDataCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

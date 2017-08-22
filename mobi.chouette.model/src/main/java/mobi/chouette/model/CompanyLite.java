@@ -21,9 +21,9 @@ import lombok.ToString;
 
 /**
  * Chouette Company : a company providing public transport services.
- * <p/>
- * Neptune mapping : Company <br/>
- * Gtfs mapping : Agency <br/>
+ * <p>
+ * Neptune mapping : Company <br>
+ * Gtfs mapping : Agency <br>
  */
 
 @Entity

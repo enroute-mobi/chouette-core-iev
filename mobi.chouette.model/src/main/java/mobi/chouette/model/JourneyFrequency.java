@@ -45,7 +45,7 @@ public class JourneyFrequency extends ChouetteObject {
 	protected Long id;
 
 	/**
-	 * vehicle journey reference <br/>
+	 * vehicle journey reference <br>
 	 * 
 	 * @return The actual value
 	 */

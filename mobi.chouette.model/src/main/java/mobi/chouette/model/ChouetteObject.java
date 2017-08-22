@@ -35,7 +35,7 @@ public abstract class ChouetteObject implements Serializable {
 
 	
 	/**
-	 * database id <br/>
+	 * database id <br>
 	 * null if not saved
 	 * 
 	 * @return The actual value
@@ -43,7 +43,7 @@ public abstract class ChouetteObject implements Serializable {
 	public abstract Long getId();
 	
 	/**
-	 * database id <br/>
+	 * database id <br>
 	 * null if not saved
 	 * 
 	 * @param id

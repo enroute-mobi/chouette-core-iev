@@ -24,8 +24,8 @@ import mobi.chouette.model.type.BoardingPossibilityEnum;
 
 /**
  * Chouette StopPoint : a StopPoint on a route
- * <p/>
- * Neptune mapping : StopPoint <br/>
+ * <p>
+ * Neptune mapping : StopPoint <br>
  * Gtfs mapping : none
  */
 

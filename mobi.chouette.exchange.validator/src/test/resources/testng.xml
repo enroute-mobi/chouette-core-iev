@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Validation Phase 3" verbose="1" >
+   <test name="CheckPoints">
+       <packages>
+         <package name="mobi.chouette.exchange.validation.checkpoints" >
+         </package>
+       </packages>
+   </test>
+</suite> 

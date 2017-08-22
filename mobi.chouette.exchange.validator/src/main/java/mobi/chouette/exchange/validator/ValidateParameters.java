@@ -1,5 +1,6 @@
 package mobi.chouette.exchange.validator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -27,11 +28,11 @@ public class ValidateParameters extends AbstractParameter {
 	@Getter
 	@Setter
 	@XmlElement(name = "reference_ids")
-	private List<Long> ids;
+	private List<Long> ids = new ArrayList<>();
 
 	@Getter
 	@Setter
 	@XmlElement(name = "control_parameters")
-	private ControlParameters controlParameters;
+	private ControlParameters controlParameters = new ControlParameters();
 
 }

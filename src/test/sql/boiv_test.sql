@@ -855,12 +855,14 @@ INSERT INTO organisations VALUES (2, 'Cityway', '2017-02-10 10:05:53.212327', '2
 SELECT pg_catalog.setval('organisations_id_seq', 2, true);
 
 INSERT INTO referential_metadata VALUES (1, 1, '{1,2,3,4,5,6,7,8}', NULL, '2017-02-10 10:06:41.901097', '2017-02-10 10:06:41.901097', '{"[2017-02-10,2017-12-11)"}');
+INSERT INTO referential_metadata VALUES (2, 2, '{1,2,3,4,5,6,7,8}', NULL, '2017-02-10 10:06:41.901097', '2017-02-10 10:06:41.901097', '{"[2017-02-10,2017-12-11)"}');
 
-SELECT pg_catalog.setval('referential_metadata_id_seq', 1, true);
+SELECT pg_catalog.setval('referential_metadata_id_seq', 2, true);
 
 INSERT INTO referentials VALUES (1, 'test', 'chouette_gui', '2017-02-10 10:06:27.034272', '2017-02-10 10:06:27.034272', 'test', '', 'Paris', 'SRID=4326;POLYGON((-5.2 42.25,-5.2 51.1,8.23 51.1,8.23 42.25,-5.2 42.25))', 2, NULL, 2, 'Etienne Michel', 'neptune', 1, 1, 1, NULL, NULL, true);
+INSERT INTO referentials VALUES (2, 'checkPoints', 'iev_check_points', '2017-02-10 10:06:27.034272', '2017-02-10 10:06:27.034272', 'test', '', 'Paris', 'SRID=4326;POLYGON((-5.2 42.25,-5.2 51.1,8.23 51.1,8.23 42.25,-5.2 42.25))', 2, NULL, 2, 'Etienne Michel', 'neptune', 1, 1, 1, NULL, NULL, true);
 
-SELECT pg_catalog.setval('referentials_id_seq', 1, true);
+SELECT pg_catalog.setval('referentials_id_seq', 2, true);
 
 INSERT INTO stop_area_referentials VALUES (1, 'Reflex', '2017-02-10 09:37:12.116926', '2017-02-10 09:37:12.116926');
 

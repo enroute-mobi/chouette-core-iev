@@ -28,6 +28,17 @@ import org.codehaus.jettison.mapped.MappedXMLStreamWriter;
 
 public class JSONUtil {
 
+	/**
+	 * unmarshal json file
+	 * 
+	 * @param path file location
+	 * @param type class to build
+	 * @return object
+	 * @throws IOException
+	 * @throws JAXBException
+	 * @throws JSONException
+	 * @throws XMLStreamException
+	 */
 	public static <T> T fromJSON(Path path, Class<T> type) throws IOException, JAXBException, JSONException,
 			XMLStreamException {
 		byte[] bytes = Files.readAllBytes(path);
@@ -35,6 +46,16 @@ public class JSONUtil {
 		return fromJSON(text, type);
 	}
 
+	/**
+	 * unmarshal json string
+	 * 
+	 * @param text string to parse
+	 * @param type class to produce
+	 * @return object
+	 * @throws JAXBException
+	 * @throws JSONException
+	 * @throws XMLStreamException
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T fromJSON(String text, Class<T> type) throws JAXBException, JSONException, XMLStreamException {
 
@@ -49,6 +70,14 @@ public class JSONUtil {
 
 	}
 
+	/**
+	 * marshal to json
+	 * 
+	 * @param payload object to marshall
+	 * @return json string
+	 * @throws JAXBException
+	 * @throws JSONException
+	 */
 	public static <T> String toJSON(T payload) throws JAXBException, JSONException {
 		JAXBContext context = JAXBContext.newInstance(payload.getClass());
 		Configuration config = new Configuration();
@@ -70,6 +99,15 @@ public class JSONUtil {
 
 	}
 
+	/**
+	 * marshall in a file
+	 * 
+	 * @param path file to produce
+	 * @param payload object to marshal
+	 * @throws JAXBException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	public static <T> void toJSON(Path path, T payload) throws JAXBException, IOException, JSONException {
 		String data = JSONUtil.toJSON(payload);
 		FileUtils.writeStringToFile(path.toFile(), data);
@@ -79,6 +117,9 @@ public class JSONUtil {
 	/**
 	 * Returns all the list elements in the class ... This is called
 	 * recursively.
+	 * 
+	 * @param obj object to analyse
+	 * @return list of list typed children 
 	 */
 	@SuppressWarnings("rawtypes")
 	public static List<String> getListElements(final Class<?> obj) {

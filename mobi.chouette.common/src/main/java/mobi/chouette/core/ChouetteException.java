@@ -10,7 +10,7 @@ package mobi.chouette.core;
 
 /**
  * Base Class for all Exception of the Chouette project when a catch is required
- * <p/>
+ * <p>
  * This class provider basic mechanisms for internationalized error messages
  */
 @SuppressWarnings("serial")
@@ -25,7 +25,7 @@ public abstract class ChouetteException extends Exception {
 
 	/**
 	 * Return the error message prefix
-	 * <p/>
+	 * <p>
 	 * every Chouette module has a specific prefix for its exceptions; this
 	 * prefix should be of 3 or 4 character length
 	 * 
@@ -35,7 +35,7 @@ public abstract class ChouetteException extends Exception {
 
 	/**
 	 * Return the Exception Code
-	 * <p/>
+	 * <p>
 	 * every Chouette module have a specific codification for its exceptions;
 	 * this code should be implemented as and enum, but the implementation of
 	 * getCode has to return a String used as entry key in messages properties

@@ -14,11 +14,10 @@ import lombok.ToString;
 
 /**
  * Chouette StopAreaLite
- * <p/>
- * <p/>
- * Neptune mapping : ChouetteStopArea, AreaCentroid <br/>
+ * <p>
+ * Neptune mapping : ChouetteStopArea, AreaCentroid <br>
  * Gtfs mapping : Stop (only for BoardingPosition, Quay and CommercialStopPoint
- * types) <br/>
+ * types) <br>
  */
 
 @Entity
@@ -66,7 +65,7 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 
 
 	/**
-	 * stop area parent<br/>
+	 * stop area parent<br>
 	 * 
 	 * @return The actual value
 	 */

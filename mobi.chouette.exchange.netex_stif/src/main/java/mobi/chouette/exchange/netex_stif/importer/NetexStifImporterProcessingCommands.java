@@ -19,6 +19,7 @@ import mobi.chouette.common.chain.Chain;
 import mobi.chouette.common.chain.ChainCommand;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.LoadSharedDataCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
@@ -54,7 +55,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 			}
 			commands.add(CommandFactory.create(initialContext, NetexStifUncompressCommand.class.getName()));
 			commands.add(CommandFactory.create(initialContext, NetexStifInitImportCommand.class.getName()));
-			commands.add(CommandFactory.create(initialContext, NetexStifLoadSharedDataCommand.class.getName()));
+			commands.add(CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
 			throw new RuntimeException("unable to call factories");

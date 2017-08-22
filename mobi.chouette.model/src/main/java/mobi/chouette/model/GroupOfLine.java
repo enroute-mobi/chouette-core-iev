@@ -22,8 +22,8 @@ import lombok.ToString;
 
 /**
  * Chouette GroupOfLine : to associate lines with common purpose
- * <p/>
- * Neptune mapping : GroupOfLine <br/>
+ * <p>
+ * Neptune mapping : GroupOfLine <br>
  * 
  */
 @Entity
@@ -53,7 +53,7 @@ public class GroupOfLine extends ChouetteIdentifiedObject {
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -73,7 +73,7 @@ public class GroupOfLine extends ChouetteIdentifiedObject {
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -93,7 +93,7 @@ public class GroupOfLine extends ChouetteIdentifiedObject {
 	private String registrationNumber;
 
 	/**
-	 * set registration number <br/>
+	 * set registration number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -117,7 +117,7 @@ public class GroupOfLine extends ChouetteIdentifiedObject {
 	private List<Line> lines = new ArrayList<Line>(0);
 
 	/**
-	 * add a line to list only if not already present <br/>
+	 * add a line to list only if not already present <br>
 	 * do not affect lineIds list
 	 * 
 	 * @param line

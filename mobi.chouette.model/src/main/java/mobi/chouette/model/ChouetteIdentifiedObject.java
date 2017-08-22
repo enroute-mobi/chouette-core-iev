@@ -25,7 +25,7 @@ import org.hibernate.annotations.NaturalId;
 
 /**
  * Abstract object used for all Identified Chouette Object
- * <p/>
+ * <p>
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
@@ -35,7 +35,7 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 		ObjectIdTypes {
 
 	/**
-	 * Neptune object id <br/>
+	 * Neptune object id <br>
 	 * composed of 3 items separated by a colon
 	 * <ol>
 	 * <li>prefix : an alphanumerical value (underscore accepted)</li>

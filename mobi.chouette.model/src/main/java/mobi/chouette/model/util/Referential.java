@@ -39,131 +39,131 @@ public class Referential implements java.io.Serializable {
 	
 	@Getter
 	@Setter
-	private Map<String, AccessLink> sharedAccessLinks = new HashMap<String, AccessLink>();
+	private Map<String, AccessLink> sharedAccessLinks = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, AccessPoint> sharedAccessPoints = new HashMap<String, AccessPoint>();
+	private Map<String, AccessPoint> sharedAccessPoints = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Network> sharedPTNetworks = new HashMap<String, Network>();
+	private Map<String, Network> sharedPTNetworks = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Company> sharedCompanies = new HashMap<String, Company>();
+	private Map<String, Company> sharedCompanies = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, CompanyLite> sharedReadOnlyCompanies = new HashMap<String, CompanyLite>();
+	private Map<String, CompanyLite> sharedReadOnlyCompanies = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, ConnectionLink> sharedConnectionLinks = new HashMap<String, ConnectionLink>();
+	private Map<String, ConnectionLink> sharedConnectionLinks = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, StopArea> sharedStopAreas = new HashMap<String, StopArea>();
+	private Map<String, StopArea> sharedStopAreas = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, StopAreaLite> sharedReadOnlyStopAreas = new HashMap<String, StopAreaLite>();
+	private Map<String, StopAreaLite> sharedReadOnlyStopAreas = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, GroupOfLine> sharedGroupOfLines = new HashMap<String, GroupOfLine>();
+	private Map<String, GroupOfLine> sharedGroupOfLines = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Line> sharedLines = new HashMap<String, Line>();
+	private Map<String, Line> sharedLines = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, LineLite> sharedReadOnlyLines = new HashMap<String, LineLite>();
+	private Map<String, LineLite> sharedReadOnlyLines = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Timetable> sharedTimetables = new HashMap<String, Timetable>();
+	private Map<String, Timetable> sharedTimetables = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Timetable> sharedTimetableTemplates = new HashMap<String, Timetable>();
+	private Map<String, Timetable> sharedTimetableTemplates = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Footnote> sharedFootnotes = new HashMap<String, Footnote>();
+	private Map<String, Footnote> sharedFootnotes = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Timeband> sharedTimebands = new HashMap<String, Timeband>();
+	private Map<String, Timeband> sharedTimebands = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Route> routes = new HashMap<String, Route>();
+	private Map<String, Route> routes = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Line> lines = new HashMap<String, Line>();
+	private Map<String, Line> lines = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, JourneyPattern> journeyPatterns = new HashMap<String, JourneyPattern>();
+	private Map<String, JourneyPattern> journeyPatterns = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, StopPoint> stopPoints = new HashMap<String, StopPoint>();
+	private Map<String, StopPoint> stopPoints = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, VehicleJourney> vehicleJourneys = new HashMap<String, VehicleJourney>();
+	private Map<String, VehicleJourney> vehicleJourneys = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, AccessLink> accessLinks = new HashMap<String, AccessLink>();
+	private Map<String, AccessLink> accessLinks = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, AccessPoint> accessPoints = new HashMap<String, AccessPoint>();
+	private Map<String, AccessPoint> accessPoints = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Network> ptNetworks = new HashMap<String, Network>();
+	private Map<String, Network> ptNetworks = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Company> companies = new HashMap<String, Company>();
+	private Map<String, Company> companies = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, ConnectionLink> connectionLinks = new HashMap<String, ConnectionLink>();
+	private Map<String, ConnectionLink> connectionLinks = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, StopArea> stopAreas = new HashMap<String, StopArea>();
+	private Map<String, StopArea> stopAreas = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, GroupOfLine> groupOfLines = new HashMap<String, GroupOfLine>();
+	private Map<String, GroupOfLine> groupOfLines = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Timetable> timetables = new HashMap<String, Timetable>();
+	private Map<String, Timetable> timetables = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Timeband> timebands = new HashMap<String, Timeband>();
+	private Map<String, Timeband> timebands = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, RouteSection> routeSections = new HashMap<String, RouteSection>();
+	private Map<String, RouteSection> routeSections = new HashMap<>();
 
 	@Getter
 	@Setter
-	private Map<String, Footnote> footnotes = new HashMap<String, Footnote>();
+	private Map<String, Footnote> footnotes = new HashMap<>();
 	
 	@Getter
 	@Setter
-	private Map<String, RoutingConstraint> routingConstraints = new HashMap<String, RoutingConstraint>();
+	private Map<String, RoutingConstraint> routingConstraints = new HashMap<>();
 
 	public LineLite findLine(Long id)
 	{

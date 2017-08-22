@@ -24,9 +24,9 @@ import mobi.chouette.model.util.ObjectIdTypes;
 /**
  * Chouette Line readonly lite version: a group of Routes which is generally known to the public by a
  * similar name or number
- * <p/>
- * Neptune mapping : Line <br/>
- * Gtfs mapping : Line <br/>
+ * <p>
+ * Neptune mapping : Line <br>
+ * Gtfs mapping : Line <br>
  */
 @Entity
 @Table(name = "lines",schema="public")

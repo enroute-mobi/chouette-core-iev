@@ -26,7 +26,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Abstract object used for all Localized Chouette Objects
- * <p/>
+ * <p>
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
@@ -58,7 +58,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private BigDecimal latitude;
 
 	/**
-	 * coordinate system for longitude and latitude <br/>
+	 * coordinate system for longitude and latitude <br>
 	 * only WGS84 is valid
 	 * 
 	 * @param longLatType
@@ -72,7 +72,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private LongLatTypeEnum longLatType;
 
 	/**
-	 * x coordinate on secondary projection <br/>
+	 * x coordinate on secondary projection <br>
 	 * not mapped in database, used only for exchange purpose
 	 * 
 	 * @param x
@@ -85,7 +85,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private BigDecimal x;
 
 	/**
-	 * y coordinate on secondary projection <br/>
+	 * y coordinate on secondary projection <br>
 	 * not mapped in database, used only for exchange purpose
 	 * 
 	 * @param y
@@ -98,8 +98,8 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private BigDecimal y;
 
 	/**
-	 * secondary projection system <br/>
-	 * only epsg:xxx values are valids<br/>
+	 * secondary projection system <br>
+	 * only epsg:xxx values are valids<br>
 	 * changing this value will not change x and y attributes unless using the
 	 * geographic service
 	 * 
@@ -122,7 +122,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private String countryCode;
 
 	/**
-	 * set country code <br/>
+	 * set country code <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -142,7 +142,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private String zipCode;
 
 	/**
-	 * set zip code <br/>
+	 * set zip code <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -162,7 +162,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private String cityName;
 
 	/**
-	 * set city name <br/>
+	 * set city name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -182,7 +182,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	private String streetName;
 
 	/**
-	 * set street name <br/>
+	 * set street name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -231,7 +231,7 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	}
 
 	/**
-	 * project latitude and longitude on x and y if not already set<br/>
+	 * project latitude and longitude on x and y if not already set<br>
 	 * clears projection if no projection is given
 	 * 
 	 * @param projectionType

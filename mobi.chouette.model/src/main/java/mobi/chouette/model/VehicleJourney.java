@@ -32,14 +32,14 @@ import org.hibernate.annotations.Parameter;
 
 /**
  * Chouette VehicleJourney
- * <p/>
+ * <p>
  * <b>Note</b> VehicleJourney class contains method to manipulate
  * VehicleJourneyAtStop in logic with StopPoint's position on Route and
- * StopPoint list in JourneyPatterns <br/>
+ * StopPoint list in JourneyPatterns <br>
  * it is mandatory to respect instruction on each of these methods
- * <p/>
- * Neptune mapping : VehicleJourney <br/>
- * Gtfs mapping : trip <br/>
+ * <p>
+ * Neptune mapping : VehicleJourney <br>
+ * Gtfs mapping : trip <br>
  */
 
 @Entity
@@ -81,7 +81,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -114,7 +114,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private String publishedJourneyName;
 
 	/**
-	 * set published journey name <br/>
+	 * set published journey name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -135,7 +135,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private String publishedJourneyIdentifier;
 
 	/**
-	 * set published journey identifier <br/>
+	 * set published journey identifier <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -156,7 +156,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private String facility;
 
 	/**
-	 * set facility <br/>
+	 * set facility <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -176,7 +176,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private String vehicleTypeIdentifier;
 
 	/**
-	 * set vehicle type identifier <br/>
+	 * set vehicle type identifier <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -200,7 +200,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private Long number;
 
 	/**
-	 * mobility restriction indicator (such as wheel chairs) <br/>
+	 * mobility restriction indicator (such as wheel chairs) <br>
 	 * 
 	 * <ul>
 	 * <li>null if unknown
@@ -218,7 +218,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private Boolean mobilityRestrictedSuitability;
 
 	/**
-	 * flexible service <br/>
+	 * flexible service <br>
 	 * 
 	 * <ul>
 	 * <li>null if unknown or inherited from line
@@ -274,7 +274,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	}
 
 	/**
-	 * company reference<br/>
+	 * company reference<br>
 	 * if different from line company
 	 * 
 	 * @param company

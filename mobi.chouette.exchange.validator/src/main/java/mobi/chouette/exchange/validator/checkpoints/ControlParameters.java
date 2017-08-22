@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.validator.checkpoints;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,7 +15,7 @@ import lombok.Data;
 @XmlType(propOrder = { "globalCheckPoints", "transportModeCheckpoints" })
 
 public class ControlParameters {
-	private Map<String, Collection<CheckpointParameters>> globalCheckPoints;
+	private Map<String, Collection<CheckpointParameters>> globalCheckPoints = new HashMap<>();
 
-	private Map<String, Map<String, Collection<CheckpointParameters>>> transportModeCheckpoints;
+	private Map<String, Map<String, Collection<CheckpointParameters>>> transportModeCheckpoints = new HashMap<>();
 }

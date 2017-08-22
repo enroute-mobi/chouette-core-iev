@@ -24,8 +24,8 @@ import lombok.ToString;
 
 /**
  * Chouette Route Section : geographic route between to stop areas
- * <p/>
- * Neptune mapping : no <br/>
+ * <p>
+ * Neptune mapping : no <br>
  * Gtfs mapping : used for shapes
  * 
  * @since 3.2.0
@@ -60,7 +60,7 @@ public class RouteSection extends ChouetteIdentifiedObject {
 	private BigDecimal distance;
 
 	/**
-	 * <br/>
+	 * <br>
 	 * 
 	 * <ul>
 	 * <li>true if</li>

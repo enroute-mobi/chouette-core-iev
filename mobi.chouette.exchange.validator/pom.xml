@@ -101,12 +101,6 @@
          <version>${project.version}</version>
       </dependency>
       <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.exchange.netex_stif</artifactId>
-         <type>ejb</type>
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
          <groupId>org.hibernate</groupId>
          <artifactId>hibernate-core</artifactId>
          <scope>provided</scope>
@@ -119,6 +113,10 @@
    </dependencies>
    <build>
       <plugins>
+    		<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+			</plugin>
 
          <plugin>
             <artifactId>maven-resources-plugin</artifactId>
@@ -154,7 +152,7 @@
                </archive>
             </configuration>
          </plugin>
-<!--          <plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
@@ -162,7 +160,7 @@
                   <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                </suiteXmlFiles>
             </configuration>
-         </plugin> -->
+         </plugin> 
       </plugins>
    </build>
 </project>

@@ -35,9 +35,9 @@ import org.hibernate.annotations.Parameter;
 
 /**
  * Chouette Timetable
- * <p/>
- * Neptune mapping : Timetable <br/>
- * Gtfs mapping : service in calendar and calendar_dates <br/>
+ * <p>
+ * Neptune mapping : Timetable <br>
+ * Gtfs mapping : service in calendar and calendar_dates <br>
  */
 @Entity
 @Table(name = "time_tables")
@@ -76,7 +76,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 			DayTypeEnum.Wednesday, DayTypeEnum.Thursday, DayTypeEnum.Friday, DayTypeEnum.Saturday };
 
 	/**
-	 * comment <br/>
+	 * comment <br>
 	 * Note : should be rename as name in next release
 	 * 
 	 * @return The actual value
@@ -86,7 +86,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -97,7 +97,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	}
 
 	/**
-	 * version <br/>
+	 * version <br>
 	 * Note : should be rename as short name in next release
 	 * 
 	 * @return The actual value
@@ -107,7 +107,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	private String version;
 
 	/**
-	 * set version <br/>
+	 * set version <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value

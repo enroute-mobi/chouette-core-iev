@@ -44,7 +44,7 @@ public class CalendarDay implements Serializable, Comparable<CalendarDay> , Sign
 	private Date date;
 
 	/**
-	 * included or excluded date <br/>
+	 * included or excluded date <br>
 	 * <ul>
 	 * <li>true : if date is effective for this calendar (default value)</li>
 	 * <li>false : if date is to be excluded from periods definitions</li>
@@ -58,7 +58,7 @@ public class CalendarDay implements Serializable, Comparable<CalendarDay> , Sign
 	private Boolean included = Boolean.TRUE;
 
 	/**
-	 * included or excluded date <br/>
+	 * included or excluded date <br>
 	 * <ul>
 	 * <li>true : if date is effective for this calendar (default value)</li>
 	 * <li>false : if date is to be excluded from periods definitions</li>
@@ -86,12 +86,10 @@ public class CalendarDay implements Serializable, Comparable<CalendarDay> , Sign
 		this.included = Boolean.valueOf(included);
 	}
 	/**
-	 * complete constructor
+	 * copy constructor
 	 * 
-	 * @param date
-	 *            date
-	 * @param included
-	 *            indicate if date is included or excluded on the timetable
+	 * @param day
+	 *            day
 	 */
 	public CalendarDay(CalendarDay day) {
 		this.date = new Date(day.date.getTime());

@@ -39,9 +39,9 @@ import mobi.chouette.model.util.ObjectIdTypes;
 /**
  * Chouette Line : a group of Routes which is generally known to the public by a
  * similar name or number
- * <p/>
- * Neptune mapping : Line <br/>
- * Gtfs mapping : Line <br/>
+ * <p>
+ * Neptune mapping : Line <br>
+ * Gtfs mapping : Line <br>
  */
 @Entity
 @Table(name = "lines",schema="public")
@@ -68,7 +68,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -88,7 +88,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -108,7 +108,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String number;
 
 	/**
-	 * set number <br/>
+	 * set number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -139,7 +139,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String stableId;
 
 	/**
-	 * set published name <br/>
+	 * set published name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -159,7 +159,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String registrationNumber;
 
 	/**
-	 * set registration number <br/>
+	 * set registration number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -184,7 +184,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private TransportModeNameEnum transportModeName = TransportModeNameEnum.Bus;
 
 	/**
-	 * mobility restriction indicator (such as wheel chairs) <br/>
+	 * mobility restriction indicator (such as wheel chairs) <br>
 	 * 
 	 * <ul>
 	 * <li>null if information n is unknown for this line</li>
@@ -202,7 +202,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private Boolean mobilityRestrictedSuitable;
 
 	/**
-	 * coded user needs as binary map<br/>
+	 * coded user needs as binary map<br>
 	 * 
 	 * use following methods for easier access :
 	 * <ul>
@@ -244,7 +244,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	}
 
 	/**
-	 * flexible service <br/>
+	 * flexible service <br>
 	 * 
 	 * <ul>
 	 * <li>null if unknown</li>
@@ -271,7 +271,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String url;
 
 	/**
-	 * set web site url <br/>
+	 * set web site url <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -282,7 +282,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	}
 
 	/**
-	 * line drawing color <br/>
+	 * line drawing color <br>
 	 * should be used also on label background
 	 * 
 	 * @return The actual value in RRGGBB hexadecimal format
@@ -292,7 +292,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String color;
 
 	/**
-	 * set line drawing color <br/>
+	 * set line drawing color <br>
 	 * truncated to 6 characters if too long
 	 * 
 	 * @param value
@@ -312,7 +312,7 @@ public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
 	private String textColor;
 
 	/**
-	 * set line text color <br/>
+	 * set line text color <br>
 	 * truncated to 6 characters if too long
 	 * 
 	 * @param value

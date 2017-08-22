@@ -37,12 +37,12 @@ import mobi.chouette.model.type.PTDirectionEnum;
 
 /**
  * Chouette Route : An ordered list of StopPoints defining one single path
- * through the network. <br/>
+ * through the network. <br>
  * When a route pass through the same physical point more than once, one stop
  * point must be created for each occurrence.
- * <p/>
- * Neptune mapping : ChouetteRoute, PTLink <br/>
- * Gtfs mapping : none <br/>
+ * <p>
+ * Neptune mapping : ChouetteRoute, PTLink <br>
+ * Gtfs mapping : none <br>
  * 
  */
 @Entity
@@ -84,7 +84,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	private String name;
 
 	/**
-	 * set name <br/>
+	 * set name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -104,7 +104,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	private String comment;
 
 	/**
-	 * set comment <br/>
+	 * set comment <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -115,8 +115,8 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	}
 
 	/**
-	 * opposite route identifier <br/>
-	 * an opposite route must have it's wayBack attribute on reverse value<br/>
+	 * opposite route identifier <br>
+	 * an opposite route must have it's wayBack attribute on reverse value<br>
 	 * 
 	 * the model doesn't map this relationship as object as facility on saving
 	 * in database
@@ -130,7 +130,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	private Route oppositeRoute;
 
 	/**
-	 * opposite route identifier <br/>
+	 * opposite route identifier <br>
 	 * 
 	 * @param oppositeRoute
 	 *            new value
@@ -160,7 +160,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	private String publishedName;
 
 	/**
-	 * set published name <br/>
+	 * set published name <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -180,7 +180,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	private String number;
 
 	/**
-	 * set number <br/>
+	 * set number <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
@@ -204,7 +204,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	private PTDirectionEnum direction;
 
 	/**
-	 * wayback <br/>
+	 * wayback <br>
 	 * possible values :
 	 * <ul>
 	 * <li>A : outBound</li>
@@ -218,7 +218,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	private String wayBack;
 
 	/**
-	 * set wayBack <br/>
+	 * set wayBack <br>
 	 * truncated to 255 characters if too long
 	 * 
 	 * @param value
