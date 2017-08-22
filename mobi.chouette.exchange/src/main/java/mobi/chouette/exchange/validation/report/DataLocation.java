@@ -90,6 +90,11 @@ public class DataLocation {
 		this.columnNumber = columnNumber;
 	}
 
+	public DataLocation(ChouetteIdentifiedObject chouetteObject, LineLite line) {
+		this(chouetteObject);
+		this.line = line;
+	}
+
 	public DataLocation(ChouetteIdentifiedObject chouetteObject) {
 		this.objectId = chouetteObject.getObjectId();
 		this.object = chouetteObject;

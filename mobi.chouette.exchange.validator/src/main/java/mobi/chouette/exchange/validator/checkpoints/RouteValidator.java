@@ -2,6 +2,7 @@ package mobi.chouette.exchange.validator.checkpoints;
 
 import java.util.List;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -11,6 +12,7 @@ import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
 
+@Log4j
 public class RouteValidator extends GenericValidator<Route> implements CheckPointConstant {
 
 	private static final String[] codes = { L3_Route_1, L3_Route_2, L3_Route_3, L3_Route_4, L3_Route_5, L3_Route_6,
@@ -61,10 +63,20 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 			Referential r =(Referential) context.get(REFERENTIAL);
 			Long stopId = points.get(0).getStopAreaId();
 			StopAreaLite zdep1 = r.findStopArea(stopId);
+			if (zdep1 == null)
+			{
+				log.error("stop Area ID = "+stopId+ "not found for stopPoint rank 0");
+				return;
+			}
 			for (int i = 1; i < points.size(); i++)
 			{
 				stopId = points.get(i).getStopAreaId();
 				StopAreaLite zdep2 = r.findStopArea(stopId);
+				if (zdep2 == null)
+				{
+					log.error("stop Area ID = "+stopId+ "not found for stopPoint rank "+i);
+					return;
+				}
 				if (zdep2.getParentId().equals(zdep1.getParentId()))
 				{
 					// error

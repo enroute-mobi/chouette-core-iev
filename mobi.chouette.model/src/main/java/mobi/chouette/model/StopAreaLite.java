@@ -49,6 +49,7 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 	 * @return The actual value
 	 */
 	@Getter
+	@Setter
 	@Column(name = "name")
 	protected String name;
 
@@ -60,6 +61,7 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 	 * @return The actual value
 	 */
 	@Getter
+	@Setter
 	@Column(name = "area_type", nullable = false)
 	protected String areaType;
 
@@ -70,6 +72,7 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 	 * @return The actual value
 	 */
 	@Getter
+	@Setter
 	@Column(name = "parent_id")
 	protected Long parentId;
 
