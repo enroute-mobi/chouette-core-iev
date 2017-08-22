@@ -23,6 +23,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.hibernate.Session;
 import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.importer.ZipImporter;
+import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
 
 import lombok.extern.log4j.Log4j;
@@ -65,10 +72,10 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 	UserTransaction utx;
 
 	public void init() {
-		BasicConfigurator.resetConfiguration();
-		BasicConfigurator.configure();
-		Locale.setDefault(Locale.ENGLISH);
 		if (initialContext == null) {
+			BasicConfigurator.resetConfiguration();
+			BasicConfigurator.configure();
+			Locale.setDefault(Locale.ENGLISH);
 			try {
 				initialContext = new InitialContext();
 			} catch (NamingException e) {
@@ -76,8 +83,51 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 			}
 
 		}
-
 	}
+	public static EnterpriseArchive buildDeployment(Class<? extends AbstractTestValidation> clazz) {
+
+		EnterpriseArchive result;
+		File[] files = Maven.resolver().loadPomFromFile("pom.xml")
+				.resolve("mobi.chouette:mobi.chouette.exchange.validator").withTransitivity().asFile();
+		List<File> jars = new ArrayList<>();
+		List<JavaArchive> modules = new ArrayList<>();
+		for (File file : files) {
+			if (file.getName().startsWith("mobi.chouette.exchange")) {
+				String name = file.getName().split("\\-")[0] + ".jar";
+				JavaArchive archive = ShrinkWrap.create(ZipImporter.class, name).importFrom(file).as(JavaArchive.class);
+				modules.add(archive);
+			} else {
+				jars.add(file);
+			}
+		}
+		File[] filesDao = Maven.resolver().loadPomFromFile("pom.xml").resolve("mobi.chouette:mobi.chouette.dao")
+				.withTransitivity().asFile();
+		if (filesDao.length == 0) {
+			throw new NullPointerException("no dao");
+		}
+		for (File file : filesDao) {
+			if (file.getName().startsWith("mobi.chouette.dao")) {
+				String name = file.getName().split("\\-")[0] + ".jar";
+
+				JavaArchive archive = ShrinkWrap.create(ZipImporter.class, name).importFrom(file).as(JavaArchive.class);
+				modules.add(archive);
+				if (!modules.contains(archive))
+					modules.add(archive);
+			} else {
+				if (!jars.contains(file))
+					jars.add(file);
+			}
+		}
+		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
+				.addAsWebInfResource("postgres-ds.xml").addClass(JobDataTest.class)
+				.addClass(AbstractTestValidation.class).addClass(clazz);
+
+		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
+				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
+				.addAsResource(EmptyAsset.INSTANCE, "beans.xml");
+		return result;
+	}
+
 
 	protected void loadSharedData(Context context) throws Exception {
 		Command command = CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName());
@@ -132,6 +182,7 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 	}
 
 	public void initSchema() throws Exception {
+		init();
 		ContextHolder.setContext(SCHEMA_NAME);
 		BufferedReader r = new BufferedReader(new FileReader("src/test/data/validation_data.sql"));
 		ChouetteTenantIdentifierGenerator.deleteTenant(SCHEMA_NAME);

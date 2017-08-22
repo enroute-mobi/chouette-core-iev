@@ -165,7 +165,7 @@ public class LoadSharedDataTest extends Arquillian implements Constant, ReportCo
 		Assert.assertEquals(referential.getSharedReadOnlyCompanies().size(), 3, "company size");
 		Assert.assertNotNull(referential.getSharedReadOnlyCompanies().get("STIF:CODIFLIGNE:Operator:011"),
 				"objectid 011 should be found for companies");
-		Assert.assertEquals(referential.getSharedReadOnlyStopAreas().size(), 201, "stops size");
+		Assert.assertEquals(referential.getSharedReadOnlyStopAreas().size(), 240, "stops size");
 
 	}
 
