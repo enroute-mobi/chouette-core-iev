@@ -62,13 +62,13 @@ public class NetexStifUncompressCommand implements Command, ReportConstant,Netex
 			// check mandatory files
 			String pathName = jobData.getPathName();
 			// Calendar
-			File file = new File(pathName + "/" + INPUT + "/calendrier.xml");
+			File file = new File(pathName + "/" + INPUT + "/calendriers.xml");
 			if (!file.exists()) {
-                log.error("missing file : calendrier.xml");
+                log.error("missing file : calendriers.xml");
 				ActionReporter reporter = ActionReporter.Factory.getInstance();
-				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no calendrier.xml file");
+				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no calendriers.xml file");
 				validationReporter.addCheckPointReportError(context, L1_NetexStif_1, "2",
-						new DataLocation(zipName), "calendrier.xml");
+						new DataLocation(zipName), "calendriers.xml");
 				result = ERROR;
 			}
 			Path path = Paths.get(jobData.getPathName(), INPUT);

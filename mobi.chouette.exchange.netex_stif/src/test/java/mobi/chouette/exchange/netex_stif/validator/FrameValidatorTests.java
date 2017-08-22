@@ -37,7 +37,7 @@ public class FrameValidatorTests extends AbstractTest {
 	private static final String FRAME_CALENDRIER = "NETEX_CALENDRIER";
 	private static final String OFFRE_FILE_NAME = "offre_test.xml";
 	private static final String COMMUN_FILE_NAME = "commun.xml";
-	private static final String CALENDRIER_FILE_NAME = "calendrier.xml";
+	private static final String CALENDRIER_FILE_NAME = "calendriers.xml";
 
 	protected static InitialContext initialContext;
 

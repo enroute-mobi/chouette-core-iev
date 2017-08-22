@@ -40,7 +40,7 @@ public class NetexStifValidationCommand implements Command, Constant {
 			Referential referential = (Referential) context.get(REFERENTIAL);
 
 			// Tests are done during parsing just check file status
-			if (fileName.equals("calendrier.xml"))
+			if (fileName.equals("calendriers.xml"))
 			{
 				boolean res = validateCalendrier(context);
 				if (!res)
