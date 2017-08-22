@@ -131,7 +131,29 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route2(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		if (object.getOppositeRoute() == null) return;
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_2);
+		Route opposite = object.getOppositeRoute();
+		if (opposite.getOppositeRoute() == null || !opposite.getOppositeRoute().equals(object))
+		{
+			// routes pair mismatch
+			DataLocation source = new DataLocation(object);
+			DataLocation target = new DataLocation(opposite);
+			validationReporter.addCheckPointReportError(context, L3_Route_2, source,null,null,target);
+		}
+		else if (opposite.getWayBack() == null || object.getWayBack() == null)
+		{
+			log.error("wayback is null for route");
+		}
+		else if (opposite.getWayBack().equals(object.getWayBack()))
+		{
+			// routes direction are same
+			DataLocation source = new DataLocation(object);
+			DataLocation target = new DataLocation(opposite);
+			validationReporter.addCheckPointReportError(context, L3_Route_2, source,null,null,target);
+		}
+		
 	}
 
 	/**
