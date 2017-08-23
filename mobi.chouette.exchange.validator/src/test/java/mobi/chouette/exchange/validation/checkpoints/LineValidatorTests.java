@@ -71,14 +71,14 @@ public class LineValidatorTests extends AbstractTestValidation {
 				ref.getRoutes().put(r.getObjectId(), r);
 			});
 
+			// -- Nominal test
 			configureTestContext(context, line, L3_Line_1);
 			checkNoReports(context, line.getObjectId());
 			
-			// -- 
-			
+			// -- Error test
 			routes.stream().forEach(r -> {
 				r.setLineLite(line);
-				r.setOppositeRoute(null);
+				r.setOppositeRoute(null); //-- force no opposite route
 				ref.getRoutes().put(r.getObjectId(), r);
 			});
 
@@ -94,41 +94,6 @@ public class LineValidatorTests extends AbstractTestValidation {
 
 	}
 
-	/**
-	 * @throws Exception
-	 */
-//	@Test(groups = { "line" }, description = "3_Line_1 : error no opposite route", priority = 1)
-//	public void verifyTest_3_Line_1_ErrorNoOppositeRoute() throws Exception {
-//		log.info(Color.CYAN + " check " + L3_Line_1 + Color.NORMAL);
-//		initSchema();
-//		Context context = initValidatorContext();
-//		loadSharedData(context);
-//		utx.begin();
-//		try {
-//			em.joinTransaction();
-//
-//			Referential ref = (Referential) context.get(REFERENTIAL);
-//			LineLite line = ref.findLine(5L);
-//
-//			List<Route> routes = dao.findByLineId(line.getId());
-//			routes.stream().forEach(r -> {
-//				r.setLineLite(line);
-//				r.setOppositeRoute(null);
-//				ref.getRoutes().put(r.getObjectId(), r);
-//			});
-//
-//			configureTestContext(context, line);
-//			
-//			int warningCount = routes.size();
-//
-//			checkReports(context, line.getObjectId(), L3_Line_1, "3_line_1", null, OBJECT_STATE.WARNING, warningCount);
-//
-//		} finally {
-//			utx.rollback();
-//		}
-//
-//	}
-	
 	
 	/**
 	 * @throws Exception
@@ -169,7 +134,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 				else{
 					r.setStopPoints(orig.getStopPoints());
 					warningCount++;
-					orig=null;
+					orig=null; // -- to have 2 successive routes with same stoppoints
 				}
 			}
 			configureTestContext(context, line, L3_Route_4);
