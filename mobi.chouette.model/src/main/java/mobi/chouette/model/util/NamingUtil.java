@@ -16,6 +16,7 @@ import mobi.chouette.model.Network;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
@@ -42,6 +43,12 @@ public abstract class NamingUtil {
 	}
 
 	public static String getName(StopArea object) {
+		if (isFilled(object.getName()))
+			return object.getName();
+		return object.getObjectId();
+	}
+	
+	public static String getName(StopAreaLite object) {
 		if (isFilled(object.getName()))
 			return object.getName();
 		return object.getObjectId();

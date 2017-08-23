@@ -4,13 +4,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import lombok.extern.log4j.Log4j;
-import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.ChouetteLocalizedObject;
@@ -21,7 +24,7 @@ import mobi.chouette.model.ChouetteLocalizedObject;
  * @param <T>
  */
 @Log4j
-public abstract class GenericValidator<T extends ChouetteIdentifiedObject> implements CheckPointConstant,Constant {
+public abstract class GenericValidator<T extends ChouetteIdentifiedObject> implements CheckPointConstant, Constant {
 
 	private static final String[] genericCodes = { L3_Generique_1, L3_Generique_2, L3_Generique_3 };
 
@@ -62,21 +65,22 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 							Method method = findCheckMethod(this.getClass(), param.getCode());
 							if (method != null) {
 								try {
-									validationReporter.addItemToValidationReport(context, code, checkParam.isErrorType()?"E":"W");
+									validationReporter.addItemToValidationReport(context, code,
+											checkParam.isErrorType() ? "E" : "W");
 									method.invoke(this, context, object, param);
 								} catch (IllegalAccessException | IllegalArgumentException e) {
-									log.error("method for "+checkParam.getCode()+" not accessible",e);
+									log.error("method for " + checkParam.getCode() + " not accessible", e);
 								} catch (InvocationTargetException e) {
-									log.error("method for "+checkParam.getCode()+" failed ",e);
+									log.error("method for " + checkParam.getCode() + " failed ", e);
 								}
 							} else {
-								log.error("method for "+checkParam.getCode()+" not found");
+								log.error("method for " + checkParam.getCode() + " not found");
 							}
 						}
 					}
-				} );
+				});
 			}
-		} ); 
+		});
 
 		// then check specific codes
 		// log.info(Arrays.asList(codes));
@@ -103,26 +107,29 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 					Method method = findCheckMethod(this.getClass(), checkParam.getCode());
 					if (method != null) {
 						try {
-							validationReporter.addItemToValidationReport(context, code, checkParam.isErrorType()?"E":"W");
+							validationReporter.addItemToValidationReport(context, code,
+									checkParam.isErrorType() ? "E" : "W");
 							// log.info("call test for "+ checkParam.getCode());
 							method.invoke(this, context, object, checkParam);
 						} catch (IllegalAccessException | IllegalArgumentException e) {
-							log.error("method for "+checkParam.getCode()+" not accessible",e);
+							log.error("method for " + checkParam.getCode() + " not accessible", e);
 						} catch (InvocationTargetException e) {
-							log.error("method for "+checkParam.getCode()+" failed ",e);
+							log.error("method for " + checkParam.getCode() + " failed ", e);
 						}
 					} else {
-						log.error("method for "+checkParam.getCode()+" not found");
+						log.error("method for " + checkParam.getCode() + " not found");
 					}
-				} );
+				});
 			}
-		} );
+		});
 	}
 
 	/**
 	 * <b>Titre</b> :[Génériques] Contrôle du contenu selon un pattern
 	 * <p>
-	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes #2192</a>
+	 * <b>Référence Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes
+	 * #2192</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-1
 	 * <p>
@@ -131,10 +138,11 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : l'attribut de l'objet doit respecter un motif (expression régulière)
+	 * <b>Prédicat</b> : l'attribut de l'objet doit respecter un motif
+	 * (expression régulière)
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur {valeur} qui ne respecte pas le motif
-	 * {expression régulière}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur
+	 * {valeur} qui ne respecte pas le motif {expression régulière}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -148,13 +156,39 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Generique1(Context context, T object, GenericCheckpointParameters parameters) {
-		// TODO
+		String javaAttribute = toCamelCase(parameters.getAttributeName());
+		Method getter = findGetter(object.getClass(), javaAttribute);
+		if (getter == null) {
+			log.error("unknown column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName());
+			return;
+		}
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Generique_1);
+		try {
+			Object objVal = getter.invoke(object);
+			if (objVal != null) {
+				String value = objVal.toString();
+				String regex = parameters.getFirstValue();
+				if (!Pattern.matches(regex, value)) {
+					// pattern don't matches
+					DataLocation source = new DataLocation(object, parameters.getAttributeName());
+					validationReporter.addCheckPointReportError(context, L3_Generique_1, source, value, regex);
+				}
+			}
+		} catch (IllegalAccessException | IllegalArgumentException e) {
+			log.error("getter for " + parameters.getAttributeName() + " not accessible", e);
+		} catch (InvocationTargetException e) {
+			log.error("getter for " + parameters.getAttributeName() + " failed ", e);
+		}
+
 	}
 
 	/**
 	 * <b>Titre</b> :[Génériques] Valeur min
 	 * <p>
-	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes #2193</a>
+	 * <b>Référence Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes
+	 * #2193</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-2
 	 * <p>
@@ -164,11 +198,13 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : Néant
 	 * <p>
-	 * <b>Prédicat</b> : la valeur numérique de l'attribut doit rester comprise entre 2 valeurs
+	 * <b>Prédicat</b> : la valeur numérique de l'attribut doit rester comprise
+	 * entre 2 valeurs
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur {valeur} supérieure à la valeur maximale
-	 * autorisée {max}<br>
-	 * {objet} : l'attribut {nom attribut} à une valeur {valeur} inférieure à la valeur minimale autorisée {min}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur
+	 * {valeur} supérieure à la valeur maximale autorisée {max}<br>
+	 * {objet} : l'attribut {nom attribut} à une valeur {valeur} inférieure à la
+	 * valeur minimale autorisée {min}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -182,13 +218,55 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Generique2(Context context, T object, GenericCheckpointParameters parameters) {
-		// TODO
+		String javaAttribute = toCamelCase(parameters.getAttributeName());
+		Method getter = findGetter(object.getClass(), javaAttribute);
+		if (getter == null) {
+			log.error("unknown column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName());
+			return;
+		}
+		if (!Number.class.isAssignableFrom(getter.getReturnType())) {
+			log.error("column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName()
+					+ " is not numeric");
+			return;
+		}
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Generique_2);
+		try {
+			Object objVal = getter.invoke(object);
+			if (objVal != null) {
+				long value = Long.parseLong(objVal.toString());
+				if (parameters.getFirstValue() != null) {
+					long minVal = Long.parseLong(parameters.getFirstValue());
+					if (value < minVal) {
+						DataLocation source = new DataLocation(object, parameters.getAttributeName());
+						validationReporter.addCheckPointReportError(context, L3_Generique_2, "2", source,
+								objVal.toString(), parameters.getFirstValue());
+					}
+				}
+				if (parameters.getSecondValue() != null) {
+					long maxVal = Long.parseLong(parameters.getSecondValue());
+					if (value > maxVal) {
+						DataLocation source = new DataLocation(object, parameters.getAttributeName());
+						validationReporter.addCheckPointReportError(context, L3_Generique_2, "1", source,
+								objVal.toString(), parameters.getSecondValue());
+					}
+				}
+			}
+		} catch (IllegalAccessException | IllegalArgumentException e) {
+			log.error("getter for " + parameters.getAttributeName() + " not accessible", e);
+		} catch (InvocationTargetException e) {
+			log.error("getter for " + parameters.getAttributeName() + " failed ", e);
+		}
+
 	}
 
 	/**
-	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une ligne
+	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une
+	 * ligne
 	 * <p>
-	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes #2194</a>
+	 * <b>Référence Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes
+	 * #2194</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-3
 	 * <p>
@@ -196,9 +274,11 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : Néant
 	 * <p>
-	 * <b>Prédicat</b> : la valeur de l'attribut doit être unique au sein des objets de la ligne
+	 * <b>Prédicat</b> : la valeur de l'attribut doit être unique au sein des
+	 * objets de la ligne
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} de {ref X} à une valeur {valeur} en conflit avec {ref Y}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} de {ref X} à une
+	 * valeur {valeur} en conflit avec {ref Y}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -211,8 +291,50 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
+	@SuppressWarnings("unchecked")
 	protected void check3Generique3(Context context, T object, GenericCheckpointParameters parameters) {
-		// TODO
+		String javaAttribute = toCamelCase(parameters.getAttributeName());
+		Method getter = findGetter(object.getClass(), javaAttribute);
+		if (getter == null) {
+			log.error("unknown column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName());
+			return;
+		}
+
+		// save data for iterative check
+		// TODO : reset ATTRIBUTE_CONTEXT after validation completed
+		Map<String, Map<String, DataLocation>> generic3Context = (Map<String, Map<String, DataLocation>>) context
+				.get(ATTRIBUTE_CONTEXT);
+		if (generic3Context == null) {
+			generic3Context = new HashMap<>();
+			context.put(ATTRIBUTE_CONTEXT, generic3Context);
+		}
+		String attributeKey = parameters.getClassName() + ":" + parameters.getAttributeName();
+		Map<String, DataLocation> attributeContext = generic3Context.get(attributeKey);
+		if (attributeContext == null) {
+			attributeContext = new HashMap<>();
+			generic3Context.put(attributeKey, attributeContext);
+		}
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Generique_3);
+		try {
+			Object objVal = getter.invoke(object);
+			if (objVal != null) {
+				String value = objVal.toString();
+				DataLocation source = new DataLocation(object, parameters.getAttributeName());
+				if (attributeContext.containsKey(value)) {
+					// duplicate value
+					DataLocation target = attributeContext.get(value);
+					validationReporter.addCheckPointReportError(context, L3_Generique_3, source, value, null, target);
+				} else {
+					attributeContext.put(value, source);
+				}
+			}
+		} catch (IllegalAccessException | IllegalArgumentException e) {
+			log.error("getter for " + parameters.getAttributeName() + " not accessible", e);
+		} catch (InvocationTargetException e) {
+			log.error("getter for " + parameters.getAttributeName() + " failed ", e);
+		}
+
 	}
 
 	/**
@@ -260,7 +382,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	protected static boolean isEmpty(String string) {
 		return string == null || string.isEmpty();
 	}
-	
+
 	/**
 	 * check if to objects are null or equals
 	 * 
@@ -269,11 +391,10 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @return
 	 */
 	protected boolean isEqual(Object obj1, Object obj2) {
-		if (obj1 == null) return obj2 == null;
+		if (obj1 == null)
+			return obj2 == null;
 		return obj1.equals(obj2);
 	}
-
-
 
 	protected static final double R = 6371008.8; // Earth radius
 	protected static final double toRad = 0.017453292519943; // degree/rad ratio
@@ -366,7 +487,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	private Method findGetter(Class<? extends ChouetteIdentifiedObject> class1, String attribute) {
 		String methodName = "get" + attribute;
 		Method[] methods = class1.getMethods();
-		Optional<Method> result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName)).findFirst();	
+		Optional<Method> result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName))
+				.findFirst();
 		return result.orElse(null);
 	}
 
@@ -380,7 +502,12 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		String methodName = "check" + checkPoint.replaceAll("-", "");
 		// log.info("search "+methodName+" method in "+class1.getName());
 		Method[] methods = class1.getDeclaredMethods();
-		Optional<Method> result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName)).findFirst();	
+		Optional<Method> result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName))
+				.findFirst();
+		if (!result.isPresent()) {
+			methods = class1.getSuperclass().getDeclaredMethods();
+			result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName)).findFirst();
+		}
 		return result.orElse(null);
 	}
 

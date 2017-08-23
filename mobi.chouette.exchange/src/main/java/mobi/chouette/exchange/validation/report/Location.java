@@ -35,14 +35,14 @@ import mobi.chouette.model.util.NamingUtil;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "file", "line", "objectId", "name", "objectRefs" })
+@XmlType(propOrder = { "file", "objectId", "name", "objectRefs", "attribute" })
 public class Location extends AbstractReport {
 
 	@XmlElement(name = "file")
 	private FileLocation file;
 
-	// @XmlElement(name = "line")
-	// private LineLocation line;
+	@XmlElement(name = "attribute")
+	private String attribute;
 	//
 	@XmlElement(name = "objectid")
 	private String objectId = "";
@@ -69,6 +69,7 @@ public class Location extends AbstractReport {
 		if (dl.getFilename() != null) {
 			this.file = new FileLocation(dl);
 		}
+		this.attribute = dl.getAttribute();
 	}
 
 	public Location(String fileName) {
@@ -270,6 +271,10 @@ public class Location extends AbstractReport {
 		}
 		if (!objectRefs.isEmpty()) {
 			printArray(out, ret, level + 1, "object_path", objectRefs, first);
+			first = false;
+		}
+		if (attribute != null) {
+			out.print(toJsonString(ret, level + 1, "attribute", attribute, first));
 			first = false;
 		}
 		ret.setLength(0);

@@ -461,7 +461,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 
 		object.getStopPoints().stream().forEach(stopPoint -> {
 			StopAreaLite zdep = r.findStopArea(stopPoint.getStopAreaId());
-			if (zdep != null && zdep.getDeletedTime() != null) {
+			if (zdep != null && zdep.isDesactivated()) {
 				// deleted stopArea
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(zdep);

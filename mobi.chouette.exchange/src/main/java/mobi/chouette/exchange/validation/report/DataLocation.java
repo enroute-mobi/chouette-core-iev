@@ -18,6 +18,7 @@ import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.util.NamingUtil;
@@ -33,6 +34,7 @@ public class DataLocation {
 	private String name = "";
 	private ChouetteIdentifiedObject object;
 	private LineLite line;
+	private String attribute;
 	private List<Path> path = new ArrayList<>();
 
 	public DataLocation(String fileName) {
@@ -95,6 +97,11 @@ public class DataLocation {
 		this.line = line;
 	}
 
+	public DataLocation(ChouetteIdentifiedObject chouetteObject, String attribute) {
+		this(chouetteObject);
+		this.attribute = attribute;
+	}
+
 	public DataLocation(ChouetteIdentifiedObject chouetteObject) {
 		this.objectId = chouetteObject.getObjectId();
 		this.object = chouetteObject;
@@ -112,6 +119,7 @@ public class DataLocation {
 						}
 						else if (object.getJourneyPattern().getRoute().getLineLite() != null) {
 							path.add(new Path(object.getJourneyPattern().getRoute().getLineLite()));
+							this.line = object.getJourneyPattern().getRoute().getLineLite();
 						}
 					}
 				}
@@ -124,6 +132,7 @@ public class DataLocation {
 					}
 					else if (object.getRoute().getLineLite() != null) {
 						path.add(new Path(object.getRoute().getLineLite()));
+						this.line = object.getRoute().getLineLite();
 					}
 				}
 			} else if (chouetteObject instanceof Route) {
@@ -133,6 +142,7 @@ public class DataLocation {
 				}
 				else if (object.getLineLite() != null) {
 					path.add(new Path(object.getLineLite()));
+					this.line = object.getLineLite();
 				}
 			} else if (chouetteObject instanceof AccessLink) {
 				AccessLink object = (AccessLink) chouetteObject;
@@ -166,6 +176,9 @@ public class DataLocation {
 		} else if (chouetteObject instanceof Line) {
 			Line object = (Line) chouetteObject;
 			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof LineLite) {
+			LineLite object = (LineLite) chouetteObject;
+			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof AccessLink) {
 			AccessLink object = (AccessLink) chouetteObject;
 			return NamingUtil.getName(object);
@@ -174,6 +187,9 @@ public class DataLocation {
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof StopArea) {
 			StopArea object = (StopArea) chouetteObject;
+			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof StopAreaLite) {
+			StopAreaLite object = (StopAreaLite) chouetteObject;
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof ConnectionLink) {
 			ConnectionLink object = (ConnectionLink) chouetteObject;
