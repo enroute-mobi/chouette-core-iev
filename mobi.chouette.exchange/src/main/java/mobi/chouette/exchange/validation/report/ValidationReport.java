@@ -31,7 +31,7 @@ public class ValidationReport extends AbstractReport implements Report {
 
 	@Getter
 	@Setter
-	private boolean maxByFile = true;
+	private boolean maxByFile = false;
 	
 	@Getter
 	@Setter

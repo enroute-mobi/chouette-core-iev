@@ -149,6 +149,21 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 			}
 		}
 	}
+	
+	/**
+	 * opposite route identifier <br>
+	 * for error use-cases only
+	 * 
+	 * @param oppositeRoute
+	 *            new value
+	 */
+	public void forceOppositeRoute(Route oppositeRoute) {
+
+		if (this.oppositeRoute != oppositeRoute) {
+			this.oppositeRoute = oppositeRoute;
+		}
+	}
+
 
 	/**
 	 * published name

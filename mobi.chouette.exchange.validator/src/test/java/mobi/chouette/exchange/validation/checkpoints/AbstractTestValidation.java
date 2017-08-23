@@ -73,8 +73,8 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 
 	public void init() {
 		if (initialContext == null) {
-			BasicConfigurator.resetConfiguration();
-			BasicConfigurator.configure();
+//			BasicConfigurator.resetConfiguration();
+//			BasicConfigurator.configure();
 			Locale.setDefault(Locale.ENGLISH);
 			try {
 				initialContext = new InitialContext();

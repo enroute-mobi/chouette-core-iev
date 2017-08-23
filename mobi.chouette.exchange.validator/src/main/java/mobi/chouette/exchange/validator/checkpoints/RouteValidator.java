@@ -185,7 +185,15 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route3(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_3);
+		
+		if (object.getJourneyPatterns().isEmpty())
+		{
+			// routehas no journey pattern
+			DataLocation source = new DataLocation(object);
+			validationReporter.addCheckPointReportError(context, L3_Route_3, source);
+		}
 	}
 
 	/**
