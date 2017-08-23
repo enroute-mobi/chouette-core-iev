@@ -15,7 +15,7 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class RouteValidator extends GenericValidator<Route> implements CheckPointConstant {
 
-	private static final String[] codes = { L3_Route_1, L3_Route_2, L3_Route_3, L3_Route_4, L3_Route_5, L3_Route_6,
+	private static final String[] codes = { L3_Route_1, L3_Route_2, L3_Route_3, L3_Route_5, L3_Route_6,
 			L3_Route_7, L3_Route_8, L3_Route_9, L3_Route_10, L3_Route_11 };
 
 	@Override
@@ -196,39 +196,6 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 		}
 	}
 
-	/**
-	 * <b>Titre</b> :[Itinéraire] Détection de double définition d'itinéraire
-	 * <p>
-	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2095">Cartes
-	 * #2095</a>
-	 * <p>
-	 * <b>Code</b> :3-Route-4
-	 * <p>
-	 * <b>Variables</b> : néant
-	 * <p>
-	 * <b>Prérequis</b> : néant
-	 * <p>
-	 * <b>Prédicat</b> : 2 itinéraires ne doivent pas desservir strictement les
-	 * mêmes arrêts dans le même ordre avec les mêmes critères de monté/descente
-	 * <p>
-	 * <b>Message</b> : L'itinéraire {objectId} est identique à l'itinéraire
-	 * {objectid}
-	 * <p>
-	 * <b>Criticité</b> : warning
-	 * <p>
-	 * 
-	 *
-	 * @param context
-	 *            context de validation
-	 * @param object
-	 *            objet à contrôler
-	 * @param parameters
-	 *            paramètres du point de contrôle
-	 */
-	protected void check3Route4(Context context, Route object, CheckpointParameters parameters) {
-		// TODO à déplacer dans LineValidator
-	}
 
 	/**
 	 * <b>Titre</b> :[Itinéraire] Vérification des terminus de l'itinéraire
