@@ -41,7 +41,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	 */
 	@Test(groups = { "line" }, description = "3_Line_1", priority = 1)
 	public void verifyTest_3_Line_1() throws Exception {
-		log.info(Color.CYAN + " check " + L3_Route_1 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + L3_Line_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -83,7 +83,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	 */
 	@Test(groups = { "line" }, description = "3_Line_1 : error no opposite route", priority = 1)
 	public void verifyTest_3_Line_1_ErrorNoOppositeRoute() throws Exception {
-		log.info(Color.CYAN + " check " + L3_Route_1 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + L3_Line_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);

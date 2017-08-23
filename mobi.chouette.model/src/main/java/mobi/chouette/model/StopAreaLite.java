@@ -1,5 +1,7 @@
 package mobi.chouette.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -75,6 +77,19 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 	@Setter
 	@Column(name = "parent_id")
 	protected Long parentId;
+	
+	/**
+	 * delete time
+	 * 
+	 * @param deletedTime
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "deleted_at")
+	protected Date deletedTime;
+
 
 	@Override
 	public String objectIdPrefix() {

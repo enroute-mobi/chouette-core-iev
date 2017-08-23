@@ -259,6 +259,20 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	protected static boolean isEmpty(String string) {
 		return string == null || string.isEmpty();
 	}
+	
+	/**
+	 * check if to objects are null or equals
+	 * 
+	 * @param obj1
+	 * @param obj2
+	 * @return
+	 */
+	protected boolean isEqual(Object obj1, Object obj2) {
+		if (obj1 == null) return obj2 == null;
+		return obj1.equals(obj2);
+	}
+
+
 
 	protected static final double R = 6371008.8; // Earth radius
 	protected static final double toRad = 0.017453292519943; // degree/rad ratio

@@ -263,6 +263,8 @@ public abstract class AbstractTestValidation extends Arquillian
 		return b.toString();
 	}
 
+	
+
 	/**
 	 * calculate distance on spheroid
 	 * 

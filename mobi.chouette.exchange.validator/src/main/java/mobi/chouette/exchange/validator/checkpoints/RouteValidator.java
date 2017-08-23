@@ -1,12 +1,15 @@
 package mobi.chouette.exchange.validator.checkpoints;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.ValidateParameters;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
@@ -15,8 +18,8 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class RouteValidator extends GenericValidator<Route> implements CheckPointConstant {
 
-	private static final String[] codes = { L3_Route_1, L3_Route_2, L3_Route_3, L3_Route_5, L3_Route_6,
-			L3_Route_7, L3_Route_8, L3_Route_9, L3_Route_10, L3_Route_11 };
+	private static final String[] codes = { L3_Route_1, L3_Route_2, L3_Route_3, L3_Route_5, L3_Route_6, L3_Route_8,
+			L3_Route_9, L3_Route_10, L3_Route_11 };
 
 	@Override
 	public void validate(Context context, Route object, ValidateParameters parameters, String transportMode) {
@@ -56,44 +59,42 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route1(Context context, Route object, CheckpointParameters parameters) {
+		// prerequisites
 		List<StopPoint> points = object.getStopPoints();
-		if (points.size() > 1) {
-			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.prepareCheckPointReport(context, L3_Route_1);
-			Referential r =(Referential) context.get(REFERENTIAL);
-			Long stopId = points.get(0).getStopAreaId();
-			StopAreaLite zdep1 = r.findStopArea(stopId);
-			if (zdep1 == null)
-			{
-				log.error("stop Area ID = "+stopId+ " not found for stopPoint rank 0");
+		if (points.size() < 2)
+			return;
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_1);
+		Referential r = (Referential) context.get(REFERENTIAL);
+		Long stopId = points.get(0).getStopAreaId();
+		StopAreaLite zdep1 = r.findStopArea(stopId);
+		if (zdep1 == null) {
+			log.error("stop Area ID = " + stopId + " not found for stopPoint rank 0");
+			return;
+		}
+		for (int i = 1; i < points.size(); i++) {
+			stopId = points.get(i).getStopAreaId();
+			StopAreaLite zdep2 = r.findStopArea(stopId);
+			if (zdep2 == null) {
+				log.error("stop Area ID = " + stopId + " not found for stopPoint rank " + i);
 				return;
 			}
-			for (int i = 1; i < points.size(); i++)
-			{
-				stopId = points.get(i).getStopAreaId();
-				StopAreaLite zdep2 = r.findStopArea(stopId);
-				if (zdep2 == null)
-				{
-					log.error("stop Area ID = "+stopId+ " not found for stopPoint rank "+i);
-					return;
-				}
-				if (zdep2.getParentId() == null)
-				{
-					log.error("stop Area ID = "+stopId+ " has no parent");
-					return;
-					
-				}
-				if (zdep2.getParentId().equals(zdep1.getParentId()))
-				{
-					// error
-					DataLocation source = new DataLocation(object);
-					DataLocation target1 = new DataLocation(zdep1);
-					DataLocation target2 = new DataLocation(zdep2);
-					validationReporter.addCheckPointReportError(context, L3_Route_1, source,null,null,target1,target2);
-				}
-				// prepare next control step
-				zdep1 = zdep2;
+			if (zdep2.getParentId() == null) {
+				log.error("stop Area ID = " + stopId + " has no parent");
+				return;
+
 			}
+			if (zdep2.getParentId().equals(zdep1.getParentId())) {
+				// error
+				DataLocation source = new DataLocation(object);
+				DataLocation target1 = new DataLocation(zdep1);
+				DataLocation target2 = new DataLocation(zdep2);
+				validationReporter.addCheckPointReportError(context, L3_Route_1, source, null, null, target1, target2);
+			}
+			// prepare next control step
+			zdep1 = zdep2;
+
 		}
 	}
 
@@ -131,29 +132,27 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route2(Context context, Route object, CheckpointParameters parameters) {
-		if (object.getOppositeRoute() == null) return;
+		// prerequisite
+		if (object.getOppositeRoute() == null)
+			return;
+
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.prepareCheckPointReport(context, L3_Route_2);
 		Route opposite = object.getOppositeRoute();
-		if (opposite.getOppositeRoute() == null || !opposite.getOppositeRoute().equals(object))
-		{
+		if (opposite.getOppositeRoute() == null || !opposite.getOppositeRoute().equals(object)) {
 			// routes pair mismatch
 			DataLocation source = new DataLocation(object);
 			DataLocation target = new DataLocation(opposite);
-			validationReporter.addCheckPointReportError(context, L3_Route_2, source,null,null,target);
-		}
-		else if (opposite.getWayBack() == null || object.getWayBack() == null)
-		{
+			validationReporter.addCheckPointReportError(context, L3_Route_2, source, null, null, target);
+		} else if (opposite.getWayBack() == null || object.getWayBack() == null) {
 			log.error("wayback is null for route");
-		}
-		else if (opposite.getWayBack().equals(object.getWayBack()))
-		{
+		} else if (opposite.getWayBack().equals(object.getWayBack())) {
 			// routes direction are same
 			DataLocation source = new DataLocation(object);
 			DataLocation target = new DataLocation(opposite);
-			validationReporter.addCheckPointReportError(context, L3_Route_2, source,null,null,target);
+			validationReporter.addCheckPointReportError(context, L3_Route_2, source, null, null, target);
 		}
-		
+
 	}
 
 	/**
@@ -187,15 +186,13 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	protected void check3Route3(Context context, Route object, CheckpointParameters parameters) {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.prepareCheckPointReport(context, L3_Route_3);
-		
-		if (object.getJourneyPatterns().isEmpty())
-		{
+
+		if (object.getJourneyPatterns().isEmpty()) {
 			// route has no journey pattern
 			DataLocation source = new DataLocation(object);
 			validationReporter.addCheckPointReportError(context, L3_Route_3, source);
 		}
 	}
-
 
 	/**
 	 * <b>Titre</b> :[Itinéraire] Vérification des terminus de l'itinéraire
@@ -232,7 +229,48 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route5(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		// Prerequisites
+		if (object.getOppositeRoute() == null)
+			return;
+		List<StopPoint> points = object.getStopPoints();
+		if (points.size() < 2)
+			return;
+		Route opposite = object.getOppositeRoute();
+		List<StopPoint> oppositePoints = opposite.getStopPoints();
+		if (oppositePoints.size() < 2)
+			return;
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_5);
+		Referential r = (Referential) context.get(REFERENTIAL);
+
+		// check only first stop ; last will be checked with opposite route as
+		// input
+		Long quayRef1 = points.get(0).getStopAreaId();
+		Long quayRef2 = oppositePoints.get(oppositePoints.size() - 1).getStopAreaId();
+		StopAreaLite zdep1 = r.findStopArea(quayRef1);
+		StopAreaLite zdep2 = r.findStopArea(quayRef2);
+		if (zdep1 == null || zdep2 == null) {
+			log.error("unknown stoparea for route " + object.getId());
+		}
+		if (!isEqual(zdep1.getParentId(), zdep2.getParentId())) {
+			// zdl mismatch
+			DataLocation source = new DataLocation(object);
+			StopAreaLite zdl1 = r.findStopArea(zdep1.getParentId());
+			if (zdl1 == null) {
+				zdl1 = zdep1;
+				log.error("unknown parent for zdep " + zdep1.getName() + " (" + zdep1.getObjectId() + ")");
+			}
+			StopAreaLite zdl2 = r.findStopArea(zdep2.getParentId());
+			if (zdl2 == null) {
+				zdl2 = zdep2;
+				log.error("unknown parent for zdep " + zdep2.getName() + " (" + zdep2.getObjectId() + ")");
+			}
+			DataLocation target1 = new DataLocation(zdl1);
+			DataLocation target2 = new DataLocation(zdl2);
+			validationReporter.addCheckPointReportError(context, L3_Route_5, source, null, null, target1, target2);
+		}
+
 	}
 
 	/**
@@ -265,39 +303,14 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route6(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
-	}
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_6);
 
-	/**
-	 * <b>Titre</b> :[Itinéraire] Un itinéraire doit contenir au moins 1 mission
-	 * <p>
-	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2098">Cartes
-	 * #2098</a>
-	 * <p>
-	 * <b>Code</b> :3-Route-7
-	 * <p>
-	 * <b>Variables</b> : néant
-	 * <p>
-	 * <b>Prérequis</b> : néant
-	 * <p>
-	 * <b>Prédicat</b> : Un itinéraire doit posséder au moins une mission
-	 * <p>
-	 * <b>Message</b> : L'itinéraire {objectId} n'a aucune mission
-	 * <p>
-	 * <b>Criticité</b> : warning
-	 * <p>
-	 * 
-	 *
-	 * @param context
-	 *            context de validation
-	 * @param object
-	 *            objet à contrôler
-	 * @param parameters
-	 *            paramètres du point de contrôle
-	 */
-	protected void check3Route7(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		if (object.getStopPoints().size() < 2) {
+			// route has not enough stopPoints
+			DataLocation source = new DataLocation(object);
+			validationReporter.addCheckPointReportError(context, L3_Route_6, source);
+		}
 	}
 
 	/**
@@ -331,7 +344,29 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route8(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		// prerequisites
+		if (object.getJourneyPatterns().isEmpty())
+			return;
+		if (object.getStopPoints().size() < 2)
+			return;
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_8);
+
+		Set<StopPoint> undeservedStops = new HashSet<>(object.getStopPoints());
+		for (JourneyPattern journeyPattern : object.getJourneyPatterns()) {
+			undeservedStops.removeAll(journeyPattern.getStopPoints());
+		}
+		if (undeservedStops.size() > 0) {
+			Referential r = (Referential) context.get(REFERENTIAL);
+			DataLocation source = new DataLocation(object);
+			for (StopPoint stopPoint : undeservedStops) {
+				StopAreaLite zdep = r.findStopArea(stopPoint.getStopAreaId());
+				DataLocation target = new DataLocation(zdep);
+				validationReporter.addCheckPointReportError(context, L3_Route_8, source, null, null, target);
+			}
+		}
+
 	}
 
 	/**
@@ -366,7 +401,28 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route9(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		// prerequisites
+		if (object.getJourneyPatterns().isEmpty())
+			return;
+		if (object.getStopPoints().size() < 2)
+			return;
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_9);
+
+		boolean found = false;
+		for (JourneyPattern journeyPattern : object.getJourneyPatterns()) {
+			if (journeyPattern.getStopPoints().size() == object.getStopPoints().size()) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			// no journeypattern for complete route stops found
+			DataLocation source = new DataLocation(object);
+			validationReporter.addCheckPointReportError(context, L3_Route_9, source);
+		}
+
 	}
 
 	/**
@@ -400,7 +456,26 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route10(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		// prerequisites
+		if (object.getJourneyPatterns().isEmpty())
+			return;
+		if (object.getStopPoints().isEmpty())
+			return;
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_Route_10);
+		Referential r = (Referential) context.get(REFERENTIAL);
+		
+		for (StopPoint stopPoint : object.getStopPoints()) {
+			StopAreaLite zdep = r.findStopArea(stopPoint.getStopAreaId());
+			if (zdep != null && zdep.getDeletedTime() != null)
+			{
+				// deleted stopArea
+				DataLocation source = new DataLocation(object);
+				DataLocation target = new DataLocation(zdep);
+				validationReporter.addCheckPointReportError(context, L3_Route_10, source,null,null,target);
+			}
+		}
 	}
 
 	/**
@@ -433,7 +508,9 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route11(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		// TODO : waiting for data model
+		
+		return;
 	}
 
 }

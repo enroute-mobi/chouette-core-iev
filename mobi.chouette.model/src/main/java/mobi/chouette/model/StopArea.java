@@ -1,6 +1,7 @@
 package mobi.chouette.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -325,6 +326,20 @@ public class StopArea extends ChouetteLocalizedObject {
 		this.intUserNeeds = value;
 	}
 
+	/**
+	 * delete time
+	 * 
+	 * @param deletedTime
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "deleted_at")
+	protected Date deletedTime;
+
+	
+	
 	/**
 	 * stop area parent<br>
 	 * unavailable for areaType = ITL
