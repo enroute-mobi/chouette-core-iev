@@ -8,13 +8,11 @@ public class DummyActionTask extends ActionTask  {
 
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
 		return 1L;
 	}
 
 	@Override
 	public ACTION getAction() {
-		// TODO Auto-generated method stub
 		return ACTION.importer;
 	}
 

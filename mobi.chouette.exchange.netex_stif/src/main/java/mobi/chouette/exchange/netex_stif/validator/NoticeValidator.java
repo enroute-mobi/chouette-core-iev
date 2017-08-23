@@ -54,7 +54,6 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFNotice1(Context context, Footnote footnote, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-1 : [Netex] Contrôle de l'objet Notice : présence de l'attribut Text
 		boolean result = footnote.getLabel() != null && !footnote.getLabel().isEmpty();
 
 		if (!result) {
@@ -91,8 +90,6 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFNotice2(Context context, Footnote footnote, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice :
-		// TypeOfNoticeRef
 		boolean result = true;
 
 		Context footnoteContext = getObjectContext(context, LOCAL_CONTEXT, footnote.getObjectId());

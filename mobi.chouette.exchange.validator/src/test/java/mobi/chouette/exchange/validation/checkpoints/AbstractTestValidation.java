@@ -180,7 +180,8 @@ public abstract class AbstractTestValidation extends Arquillian
 	public void initSchema() throws Exception {
 		init();
 		ContextHolder.setContext(SCHEMA_NAME);
-		BufferedReader r = new BufferedReader(new FileReader("src/test/data/validation_data.sql"));
+		String sqlFilename="src/test/data/validation_data.sql";
+		BufferedReader r = new BufferedReader(new FileReader(sqlFilename));
 		ChouetteTenantIdentifierGenerator.deleteTenant(SCHEMA_NAME);
 		utx.begin();
 		em.joinTransaction();
@@ -227,8 +228,8 @@ public abstract class AbstractTestValidation extends Arquillian
 				try {
 					r.close();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Cannot close file '"+sqlFilename+"'", e);
+					//e.printStackTrace();
 				}
 				if (statement != null)
 					statement.close();
