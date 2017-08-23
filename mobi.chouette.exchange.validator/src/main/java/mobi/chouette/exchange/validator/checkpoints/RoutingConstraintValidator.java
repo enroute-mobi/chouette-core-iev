@@ -71,7 +71,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3ITL2(Context context, RoutingConstraint object, CheckpointParameters parameters) {
-		// TODO
+		// TODO :Didier
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3ITL3(Context context, RoutingConstraint object, CheckpointParameters parameters) {
-		// TODO
+		// TODO : @Didier
 	}
 
 }

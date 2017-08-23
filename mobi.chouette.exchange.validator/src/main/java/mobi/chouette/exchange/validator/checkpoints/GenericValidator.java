@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
@@ -39,7 +40,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		ControlParameters controlParameters = parameters.getControlParameters();
 		String className = object.getClass().getSimpleName();
 		// first check generic codes for class
-		for (String code : genericCodes) {
+		Arrays.stream(genericCodes).forEach(code -> {
 			// find checkpoint for code
 			Collection<CheckpointParameters> checkParams = null;
 			// in transportModes
@@ -54,7 +55,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			}
 			// if tests are found
 			if (!isEmpty(checkParams)) {
-				for (CheckpointParameters checkParam : checkParams) {
+				checkParams.stream().forEach(checkParam -> {
 					if (checkParam instanceof GenericCheckpointParameters) {
 						GenericCheckpointParameters param = (GenericCheckpointParameters) checkParam;
 						if (param.getClassName().equals(className)) {
@@ -73,13 +74,13 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 							}
 						}
 					}
-				}
+				} );
 			}
-		}
+		} ); 
 
 		// then check specific codes
 		// log.info(Arrays.asList(codes));
-		for (String code : codes) {
+		Arrays.stream(codes).forEach(code -> {
 			// find checkpoint for code
 			Collection<CheckpointParameters> checkParams = null;
 			// in transportModes
@@ -97,7 +98,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			// if tests are found
 			if (!isEmpty(checkParams)) {
 				// log.info("checkpoints found");
-				for (CheckpointParameters checkParam : checkParams) {
+				checkParams.stream().forEach(checkParam -> {
 
 					Method method = findCheckMethod(this.getClass(), checkParam.getCode());
 					if (method != null) {
@@ -113,9 +114,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 					} else {
 						log.error("method for "+checkParam.getCode()+" not found");
 					}
-				}
+				} );
 			}
-		}
+		} );
 	}
 
 	/**
@@ -146,7 +147,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3Generique1(Context context, T object, CheckpointParameters parameters) {
+	protected void check3Generique1(Context context, T object, GenericCheckpointParameters parameters) {
 		// TODO
 	}
 
@@ -180,7 +181,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3Generique2(Context context, T object, CheckpointParameters parameters) {
+	protected void check3Generique2(Context context, T object, GenericCheckpointParameters parameters) {
 		// TODO
 	}
 
@@ -210,7 +211,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3Generique3(Context context, T object, CheckpointParameters parameters) {
+	protected void check3Generique3(Context context, T object, GenericCheckpointParameters parameters) {
 		// TODO
 	}
 
@@ -365,14 +366,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	private Method findGetter(Class<? extends ChouetteIdentifiedObject> class1, String attribute) {
 		String methodName = "get" + attribute;
 		Method[] methods = class1.getMethods();
-		Method accessor = null;
-		for (Method method : methods) {
-			if (method.getName().equalsIgnoreCase(methodName)) {
-				accessor = method;
-				break;
-			}
-		}
-		return accessor;
+		Optional<Method> result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName)).findFirst();	
+		return result.orElse(null);
 	}
 
 	/**
@@ -385,15 +380,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		String methodName = "check" + checkPoint.replaceAll("-", "");
 		// log.info("search "+methodName+" method in "+class1.getName());
 		Method[] methods = class1.getDeclaredMethods();
-		Method check = null;
-		for (Method method : methods) {
-			// log.info(" method checked is "+method.getName());
-			if (method.getName().equalsIgnoreCase(methodName)) {
-				check = method;
-				break;
-			}
-		}
-		return check;
+		Optional<Method> result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName)).findFirst();	
+		return result.orElse(null);
 	}
 
 }

@@ -23,7 +23,6 @@ public class DummyActionResource extends ActionResource  {
 
 	@Override
 	public ACTION getAction() {
-		// TODO Auto-generated method stub
 		return ACTION.importer;
 	}
 

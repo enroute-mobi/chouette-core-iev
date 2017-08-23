@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJB;
 
@@ -25,7 +26,6 @@ import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.RouteValidator;
-import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopAreaLite;
@@ -100,9 +100,9 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			Assert.assertNotNull(routes, "routes for line 7 not found");
 			Assert.assertEquals(routes.size(), 4, " 4 routes for line 7 ");
 			LineLite line = ref.findLine(7L);
-			for (Route route : routes) {
+			routes.stream().forEach(route -> {
 				route.setLineLite(line);
-			}
+			});
 			// route 6 <-> 7 and 8 <-> 9
 			Route route = getRoute(routes, 6L);
 			ActionReporter reporter = ActionReporter.Factory.getInstance();
@@ -290,11 +290,11 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			checkNoReports(context, line.getObjectId());
 
 			// remove stop 1 on omnibus
-			for (JourneyPattern journeyPattern : route.getJourneyPatterns()) {
+			route.getJourneyPatterns().stream().forEach(journeyPattern -> {
 				if (journeyPattern.getStopPoints().size() == route.getStopPoints().size()) {
 					journeyPattern.removeStopPoint(journeyPattern.getStopPoints().get(1));
 				}
-			}
+			} );
 
 			validator.validate(context, route, parameters, transportMode);
 			checkReports(context, line.getObjectId(), L3_Route_8, "3_route_8", null, OBJECT_STATE.WARNING);
@@ -336,11 +336,11 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			checkNoReports(context, line.getObjectId());
 
 			// remove stop 1 on omnibus
-			for (JourneyPattern journeyPattern : route.getJourneyPatterns()) {
+			route.getJourneyPatterns().stream().forEach(journeyPattern -> {
 				if (journeyPattern.getStopPoints().size() == route.getStopPoints().size()) {
 					journeyPattern.removeStopPoint(journeyPattern.getStopPoints().get(1));
 				}
-			}
+			} );
 
 			validator.validate(context, route, parameters, transportMode);
 			checkReports(context, line.getObjectId(), L3_Route_9, "3_route_9", null, OBJECT_STATE.WARNING);
@@ -391,11 +391,9 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	}
 
 	private Route getRoute(List<Route> routes, Long l) {
-		for (Route route : routes) {
-			if (route.getId().equals(l))
-				return route;
-		}
-		return null;
+		Optional<Route> result = 
+		routes.stream().filter(route -> (route.getId().equals(l))).findFirst();
+		return result.orElse(null);
 	}
 
 }
