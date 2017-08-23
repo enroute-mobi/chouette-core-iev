@@ -190,7 +190,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 		
 		if (object.getJourneyPatterns().isEmpty())
 		{
-			// routehas no journey pattern
+			// route has no journey pattern
 			DataLocation source = new DataLocation(object);
 			validationReporter.addCheckPointReportError(context, L3_Route_3, source);
 		}
@@ -227,7 +227,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route4(Context context, Route object, CheckpointParameters parameters) {
-		// TODO
+		// TODO à déplacer dans LineValidator
 	}
 
 	/**

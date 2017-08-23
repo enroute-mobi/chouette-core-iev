@@ -20,7 +20,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.BasicConfigurator;
 import org.hibernate.Session;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -40,10 +39,8 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.LoadSharedDataCommand;
 import mobi.chouette.exchange.report.ActionReport;
-import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
-import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.ObjectCollectionReport;
 import mobi.chouette.exchange.report.ObjectReport;
 import mobi.chouette.exchange.report.ReportConstant;
@@ -73,8 +70,6 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 
 	public void init() {
 		if (initialContext == null) {
-//			BasicConfigurator.resetConfiguration();
-//			BasicConfigurator.configure();
 			Locale.setDefault(Locale.ENGLISH);
 			try {
 				initialContext = new InitialContext();
