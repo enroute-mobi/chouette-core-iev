@@ -37,7 +37,6 @@ import mobi.chouette.dao.LineDAO;
 import mobi.chouette.dao.NetworkDAO;
 import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.dao.TimetableDAO;
-import mobi.chouette.exchange.validation.SharedDataValidatorCommand;
 import mobi.chouette.exchange.validation.ValidationData;
 
 /**
@@ -124,9 +123,9 @@ public class DaoSharedDataValidatorCommand implements Command, Constant {
 				data.getTimetables().addAll(timetableDAO.findByObjectId(data.getTimetableIds()));
 			}
 
-			Command validateSharedData = CommandFactory.create(initialContext,
-					SharedDataValidatorCommand.class.getName());
-			result = validateSharedData.execute(context);
+//			Command validateSharedData = CommandFactory.create(initialContext,
+//					SharedDataValidatorCommand.class.getName());
+//			result = validateSharedData.execute(context);
 			// daoContext.setRollbackOnly();
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);

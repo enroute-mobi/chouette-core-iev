@@ -13,7 +13,6 @@ import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.TestDescription;
 import mobi.chouette.exchange.parameters.AbstractParameter;
-import mobi.chouette.exchange.validation.checkpoint.AbstractValidation;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 
 @Log4j
@@ -107,7 +106,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	public List<TestDescription> getTestList() {
 		List<TestDescription> lstResults = new ArrayList<TestDescription>();
 		
-		lstResults.addAll(AbstractValidation.getTestLevel3DatabaseList());
+		//lstResults.addAll(AbstractValidation.getTestLevel3DatabaseList());
 		
 		return lstResults;
 	}

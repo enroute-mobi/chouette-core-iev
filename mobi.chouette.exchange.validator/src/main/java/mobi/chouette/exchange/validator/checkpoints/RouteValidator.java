@@ -6,6 +6,7 @@ import java.util.Set;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.ValidateParameters;
@@ -70,7 +71,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 		StopAreaLite zdep1 = r.findStopArea(stopId);
 		if (zdep1 == null) {
 			log.error("stop Area ID = " + stopId + " not found for stopPoint rank 0");
-			return;
+			throw new ValidationException("Route id = "+object.getId()+" : stop Area ID = " + stopId + " not found for stopPoint rank 0");
 		}
 		for (int i = 1; i < points.size(); i++) {
 			stopId = points.get(i).getStopAreaId();

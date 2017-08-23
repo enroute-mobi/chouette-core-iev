@@ -29,10 +29,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.LineDAO;
-import mobi.chouette.exchange.validation.LineValidatorCommand;
 import mobi.chouette.exchange.validation.ValidationData;
-import mobi.chouette.exchange.validation.ValidationDataCollector;
-import mobi.chouette.model.Line;
 
 /**
  *
@@ -62,16 +59,16 @@ public class DaoLineValidatorCommand implements Command, Constant {
 
 		try {
 			
-			Command lineValidatorCommand = CommandFactory.create(initialContext,
-					LineValidatorCommand.class.getName());
-
-			Long lineId = (Long) context.get(LINE_ID);
-			Line line = lineDAO.find(lineId);
-			
-			ValidationDataCollector collector = new ValidationDataCollector();
-			collector.collect(data, line);
-
-			result = lineValidatorCommand.execute(context);
+//			Command lineValidatorCommand = CommandFactory.create(initialContext,
+//					LineValidatorCommand.class.getName());
+//
+//			Long lineId = (Long) context.get(LINE_ID);
+//			Line line = lineDAO.find(lineId);
+//			
+//			ValidationDataCollector collector = new ValidationDataCollector();
+//			collector.collect(data, line);
+//
+//			result = lineValidatorCommand.execute(context);
 			// daoContext.setRollbackOnly();
 			
 		} finally {
