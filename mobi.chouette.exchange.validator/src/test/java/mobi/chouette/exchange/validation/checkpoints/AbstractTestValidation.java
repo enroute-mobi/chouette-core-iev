@@ -20,7 +20,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.BasicConfigurator;
 import org.hibernate.Session;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -40,10 +39,8 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.LoadSharedDataCommand;
 import mobi.chouette.exchange.report.ActionReport;
-import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
-import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.ObjectCollectionReport;
 import mobi.chouette.exchange.report.ObjectReport;
 import mobi.chouette.exchange.report.ReportConstant;
@@ -59,7 +56,8 @@ import mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public abstract class AbstractTestValidation extends Arquillian implements Constant, ReportConstant, CheckPointConstant {
+public abstract class AbstractTestValidation extends Arquillian
+		implements Constant, ReportConstant, CheckPointConstant {
 
 	public static final String SCHEMA_NAME = "iev_check_points";
 
@@ -73,17 +71,18 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 
 	public void init() {
 		if (initialContext == null) {
-//			BasicConfigurator.resetConfiguration();
-//			BasicConfigurator.configure();
+			// BasicConfigurator.resetConfiguration();
+			// BasicConfigurator.configure();
 			Locale.setDefault(Locale.ENGLISH);
 			try {
 				initialContext = new InitialContext();
 			} catch (NamingException e) {
-				log.error("initialContext",e);
+				log.error("initialContext", e);
 			}
 
 		}
 	}
+
 	public static EnterpriseArchive buildDeployment(Class<? extends AbstractTestValidation> clazz) {
 
 		EnterpriseArchive result;
@@ -128,7 +127,6 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 		return result;
 	}
 
-
 	protected void loadSharedData(Context context) throws Exception {
 		Command command = CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName());
 		command.execute(context);
@@ -148,7 +146,7 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setOrganisationName("organisation");
-		
+
 		configuration.setReferentialName("checkPoints");
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
@@ -321,9 +319,14 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 		return details;
 	}
 
-	
 	protected void checkReports(Context context, String lineId, String checkPointCode, String messageCode, String value,
 			OBJECT_STATE state) {
+		checkReports(context, lineId, checkPointCode, messageCode, value, state, 1);
+
+	}
+
+	protected void checkReports(Context context, String lineId, String checkPointCode, String messageCode, String value,
+			OBJECT_STATE state, int reportCount) {
 		ActionReport report = (ActionReport) context.get(REPORT);
 
 		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
@@ -333,17 +336,17 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 		Assert.assertEquals(report.getFiles().size(), 0, "no file reported ");
 		CheckPointErrorReport error = null;
 		ObjectCollectionReport lineReports = report.getCollections().get(OBJECT_TYPE.LINE);
-		Assert.assertNotNull(lineReports," lines reported");
-		Assert.assertEquals(lineReports.getObjectReports().size(),1,"one line reported");
+		Assert.assertNotNull(lineReports, " lines reported");
+		Assert.assertEquals(lineReports.getObjectReports().size(), 1, "one line reported");
 		ObjectReport lineReport = lineReports.getObjectReports().get(0);
-		
+
 		if (state.equals(OBJECT_STATE.ERROR)) {
 			Assert.assertEquals(lineReport.getStatus(), OBJECT_STATE.ERROR, "line status reported");
-			Assert.assertEquals(lineReport.getCheckPointErrorCount(), 1, "line error reported");
+			Assert.assertEquals(lineReport.getCheckPointErrorCount(), reportCount, "line error reported");
 			error = valReport.getCheckPointErrors().get(lineReport.getCheckPointErrorKeys().get(0).intValue());
 		} else {
 			Assert.assertEquals(lineReport.getStatus(), OBJECT_STATE.OK, "line status reported");
-			Assert.assertEquals(lineReport.getCheckPointWarningCount(), 1, "line warning reported");
+			Assert.assertEquals(lineReport.getCheckPointWarningCount(), reportCount, "line warning reported");
 			error = valReport.getCheckPointErrors().get(lineReport.getCheckPointWarningKeys().get(0).intValue());
 		}
 		Assert.assertEquals(error.getTestId(), checkPointCode, "checkpoint code");
@@ -357,7 +360,6 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 
 	}
 
-
 	protected final void checkNoReports(Context context, String lineId) {
 		ActionReport report = (ActionReport) context.get(REPORT);
 
@@ -366,10 +368,10 @@ public abstract class AbstractTestValidation extends Arquillian implements Const
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "OK", "result");
 		ObjectCollectionReport lineReports = report.getCollections().get(OBJECT_TYPE.LINE);
-		Assert.assertNotNull(lineReports," lines reported");
-		Assert.assertEquals(lineReports.getObjectReports().size(),1,"one line reported");
+		Assert.assertNotNull(lineReports, " lines reported");
+		Assert.assertEquals(lineReports.getObjectReports().size(), 1, "one line reported");
 		ObjectReport lineReport = lineReports.getObjectReports().get(0);
-		Assert.assertEquals(lineReport.getStatus(),OBJECT_STATE.OK, "line status reported");
+		Assert.assertEquals(lineReport.getStatus(), OBJECT_STATE.OK, "line status reported");
 		Assert.assertEquals(lineReport.getCheckPointErrorCount(), 0, "no line error reported");
 		Assert.assertEquals(lineReport.getCheckPointWarningCount(), 0, "no line warning reported");
 
