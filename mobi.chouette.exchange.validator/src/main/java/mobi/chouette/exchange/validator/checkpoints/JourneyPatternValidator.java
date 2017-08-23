@@ -1,9 +1,17 @@
 package mobi.chouette.exchange.validator.checkpoints;
 
+
+import java.util.List;
+
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.validation.report.DataLocation;
+import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.VehicleJourney;
 
+@Log4j
 public class JourneyPatternValidator extends GenericValidator<JourneyPattern> implements CheckPointConstant {
 
 	private static final String[] codes = { L3_JourneyPattern_1, L3_JourneyPattern_2 };
@@ -70,7 +78,14 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3JourneyPattern2(Context context, JourneyPattern object, CheckpointParameters parameters) {
-		// TODO
+		List<VehicleJourney> vjs = object.getVehicleJourneys();
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_JourneyPattern_2);
+		if (vjs == null || vjs.size() < 1) {
+			log.error("JourneyPattern " + object.getObjectId() + " has less than 1 VehicleJourney");
+			DataLocation source = new DataLocation(object);
+			validationReporter.addCheckPointReportError(context, L3_JourneyPattern_2, source);
+		}
 	}
 
 }

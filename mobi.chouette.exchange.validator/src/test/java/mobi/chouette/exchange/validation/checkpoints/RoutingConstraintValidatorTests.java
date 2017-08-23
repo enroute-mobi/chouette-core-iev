@@ -19,7 +19,6 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.RoutingConstraintDAO;
-import mobi.chouette.dao.StopPointDAO;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
@@ -37,10 +36,7 @@ import mobi.chouette.model.util.Referential;
 public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 
 	@EJB
-	RoutingConstraintDAO routingConstraintDao;
-
-	@EJB
-	StopPointDAO stopPointDao;
+	RoutingConstraintDAO dao;
 
 	@Deployment
 	public static EnterpriseArchive createDeployment() {
@@ -52,7 +48,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@Test(groups = { "routing-contraints" }, description = "3_itl_1", priority = 1)
-	public void verifyTest_3_ITL_1() throws Exception {
+	public void verifyTest_3_RoutingConstraint_1() throws Exception {
 		log.info(Color.CYAN + " check " + L3_ITL_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
@@ -87,7 +83,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 			}
 
 			tc.runValidation();
-			checkReports(context, tc.getLine().getObjectId(), L3_ITL_1, tc.getFormattedCheckPointName(), null,
+			checkReports(context, tc.getLine().getObjectId(), tc.getFormattedCheckPointName(), tc.getFormattedCheckPointName(), null,
 					OBJECT_STATE.WARNING, warningCount);
 
 		} finally {
@@ -99,7 +95,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@Test(groups = { "routing-contraints" }, description = "3_itl_2", priority = 1)
-	public void verifyTest_3_ITL_2() throws Exception {
+	public void verifyTest_3_RoutingConstraint_2() throws Exception {
 		log.info(Color.CYAN + " check " + L3_ITL_2 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
@@ -136,7 +132,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@Test(groups = { "routing-contraints" }, description = "3_itl_3", priority = 1)
-	public void verifyTest_3_ITL_3() throws Exception {
+	public void verifyTest_3_RoutingConstraint_3() throws Exception {
 		log.info(Color.CYAN + " check " + L3_ITL_3 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
@@ -189,7 +185,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 			this.checkPointName = checkPointName;
 			// -- Object to TestprepareNewTest()
 			long rcId = 2;
-			objectForTest = routingConstraintDao.find(rcId);
+			objectForTest = dao.find(rcId);
 			Assert.assertNotNull(objectForTest, "routing-constraint id " + rcId + " not found");
 			Route route = objectForTest.getRoute();
 			// System.err.println("Route= " + route);
@@ -212,7 +208,6 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 			String transportMode = line.getTransportModeName();
 			validator.validate(context, objectForTest, parameters, transportMode);
 		}
-		
 
 		public Referential getReferential() {
 			return referential;
