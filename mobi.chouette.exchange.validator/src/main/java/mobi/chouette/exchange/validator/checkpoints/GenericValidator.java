@@ -120,7 +120,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 						} catch (IllegalAccessException | IllegalArgumentException e) {
 							log.error("method for " + checkParam.getCode() + " not accessible", e);
 						} catch (InvocationTargetException e) {
-							log.error("method for " + checkParam.getCode() + " failed ", e);
+							log.error("method for " + checkParam.getCode() + " failed ("+method.getName()+")", e);
 						}
 					} else {
 						log.error("method for " + checkParam.getCode() + " not found");

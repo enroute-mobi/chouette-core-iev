@@ -1,12 +1,9 @@
 package mobi.chouette.exchange.validation.checkpoints;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 
@@ -28,9 +25,8 @@ import mobi.chouette.exchange.validator.checkpoints.JourneyPatternValidator;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
-import mobi.chouette.model.StopAreaLite;
-import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.VehicleJourney;
+import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
@@ -66,10 +62,49 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			checkNoReports(context, jp.getObjectId());
 
 			// -- Error
-			jp.setVehicleJourneys(new ArrayList<VehicleJourney>()); //-- remove all vehiclejourneys
+			jp.setVehicleJourneys(new ArrayList<VehicleJourney>()); // -- remove all vehiclejourneys
 			tc.runValidation();
-			checkReports(context, tc.getLine().getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
-					OBJECT_STATE.WARNING);
+			checkReports(context, tc.getLine().getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(),
+					null, OBJECT_STATE.WARNING);
+
+		} finally {
+			utx.rollback();
+		}
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	@Test(groups = { "journey-pattern" }, description = "3_Vehicle_Journey_3", priority = 1)
+	public void verifyTest_3_VehicleJourney_3() throws Exception {
+		log.info(Color.CYAN + " check " + L3_VehicleJourney_3 + Color.NORMAL);
+		initSchema();
+		Context context = initValidatorContext();
+		loadSharedData(context);
+		utx.begin();
+		try {
+			em.joinTransaction();
+
+			Long threshold = 2 * 60L;
+
+			TestContext tc = new TestContext(context, L3_VehicleJourney_3);
+			JourneyPattern jp = tc.getObjectForTest();
+
+			// -- Nominal
+			tc.setFirstParam(Long.toString(threshold));
+			tc.runValidation();
+			checkNoReports(context, jp.getObjectId());
+
+			// -- Error
+			List<VehicleJourney> vj = jp.getVehicleJourneys();
+			VehicleJourneyAtStop vjs = vj.get(0).getVehicleJourneyAtStops().get(1);
+			Time at = vjs.getArrivalTime();
+			vjs.setArrivalTime(new Time(at.getTime() + (threshold + 10) * 60 * 1000));
+
+			tc.setFirstParam(Long.toString(2 * 60));
+			tc.runValidation();
+			checkReports(context, tc.getLine().getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(),
+					null, OBJECT_STATE.WARNING);
 
 		} finally {
 			utx.rollback();
@@ -84,6 +119,8 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 		private LineLite line;
 		private String checkPointName;
 		private JourneyPatternValidator validator;
+		private String firstParam;
+		private String secondParam;
 
 		public String getCheckPointName() {
 			return checkPointName;
@@ -116,11 +153,27 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			validator = new JourneyPatternValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, firstParam, secondParam);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
 			String transportMode = line.getTransportModeName();
 			validator.validate(context, objectForTest, parameters, transportMode);
+		}
+
+		public String getFirstParam() {
+			return firstParam;
+		}
+
+		public void setFirstParam(String firstParam) {
+			this.firstParam = firstParam;
+		}
+
+		public String getSecondParam() {
+			return secondParam;
+		}
+
+		public void setSecondParam(String secondParam) {
+			this.secondParam = secondParam;
 		}
 
 		public Referential getReferential() {

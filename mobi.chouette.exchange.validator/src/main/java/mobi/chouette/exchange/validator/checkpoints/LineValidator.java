@@ -10,6 +10,8 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.ValidateParameters;
+import mobi.chouette.exchange.validator.ValidationException;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
@@ -18,7 +20,7 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public class LineValidator extends GenericValidator<LineLite> implements CheckPointConstant {
 
-	private static final String[] codes = { L3_Line_1, L3_Route_4 };
+	private static final String[] codes = { L3_Line_1, L3_Route_4, L3_JourneyPattern_1 };
 
 	@Override
 	public void validate(Context context, LineLite object, ValidateParameters parameters, String transportMode) {
@@ -70,7 +72,10 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 				}
 			}
 		}
-
+		else{
+			log.error("Line ID = " + object.getId() + " has no route !");
+			throw new ValidationException("Line ID = " + object.getId() + " has no route !");
+		}
 	}
 
 	/**
@@ -136,7 +141,44 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 				}
 			}
 		}
+		else{
+			log.error("Line ID = " + object.getId() + " has no route !");
+			throw new ValidationException("Line ID = " + object.getId() + " has no route !");
+		}
 
+	}
+	
+	
+	
+
+	/**
+	 * <b>Titre</b> :[Mission] Doublon de missions dans une ligne
+	 * <p>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2102">Cartes #2102</a>
+	 * <p>
+	 * <b>Code</b> :3-JourneyPattern-1
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : néant
+	 * <p>
+	 * <b>Prédicat</b> : Deux missions de la même ligne ne doivent pas desservir les mêmes arrêts dans le même ordre
+	 * <p>
+	 * <b>Message</b> : La mission {objectId} est identique à la mission {objectId}
+	 * <p>
+	 * <b>Criticité</b> : warning
+	 * <p>
+	 * 
+	 *
+	 * @param context
+	 *            context de validation
+	 * @param object
+	 *            objet à contrôler
+	 * @param parameters
+	 *            paramètres du point de contrôle
+	 */
+	protected void check3JourneyPattern1(Context context, JourneyPattern object, CheckpointParameters parameters) {
+		// TODO
 	}
 
 }

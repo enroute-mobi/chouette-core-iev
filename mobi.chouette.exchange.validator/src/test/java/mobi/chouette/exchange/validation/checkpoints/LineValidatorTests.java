@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
@@ -18,6 +19,7 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.validator.ValidateParameters;
+import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.LineValidator;
 import mobi.chouette.model.LineLite;
@@ -36,19 +38,6 @@ public class LineValidatorTests extends AbstractTestValidation {
 		return buildDeployment(LineValidatorTests.class);
 	}
 
-	private void configureTestContext(Context context, LineLite line, String checkPointName) {
-		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK, null);
-		LineValidator validator = new LineValidator();
-		ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
-		Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-		CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, null, null);
-		checkPoints.add(checkPoint);
-		parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
-		String transportMode = line.getTransportModeName();
-		validator.validate(context, line, parameters, transportMode);
-	}
-
 	/**
 	 * @throws Exception
 	 */
@@ -62,31 +51,34 @@ public class LineValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			Referential ref = (Referential) context.get(REFERENTIAL);
-			LineLite line = ref.findLine(5L);
-
-			List<Route> routes = dao.findByLineId(line.getId());
-			routes.stream().forEach(r -> {
-				r.setLineLite(line);
-				ref.getRoutes().put(r.getObjectId(), r);
-			});
+			TestContext tc = new TestContext(context, L3_Line_1);
+			LineLite line = tc.getObjectForTest();
+			Collection<Route> routes = tc.getReferential().getRoutes().values();
 
 			// -- Nominal test
-			configureTestContext(context, line, L3_Line_1);
+			tc.runValidation();
 			checkNoReports(context, line.getObjectId());
-			
-			// -- Error test
+
+			// -- Error test : no route for line
+			tc.getReferential().getRoutes().clear();
+			ValidationException e = null;
+			try {
+				tc.runValidation();
+			} catch (ValidationException exp) {
+				e = exp;
+			}
+			Assert.assertNotNull(e, "ValidationException should have been thrown, but nothing...");
+
+			// -- Error test : no opposite route
 			routes.stream().forEach(r -> {
 				r.setLineLite(line);
-				r.setOppositeRoute(null); //-- force no opposite route
-				ref.getRoutes().put(r.getObjectId(), r);
+				r.setOppositeRoute(null); // -- force no opposite route
+				tc.getReferential().getRoutes().put(r.getObjectId(), r);
 			});
-
-			configureTestContext(context, line, L3_Line_1);
-			
+			tc.runValidation();
 			int warningCount = routes.size();
-
-			checkReports(context, line.getObjectId(), L3_Line_1, "3_line_1", null, OBJECT_STATE.WARNING, warningCount);
+			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
+					OBJECT_STATE.WARNING, warningCount);
 
 		} finally {
 			utx.rollback();
@@ -94,7 +86,6 @@ public class LineValidatorTests extends AbstractTestValidation {
 
 	}
 
-	
 	/**
 	 * @throws Exception
 	 */
@@ -108,40 +99,123 @@ public class LineValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			Referential ref = (Referential) context.get(REFERENTIAL);
-			LineLite line = ref.findLine(7L);
+			TestContext tc = new TestContext(context, L3_Route_4);
+			LineLite line = tc.getObjectForTest();
+			Collection<Route> routes = tc.getReferential().getRoutes().values();
 
-			
 			// -- Nominal test
-			List<Route> routes = dao.findByLineId(line.getId());
-			routes.stream().forEach(r -> {
-				r.setLineLite(line);
-				r.setOppositeRoute(null);
-				ref.getRoutes().put(r.getObjectId(), r);
-				
-			});
-
-			configureTestContext(context, line, L3_Route_4);
+			tc.runValidation();
 			checkNoReports(context, line.getObjectId());
-			
+
 			// -- Error test
-			Route orig=null;
-			int warningCount=0;
-			for (Route r: routes){
-				if (orig == null){
+			Route orig = null;
+			int warningCount = 0;
+			for (Route r : routes) {
+				if (orig == null) {
 					orig = r;
-				}
-				else{
+				} else {
 					r.setStopPoints(orig.getStopPoints());
 					warningCount++;
-					orig=null; // -- to have 2 successive routes with same stoppoints
+					orig = null; // -- to have 2 successive routes with same stoppoints
 				}
 			}
-			configureTestContext(context, line, L3_Route_4);
-			checkReports(context, line.getObjectId(), L3_Route_4, "3_route_4", null, OBJECT_STATE.WARNING, warningCount);
+			tc.runValidation();
+			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
+					OBJECT_STATE.WARNING, warningCount);
 
 		} finally {
 			utx.rollback();
+		}
+
+	}
+
+	class TestContext {
+
+		private Context context;
+		private Referential referential;
+		private LineLite objectForTest;
+		private LineLite line;
+		private String checkPointName;
+		private LineValidator validator;
+		private String firstParam;
+		private String secondParam;
+
+		public String getCheckPointName() {
+			return checkPointName;
+		}
+
+		public void setCheckPointName(String checkPointName) {
+			this.checkPointName = checkPointName;
+		}
+
+		public TestContext(Context context, String checkPointName) {
+			this.context = context;
+			referential = (Referential) context.get(REFERENTIAL);
+			this.checkPointName = checkPointName;
+			// -- Object to TestprepareNewTest()
+			long id = 5L;
+			line = objectForTest = referential.findLine(id);
+			List<Route> routes = dao.findByLineId(line.getId());
+			routes.stream().forEach(r -> {
+				r.setLineLite(line);
+				referential.getRoutes().put(r.getObjectId(), r);
+			});
+			Assert.assertNotNull(objectForTest, "Line id " + id + " not found");
+		}
+
+		public void runValidation() {
+			ActionReporter reporter = ActionReporter.Factory.getInstance();
+			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
+					null);
+			//
+			validator = new LineValidator();
+			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
+			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, firstParam, secondParam);
+			checkPoints.add(checkPoint);
+			parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
+			String transportMode = line.getTransportModeName();
+			validator.validate(context, objectForTest, parameters, transportMode);
+		}
+
+		public String getFirstParam() {
+			return firstParam;
+		}
+
+		public void setFirstParam(String firstParam) {
+			this.firstParam = firstParam;
+		}
+
+		public String getSecondParam() {
+			return secondParam;
+		}
+
+		public void setSecondParam(String secondParam) {
+			this.secondParam = secondParam;
+		}
+
+		public Referential getReferential() {
+			return referential;
+		}
+
+		public void setReferential(Referential referential) {
+			this.referential = referential;
+		}
+
+		public LineLite getObjectForTest() {
+			return objectForTest;
+		}
+
+		public void setObjectForTest(LineLite objectForTest) {
+			this.objectForTest = objectForTest;
+		}
+
+		public LineLite getLine() {
+			return objectForTest;
+		}
+
+		public String getFormattedCheckPointName() {
+			return checkPointName.replace('-', '_').toLowerCase();
 		}
 
 	}
