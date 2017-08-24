@@ -3,9 +3,7 @@ package mobi.chouette.exchange.validator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -24,7 +22,6 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.common.chain.ProgressionCommand;
 import mobi.chouette.exchange.CommandCancelledException;
 import mobi.chouette.exchange.DaoProgressionCommand;
-import mobi.chouette.exchange.DaoReader;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.report.ActionReporter;
@@ -33,8 +30,9 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
-import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.NamingUtil;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 @Stateless(name = ValidatorCommand.COMMAND)
@@ -42,7 +40,7 @@ public class ValidatorCommand implements Command, Constant {
 
 	public static final String COMMAND = "ValidatorCommand";
 
-	@EJB DaoReader reader;
+	// @EJB DaoReader reader;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -144,18 +142,18 @@ public class ValidatorCommand implements Command, Constant {
 			ids = new ArrayList<Long>(parameters.getIds());
 		}
 
-		Set<Long> lines = reader.loadLines(type, ids);
-		if (lines.isEmpty()) {
+		Referential r = (Referential) context.get(REFERENTIAL);
+		if (r.getSharedReadOnlyLines().isEmpty()) {
 			reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND,"no data selected");
 			return ERROR;
 
 		}
 		progression.execute(context);
 		// process lines
-		progression.start(context, lines.size());
+		progression.start(context, ids.size());
 		int lineCount = 0;
-		// export each line
-		for (Long lineId : lines) {
+		// validate each line
+		for (Long lineId : ids) {
 			context.put(LINE_ID, lineId);
 			boolean validateFailed = false;
 			List<? extends Command> lineProcessingCommands = commands.getLineProcessingCommands(context, true);
@@ -168,13 +166,12 @@ public class ValidatorCommand implements Command, Constant {
 			}
 			progression.execute(context);
 			// TODO a mettre dans une commande dédiée
-			ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
-			Line line = data.getCurrentLine();
+			LineLite line = r.getCurrentLine();
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, data.getJourneyPatterns().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE, data.getRoutes().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY, data.getVehicleJourneys().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, r.getJourneyPatterns().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE, r.getRoutes().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY, r.getVehicleJourneys().size());
 
 			if (!validateFailed) 
 			{
@@ -188,7 +185,7 @@ public class ValidatorCommand implements Command, Constant {
 		}
 		// post processing
 		
-		// check if data where exported
+		// check if data where validated
 		if (lineCount == 0) {
 			progression.terminate(context, 1);
 			reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED,"no data validated");
@@ -207,20 +204,6 @@ public class ValidatorCommand implements Command, Constant {
 			}
 			progression.execute(context);
 		}	
-		// TODO a mettre dans une commande dédiée
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
-		reporter.addObjectReport(context, "merged", OBJECT_TYPE.NETWORK, "networks", OBJECT_STATE.OK, IO_TYPE.INPUT);
-		reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.NETWORK, OBJECT_TYPE.NETWORK, data.getNetworks().size());
-		reporter.addObjectReport(context, "merged", OBJECT_TYPE.COMPANY, "companies", OBJECT_STATE.OK, IO_TYPE.INPUT);
-		reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.COMPANY, OBJECT_TYPE.COMPANY, data.getCompanies().size());
-		reporter.addObjectReport(context, "merged", OBJECT_TYPE.CONNECTION_LINK, "connection links", OBJECT_STATE.OK, IO_TYPE.INPUT);
-		reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.CONNECTION_LINK, OBJECT_TYPE.CONNECTION_LINK, data.getConnectionLinks().size());
-		reporter.addObjectReport(context, "merged", OBJECT_TYPE.ACCESS_POINT, "access points", OBJECT_STATE.OK, IO_TYPE.INPUT);
-		reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.ACCESS_POINT, OBJECT_TYPE.ACCESS_POINT, data.getAccessPoints().size());
-		reporter.addObjectReport(context, "merged", OBJECT_TYPE.STOP_AREA, "stop areas", OBJECT_STATE.OK, IO_TYPE.INPUT);
-		reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.STOP_AREA, OBJECT_TYPE.STOP_AREA, data.getStopAreas().size());
-		reporter.addObjectReport(context, "merged", OBJECT_TYPE.TIMETABLE, "calendars", OBJECT_STATE.OK, IO_TYPE.INPUT);
-		reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.TIMETABLE, OBJECT_TYPE.TIMETABLE, data.getTimetables().size());
 		return result;
 	}
 

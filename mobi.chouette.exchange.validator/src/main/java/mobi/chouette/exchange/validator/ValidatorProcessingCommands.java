@@ -12,6 +12,7 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.LoadSharedDataCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 
@@ -35,7 +36,15 @@ public class ValidatorProcessingCommands implements ProcessingCommands, Constant
 
 	@Override
 	public List<? extends Command> getPreProcessingCommands(Context context, boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
+		
+		try {
+			commands.add( CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
+		} catch (Exception e) {
+			log.error(e, e);
+			throw new RuntimeException("unable to call factories");
+		}
 		return commands;
 	}
 
@@ -59,14 +68,14 @@ public class ValidatorProcessingCommands implements ProcessingCommands, Constant
 
 	@Override
 	public List<? extends Command> getPostProcessingCommands(Context context, boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+//		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
-		try {
-			// commands.add(CommandFactory.create(initialContext, SharedDataValidatorCommand.class.getName()));
-		} catch (Exception e) {
-			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
-		}
+//		try {
+//			// commands.add(CommandFactory.create(initialContext, SharedDataValidatorCommand.class.getName()));
+//		} catch (Exception e) {
+//			log.error(e, e);
+//			throw new RuntimeException("unable to call factories");
+//		}
 		return commands;
 	}
 
