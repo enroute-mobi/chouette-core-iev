@@ -183,7 +183,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				Timetable tm = getTimetable(referential, ref);
 				if (tm != null) {
 					referential.getTimetables().put(ref, tm);
-					log.info("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
+					log.debug("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
 					tm.addVehicleJourney(vehicleJourney);
 				}
 			}
@@ -220,7 +220,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 					}
 					tm.setObjectId(key);
 					referential.getTimetables().put(key, tm);
-					log.info("affect tm " + key + " on vj " + vehicleJourney.getObjectId());
+					log.debug("affect tm " + key + " on vj " + vehicleJourney.getObjectId());
 					tm.addVehicleJourney(vehicleJourney);
 				}
 			}

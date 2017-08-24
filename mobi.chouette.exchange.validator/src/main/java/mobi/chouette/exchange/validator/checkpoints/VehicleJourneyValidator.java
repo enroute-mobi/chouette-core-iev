@@ -1,9 +1,8 @@
 package mobi.chouette.exchange.validator.checkpoints;
 
-import java.sql.Time;
-import java.util.HashMap;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
@@ -11,7 +10,6 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.exchange.validator.ValidationException;
-import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
@@ -76,11 +74,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 		passingTimes.stream()
 				.filter(passingTime -> passingTime.getArrivalTime() != null && passingTime.getDepartureTime() != null)
 				.forEach(passingTime -> {
-					long delta = (passingTime.getDepartureTime().getTime() - passingTime.getArrivalTime().getTime())
-							/ 1000L;
-					if (passingTime.getDepartureTime().before(passingTime.getArrivalTime())) {
-						delta += 86400L;
-					}
+					long delta = this.diffTime(passingTime.getArrivalTime(), passingTime.getDepartureTime());
+
 					if (delta > deltaMax) {
 						StopAreaLite zdep = r.findStopArea(passingTime.getStopPoint().getStopAreaId());
 						if (zdep == null) {
@@ -135,7 +130,45 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3VehicleJourney2(Context context, VehicleJourney object, CheckpointParameters parameters) {
-		// TODO
+		// prerequisites
+		List<VehicleJourneyAtStop> passingTimes = object.getVehicleJourneyAtStops();
+		if (passingTimes.size() < 2)
+			return;
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_2);
+		Referential r = (Referential) context.get(REFERENTIAL);
+
+		long speedMax = Long.parseLong(parameters.getSecondValue());
+		long speedMin = Long.parseLong(parameters.getFirstValue());
+
+		for (int i = 1; i < passingTimes.size(); i++) {
+			VehicleJourneyAtStop passingTime1 = passingTimes.get(i - 1);
+			VehicleJourneyAtStop passingTime2 = passingTimes.get(i);
+
+			long speed = (long) getSpeedBetweenStops(context, passingTime1, passingTime2);
+			if (speed > speedMax) {
+				StopAreaLite zdep1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
+				StopAreaLite zdep2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+
+				DataLocation source = new DataLocation(object);
+				DataLocation target1 = new DataLocation(zdep1);
+				DataLocation target2 = new DataLocation(zdep2);
+				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_2, "1", source,
+						Long.toString(speed), parameters.getFirstValue(), target1, target2);
+
+			}
+			if (speedMin > 0 && speed < speedMin) {
+				StopAreaLite zdep1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
+				StopAreaLite zdep2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+
+				DataLocation source = new DataLocation(object);
+				DataLocation target1 = new DataLocation(zdep1);
+				DataLocation target2 = new DataLocation(zdep2);
+				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_2, "2", source,
+						Long.toString(speed), parameters.getFirstValue(), target1, target2);
+			}
+		}
 	}
 
 	/**
@@ -169,7 +202,16 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3VehicleJourney4(Context context, VehicleJourney object, CheckpointParameters parameters) {
-		// TODO
+		// prerequisites
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_4);
+
+		if (object.getTimetables().isEmpty()) {
+			DataLocation source = new DataLocation(object);
+			validationReporter.addCheckPointReportError(context, L3_VehicleJourney_4, source);
+
+		}
 	}
 
 	/**
@@ -207,50 +249,54 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3VehicleJourney5(Context context, VehicleJourney object, CheckpointParameters parameters) {
-		// TODO
-	}
-	private Map<String,Double> distances = new HashMap<>();
-	
-	private double getDistance(StopArea stop1, StopArea stop2)
-	{
-		String key = stop1.getObjectId()+"#"+stop2.getObjectId();
-		if (distances.containsKey(key))
+		// prerequisites
+		List<VehicleJourneyAtStop> passingTimes = object.getVehicleJourneyAtStops();
+		if (passingTimes.isEmpty())
+			return;
+
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_5);
+		Referential r = (Referential) context.get(REFERENTIAL);
+		DateFormat format = new SimpleDateFormat("HH:mm");
+		// check first passingTime
 		{
-			return distances.get(key).doubleValue();
-		}
-		key = stop2.getObjectId()+"#"+stop1.getObjectId();
-		if (distances.containsKey(key))
-		{
-			return distances.get(key).doubleValue();
-		}
-		double distance = distance(stop1, stop2);
-		distances.put(key,Double.valueOf(distance));
-		return distance;
-	}
-
-	/**
-	 * calculate duration in second beetween times <br>
-	 * if last time before first time, assume a change of day
-	 * 
-	 * @param first first time (earlyer one)
-	 * @param last last time 
-	 * @return difference in seconds
-	 */
-	protected long diffTime(Time first,  Time last) {
-		if (first == null || last == null)
-			return Long.MIN_VALUE; // TODO
-
-		
-
-		long lastTime = (last.getTime() / 1000L) ;
-		long firstTime = (first.getTime() / 1000L) ;
-
-		long delta = lastTime - firstTime;
-		if (last.before(first)) {
-			delta += 86400L;
+			VehicleJourneyAtStop passingTime = passingTimes.get(0);
+			if (getArrivalTime(passingTime).after(passingTime.getDepartureTime())) {
+				StopAreaLite zdep = r.findStopArea(passingTime.getStopPoint().getStopAreaId());
+				if (zdep == null) {
+					log.error("passingTime for missing stop area ");
+					throw new ValidationException("VehicleJourney " + object.getId() + " : missing StopArea reference");
+				}
+				DataLocation source = new DataLocation(object);
+				DataLocation target = new DataLocation(zdep);
+				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_5, "1", source,
+						format.format(passingTime.getArrivalTime()), format.format(passingTime.getDepartureTime()),
+						target);
+			}
 		}
 
-		return delta;
+		for (int i = 1; i < passingTimes.size(); i++) {
+			VehicleJourneyAtStop passingTime1 = passingTimes.get(i - 1);
+			VehicleJourneyAtStop passingTime2 = passingTimes.get(i);
+			if (passingTime1.getDepartureTime().after(passingTime2.getArrivalTime())
+					&& passingTime1.getDepartureDayOffset() == passingTime2.getDepartureDayOffset()) {
+				StopAreaLite zdep1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
+
+				StopAreaLite zdep2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+				if (zdep2 == null) {
+					log.error("passingTime for missing stop area ");
+					throw new ValidationException("VehicleJourney " + object.getId() + " : missing StopArea reference");
+				}
+
+				DataLocation source = new DataLocation(object);
+				DataLocation target1 = new DataLocation(zdep1);
+				DataLocation target2 = new DataLocation(zdep2);
+				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_5, "2", source,
+						format.format(passingTime1.getDepartureTime()), format.format(passingTime2.getArrivalTime()),
+						target1, target2);
+
+			}
+		}
 	}
 
 }

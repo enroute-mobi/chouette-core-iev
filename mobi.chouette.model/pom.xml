@@ -63,11 +63,11 @@
 					<sourcepath>target/generated-sources/delombok</sourcepath>
 					<javaApiLinks>
 						<property>
-							<name>api_1.7</name>
-							<value>http://docs.oracle.com/javase/7/docs/api/</value>
+							<name>api_1.8</name>
+							<value>http://docs.oracle.com/javase/8/docs/api/</value>
 						</property>
 					</javaApiLinks>
-					<source>1.7</source>
+					<source>1.8</source>
 					<skip>${skipDelombok}</skip>
 				</configuration>
 				<executions>
