@@ -2,6 +2,7 @@ package mobi.chouette.model.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +37,7 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private LineLite currentLine = null;
-	
+
 	@Getter
 	@Setter
 	private Map<String, AccessLink> sharedAccessLinks = new HashMap<>();
@@ -160,81 +161,71 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, Footnote> footnotes = new HashMap<>();
-	
+
 	@Getter
 	@Setter
 	private Map<String, RoutingConstraint> routingConstraints = new HashMap<>();
 
-	public LineLite findLine(Long id)
-	{
-		for (LineLite line : sharedReadOnlyLines.values()) {
-			if (line.getId().equals(id))
-				return line;
-		}
-		return null;
-	}
-	
-	public StopAreaLite findStopArea(Long id)
-	{
-		for (StopAreaLite stop : sharedReadOnlyStopAreas.values()) {
-			if (stop.getId().equals(id))
-				return stop;
-		}
-		return null;
+	public LineLite findLine(Long id) {
+		Optional<LineLite> result = sharedReadOnlyLines.values().stream().filter(line -> line.getId().equals(id))
+				.findFirst();
+		return result.orElse(null);
 	}
 
-	public CompanyLite findCompany(Long id)
-	{
-		for (CompanyLite company : sharedReadOnlyCompanies.values()) {
-			if (company.getId().equals(id))
-				return company;
-		}
-		return null;
+	public StopAreaLite findStopArea(Long id) {
+		Optional<StopAreaLite> result = sharedReadOnlyStopAreas.values().stream()
+				.filter(stop -> stop.getId().equals(id)).findFirst();
+		return result.orElse(null);
+	}
+
+	public CompanyLite findCompany(Long id) {
+		Optional<CompanyLite> result = sharedReadOnlyCompanies.values().stream()
+				.filter(company->company.getId().equals(id)).findFirst();
+		return result.orElse(null);
 	}
 
 	public void clear(boolean cascade) {
 		if (cascade) {
-			for (Line line : lines.values()) {
+			lines.values().stream().forEach(line -> {
 				line.getRoutes().clear();
 				line.getFootnotes().clear();
 				line.getRoutingConstraints().clear();
 				line.getGroupOfLines().clear();
-			}
-			for (Route route : routes.values()) {
+			});
+			routes.values().stream().forEach(route -> {
 				route.getStopPoints().clear();
 				route.getJourneyPatterns().clear();
-			}
-			for (JourneyPattern jp : journeyPatterns.values()) {
+			});
+			journeyPatterns.values().stream().forEach(jp -> {
 				jp.getStopPoints().clear();
 				jp.getVehicleJourneys().clear();
 				jp.getRouteSections().clear();
-			}
-			for (VehicleJourney vj : vehicleJourneys.values()) {
+			});
+			vehicleJourneys.values().stream().forEach(vj -> {
 				vj.getVehicleJourneyAtStops().clear();
 				vj.getTimetables().clear();
 				vj.getJourneyFrequencies().clear();
 				vj.getFootnotes().clear();
-			}
-			for (Timetable timetable : timetables.values()) {
+			});
+			timetables.values().stream().forEach(timetable -> {
 				timetable.getVehicleJourneys().clear();
-			}
-			for (Timetable timetable : sharedTimetables.values()) {
+			});
+			sharedTimetables.values().stream().forEach(timetable -> {
 				timetable.getVehicleJourneys().clear();
-			}
-			for (Timeband timeband : sharedTimebands.values()) {
+			});
+			sharedTimebands.values().stream().forEach(timeband -> {
 				timeband.getJourneyFrequencies().clear();
-			}
-			for (Timeband timeband : timebands.values()) {
+			});
+			timebands.values().stream().forEach(timeband -> {
 				timeband.getJourneyFrequencies().clear();
-			}
-			for (GroupOfLine group : sharedGroupOfLines.values()) {
+			});
+			sharedGroupOfLines.values().stream().forEach(group -> {
 				group.getLines().clear();
-			}
-			for (StopArea area : sharedStopAreas.values()) {
+			});
+			sharedStopAreas.values().stream().forEach(area -> {
 				area.getContainedStopPoints().clear();
-			}
-			
-			
+			});
+
 		}
 		accessLinks.clear();
 		accessPoints.clear();

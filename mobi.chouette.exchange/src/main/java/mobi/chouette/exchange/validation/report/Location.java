@@ -119,16 +119,25 @@ public class Location extends AbstractReport {
 			objectRefs.add(new ObjectReference(object));
 			objectRefs.add(new ObjectReference(object.getJourneyPattern()));
 			objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute()));
-			objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute().getLineLite()));
+			if (object.getJourneyPattern().getRoute().getLine() != null)
+				objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute().getLine()));
+			if (object.getJourneyPattern().getRoute().getLineLite() != null)
+				objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute().getLineLite()));
 		} else if (chouetteObject instanceof JourneyPattern) {
 			JourneyPattern object = (JourneyPattern) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
 			objectRefs.add(new ObjectReference(object.getRoute()));
-			objectRefs.add(new ObjectReference(object.getRoute().getLineLite()));
+			if (object.getRoute().getLine() != null)
+				objectRefs.add(new ObjectReference(object.getRoute().getLine()));
+			if (object.getRoute().getLineLite() != null)
+				objectRefs.add(new ObjectReference(object.getRoute().getLineLite()));
 		} else if (chouetteObject instanceof Route) {
 			Route object = (Route) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
-			objectRefs.add(new ObjectReference(object.getLineLite()));
+			if (object.getLine() != null)
+				objectRefs.add(new ObjectReference(object.getLine()));
+			if (object.getLineLite() != null)
+				objectRefs.add(new ObjectReference(object.getLineLite()));
 		} else if (chouetteObject instanceof Line) {
 			Line object = (Line) chouetteObject;
 			objectRefs.add(new ObjectReference(object));

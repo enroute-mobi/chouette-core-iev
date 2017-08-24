@@ -9,6 +9,7 @@
 package mobi.chouette.exchange.validator;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -24,12 +25,13 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
-import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.dao.LineDAO;
-import mobi.chouette.exchange.validation.ValidationData;
+import mobi.chouette.dao.RouteDAO;
+import mobi.chouette.model.LineLite;
+import mobi.chouette.model.Route;
+import mobi.chouette.model.util.Referential;
 
 /**
  *
@@ -43,14 +45,13 @@ public class DaoLineValidatorCommand implements Command, Constant {
 	private SessionContext daoContext;
 	
 	@EJB 
-	private LineDAO lineDAO;
+	private RouteDAO routeDAO;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 		boolean result = ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		if (!context.containsKey(SOURCE))
 		{
@@ -58,18 +59,26 @@ public class DaoLineValidatorCommand implements Command, Constant {
 		}
 
 		try {
-			
-//			Command lineValidatorCommand = CommandFactory.create(initialContext,
-//					LineValidatorCommand.class.getName());
-//
-//			Long lineId = (Long) context.get(LINE_ID);
-//			Line line = lineDAO.find(lineId);
-//			
-//			ValidationDataCollector collector = new ValidationDataCollector();
-//			collector.collect(data, line);
-//
-//			result = lineValidatorCommand.execute(context);
-			// daoContext.setRollbackOnly();
+			Command lineValidatorCommand = CommandFactory.create(initialContext,
+					LineValidatorCommand.class.getName());
+
+			Long lineId = (Long) context.get(LINE_ID);
+			Referential r = (Referential) context.get(REFERENTIAL);
+            r.clear(false);
+			LineLite line = r.findLine(lineId);
+			r.setCurrentLine(line);
+			List<Route> routes = routeDAO.findByLineId(lineId);
+			routes.forEach(route -> {
+				r.getRoutes().put(route.getObjectId(), route);
+				route.getRoutingConstraints().forEach(rc -> r.getRoutingConstraints().put(rc.getObjectId(), rc));
+				route.getJourneyPatterns().forEach(jp -> {
+					r.getJourneyPatterns().put(jp.getObjectId(), jp);
+					jp.getVehicleJourneys().forEach(vj -> r.getVehicleJourneys().put(vj.getObjectId(), vj));
+				});
+			});
+
+			result = lineValidatorCommand.execute(context);
+			daoContext.setRollbackOnly();
 			
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);

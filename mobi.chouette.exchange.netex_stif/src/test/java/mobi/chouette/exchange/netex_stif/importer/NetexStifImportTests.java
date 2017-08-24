@@ -240,9 +240,9 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		verifyFromJson();
 		// JSONWriter writer = new JSONWriter(w);
 		List<RoutingConstraint> routingConstraints = routingConstraintDao.findAll();
-		for (RoutingConstraint routingConstraint : routingConstraints) {
-			log.info("routing constraint" + routingConstraint.getName());
-		}
+//		for (RoutingConstraint routingConstraint : routingConstraints) {
+//			log.info("routing constraint" + routingConstraint.getName());
+//		}
 		// NeptuneTestsUtils.checkMinimalLine(line);
 
 		utx.rollback();
@@ -385,7 +385,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 	}
 
 	private void verifyFootnote(JSONObject jsonFootnote) throws JSONException {
-		log.info("footnote:"+ jsonFootnote);
+		// log.info("footnote:"+ jsonFootnote);
 		Long id = jsonFootnote.getLong("id");
 		Footnote footnote = footnoteDao.find(id);
 		Assert.assertEquals(footnote.getLabel(), jsonFootnote.getString("label"));
@@ -532,7 +532,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	private JSONObject buildJsonFootnote(Footnote footnote) throws JSONException {
 		JSONObject fnObject = new JSONObject();
-		log.info("footnote id : " + footnote.getId());
+		// log.info("footnote id : " + footnote.getId());
 		fnObject.put("id", footnote.getId());
 		fnObject.put("label", footnote.getLabel());
 		fnObject.put("code", footnote.getCode());

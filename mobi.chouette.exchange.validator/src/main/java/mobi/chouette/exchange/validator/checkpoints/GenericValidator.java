@@ -563,16 +563,44 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		return distance;
 	}
 
-	protected Double getSpeedBetweenStops(Context context,VehicleJourneyAtStop passingTime1,VehicleJourneyAtStop passingTime2) 
+	/**
+	 * calculate speed between 2 passing times in Km/h 
+	 * 
+	 * @param context context
+	 * @param passingTime1 first passing time
+	 * @param passingTime2 last passing time
+	 * @return speed
+	 */
+	protected double getSpeedBetweenStops(Context context,VehicleJourneyAtStop passingTime1,VehicleJourneyAtStop passingTime2) 
 	{
 		Referential r = (Referential) context.get(REFERENTIAL);
+		// TODO find distance with shapes if present 
+		
+		// else use flying distance
 		StopAreaLite stop1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
 		if (stop1 == null) throw new ValidationException("unknown StopArea for id "+ passingTime1.getStopPoint().getStopAreaId());
 		StopAreaLite stop2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
 		if (stop2 == null) throw new ValidationException("unknown StopArea for id "+ passingTime2.getStopPoint().getStopAreaId());
 		
 		Double distance = getDistance(context, stop1, stop2);
-		return null;
+		// security if arrival time is missing
+		Time arrivalTime = getArrivalTime(passingTime2);
+		long time = diffTime(passingTime1.getDepartureTime(),arrivalTime);
+		// if (duration less than 1 minute, force one minute
+		if (time < 60L) time = 60l;
+		double speed = distance / (double) time * 3.6; // (km/h)
+		return speed;
+	}
+	
+	/**
+	 * gives arrivalTime or departuretime if null
+	 * 
+	 * @param passingTime
+	 * @return
+	 */
+	protected Time getArrivalTime(VehicleJourneyAtStop passingTime)
+	{
+		return passingTime.getArrivalTime() == null ? passingTime.getDepartureTime() : passingTime.getArrivalTime();
 	}
 	
 }

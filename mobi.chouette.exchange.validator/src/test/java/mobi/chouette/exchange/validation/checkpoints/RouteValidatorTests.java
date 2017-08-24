@@ -47,7 +47,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_1", priority = 1)
+	@Test(groups = { "route" }, description = "3_Route_1", priority = 11)
 	public void verifyTest_3_Route_1() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_1 + Color.NORMAL);
 		initSchema();
@@ -86,7 +86,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_2", priority = 2)
+	@Test(groups = { "route" }, description = "3_Route_2", priority = 12)
 	public void verifyTest_3_Route_2() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_2 + Color.NORMAL);
 		initSchema();
@@ -142,7 +142,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_3", priority = 3)
+	@Test(groups = { "route" }, description = "3_Route_3", priority = 13)
 	public void verifyTest_3_Route_3() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_3 + Color.NORMAL);
 		initSchema();
@@ -181,7 +181,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_5", priority = 5)
+	@Test(groups = { "route" }, description = "3_Route_5", priority = 14)
 	public void verifyTest_3_Route_5() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_5 + Color.NORMAL);
 		initSchema();
@@ -220,7 +220,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_6", priority = 6)
+	@Test(groups = { "route" }, description = "3_Route_6", priority = 15)
 	public void verifyTest_3_Route_6() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_6 + Color.NORMAL);
 		initSchema();
@@ -261,7 +261,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_8", priority = 8)
+	@Test(groups = { "route" }, description = "3_Route_8", priority = 16)
 	public void verifyTest_3_Route_8() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_8 + Color.NORMAL);
 		initSchema();
@@ -307,7 +307,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_9", priority = 9)
+	@Test(groups = { "route" }, description = "3_Route_9", priority = 17)
 	public void verifyTest_3_Route_9() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_9 + Color.NORMAL);
 		initSchema();
@@ -353,7 +353,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_10", priority = 10)
+	@Test(groups = { "route" }, description = "3_Route_10", priority = 18)
 	public void verifyTest_3_Route_10() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_10 + Color.NORMAL);
 		initSchema();
