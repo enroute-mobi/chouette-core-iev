@@ -75,7 +75,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "journey-pattern" }, description = "3_Vehicle_Journey_3", priority = 1)
+	@Test(groups = { "journey-pattern" }, description = "3_Vehicle_Journey_3", priority = 42)
 	public void verifyTest_3_VehicleJourney_3() throws Exception {
 		log.info(Color.CYAN + " check " + L3_VehicleJourney_3 + Color.NORMAL);
 		initSchema();

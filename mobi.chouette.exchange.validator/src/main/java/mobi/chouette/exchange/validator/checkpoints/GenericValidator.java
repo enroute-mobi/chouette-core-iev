@@ -74,6 +74,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 									validationReporter.addItemToValidationReport(context, code,
 											checkParam.isErrorType() ? "E" : "W");
 									method.invoke(this, context, object, param);
+								} catch (ValidationException ve) {
+									throw ve;
 								} catch (IllegalAccessException | IllegalArgumentException e) {
 									log.error("method for " + checkParam.getCode() + " not accessible", e);
 								} catch (InvocationTargetException e) {
@@ -117,10 +119,19 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 									checkParam.isErrorType() ? "E" : "W");
 							// log.info("call test for "+ checkParam.getCode());
 							method.invoke(this, context, object, checkParam);
+						} catch (ValidationException ve) {
+							throw ve;
 						} catch (IllegalAccessException | IllegalArgumentException e) {
 							log.error("method for " + checkParam.getCode() + " not accessible", e);
 						} catch (InvocationTargetException e) {
-							log.error("method for " + checkParam.getCode() + " failed ("+method.getName()+")", e);
+							log.error("target exception :" + e.getTargetException());
+							if (e.getTargetException() instanceof mobi.chouette.exchange.validator.ValidationException) {
+								mobi.chouette.exchange.validator.ValidationException ve = (mobi.chouette.exchange.validator.ValidationException) e.getTargetException();
+								throw ve;
+							} else {
+								log.error("method for " + checkParam.getCode() + " failed ",
+										e);
+							}
 						}
 					} else {
 						log.error("method for " + checkParam.getCode() + " not found");
@@ -133,9 +144,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	/**
 	 * <b>Titre</b> :[Génériques] Contrôle du contenu selon un pattern
 	 * <p>
-	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes
-	 * #2192</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes #2192</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-1
 	 * <p>
@@ -144,11 +153,10 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : l'attribut de l'objet doit respecter un motif
-	 * (expression régulière)
+	 * <b>Prédicat</b> : l'attribut de l'objet doit respecter un motif (expression régulière)
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur
-	 * {valeur} qui ne respecte pas le motif {expression régulière}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur {valeur} qui ne respecte pas le motif
+	 * {expression régulière}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -192,9 +200,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	/**
 	 * <b>Titre</b> :[Génériques] Valeur min
 	 * <p>
-	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes
-	 * #2193</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes #2193</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-2
 	 * <p>
@@ -204,13 +210,11 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : Néant
 	 * <p>
-	 * <b>Prédicat</b> : la valeur numérique de l'attribut doit rester comprise
-	 * entre 2 valeurs
+	 * <b>Prédicat</b> : la valeur numérique de l'attribut doit rester comprise entre 2 valeurs
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur
-	 * {valeur} supérieure à la valeur maximale autorisée {max}<br>
-	 * {objet} : l'attribut {nom attribut} à une valeur {valeur} inférieure à la
-	 * valeur minimale autorisée {min}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur {valeur} supérieure à la valeur maximale
+	 * autorisée {max}<br>
+	 * {objet} : l'attribut {nom attribut} à une valeur {valeur} inférieure à la valeur minimale autorisée {min}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -267,12 +271,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	}
 
 	/**
-	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une
-	 * ligne
+	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une ligne
 	 * <p>
-	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes
-	 * #2194</a>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes #2194</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-3
 	 * <p>
@@ -280,11 +281,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : Néant
 	 * <p>
-	 * <b>Prédicat</b> : la valeur de l'attribut doit être unique au sein des
-	 * objets de la ligne
+	 * <b>Prédicat</b> : la valeur de l'attribut doit être unique au sein des objets de la ligne
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} de {ref X} à une
-	 * valeur {valeur} en conflit avec {ref Y}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} de {ref X} à une valeur {valeur} en conflit avec {ref Y}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -564,43 +563,48 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	}
 
 	/**
-	 * calculate speed between 2 passing times in Km/h 
+	 * calculate speed between 2 passing times in Km/h
 	 * 
-	 * @param context context
-	 * @param passingTime1 first passing time
-	 * @param passingTime2 last passing time
+	 * @param context
+	 *            context
+	 * @param passingTime1
+	 *            first passing time
+	 * @param passingTime2
+	 *            last passing time
 	 * @return speed
 	 */
-	protected double getSpeedBetweenStops(Context context,VehicleJourneyAtStop passingTime1,VehicleJourneyAtStop passingTime2) 
-	{
+	protected double getSpeedBetweenStops(Context context, VehicleJourneyAtStop passingTime1,
+			VehicleJourneyAtStop passingTime2) {
 		Referential r = (Referential) context.get(REFERENTIAL);
-		// TODO find distance with shapes if present 
-		
+		// TODO find distance with shapes if present
+
 		// else use flying distance
 		StopAreaLite stop1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
-		if (stop1 == null) throw new ValidationException("unknown StopArea for id "+ passingTime1.getStopPoint().getStopAreaId());
+		if (stop1 == null)
+			throw new ValidationException("unknown StopArea for id " + passingTime1.getStopPoint().getStopAreaId());
 		StopAreaLite stop2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
-		if (stop2 == null) throw new ValidationException("unknown StopArea for id "+ passingTime2.getStopPoint().getStopAreaId());
-		
+		if (stop2 == null)
+			throw new ValidationException("unknown StopArea for id " + passingTime2.getStopPoint().getStopAreaId());
+
 		Double distance = getDistance(context, stop1, stop2);
 		// security if arrival time is missing
 		Time arrivalTime = getArrivalTime(passingTime2);
-		long time = diffTime(passingTime1.getDepartureTime(),arrivalTime);
+		long time = diffTime(passingTime1.getDepartureTime(), arrivalTime);
 		// if (duration less than 1 minute, force one minute
-		if (time < 60L) time = 60l;
+		if (time < 60L)
+			time = 60l;
 		double speed = distance / (double) time * 3.6; // (km/h)
 		return speed;
 	}
-	
+
 	/**
 	 * gives arrivalTime or departuretime if null
 	 * 
 	 * @param passingTime
 	 * @return
 	 */
-	protected Time getArrivalTime(VehicleJourneyAtStop passingTime)
-	{
+	protected Time getArrivalTime(VehicleJourneyAtStop passingTime) {
 		return passingTime.getArrivalTime() == null ? passingTime.getDepartureTime() : passingTime.getArrivalTime();
 	}
-	
+
 }
