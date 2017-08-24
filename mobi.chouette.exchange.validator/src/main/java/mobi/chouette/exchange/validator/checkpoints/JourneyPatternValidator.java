@@ -6,7 +6,7 @@ import mobi.chouette.model.JourneyPattern;
 
 public class JourneyPatternValidator extends GenericValidator<JourneyPattern> implements CheckPointConstant {
 
-	private static final String[] codes = { L3_JourneyPattern_1, L3_JourneyPattern_2 };
+	private static final String[] codes = { L3_JourneyPattern_1, L3_JourneyPattern_2,  L3_VehicleJourney_3 };
 
 	@Override
 	public void validate(Context context, JourneyPattern object, ValidateParameters parameters, String transportMode) {
@@ -72,5 +72,40 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	protected void check3JourneyPattern2(Context context, JourneyPattern object, CheckpointParameters parameters) {
 		// TODO
 	}
+	
+	/**
+	 * <b>Titre</b> :[Course] Les vitesses entre 2 arrêts doivent être similaires pour toutes les courses d'une même
+	 * mission
+	 * <p>
+	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2105">Cartes #2105</a>
+	 * <p>
+	 * <b>Code</b> :3-VehicleJourney-3
+	 * <p>
+	 * <b>Variables</b> : * écart maximal en minutes
+	 * <p>
+	 * <b>Prérequis</b> : néant
+	 * <p>
+	 * <b>Prédicat</b> : Les temps de parcours entre 2 arrêts successifs doivent être similaires pour toutes les courses
+	 * d?une même mission
+	 * <p>
+	 * <b>Message</b> : Le temps de parcours sur la course {objectId} entre les arrêts {nomArrêt1} ({objectId}) et
+	 * {nomArrêt2} ({objectId}) s'écarte de {écart} du temps moyen constaté sur la mission
+	 * <p>
+	 * <b>Criticité</b> : warning
+	 * <p>
+	 * Note : Le calcul se fait à l'aide d'un temps de parcours moyen calculé sur toutes les courses de la mission puis
+	 * d'une mesure de l'écart entre les temps de parcours de chaque course avec ce temps moyen
+	 *
+	 * @param context
+	 *            context de validation
+	 * @param object
+	 *            objet à contrôler
+	 * @param parameters
+	 *            paramètres du point de contrôle
+	 */
+	protected void check3VehicleJourney3(Context context, JourneyPattern object, CheckpointParameters parameters) {
+		// TODO
+	}
+
 
 }

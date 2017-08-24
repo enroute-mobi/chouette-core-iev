@@ -3,6 +3,7 @@ package mobi.chouette.exchange.validation.checkpoints;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 
@@ -19,7 +20,9 @@ import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.GenericCheckpointParameters;
@@ -136,6 +139,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	@Test(groups = { "route" }, description = "3_Generique_3", priority = 3)
 	public void verifyTest_3_Generique_3() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Generique_3 + Color.NORMAL);
@@ -169,6 +173,11 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			} );
 
 			checkNoReports(context, line.getObjectId());
+			Map<String, Map<String, DataLocation>> generic3Context = (Map<String, Map<String, DataLocation>>) context
+					.get(Constant.ATTRIBUTE_CONTEXT);
+			
+			generic3Context.values().stream().forEach(map -> map.clear());
+			generic3Context.clear();
 			routes.get(0).setName(routes.get(1).getName());
 			routes.stream().forEach(route -> {
 			validator.validate(context, route, parameters, transportMode);
