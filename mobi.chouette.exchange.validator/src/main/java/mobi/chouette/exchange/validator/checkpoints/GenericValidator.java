@@ -2,12 +2,15 @@ package mobi.chouette.exchange.validator.checkpoints;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import org.hibernate.metamodel.ValidationException;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
@@ -17,6 +20,9 @@ import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.ChouetteLocalizedObject;
+import mobi.chouette.model.StopAreaLite;
+import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.Referential;
 
 /**
  * @author michel
@@ -408,18 +414,18 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param obj2
 	 * @return
 	 */
-	protected static double distance(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
+	protected static Double distance(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
 		if (obj1.hasCoordinates() && obj2.hasCoordinates()) {
 			return computeHaversineFormula(obj1.getLongitude().doubleValue(), obj1.getLatitude().doubleValue(),
 					obj2.getLongitude().doubleValue(), obj2.getLatitude().doubleValue());
 		} else
-			return 0;
+			return Double.valueOf(0.);
 	}
 
 	/**
 	 * @see http://mathforum.org/library/drmath/view/51879.html
 	 */
-	private static double computeHaversineFormula(double dlon1, double dlat1, double dlon2, double dlat2) {
+	private static Double computeHaversineFormula(double dlon1, double dlat1, double dlon2, double dlat2) {
 
 		double lon1 = dlon1 * toRad;
 		double lat1 = dlat1 * toRad;
@@ -431,7 +437,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		double a = (dlat * dlat) + Math.cos(lat1) * Math.cos(lat2) * (dlon * dlon);
 		double c = 2. * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		double d = R * c;
-		return d;
+		return Double.valueOf(d);
 	}
 
 	protected static final double A = 111322.; // Length of a degree in meter on
@@ -444,7 +450,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param obj2
 	 * @return
 	 */
-	protected static double quickDistance(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
+	protected static Double quickDistance(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
 		if (obj1.hasCoordinates() && obj2.hasCoordinates()) {
 			double dlon = (obj2.getLongitude().doubleValue() - obj1.getLongitude().doubleValue()) * A;
 			dlon *= Math.cos((obj2.getLatitude().doubleValue() + obj1.getLatitude().doubleValue()) * toRad / 2.);
@@ -452,9 +458,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			double ret = Math.sqrt(dlon * dlon + dlat * dlat);
 			if (ret > 2000.)
 				return distance(obj1, obj2);
-			return ret;
+			return Double.valueOf(ret);
 		} else
-			return 0.;
+			return Double.valueOf(0.);
 
 	}
 
@@ -477,6 +483,31 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			return computeHaversineFormula(long1, lat1, long1, lat1);
 		return ret;
 
+	}
+
+	/**
+	 * calculate duration in second beetween times <br>
+	 * if last time before first time, assume a change of day
+	 * 
+	 * @param first
+	 *            first time (earlyer one)
+	 * @param last
+	 *            last time
+	 * @return difference in seconds
+	 */
+	protected long diffTime(Time first, Time last) {
+		if (first == null || last == null)
+			return Long.MIN_VALUE; // TODO
+
+		long lastTime = (last.getTime() / 1000L);
+		long firstTime = (first.getTime() / 1000L);
+
+		long delta = lastTime - firstTime;
+		if (last.before(first)) {
+			delta += 86400L;
+		}
+
+		return delta;
 	}
 
 	/**
@@ -511,4 +542,37 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		return result.orElse(null);
 	}
 
+	@SuppressWarnings("unchecked")
+	protected Double getDistance(Context context, ChouetteLocalizedObject stop1, ChouetteLocalizedObject stop2) {
+		Map<String, Double> distances = (Map<String, Double>) context.get(DISTANCE_CONTEXT);
+		if (distances == null) {
+			distances = new HashMap<>();
+			context.put(DISTANCE_CONTEXT, distances);
+		}
+
+		String key = stop1.getObjectId() + "#" + stop2.getObjectId();
+		if (distances.containsKey(key)) {
+			return distances.get(key);
+		}
+		key = stop2.getObjectId() + "#" + stop1.getObjectId();
+		if (distances.containsKey(key)) {
+			return distances.get(key);
+		}
+		Double distance = quickDistance(stop1, stop2);
+		distances.put(key, distance);
+		return distance;
+	}
+
+	protected Double getSpeedBetweenStops(Context context,VehicleJourneyAtStop passingTime1,VehicleJourneyAtStop passingTime2) 
+	{
+		Referential r = (Referential) context.get(REFERENTIAL);
+		StopAreaLite stop1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
+		if (stop1 == null) throw new ValidationException("unknown StopArea for id "+ passingTime1.getStopPoint().getStopAreaId());
+		StopAreaLite stop2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+		if (stop2 == null) throw new ValidationException("unknown StopArea for id "+ passingTime2.getStopPoint().getStopAreaId());
+		
+		Double distance = getDistance(context, stop1, stop2);
+		return null;
+	}
+	
 }
