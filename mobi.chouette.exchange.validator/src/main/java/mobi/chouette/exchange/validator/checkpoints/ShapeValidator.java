@@ -42,7 +42,7 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Shape1(Context context, Shape object, CheckpointParameters parameters) {
-		// TODO
+		// TODO TO IMPLEMENT : check3Shape1 :: [Tracé] Proximité d'un tracé avec l'itinéraire associé
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Shape2(Context context, Shape object, CheckpointParameters parameters) {
-		// TODO
+		// TODO TO IMPLEMENT : check3Shape2 :: [Tracé] Cohérence d'un tracé avec l'itinéraire associé
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class ShapeValidator extends GenericValidator<Shape> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Shape3(Context context, Shape object, CheckpointParameters parameters) {
-		// TODO
+		// TODO TO IMPLEMENT : check3Shape3 :: [Tracés] Impact lors de la mise à jour de la BD-TOPO
 	}
 
 }

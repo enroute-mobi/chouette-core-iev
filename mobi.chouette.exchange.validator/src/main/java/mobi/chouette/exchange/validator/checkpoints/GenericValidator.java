@@ -496,7 +496,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 */
 	protected long diffTime(Time first, Time last) {
 		if (first == null || last == null)
-			return Long.MIN_VALUE; // TODO
+			return Long.MIN_VALUE; // TODO diffTime => action when first & last time are null
 
 		long lastTime = (last.getTime() / 1000L);
 		long firstTime = (first.getTime() / 1000L);
