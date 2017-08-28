@@ -2,7 +2,9 @@ package mobi.chouette.exchange.validation.checkpoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 
@@ -14,6 +16,7 @@ import org.testng.annotations.Test;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
+import mobi.chouette.dao.JourneyPatternDAO;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
@@ -22,6 +25,7 @@ import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.LineValidator;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.util.Referential;
@@ -31,6 +35,9 @@ public class LineValidatorTests extends AbstractTestValidation {
 
 	@EJB
 	RouteDAO dao;
+
+	@EJB
+	JourneyPatternDAO jpDao;
 
 	@Deployment
 	public static EnterpriseArchive createDeployment() {
@@ -59,16 +66,6 @@ public class LineValidatorTests extends AbstractTestValidation {
 			tc.runValidation();
 			checkNoReports(context, line.getObjectId());
 
-			// -- Error test : no route for line
-			tc.getReferential().getRoutes().clear();
-			ValidationException e = null;
-			try {
-				tc.runValidation();
-			} catch (ValidationException exp) {
-				e = exp;
-			}
-			Assert.assertNotNull(e, "ValidationException should have been thrown, but nothing...");
-
 			// -- Error test : no opposite route
 			routes.stream().forEach(r -> {
 				r.setLineLite(line);
@@ -80,6 +77,15 @@ public class LineValidatorTests extends AbstractTestValidation {
 			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
 					OBJECT_STATE.WARNING, warningCount);
 
+			// -- Error test : no route for line
+			tc.getReferential().getRoutes().clear();
+			ValidationException e = null;
+			try {
+				tc.runValidation();
+			} catch (ValidationException exp) {
+				e = exp;
+			}
+			Assert.assertNotNull(e, "ValidationException should have been thrown, but nothing...");
 		} finally {
 			utx.rollback();
 		}
@@ -120,6 +126,54 @@ public class LineValidatorTests extends AbstractTestValidation {
 				}
 			}
 			tc.runValidation();
+			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
+					OBJECT_STATE.WARNING, warningCount);
+
+		} finally {
+			utx.rollback();
+		}
+
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	@Test(groups = { "line" }, description = L3_JourneyPattern_1
+			+ " : error 2 journeypatterns must have different different stops order ", priority = 32)
+	public void verifyTest_3_Line_1_ErrorJourneyPatternWithSameOrderedStops() throws Exception {
+		log.info(Color.CYAN + " check " + L3_JourneyPattern_1 + Color.NORMAL);
+		initSchema();
+		Context context = initValidatorContext();
+		loadSharedData(context);
+		utx.begin();
+		try {
+			em.joinTransaction();
+
+			TestContext tc = new TestContext(context, L3_JourneyPattern_1);
+			LineLite line = tc.getObjectForTest();
+			List<JourneyPattern> journeypatterns = new ArrayList<JourneyPattern>();
+
+			Collection<Route> rt = tc.getReferential().getRoutes().values();
+			rt.stream().forEach(r -> {
+				List<JourneyPattern> jps = r.getJourneyPatterns();
+				journeypatterns.addAll(jps);
+			});
+			Map<String, JourneyPattern> mapJourneyPatterns = new HashMap<String, JourneyPattern>();
+			journeypatterns.stream().forEach(jp -> mapJourneyPatterns.put(jp.getObjectId(), jp));
+			tc.getReferential().setJourneyPatterns(mapJourneyPatterns);
+
+			// -- Nominal test
+			tc.runValidation();
+			checkNoReports(context, line.getObjectId());
+
+			// -- Error test
+			int warningCount = 1;
+			JourneyPattern first = journeypatterns.get(0);
+			JourneyPattern second = journeypatterns.get(1);
+			first.setStopPoints(second.getStopPoints()); //-- copy stoppoints from jp0 to jp1
+
+			tc.runValidation();
+
 			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
 					OBJECT_STATE.WARNING, warningCount);
 

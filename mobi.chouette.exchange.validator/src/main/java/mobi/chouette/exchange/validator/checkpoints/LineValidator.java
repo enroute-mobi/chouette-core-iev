@@ -57,22 +57,21 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 
 		Referential ref = (Referential) context.get(REFERENTIAL);
 		Collection<Route> routes = ref.getRoutes().values();
-
 		if (routes.size() > 1) { // -- Prérequis : Ligne disposant de plusieurs itinéraires
+			String checkPointName = L3_Line_1;
 
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.prepareCheckPointReport(context, L3_Line_1);
+			validationReporter.prepareCheckPointReport(context, checkPointName);
 			for (Route r : routes) {
 				Route opposite = r.getOppositeRoute();
 				if (opposite == null) {
 					log.error("Route " + r.getObjectId() + " of Line " + object.getObjectId()
 							+ " has incorrect opposite Route");
 					DataLocation source = new DataLocation(object);
-					validationReporter.addCheckPointReportError(context, L3_Line_1, source);
+					validationReporter.addCheckPointReportError(context, checkPointName, source);
 				}
 			}
-		}
-		else{
+		} else {
 			log.error("Line ID = " + object.getId() + " has no route !");
 			throw new ValidationException("Line ID = " + object.getId() + " has no route !");
 		}
@@ -130,7 +129,7 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 					b.append("]");
 				}
 				String key = b.toString();
-				System.err.println("R("+r.getObjectId()+") =>>" + key);
+				System.err.println("R(" + r.getObjectId() + ") =>>" + key);
 				Route sameExist = map.get(key);
 				if (sameExist != null) {
 					DataLocation source = new DataLocation(object);
@@ -140,16 +139,12 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 					map.put(key, r);
 				}
 			}
-		}
-		else{
+		} else {
 			log.error("Line ID = " + object.getId() + " has no route !");
 			throw new ValidationException("Line ID = " + object.getId() + " has no route !");
 		}
 
 	}
-	
-	
-	
 
 	/**
 	 * <b>Titre</b> :[Mission] Doublon de missions dans une ligne
@@ -177,8 +172,41 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3JourneyPattern1(Context context, JourneyPattern object, CheckpointParameters parameters) {
-		// TODO
+	protected void check3JourneyPattern1(Context context, LineLite object, CheckpointParameters parameters) {
+		Referential ref = (Referential) context.get(REFERENTIAL);
+		String checkPointName = L3_JourneyPattern_1;
+		Collection<JourneyPattern> journeyPatterns = ref.getJourneyPatterns().values();
+		System.out.println("journeyPatterns : " + journeyPatterns.size());
+		Map<String, JourneyPattern> map = new HashMap<String, JourneyPattern>();
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, checkPointName);
+		journeyPatterns.stream().forEach( jp -> {
+			List<StopPoint> stoppoints = jp.getStopPoints();
+			StringBuilder b = new StringBuilder();
+			for (StopPoint sp : stoppoints) {
+				if (b.length() > 0) {
+					b.append(",");
+				}
+				b.append("[");
+				b.append(sp.getObjectId());
+				b.append("/fa:");
+				b.append(sp.getForAlighting());
+				b.append("/fb:");
+				b.append(sp.getForBoarding());
+				b.append("]");
+			}
+			String key = b.toString();
+			System.err.println("JP(" + jp.getObjectId() + ") =>>" + key);
+			JourneyPattern sameExist = map.get(key);
+			if (sameExist != null) {
+				DataLocation source = new DataLocation(object);
+				DataLocation target = new DataLocation(sameExist);
+				validationReporter.addCheckPointReportError(context, checkPointName, source, null, null, target);
+			} else {
+				map.put(key, jp);
+			}	
+		
+		});
 	}
 
 }
