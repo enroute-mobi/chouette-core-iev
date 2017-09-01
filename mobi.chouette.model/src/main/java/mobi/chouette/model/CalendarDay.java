@@ -5,7 +5,6 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,13 +22,14 @@ public class CalendarDay implements Serializable, Comparable<CalendarDay> , Sign
 
 	@Getter
 	@Setter
-	@Transient
+	@Column(name = "checksum")
 	private String checksum ;
 	
 	@Getter
 	@Setter 
-	@Transient
+	@Column(name = "checksum_source")
 	private String checksumSource;
+
 
 	/**
 	 * date

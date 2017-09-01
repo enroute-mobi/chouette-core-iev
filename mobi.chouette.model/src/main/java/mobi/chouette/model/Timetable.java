@@ -19,19 +19,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import mobi.chouette.model.type.DayTypeEnum;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import mobi.chouette.model.type.DayTypeEnum;
 
 /**
  * Chouette Timetable
@@ -60,13 +59,14 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	@Getter
 	@Setter
-	@Transient
+	@Column(name = "checksum")
 	private String checksum ;
 	
 	@Getter
 	@Setter 
-	@Transient
+	@Column(name = "checksum_source")
 	private String checksumSource;
+
 
 	
 	/**
