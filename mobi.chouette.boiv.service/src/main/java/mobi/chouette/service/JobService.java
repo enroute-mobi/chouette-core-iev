@@ -22,7 +22,7 @@ import mobi.chouette.model.ImportTask;
 public class JobService implements JobData, ServiceConstants {
 
 	public enum STATUS {
-		NEW, PENDING, RUNNING, SUCCESSFUL, FAILED, CANCELLED, ABORTED
+		NEW, PENDING, RUNNING, SUCCESSFUL, WARNING, FAILED, CANCELLED, ABORTED
 	}
 
 	private Long id;

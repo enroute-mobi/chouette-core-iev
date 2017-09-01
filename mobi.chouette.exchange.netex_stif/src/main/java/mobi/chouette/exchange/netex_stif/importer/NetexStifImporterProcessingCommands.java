@@ -46,7 +46,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	@Override
 	public List<? extends Command> getPreProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
-		NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+		// NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
 		List<Command> commands = new ArrayList<>();
 		try {
 			if (withDao /*&& parameters.isCleanRepository()*/) {

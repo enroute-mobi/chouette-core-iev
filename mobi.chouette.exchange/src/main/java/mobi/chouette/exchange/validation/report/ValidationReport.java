@@ -36,8 +36,7 @@ public class ValidationReport extends AbstractReport implements Report {
 	@Getter
 	@Setter
 	private Date date = new Date(0);
-
-
+	
 	public CheckPointReport findCheckPointReportByName(String name) {
 		for (CheckPointReport checkPoint : checkPoints) {
 			if (checkPoint.getName().equals(name))

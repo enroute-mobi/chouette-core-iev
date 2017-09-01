@@ -201,6 +201,7 @@ public class ActionReporterImpl implements ActionReporter, Constant {
 			FileReport fileReport = actionReport.findZipReport(fileInfoName);
 			if (fileReport != null) {
 				ret = fileReport.addCheckPointError(code, severity);
+				if (severity.equals(SEVERITY.WARNING)) actionReport.setWarning(true);
 			}
 		}
 		return ret;
@@ -214,6 +215,7 @@ public class ActionReporterImpl implements ActionReporter, Constant {
 			FileReport fileReport = actionReport.findFileReport(fileInfoName);
 			if (fileReport != null) {
 				ret = fileReport.addCheckPointError(code, severity);
+				if (severity.equals(SEVERITY.WARNING)) actionReport.setWarning(true);
 			}
 		}
 		return ret;
@@ -231,6 +233,7 @@ public class ActionReporterImpl implements ActionReporter, Constant {
 			ObjectReport objectReport = actionReport.findObjectReport(objectId, type);
 			if (objectReport != null) {
 				ret = objectReport.addCheckPointError(code, severity);
+				if (severity.equals(SEVERITY.WARNING)) actionReport.setWarning(true);
 			}
 		}
 		return ret;

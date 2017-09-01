@@ -17,6 +17,7 @@ import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.checkpoint.AbstractValidation;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
 
 @Log4j
@@ -101,23 +102,30 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 	}
 
 	@Override
-	public AbstractParameter toActionParameter( Object task) {
+	public AbstractParameter toActionParameter(Object task) {
 		if (task instanceof ImportTask) {
 			ImportTask importTask = (ImportTask) task;
 			if (!importTask.getFormat().equals("netex_stif"))
 				return null;
 			Referential referential = importTask.getReferential();
+			Organisation organisation = referential.getOrganisation();
 			NetexStifImportParameters parameter = new NetexStifImportParameters();
 			parameter.setImportId(importTask.getId());
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
-			if (referential.getId() == null) throw new RuntimeException("referential id is null");
-			if (referential.getMetadatas().isEmpty()) throw new RuntimeException("referential id "+referential.getId() +" metadata is null");
-			if (referential.getMetadatas().get(0).getLineIds() == null) throw new RuntimeException("referential's metadata line ids  null");
+			if (referential.getId() == null)
+				throw new RuntimeException("referential id is null");
+			if (referential.getMetadatas().isEmpty())
+				throw new RuntimeException("referential id " + referential.getId() + " metadata is null");
+			if (referential.getMetadatas().get(0).getLineIds() == null)
+				throw new RuntimeException("referential's metadata line ids  null");
 			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
+			parameter.setOrganisationName(organisation.getName());
+			parameter.setOrganisationCode(organisation.getCode());
+
 			return parameter;
 		}
 		return null;

@@ -264,6 +264,9 @@ public class JobServiceManager {
 			updateImportTask(jobService);
 		}
 		// TODO delete directory
+		
+		// TODO send termination to BOIV
+
 	}
 
 	private void updateImportTask(JobService jobService) {
@@ -301,6 +304,8 @@ public class JobServiceManager {
 			updateImportTask(jobService);
 		}
 		// TODO delete directory
+		
+		// TODO send termination to BOIV
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

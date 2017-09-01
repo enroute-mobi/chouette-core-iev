@@ -26,7 +26,7 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 
 @XmlRootElement(name = "action_report")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "progression", "result", "zip", "files", "lines", "stats", "failure", "objects", "collections" })
+@XmlType(propOrder = { "progression", "result","warning", "zip", "files", "lines", "stats", "failure", "objects", "collections" })
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ActionReport extends AbstractReport implements Constant, ProgressionReport, Report {
@@ -45,6 +45,9 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 
 	@XmlElement(name = "failure")
 	private ActionError failure;
+
+	@XmlElement(name = "warning")
+	private boolean warning = false;
 
 	@XmlElement(name = "objects")
 	private Map<ActionReporter.OBJECT_TYPE, ObjectReport> objects = new HashMap<ActionReporter.OBJECT_TYPE, ObjectReport>();
