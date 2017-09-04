@@ -501,7 +501,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3Route11(Context context, Route object, CheckpointParameters parameters) {
-		// TODO : waiting for data model
+		// TODO : TO IMPLEMENT : check3Route11 :: [Itinéraire] Présence de tracé
 
 		return;
 	}

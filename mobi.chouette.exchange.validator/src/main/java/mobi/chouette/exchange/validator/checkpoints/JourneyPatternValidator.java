@@ -1,7 +1,10 @@
 package mobi.chouette.exchange.validator.checkpoints;
 
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
@@ -9,46 +12,19 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.VehicleJourney;
+import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class JourneyPatternValidator extends GenericValidator<JourneyPattern> implements CheckPointConstant {
 
-	private static final String[] codes = { L3_JourneyPattern_1, L3_JourneyPattern_2,  L3_VehicleJourney_3 };
+	private static final String[] codes = { L3_JourneyPattern_2, L3_VehicleJourney_3 };
 
 	@Override
 	public void validate(Context context, JourneyPattern object, ValidateParameters parameters, String transportMode) {
 		super.validate(context, object, parameters, transportMode, codes);
-	}
-
-	/**
-	 * <b>Titre</b> :[Mission] Doublon de missions dans une ligne
-	 * <p>
-	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2102">Cartes #2102</a>
-	 * <p>
-	 * <b>Code</b> :3-JourneyPattern-1
-	 * <p>
-	 * <b>Variables</b> : néant
-	 * <p>
-	 * <b>Prérequis</b> : néant
-	 * <p>
-	 * <b>Prédicat</b> : Deux missions de la même ligne ne doivent pas desservir les mêmes arrêts dans le même ordre
-	 * <p>
-	 * <b>Message</b> : La mission {objectId} est identique à la mission {objectId}
-	 * <p>
-	 * <b>Criticité</b> : warning
-	 * <p>
-	 * 
-	 *
-	 * @param context
-	 *            context de validation
-	 * @param object
-	 *            objet à contrôler
-	 * @param parameters
-	 *            paramètres du point de contrôle
-	 */
-	protected void check3JourneyPattern1(Context context, JourneyPattern object, CheckpointParameters parameters) {
-		// TODO
 	}
 
 	/**
@@ -87,7 +63,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 			validationReporter.addCheckPointReportError(context, L3_JourneyPattern_2, source);
 		}
 	}
-	
+
 	/**
 	 * <b>Titre</b> :[Course] Les vitesses entre 2 arrêts doivent être similaires pour toutes les courses d'une même
 	 * mission
@@ -119,8 +95,109 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 *            paramètres du point de contrôle
 	 */
 	protected void check3VehicleJourney3(Context context, JourneyPattern object, CheckpointParameters parameters) {
-		// TODO
+		List<VehicleJourney> vj = object.getVehicleJourneys();
+		Referential ref = (Referential) context.get(REFERENTIAL);
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_3);
+		Map<String, List<TravelTime>> travelTimeMap = new HashMap<String, List<TravelTime>>();
+
+		vj.stream().forEach(v -> {
+			System.out.println(v.getObjectId());
+			VehicleJourneyAtStop last = null;
+			List<VehicleJourneyAtStop> list = v.getVehicleJourneyAtStops();
+			for (VehicleJourneyAtStop vjs : list) {
+				if (last != null) {
+					updateSpeed(v, vjs, last, travelTimeMap);
+				}
+				last = vjs;
+			}
+		});
+		String tmp = parameters.getFirstValue();
+		Long threshold = Long.parseLong(tmp);
+
+		travelTimeMap.keySet().stream().forEach(s -> {
+			System.out.println(s + "(#" + travelTimeMap.get(s).size() + ") -> ");
+			final Long average = (long) travelTimeMap.get(s).stream().mapToLong(t -> t.getDelta()).average()
+					.getAsDouble();
+			System.out.println("avg=" + average + ", threshold=" + threshold + ", smin=" + (average - threshold)
+					+ ", smax=" + (average + threshold));
+			List<TravelTime> list = travelTimeMap.get(s).stream()
+					.filter(tt -> (tt.getDelta() > (average + threshold)) || (tt.getDelta() < (average - threshold)))
+					.collect(Collectors.toList());
+			list.stream().forEach(tt -> {
+				DataLocation source = new DataLocation(tt.getVehicleJourney());
+				StopAreaLite sa1 = ref.findStopArea(tt.getVehicleJourneyAtStop1().getStopPoint().getStopAreaId());
+				StopAreaLite sa2 = ref.findStopArea(tt.getVehicleJourneyAtStop2().getStopPoint().getStopAreaId());
+				long delta = average - tt.getDelta();
+				log.error("Le temps de parcours sur la course "+tt.getVehicleJourney().getObjectId()+" entre les arrêts {"+sa1.getName()+"} ({"+sa1.getObjectId()+"}) et {"+sa2.getName()+"} ({"+sa2.getObjectId()+"}) s'écarte de {"+delta+"} du temps moyen constaté sur la mission");
+				DataLocation target1 = new DataLocation(sa1);
+				DataLocation target2 = new DataLocation(sa2);
+				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_3, source, null, null, target1,
+						target2);
+			});
+			System.out.println("For parcours " + s + "  => err=" + list.size() + " total="+travelTimeMap.get(s).size() );
+		});
 	}
 
+	private void updateSpeed(VehicleJourney vj, VehicleJourneyAtStop vjs1, VehicleJourneyAtStop vjs2,
+			Map<String, List<TravelTime>> travelTimeMap) {
+
+		TravelTime tt = new TravelTime();
+		tt.setVehicleJourney(vj);
+		String key = new StringBuilder().append("(").append(vjs1.getStopPoint().getObjectId()).append("->")
+				.append(vjs1.getStopPoint().getObjectId()).append(")").toString();
+		Long delta = diffTime(vjs1.getDepartureTime(), vjs2.getArrivalTime());
+		tt.setVehicleJourneyAtStop1(vjs1);
+		tt.setVehicleJourneyAtStop2(vjs2);
+		tt.setDelta(delta);
+
+		List<TravelTime> ttList = travelTimeMap.get(key);
+		if (ttList == null) {
+			ttList = new ArrayList<TravelTime>();
+			travelTimeMap.put(key, ttList);
+		}
+		ttList.add(tt);
+
+	}
+
+	class TravelTime {
+		private Long delta;
+		private VehicleJourney vehicleJourney;
+		private VehicleJourneyAtStop vehicleJourneyAtStop1;
+		private VehicleJourneyAtStop vehicleJourneyAtStop2;
+
+		public Long getDelta() {
+			return delta;
+		}
+
+		public void setDelta(Long delta) {
+			this.delta = delta;
+		}
+
+		public VehicleJourney getVehicleJourney() {
+			return vehicleJourney;
+		}
+
+		public void setVehicleJourney(VehicleJourney vehicleJourney) {
+			this.vehicleJourney = vehicleJourney;
+		}
+
+		public VehicleJourneyAtStop getVehicleJourneyAtStop1() {
+			return vehicleJourneyAtStop1;
+		}
+
+		public void setVehicleJourneyAtStop1(VehicleJourneyAtStop vehicleJourneyAtStop1) {
+			this.vehicleJourneyAtStop1 = vehicleJourneyAtStop1;
+		}
+
+		public VehicleJourneyAtStop getVehicleJourneyAtStop2() {
+			return vehicleJourneyAtStop2;
+		}
+
+		public void setVehicleJourneyAtStop2(VehicleJourneyAtStop vehicleJourneyAtStop2) {
+			this.vehicleJourneyAtStop2 = vehicleJourneyAtStop2;
+		}
+
+	}
 
 }
