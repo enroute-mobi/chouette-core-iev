@@ -99,9 +99,9 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			List<VehicleJourney> vj = jp.getVehicleJourneys();
 			VehicleJourneyAtStop vjs = vj.get(0).getVehicleJourneyAtStops().get(1);
 			Time at = vjs.getArrivalTime();
-			vjs.setArrivalTime(new Time(at.getTime() + (threshold + 10) * 60 * 1000));
+			vjs.setArrivalTime(new Time(at.getTime() + (2 *threshold )  * 1000));
 
-			tc.setFirstParam(Long.toString(2 * 60));
+			tc.setFirstParam(Long.toString(threshold));
 			tc.runValidation();
 			checkReports(context, tc.getLine().getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(),
 					null, OBJECT_STATE.WARNING);

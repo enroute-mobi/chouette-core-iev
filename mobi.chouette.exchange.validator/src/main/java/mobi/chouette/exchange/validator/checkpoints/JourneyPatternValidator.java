@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -103,13 +105,13 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 
 		vj.stream().forEach(v -> {
 			System.out.println(v.getObjectId());
-			VehicleJourneyAtStop last = null;
+			VehicleJourneyAtStop previous = null;
 			List<VehicleJourneyAtStop> list = v.getVehicleJourneyAtStops();
 			for (VehicleJourneyAtStop vjs : list) {
-				if (last != null) {
-					updateSpeed(v, vjs, last, travelTimeMap);
+				if (previous != null) {
+					updateSpeed(v, previous, vjs, travelTimeMap);
 				}
-				last = vjs;
+				previous = vjs;
 			}
 		});
 		String tmp = parameters.getFirstValue();
@@ -128,7 +130,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 				DataLocation source = new DataLocation(tt.getVehicleJourney());
 				StopAreaLite sa1 = ref.findStopArea(tt.getVehicleJourneyAtStop1().getStopPoint().getStopAreaId());
 				StopAreaLite sa2 = ref.findStopArea(tt.getVehicleJourneyAtStop2().getStopPoint().getStopAreaId());
-				long delta = average - tt.getDelta();
+				long delta = Math.abs(tt.getDelta() - average);
 				log.error("Le temps de parcours sur la course "+tt.getVehicleJourney().getObjectId()+" entre les arrêts {"+sa1.getName()+"} ({"+sa1.getObjectId()+"}) et {"+sa2.getName()+"} ({"+sa2.getObjectId()+"}) s'écarte de {"+delta+"} du temps moyen constaté sur la mission");
 				DataLocation target1 = new DataLocation(sa1);
 				DataLocation target2 = new DataLocation(sa2);
@@ -160,43 +162,20 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 
 	}
 
+	
 	class TravelTime {
+		@Getter
+		@Setter
 		private Long delta;
+		@Getter
+		@Setter
 		private VehicleJourney vehicleJourney;
+		@Getter
+		@Setter
 		private VehicleJourneyAtStop vehicleJourneyAtStop1;
+		@Getter
+		@Setter
 		private VehicleJourneyAtStop vehicleJourneyAtStop2;
-
-		public Long getDelta() {
-			return delta;
-		}
-
-		public void setDelta(Long delta) {
-			this.delta = delta;
-		}
-
-		public VehicleJourney getVehicleJourney() {
-			return vehicleJourney;
-		}
-
-		public void setVehicleJourney(VehicleJourney vehicleJourney) {
-			this.vehicleJourney = vehicleJourney;
-		}
-
-		public VehicleJourneyAtStop getVehicleJourneyAtStop1() {
-			return vehicleJourneyAtStop1;
-		}
-
-		public void setVehicleJourneyAtStop1(VehicleJourneyAtStop vehicleJourneyAtStop1) {
-			this.vehicleJourneyAtStop1 = vehicleJourneyAtStop1;
-		}
-
-		public VehicleJourneyAtStop getVehicleJourneyAtStop2() {
-			return vehicleJourneyAtStop2;
-		}
-
-		public void setVehicleJourneyAtStop2(VehicleJourneyAtStop vehicleJourneyAtStop2) {
-			this.vehicleJourneyAtStop2 = vehicleJourneyAtStop2;
-		}
 
 	}
 
