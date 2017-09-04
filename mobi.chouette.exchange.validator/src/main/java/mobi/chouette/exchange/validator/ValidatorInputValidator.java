@@ -113,7 +113,11 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
-		// TODO Auto-generated method stub
+		// TODO : convertir task en ComplianceeCheckTask 
+		// puis s'en servir pour créer et habiller un ValidateParameter 
+		// le ValidateParameter est à retourner par cette fonction
+		// voir NetexStifInputValidator comme exemple au moins sur les éléménts communs (AbstactParameter et ActionTask) 
+		
 		return null;
 	}
 
