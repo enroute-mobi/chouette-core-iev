@@ -80,6 +80,7 @@ public class Scheduler {
 	}
 
 	@PostConstruct
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	private void initialize() {
 
 		try {

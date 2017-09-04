@@ -66,7 +66,7 @@ public class Referential {
 	private boolean ready;
 	
 	@Getter
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "organisation_id")
 	private Organisation organisation;
 	
