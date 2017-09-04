@@ -80,6 +80,7 @@ public class AbstractValidatorTests extends AbstractTest {
 
 	private boolean validateId(String id, String type) {
 		Context context = initImportContext();
+		context.put(Constant.FILE_NAME, FAKE_FILENAME);
 		AbstractValidator validator = ValidatorFactory.getValidator(context, RouteValidator.class); // --
 		// RouteValidator
 		// étend
@@ -87,7 +88,6 @@ public class AbstractValidatorTests extends AbstractTest {
 		int lineNumber = 0;
 		int columnNumber = 0;
 		ValidationReport report = (ValidationReport) context.get(VALIDATION_REPORT);
-		context.put(Constant.FILE_NAME, FAKE_FILENAME);
 		boolean result = validator.checkNetexId(context, type, id, lineNumber, columnNumber);
 		log.info(report.getCheckPointErrors());
 
@@ -246,13 +246,13 @@ public class AbstractValidatorTests extends AbstractTest {
 	private boolean validateRef(String ref, String refType, boolean b) {
 		Context context = initImportContext();
 
+		context.put(Constant.FILE_NAME, FAKE_FILENAME);
 		AbstractValidator validator = ValidatorFactory.getValidator(context, RouteValidator.class); // --
 		// RouteValidator
 		// étend
 		// AbstractValidator
 		int lineNumber = 1;
 		int columnNumber = 2;
-		context.put(Constant.FILE_NAME, FAKE_FILENAME);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, FAKE_FILENAME, IO_TYPE.INPUT);
 		Route object = new Route();

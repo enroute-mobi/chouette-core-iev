@@ -103,4 +103,8 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String ROUTE_FROM_SERVICE_JOURNEY_PATTERN = "RouteFromServiceJourneyPattern";
 	public static final String VALIDATORS = "validators";
 
+	// file names
+	public static final String CALENDRIER_FILE_NAME = "calendriers.xml";
+	public static final String COMMUN_FILE_NAME = "commun.xml";
+
 }

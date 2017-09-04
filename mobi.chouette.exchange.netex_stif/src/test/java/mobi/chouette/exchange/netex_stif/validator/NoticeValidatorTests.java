@@ -23,7 +23,7 @@ import mobi.chouette.model.Line;
 @Log4j
 public class NoticeValidatorTests extends AbstractTest {
 
-	public static String TEST_FILENAME = "offre_xxx.xml";
+	public static String TEST_FILENAME = COMMUN_FILE_NAME;
 
 	@Getter
 	@Setter

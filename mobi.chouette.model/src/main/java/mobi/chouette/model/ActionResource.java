@@ -48,7 +48,7 @@ public abstract class ActionResource implements Serializable{
 	
 	@Getter
 	@Setter
-	@Column(name = "type")
+	@Column(name = "resource_type")
 	private String type;
 	
 

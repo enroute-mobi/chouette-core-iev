@@ -129,8 +129,10 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		if (context.containsKey(TESTNG))
 			return;
 		ActionReport report = (ActionReport) context.get(REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		JobData job = (JobData) context.get(JOB_DATA);
 
+		valReport.computeStats();
 		// List<ActionResource> result = new ArrayList<ActionResource>();
 		for (FileReport zipReport : report.getZips()) {
 			ActionResource actionResource = actionResourceDAO.createResource(job);
@@ -146,7 +148,12 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 			actionResource.setType("file");
 			actionResource.setName(fileReport.getName());
 			actionResource.setStatus(fileReport.getStatus().name());
+			actionResource.getMetrics().put("ok_count", Integer.toString(valReport.getOkCount()));
+			actionResource.getMetrics().put("warning_count", Integer.toString(valReport.getWarningCount()));
+			actionResource.getMetrics().put("error_count", Integer.toString(valReport.getErrorCount()));
+			actionResource.getMetrics().put("uncheck_count", Integer.toString(valReport.getUncheckCount()));
 			actionResourceDAO.saveResource(actionResource);
+			
 			addMessages(context, fileReport, actionResource);
 		}
 		report.getFiles().clear(); // TODO : see if mark as saved or delete !
@@ -180,6 +187,9 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		}
 		report.getCollections().clear(); // TODO : see if mark as saved or
 											// delete !
+		valReport.getCheckPoints().clear();
+		valReport.getCheckPointErrors().clear();
+		context.put(VALIDATION_REPORT, new ValidationReport());
 	}
 
 	private void addMessages(Context context, CheckedReport report, ActionResource actionResource) {

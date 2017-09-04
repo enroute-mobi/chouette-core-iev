@@ -32,11 +32,26 @@ public class ValidationReport extends AbstractReport implements Report {
 	@Getter
 	@Setter
 	private boolean maxByFile = true;
-	
+
 	@Getter
 	@Setter
 	private Date date = new Date(0);
 
+	@Getter
+	@Setter
+	private int okCount = 0;
+
+	@Getter
+	@Setter
+	private int uncheckCount = 0;
+
+	@Getter
+	@Setter
+	private int warningCount = 0;
+
+	@Getter
+	@Setter
+	private int errorCount = 0;
 
 	public CheckPointReport findCheckPointReportByName(String name) {
 		for (CheckPointReport checkPoint : checkPoints) {
@@ -83,14 +98,13 @@ public class ValidationReport extends AbstractReport implements Report {
 			result = VALIDATION_RESULT.OK;
 	}
 
-
 	@Override
 	public void print(PrintStream out) {
 		print(out, new StringBuilder(), 1, true);
 	}
 
 	@Override
-	public void print(PrintStream out, StringBuilder ret , int level, boolean first) {
+	public void print(PrintStream out, StringBuilder ret, int level, boolean first) {
 		ret.setLength(0);
 		level = 1;
 		out.print("{\"validation_report\": {");
@@ -108,5 +122,25 @@ public class ValidationReport extends AbstractReport implements Report {
 		// Validation Report has to be saved if checkPoints were defined
 
 		return checkPoints.isEmpty();
+	}
+
+	public void computeStats() {
+		checkPoints.stream().forEach(checkPoint -> {
+			boolean error = checkPoint.getSeverity().equals(SEVERITY.ERROR);
+			switch (checkPoint.getState()) {
+			case UNCHECK:
+				uncheckCount++;
+				break;
+			case NOK:
+				if (error)
+					errorCount++;
+				else
+					warningCount++;
+				break;
+			case OK:
+				okCount++;
+				break;
+			}
+		});
 	}
 }

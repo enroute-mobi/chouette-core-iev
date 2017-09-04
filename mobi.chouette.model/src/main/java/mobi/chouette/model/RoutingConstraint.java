@@ -42,13 +42,14 @@ public class RoutingConstraint extends ChouetteIdentifiedObject implements Signe
 
 	@Getter
 	@Setter
-	@Transient
+	@Column(name = "checksum")
 	private String checksum ;
 	
 	@Getter
 	@Setter 
-	@Transient
+	@Column(name = "checksum_source")
 	private String checksumSource;
+
 
 	
 	/**

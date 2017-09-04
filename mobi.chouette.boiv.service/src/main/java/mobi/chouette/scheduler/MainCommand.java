@@ -65,6 +65,10 @@ public class MainCommand implements Command, Constant {
 			{
 				jobManager.terminate(jobService,JobService.STATUS.FAILED);
 			}
+			else if (report.isWarning())
+			{ 
+				jobManager.terminate(jobService,JobService.STATUS.WARNING);
+			}
 			else
 			{
 				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFUL);
@@ -78,9 +82,17 @@ public class MainCommand implements Command, Constant {
 					&& report.getFailure().getCode().equals(ActionReporter.ERROR_CODE.INTERNAL_ERROR))
 				jobManager.abort(jobService);
 			else if (report.getResult().equals(ReportConstant.STATUS_ERROR))
+			{
 				jobManager.terminate(jobService,JobService.STATUS.FAILED);
+			}
+			else if (report.isWarning())
+			{ 
+				jobManager.terminate(jobService,JobService.STATUS.WARNING);
+			}
 			else
+			{
 				jobManager.terminate(jobService,JobService.STATUS.SUCCESSFUL);
+			}
 
 		} catch (Exception ex) {
 			if (!COMMAND_CANCELLED.equals(ex.getMessage())) {

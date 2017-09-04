@@ -5,7 +5,6 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,13 +25,14 @@ public class Period implements Serializable, Comparable<Period>, Cloneable , Sig
 
 	@Getter
 	@Setter
-	@Transient
+	@Column(name = "checksum")
 	private String checksum ;
 	
 	@Getter
 	@Setter 
-	@Transient
+	@Column(name = "checksum_source")
 	private String checksumSource;
+
 
 	
 	/**
