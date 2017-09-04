@@ -132,7 +132,8 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		JobData job = (JobData) context.get(JOB_DATA);
 
-		valReport.computeStats();
+		if (valReport != null)
+			valReport.computeStats();
 		// List<ActionResource> result = new ArrayList<ActionResource>();
 		for (FileReport zipReport : report.getZips()) {
 			ActionResource actionResource = actionResourceDAO.createResource(job);
@@ -148,12 +149,14 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 			actionResource.setType("file");
 			actionResource.setName(fileReport.getName());
 			actionResource.setStatus(fileReport.getStatus().name());
-			actionResource.getMetrics().put("ok_count", Integer.toString(valReport.getOkCount()));
-			actionResource.getMetrics().put("warning_count", Integer.toString(valReport.getWarningCount()));
-			actionResource.getMetrics().put("error_count", Integer.toString(valReport.getErrorCount()));
-			actionResource.getMetrics().put("uncheck_count", Integer.toString(valReport.getUncheckCount()));
+			if (valReport != null) {
+				actionResource.getMetrics().put("ok_count", Integer.toString(valReport.getOkCount()));
+				actionResource.getMetrics().put("warning_count", Integer.toString(valReport.getWarningCount()));
+				actionResource.getMetrics().put("error_count", Integer.toString(valReport.getErrorCount()));
+				actionResource.getMetrics().put("uncheck_count", Integer.toString(valReport.getUncheckCount()));
+			}
 			actionResourceDAO.saveResource(actionResource);
-			
+
 			addMessages(context, fileReport, actionResource);
 		}
 		report.getFiles().clear(); // TODO : see if mark as saved or delete !
@@ -187,9 +190,11 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		}
 		report.getCollections().clear(); // TODO : see if mark as saved or
 											// delete !
-		valReport.getCheckPoints().clear();
-		valReport.getCheckPointErrors().clear();
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		if (valReport != null) {
+			valReport.getCheckPoints().clear();
+			valReport.getCheckPointErrors().clear();
+			context.put(VALIDATION_REPORT, new ValidationReport());
+		}
 	}
 
 	private void addMessages(Context context, CheckedReport report, ActionResource actionResource) {
@@ -201,7 +206,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
 				ActionMessage message = actionMessageDAO.createMessage(actionResource);
 				message.setCriticity(ActionMessage.CRITICITY.ERROR);
-				populateMessage(message,error);
+				populateMessage(message, error);
 				actionMessageDAO.saveMessage(message);
 			}
 		}
@@ -210,7 +215,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
 				ActionMessage message = actionMessageDAO.createMessage(actionResource);
 				message.setCriticity(ActionMessage.CRITICITY.WARNING);
-				populateMessage(message,error);
+				populateMessage(message, error);
 				actionMessageDAO.saveMessage(message);
 			}
 		}
@@ -224,14 +229,15 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		addLocation(map, "source", error.getSource());
 		addLocation(mapResource, "", error.getSource());
 		for (int i = 0; i < error.getTargets().size(); i++) {
-			addLocation(map, "target_"+i, error.getTargets().get(i));
+			addLocation(map, "target_" + i, error.getTargets().get(i));
 		}
 		map.put("error_value", asString(error.getValue()));
-		map.put("reference_value", asString(error.getReferenceValue()));		
+		map.put("reference_value", asString(error.getReferenceValue()));
 	}
 
 	private void addLocation(Map<String, String> map, String prefix, Location location) {
-		if (!prefix.isEmpty()) prefix = prefix+".";
+		if (!prefix.isEmpty())
+			prefix = prefix + ".";
 		if (location.getFile() != null) {
 			map.put(prefix + "filename", asString(location.getFile().getFilename()));
 			map.put(prefix + "line_number", asString(location.getFile().getLineNumber()));
@@ -239,10 +245,9 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		}
 		map.put(prefix + "label", asString(location.getName()));
 		map.put(prefix + "objectid", asString(location.getObjectId()));
-        if (!location.getObjectRefs().isEmpty())
-        {
-        	// TODO save path
-        }
+		if (!location.getObjectRefs().isEmpty()) {
+			// TODO save path
+		}
 
 	}
 
