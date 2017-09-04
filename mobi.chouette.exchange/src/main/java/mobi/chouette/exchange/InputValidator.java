@@ -1,9 +1,7 @@
 package mobi.chouette.exchange;
 
 import java.nio.file.Path;
-import java.util.List;
 
-import mobi.chouette.common.JobData;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 
@@ -12,7 +10,7 @@ public interface InputValidator {
 	
 	AbstractParameter toActionParameter(Object task);
 
-	ValidationParameters toValidation(String validationParameters);
+	// ValidationParameters toValidation(String validationParameters);
 
 	boolean checkParameters(String abstractParameter, String validationParameters);
 
@@ -22,7 +20,7 @@ public interface InputValidator {
 	
 	boolean checkFile(String fileName, Path filePath, AbstractParameter abstractParameter);
 	
-	boolean initReport2(JobData data);
+	// boolean initReport2(JobData data);
 	
-	List<TestDescription> getTestList();
+	// List<TestDescription> getTestList();
 }

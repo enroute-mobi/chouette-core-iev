@@ -40,11 +40,11 @@ public class Parameters {
 			String type = (String) iterator.next();
 			JSONObject elt = new JSONObject();
 			elt.put(type, param.getJSONObject(type));
-			if (type.equals("validation"))
-			{
-				validation = inputValidator.toValidation(elt.toString());
-			}
-			else
+//			if (type.equals("validation"))
+//			{
+//				validation = inputValidator.toValidation(elt.toString());
+//			}
+//			else
 			{
 				command = type;
 				configuration = inputValidator.toActionParameter(elt.toString());
