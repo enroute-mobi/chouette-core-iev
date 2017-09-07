@@ -237,7 +237,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 
 	private void addLocation(Map<String, String> map, String prefix, Location location) {
 		if (!prefix.isEmpty())
-			prefix = prefix + ".";
+			prefix = prefix + "_";
 		if (location.getFile() != null) {
 			map.put(prefix + "filename", asString(location.getFile().getFilename()));
 			map.put(prefix + "line_number", asString(location.getFile().getLineNumber()));
