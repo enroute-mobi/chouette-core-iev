@@ -28,10 +28,13 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.parser.PublicationDeliveryParser;
+import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_ERROR_CODE;
+import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.report.FileReport;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.NamingUtil;
@@ -100,7 +103,6 @@ public class NetexStifParserCommand implements Command, Constant {
 
 			Parser parser = ParserFactory.create(PublicationDeliveryParser.class.getName());
 			parser.parse(context);
-
 			result = SUCCESS;
 			// log.info("Referential.routes : " + referential.getRoutes());
 		} catch (Exception e) {
