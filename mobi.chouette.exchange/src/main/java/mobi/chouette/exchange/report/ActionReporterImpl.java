@@ -60,6 +60,8 @@ public class ActionReporterImpl implements ActionReporter, Constant {
 		// FILE_STATE.ERROR));
 		//
 		fileReport.addError(new FileError(code, message));
+		setActionError(context,ERROR_CODE.INVALID_DATA,"File error for "+fileInfoName);
+		
 
 	}
 

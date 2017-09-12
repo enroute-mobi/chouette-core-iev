@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import java.text.SimpleDateFormat;
+
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.OperatingPeriod;
@@ -63,8 +65,8 @@ public class OperatingPeriodValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, period);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_OperatingPeriod_1, location);
-
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_OperatingPeriod_1, location,sdf.format(period.getPeriod().getEndDate()),sdf.format(period.getPeriod().getEndDate()));
 		}
 		return result;
 	}

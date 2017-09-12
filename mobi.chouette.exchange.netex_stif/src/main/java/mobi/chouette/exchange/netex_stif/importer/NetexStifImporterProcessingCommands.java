@@ -158,6 +158,8 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 			}
 
 		} catch (Exception e) {
+			log.error(e, e);
+			throw new RuntimeException("unable to call factories");
 
 		}
 
@@ -192,7 +194,15 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 
 	@Override
 	public List<? extends Command> getDisposeCommands(Context context, boolean withDao) {
+		 InitialContext initialContext = (InitialContext)
+		 context.get(INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
+		try {
+			commands.add(CommandFactory.create(initialContext, NetexStifDisposeImportCommand.class.getName()));
+		} catch (Exception e) {
+			log.error(e, e);
+			throw new RuntimeException("unable to call factories");
+		}
 		return commands;
 	}
 

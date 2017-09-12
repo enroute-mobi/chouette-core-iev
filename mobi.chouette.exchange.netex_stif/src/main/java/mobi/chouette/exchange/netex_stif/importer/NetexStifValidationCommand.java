@@ -40,21 +40,24 @@ public class NetexStifValidationCommand implements Command, Constant {
 			Referential referential = (Referential) context.get(REFERENTIAL);
 
 			// Tests are done during parsing just check file status
-			if (fileName.equals("calendriers.xml"))
+			if (fileName.equals(CALENDRIER_FILE_NAME))
 			{
-				boolean res = validateCalendrier(context);
+				boolean res = validateCalendrier(context) && !reporter.hasFileValidationErrors(context, fileName);
 				if (!res)
 				{
 					// block save mode to check other files
 					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
 					parameters.setNoSave(true);
 				}
+				else
+				{
+					result = SUCCESS;
+				}
 			}
-
-			if (!reporter.hasFileValidationErrors(context, fileName))
+			else if (!reporter.hasFileValidationErrors(context, fileName))
 				result = SUCCESS;
 			
-			if (result && fileName.startsWith("offre")) {
+			if (result && fileName.startsWith(OFFRE_FILE_PREFIX)) {
 				addStats(context, reporter, referential);
 			}
 
