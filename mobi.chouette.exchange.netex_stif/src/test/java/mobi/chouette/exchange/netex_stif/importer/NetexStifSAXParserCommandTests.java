@@ -103,7 +103,7 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
-		Assert.assertEquals(report.getResult(), "OK", "result");
+		Assert.assertEquals(report.getResult(), "NOK", "result");
 		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
 		FileReport file = report.getFiles().get(0);
 		Assert.assertEquals(file.getStatus(),FILE_STATE.ERROR,"file status reported");
@@ -133,7 +133,7 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
-		Assert.assertEquals(report.getResult(), "OK", "result");
+		Assert.assertEquals(report.getResult(), "NOK", "result");
 		Assert.assertEquals(report.getFiles().size(), 1, "file reported size ");
 		FileReport file = report.getFiles().get(0);
 		Assert.assertEquals(file.getStatus(),FILE_STATE.ERROR,"file status reported");

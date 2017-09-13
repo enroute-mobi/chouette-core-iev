@@ -2,11 +2,9 @@ package mobi.chouette.exchange.dummy.importer;
 
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 
 import mobi.chouette.common.JSONUtil;
 import mobi.chouette.exchange.AbstractInputValidator;
-import mobi.chouette.exchange.TestDescription;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.model.ImportTask;
@@ -43,10 +41,10 @@ public class DummyImporterInputValidator extends AbstractInputValidator {
 		return true;
 	}
 
-	@Override
-	public List<TestDescription> getTestList() {
-		return null;
-	}
+	// @Override
+//	public List<TestDescription> getTestList() {
+//		return null;
+//	}
 
 	@Override
 	public AbstractParameter toActionParameter(Object task) {

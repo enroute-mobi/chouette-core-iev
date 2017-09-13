@@ -106,5 +106,6 @@ public interface Constant extends mobi.chouette.common.Constant {
 	// file names
 	public static final String CALENDRIER_FILE_NAME = "calendriers.xml";
 	public static final String COMMUN_FILE_NAME = "commun.xml";
+	public static final String OFFRE_FILE_PREFIX = "offre";
 
 }

@@ -64,7 +64,7 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 	 * @param name
 	 * @return
 	 */
-	protected FileReport findFileReport(String name) {
+	public FileReport findFileReport(String name) {
 		for (FileReport fileReport : files) {
 			if (fileReport.getName().equals(name))
 				return fileReport;
@@ -78,7 +78,7 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 	 * @param name
 	 * @return
 	 */
-	protected FileReport findZipReport(String name) {
+	public FileReport findZipReport(String name) {
 		for (FileReport fileReport : zips) {
 			if (fileReport.getName().equals(name))
 				return fileReport;
@@ -93,7 +93,7 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 	 * @param state
 	 * @return
 	 */
-	protected FileReport findFileReport(String name, FILE_STATE state) {
+	public FileReport findFileReport(String name, FILE_STATE state) {
 		for (FileReport fileReport : files) {
 			if (fileReport.getName().equals(name)
 					&& (fileReport.getStatus().name().equals(state.name())
