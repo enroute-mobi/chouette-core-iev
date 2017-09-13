@@ -117,9 +117,10 @@ public class JobServiceManager {
 	}
 
 	private JobService createImportJob(Long id) throws ServiceException {
+		ImportTask importTask = null;
 		try {
 			// Instancier le modèle du service 'upload'
-			ImportTask importTask = importTaskDAO.find(id);
+			importTask = importTaskDAO.find(id);
 			if (importTask == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
@@ -160,9 +161,36 @@ public class JobServiceManager {
 
 		} catch (RequestServiceException ex) {
 			log.info("fail to create import job " + ex.getMessage());
+			if (importTask != null) {
+				try {
+					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+					importTaskDAO.update(importTask);
+				} catch (Exception e) {
+					log.error("cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
+				}
+			}
+			throw ex;
+		} catch (ServiceException ex) {
+			log.info("invalid import job data" + ex.getMessage());
+			if (importTask != null) {
+				try {
+					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+					importTaskDAO.update(importTask);
+				} catch (Exception e) {
+					log.error("cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
+				}
+			}
 			throw ex;
 		} catch (Exception ex) {
 			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
+			if (importTask != null) {
+				try {
+					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+					importTaskDAO.update(importTask);
+				} catch (Exception e) {
+					log.error("cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
+				}
+			}
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
@@ -264,7 +292,7 @@ public class JobServiceManager {
 			updateImportTask(jobService);
 		}
 		// TODO delete directory
-		
+
 		// TODO send termination to BOIV
 
 	}
@@ -304,7 +332,7 @@ public class JobServiceManager {
 			updateImportTask(jobService);
 		}
 		// TODO delete directory
-		
+
 		// TODO send termination to BOIV
 	}
 
@@ -320,7 +348,7 @@ public class JobServiceManager {
 			} catch (ServiceException e) {
 				log.error("fail to manage import task " + importTask);
 			} catch (Exception e) {
-				log.error("fail to manage import task " + importTask,e);
+				log.error("fail to manage import task " + importTask, e);
 			}
 		}
 		return jobs;
