@@ -30,18 +30,16 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.dao.FootnoteDAO;
-import mobi.chouette.dao.JourneyPatternDAO;
-import mobi.chouette.dao.LineDAO;
-import mobi.chouette.dao.RouteDAO;
-import mobi.chouette.dao.RoutingConstraintDAO;
-import mobi.chouette.dao.StopPointDAO;
-import mobi.chouette.dao.VehicleJourneyDAO;
+import mobi.chouette.dao.ActionDAO;
+import mobi.chouette.dao.ActionMessageDAO;
+import mobi.chouette.dao.ActionResourceDAO;
+import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.model.ImportTask;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
@@ -52,28 +50,20 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 	protected static final String NETEX_TEST_FILES_DIR = "src/test/data/netex-files-set";
 
-	@EJB
-	LineDAO lineDao;
 
 	@EJB
-	RouteDAO routeDao;
+	ReferentialDAO referentialDAO;
 
 	@EJB
-	JourneyPatternDAO journeyPatternDao;
+	ActionDAO actionDAO;
 
 	@EJB
-	RoutingConstraintDAO routingConstraintDao;
+	ActionResourceDAO actionResourceDAO;
 
 	@EJB
-	StopPointDAO stopPointDao;
+	ActionMessageDAO actionMessageDAO;
 
-	@EJB
-	FootnoteDAO footnoteDao;
-
-	@EJB
-	VehicleJourneyDAO vjDao;
-
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	EntityManager em;
 
 	@Inject
@@ -144,7 +134,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		// ;
 	}
 
-	protected Context initImportContext() {
+	protected Context initImportContext() throws Exception {
 		init();
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
@@ -165,6 +155,16 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L });
 		configuration.setIds(ids);
 		JobDataTest jobData = new JobDataTest();
+		utx.begin();
+		em.joinTransaction();
+		mobi.chouette.model.Referential ref = referentialDAO.find(Long.valueOf(1L));
+		ImportTask task = new ImportTask();
+		task.setFormat("netex_stif");
+		task.setReferential(ref);
+		em.persist(task);
+		log.info("task id = "+task.getId());
+		jobData.setId(task.getId());
+		utx.commit();
 		context.put(JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
@@ -178,7 +178,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType("netex_stif");
-		context.put(TESTNG, "true"); // mode test
+		// context.put(TESTNG, "true"); // mode test
 		context.put(OPTIMIZED, Boolean.FALSE);
 		return context;
 
@@ -203,13 +203,15 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			throw ex;
 		}
 
+		
 		ActionReport report = (ActionReport) context.get(REPORT);
-		Assert.assertEquals(report.getResult(), expectedActionReportResult);
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
-
 		log.info(report);
+		// à lire dans importResources par fichier 
+		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		log.info(valReport.getCheckPointErrors());
+		Assert.assertEquals(report.getResult(), expectedActionReportResult);
+		// Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
+
 
 		return context;
 	}
