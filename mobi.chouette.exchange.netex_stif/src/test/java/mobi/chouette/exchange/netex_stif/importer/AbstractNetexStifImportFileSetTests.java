@@ -14,6 +14,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 
 import org.apache.commons.io.FileUtils;
@@ -32,6 +37,7 @@ import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
+import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.ImportMessageDAO;
 import mobi.chouette.dao.ImportResourceDAO;
 import mobi.chouette.dao.ImportTaskDAO;
@@ -41,7 +47,12 @@ import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.model.ImportMessage;
+import mobi.chouette.model.ImportMessage_;
+import mobi.chouette.model.ImportResource;
+import mobi.chouette.model.ImportResource_;
 import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
@@ -272,47 +283,78 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 		System.err.println("expectedActionReportResult="+expectedActionReportResult+", expectedData:"+b.toString());
 
-		// Context context = initImportContext();
-		// context.put(REFERENTIAL, new Referential());
-		// NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-		// NetexStifImporterCommand.class.getName());
-		// copyFile(zipFile);
-		// JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		// jobData.setInputFilename(zipFile);
-		// NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
-		// configuration.setNoSave(false);
-		// configuration.setCleanRepository(true);
-		// try {
-		// command.execute(context);
-		// } catch (Exception ex) {
-		// log.error("test failed", ex);
-		// throw ex;
-		// }
-		//
-		// Arrays.asList(args).stream().forEach(System.out::println);
-		//
-		// ActionReport report = (ActionReport) context.get(REPORT);
-		// log.info(report);
-		// // à lire dans importResources par fichier
-		//
-		// utx.begin();
-		// em.joinTransaction();
-		//
-		// // TODO:
-		// // récupérer id import dans jobData
-		// //
-		// ImportTask task = importTaskDAO.find(jobData.getId());
-		//
-		// // importresoucedao.getResources(task).
-		// // importresoucedao.getResources(task).
-		//
-		// utx.commit();
-		//
-		// ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		// log.info(valReport.getCheckPointErrors());
-		// // Assert.assertEquals(report.getResult(), expectedActionReportResult);
-		// // Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
+		 Context context = initImportContext();
+		 context.put(REFERENTIAL, new Referential());
+		 NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
+		 NetexStifImporterCommand.class.getName());
+		 copyFile(zipFile);
+		 JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		 jobData.setInputFilename(zipFile);
+		 NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		 configuration.setNoSave(false);
+		 configuration.setCleanRepository(true);
+		 try {
+		 command.execute(context);
+		 } catch (Exception ex) {
+		 log.error("test failed", ex);
+		 throw ex;
+		 }
+		
+		 Arrays.asList(expectedData).stream().forEach(System.out::println);
+		
+		 ActionReport report = (ActionReport) context.get(REPORT);
+		 log.info(report);
+		 // à lire dans importResources par fichier
+		
+		 utx.begin();
+		 em.joinTransaction();
+		
+		 // TODO:
+		 // récupérer id import dans jobData
+		 //
+		 ImportTask task = importTaskDAO.find(jobData.getId());
+		
+		 List<ImportResource> resources = getRessources(task);
+		 List<ImportMessage> messages = getMessages(task);
+		 
+		 
+		 // clean database
+//		 messages.stream().forEach(m -> em.remove(m));
+//		 resources.stream().forEach(r -> em.remove(r));
+//		 em.remove(task);
+		 utx.commit();
+		
+		 ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		 log.info(valReport.getCheckPointErrors());
+		 // Assert.assertEquals(report.getResult(), expectedActionReportResult);
+		 // Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
 
 	}
 
+	
+	private List<ImportResource> getRessources(ImportTask task)
+	{
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<ImportResource> criteria = builder.createQuery(ImportResource.class);
+		Root<ImportResource> root = criteria.from(ImportResource.class);
+		Predicate predicate = builder.equal(root.get(ImportResource_.taskId),task.getId());
+		criteria.where(predicate);
+		TypedQuery<ImportResource> query = em.createQuery(criteria);
+		
+		return query.getResultList();
+		
+	}
+	
+	private List<ImportMessage> getMessages(ImportTask task)
+	{
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<ImportMessage> criteria = builder.createQuery(ImportMessage.class);
+		Root<ImportMessage> root = criteria.from(ImportMessage.class);
+		Predicate predicate = builder.equal(root.get(ImportMessage_.taskId),task.getId());
+		criteria.where(predicate);
+		TypedQuery<ImportMessage> query = em.createQuery(criteria);
+		
+		return query.getResultList();
+		
+	}
 }
