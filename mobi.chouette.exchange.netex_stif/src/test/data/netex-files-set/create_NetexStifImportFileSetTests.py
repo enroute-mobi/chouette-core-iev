@@ -29,15 +29,25 @@ def endJavaClass():
 	#print("javaClass=%s" %(javaClass))
 	return javaClass
 
-def addTest(priority, issueId,testnumber, zipfilename, report_status, validation_status):
+def addTest(priority, issueId,testnumber, zipfilename, actionReportStatus, expectedData):
 	issue = redmine.issue.get(int(issueId), include='children,journals,watchers')
 	group=issueId
 	testname=issueId+"-"+testnumber
 	description=issue.subject
+	
+	args=""
+	for e in expectedData:
+		if len(str(e))>0 :
+			if len(args)>0 and not args.endswith(','):
+				args += ","
+			args+="\""+str(e)+"\""
+	if len(args)>0 and not args.startswith(','):
+			args = "," + args
+	
 	test =	"\n	@Test(groups = { \"%s\" }, testName = \"%s\", description = \"%s\", priority=%s)\n \
 		public void verifyCard%s_%s() throws Exception {\n  \
-			doImport(\"%s\", \"%s\", \"%s\");\n\
-		}\n" %(group, testname, description,priority, issueId,testnumber, zipfilename, report_status, validation_status )
+			doImport(\"%s\",\"%s\" %s);\n\
+		}\n" %(group, testname, description,priority, issueId,testnumber, zipfilename, actionReportStatus, args )
 
 	return test
  
@@ -57,24 +67,32 @@ if __name__ == '__main__':
 	
 	
 	priority=0
-
-	with open("expected-result.txt", "rt", encoding="UTF8") as f:
-		reader = csv.DictReader(f, delimiter=';')
-		for row in reader:
-			filename=row["#file"]
-			report_status=row['report-status']
-			validation_status=row['validation-status']
+	
+	with open("expected-result.txt", encoding="utf-8") as f:
+		lines = f.readlines()
+		for row in lines:
+			if row.startswith("#"):
+				continue
+			fields=row.replace('\n', '').split(";")
+			
+			filename=fields[0]
+			report_status=fields[1]
+			expectedData = fields[2:]
+			#parse filename
 			newfilename = filename.replace("-", "_")
 			tmp=newfilename.split('_')
 			tmp=tmp[2]
 			tmp=tmp.split(".")
 			tmp=tmp[0]
 			tmp=tmp[-6:]
-
 			issueId=tmp[-4:]
 			testnumber=tmp[:2]
+			
 			priority=priority+1
-			javaClass = javaClass + addTest(priority, issueId, testnumber, filename, report_status, validation_status)
+			result = addTest(priority, issueId, testnumber, filename, report_status,expectedData)
+			#print(result)
+			javaClass = javaClass + result
+		f.close()
 
 	javaClass = javaClass+endJavaClass()
 	

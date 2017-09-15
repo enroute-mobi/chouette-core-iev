@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,25 +25,23 @@ import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.testng.Assert;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
-import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.dao.FootnoteDAO;
-import mobi.chouette.dao.JourneyPatternDAO;
-import mobi.chouette.dao.LineDAO;
-import mobi.chouette.dao.RouteDAO;
-import mobi.chouette.dao.RoutingConstraintDAO;
-import mobi.chouette.dao.StopPointDAO;
-import mobi.chouette.dao.VehicleJourneyDAO;
+import mobi.chouette.dao.ImportMessageDAO;
+import mobi.chouette.dao.ImportResourceDAO;
+import mobi.chouette.dao.ImportTaskDAO;
+import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.model.util.Referential;
+import mobi.chouette.model.ImportTask;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
@@ -53,31 +52,24 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 	protected static final String NETEX_TEST_FILES_DIR = "src/test/data/netex-files-set";
 
 	@EJB
-	LineDAO lineDao;
+	ReferentialDAO referentialDAO;
 
 	@EJB
-	RouteDAO routeDao;
+	ImportTaskDAO importTaskDAO;
 
 	@EJB
-	JourneyPatternDAO journeyPatternDao;
+	ImportResourceDAO importResourceDAO;
 
 	@EJB
-	RoutingConstraintDAO routingConstraintDao;
+	ImportMessageDAO importMessageDAO;
 
-	@EJB
-	StopPointDAO stopPointDao;
-
-	@EJB
-	FootnoteDAO footnoteDao;
-
-	@EJB
-	VehicleJourneyDAO vjDao;
-
-	@PersistenceContext(unitName = "referential")
+	@PersistenceContext(unitName = "public")
 	EntityManager em;
 
 	@Inject
 	UserTransaction utx;
+
+	private ExpectedData data;
 
 	public static EnterpriseArchive createDeployment(Class testClass) {
 
@@ -115,8 +107,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(AbstractNetexStifImportFileSetTests.class)
-				.addClass(testClass)
-				.addClass(JobDataTest.class);
+				.addClass(testClass).addClass(JobDataTest.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -144,7 +135,84 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		// ;
 	}
 
-	protected Context initImportContext() {
+	private String next(Iterator<String> iter) {
+		if (iter.hasNext()) {
+			return iter.next();
+		} else {
+			return null;
+		}
+	}
+
+	public ExpectedData parse(String line) {
+		ExpectedData data = null;
+
+		String[] tmp = line.split(":");
+
+		List<String> list = Arrays.asList(tmp);
+		Iterator<String> iter = list.iterator();
+
+		ExpectedDataBuilder builder = new ExpectedDataBuilder();
+		data = builder.withFile(next(iter)).withStatus(next(iter)).withValidationCode(next(iter))
+				.withMessageCode(next(iter)).build();
+
+		return data;
+	}
+
+	@ToString
+	class ExpectedData {
+		@Getter
+		@Setter
+		String file;
+		@Getter
+		@Setter
+		String status;
+		@Getter
+		@Setter
+		String validationCode;
+		@Getter
+		@Setter
+		String messageCode;
+
+	}
+
+	class ExpectedDataBuilder {
+		String file;
+		String status;
+		String validationCode;
+		String messageCode;
+
+		public ExpectedDataBuilder withFile(String file) {
+			this.file = file;
+			return this;
+		}
+
+		public ExpectedDataBuilder withStatus(String status) {
+			this.status = status;
+			return this;
+		}
+
+		public ExpectedDataBuilder withValidationCode(String vCode) {
+			this.validationCode = vCode;
+			return this;
+		}
+
+		public ExpectedDataBuilder withMessageCode(String messageCode) {
+			this.messageCode = messageCode;
+			return this;
+		}
+
+		public ExpectedData build() {
+			ExpectedData data = new ExpectedData();
+			data.setFile(file);
+			data.setMessageCode(messageCode);
+			data.setStatus(status);
+			data.setValidationCode(validationCode);
+
+			return data;
+		}
+	}
+
+	protected Context initImportContext() throws Exception {
 		init();
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
@@ -165,6 +233,16 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L });
 		configuration.setIds(ids);
 		JobDataTest jobData = new JobDataTest();
+		utx.begin();
+		em.joinTransaction();
+		mobi.chouette.model.Referential ref = referentialDAO.find(Long.valueOf(1L));
+		ImportTask task = new ImportTask();
+		task.setFormat("netex_stif");
+		task.setReferential(ref);
+		em.persist(task);
+		log.info("task id = " + task.getId());
+		jobData.setId(task.getId());
+		utx.commit();
 		context.put(JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
@@ -178,40 +256,63 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType("netex_stif");
-		context.put(TESTNG, "true"); // mode test
+		// context.put(TESTNG, "true"); // mode test
 		context.put(OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
 
-	protected Context doImport(String zipFile, String expectedActionReportResult, String expectedValidationResult)
-			throws Exception {
-		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
-		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-				NetexStifImporterCommand.class.getName());
-		copyFile(zipFile);
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		jobData.setInputFilename(zipFile);
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
-		configuration.setNoSave(false);
-		configuration.setCleanRepository(true);
-		try {
-			command.execute(context);
-		} catch (Exception ex) {
-			log.error("test failed", ex);
-			throw ex;
+	protected void doImport(String zipFile, String expectedActionReportResult, String... expectedData) throws Exception {
+
+		StringBuilder b = new StringBuilder();
+		for (String arg : expectedData) {
+			data = parse(arg);
+			b.append(data.toString());
+			b.append(", ");
 		}
+		System.err.println("expectedActionReportResult="+expectedActionReportResult+", expectedData:"+b.toString());
 
-		ActionReport report = (ActionReport) context.get(REPORT);
-		Assert.assertEquals(report.getResult(), expectedActionReportResult);
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
+		// Context context = initImportContext();
+		// context.put(REFERENTIAL, new Referential());
+		// NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
+		// NetexStifImporterCommand.class.getName());
+		// copyFile(zipFile);
+		// JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		// jobData.setInputFilename(zipFile);
+		// NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		// configuration.setNoSave(false);
+		// configuration.setCleanRepository(true);
+		// try {
+		// command.execute(context);
+		// } catch (Exception ex) {
+		// log.error("test failed", ex);
+		// throw ex;
+		// }
+		//
+		// Arrays.asList(args).stream().forEach(System.out::println);
+		//
+		// ActionReport report = (ActionReport) context.get(REPORT);
+		// log.info(report);
+		// // à lire dans importResources par fichier
+		//
+		// utx.begin();
+		// em.joinTransaction();
+		//
+		// // TODO:
+		// // récupérer id import dans jobData
+		// //
+		// ImportTask task = importTaskDAO.find(jobData.getId());
+		//
+		// // importresoucedao.getResources(task).
+		// // importresoucedao.getResources(task).
+		//
+		// utx.commit();
+		//
+		// ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		// log.info(valReport.getCheckPointErrors());
+		// // Assert.assertEquals(report.getResult(), expectedActionReportResult);
+		// // Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
 
-		log.info(report);
-		log.info(valReport.getCheckPointErrors());
-
-		return context;
 	}
 
 }
