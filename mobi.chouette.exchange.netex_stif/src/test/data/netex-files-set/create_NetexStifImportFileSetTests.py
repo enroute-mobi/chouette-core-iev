@@ -40,7 +40,7 @@ def addTest(priority, issueId,testnumber, zipfilename, actionReportStatus, expec
 		if len(str(e))>0 :
 			if len(args)>0 and not args.endswith(','):
 				args += ","
-			args+="\""+str(e)+"\""
+			args+="\""+str(e).strip()+"\""
 	if len(args)>0 and not args.startswith(','):
 			args = "," + args
 	
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 	
 	priority=0
 	
-	with open("expected-result.txt", encoding="utf-8") as f:
+	with open("expected-result.csv", encoding="utf-8") as f:
 		lines = f.readlines()
 		for row in lines:
 			if row.startswith("#"):

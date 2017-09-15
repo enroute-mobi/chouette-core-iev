@@ -4,9 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -30,10 +35,8 @@ import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.testng.Assert;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
@@ -80,8 +83,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 	@Inject
 	UserTransaction utx;
 
-	private ExpectedData data;
-
 	public static EnterpriseArchive createDeployment(Class testClass) {
 
 		EnterpriseArchive result;
@@ -118,7 +119,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(AbstractNetexStifImportFileSetTests.class)
-				.addClass(testClass).addClass(JobDataTest.class);
+				.addClass(testClass)
+				.addClass(YmlMessages.class)
+				.addClass(JobDataTest.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -146,82 +149,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		// ;
 	}
 
-	private String next(Iterator<String> iter) {
-		if (iter.hasNext()) {
-			return iter.next();
-		} else {
-			return null;
-		}
-	}
 
-	public ExpectedData parse(String line) {
-		ExpectedData data = null;
-
-		String[] tmp = line.split(":");
-
-		List<String> list = Arrays.asList(tmp);
-		Iterator<String> iter = list.iterator();
-
-		ExpectedDataBuilder builder = new ExpectedDataBuilder();
-		data = builder.withFile(next(iter)).withStatus(next(iter)).withValidationCode(next(iter))
-				.withMessageCode(next(iter)).build();
-
-		return data;
-	}
-
-	@ToString
-	class ExpectedData {
-		@Getter
-		@Setter
-		String file;
-		@Getter
-		@Setter
-		String status;
-		@Getter
-		@Setter
-		String validationCode;
-		@Getter
-		@Setter
-		String messageCode;
-
-	}
-
-	class ExpectedDataBuilder {
-		String file;
-		String status;
-		String validationCode;
-		String messageCode;
-
-		public ExpectedDataBuilder withFile(String file) {
-			this.file = file;
-			return this;
-		}
-
-		public ExpectedDataBuilder withStatus(String status) {
-			this.status = status;
-			return this;
-		}
-
-		public ExpectedDataBuilder withValidationCode(String vCode) {
-			this.validationCode = vCode;
-			return this;
-		}
-
-		public ExpectedDataBuilder withMessageCode(String messageCode) {
-			this.messageCode = messageCode;
-			return this;
-		}
-
-		public ExpectedData build() {
-			ExpectedData data = new ExpectedData();
-			data.setFile(file);
-			data.setMessageCode(messageCode);
-			data.setStatus(status);
-			data.setValidationCode(validationCode);
-
-			return data;
-		}
-	}
 
 	protected Context initImportContext() throws Exception {
 		init();
@@ -273,88 +201,117 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 	}
 
-	protected void doImport(String zipFile, String expectedActionReportResult, String... expectedData) throws Exception {
+	protected void doImport(String zipFile, String expectedActionReportResult, String... expectedData)
+			throws Exception {
 
-		StringBuilder b = new StringBuilder();
-		for (String arg : expectedData) {
-			data = parse(arg);
-			b.append(data.toString());
-			b.append(", ");
+		Context context = initImportContext();
+		context.put(REFERENTIAL, new Referential());
+		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
+				NetexStifImporterCommand.class.getName());
+		copyFile(zipFile);
+		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		jobData.setInputFilename(zipFile);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		configuration.setNoSave(false);
+		configuration.setCleanRepository(true);
+		try {
+			command.execute(context);
+		} catch (Exception ex) {
+			log.error("test failed", ex);
+			throw ex;
 		}
-		System.err.println("expectedActionReportResult="+expectedActionReportResult+", expectedData:"+b.toString());
 
-		 Context context = initImportContext();
-		 context.put(REFERENTIAL, new Referential());
-		 NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-		 NetexStifImporterCommand.class.getName());
-		 copyFile(zipFile);
-		 JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
-		 jobData.setInputFilename(zipFile);
-		 NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
-		 configuration.setNoSave(false);
-		 configuration.setCleanRepository(true);
-		 try {
-		 command.execute(context);
-		 } catch (Exception ex) {
-		 log.error("test failed", ex);
-		 throw ex;
-		 }
-		
-		 Arrays.asList(expectedData).stream().forEach(System.out::println);
-		
-		 ActionReport report = (ActionReport) context.get(REPORT);
-		 log.info(report);
-		 // à lire dans importResources par fichier
-		
-		 utx.begin();
-		 em.joinTransaction();
-		
-		 // TODO:
-		 // récupérer id import dans jobData
-		 //
-		 ImportTask task = importTaskDAO.find(jobData.getId());
-		
-		 List<ImportResource> resources = getRessources(task);
-		 List<ImportMessage> messages = getMessages(task);
-		 
-		 
-		 // clean database
-//		 messages.stream().forEach(m -> em.remove(m));
-//		 resources.stream().forEach(r -> em.remove(r));
-//		 em.remove(task);
-		 utx.commit();
-		
-		 ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		 log.info(valReport.getCheckPointErrors());
-		 // Assert.assertEquals(report.getResult(), expectedActionReportResult);
-		 // Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
+		Arrays.asList(expectedData).stream().forEach(System.out::println);
+
+		ActionReport report = (ActionReport) context.get(REPORT);
+		log.info(report);
+
+		utx.begin();
+		em.joinTransaction();
+
+		ImportTask task = importTaskDAO.find(jobData.getId());
+
+		List<ImportResource> resources = getRessources(task);
+		Map<Long, ImportResource> mapImportResources = new HashMap<Long, ImportResource>();
+		resources.stream().forEach(x -> mapImportResources.put(x.getId(), x));
+
+		Set<String> actualErrors = new TreeSet<String>();
+		List<ImportMessage> messages = getMessages(task);
+
+		messages.stream().forEach(x -> {
+			ImportResource ir = mapImportResources.get(x.getResourceId());
+			StringBuilder sb = new StringBuilder();
+			sb.append(ir.getName());
+			sb.append(":");
+			sb.append(ir.getStatus());
+			sb.append(":");
+			sb.append(x.getMessageAttributs().get("test_id"));
+			sb.append(":");
+			sb.append(x.getMessageKey());
+
+			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
+			log.info("message(" + x.getMessageKey() + ")=" + message);
+
+			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
+			Assert.assertEquals(0, missingKeys.size(), "Missing keys { " + missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
+
+			actualErrors.add(sb.toString());
+		});
+
+		Set<String> expectedErrors = new TreeSet<String>();
+		Arrays.asList(expectedData).stream().forEach(x -> expectedErrors.add(x.trim()));
+
+		List<String> expectedNotDetected = expectedErrors.stream().filter(x -> !actualErrors.contains(x))
+				.collect(Collectors.toList());
+		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
+				.collect(Collectors.toList());// );
+		if (!notExpected.isEmpty()) {
+			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + report.getResult() + ";"
+					+ notExpected.stream().collect(Collectors.joining("; ")));
+		}
+		if (!expectedNotDetected.isEmpty()) {
+			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
+		}
+		Assert.assertTrue(expectedNotDetected.isEmpty(),
+				expectedNotDetected.size() + " Error(s) not detected (but expected) : "
+						+ expectedNotDetected.stream().collect(Collectors.joining("; ")));
+		Assert.assertTrue(notExpected.isEmpty(), notExpected.size() + " Error(s) not expected (but detected) : "
+				+ notExpected.stream().collect(Collectors.joining("; ")));
+
+		// clean database
+		// messages.stream().forEach(m -> em.remove(m));
+		// resources.stream().forEach(r -> em.remove(r));
+		// em.remove(task);
+		utx.commit();
+
+		// ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		// log.info(valReport.getCheckPointErrors());
+		// Assert.assertEquals(report.getResult(), expectedActionReportResult);
+		// Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
 
 	}
 
-	
-	private List<ImportResource> getRessources(ImportTask task)
-	{
+	private List<ImportResource> getRessources(ImportTask task) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<ImportResource> criteria = builder.createQuery(ImportResource.class);
 		Root<ImportResource> root = criteria.from(ImportResource.class);
-		Predicate predicate = builder.equal(root.get(ImportResource_.taskId),task.getId());
+		Predicate predicate = builder.equal(root.get(ImportResource_.taskId), task.getId());
 		criteria.where(predicate);
 		TypedQuery<ImportResource> query = em.createQuery(criteria);
-		
+
 		return query.getResultList();
-		
+
 	}
-	
-	private List<ImportMessage> getMessages(ImportTask task)
-	{
+
+	private List<ImportMessage> getMessages(ImportTask task) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<ImportMessage> criteria = builder.createQuery(ImportMessage.class);
 		Root<ImportMessage> root = criteria.from(ImportMessage.class);
-		Predicate predicate = builder.equal(root.get(ImportMessage_.taskId),task.getId());
+		Predicate predicate = builder.equal(root.get(ImportMessage_.taskId), task.getId());
 		criteria.where(predicate);
 		TypedQuery<ImportMessage> query = em.createQuery(criteria);
-		
+
 		return query.getResultList();
-		
+
 	}
 }
