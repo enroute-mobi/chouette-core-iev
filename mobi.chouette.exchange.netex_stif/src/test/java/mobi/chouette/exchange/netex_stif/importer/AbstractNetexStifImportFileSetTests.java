@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -119,9 +118,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(AbstractNetexStifImportFileSetTests.class)
-				.addClass(testClass)
-				.addClass(YmlMessages.class)
-				.addClass(JobDataTest.class);
+				.addClass(testClass).addClass(YmlMessages.class).addClass(JobDataTest.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -148,8 +145,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		// Logger.getInstance(RouteRegisterCommand.class).setLevel(Level.DEBUG)
 		// ;
 	}
-
-
 
 	protected Context initImportContext() throws Exception {
 		init();
@@ -204,6 +199,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 	protected void doImport(String zipFile, String expectedActionReportResult, String... expectedData)
 			throws Exception {
 
+		log.info("########## Import " + zipFile + " ##########");
 		Context context = initImportContext();
 		context.put(REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
@@ -221,7 +217,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			throw ex;
 		}
 
-		Arrays.asList(expectedData).stream().forEach(System.out::println);
 
 		ActionReport report = (ActionReport) context.get(REPORT);
 		log.info(report);
@@ -250,10 +245,12 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			sb.append(x.getMessageKey());
 
 			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
-			log.info("message(" + x.getMessageKey() + ")=" + message);
-
+			if (log.isDebugEnabled()) {
+				log.debug("message(" + x.getMessageKey() + ")=" + message);
+			}
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
-			Assert.assertEquals(0, missingKeys.size(), "Missing keys { " + missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
+			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
+					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
 
 			actualErrors.add(sb.toString());
 		});
