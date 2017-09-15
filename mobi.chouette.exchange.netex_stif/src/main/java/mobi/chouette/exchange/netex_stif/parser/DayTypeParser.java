@@ -28,12 +28,12 @@ public class DayTypeParser implements Parser, Constant {
 		DayTypeValidator validator = (DayTypeValidator) ValidatorFactory.getValidator(context, DayTypeValidator.class);
 		String id = xpp.getAttributeValue(null, ID);
 		Timetable timeTable = ObjectFactory.getTimetable(referential, id);
-		Long version = (Long)context.get(VERSION);
+		Long version = (Long) context.get(VERSION);
 		timeTable.setObjectVersion(version);
 
 		// for post import checkPoints
 		validator.addLocation(context, timeTable, lineNumber, columnNumber);
-		
+
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			// log.info("DayTypeParser tag : "+ xpp.getName());
 			if (xpp.getName().equals(NAME)) {
@@ -52,8 +52,12 @@ public class DayTypeParser implements Parser, Constant {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(DAYS_OF_WEEK)) {
 						String day = xpp.nextText();
-						timetable.addDayType(DayTypeEnum.valueOf(day));
-						
+						try {
+							timetable.addDayType(DayTypeEnum.valueOf(day));
+						} catch (Exception ex) {
+							log.warn("unmanaged daytype " + day);
+						}
+
 					}
 				}
 			}
