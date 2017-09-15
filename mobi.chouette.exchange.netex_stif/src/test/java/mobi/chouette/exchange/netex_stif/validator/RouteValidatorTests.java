@@ -116,8 +116,8 @@ public class RouteValidatorTests extends AbstractTest {
 		validateRouteDirectionType(tc, directionType);
 
 		Assert.assertFalse(tc.isResult());
-		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_1, "2_netexstif_route_1", null,
-				FILE_STATE.ERROR);
+		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_1, "2_netexstif_route_1",
+				"null", FILE_STATE.ERROR);
 
 	}
 
@@ -149,6 +149,11 @@ public class RouteValidatorTests extends AbstractTest {
 
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 
+		tc.getRouteValidator().addRouteId(tc.getContext(), tc.getFakeRoute().getObjectId(),
+				tc.getFakeRoute().getObjectId());
+		if (oppositeRoute != null)
+			tc.getRouteValidator().addRouteId(tc.getContext(), oppositeRoute.getObjectId(),
+					oppositeRoute.getObjectId());
 		boolean result = tc.getRouteValidator().check2NeTExSTIFRoute2_1(tc.getContext(), tc.getFakeRoute(), lineNumber,
 				columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());
@@ -167,13 +172,14 @@ public class RouteValidatorTests extends AbstractTest {
 		oppositeRoute.setId(System.currentTimeMillis());
 		oppositeRoute.setOppositeRoute(oppositeRoute);
 		oppositeRoute.setObjectId("Codespace:type:identifierAABB:LOC");
+		oppositeRoute.setFilled(true);
 		TestContext tc = new TestContext();
 		tc.getRouteValidator().addInverseRouteRef(tc.getContext(), oppositeRoute.getObjectId(),
 				"Codespace:type:identifierAABB_INCORRECT:LOC");
 		validateInverseRouteRef(tc, oppositeRoute);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_1",
-				"Codespace:type:identifierAABB:LOC", FILE_STATE.OK);
+				"Codespace:type:identifierAABB:LOC", FILE_STATE.WARNING);
 	}
 
 	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal 1 : No Opposite Route ", priority = 1)
@@ -232,25 +238,27 @@ public class RouteValidatorTests extends AbstractTest {
 		Route oppositeRoute = new Route();
 		oppositeRoute.setObjectId("Codespace:type:identifierAABB:LOC");
 		oppositeRoute.setWayBack(DIRECTION_INBOUND);
+		oppositeRoute.setFilled(true);
 		TestContext tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_INBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'inbound' twice");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
-				oppositeRoute.getObjectId(), FILE_STATE.OK);
+				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 		//
 		// -- error : 'outbound' twice
 		oppositeRoute.setWayBack(DIRECTION_OUTBOUND);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_OUTBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'outbound' twice");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
-				oppositeRoute.getObjectId(), FILE_STATE.OK);
+				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 		//
-		// -- error : 'outbound' twice, default value for route wayback (null) is 'outbound'
+		// -- error : 'outbound' twice, default value for route wayback (null)
+		// is 'outbound'
 		oppositeRoute.setWayBack(null);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, null);
 		Assert.assertFalse(tc.isResult(),
 				"error : 'outbound' twice, default value for route wayback (null) is 'outbound'");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
-				oppositeRoute.getObjectId(), FILE_STATE.OK);
+				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 	}
 
 	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal : No Opposite Route ", priority = 1)
@@ -304,7 +312,8 @@ public class RouteValidatorTests extends AbstractTest {
 				Arrays.asList(StopPointBuilder.newInstance().id(0L).position(10).build(),
 						StopPointBuilder.newInstance().id(1L).position(20).build(),
 						StopPointBuilder.newInstance().id(2L).position(30).build(),
-						StopPointBuilder.newInstance().id(3L).position(60).build(), // --incorrect position
+						StopPointBuilder.newInstance().id(3L).position(60).build(), // --incorrect
+																					// position
 						StopPointBuilder.newInstance().id(4L).position(50).build()));
 		TestContext tc = validateRouteStopPointOrder(list);
 		Assert.assertFalse(tc.isResult());
@@ -380,7 +389,8 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	/*
-	 * StopPoint Alighting/Boarding in route match those in JourneyPatterns NeTExSTIF_Route_3
+	 * StopPoint Alighting/Boarding in route match those in JourneyPatterns
+	 * NeTExSTIF_Route_3
 	 */
 
 	private void validateRouteStopPointAlightingBoarding(TestContext tc, List<StopPoint> list) {
@@ -449,7 +459,7 @@ public class RouteValidatorTests extends AbstractTest {
 		validateRouteStopPointAlightingBoarding(tc, list);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_4, "2_netexstif_route_4",
-				"CSP:TYP:40:LOC", FILE_STATE.OK);
+				"CSP:TYP:40:LOC", FILE_STATE.WARNING);
 	}
 
 	@Test(groups = { "Route",

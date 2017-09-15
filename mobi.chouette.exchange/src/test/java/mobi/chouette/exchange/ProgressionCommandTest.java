@@ -115,7 +115,7 @@ public class ProgressionCommandTest implements Constant {
 		Assert.assertEquals(taskDao.getSaved().getCurrentStepProgress(), 0.5 ,"task progression should be 0.5");
 		Assert.assertNotNull(taskDao.getSaved().getUpdatedAt(), "task should has updated time updated");
 
-		Assert.assertEquals(resourceDao.getSaved().size(),4, "resources should be saved");
+		Assert.assertEquals(resourceDao.getSaved().size(),3, "resources should be saved");
 
 		// ValidationReport validation = new ValidationReport();
 		// context.put(VALIDATION_REPORT, validation);

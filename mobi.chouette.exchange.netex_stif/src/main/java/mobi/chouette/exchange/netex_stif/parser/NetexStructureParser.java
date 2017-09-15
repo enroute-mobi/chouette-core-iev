@@ -16,6 +16,8 @@ import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
@@ -43,8 +45,6 @@ public class NetexStructureParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		// Referential ref = (Referential)context.get(REFERENTIAL);
-		// log.info("Referential.routes : " + ref.getRoutes());
 		orderStopPointsInRoute(context);
 		updateDirectionsToRoute(context);
 		updateDestinationDisplayToJourneyPattern(context);

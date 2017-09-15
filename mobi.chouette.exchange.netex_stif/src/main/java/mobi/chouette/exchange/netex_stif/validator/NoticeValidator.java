@@ -105,7 +105,7 @@ public class NoticeValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(footnote.getObjectId());
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, ""+type); // TODO : @Michel cas du Type null ==> le message utilisateur doit préciser "null" ou null ou "<vide>" ou ??? -> see with AF83 
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, ""+type); 
 		}
 
 		return result;

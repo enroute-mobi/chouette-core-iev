@@ -88,6 +88,7 @@ public class FileReport extends AbstractReport implements CheckedReport{
 				ret = true;
 			}
 			checkPointWarningCount++;
+			if (status.ordinal() < FILE_STATE.WARNING.ordinal()) status = FILE_STATE.WARNING;
 			break;
 
 		default: // ERROR

@@ -151,20 +151,20 @@ public class NoticeValidatorTests extends AbstractTest {
 		validateTypeOfNoticeRefOfFootNote(tc, null);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
-				"null", FILE_STATE.OK);
+				"null", FILE_STATE.WARNING);
 
 		// case TypeOfNoticeRef empty
 		tc = new TestContext();
 		validateTypeOfNoticeRefOfFootNote(tc, "");
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2", "",
-				FILE_STATE.OK);
+				FILE_STATE.WARNING);
 
 		// case TypeOfNoticeRef is not SERVICE_JOURNEY_NOTICE
 		tc = new TestContext();
 		validateTypeOfNoticeRefOfFootNote(tc, "bidule");
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "2_netexstif_notice_2",
-				"bidule", FILE_STATE.OK);
+				"bidule", FILE_STATE.WARNING);
 	}
 }

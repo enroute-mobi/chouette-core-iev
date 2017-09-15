@@ -39,24 +39,29 @@ public class NetexStifValidationCommand implements Command, Constant {
 		try {
 			Referential referential = (Referential) context.get(REFERENTIAL);
 
-			// Tests are done during parsing just check file status
-			if (fileName.equals(CALENDRIER_FILE_NAME))
-			{
+			// Except for calendars, tests are done during parsing just check file status
+			if (fileName.equals(CALENDRIER_FILE_NAME)) {
 				boolean res = validateCalendrier(context) && !reporter.hasFileValidationErrors(context, fileName);
-				if (!res)
-				{
+				if (!res) {
 					// block save mode to check other files
 					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
 					parameters.setNoSave(true);
+				} else {
+					result = SUCCESS;
 				}
-				else
-				{
+			} else if (fileName.equals(COMMUN_FILE_NAME)) {
+				boolean res = !reporter.hasFileValidationErrors(context, fileName);
+				if (!res) {
+					// block save mode to check other files
+					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+					parameters.setNoSave(true);
+				} else {
 					result = SUCCESS;
 				}
 			}
 			else if (!reporter.hasFileValidationErrors(context, fileName))
 				result = SUCCESS;
-			
+
 			if (result && fileName.startsWith(OFFRE_FILE_PREFIX)) {
 				addStats(context, reporter, referential);
 			}
@@ -98,13 +103,12 @@ public class NetexStifValidationCommand implements Command, Constant {
 
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
 					referential.getJourneyPatterns().size());
-			
+
 			NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
-			if (parameters.isNoSave())
-			{
+			if (parameters.isNoSave()) {
 				reporter.setObjectStatus(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_STATE.IGNORED);
 			}
-			
+
 		}
 	}
 

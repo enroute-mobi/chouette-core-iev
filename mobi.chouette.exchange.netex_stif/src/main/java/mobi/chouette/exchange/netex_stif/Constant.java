@@ -51,6 +51,7 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String NOTICE_ASSIGNMENT = "NoticeAssignment";
 	public static final String NOTICE_ASSIGNMENTS = "noticeAssignments";
 	public static final String NOTICE_REF = "NoticeRef";
+	public static final String OPERATING_DAY_REF = "OperatingDayRef";
 	public static final String OPERATING_PERIOD = "OperatingPeriod";
 	public static final String OPERATING_PERIODS = "operatingPeriods";
 	public static final String OPERATING_PERIOD_REF = "OperatingPeriodRef";

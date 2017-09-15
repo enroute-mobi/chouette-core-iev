@@ -52,8 +52,11 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 							attr_version, content, lineNumber, columnNumber);
 				dayTypeAssignment.setOperatingPeriodRef(ref);
 				period = factory.getOperatingPeriod(ref);
-			} else if (xpp.getName().equals(DATE)) {
-				String value = isAvailable = xpp.nextText();
+			} else if (xpp.getName().equals(OPERATING_DAY_REF)) {
+				String ref = xpp.getAttributeValue(null, REF);
+				dayTypeAssignment.setOperationDayRef(ref);
+			}else if (xpp.getName().equals(DATE)) {
+				String value = xpp.nextText();
 				Date date = ParserUtils.getSQLDate(value);
 				day = new CalendarDay();
 				day.setDate(date);

@@ -7,14 +7,6 @@ package mobi.chouette.model.type;
 public enum DayTypeEnum
 {
    /**
-    * from monday to friday
-    */
-   WeekDay, 
-   /**
-    * saturday and sunday
-    */
-   WeekEnd, 
-   /**
     * monday
     */
    Monday, 
@@ -41,18 +33,5 @@ public enum DayTypeEnum
    /**
     * sunday
     */
-   Sunday, 
-   /**
-    * school holliday (unused)
-    */
-   SchoolHolliday, 
-   /**
-    * public holliday (unused)
-    */
-   PublicHolliday, 
-   /**
-    * market day (unused)
-    */
-   MarketDay;
-
+   Sunday
 }
