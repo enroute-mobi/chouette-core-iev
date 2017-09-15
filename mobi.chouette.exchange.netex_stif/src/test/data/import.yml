@@ -10,7 +10,7 @@ fr:
       2_netexstif_2_2: "Le fichier calendriers.xml contient une frame nommée %{error_value} non acceptée"
       2_netexstif_3_1: "Le fichier %{source_filename} ne contient pas de frame nommée NETEX_OFFRE_LIGNE"
       2_netexstif_3_2: "Le fichier %{source_filename} contient une frame nommée %{error_value} non acceptée"
-      2_netexstif_3_3: "la frame NETEX_OFFRE_LIGNE du fichier %{source_filename} ne contient pas la frame %{NETEX_STRUCTURE|NETEX_HORAIRE} obligatoire"
+      2_netexstif_3_3: "la frame NETEX_OFFRE_LIGNE du fichier %{source_filename} ne contient pas la frame %{error_value} obligatoire"
       2_netexstif_3_4: "la frame NETEX_OFFRE_LIGNE du fichier %{source_filename} contient une frame %{error_value} non acceptée"
       2_netexstif_4: "%{source_filename}-Ligne %{source_line_number}-Colonne %{source_column_number} : l'identifiant %{source_objectid} de l'objet %{source_label} ne respecte pas la syntaxe [CODESPACE]:%{source_label}:[identifiant Technique]:LOC"
       2_netexstif_6: "%{source_filename}-Ligne %{source_line_number}-Colonne %{source_column_number} : l'objet %{source_label} d'identifiant %{source_objectid} a un état de modification interdit : 'delete'"
