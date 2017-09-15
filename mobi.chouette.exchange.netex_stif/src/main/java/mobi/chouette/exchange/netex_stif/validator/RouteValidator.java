@@ -151,6 +151,10 @@ public class RouteValidator extends AbstractValidator {
 			return result;
 
 		String routeId = getRouteId(context, route.getObjectId());
+		if (routeId == null) {
+			log.error("missing ref routeId for " + route.getObjectId());
+			routeId = route.getObjectId();
+		}
 
 		Context waybackContext = getObjectContext(context, LOCAL_CONTEXT, route.getOppositeRoute().getObjectId());
 		// récupération de la valeur d'attribut sauvegardée
