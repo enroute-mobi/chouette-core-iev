@@ -83,7 +83,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 	@Inject
 	UserTransaction utx;
 
-
 	public static EnterpriseArchive createDeployment(Class testClass) {
 
 		EnterpriseArchive result;
@@ -120,7 +119,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(AbstractNetexStifImportFileSetTests.class)
-				.addClass(testClass).addClass(JobDataTest.class);
+				.addClass(testClass)
+				.addClass(YmlMessages.class)
+				.addClass(JobDataTest.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -148,15 +149,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		// ;
 	}
 
-	private String next(Iterator<String> iter) {
-		if (iter.hasNext()) {
-			return iter.next();
-		} else {
-			return null;
-		}
-	}
 
-	
 
 	protected Context initImportContext() throws Exception {
 		init();
@@ -236,7 +229,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		utx.begin();
 		em.joinTransaction();
 
-		
 		ImportTask task = importTaskDAO.find(jobData.getId());
 
 		List<ImportResource> resources = getRessources(task);
@@ -245,6 +237,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		Set<String> actualErrors = new TreeSet<String>();
 		List<ImportMessage> messages = getMessages(task);
+
 		messages.stream().forEach(x -> {
 			ImportResource ir = mapImportResources.get(x.getResourceId());
 			StringBuilder sb = new StringBuilder();
@@ -256,23 +249,34 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			sb.append(":");
 			sb.append(x.getMessageKey());
 
+			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
+			log.info("message(" + x.getMessageKey() + ")=" + message);
+
+			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
+			Assert.assertEquals(0, missingKeys.size(), "Missing keys { " + missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
+
 			actualErrors.add(sb.toString());
 		});
-
 
 		Set<String> expectedErrors = new TreeSet<String>();
 		Arrays.asList(expectedData).stream().forEach(x -> expectedErrors.add(x.trim()));
 
-		List<String> expectedNotDetected = expectedErrors.stream().filter(x -> ! actualErrors.contains(x)).collect(Collectors.toList());
-		List<String> notExpected = actualErrors.stream().filter(x -> ! expectedErrors.contains(x)).collect(Collectors.toList());//);
+		List<String> expectedNotDetected = expectedErrors.stream().filter(x -> !actualErrors.contains(x))
+				.collect(Collectors.toList());
+		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
+				.collect(Collectors.toList());// );
 		if (!notExpected.isEmpty()) {
-			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + report.getResult() + ";" + notExpected.stream().collect(Collectors.joining("; ")));
+			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + report.getResult() + ";"
+					+ notExpected.stream().collect(Collectors.joining("; ")));
 		}
 		if (!expectedNotDetected.isEmpty()) {
 			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
 		}
-		Assert.assertTrue(expectedNotDetected.isEmpty(), expectedNotDetected.size() + " Error(s) not detected (but expected) : " + expectedNotDetected.stream().collect(Collectors.joining("; ")));
-		Assert.assertTrue(notExpected.isEmpty(), notExpected.size() + " Error(s) not expected (but detected) : " + notExpected.stream().collect(Collectors.joining("; ")));
+		Assert.assertTrue(expectedNotDetected.isEmpty(),
+				expectedNotDetected.size() + " Error(s) not detected (but expected) : "
+						+ expectedNotDetected.stream().collect(Collectors.joining("; ")));
+		Assert.assertTrue(notExpected.isEmpty(), notExpected.size() + " Error(s) not expected (but detected) : "
+				+ notExpected.stream().collect(Collectors.joining("; ")));
 
 		// clean database
 		// messages.stream().forEach(m -> em.remove(m));
