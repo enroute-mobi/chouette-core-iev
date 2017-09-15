@@ -58,6 +58,9 @@ public class JobService implements JobData, ServiceConstants {
 	public JobService(String application, String rootDirectory, ImportTask importTask) throws ServiceException {
 		this.rootDirectory = rootDirectory;
 		this.id = importTask.getId();
+		if (importTask.getReferential() == null) {
+			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS, "no referential");
+		}
 		this.referential = importTask.getReferential().getSchemaName();
 		this.action = ACTION.importer;
 		this.type = importTask.getFormat();
@@ -78,13 +81,19 @@ public class JobService implements JobData, ServiceConstants {
 		this.status = STATUS.valueOf(importTask.getStatus().toUpperCase());
 
 		if (!commandExists()) {
-			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, "");
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, getCommandName() + "not found");
 		}
 		try {
 			inputValidator = getCommandInputValidator(action.name(), type);
-			actionParameter = inputValidator.toActionParameter(importTask);
 		} catch (ClassNotFoundException | IOException e) {
-			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, "");
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION,
+					getCommandName() + "has no input validator");
+		}
+		try {
+			actionParameter = inputValidator.toActionParameter(importTask);
+		} catch (Exception ex) {
+			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS,
+					getCommandName() + "cannot read action parameters");
 		}
 		if (System.getProperty(application + PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null) {
 			long stepWait = Long
