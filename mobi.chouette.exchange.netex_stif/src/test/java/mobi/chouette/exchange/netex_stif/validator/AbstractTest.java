@@ -31,7 +31,7 @@ public abstract class AbstractTest implements Constant {
 			Assert.assertEquals(file.getCheckPointErrorCount(), 1, "file error reported");
 			error = valReport.getCheckPointErrors().get(file.getCheckPointErrorKeys().get(0).intValue());
 		} else {
-			Assert.assertEquals(file.getStatus(), FILE_STATE.OK, "file status reported");
+			Assert.assertEquals(file.getStatus(), FILE_STATE.WARNING, "file status reported");
 			Assert.assertEquals(file.getCheckPointWarningCount(), 1, "file warning reported");
 			error = valReport.getCheckPointErrors().get(file.getCheckPointWarningKeys().get(0).intValue());
 		}

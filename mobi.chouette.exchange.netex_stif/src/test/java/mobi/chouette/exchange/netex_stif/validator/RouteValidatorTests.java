@@ -173,7 +173,7 @@ public class RouteValidatorTests extends AbstractTest {
 		validateInverseRouteRef(tc, oppositeRoute);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_1",
-				"Codespace:type:identifierAABB:LOC", FILE_STATE.OK);
+				"Codespace:type:identifierAABB:LOC", FILE_STATE.WARNING);
 	}
 
 	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal 1 : No Opposite Route ", priority = 1)
@@ -235,14 +235,14 @@ public class RouteValidatorTests extends AbstractTest {
 		TestContext tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_INBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'inbound' twice");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
-				oppositeRoute.getObjectId(), FILE_STATE.OK);
+				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 		//
 		// -- error : 'outbound' twice
 		oppositeRoute.setWayBack(DIRECTION_OUTBOUND);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_OUTBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'outbound' twice");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
-				oppositeRoute.getObjectId(), FILE_STATE.OK);
+				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 		//
 		// -- error : 'outbound' twice, default value for route wayback (null) is 'outbound'
 		oppositeRoute.setWayBack(null);
@@ -250,7 +250,7 @@ public class RouteValidatorTests extends AbstractTest {
 		Assert.assertFalse(tc.isResult(),
 				"error : 'outbound' twice, default value for route wayback (null) is 'outbound'");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
-				oppositeRoute.getObjectId(), FILE_STATE.OK);
+				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 	}
 
 	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal : No Opposite Route ", priority = 1)
@@ -449,7 +449,7 @@ public class RouteValidatorTests extends AbstractTest {
 		validateRouteStopPointAlightingBoarding(tc, list);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_4, "2_netexstif_route_4",
-				"CSP:TYP:40:LOC", FILE_STATE.OK);
+				"CSP:TYP:40:LOC", FILE_STATE.WARNING);
 	}
 
 	@Test(groups = { "Route",

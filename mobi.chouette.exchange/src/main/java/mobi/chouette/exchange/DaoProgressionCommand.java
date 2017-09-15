@@ -161,18 +161,18 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 		}
 		report.getFiles().clear(); // TODO : see if mark as saved or delete !
 
-		for (ObjectReport objectReport : report.getObjects().values()) {
-			ActionResource actionResource = actionResourceDAO.createResource(job);
-			actionResource.setType(objectReport.getType().name().toLowerCase());
-			actionResource.setName(objectReport.getDescription());
-			actionResource.setStatus(objectReport.getStatus().name());
-			actionResource.setReference("merged");
-			for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
-				actionResource.getMetrics().put(entry.getKey().name().toLowerCase(), entry.getValue().toString());
-			}
-			actionResourceDAO.saveResource(actionResource);
-			addMessages(context, objectReport, actionResource);
-		}
+//		for (ObjectReport objectReport : report.getObjects().values()) {
+//			ActionResource actionResource = actionResourceDAO.createResource(job);
+//			actionResource.setType(objectReport.getType().name().toLowerCase());
+//			actionResource.setName(objectReport.getDescription());
+//			actionResource.setStatus(objectReport.getStatus().name());
+//			actionResource.setReference("merged");
+//			for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
+//				actionResource.getMetrics().put(entry.getKey().name().toLowerCase(), entry.getValue().toString());
+//			}
+//			actionResourceDAO.saveResource(actionResource);
+//			addMessages(context, objectReport, actionResource);
+//		}
 		report.getObjects().clear(); // TODO : see if mark as saved or delete !
 
 		for (ObjectCollectionReport collection : report.getCollections().values()) {
