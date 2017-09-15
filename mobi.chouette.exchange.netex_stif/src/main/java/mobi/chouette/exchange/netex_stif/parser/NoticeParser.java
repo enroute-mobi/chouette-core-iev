@@ -48,6 +48,8 @@ public class NoticeParser implements Parser, Constant {
 		// log.info("valid " + validType);
 		Footnote footnote = factory.getFootnote(id);
 		footnote.setObjectVersion(version);
+		if (text != null) text = text.trim();
+		if (publicCode != null) publicCode = publicCode.trim();
 		footnote.setLabel(text);
 		footnote.setCode(publicCode);
 		Referential referential = (Referential) context.get(REFERENTIAL);
