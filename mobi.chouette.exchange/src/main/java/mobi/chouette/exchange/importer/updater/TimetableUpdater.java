@@ -48,22 +48,7 @@ public class TimetableUpdater implements Updater<Timetable> {
 			NamingUtil.setDefaultName(newValue);
 		}
 		
-//		if (newValue.getDayTypes().contains(DayTypeEnum.WeekDay))
-//		{
-//			newValue.addDayType(DayTypeEnum.Monday);
-//			newValue.addDayType(DayTypeEnum.Tuesday);
-//			newValue.addDayType(DayTypeEnum.Wednesday);
-//			newValue.addDayType(DayTypeEnum.Thursday);
-//			newValue.addDayType(DayTypeEnum.Friday);
-//			newValue.removeDayType(DayTypeEnum.WeekDay);
-//		}
-//		if (newValue.getDayTypes().contains(DayTypeEnum.WeekEnd))
-//		{
-//			newValue.addDayType(DayTypeEnum.Saturday);
-//			newValue.addDayType(DayTypeEnum.Sunday);
-//			newValue.removeDayType(DayTypeEnum.WeekEnd);
-//		}
-
+ 
 		if (newValue.getObjectId() != null
 				&& !newValue.getObjectId().equals(oldValue.getObjectId())) {
 			oldValue.setObjectId(newValue.getObjectId());

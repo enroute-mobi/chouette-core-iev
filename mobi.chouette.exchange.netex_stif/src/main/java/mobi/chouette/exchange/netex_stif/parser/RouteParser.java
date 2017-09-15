@@ -62,12 +62,14 @@ public class RouteParser implements Parser, Constant {
 					route.setLineId(line.getId());
 					route.setLineLite(line);
 					NetexStifUtils.uniqueObjectIdOnLine(route, line);
+					validator.addRouteId(context, route.getObjectId(), id);
 					context.put(LINE, line);
 				}
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
 
 				String tmpDirType = xpp.nextText();
 				route.setWayBack(tmpDirType);
+				log.warn("Route "+ id+ " : DirectionType = "+ tmpDirType);
 				if (tmpDirType.equals(DIRECTION_INBOUND)) {
 					route.setDirection(PTDirectionEnum.R);
 				} else if (tmpDirType.equals(DIRECTION_OUTBOUND)) {
@@ -111,6 +113,9 @@ public class RouteParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		
+		validator.validate(context, route, lineNumber, columnNumber);
+		
 		route.setFilled(true);
 	}
 
