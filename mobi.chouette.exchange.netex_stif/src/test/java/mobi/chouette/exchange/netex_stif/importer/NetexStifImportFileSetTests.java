@@ -107,21 +107,20 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
 	}
 
-/*
-	@Test(groups = {
-			"2296" }, testName = "2296-00", description = "[Netex] Contrôle de la syntaxe des références", priority = 11)
-	public void verifyCard2296_00() throws Exception {
-		doImport("OFFRE_SNTYO_20170821002296.zip", "NOK", "calendriers.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
-				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
-				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
-				"offre_C00166_05.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-				"offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
-	}
-	*/
+//	@Test(groups = {
+//			"2296" }, testName = "2296-00", description = "[Netex] Contrôle de la syntaxe des références", priority = 11)
+//	public void verifyCard2296_00() throws Exception {
+//		doImport("OFFRE_SNTYO_20170821002296.zip", "NOK", "calendriers.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+//				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
+//				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+//				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
+//				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+//				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
+//				"offre_C00166_05.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+//				"offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+//				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
+//	}
+
 
 	@Test(groups = {
 			"2297" }, testName = "2297-00", description = "[Netex] Contrôle de la syntaxe des références internes", priority = 12)
@@ -230,13 +229,13 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 		doImport("OFFRE_SNTYO_20170821002312.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
 	}
 
-	@Test(groups = {
-			"2313" }, testName = "2313-00", description = "[Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef", priority = 27)
-	public void verifyCard2313_00() throws Exception {
-		doImport("OFFRE_SNTYO_20170821002313.zip", "NOK", "offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
-				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1",
-				"offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
-	}
+//	@Test(groups = {
+//			"2313" }, testName = "2313-00", description = "[Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef", priority = 27)
+//	public void verifyCard2313_00() throws Exception {
+//		doImport("OFFRE_SNTYO_20170821002313.zip", "NOK", "offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
+//				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1",
+//				"offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
+//	}
 
 	@Test(groups = {
 			"2314" }, testName = "2314-00", description = "[Netex] Contrôle de l'objet ServiceJourneyPattern : pointsInSequence", priority = 28)
@@ -259,11 +258,11 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-4:2_netexstif_servicejourneypattern_4");
 	}
 
-	@Test(groups = {
-			"2317" }, testName = "2317-00", description = "[Netex] Contrôle de l'objet Route : cohérence des ServiceJourneyPattern sur les interdictions de montée et descente", priority = 31)
-	public void verifyCard2317_00() throws Exception {
-		doImport("OFFRE_SNTYO_20170821002317.zip", "OK");
-	}
+//	@Test(groups = {
+//			"2317" }, testName = "2317-00", description = "[Netex] Contrôle de l'objet Route : cohérence des ServiceJourneyPattern sur les interdictions de montée et descente", priority = 31)
+//	public void verifyCard2317_00() throws Exception {
+//		doImport("OFFRE_SNTYO_20170821002317.zip", "OK");
+//	}
 
 	@Test(groups = {
 			"2318" }, testName = "2318-00", description = "[Netex] Contrôle de l'objet PassengerStopAssignment : complétude", priority = 32)
@@ -291,11 +290,11 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 		doImport("OFFRE_SNTYO_20170821002321.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
 	}
 
-	@Test(groups = {
-			"2322" }, testName = "2322-00", description = "[Netex] Contrôle de l'objet ServiceJourney : trainNumbers", priority = 36)
-	public void verifyCard2322_00() throws Exception {
-		doImport("OFFRE_SNTYO_20170821002322.zip", "OK");
-	}
+//	@Test(groups = {
+//			"2322" }, testName = "2322-00", description = "[Netex] Contrôle de l'objet ServiceJourney : trainNumbers", priority = 36)
+//	public void verifyCard2322_00() throws Exception {
+//		doImport("OFFRE_SNTYO_20170821002322.zip", "OK");
+//	}
 
 	@Test(groups = {
 			"2323" }, testName = "2323-00", description = "[Netex] Contrôle de l'objet ServiceJourney : complétude des passingTimes", priority = 37)

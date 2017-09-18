@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -141,8 +142,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 				boolean checked = validator.checkNetexRef(context, vehicleJourney, DAY_TYPE_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkExternalRef(context, vehicleJourney, DAY_TYPE_REF, ref, att_version, content,
-							lineNumber, columnNumber);
+					checked = validator.checkExternalRef(context, vehicleJourney, DAY_TYPE_REF, ref, att_version,
+							content, lineNumber, columnNumber);
 				if (checked)
 					checked = validator.checkExistsRef(context, vehicleJourney, DAY_TYPE_REF, ref, att_version, content,
 							lineNumber, columnNumber);
@@ -173,7 +174,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 	private void affectTimetables(Context context, Referential referential, VehicleJourney vehicleJourney,
 			Set<String> timetableRefs) {
 		if (referential.getSharedTimetableTemplates().isEmpty()) {
-			log.info("no tm loaded ");
+			log.warn("no tm loaded ");
 			return;
 		}
 		Set<String> negative = getNegative(referential, timetableRefs);
@@ -183,7 +184,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				Timetable tm = getTimetable(referential, ref);
 				if (tm != null) {
 					referential.getTimetables().put(ref, tm);
-					log.info("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
+					//log.info("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
 					tm.addVehicleJourney(vehicleJourney);
 				}
 			}
@@ -220,7 +221,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 					}
 					tm.setObjectId(key);
 					referential.getTimetables().put(key, tm);
-					log.info("affect tm " + key + " on vj " + vehicleJourney.getObjectId());
+					// log.info("affect tm " + key + " on vj " + vehicleJourney.getObjectId());
 					tm.addVehicleJourney(vehicleJourney);
 				}
 			}
@@ -266,9 +267,11 @@ public class ServiceJourneyParser implements Parser, Constant {
 				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
 				int rank = vehicleJourney.getVehicleJourneyAtStops().size();
 				vjas.setVehicleJourney(vehicleJourney);
-				if (rank < vehicleJourney.getJourneyPattern().getStopPoints().size()) {
-					StopPoint sp = vehicleJourney.getJourneyPattern().getStopPoints().get(rank);
-					vjas.setStopPoint(sp);
+				if (vehicleJourney.getJourneyPattern() != null) {
+					if (rank < vehicleJourney.getJourneyPattern().getStopPoints().size()) {
+						StopPoint sp = vehicleJourney.getJourneyPattern().getStopPoints().get(rank);
+						vjas.setStopPoint(sp);
+					}
 				}
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals(ARRIVAL_TIME)) {
@@ -281,6 +284,15 @@ public class ServiceJourneyParser implements Parser, Constant {
 						vjas.setDepartureDayOffset(Integer.parseInt(xpp.nextText()));
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
+					}
+				}
+				if (vjas.getDepartureTime() != null) {
+					if (vjas.getArrivalTime() == null) {
+						vjas.setArrivalTime(new Time(vjas.getDepartureTime().getTime()));
+						vjas.setArrivalDayOffset(vjas.getDepartureDayOffset());
+					} else if (vjas.getDepartureDayOffset() > 0 && vjas.getArrivalDayOffset() == null
+							&& vjas.getArrivalTime().after(vjas.getDepartureTime())) {
+						vjas.setArrivalDayOffset(vjas.getDepartureDayOffset() - 1);
 					}
 				}
 				validator.validate(context, vjas, lineNumber, columnNumber, rank);
@@ -299,6 +311,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 				int columnNumber = xpp.getColumnNumber();
 				// value of train number in the third field of the ref
 				String ref = xpp.getAttributeValue(null, REF);
+				validator.addTrainNumberRef(context, vehicleJourney.getObjectId(), ref);
 				String version = xpp.getAttributeValue(null, VERSION);
 				String content = xpp.nextText();
 				// check external reference

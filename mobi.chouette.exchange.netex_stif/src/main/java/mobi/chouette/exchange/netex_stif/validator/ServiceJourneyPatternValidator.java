@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -11,6 +12,7 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.StopPoint;
 
+@Log4j
 public class ServiceJourneyPatternValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = SERVICE_JOURNEY_PATTERN;

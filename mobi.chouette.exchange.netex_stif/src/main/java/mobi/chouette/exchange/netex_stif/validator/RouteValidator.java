@@ -11,9 +11,11 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class RouteValidator extends AbstractValidator {
@@ -51,7 +53,16 @@ public class RouteValidator extends AbstractValidator {
 		return (String) objectContext.get(ID);
 	}
 
+	/**
+	 * @param context
+	 * @param route
+	 * @param lineNumber
+	 * @param columnNumber
+	 * @return
+	 */
 	public boolean validate(Context context, Route route, int lineNumber, int columnNumber) {
+		addLocation(context, route, lineNumber, columnNumber);
+
 		checkChanged(context, ROUTE, route, lineNumber, columnNumber);
 		boolean result2 = checkModification(context, ROUTE, route, lineNumber, columnNumber);
 		boolean result3 = check2NeTExSTIFRoute1(context, route, lineNumber, columnNumber);
@@ -61,16 +72,27 @@ public class RouteValidator extends AbstractValidator {
 			check2NeTExSTIFRoute2_2(context, route, lineNumber, columnNumber);
 		if (result3)
 			result3 = check2NeTExSTIFRoute3(context, route, lineNumber, columnNumber);
-		if (result3)
-			check2NeTExSTIFRoute4(context, route, lineNumber, columnNumber);
+		// must be done after ServiceJourneyPatterns loaded
+		// if (result3)
+		// check2NeTExSTIFRoute4(context, route, lineNumber, columnNumber);
 		return result2 && result3;
 
+	}
+
+	public void validateAll(Context context) {
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		referential.getRoutes().values().stream().forEach(r -> {
+			DataLocation d = getLocation(context, r.getObjectId());
+			check2NeTExSTIFRoute4(context, r, d.getLineNumber(), d.getColumnNumber());
+		});
 	}
 
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Route : DirectionType
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2308">Cartes #2308</a>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2308">Cartes
+	 * #2308</a>
 	 * <p>
 	 * <b>Code</b> : 2-NeTExSTIF-Route-1
 	 * <p>
@@ -78,10 +100,12 @@ public class RouteValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Prérequis</b> : Attribut DirectionType renseigné
 	 * <p>
-	 * <b>Prédicat</b> : L'attribut DirectionType doit prendre l'une des 2 valeurs 'outbound' ou 'inbound'
+	 * <b>Prédicat</b> : L'attribut DirectionType doit prendre l'une des 2
+	 * valeurs 'outbound' ou 'inbound'
 	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet Route d'identifiant {objectId} a une valeur
-	 * de l'attribut DirectionType interdite : {directionType}
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
+	 * Route d'identifiant {objectId} a une valeur de l'attribut DirectionType
+	 * interdite : {directionType}
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
@@ -108,9 +132,12 @@ public class RouteValidator extends AbstractValidator {
 	}
 
 	/**
-	 * <b>Titre</b> :[Netex] Contrôle de l'objet Route : cohérence des routes inverses
+	 * <b>Titre</b> :[Netex] Contrôle de l'objet Route : cohérence des routes
+	 * inverses
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2309">Cartes #2309</a>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2309">Cartes
+	 * #2309</a>
 	 * <p>
 	 * <b>Code</b> : 2-NeTExSTIF-Route-2
 	 * <p>
@@ -118,12 +145,15 @@ public class RouteValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Prérequis</b> : Attribut InverseRouteRef renseigné
 	 * <p>
-	 * <b>Prédicat</b> : Les Routes associées comme routes inverses doivent se référencer mutuellement.Les DirectionType
-	 * des Routes en sens opposés doivent être différent (Note : DirectionType non renseigné = outbound)
+	 * <b>Prédicat</b> : Les Routes associées comme routes inverses doivent se
+	 * référencer mutuellement.Les DirectionType des Routes en sens opposés
+	 * doivent être différent (Note : DirectionType non renseigné = outbound)
 	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet Route d'identifiant {objectId} référence un
-	 * objet Route inverse {InverseRouteRef.ref} qui ne le référence pas. {fichier}-Ligne {ligne}-Colonne {Colonne} :
-	 * l'objet Route d'identifiant {objectId} référence un objet Route inverse {InverseRouteRef.ref} de même
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
+	 * Route d'identifiant {objectId} référence un objet Route inverse
+	 * {InverseRouteRef.ref} qui ne le référence pas. {fichier}-Ligne
+	 * {ligne}-Colonne {Colonne} : l'objet Route d'identifiant {objectId}
+	 * référence un objet Route inverse {InverseRouteRef.ref} de même
 	 * DirectionType
 	 * <p>
 	 * <b>Criticité</b> : warning
@@ -176,7 +206,8 @@ public class RouteValidator extends AbstractValidator {
 		if (route.getOppositeRoute().getWayBack() != null) {
 			oppositeWayback = route.getOppositeRoute().getWayBack();
 		}
-		// log.warn("wayback = " + wayback + "; oppositeWayback = " + oppositeWayback);
+		// log.warn("wayback = " + wayback + "; oppositeWayback = " +
+		// oppositeWayback);
 		if (wayback.equals(oppositeWayback)) {
 			result = false;
 		}
@@ -196,7 +227,9 @@ public class RouteValidator extends AbstractValidator {
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Route : Séquence des arrêts
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2310">Cartes #2310</a>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2310">Cartes
+	 * #2310</a>
 	 * <p>
 	 * <b>Code</b> : 2-NeTExSTIF-Route-3
 	 * <p>
@@ -204,11 +237,13 @@ public class RouteValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : L'ordre des arrêts (ScheduledStopPoint) issus des StopPointInJourneyPattern des
-	 * ServiceJourneyPattern de la Route doit être croissant
+	 * <b>Prédicat</b> : L'ordre des arrêts (ScheduledStopPoint) issus des
+	 * StopPointInJourneyPattern des ServiceJourneyPattern de la Route doit être
+	 * croissant
 	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : Les ServiceJourneyPattern de l'objet Route
-	 * d'identifiant {objectId} ne permettent pas de reconstituer la séquence des arrêts de celui-ci
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : Les
+	 * ServiceJourneyPattern de l'objet Route d'identifiant {objectId} ne
+	 * permettent pas de reconstituer la séquence des arrêts de celui-ci
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
@@ -245,11 +280,11 @@ public class RouteValidator extends AbstractValidator {
 	private boolean compare(Boolean boolAlighting, AlightingPossibilityEnum enumAlighting) {
 
 		if (enumAlighting == null) {
-			return boolAlighting;
+			return true;
 		} else if (enumAlighting.equals(AlightingPossibilityEnum.normal)) {
-			return boolAlighting;
+			return boolAlighting.booleanValue();
 		} else if (enumAlighting.equals(AlightingPossibilityEnum.forbidden)) {
-			return !boolAlighting;
+			return !(boolAlighting.booleanValue());
 		} else {
 			return false;
 		}
@@ -258,11 +293,11 @@ public class RouteValidator extends AbstractValidator {
 	private boolean compare(Boolean boolBoarding, BoardingPossibilityEnum enumBoarding) {
 
 		if (enumBoarding == null) {
-			return boolBoarding;
+			return true;
 		} else if (enumBoarding.equals(BoardingPossibilityEnum.normal)) {
-			return boolBoarding;
+			return boolBoarding.booleanValue();
 		} else if (enumBoarding.equals(BoardingPossibilityEnum.forbidden)) {
-			return !boolBoarding;
+			return !(boolBoarding.booleanValue());
 		} else {
 			return false;
 		}
@@ -270,9 +305,12 @@ public class RouteValidator extends AbstractValidator {
 	}
 
 	/**
-	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern : Interdictions de montée et descente
+	 * <b>Titre</b> :[Netex] Contrôle de l'objet ServiceJourneyPattern :
+	 * Interdictions de montée et descente
 	 * <p>
-	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2317">Cartes #2317</a>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2317">Cartes
+	 * #2317</a>
 	 * <p>
 	 * <b>Code</b> : 2-NeTExSTIF-Route-4
 	 * <p>
@@ -280,16 +318,19 @@ public class RouteValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : Les attributs ForAlighting et ForBoarding d'un StopPointInJourneyPattern doivent être
-	 * identiques pour des arrêts partagés entre plusieurs ServiceJourneyPattern de la même Route
+	 * <b>Prédicat</b> : Les attributs ForAlighting et ForBoarding d'un
+	 * StopPointInJourneyPattern doivent être identiques pour des arrêts
+	 * partagés entre plusieurs ServiceJourneyPattern de la même Route
 	 * <p>
-	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne}, Les informations de montée/Descente à l'arrêt {id
-	 * arrêt} de la Route {objectId} diffèrent sur plusieurs ServiceJourneyPattern, ces informations ne sont pas
-	 * importées
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne}, Les
+	 * informations de montée/Descente à l'arrêt {id arrêt} de la Route
+	 * {objectId} diffèrent sur plusieurs ServiceJourneyPattern, ces
+	 * informations ne sont pas importées
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * Note : si plusieurs ServiceJourneyPattern sont concernées, le message n'apparait qu'une seule fois
+	 * Note : si plusieurs ServiceJourneyPattern sont concernées, le message
+	 * n'apparait qu'une seule fois
 	 *
 	 * @param context
 	 * @return
@@ -301,23 +342,31 @@ public class RouteValidator extends AbstractValidator {
 		StopPoint stopPointOnError = null;
 
 		for (JourneyPattern jp : route.getJourneyPatterns()) {
+			// log.warn("check2NeTExSTIFRoute4 : jp "+ jp.getObjectId() );
 
 			Context objectContext = getObjectContext(context, ServiceJourneyPatternValidator.LOCAL_CONTEXT,
 					jp.getObjectId());
 			Map<Integer, Boolean> mapAlighting = (Map<Integer, Boolean>) objectContext.get(FOR_ALIGHTING);
 			Map<Integer, Boolean> mapBoarding = (Map<Integer, Boolean>) objectContext.get(FOR_BOARDING);
 			for (StopPoint sp : route.getStopPoints()) {
-				if (mapAlighting.containsKey(sp.getPosition())) {
+				// log.warn("stopPoint position "+ sp.getPosition() );
+				if (mapAlighting != null && mapAlighting.containsKey(sp.getPosition())) {
 					Boolean alighting = mapAlighting.get(sp.getPosition());
+					// log.warn(" check "+ sp.getForAlighting() + " with "+
+					// alighting);
 					if (!compare(alighting, sp.getForAlighting())) {
+						// log.warn(" error found");
 						result = false;
 						stopPointOnError = sp;
 						break;
 					}
 				}
-				if (mapBoarding.containsKey(sp.getPosition())) {
+				if (mapBoarding != null && mapBoarding.containsKey(sp.getPosition())) {
 					Boolean boarding = mapBoarding.get(sp.getPosition());
+					// log.warn(" check "+ sp.getForBoarding() + " with "+
+					// boarding);
 					if (!compare(boarding, sp.getForBoarding())) {
+						// log.warn(" error found");
 						result = false;
 						stopPointOnError = sp;
 						break;
@@ -335,9 +384,21 @@ public class RouteValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
+			Referential referential = (Referential) context.get(REFERENTIAL);
+			String refId = stopPointOnError.getObjectId();
+			if (referential != null && !referential.getSharedReadOnlyStopAreas().isEmpty()) {
+				// protection from testng conditions
+				StopAreaLite stopArea = referential.findStopArea(stopPointOnError.getStopAreaId());
+				refId = stopArea.getObjectId();
+			}
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_4, location,
-					stopPointOnError.getObjectId());
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_4, location, refId);
+
+			// clean boarding and alighting data
+			for (StopPoint sp : route.getStopPoints()) {
+				sp.setForBoarding(null);
+				sp.setForAlighting(null);
+			}
 		}
 
 		return result;

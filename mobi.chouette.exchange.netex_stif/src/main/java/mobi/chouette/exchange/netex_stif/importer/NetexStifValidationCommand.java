@@ -14,6 +14,7 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.validator.DayTypeValidator;
+import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
@@ -39,7 +40,6 @@ public class NetexStifValidationCommand implements Command, Constant {
 		try {
 			Referential referential = (Referential) context.get(REFERENTIAL);
 
-			// Except for calendars, tests are done during parsing just check file status
 			if (fileName.equals(CALENDRIER_FILE_NAME)) {
 				boolean res = validateCalendrier(context) && !reporter.hasFileValidationErrors(context, fileName);
 				if (!res) {
@@ -58,12 +58,16 @@ public class NetexStifValidationCommand implements Command, Constant {
 				} else {
 					result = SUCCESS;
 				}
-			}
-			else if (!reporter.hasFileValidationErrors(context, fileName))
-				result = SUCCESS;
+			} else {
+				RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(context,
+						RouteValidator.class);
+				validator.validateAll(context);
 
-			if (result && fileName.startsWith(OFFRE_FILE_PREFIX)) {
-				addStats(context, reporter, referential);
+				if (!reporter.hasFileValidationErrors(context, fileName)) {
+					addStats(context, reporter, referential);
+					result = SUCCESS;
+				}
+
 			}
 
 		} catch (Exception e) {

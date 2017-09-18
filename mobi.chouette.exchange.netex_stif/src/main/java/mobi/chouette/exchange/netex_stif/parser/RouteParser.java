@@ -69,7 +69,7 @@ public class RouteParser implements Parser, Constant {
 
 				String tmpDirType = xpp.nextText();
 				route.setWayBack(tmpDirType);
-				log.warn("Route "+ id+ " : DirectionType = "+ tmpDirType);
+				// log.warn("Route "+ id+ " : DirectionType = "+ tmpDirType);
 				if (tmpDirType.equals(DIRECTION_INBOUND)) {
 					route.setDirection(PTDirectionEnum.R);
 				} else if (tmpDirType.equals(DIRECTION_OUTBOUND)) {
