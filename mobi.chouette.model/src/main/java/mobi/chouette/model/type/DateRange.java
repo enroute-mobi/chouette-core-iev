@@ -11,8 +11,10 @@ import org.postgresql.util.PGobject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @AllArgsConstructor
+@Log4j
 public class DateRange implements Serializable {
 	private static final long serialVersionUID = -4771648000594466515L;
 	@Getter
@@ -30,20 +32,22 @@ public class DateRange implements Serializable {
 			try {
 				first = new Date(format.parse(tok[0]).getTime());
 			} catch (ParseException e) {
+				log.error(e.getMessage(),e);
 			}
 			try {
 				last = new Date(format.parse(tok[1]).getTime());
 			} catch (ParseException e) {
+				log.error(e.getMessage(),e);
 			}
-
 		}
 	}
 
 	public PGobject toPGObject() throws SQLException {
 		PGobject obj = new PGobject();
 		obj.setType("daterange");
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		obj.setValue("[" + format.format(first) + "," + format.format(last) + "]");
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+		obj.setValue("[" + format1.format(first) + "," + format2.format(last) + ")");
 		return obj;
 	}
 
