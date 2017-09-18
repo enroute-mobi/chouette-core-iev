@@ -112,11 +112,19 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
 		Assert.assertFalse(res, "validation should be nok");
 		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3,
-				"2_netexstif_servicejourneypattern_3", null, FILE_STATE.ERROR);
+				"2_netexstif_servicejourneypattern_3_1", null, FILE_STATE.ERROR);
 		context = initImportContext();
 		validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
 				ServiceJourneyPatternValidator.class);
-		validator.addPatternType(context, jpId, "test");
+		validator.addPatternType(context, jpId, "other");
+		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
+		Assert.assertFalse(res, "validation should be nok");
+		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3,
+				"2_netexstif_servicejourneypattern_3_2", "other", FILE_STATE.ERROR);
+		context = initImportContext();
+		validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
+				ServiceJourneyPatternValidator.class);
+		validator.addPatternType(context, jpId, "passenger");
 		checkNoReports(context, "offre_xxx.xml");
 		res = validator.check2NeTExSTIFServiceJourneyPattern3(context, jp, 1, 2);
 		Assert.assertTrue(res, "validation should be ok");
