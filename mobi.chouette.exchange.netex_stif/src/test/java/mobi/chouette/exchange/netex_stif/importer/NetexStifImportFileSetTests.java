@@ -107,6 +107,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
 	}
 
+/*
 	@Test(groups = {
 			"2296" }, testName = "2296-00", description = "[Netex] Contrôle de la syntaxe des références", priority = 11)
 	public void verifyCard2296_00() throws Exception {
@@ -120,6 +121,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 				"offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
 				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
 	}
+	*/
 
 	@Test(groups = {
 			"2297" }, testName = "2297-00", description = "[Netex] Contrôle de la syntaxe des références internes", priority = 12)
