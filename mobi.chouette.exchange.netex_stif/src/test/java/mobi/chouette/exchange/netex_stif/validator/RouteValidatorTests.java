@@ -390,7 +390,7 @@ public class RouteValidatorTests extends AbstractTest {
 
 	/*
 	 * StopPoint Alighting/Boarding in route match those in JourneyPatterns
-	 * NeTExSTIF_Route_3
+	 * NeTExSTIF_Route_4
 	 */
 
 	private void validateRouteStopPointAlightingBoarding(TestContext tc, List<StopPoint> list) {
@@ -398,6 +398,7 @@ public class RouteValidatorTests extends AbstractTest {
 		int columnNumber = 2;
 		tc.getFakeRoute().setStopPoints(list);
 		RouteValidator validator = tc.getRouteValidator();
+        Assert.assertNotNull(validator,"validator");
 		boolean result = validator.check2NeTExSTIFRoute4(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
 		log.info("Validation Report ===>" + tc.getValidationReport().toString());
 		log.info("Validation Report Result = " + tc.getValidationReport().getResult());
@@ -462,8 +463,8 @@ public class RouteValidatorTests extends AbstractTest {
 				"CSP:TYP:40:LOC", FILE_STATE.WARNING);
 	}
 
-	@Test(groups = { "Route",
-			"AlightingBoarding" }, description = "Nominal 1 : AlightingBoarding in Route vs JourneyPattern correct  ", priority = 1)
+//	@Test(groups = { "Route",
+//			"AlightingBoarding" }, description = "Nominal 1 : AlightingBoarding in Route vs JourneyPattern correct  ", priority = 1)
 	public void verifyRouteStopPointAlightingBoardingcorrect() throws Exception {
 
 		List<StopPoint> list = new ArrayList<StopPoint>(Arrays.asList(
