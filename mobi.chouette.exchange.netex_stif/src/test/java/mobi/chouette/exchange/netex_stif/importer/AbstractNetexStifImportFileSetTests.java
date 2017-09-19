@@ -262,6 +262,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 				.collect(Collectors.toList());
 		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
 				.collect(Collectors.toList());// );
+		
+		log.error("ALL DETECTED ERRORS ("+actualErrors.size()+"):" + zipFile + ";" + report.getResult() + ";"
+				+ actualErrors.stream().collect(Collectors.joining("; ")));
 		if (!notExpected.isEmpty()) {
 			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + report.getResult() + ";"
 					+ notExpected.stream().collect(Collectors.joining("; ")));

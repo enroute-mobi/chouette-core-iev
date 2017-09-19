@@ -3,23 +3,25 @@ import sys
 import csv
 import os
 from redminelib import Redmine
-
+import datetime
 
 def beginJavaClass():
-	javaClass="/**\n" \
-	+" *  !!! Generated Code !!!\n" \
-	+" *  Do not edit !\n" \
-	+" *  Created by create_NetexStifImportFileSetTests.py\n" \
-	+" */\n\n"\
-	+"package mobi.chouette.exchange.netex_stif.importer;\n"	\
-	+"import org.jboss.arquillian.container.test.api.Deployment;\n" \
- 	+"import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;\n" \
-	+"import org.testng.annotations.Test;\n" \
- 	+"public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetTests {\n"\
- 	+"\n@Deployment\n"\
- 	+"	public static EnterpriseArchive createDeployment() {\n"\
- 	+"		return AbstractNetexStifImportFileSetTests.createDeployment(NetexStifImportFileSetTests.class);\n"\
- 	+"	}\n"
+	now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+	javaClass="\
+	/**\n \
+	 *  !!! Generated Code (%s)!!!\n \
+	 *  Do not edit !\n \
+	 *  Created by create_NetexStifImportFileSetTests.py\n \
+	 */\n\n \
+	package mobi.chouette.exchange.netex_stif.importer;\n	\
+	import org.jboss.arquillian.container.test.api.Deployment;\n \
+ 	import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;\n \
+	import org.testng.annotations.Test;\n \
+ 	public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetTests {\n \
+ 	\n@Deployment\n\
+ 		public static EnterpriseArchive createDeployment() {\n\
+ 			return AbstractNetexStifImportFileSetTests.createDeployment(NetexStifImportFileSetTests.class);\n\
+ 		}\n" %(now)
 	#print("javaClass=%s" %(javaClass))
 	return javaClass
 
@@ -86,12 +88,7 @@ if __name__ == '__main__':
 			newfilename = filename.replace("-", "_")
 			tmp=newfilename.split(".")[0]
 			tmp=tmp.split('_')
-# 			tmp=tmp[2]
-# 			tmp=tmp.split(".")
-# 			tmp=tmp[0]
-# 			tmp=tmp[-6:]
-# 			issueId=tmp[-4:]
-# 			testnumber=tmp[:2]
+
 			issueId=tmp[2]
 			testnumber=tmp[3]
 			
