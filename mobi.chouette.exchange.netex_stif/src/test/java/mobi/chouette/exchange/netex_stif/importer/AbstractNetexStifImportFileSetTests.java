@@ -217,8 +217,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			throw ex;
 		}
 
-		ActionReport report = (ActionReport) context.get(REPORT);
-		log.info(report);
+		ActionReport actionReport = (ActionReport) context.get(REPORT);
+		log.info(actionReport);
+		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
 
 		utx.begin();
 		em.joinTransaction();
@@ -260,10 +261,10 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
 				.collect(Collectors.toList());// );
 
-		log.info("ALL DETECTED ERRORS (" + actualErrors.size() + "):" + zipFile + ";" + report.getResult() + ";"
+		log.info("ALL DETECTED ERRORS (" + actualErrors.size() + "):" + zipFile + ";" + actionReport.getResult() + ";"
 				+ actualErrors.stream().collect(Collectors.joining("; ")));
 		if (!notExpected.isEmpty()) {
-			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + report.getResult() + ";"
+			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + actionReport.getResult() + ";"
 					+ notExpected.stream().collect(Collectors.joining("; ")));
 		}
 		if (!expectedNotDetected.isEmpty()) {
@@ -283,7 +284,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		// ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		// log.info(valReport.getCheckPointErrors());
-		// Assert.assertEquals(report.getResult(), expectedActionReportResult);
 		// Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
 
 	}
