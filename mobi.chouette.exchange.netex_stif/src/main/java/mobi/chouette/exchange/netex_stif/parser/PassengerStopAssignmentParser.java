@@ -34,7 +34,10 @@ public class PassengerStopAssignmentParser implements Parser, Constant {
 
 		String id = xpp.getAttributeValue(null, ID);
 		PassengerStopAssignment stopAssignment = factory.getPassengerStopAssignment(id);
-		
+		validator.checkNetexId(context, PASSENGER_STOP_ASSIGNMENT, id, lineNumber, columnNumber);
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		validator.addModification(context, id, modification);
+
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			// log.info("PassengerStopAssignmentParser : " + xpp.getName());
 			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {

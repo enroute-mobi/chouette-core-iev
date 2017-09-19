@@ -25,9 +25,10 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
 	}
 
 	public boolean validate(Context context, DayTypeAssignment dayTypeAssignment, int lineNumber, int columnNumber) {
+		boolean result3 = checkModification(context, DAY_TYPE_ASSIGNMENT, dayTypeAssignment, lineNumber, columnNumber);
 		boolean result1 = check2NeTExSTIFDayTypeAssignment1(context, dayTypeAssignment, lineNumber, columnNumber);
 		boolean result2 = check2NeTExSTIFDayTypeAssignment2(context, dayTypeAssignment, lineNumber, columnNumber);
-		return result1 && result2;
+		return result1 && result2 && result3;
 	}
 
 	/**

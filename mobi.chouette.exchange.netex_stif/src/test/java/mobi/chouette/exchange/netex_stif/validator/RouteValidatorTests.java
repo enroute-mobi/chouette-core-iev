@@ -149,10 +149,10 @@ public class RouteValidatorTests extends AbstractTest {
 
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
 
-		tc.getRouteValidator().addRouteId(tc.getContext(), tc.getFakeRoute().getObjectId(),
+		tc.getRouteValidator().addXmlId(tc.getContext(), tc.getFakeRoute().getObjectId(),
 				tc.getFakeRoute().getObjectId());
 		if (oppositeRoute != null)
-			tc.getRouteValidator().addRouteId(tc.getContext(), oppositeRoute.getObjectId(),
+			tc.getRouteValidator().addXmlId(tc.getContext(), oppositeRoute.getObjectId(),
 					oppositeRoute.getObjectId());
 		boolean result = tc.getRouteValidator().check2NeTExSTIFRoute2_1(tc.getContext(), tc.getFakeRoute(), lineNumber,
 				columnNumber);

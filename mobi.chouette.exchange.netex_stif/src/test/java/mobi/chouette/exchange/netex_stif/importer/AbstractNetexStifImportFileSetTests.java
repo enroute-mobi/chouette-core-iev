@@ -217,9 +217,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			throw ex;
 		}
 
-
-		ActionReport report = (ActionReport) context.get(REPORT);
-		log.info(report);
+		ActionReport actionReport = (ActionReport) context.get(REPORT);
+		log.info(actionReport);
+		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
 
 		utx.begin();
 		em.joinTransaction();
@@ -245,9 +245,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			sb.append(x.getMessageKey());
 
 			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
-			if (log.isDebugEnabled()) {
-				log.debug("message(" + x.getMessageKey() + ")=" + message);
-			}
+			log.info("message(" + x.getMessageKey() + ")=" + message);
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
@@ -262,8 +260,11 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 				.collect(Collectors.toList());
 		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
 				.collect(Collectors.toList());// );
+
+		log.info("ALL DETECTED ERRORS (" + actualErrors.size() + "):" + zipFile + ";" + actionReport.getResult() + ";"
+				+ actualErrors.stream().collect(Collectors.joining("; ")));
 		if (!notExpected.isEmpty()) {
-			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + report.getResult() + ";"
+			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + actionReport.getResult() + ";"
 					+ notExpected.stream().collect(Collectors.joining("; ")));
 		}
 		if (!expectedNotDetected.isEmpty()) {
@@ -283,7 +284,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		// ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		// log.info(valReport.getCheckPointErrors());
-		// Assert.assertEquals(report.getResult(), expectedActionReportResult);
 		// Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
 
 	}

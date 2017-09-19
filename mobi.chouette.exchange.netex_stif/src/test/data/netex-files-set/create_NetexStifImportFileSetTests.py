@@ -3,23 +3,25 @@ import sys
 import csv
 import os
 from redminelib import Redmine
-
+import datetime
 
 def beginJavaClass():
-	javaClass="/**\n" \
-	+" *  !!! Generated Code !!!\n" \
-	+" *  Do not edit !\n" \
-	+" *  Created by create_NetexStifImportFileSetTests.py\n" \
-	+" */\n\n"\
-	+"package mobi.chouette.exchange.netex_stif.importer;\n"	\
-	+"import org.jboss.arquillian.container.test.api.Deployment;\n" \
- 	+"import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;\n" \
-	+"import org.testng.annotations.Test;\n" \
- 	+"public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetTests {\n"\
- 	+"\n@Deployment\n"\
- 	+"	public static EnterpriseArchive createDeployment() {\n"\
- 	+"		return AbstractNetexStifImportFileSetTests.createDeployment(NetexStifImportFileSetTests.class);\n"\
- 	+"	}\n"
+	now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+	javaClass="\
+	/**\n \
+	 *  !!! Generated Code (%s)!!!\n \
+	 *  Do not edit !\n \
+	 *  Created by create_NetexStifImportFileSetTests.py\n \
+	 */\n\n \
+	package mobi.chouette.exchange.netex_stif.importer;\n	\
+	import org.jboss.arquillian.container.test.api.Deployment;\n \
+ 	import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;\n \
+	import org.testng.annotations.Test;\n \
+ 	public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetTests {\n \
+ 	\n@Deployment\n\
+ 		public static EnterpriseArchive createDeployment() {\n\
+ 			return AbstractNetexStifImportFileSetTests.createDeployment(NetexStifImportFileSetTests.class);\n\
+ 		}\n" %(now)
 	#print("javaClass=%s" %(javaClass))
 	return javaClass
 
@@ -30,10 +32,14 @@ def endJavaClass():
 	return javaClass
 
 def addTest(priority, issueId,testnumber, zipfilename, actionReportStatus, expectedData):
-	issue = redmine.issue.get(int(issueId), include='children,journals,watchers')
+	description=""
 	group=issueId
 	testname=issueId+"-"+testnumber
-	description=issue.subject
+	try:
+		issue = redmine.issue.get(int(issueId), include='children,journals,watchers')
+		description=issue.subject
+	except:
+		 print("Warning : Issue #%s does not exist in Redmine.\n" %(issueId))
 	
 	args=""
 	for e in expectedData:
@@ -80,13 +86,11 @@ if __name__ == '__main__':
 			expectedData = fields[2:]
 			#parse filename
 			newfilename = filename.replace("-", "_")
-			tmp=newfilename.split('_')
-			tmp=tmp[2]
-			tmp=tmp.split(".")
-			tmp=tmp[0]
-			tmp=tmp[-6:]
-			issueId=tmp[-4:]
-			testnumber=tmp[:2]
+			tmp=newfilename.split(".")[0]
+			tmp=tmp.split('_')
+
+			issueId=tmp[2]
+			testnumber=tmp[3]
 			
 			priority=priority+1
 			result = addTest(priority, issueId, testnumber, filename, report_status,expectedData)

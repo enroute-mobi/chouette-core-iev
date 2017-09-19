@@ -39,6 +39,11 @@ public class RouteParser implements Parser, Constant {
 		
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
+		String changed = xpp.getAttributeValue(null, CHANGED);
+		if (changed != null) {
+			route.setCreationTime(NetexStifUtils.getDate(changed));
+		}
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			// log.info("RouteParser tag: " + xpp.getName());
@@ -62,7 +67,7 @@ public class RouteParser implements Parser, Constant {
 					route.setLineId(line.getId());
 					route.setLineLite(line);
 					NetexStifUtils.uniqueObjectIdOnLine(route, line);
-					validator.addRouteId(context, route.getObjectId(), id);
+					validator.addXmlId(context, route.getObjectId(), id);
 					context.put(LINE, line);
 				}
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
@@ -114,6 +119,7 @@ public class RouteParser implements Parser, Constant {
 			}
 		}
 		
+		validator.addModification(context, route.getObjectId(), modification);
 		validator.validate(context, route, lineNumber, columnNumber);
 		
 		route.setFilled(true);

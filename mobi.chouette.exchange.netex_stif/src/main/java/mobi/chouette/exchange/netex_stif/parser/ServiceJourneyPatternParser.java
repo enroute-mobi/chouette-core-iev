@@ -41,7 +41,6 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			journeyPattern.setCreationTime(NetexStifUtils.getDate(changed));
 		}
 		String modification = xpp.getAttributeValue(null, MODIFICATION);
-		validator.addModificationf(context, id, modification);
 		Long version = (Long) context.get(VERSION);
 		LineLite line = (LineLite) context.get(LINE);
 		if (line != null)
@@ -98,6 +97,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
+		validator.addModification(context, journeyPattern.getObjectId(), modification);
 		validator.validate(context, journeyPattern, lineNumber, columnNumber);
 		if (context.contains(ROUTE_FROM_SERVICE_JOURNEY_PATTERN)) {
 			context.remove(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);

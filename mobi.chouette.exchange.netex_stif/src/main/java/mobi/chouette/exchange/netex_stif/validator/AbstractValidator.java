@@ -172,11 +172,13 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		objectIds.add(objectId);
 
 		Context localContext = (Context) validationContext.get(localContextName);
+		
 		if (localContext == null) {
 			localContext = new Context();
 			validationContext.put(localContextName, localContext);
 		}
 		Context objectContext = (Context) localContext.get(objectId);
+
 		if (objectContext == null) {
 			objectContext = new Context();
 			localContext.put(objectId, objectContext);
@@ -185,12 +187,22 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	}
 
-	public void addModificationf(Context context, String objectId, String modification) {
+	public void addModification(Context context, String objectId, String modification) {
 		if (modification != null) {
 			Context objectContext = getObjectContext(context, getLocalContext(), objectId);
 			objectContext.put(MODIFICATION, modification);
 		}
 
+	}
+	
+	public void addXmlId(Context context, String objectId, String xmlId) {
+		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
+		objectContext.put(ID, xmlId);
+	}
+
+	protected  String getXmlId(Context context, String objectId) {
+		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
+		return (String) objectContext.get(ID);
 	}
 
 	/**
@@ -234,8 +246,8 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, id, regex);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, id);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, type, regex);
 		}
 		return result;
 	}

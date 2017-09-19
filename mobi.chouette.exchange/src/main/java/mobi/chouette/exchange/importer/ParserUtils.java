@@ -143,8 +143,13 @@ public class ParserUtils {
 	}
 
 	public static java.util.Date getDate(String value) throws ParseException {
+	   String format = "yyyy-MM-dd'T'HH:mm:ss";
+	   if (value != null && value.endsWith("Z")) {
+	       format = format + "'Z'";
+	   }
+	   
 		DateFormat DATE_FORMAT = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+				format);
 		return getDate(DATE_FORMAT, value);
 	}
 

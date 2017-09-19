@@ -43,15 +43,6 @@ public class RouteValidator extends AbstractValidator {
 		objectContext.put(INVERSE_ROUTE_REF, inverseRouteRef);
 	}
 
-	public void addRouteId(Context context, String objectId, String routeId) {
-		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		objectContext.put(ID, routeId);
-	}
-
-	private String getRouteId(Context context, String objectId) {
-		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		return (String) objectContext.get(ID);
-	}
 
 	/**
 	 * @param context
@@ -62,7 +53,6 @@ public class RouteValidator extends AbstractValidator {
 	 */
 	public boolean validate(Context context, Route route, int lineNumber, int columnNumber) {
 		addLocation(context, route, lineNumber, columnNumber);
-
 		checkChanged(context, ROUTE, route, lineNumber, columnNumber);
 		boolean result2 = checkModification(context, ROUTE, route, lineNumber, columnNumber);
 		boolean result3 = check2NeTExSTIFRoute1(context, route, lineNumber, columnNumber);
@@ -82,8 +72,10 @@ public class RouteValidator extends AbstractValidator {
 	public void validateAll(Context context) {
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		referential.getRoutes().values().stream().forEach(r -> {
-			DataLocation d = getLocation(context, r.getObjectId());
-			check2NeTExSTIFRoute4(context, r, d.getLineNumber(), d.getColumnNumber());
+			if (r.isFilled()) {
+				DataLocation d = getLocation(context, r.getObjectId());
+				check2NeTExSTIFRoute4(context, r, d.getLineNumber(), d.getColumnNumber());
+			}
 		});
 	}
 
@@ -169,7 +161,7 @@ public class RouteValidator extends AbstractValidator {
 		if (route.getOppositeRoute() == null || !route.getOppositeRoute().isFilled())
 			return result;
 
-		String routeId = getRouteId(context, route.getObjectId());
+		String routeId = getXmlId(context, route.getObjectId());
 		if (routeId == null) {
 			log.error("2-NeTExSTIF-Route-2-1 ->> missing ref routeId for " + route.getObjectId());
 			routeId = route.getObjectId();

@@ -28,6 +28,8 @@ public class DayTypeValidator extends AbstractValidator {
 		boolean result = true;
 		Referential ref = (Referential) context.get(REFERENTIAL);
 		for (Timetable timetable : ref.getSharedTimetableTemplates().values()) {
+			DataLocation location = getLocation(context, timetable.getObjectId());
+			result &= checkModification(context, DAY_TYPE, timetable, location.getLineNumber(), location.getColumnNumber());
 			check2NeTExSTIFDayType1(context, timetable);
             result &= check2NeTExSTIFDayType2(context, timetable);
 		}
