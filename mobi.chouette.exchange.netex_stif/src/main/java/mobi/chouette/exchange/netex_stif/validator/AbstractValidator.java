@@ -246,8 +246,8 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, id, regex);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, id);
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_4, location, type, regex);
 		}
 		return result;
 	}
