@@ -2,6 +2,7 @@ package mobi.chouette.dao;
 
 import java.io.File;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.ejb.EJB;
@@ -61,9 +62,11 @@ public class ReferentialDaoTest extends Arquillian {
 		{
 			try {
 
-				Referential r = createReferential();
+				Referential r = createReferential(3);
 				referentialDao.create(r);
-				referentialDao.flush();
+				 r = createReferential(2);
+					referentialDao.create(r);
+					referentialDao.flush();
 				Assert.assertNotNull(r.getId(), "referential id");
 				id = r.getId();
 			} catch (RuntimeException ex) {
@@ -95,6 +98,12 @@ public class ReferentialDaoTest extends Arquillian {
 				ReferentialMetadata md = r.getMetadatas().get(0);
 				Assert.assertEquals(md.getLineIds().length, 4, "lines size");
 				Assert.assertEquals(md.getPeriods().length, 2, "periods size");
+			    SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+			    Assert.assertEquals(format.format(md.getPeriods()[0].getFirst()), "2017/12/02", "start of first period");
+			    Assert.assertEquals(format.format(md.getPeriods()[0].getLast()), "2017/12/07", "end of first period");
+			    Assert.assertEquals(format.format(md.getPeriods()[1].getFirst()), "2017/12/09", "start of last period");
+			    Assert.assertEquals(format.format(md.getPeriods()[1].getLast()), "2017/12/14", "end of last period");
+
 				referentialDao.delete(r);
 				utx.commit();
 			} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException
@@ -106,7 +115,7 @@ public class ReferentialDaoTest extends Arquillian {
 
 	}
 
-	private Referential createReferential() {
+	private Referential createReferential(int day) {
 		Referential r = new Referential();
 		r.setName("toto");
 		ReferentialMetadata md = new ReferentialMetadata();
@@ -114,6 +123,7 @@ public class ReferentialDaoTest extends Arquillian {
 		md.setLineIds(lids);
 		DateRange[] periods = new DateRange[2];
 		Calendar c = Calendar.getInstance();
+		c.set(2017, 11, day , 00 , 00 , 0);
 		Date first1 = new Date(c.getTimeInMillis());
 		c.add(Calendar.DATE, 5);
 		Date last1 = new Date(c.getTimeInMillis());

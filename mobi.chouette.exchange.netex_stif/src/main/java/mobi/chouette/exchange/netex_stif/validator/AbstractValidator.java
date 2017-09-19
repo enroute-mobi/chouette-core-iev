@@ -89,7 +89,7 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourneyPattern_3, "E");
 			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourneyPattern_4, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassengerStopAssignment_1, "W");
+			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassengerStopAssignment_1, "E");
 
 			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_RoutingConstraintZone_1, "E");
 			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_RoutingConstraintZone_2, "E");
