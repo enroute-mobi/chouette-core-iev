@@ -27,7 +27,8 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
 
 	public boolean validate(Context context, PassengerStopAssignment stopAssignment, int lineNumber, int columnNumber)
 	{
-		return check2NeTExSTIFPassengerStopAssignment1(context, stopAssignment, lineNumber, columnNumber);
+		boolean result = checkModification(context, PASSENGER_STOP_ASSIGNMENT, stopAssignment, lineNumber, columnNumber);
+		return check2NeTExSTIFPassengerStopAssignment1(context, stopAssignment, lineNumber, columnNumber) && result;
 	}
  	/** 
  	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassengerStopAssignment : complétude

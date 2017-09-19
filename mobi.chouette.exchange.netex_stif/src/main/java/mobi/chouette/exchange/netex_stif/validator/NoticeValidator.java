@@ -114,4 +114,25 @@ public class NoticeValidator extends AbstractValidator {
 		return result;
 	}
 
+	public boolean checkModification(Context context, String type, Footnote object, int lineNumber,
+			int columnNumber) {
+		
+			boolean result = true;
+
+			Context objectContext = getObjectContext(context, getLocalContext(), object.getObjectId());
+			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			if (objectContext.containsKey(MODIFICATION)) {
+				validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_6);
+				String modification = (String) objectContext.get(MODIFICATION);
+				result = !modification.equals("delete");
+			}
+			if (!result) {
+				String fileName = (String) context.get(Constant.FILE_NAME);
+				DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object.getObjectId());
+				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_6, location, type);
+			}
+			return result;
+		
+	}
+
 }

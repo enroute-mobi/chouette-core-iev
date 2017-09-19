@@ -54,25 +54,25 @@
 				<netex:DayType id="CITYWAY:DayType:4:LOC" version="any">
 					<netex:Name>Restriction</netex:Name>
 				</netex:DayType>
-					<netex:DayTypeAssignment version="any">
+					<netex:DayTypeAssignment id="CITYWAY:DayTypeAssignment:1:LOC" version="any">
 						<netex:OperatingPeriodRef ref="CITYWAY:OperatingPeriod:1:LOC"
 							version="any" />
 						<netex:DayTypeRef ref="CITYWAY:DayType:1:LOC"
 							version="any" />
 					</netex:DayTypeAssignment>
-					<netex:DayTypeAssignment version="any">
+					<netex:DayTypeAssignment id="CITYWAY:DayTypeAssignment:2:LOC"  version="any">
 						<netex:OperatingPeriodRef ref="CITYWAY:OperatingPeriod:1:LOC"
 							version="any" />
 						<netex:DayTypeRef ref="CITYWAY:DayType:2:LOC"
 							version="any" />
 					</netex:DayTypeAssignment>
-					<netex:DayTypeAssignment version="any">
+					<netex:DayTypeAssignment id="CITYWAY:DayTypeAssignment:3:LOC" version="any">
 						<netex:Date>2017-03-15</netex:Date>
 						<netex:DayTypeRef ref="CITYWAY:DayType:3:LOC"
 							version="any" />
 						<netex:isAvailable>true</netex:isAvailable>
 					</netex:DayTypeAssignment>
-					<netex:DayTypeAssignment version="any">
+					<netex:DayTypeAssignment id="CITYWAY:DayTypeAssignment:4:LOC" version="any">
 						<netex:Date>2017-03-15</netex:Date>
 						<netex:DayTypeRef ref="CITYWAY:DayType:4:LOC"
 							version="any" />

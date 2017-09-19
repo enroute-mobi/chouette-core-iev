@@ -133,10 +133,11 @@ public class DirectionValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean validate(Context context, Direction direction, int lineNumber, int columnNumber) {
+		boolean result3 = checkModification(context, DIRECTION, direction, lineNumber, columnNumber);
 		boolean result1 = check2NeTExSTIFDirection1(context, direction, lineNumber, columnNumber);
 		boolean result2 = check2NeTExSTIFDirection2(context, direction, lineNumber, columnNumber);
 
-		return result1 && result2;
+		return result1 && result2 && result3;
 
 	}
 

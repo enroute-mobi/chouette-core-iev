@@ -30,6 +30,12 @@ public class DayTypeParser implements Parser, Constant {
 		Timetable timeTable = ObjectFactory.getTimetable(referential, id);
 		Long version = (Long) context.get(VERSION);
 		timeTable.setObjectVersion(version);
+		String changed = xpp.getAttributeValue(null, CHANGED);
+		if (changed != null) {
+			timeTable.setCreationTime(NetexStifUtils.getDate(changed));
+		}
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		validator.addModification(context, id, modification);
 
 		// for post import checkPoints
 		validator.addLocation(context, timeTable, lineNumber, columnNumber);

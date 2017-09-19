@@ -32,7 +32,9 @@ public class NoticeParser implements Parser, Constant {
 
 		NoticeValidator validator = (NoticeValidator) ValidatorFactory.getValidator(context, NoticeValidator.class);
 		validator.checkNetexId(context, NOTICE, id, lineNumber, columnNumber);
-
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		String changed = xpp.getAttributeValue(null, CHANGED);
+		
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(TYPE_OF_NOTICE_REF)) {
 				typeOfNoticeRef = xpp.getAttributeValue(null, REF);
@@ -48,14 +50,20 @@ public class NoticeParser implements Parser, Constant {
 		// log.info("valid " + validType);
 		Footnote footnote = factory.getFootnote(id);
 		footnote.setObjectVersion(version);
+		if (changed != null) {
+			footnote.setCreationTime(NetexStifUtils.getDate(changed));
+		}
+		validator.addModification(context, id, modification);
 		if (text != null) text = text.trim();
 		if (publicCode != null) publicCode = publicCode.trim();
 		footnote.setLabel(text);
 		footnote.setCode(publicCode);
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		validator.addTypeOfNoticeRef(context, footnote.getObjectId(), typeOfNoticeRef);
+		boolean result3 = validator.checkModification(context, NOTICE, footnote, lineNumber, columnNumber);
+
 		validator.check2NeTExSTIFNotice1(context, footnote, lineNumber, columnNumber);
-		if (validator.check2NeTExSTIFNotice2(context, footnote, lineNumber, columnNumber)) {
+		if (validator.check2NeTExSTIFNotice2(context, footnote, lineNumber, columnNumber) && result3) {
 			// notice accepted
 			referential.getSharedFootnotes().put(id, footnote);
 		}

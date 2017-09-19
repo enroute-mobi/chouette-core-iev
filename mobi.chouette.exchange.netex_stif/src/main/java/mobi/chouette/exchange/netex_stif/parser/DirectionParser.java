@@ -29,6 +29,12 @@ public class DirectionParser implements Parser, Constant {
 
 		DirectionValidator validator = (DirectionValidator) ValidatorFactory.getValidator(context,
 				DirectionValidator.class);
+		String changed = xpp.getAttributeValue(null, CHANGED);
+		if (changed != null) {
+			direction.setCreationTime(NetexStifUtils.getDate(changed));
+		}
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		validator.addModification(context, id, modification);
 		validator.checkNetexId(context, DIRECTION, id, lineNumber, columnNumber);
 
 		direction.setOppositeDirectionRef(null); 

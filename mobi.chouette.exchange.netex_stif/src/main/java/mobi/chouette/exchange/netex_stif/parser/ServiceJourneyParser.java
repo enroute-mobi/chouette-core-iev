@@ -55,7 +55,6 @@ public class ServiceJourneyParser implements Parser, Constant {
 			vehicleJourney.setCreationTime(NetexStifUtils.getDate(changed));
 		}
 		String modification = xpp.getAttributeValue(null, MODIFICATION);
-		validator.addModificationf(context, id, modification);
 		vehicleJourney.setObjectVersion(version);
 		LineLite line = (LineLite) context.get(LINE);
 		if (line != null)
@@ -121,6 +120,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 			}
 		}
 
+		validator.addModification(context, vehicleJourney.getObjectId(), modification);
 		if (validator.validate(context, vehicleJourney, lineNumber, columnNumber)) {
 			// affect timetables
 			affectTimetables(context, referential, vehicleJourney, timetableRefs);

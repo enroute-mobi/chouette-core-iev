@@ -25,6 +25,9 @@ public class OperatingPeriodParser implements Parser, Constant {
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
 		OperatingPeriodValidator validator =  (OperatingPeriodValidator) ValidatorFactory.getValidator(context, OperatingPeriodValidator.class);
 		OperatingPeriod period = factory.getOperatingPeriod(id);
+		validator.checkNetexId(context, OPERATING_PERIOD, id, lineNumber, columnNumber);
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		validator.addModification(context, id, modification);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {

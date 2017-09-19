@@ -35,6 +35,13 @@ public class DayTypeAssignmentParser implements Parser, Constant {
 		DayTypeAssignmentValidator validator = (DayTypeAssignmentValidator) ValidatorFactory.getValidator(context, DayTypeAssignmentValidator.class);
 		String id = xpp.getAttributeValue(null, ID);
 		DayTypeAssignment dayTypeAssignment = factory.getDayTypeAssignment(id); 
+		validator.checkNetexId(context, DAY_TYPE_ASSIGNMENT, id, lineNumber, columnNumber);
+		String changed = xpp.getAttributeValue(null, CHANGED);
+		if (changed != null) {
+			dayTypeAssignment.setCreationTime(NetexStifUtils.getDate(changed));
+		}
+		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		validator.addModification(context, id, modification);
 		Timetable timetable = null;
 		OperatingPeriod period = null;
 		CalendarDay day = null;

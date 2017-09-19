@@ -50,6 +50,7 @@ public class NetexStifSAXParserCommand implements Command, Constant {
 		boolean result = ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
+		context.remove(VALIDATION_CONTEXT);
 
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
