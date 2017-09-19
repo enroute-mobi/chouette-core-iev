@@ -87,11 +87,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2294" }, testName = "2294-00", description = "[Netex] Contrôle de l'attribut 'changed'", priority = 9)
 	public void verifyCard2294_00() throws Exception {
-		doImport("OFFRE_SNTYO_2294_00.zip", "NOK", "offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
+		doImport("OFFRE_SNTYO_2294_00.zip", "OK", "offre_C00163_01.xml:WARNING:2-NeTExSTIF-5:2_netexstif_5");
 	}
 
 	@Test(groups = {
