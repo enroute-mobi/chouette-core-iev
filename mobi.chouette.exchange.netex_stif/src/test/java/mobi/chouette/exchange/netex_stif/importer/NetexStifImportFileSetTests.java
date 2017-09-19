@@ -1,5 +1,5 @@
 /**
- *  !!! Generated Code (2017-09-19 10:50:35)!!!
+ *  !!! Generated Code (2017-09-19 16:48:49)!!!
  *  Do not edit !
  *  Created by create_NetexStifImportFileSetTests.py
  */
@@ -138,7 +138,9 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2293" }, testName = "2293-00", description = "[Netex] Contrôle de la syntaxe des identifiants", priority = 15)
 	public void verifyCard2293_00() throws Exception {
-		doImport("OFFRE_SNTYO_2293_00.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
+		doImport("OFFRE_SNTYO_2293_00.zip", "NOK", "calendriers.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4",
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4",
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7");
 	}
 
 	@Test(groups = {
@@ -156,13 +158,8 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2295" }, testName = "2295-00", description = "[Netex] Contrôle de l'attribut 'modification'", priority = 17)
 	public void verifyCard2295_00() throws Exception {
-		doImport("OFFRE_SNTYO_2295_00.zip", "NOK", "calendriers.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
+		doImport("OFFRE_SNTYO_2295_00.zip", "NOK", "calendriers.xml:ERROR:2-NeTExSTIF-6:2_netexstif_6",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-6:2_netexstif_6");
 	}
 
 	@Test(groups = {
@@ -304,7 +301,8 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2313" }, testName = "2313-00", description = "[Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef", priority = 35)
 	public void verifyCard2313_00() throws Exception {
-		doImport("OFFRE_SNTYO_2313_00.zip", "NOK", "offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1",
+		doImport("OFFRE_SNTYO_2313_00.zip", "NOK",
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1",
 				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_1",
 				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_2");
 	}
@@ -394,7 +392,8 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 			"2325" }, testName = "2325-00", description = "[Netex] Contrôle de l'objet PassingTime : complétude", priority = 47)
 	public void verifyCard2325_00() throws Exception {
 		doImport("OFFRE_SNTYO_2325_00.zip", "NOK",
-				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-PassingTime-1:2_netexstif_passingtime_1");
+				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-PassingTime-1:2_netexstif_passingtime_1",
+				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-ServiceJourney-4:2_netexstif_servicejourney_4");
 	}
 
 	@Test(groups = {

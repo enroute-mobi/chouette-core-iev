@@ -217,7 +217,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			throw ex;
 		}
 
-
 		ActionReport report = (ActionReport) context.get(REPORT);
 		log.info(report);
 
@@ -245,9 +244,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			sb.append(x.getMessageKey());
 
 			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
-			if (log.isDebugEnabled()) {
-				log.debug("message(" + x.getMessageKey() + ")=" + message);
-			}
+			log.info("message(" + x.getMessageKey() + ")=" + message);
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
@@ -262,8 +259,8 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 				.collect(Collectors.toList());
 		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
 				.collect(Collectors.toList());// );
-		
-		log.error("ALL DETECTED ERRORS ("+actualErrors.size()+"):" + zipFile + ";" + report.getResult() + ";"
+
+		log.info("ALL DETECTED ERRORS (" + actualErrors.size() + "):" + zipFile + ";" + report.getResult() + ";"
 				+ actualErrors.stream().collect(Collectors.joining("; ")));
 		if (!notExpected.isEmpty()) {
 			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + report.getResult() + ";"
