@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 
@@ -65,13 +64,16 @@ public class YmlMessages {
 		if (message == null)
 			return message;
 		for (Entry<String, String> e : values.entrySet()) {
-			message = message.replaceAll("\\%\\{" + e.getKey() + "\\}", e.getValue());
+			try {
+				message = message.replace("%{" + e.getKey() + "}", e.getValue());
+			} catch (IllegalArgumentException iae) {
+				log.error("IAE : message="+message+", key="+e.getKey()+ ", value="+e.getValue() + " => exception=" + iae.getMessage());
+			}
 		}
 		return message;
 	}
-	
-	public static List<String> missingKeys(String key, Map<String, String> values)
-	{
+
+	public static List<String> missingKeys(String key, Map<String, String> values) {
 		List<String> keys = getMessageKeys(key);
 		keys.removeAll(values.keySet());
 		return keys;
