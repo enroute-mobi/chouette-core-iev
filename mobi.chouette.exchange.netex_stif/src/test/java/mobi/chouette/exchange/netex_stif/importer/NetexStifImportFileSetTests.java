@@ -304,7 +304,8 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2313" }, testName = "2313-00", description = "[Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef", priority = 35)
 	public void verifyCard2313_00() throws Exception {
-		doImport("OFFRE_SNTYO_2313_00.zip", "NOK", "offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_1",
+		doImport("OFFRE_SNTYO_2313_00.zip", "NOK", "offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_1",
 				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_2");
 	}
 
