@@ -243,7 +243,9 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			int res = o1.getDepartureDayOffset()-o2.getArrivalDayOffset();
 			if (res == 0)
 			{
-				if (o2.getArrivalTime().after(o1.getDepartureTime())) res = -1;
+				if (o2.getArrivalTime() == null) res= 1;
+				else if (o1.getDepartureTime() == null) res = -1;
+				else if (o2.getArrivalTime().after(o1.getDepartureTime())) res = -1;
 				else if (o2.getArrivalTime().before(o1.getDepartureTime())) res = 1;
 			}
 			return res;
