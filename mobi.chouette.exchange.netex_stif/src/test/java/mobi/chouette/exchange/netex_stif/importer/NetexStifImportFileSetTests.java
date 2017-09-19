@@ -79,7 +79,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2293" }, testName = "2293-00", description = "[Netex] Contrôle de la syntaxe des identifiants", priority = 8)
 	public void verifyCard2293_00() throws Exception {
-		doImport("OFFRE_SNTYO_2293-00.zip", "NOK", "calendriers.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4",
+		doImport("OFFRE_SNTYO_2293-00.zip", "NOK", 
 				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4",
 				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7");
 	}
