@@ -1,5 +1,5 @@
 /**
- *  !!! Generated Code (2017-09-20 15:02:33)!!!
+ *  !!! Generated Code (2017-09-20 16:35:14)!!!
  *  Do not edit !
  *  Created by create_NetexStifImportFileSetTests.py
  */
@@ -39,42 +39,73 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 
 	@Test(groups = { "2111" }, testName = "2111-00", description = "[Netex] Conformité XML", priority = 5)
 	public void verifyCard2111_00() throws Exception {
-		doImport("OFFRE_SNTYO_2111_00.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_00.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00166_05.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00171_11.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-01", description = "[Netex] Conformité XML", priority = 6)
 	public void verifyCard2111_01() throws Exception {
-		doImport("OFFRE_SNTYO_2111_01.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_01.zip", "NOK", "calendriers.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-02", description = "[Netex] Conformité XML", priority = 7)
 	public void verifyCard2111_02() throws Exception {
-		doImport("OFFRE_SNTYO_2111_02.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_02.zip", "NOK", "calendriers.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-03", description = "[Netex] Conformité XML", priority = 8)
 	public void verifyCard2111_03() throws Exception {
-		doImport("OFFRE_SNTYO_2111_03.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_03.zip", "NOK", "calendriers.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-04", description = "[Netex] Conformité XML", priority = 9)
 	public void verifyCard2111_04() throws Exception {
-		doImport("OFFRE_SNTYO_2111_04.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_04.zip", "OK");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-05", description = "[Netex] Conformité XML", priority = 10)
 	public void verifyCard2111_05() throws Exception {
-		doImport("OFFRE_SNTYO_2111_05.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_05.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7",
+				"offre_C00165_04.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4",
+				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-06", description = "[Netex] Conformité XML", priority = 11)
 	public void verifyCard2111_06() throws Exception {
-		doImport("OFFRE_SNTYO_2111_06.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_06.zip", "NOK", "offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-07", description = "[Netex] Conformité XML", priority = 12)
 	public void verifyCard2111_07() throws Exception {
-		doImport("OFFRE_SNTYO_2111_07.zip", "NOK");
+		doImport("OFFRE_SNTYO_2111_07.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00165_04.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00166_05.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00168_08.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_1");
 	}
 
 	@Test(groups = {
