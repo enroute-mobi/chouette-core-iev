@@ -247,6 +247,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
+			
+			
+			log.info("POUR ANALYSE : "+ zipFile+";" + sb.toString() + ";MSG="+message); 
 
 			actualErrors.add(sb.toString());
 		});
