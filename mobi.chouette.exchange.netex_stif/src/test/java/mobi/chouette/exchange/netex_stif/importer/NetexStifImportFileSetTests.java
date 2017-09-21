@@ -214,10 +214,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	public void verifyCard2301_00() throws Exception {
 		doImport("OFFRE_SNTYO_2301_00.zip", "NOK", "commun.xml:ERROR:2-NeTExSTIF-Notice-1:2_netexstif_notice_1",
 				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
 	}
 
 	@Test(groups = {
