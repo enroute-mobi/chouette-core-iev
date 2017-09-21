@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import java.util.Calendar;
+
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -31,6 +33,26 @@ public class NoticeValidator extends AbstractValidator {
 	}
 
 	/**
+	 * @param context
+	 * @param route
+	 * @param lineNumber
+	 * @param columnNumber
+	 * @return
+	 */
+	public boolean validate(Context context, Footnote footnote, int lineNumber, int columnNumber) {
+		boolean result1 = checkChanged(context, NOTICE, footnote, lineNumber, columnNumber);
+
+		boolean result2 = checkModification(context, NOTICE, footnote, lineNumber, columnNumber);
+		boolean result3 = check2NeTExSTIFNotice2(context, footnote, lineNumber, columnNumber);
+		if (result3)
+			result3 = check2NeTExSTIFNotice1(context, footnote, lineNumber, columnNumber);
+		
+		return result1 && result2 && result3;
+
+	}
+
+
+	/**
 	 * <b>Titre</b> :[Netex] Contrôle de l'objet Notice : présence de l'attribut Text
 	 * <p>
 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2301">Cartes #2301</a>
@@ -54,7 +76,8 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFNotice1(Context context, Footnote footnote, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-1 : [Netex] Contrôle de l'objet Notice : présence de l'attribut Text
+		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-1 : [Netex] Contrôle de l'objet Notice
+		// : présence de l'attribut Text
 		boolean result = footnote.getLabel() != null && !footnote.getLabel().isEmpty();
 
 		if (!result) {
@@ -91,7 +114,8 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean check2NeTExSTIFNotice2(Context context, Footnote footnote, int lineNumber, int columnNumber) {
-		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice :
+		// TODO : [STIF] @Didier=done Implementation Controle 2-NeTExSTIF-Notice-2 : [Netex] Contrôle de l'objet Notice
+		// :
 		// TypeOfNoticeRef
 		boolean result = true;
 
@@ -108,31 +132,48 @@ public class NoticeValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(footnote.getObjectId());
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, ""+type); 
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Notice_2, location, "" + type);
 		}
 
 		return result;
 	}
 
-	public boolean checkModification(Context context, String type, Footnote object, int lineNumber,
-			int columnNumber) {
-		
-			boolean result = true;
+	public boolean checkChanged(Context context, String type, Footnote object, int lineNumber, int columnNumber) {
 
-			Context objectContext = getObjectContext(context, getLocalContext(), object.getObjectId());
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DATE, 1);
+
+		boolean result = object.getCreationTime().before(c.getTime());
+
+		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			if (objectContext.containsKey(MODIFICATION)) {
-				validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_6);
-				String modification = (String) objectContext.get(MODIFICATION);
-				result = !modification.equals("delete");
-			}
-			if (!result) {
-				String fileName = (String) context.get(Constant.FILE_NAME);
-				DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object.getObjectId());
-				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_6, location, type);
-			}
-			return result;
-		
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object.getObjectId());
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_5, location, type);
+			// reset creation time to now
+			object.setCreationTime(Calendar.getInstance().getTime());
+		}
+		return result;
+	}
+
+	public boolean checkModification(Context context, String type, Footnote object, int lineNumber, int columnNumber) {
+
+		boolean result = true;
+
+		Context objectContext = getObjectContext(context, getLocalContext(), object.getObjectId());
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		if (objectContext.containsKey(MODIFICATION)) {
+			validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_6);
+			String modification = (String) objectContext.get(MODIFICATION);
+			result = !modification.equals("delete");
+		}
+		if (!result) {
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object.getObjectId());
+			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_6, location, type);
+		}
+		return result;
+
 	}
 
 }
