@@ -16,15 +16,17 @@ import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 
 public class ExportableData {
-	// private Network network;
 	
 	@Getter
 	@Setter
@@ -32,6 +34,9 @@ public class ExportableData {
 	@Getter
 	@Setter
 	private Line line;
+	@Getter
+	@Setter
+	private LineLite lineLite;
 	@Getter
 	@Setter
 	private Set<Company> companies = new HashSet<>();
@@ -73,7 +78,7 @@ public class ExportableData {
 	private Set<Timetable> excludedTimetables = new HashSet<>();
 	@Getter
 	@Setter
-	private Set<StopArea> restrictionConstraints = new HashSet<>();
+	private Set<RoutingConstraint> routingConstraints = new HashSet<>();
 	@Getter
 	@Setter
 	private Map<String, List<Timetable>> timetableMap = new HashMap<>();
@@ -94,6 +99,9 @@ public class ExportableData {
 	@Getter
 	@Setter
 	private Set<StopArea> sharedStops = new HashSet<>();
+	
+	@Getter @Setter 
+	private Map<Integer,StopAreaLite> mappedStopAreas = new HashMap<>();
 
 //	public Timetable findTimetable(String objectId) {
 //		for (Timetable tm : timetables) {
@@ -107,6 +115,7 @@ public class ExportableData {
 	{
 		networks.clear();
 		line = null;
+		lineLite = null;
 		companies.clear();
 		groupOfLines.clear();
 		stopAreas.clear();
@@ -120,12 +129,13 @@ public class ExportableData {
 		accessPoints.clear();
 		timetables.clear();
 		excludedTimetables.clear();
-		restrictionConstraints.clear();
+		routingConstraints.clear();
 		timetableMap.clear();
 		vehicleJourneys.clear();
 		journeyPatterns.clear();
 		routes.clear();
 		stopPoints.clear();
 		sharedStops.clear();
+		mappedStopAreas.clear();
 	}
 }
