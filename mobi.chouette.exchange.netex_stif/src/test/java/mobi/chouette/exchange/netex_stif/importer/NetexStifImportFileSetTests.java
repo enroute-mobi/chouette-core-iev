@@ -1,5 +1,5 @@
 /**
- *  !!! Generated Code (2017-09-21 11:25:19)!!!
+ *  !!! Generated Code (2017-09-21 15:16:57)!!!
  *  Do not edit !
  *  Created by create_NetexStifImportFileSetTests.py
  */
@@ -96,10 +96,10 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = { "2111" }, testName = "2111-06", description = "[Netex] Conformité XML", priority = 11)
 	public void verifyCard2111_06() throws Exception {
 		doImport("OFFRE_SNTYO_2111_06.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-		        "offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-		        "offre_C00165_04.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-		        "offre_C00166_05.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-		        "offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
+				"offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00165_04.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00166_05.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+				"offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-07", description = "[Netex] Conformité XML", priority = 12)
@@ -160,20 +160,13 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2294" }, testName = "2294-00", description = "[Netex] Contrôle de l'attribut 'changed'", priority = 17)
 	public void verifyCard2294_00() throws Exception {
-		doImport("OFFRE_SNTYO_2294_00.zip", "NOK", "offre_C00163_01.xml:WARNING:2-NeTExSTIF-5:2_netexstif_5");
+		doImport("OFFRE_SNTYO_2294_00.zip", "OK", "calendriers.xml:WARNING:2-NeTExSTIF-5:2_netexstif_5");
 	}
 
 	@Test(groups = {
 			"2294" }, testName = "2294-01", description = "[Netex] Contrôle de l'attribut 'changed'", priority = 18)
 	public void verifyCard2294_01() throws Exception {
-		doImport("OFFRE_SNTYO_2294_01.zip", "NOK", "OFFRE_SNTYO_2294_01.zip", "NOK",
-				"commun.xml:WARNING:2-NeTExSTIF-5:2_netexstif_5",
-				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
-				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
+		doImport("OFFRE_SNTYO_2294_01.zip", "OK", "commun.xml:WARNING:2-NeTExSTIF-5:2_netexstif_5");
 	}
 
 	@Test(groups = {
@@ -245,8 +238,6 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
 				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
 				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
-
-
 	}
 
 	@Test(groups = {
