@@ -218,8 +218,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 
 		ActionReport actionReport = (ActionReport) context.get(REPORT);
-		log.info(actionReport);
-		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
 
 		utx.begin();
 		em.joinTransaction();
@@ -249,6 +247,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
+			
+			
+			log.info("POUR ANALYSE : "+ zipFile+";" + sb.toString() + ";MSG="+message); 
 
 			actualErrors.add(sb.toString());
 		});
@@ -270,6 +271,10 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		if (!expectedNotDetected.isEmpty()) {
 			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
 		}
+		
+		log.info(actionReport);
+		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
+
 		Assert.assertTrue(expectedNotDetected.isEmpty(),
 				expectedNotDetected.size() + " Error(s) not detected (but expected) : "
 						+ expectedNotDetected.stream().collect(Collectors.joining("; ")));
