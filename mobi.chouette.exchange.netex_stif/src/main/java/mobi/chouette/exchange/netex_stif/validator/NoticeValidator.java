@@ -40,14 +40,14 @@ public class NoticeValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean validate(Context context, Footnote footnote, int lineNumber, int columnNumber) {
-		boolean result1 = checkChanged(context, NOTICE, footnote, lineNumber, columnNumber);
+		checkChanged(context, NOTICE, footnote, lineNumber, columnNumber);
 
 		boolean result2 = checkModification(context, NOTICE, footnote, lineNumber, columnNumber);
 		boolean result3 = check2NeTExSTIFNotice2(context, footnote, lineNumber, columnNumber);
 		if (result3)
 			result3 = check2NeTExSTIFNotice1(context, footnote, lineNumber, columnNumber);
 		
-		return result1 && result2 && result3;
+		return result2 && result3;
 
 	}
 
