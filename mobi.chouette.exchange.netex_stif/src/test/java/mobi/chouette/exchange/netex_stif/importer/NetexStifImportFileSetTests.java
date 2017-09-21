@@ -95,8 +95,11 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 
 	@Test(groups = { "2111" }, testName = "2111-06", description = "[Netex] Conformité XML", priority = 11)
 	public void verifyCard2111_06() throws Exception {
-		doImport("OFFRE_SNTYO_2111_06.zip", "NOK", "offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
-				"offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
+		doImport("OFFRE_SNTYO_2111_06.zip", "NOK", "offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+		        "offre_C00164_03.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+		        "offre_C00165_04.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+		        "offre_C00166_05.xml:ERROR:1-NeTExStif-2:1_netexstif_2",
+		        "offre_C00168_08.xml:ERROR:1-NeTExStif-2:1_netexstif_2");
 	}
 
 	@Test(groups = { "2111" }, testName = "2111-07", description = "[Netex] Conformité XML", priority = 12)
@@ -236,7 +239,14 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2301" }, testName = "2301-00", description = "[Netex] Contrôle de l'objet Notice : présence de l'attribut Text", priority = 27)
 	public void verifyCard2301_00() throws Exception {
-		doImport("OFFRE_SNTYO_2301_00.zip", "NOK", "commun.xml:ERROR:2-NeTExSTIF-Notice-1:2_netexstif_notice_1");
+		doImport("OFFRE_SNTYO_2301_00.zip", "NOK", "commun.xml:ERROR:2-NeTExSTIF-Notice-1:2_netexstif_notice_1",
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10",
+				"offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10");
+
+
 	}
 
 	@Test(groups = {
