@@ -87,6 +87,10 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 				return result;
 			}
 			result = SUCCESS;
+		} catch (SAXException e) {
+			log.error(e.getMessage());
+			addLineEntry(context, reporter, fileName, e.getMessage());
+			reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, e.getMessage());
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			reportError(context, e, fileName, reporter);
