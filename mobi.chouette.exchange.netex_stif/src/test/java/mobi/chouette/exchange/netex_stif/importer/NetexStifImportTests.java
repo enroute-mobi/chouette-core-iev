@@ -178,6 +178,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		configuration.setCleanRepository(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
+		configuration.setReferentialId(1L);
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L });

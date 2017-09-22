@@ -13,6 +13,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.parser.NetexStifUtils;
 import mobi.chouette.exchange.netex_stif.validator.DayTypeValidator;
 import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
@@ -65,6 +66,7 @@ public class NetexStifValidationCommand implements Command, Constant {
 
 				if (!reporter.hasFileValidationErrors(context, fileName)) {
 					addStats(context, reporter, referential);
+					updateObjectIds(context);
 					result = SUCCESS;
 				}
 
@@ -82,6 +84,20 @@ public class NetexStifValidationCommand implements Command, Constant {
 		}
 		return result;
 	}
+	
+	private void updateObjectIds(Context context) {
+		Referential referential = (Referential) context.get(REFERENTIAL);
+		LineLite line = (LineLite) context.get(LINE);
+		if (line == null) return;
+		referential.getRoutes().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectIdOnLine(context,obj, line));
+		referential.getStopPoints().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectIdOnLine(context,obj, line));
+		referential.getRoutingConstraints().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectIdOnLine(context,obj, line));
+		referential.getJourneyPatterns().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectIdOnLine(context,obj, line));
+		referential.getVehicleJourneys().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectIdOnLine(context,obj, line));
+		referential.getTimetables().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectId(context, obj));
+	
+}
+
 
 	private boolean validateCalendrier(Context context) {
 		DayTypeValidator validator = (DayTypeValidator) ValidatorFactory.getValidator(context, DayTypeValidator.class);

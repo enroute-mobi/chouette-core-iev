@@ -57,8 +57,8 @@ public class ServiceJourneyParser implements Parser, Constant {
 		String modification = xpp.getAttributeValue(null, MODIFICATION);
 		vehicleJourney.setObjectVersion(version);
 		LineLite line = (LineLite) context.get(LINE);
-		if (line != null)
-			NetexStifUtils.uniqueObjectIdOnLine(vehicleJourney, line);
+//		if (line != null)
+//			NetexStifUtils.uniqueObjectIdOnLine(context,vehicleJourney, line);
 		JourneyPattern pattern = null;
 		Set<String> timetableRefs = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -158,15 +158,28 @@ public class ServiceJourneyParser implements Parser, Constant {
 	private Timetable getTimetable(Referential referential, String ref) {
 		Timetable tm = referential.getTimetables().get(ref);
 		if (tm == null) {
-			tm = referential.getSharedTimetables().get(ref);
+			// tm = referential.getSharedTimetables().get(ref);
 			if (tm == null) {
 				tm = referential.getSharedTimetableTemplates().get(ref);
 				if (tm == null) {
 					log.info("tm not found " + ref);
 					return null;
 				}
+				else
+				{
+					log.info("template tm found " + ref);
+				}
 				tm = CopyUtil.copy(tm);
 			}
+//			else
+//			{
+//				log.info("shared tm found " + ref);
+//				tm = CopyUtil.copy(tm);
+//			}
+		}
+		else
+		{
+			log.info("local tm found " + ref);
 		}
 		return tm;
 	}

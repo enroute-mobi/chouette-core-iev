@@ -19,7 +19,6 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.model.RoutingConstraintZone;
 import mobi.chouette.exchange.netex_stif.validator.RoutingConstraintZoneValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
-import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopPoint;
@@ -47,9 +46,9 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 			zone.setCreationTime(NetexStifUtils.getDate(changed));
 		}
 		String modification = xpp.getAttributeValue(null, MODIFICATION);
-		LineLite line = (LineLite) context.get(LINE);
-		if (line != null)
-			NetexStifUtils.uniqueObjectIdOnLine(zone, line);
+//		LineLite line = (LineLite) context.get(LINE);
+//		if (line != null)
+//			NetexStifUtils.uniqueObjectIdOnLine(context,zone, line);
 		
 		String name = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {

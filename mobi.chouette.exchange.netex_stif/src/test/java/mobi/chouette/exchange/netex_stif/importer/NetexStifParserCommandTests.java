@@ -80,6 +80,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		configuration.setNoSave(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
+		configuration.setReferentialId(1L);
 		JobDataTest test = new JobDataTest();
 		context.put(JOB_DATA, test);
 
@@ -134,14 +135,14 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	}
 
 	@Test(groups = { "Nominal" }, description = "offre", priority = 3)
-	public void verifiyOfferParser() throws Exception{
-		verifiyOfferParser("calendriers.xml", "commun.xml", "offre.xml");
+	public void verifyOfferParser() throws Exception{
+		verifyOfferParser("calendriers.xml", "commun.xml", "offre.xml");
 		
 	}
 
 	
 	//@Test(groups = { "Nominal" }, description = "offre", priority = 3)
-	public void verifiyOfferParser(String calendrier, String commun, String offre) throws Exception {
+	public void verifyOfferParser(String calendrier, String commun, String offre) throws Exception {
 		Context context = initImportContext();
         ActionReport report = (ActionReport) context.get(REPORT);
         ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
@@ -170,25 +171,25 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		parser.execute(context);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
-		assertRoute(referential, "CITYWAY:Route:1:LOC", "CITYWAY:Route:C00108-1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
-				"Par ici", "CITYWAY:Route:C00108-2:LOC");
-		assertRoute(referential, "CITYWAY:Route:2:LOC", "CITYWAY:Route:C00108-2:LOC", "route 2", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.R,
-				"Par là", "CITYWAY:Route:C00108-1:LOC");
+		assertRoute(referential, "CITYWAY:Route:1:LOC", "CITYWAY:Route:1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
+				"Par ici", "CITYWAY:Route:2:LOC");
+		assertRoute(referential, "CITYWAY:Route:2:LOC", "CITYWAY:Route:2:LOC", "route 2", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.R,
+				"Par là", "CITYWAY:Route:1:LOC");
 
-		assertJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "CITYWAY:ServiceJourneyPattern:C00108-1:LOC", "Par ici", "Mission 1", "1234",
-				"CITYWAY:Route:C00108-1:LOC");
-		assertJourneyPattern(referential,  "CITYWAY:ServiceJourneyPattern:2:LOC","CITYWAY:ServiceJourneyPattern:C00108-2:LOC", "Par là", "Mission 2", "2345",
-				"CITYWAY:Route:C00108-2:LOC");
-		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC","CITYWAY:ServiceJourney:C00108-1-1:LOC", "Course 1 par ici",
-				"CITYWAY:ServiceJourneyPattern:C00108-1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234", 1, 1);
+		assertJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1", "1234",
+				"CITYWAY:Route:1:LOC");
+		assertJourneyPattern(referential,  "CITYWAY:ServiceJourneyPattern:2:LOC","CITYWAY:ServiceJourneyPattern:2:LOC", "Par là", "Mission 2", "2345",
+				"CITYWAY:Route:2:LOC");
+		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC","CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici",
+				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234", 1, 1);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0, "01:01:00.000", 0);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0, "01:05:00.000", 0);
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-1-1-1-1:LOC","", 1, 18304L, "CITYWAY:Route:C00108-1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-1-1-2-2:LOC","", 2, 32521L, "CITYWAY:Route:C00108-1:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-2-2-1-1:LOC","", 1, 32522L, "CITYWAY:Route:C00108-2:LOC");
-		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:C00108-2-2-2-2:LOC","", 2, 18305L, "CITYWAY:Route:C00108-2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1-1-1:LOC","", 1, 18304L, "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1-2-2:LOC","", 2, 32521L, "CITYWAY:Route:1:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2-1-1:LOC","", 1, 32522L, "CITYWAY:Route:2:LOC");
+		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2-2-2:LOC","", 2, 18305L, "CITYWAY:Route:2:LOC");
 		
-		assertRoutingConstraint(referential, "CITYWAY:RoutingConstraintZone:C00108-1-1:LOC", "ITL 1", "route 1","");
+		assertRoutingConstraint(referential, "CITYWAY:RoutingConstraintZone:1-1:LOC", "ITL 1", "route 1","");
 	}
 	
 	private void assertRoutingConstraint (Referential referential, String id, String name, String routeName, String stopPointsId){
@@ -200,6 +201,10 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	private void assertStopPoint(Referential referential, String id, String objectId, int position, Long quayRef, String routeId) {
 		StopPoint stopPoint = referential.getStopPoints().get(id);
+		if (stopPoint == null)
+		{
+			log.info("stopPointIds = "+referential.getStopPoints().keySet());
+		}
 		Assert.assertNotNull(stopPoint, " stopPoint id = " + id);
 		Assert.assertEquals(stopPoint.getPosition(), new Integer(position));
 		Assert.assertEquals(stopPoint.getRoute().getObjectId(), routeId);
@@ -266,7 +271,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	}
 
 	@Test(groups = { "Nominal" }, description = "commun", priority = 2)
-	public void verifiyCommunParser() throws Exception {
+	public void verifyCommunParser() throws Exception {
 		Context context = initImportContext();
 
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
@@ -289,7 +294,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	}
 
 	@Test(groups = { "Nominal" }, description = "calendrier", priority = 1)
-	public void verifiyCalendrierParser() throws Exception {
+	public void verifyCalendrierParser() throws Exception {
 		Context context = initImportContext();
 
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,

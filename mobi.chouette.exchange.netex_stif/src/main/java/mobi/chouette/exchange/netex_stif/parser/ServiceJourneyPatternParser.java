@@ -13,7 +13,6 @@ import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.validator.ServiceJourneyPatternValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.JourneyPattern;
-import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
@@ -42,9 +41,9 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		}
 		String modification = xpp.getAttributeValue(null, MODIFICATION);
 		Long version = (Long) context.get(VERSION);
-		LineLite line = (LineLite) context.get(LINE);
-		if (line != null)
-			NetexStifUtils.uniqueObjectIdOnLine(journeyPattern, line);
+//		LineLite line = (LineLite) context.get(LINE);
+//		if (line != null)
+//			NetexStifUtils.uniqueObjectIdOnLine(context,journeyPattern, line);
 
 		journeyPattern.setObjectVersion(version);
 
