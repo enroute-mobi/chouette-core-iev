@@ -2,11 +2,13 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 import java.util.Collection;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
+@Log4j
 public class FrameValidator extends AbstractValidator implements Constant {
 
 	public void init(Context context) {
@@ -300,18 +302,23 @@ public class FrameValidator extends AbstractValidator implements Constant {
 	 * @param columnNumber
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private boolean check2NeTExStif3_3(Context context, Collection<String> frameNames, int lineNumber,
 			int columnNumber) {
 		boolean result = true;
 		boolean structure = false;
 		boolean horaire = false;
+		Collection<String> compositeFrameNames = (Collection<String>) context.get(COMPOSITE_FRAMES);
+		if (!compositeFrameNames.contains(NETEX_OFFRE_LIGNE)) return false;
 		for (String frameName : frameNames) {
+			log.info("frame "+frameName);
 			if (frameName.equals(NETEX_STRUCTURE)) {
 				structure = true;
 			}
 			if (frameName.equals(NETEX_HORAIRE)) {
 				horaire = true;
 			}
+			
 		}
 		if (!structure) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();

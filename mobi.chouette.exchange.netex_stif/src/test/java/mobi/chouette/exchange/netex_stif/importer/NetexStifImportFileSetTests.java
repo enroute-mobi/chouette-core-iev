@@ -122,7 +122,6 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	public void verifyCard2115_00() throws Exception {
 		doImport("OFFRE_SNTYO_2115_00.zip", "NOK", "offre_C00163_01.xml:ERROR:2-NeTExSTIF-3:2_netexstif_3_1",
 				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-3:2_netexstif_3_2",
-				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-3:2_netexstif_3_3",
 				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-3:2_netexstif_3_3",
 				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-3:2_netexstif_3_4",
 				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-ServiceJourney-3:2_netexstif_servicejourney_3",
