@@ -82,7 +82,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 	@Inject
 	UserTransaction utx;
 
-	public static EnterpriseArchive createDeployment(Class testClass) {
+	public static EnterpriseArchive createDeployment(Class<? extends Arquillian> testClass) {
 
 		EnterpriseArchive result;
 		File[] files = Maven.resolver().loadPomFromFile("pom.xml")
@@ -226,7 +226,10 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		List<ImportResource> resources = getRessources(task);
 		Map<Long, ImportResource> mapImportResources = new HashMap<Long, ImportResource>();
-		resources.stream().forEach(x -> mapImportResources.put(x.getId(), x));
+		resources.stream().forEach(x -> {
+			mapImportResources.put(x.getId(), x);
+			log.info(x.toString());
+			});
 
 		Set<String> actualErrors = new TreeSet<String>();
 		List<ImportMessage> messages = getMessages(task);

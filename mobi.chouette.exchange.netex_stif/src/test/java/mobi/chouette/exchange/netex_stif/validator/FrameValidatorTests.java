@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.naming.InitialContext;
@@ -300,6 +301,9 @@ public class FrameValidatorTests extends AbstractTest {
 		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
+		Collection<String> compositeFrameNames =  new ArrayList<String>();
+		context.put(COMPOSITE_FRAMES, compositeFrameNames);
+		compositeFrameNames.add(NETEX_OFFRE_LIGNE);
 		ArrayList<String> frames = new ArrayList<>();
 		frames.add(FRAME_STRUCTURE);
 		frames.add(FRAME_HORAIRE);
@@ -337,6 +341,9 @@ public class FrameValidatorTests extends AbstractTest {
 	public void verifyOffreWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
+		Collection<String> compositeFrameNames =  new ArrayList<String>();
+		context.put(COMPOSITE_FRAMES, compositeFrameNames);
+		compositeFrameNames.add(NETEX_OFFRE_LIGNE);
 		FrameValidator validator = (FrameValidator) ValidatorFactory.getValidator(context, FrameValidator.class);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, OFFRE_FILE_NAME, IO_TYPE.INPUT);
