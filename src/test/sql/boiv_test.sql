@@ -30,6 +30,16 @@ SET search_path = public, pg_catalog;
 DROP TABLE IF EXISTS public.access_links CASCADE;
 DROP TABLE IF EXISTS public.access_points CASCADE;
 DROP TABLE IF EXISTS public.companies CASCADE;
+
+DROP TABLE IF EXISTS public.compliance_check_blocks  CASCADE;
+DROP TABLE IF EXISTS public.compliance_check_resources  CASCADE;
+DROP TABLE IF EXISTS public.compliance_check_results  CASCADE;
+DROP TABLE IF EXISTS public.compliance_check_sets  CASCADE;
+DROP TABLE IF EXISTS public.compliance_checks  CASCADE;
+DROP TABLE IF EXISTS public.compliance_control_blocks  CASCADE;
+DROP TABLE IF EXISTS public.compliance_control_sets  CASCADE;
+DROP TABLE IF EXISTS public.compliance_controls  CASCADE;
+
 DROP TABLE IF EXISTS public.connection_links CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines_lines CASCADE;
@@ -48,14 +58,6 @@ DROP TABLE IF EXISTS public.stop_areas CASCADE;
 DROP TABLE IF EXISTS public.users CASCADE;
 DROP TABLE IF EXISTS public.workbenches CASCADE;
 
-DROP TABLE IF EXISTS public.compliance_check_blocks  CASCADE;
-DROP TABLE IF EXISTS public.compliance_check_resources  CASCADE;
-DROP TABLE IF EXISTS public.compliance_check_results  CASCADE;
-DROP TABLE IF EXISTS public.compliance_check_sets  CASCADE;
-DROP TABLE IF EXISTS public.compliance_checks  CASCADE;
-DROP TABLE IF EXISTS public.compliance_control_blocks  CASCADE;
-DROP TABLE IF EXISTS public.compliance_control_sets  CASCADE;
-DROP TABLE IF EXISTS public.compliance_controls  CASCADE;
 
 
 CREATE TABLE access_links (
@@ -843,23 +845,6 @@ ALTER TABLE ONLY compliance_control_blocks ALTER COLUMN id SET DEFAULT nextval('
 ALTER TABLE ONLY compliance_control_sets ALTER COLUMN id SET DEFAULT nextval('compliance_control_sets_id_seq'::regclass);
 ALTER TABLE ONLY compliance_controls ALTER COLUMN id SET DEFAULT nextval('compliance_controls_id_seq'::regclass);
 
-ALTER TABLE ONLY compliance_check_blocks
-    ADD CONSTRAINT compliance_check_blocks_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY compliance_check_resources
-    ADD CONSTRAINT compliance_check_resources_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY compliance_check_results
-    ADD CONSTRAINT compliance_check_results_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY compliance_check_sets
-    ADD CONSTRAINT compliance_check_sets_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY compliance_checks
-    ADD CONSTRAINT compliance_checks_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY compliance_control_blocks
-    ADD CONSTRAINT compliance_control_blocks_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY compliance_control_sets
-    ADD CONSTRAINT compliance_control_sets_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY compliance_controls
-    ADD CONSTRAINT compliance_controls_pkey PRIMARY KEY (id);   
-
 ALTER TABLE ONLY connection_links ALTER COLUMN id SET DEFAULT nextval('connection_links_id_seq'::regclass);
 ALTER TABLE ONLY group_of_lines ALTER COLUMN id SET DEFAULT nextval('group_of_lines_id_seq'::regclass);
 ALTER TABLE ONLY import_messages ALTER COLUMN id SET DEFAULT nextval('import_messages_id_seq'::regclass);
@@ -875,30 +860,7 @@ ALTER TABLE ONLY stop_area_referentials ALTER COLUMN id SET DEFAULT nextval('sto
 ALTER TABLE ONLY stop_areas ALTER COLUMN id SET DEFAULT nextval('stop_areas_id_seq'::regclass);
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 ALTER TABLE ONLY workbenches ALTER COLUMN id SET DEFAULT nextval('workbenches_id_seq'::regclass);
-ALTER TABLE ONLY compliance_control_blocks
-    ADD CONSTRAINT fk_rails_0f26e226bd FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
-ALTER TABLE ONLY compliance_check_results
-    ADD CONSTRAINT fk_rails_1361178dd5 FOREIGN KEY (compliance_check_id) REFERENCES compliance_checks(id);
-ALTER TABLE ONLY compliance_checks
-    ADD CONSTRAINT fk_rails_2cbc8a0142 FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
---ALTER TABLE ONLY compliance_check_sets
---    ADD CONSTRAINT fk_rails_4145f3761b FOREIGN KEY (referential_id) REFERENCES referentials(id);
-ALTER TABLE ONLY compliance_check_results
-    ADD CONSTRAINT fk_rails_70bd95092e FOREIGN KEY (compliance_check_resource_id) REFERENCES compliance_check_resources(id);    
-ALTER TABLE ONLY compliance_check_blocks
-    ADD CONSTRAINT fk_rails_7d7a89703f FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
---ALTER TABLE ONLY compliance_control_sets
---    ADD CONSTRAINT fk_rails_aa1e909966 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
-ALTER TABLE ONLY compliance_controls
-    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
-ALTER TABLE ONLY compliance_check_sets
-    ADD CONSTRAINT fk_rails_d227ba43d7 FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
---ALTER TABLE ONLY compliance_check_sets
---    ADD CONSTRAINT fk_rails_d61509f1a9 FOREIGN KEY (workbench_id) REFERENCES workbenches(id);
-ALTER TABLE ONLY compliance_checks
-    ADD CONSTRAINT fk_rails_df077b5b35 FOREIGN KEY (compliance_check_block_id) REFERENCES compliance_check_blocks(id);
-ALTER TABLE ONLY compliance_controls
-    ADD CONSTRAINT fk_rails_f402e905ef FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+
 
 -----------------------------------------------------------
 -- insert init data here !
@@ -10577,6 +10539,22 @@ ALTER TABLE ONLY access_points
 ALTER TABLE ONLY companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY compliance_check_blocks
+    ADD CONSTRAINT compliance_check_blocks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_check_resources
+    ADD CONSTRAINT compliance_check_resources_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_check_results
+    ADD CONSTRAINT compliance_check_results_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT compliance_check_sets_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_checks
+    ADD CONSTRAINT compliance_checks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_control_blocks
+    ADD CONSTRAINT compliance_control_blocks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_control_sets
+    ADD CONSTRAINT compliance_control_sets_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT compliance_controls_pkey PRIMARY KEY (id);   
 
     
 ALTER TABLE ONLY connection_links
@@ -10618,7 +10596,6 @@ CREATE UNIQUE INDEX connection_links_objectid_key ON connection_links USING btre
 CREATE UNIQUE INDEX group_of_lines_objectid_key ON group_of_lines USING btree (objectid);
 CREATE INDEX index_companies_on_line_referential_id ON companies USING btree (line_referential_id);
 
-
 CREATE INDEX index_compliance_check_blocks_on_compliance_check_set_id ON compliance_check_blocks USING btree (compliance_check_set_id);
 CREATE INDEX index_compliance_check_results_on_compliance_check_id ON compliance_check_results USING btree (compliance_check_id);
 CREATE INDEX index_compliance_check_results_on_compliance_check_resource_id ON compliance_check_results USING btree (compliance_check_resource_id);
@@ -10632,9 +10609,6 @@ CREATE INDEX index_compliance_control_blocks_on_compliance_control_set_id ON com
 CREATE INDEX index_compliance_control_sets_on_organisation_id ON compliance_control_sets USING btree (organisation_id);
 CREATE INDEX index_compliance_controls_on_compliance_control_block_id ON compliance_controls USING btree (compliance_control_block_id);
 CREATE INDEX index_compliance_controls_on_compliance_control_set_id ON compliance_controls USING btree (compliance_control_set_id);
-
-
-
 
 CREATE INDEX index_group_of_lines_on_line_referential_id ON group_of_lines USING btree (line_referential_id);
 CREATE INDEX index_import_messages_on_import_id ON import_messages USING btree (import_id);
@@ -10672,6 +10646,32 @@ ALTER TABLE ONLY stop_areas
 ALTER TABLE ONLY group_of_lines_lines
     ADD CONSTRAINT groupofline_group_fkey FOREIGN KEY (group_of_line_id) REFERENCES group_of_lines(id) ON DELETE CASCADE;
 
+ALTER TABLE ONLY compliance_control_blocks
+    ADD CONSTRAINT fk_rails_0f26e226bd FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+ALTER TABLE ONLY compliance_check_results
+    ADD CONSTRAINT fk_rails_1361178dd5 FOREIGN KEY (compliance_check_id) REFERENCES compliance_checks(id);
+ALTER TABLE ONLY compliance_checks
+    ADD CONSTRAINT fk_rails_2cbc8a0142 FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT fk_rails_4145f3761b FOREIGN KEY (referential_id) REFERENCES referentials(id);
+ALTER TABLE ONLY compliance_check_results
+    ADD CONSTRAINT fk_rails_70bd95092e FOREIGN KEY (compliance_check_resource_id) REFERENCES compliance_check_resources(id);
+ALTER TABLE ONLY compliance_check_blocks
+    ADD CONSTRAINT fk_rails_7d7a89703f FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
+ALTER TABLE ONLY compliance_control_sets
+    ADD CONSTRAINT fk_rails_aa1e909966 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT fk_rails_d227ba43d7 FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT fk_rails_d61509f1a9 FOREIGN KEY (workbench_id) REFERENCES workbenches(id);
+ALTER TABLE ONLY compliance_checks
+    ADD CONSTRAINT fk_rails_df077b5b35 FOREIGN KEY (compliance_check_block_id) REFERENCES compliance_check_blocks(id);
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT fk_rails_f402e905ef FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+
+    
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
@@ -11179,9 +11179,3 @@ ALTER TABLE ONLY time_tables_vehicle_journeys
 
 GRANT ALL ON SCHEMA chouette_gui TO chouette;
 GRANT ALL ON SCHEMA chouette_gui TO PUBLIC;
-
-
---
---
-
-
