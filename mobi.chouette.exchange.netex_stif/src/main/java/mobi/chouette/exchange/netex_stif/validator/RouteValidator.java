@@ -3,7 +3,6 @@ package mobi.chouette.exchange.netex_stif.validator;
 import java.util.List;
 import java.util.Map;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -17,7 +16,6 @@ import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
 public class RouteValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = ROUTE;
@@ -159,18 +157,20 @@ public class RouteValidator extends AbstractValidator {
 		boolean result = true;
 
 		if (route.getOppositeRoute() == null || !route.getOppositeRoute().isFilled())
+		{
+//			log.info("2-NeTExSTIF-Route-2-1 : Route " + route.getObjectId() +
+//		     (route.getOppositeRoute() == null ? " pas de route inverse" : " route inverse non lue : "+route.getOppositeRoute().getObjectId()));
 			return result;
-
-		String routeId = getXmlId(context, route.getObjectId());
-		if (routeId == null) {
-			log.error("2-NeTExSTIF-Route-2-1 ->> missing ref routeId for " + route.getObjectId());
-			routeId = route.getObjectId();
 		}
+//		log.info("2-NeTExSTIF-Route-2-1 : check Route " + route.getObjectId() );
 
+		Context routeContext = getObjectContext(context, LOCAL_CONTEXT, route.getObjectId());
 		Context waybackContext = getObjectContext(context, LOCAL_CONTEXT, route.getOppositeRoute().getObjectId());
 		// récupération de la valeur d'attribut sauvegardée
 		String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
-		result = routeId.equals(wayBackInverseRouteRef);
+		String inverseRouteRef = (String) routeContext.get(INVERSE_ROUTE_REF);
+
+		result = route.getObjectId().equals(wayBackInverseRouteRef) && route.getOppositeRoute().getObjectId().equals(inverseRouteRef);
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();

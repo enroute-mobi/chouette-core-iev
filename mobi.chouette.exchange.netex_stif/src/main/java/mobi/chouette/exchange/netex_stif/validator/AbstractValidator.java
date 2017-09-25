@@ -195,16 +195,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	}
 	
-	public void addXmlId(Context context, String objectId, String xmlId) {
-		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
-		objectContext.put(ID, xmlId);
-	}
-
-	protected  String getXmlId(Context context, String objectId) {
-		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
-		return (String) objectContext.get(ID);
-	}
-
+//	public void addXmlId(Context context, String objectId, String xmlId) {
+//		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
+//		objectContext.put(ID, xmlId);
+//	}
+//
+//	protected  String getXmlId(Context context, String objectId) {
+//		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
+//		return (String) objectContext.get(ID);
+//	}
+//
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des identifiants
 	 * <p>

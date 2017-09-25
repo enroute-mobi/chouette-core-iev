@@ -254,8 +254,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2307" }, testName = "2307-00", description = "[Netex] Contrôle de l'objet DayType : types de jour sur période", priority = 29)
 	public void verifyCard2307_00() throws Exception {
-		doImport("OFFRE_SNTYO_2307_00.zip", "NOK", "calendriers.xml:ERROR:2-NeTExSTIF-DayType-2:2_netexstif_daytype_2",
-				"calendriers.xml:ERROR:2-NeTExSTIF-DayTypeAssignment-2:2_netexstif_daytypeassignment_2");
+		doImport("OFFRE_SNTYO_2307_00.zip", "NOK", "calendriers.xml:ERROR:2-NeTExSTIF-DayType-2:2_netexstif_daytype_2");
 	}
 
 	@Test(groups = {
@@ -280,6 +279,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 			"2309" }, testName = "2309-00", description = "[Netex] Contrôle de l'objet Route : cohérence des routes inverses", priority = 32)
 	public void verifyCard2309_00() throws Exception {
 		doImport("OFFRE_SNTYO_2309_00.zip", "OK",
+				"offre_C00163_01.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_1",
 				"offre_C00164_03.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2",
 				"offre_C00171_11.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2");
 	}
@@ -310,9 +310,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 			"2313" }, testName = "2313-00", description = "[Netex] Contrôle de l'objet ServiceJourneyPattern : RouteRef", priority = 36)
 	public void verifyCard2313_00() throws Exception {
 		doImport("OFFRE_SNTYO_2313_00.zip", "NOK",
-				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1",
-				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_1",
-				"offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_2");
+				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1");
 	}
 
 	@Test(groups = {
