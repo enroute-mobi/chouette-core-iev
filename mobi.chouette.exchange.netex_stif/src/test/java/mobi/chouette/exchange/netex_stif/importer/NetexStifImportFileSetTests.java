@@ -1,5 +1,5 @@
 /**
- *  !!! Generated Code (2017-09-21 16:12:05)!!!
+ *  !!! Generated Code (2017-09-25 13:38:37)!!!
  *  Do not edit !
  *  Created by create_NetexStifImportFileSetTests.py
  */
@@ -278,8 +278,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2309" }, testName = "2309-00", description = "[Netex] Contrôle de l'objet Route : cohérence des routes inverses", priority = 32)
 	public void verifyCard2309_00() throws Exception {
-		doImport("OFFRE_SNTYO_2309_00.zip", "OK",
-				"offre_C00163_01.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_1",
+		doImport("OFFRE_SNTYO_2309_00.zip", "OK", "offre_C00163_01.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_1",
 				"offre_C00164_03.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2",
 				"offre_C00171_11.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2");
 	}
