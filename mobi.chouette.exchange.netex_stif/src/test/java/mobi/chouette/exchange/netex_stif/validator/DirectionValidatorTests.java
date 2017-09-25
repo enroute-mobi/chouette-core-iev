@@ -95,7 +95,7 @@ public class DirectionValidatorTests extends AbstractTest {
 		validateAbsenceOfDirectionAttributes(tc, directionType, oppositeDirectionRef);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Direction_2,
-				"2_netexstif_direction_2", OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR);
+				"2_netexstif_direction_2", OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR,2);
 
 		// -- DirectionType is incorrect
 		tc = new TestContext();
