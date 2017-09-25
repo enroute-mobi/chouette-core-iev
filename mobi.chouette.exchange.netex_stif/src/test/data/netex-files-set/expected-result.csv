@@ -26,14 +26,14 @@ OFFRE_SNTYO_2303_00.zip;NOK;calendriers.xml:ERROR:2-NeTExSTIF-DayTypeAssignment-
 OFFRE_SNTYO_2304_00.zip;NOK;calendriers.xml:ERROR:2-NeTExSTIF-DayTypeAssignment-2:2_netexstif_daytypeassignment_2;;;;;;;
 OFFRE_SNTYO_2305_00.zip;OK;calendriers.xml:WARNING:2-NeTExSTIF-DayType-1:2_netexstif_daytype_1;;;;;;;
 OFFRE_SNTYO_2306_00.zip;NOK;calendriers.xml:ERROR:2-NeTExSTIF-OperatingPeriod-1:2_netexstif_operatingperiod_1;;;;;;;
-OFFRE_SNTYO_2307_00.zip;NOK;calendriers.xml:ERROR:2-NeTExSTIF-DayType-2:2_netexstif_daytype_2; calendriers.xml:ERROR:2-NeTExSTIF-DayTypeAssignment-2:2_netexstif_daytypeassignment_2;;;;;;
+OFFRE_SNTYO_2307_00.zip;NOK;calendriers.xml:ERROR:2-NeTExSTIF-DayType-2:2_netexstif_daytype_2;;;;;;;
 OFFRE_SNTYO_2307_01.zip;NOK;calendriers.xml:ERROR:1-NeTExStif-2:1_netexstif_2; offre_C00163_01.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10; offre_C00164_03.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10; offre_C00165_04.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10; offre_C00166_05.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10; offre_C00168_08.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10; offre_C00171_11.xml:ERROR:2-NeTExSTIF-10:2_netexstif_10;
 OFFRE_SNTYO_2308_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-Route-1:2_netexstif_route_1;;;;;;;
-OFFRE_SNTYO_2309_00.zip;OK;offre_C00164_03.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2; offre_C00171_11.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2;;;;;;
+OFFRE_SNTYO_2309_00.zip;OK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-Route-2:2_netexstif_route_2_1;offre_C00164_03.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2; offre_C00171_11.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2;;;;;;
 OFFRE_SNTYO_2310_00.zip;NOK;offre_C00171_11.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-4:2_netexstif_servicejourneypattern_4;;;;;;;
 OFFRE_SNTYO_2311_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-Direction-1:2_netexstif_direction_1; offre_C00164_03.xml:ERROR:2-NeTExSTIF-Direction-1:2_netexstif_direction_1;;;;;;
 OFFRE_SNTYO_2312_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-Direction-2:2_netexstif_direction_2;;;;;;;
-OFFRE_SNTYO_2313_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1; offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_1; offre_C00164_03.xml:ERROR:2-NeTExSTIF-8:2_netexstif_8_2;;;;;
+OFFRE_SNTYO_2313_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1;;;;;;
 OFFRE_SNTYO_2314_00.zip;NOK;offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2; offre_C00164_03.xml:ERROR:2-NeTExSTIF-ServiceJourney-3:2_netexstif_servicejourney_3; offre_C00164_03.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-2:2_netexstif_servicejourneypattern_2;;;;;
 OFFRE_SNTYO_2315_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-3:2_netexstif_servicejourneypattern_3_1; offre_C00164_03.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-3:2_netexstif_servicejourneypattern_3_2;;;;;;
 OFFRE_SNTYO_2316_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-4:2_netexstif_servicejourneypattern_4;;;;;;;

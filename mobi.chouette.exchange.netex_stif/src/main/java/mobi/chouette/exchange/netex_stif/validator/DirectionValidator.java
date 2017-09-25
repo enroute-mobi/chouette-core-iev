@@ -104,7 +104,8 @@ public class DirectionValidator extends AbstractValidator {
 		if (direction.getOppositeDirectionRef() != null) {
 			forbiddenOppositeDirectionRef = true;
 			result = false;
-		} else if (direction.getDirectionType() != null) {
+		} 
+		if (direction.getDirectionType() != null) {
 			forbiddenDirectionType = true;
 			result = false;
 		}
