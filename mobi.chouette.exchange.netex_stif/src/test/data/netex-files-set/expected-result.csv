@@ -36,7 +36,7 @@ OFFRE_SNTYO_2312_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-Direction-2:2_
 OFFRE_SNTYO_2313_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-1:2_netexstif_servicejourneypattern_1;;;;;;
 OFFRE_SNTYO_2314_00.zip;NOK;offre_C00163_01.xml:ERROR:1-NeTExStif-2:1_netexstif_2; offre_C00164_03.xml:ERROR:2-NeTExSTIF-ServiceJourney-3:2_netexstif_servicejourney_3; offre_C00164_03.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-2:2_netexstif_servicejourneypattern_2;;;;;
 OFFRE_SNTYO_2315_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-3:2_netexstif_servicejourneypattern_3_1; offre_C00164_03.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-3:2_netexstif_servicejourneypattern_3_2;;;;;;
-OFFRE_SNTYO_2316_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-4:2_netexstif_servicejourneypattern_4;;;;;;;
+OFFRE_SNTYO_2316_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-Route-3:2_netexstif_route_3; offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourney-3:2_netexstif_servicejourney_3; offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-4:2_netexstif_servicejourneypattern_4;;;
 OFFRE_SNTYO_2317_00.zip;OK;offre_C00171_11.xml:WARNING:2-NeTExSTIF-Route-4:2_netexstif_route_4;;;;;;;
 OFFRE_SNTYO_2318_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-PassengerStopAssignment-1:2_netexstif_passengerstopassignment_1;;;;;;;
 OFFRE_SNTYO_2319_00.zip;NOK;offre_C00163_01.xml:ERROR:2-NeTExSTIF-RoutingConstraintZone-1:2_netexstif_routingconstraintzone_1; offre_C00164_03.xml:ERROR:2-NeTExSTIF-RoutingConstraintZone-1:2_netexstif_routingconstraintzone_1;;;;;;

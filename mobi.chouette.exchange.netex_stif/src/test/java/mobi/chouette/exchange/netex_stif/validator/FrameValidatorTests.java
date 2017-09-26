@@ -109,7 +109,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Calendrier" }, description = "Good GeneralFrames list ", priority = 1)
+	@Test(groups = { "Calendrier" }, description = "Good GeneralFrames list ", priority = 701)
 	public void verifyCalendrierRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
@@ -125,7 +125,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Calendrier" }, description = "Good GeneralFrame ", priority = 2)
+	@Test(groups = { "Calendrier" }, description = "Good GeneralFrame ", priority = 702)
 	public void verifyCalendrierValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
@@ -139,7 +139,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Calendrier" }, description = "Bad GeneralFrames list ", priority = 3)
+	@Test(groups = { "Calendrier" }, description = "Bad GeneralFrames list ", priority = 703)
 	public void verifyCalendrierWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
@@ -157,7 +157,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Calendrier" }, description = "Bad GeneralFrame ", priority = 4)
+	@Test(groups = { "Calendrier" }, description = "Bad GeneralFrame ", priority = 704)
 	public void verifyCalendrierForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
@@ -172,7 +172,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Calendrier" }, description = "Good CompositeFrames list ", priority = 5)
+	@Test(groups = { "Calendrier" }, description = "Good CompositeFrames list ", priority = 705)
 	public void verifyCalendrierRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
@@ -186,7 +186,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Calendrier" }, description = "Bad CompositeFrame ", priority = 6)
+	@Test(groups = { "Calendrier" }, description = "Bad CompositeFrame ", priority = 706)
 	public void verifyCalendrierForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, CALENDRIER_FILE_NAME);
@@ -203,7 +203,7 @@ public class FrameValidatorTests extends AbstractTest {
 		Assert.assertFalse(result, "validator result");
 	}
 
-	@Test(groups = { "Commun" }, description = "Good GeneralFrames list ", priority = 7)
+	@Test(groups = { "Commun" }, description = "Good GeneralFrames list ", priority = 707)
 	public void verifyCommunRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
@@ -218,7 +218,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Good GeneralFrame ", priority = 8)
+	@Test(groups = { "Commun" }, description = "Good GeneralFrame ", priority = 708)
 	public void verifyCommunValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
@@ -232,7 +232,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Bad GeneralFrames list ", priority = 9)
+	@Test(groups = { "Commun" }, description = "Bad GeneralFrames list ", priority = 709)
 	public void verifyCommunWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
@@ -250,7 +250,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Bad GeneralFrame ", priority = 10)
+	@Test(groups = { "Commun" }, description = "Bad GeneralFrame ", priority = 710)
 	public void verifyCommunForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
@@ -264,7 +264,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Good CompositeFrames list ", priority = 11)
+	@Test(groups = { "Commun" }, description = "Good CompositeFrames list ", priority = 711)
 	public void verifyCommunRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
@@ -278,7 +278,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Commun" }, description = "Bad CompositeFrame ", priority = 12)
+	@Test(groups = { "Commun" }, description = "Bad CompositeFrame ", priority = 712)
 	public void verifyCommunForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, COMMUN_FILE_NAME);
@@ -294,7 +294,7 @@ public class FrameValidatorTests extends AbstractTest {
 		Assert.assertFalse(result, "validator result");
 	}
 
-	@Test(groups = { "Offre" }, description = "Good GeneralFrames list ", priority = 13)
+	@Test(groups = { "Offre" }, description = "Good GeneralFrames list ", priority = 713)
 	public void verifyOffreRightMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
@@ -319,7 +319,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Offre" }, description = "Good GeneralFrame ", priority = 14)
+	@Test(groups = { "Offre" }, description = "Good GeneralFrame ", priority = 714)
 	public void verifyOffreValidGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
@@ -337,7 +337,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Offre" }, description = "Bad GeneralFrames list ", priority = 15)
+	@Test(groups = { "Offre" }, description = "Bad GeneralFrames list ", priority = 715)
 	public void verifyOffreWrongtMandatoryGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
@@ -358,7 +358,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Offre" }, description = "Bad GeneralFrame ", priority = 16)
+	@Test(groups = { "Offre" }, description = "Bad GeneralFrame ", priority = 716)
 	public void verifyOffreForbiddenGeneralFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
@@ -372,7 +372,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Offre" }, description = "Good CompositeFrames list ", priority = 17)
+	@Test(groups = { "Offre" }, description = "Good CompositeFrames list ", priority = 717)
 	public void verifyOffreRightMandatoryCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, OFFRE_FILE_NAME);
@@ -389,7 +389,7 @@ public class FrameValidatorTests extends AbstractTest {
 
 
 
-	@Test(groups = { "Offre" }, description = "Bad CompositeFrame ", priority = 18)
+	@Test(groups = { "Offre" }, description = "Bad CompositeFrame ", priority = 718)
 	public void verifyOffreForbiddenCompositeFrame() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, OFFRE_FILE_NAME);

@@ -87,7 +87,7 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 	}
 
 
-	@Test(groups = { "XML" }, description = "bad xml file", priority = 3)
+	@Test(groups = { "XML" }, description = "bad xml file", priority = 401)
 	public void verifiyXMLSyntax() throws Exception{
 		
 		Context context = initImportContext();
@@ -117,7 +117,7 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		Assert.assertEquals(error.getSource().getFile().getColumnNumber(),Integer.valueOf(3),"source column number");		
 		
 	}
-	@Test(groups = { "XML" }, description = "bad xsd file", priority = 4)
+	@Test(groups = { "XML" }, description = "bad xsd file", priority = 402)
 	public void verifiyXSDSyntax() throws Exception{
 		
 		Context context = initImportContext();

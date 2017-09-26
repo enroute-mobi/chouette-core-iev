@@ -98,7 +98,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"DirectionType" }, description = "Cas erreur 1: Route DirectionType incorrect : neither 'inboud', nor 'outbound' ", priority = 1)
+			"DirectionType" }, description = "Cas erreur 1: Route DirectionType incorrect : neither 'inboud', nor 'outbound' ", priority = 1001)
 	public void verifyRouteDirectionTypeIncorrect() throws Exception {
 		String directionType = "xxxx";
 		TestContext tc = new TestContext();
@@ -109,7 +109,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"DirectionType" }, description = "Cas erreur 2 : Route DirectionType incorrect (null) ", priority = 1)
+			"DirectionType" }, description = "Cas erreur 2 : Route DirectionType incorrect (null) ", priority = 1002)
 	public void verifyRouteDirectionTypeNull() throws Exception {
 		String directionType = null;
 		TestContext tc = new TestContext();
@@ -122,7 +122,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"DirectionType" }, description = "Cas nominal 1 : Route DirectionType is inbound", priority = 1)
+			"DirectionType" }, description = "Cas nominal 1 : Route DirectionType is inbound", priority = 1003)
 	public void verifyRouteDirectionTypeWithInbound() throws Exception {
 		String directionType = DIRECTION_INBOUND;
 		TestContext tc = new TestContext();
@@ -133,7 +133,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"DirectionType" }, description = "Cas nominal 2 : Route DirectionType is outbound", priority = 1)
+			"DirectionType" }, description = "Cas nominal 2 : Route DirectionType is outbound", priority = 1004)
 	public void verifyRouteDirectionTypeWithOutbound() throws Exception {
 		String directionType = DIRECTION_OUTBOUND;
 		TestContext tc = new TestContext();
@@ -166,7 +166,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"InverseRouteRef" }, description = "Error 1 : Opposite Route of a given Route is NOT correct ", priority = 1)
+			"InverseRouteRef" }, description = "Error 1 : Opposite Route of a given Route is NOT correct ", priority = 1005)
 	public void verifyRouteInverseRouteRefIncorrect() throws Exception {
 		Route oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
@@ -182,7 +182,7 @@ public class RouteValidatorTests extends AbstractTest {
 				"Codespace:type:identifierAABB:LOC", FILE_STATE.WARNING);
 	}
 
-	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal 1 : No Opposite Route ", priority = 1)
+	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal 1 : No Opposite Route ", priority = 1006)
 	public void verifyRouteInverseRouteRefOnNoOppositeRoute() throws Exception {
 		TestContext tc = new TestContext();
 		validateInverseRouteRef(tc, null);
@@ -190,7 +190,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"InverseRouteRef" }, description = "Nominal 2 : Opposite Route of a given Route is correct ", priority = 1)
+			"InverseRouteRef" }, description = "Nominal 2 : Opposite Route of a given Route is correct ", priority = 1007)
 	public void verifyRouteInverseRouteRefCorrect() throws Exception {
 
 		Route oppositeRoute = new Route();
@@ -232,7 +232,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"InverseRouteRef" }, description = "Error : Opposite Route of a given Route is not correct ", priority = 1)
+			"InverseRouteRef" }, description = "Error : Opposite Route of a given Route is not correct ", priority = 1008)
 	public void verifyInverseWaybackValueIncorrect() throws Exception {
 		// -- error : 'inbound' twice
 		Route oppositeRoute = new Route();
@@ -261,7 +261,7 @@ public class RouteValidatorTests extends AbstractTest {
 				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 	}
 
-	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal : No Opposite Route ", priority = 1)
+	@Test(groups = { "Route", "InverseRouteRef" }, description = "Nominal : No Opposite Route ", priority = 1009)
 	public void verifyInverseWaybackValueOK() throws Exception {
 		Route oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
@@ -409,7 +409,7 @@ public class RouteValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Route",
-			"AlightingBoarding" }, description = "Error 1 : AlightingBoarding in Route vs JourneyPattern is incorrect  ", priority = 1)
+			"AlightingBoarding" }, description = "Error 1 : AlightingBoarding in Route vs JourneyPattern is incorrect  ", priority = 1010)
 	public void verifyRouteStopPointAlightingBoardingIncorrect() throws Exception {
 
 		List<StopPoint> list = new ArrayList<StopPoint>(Arrays.asList(

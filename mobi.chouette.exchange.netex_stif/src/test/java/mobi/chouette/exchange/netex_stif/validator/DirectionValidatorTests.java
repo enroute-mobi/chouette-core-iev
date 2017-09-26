@@ -83,7 +83,7 @@ public class DirectionValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Direction",
-			"Attributes DirectionType OppositeDirectionRef" }, description = "Error 1: Direction incorrect : neither 'DirectionType', nor 'OppositeDirectionRef' ", priority = 1)
+			"Attributes DirectionType OppositeDirectionRef" }, description = "Error 1: Direction incorrect : neither 'DirectionType', nor 'OppositeDirectionRef' ", priority = 601)
 	public void verifyDirectionAttributeIncorrect() throws Exception {
 		String directionType = "directionType-should-be-null-but-is-not";
 		String oppositeDirectionRef = "oppositeDirectionRef-should-be-null-but-is-not";
@@ -113,7 +113,7 @@ public class DirectionValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Direction",
-			"Attributes DirectionType OppositeDirectionRef" }, description = "Nominal : Direction correct : 'DirectionType' and 'OppositeDirectionRef' are not set ", priority = 1)
+			"Attributes DirectionType OppositeDirectionRef" }, description = "Nominal : Direction correct : 'DirectionType' and 'OppositeDirectionRef' are not set ", priority = 602)
 	public void verifyDirectionAttributeCorrect() throws Exception {
 		String directionType = null;
 		String oppositeDirectionRef = null;
@@ -149,7 +149,7 @@ public class DirectionValidatorTests extends AbstractTest {
 		tc.setResult(result);
 	}
 
-	@Test(groups = { "Direction", "Name" }, description = "Nominal : Direction name is set  ", priority = 1)
+	@Test(groups = { "Direction", "Name" }, description = "Nominal : Direction name is set  ", priority = 603)
 	public void verifyDirectionNameCorrect() throws Exception {
 
 		TestContext tc = new TestContext();
@@ -160,7 +160,7 @@ public class DirectionValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "Direction", "Name" }, description = "Error : Direction name is not set  ", priority = 1)
+	@Test(groups = { "Direction", "Name" }, description = "Error : Direction name is not set  ", priority = 604)
 	public void verifyDirectionNameNotCorrect() throws Exception {
 
 		TestContext tc = new TestContext();

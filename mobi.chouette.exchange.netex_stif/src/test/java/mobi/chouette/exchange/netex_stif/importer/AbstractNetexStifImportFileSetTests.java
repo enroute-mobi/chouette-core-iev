@@ -259,11 +259,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		resources.stream().forEach(x -> {
 			List<ImportMessage> msgs = getMessages(task, x);
-			System.err.println("x="+x);
-			System.err.println("x.getType()="+x.getType());
-			System.err.println("x.getStatus()="+x.getStatus());
 			if (x.getType().equalsIgnoreCase("file") && x.getStatus().equalsIgnoreCase("ERROR")) {
-				Assert.assertTrue(((msgs != null) ? msgs.size() : 0) > 0, "ImportResource " + x.getName() + " contains ERROR, but no message !!!");
+				Assert.assertTrue(((msgs != null) ? msgs.size() : 0) > 0,
+						"ImportResource " + x.getName() + " contains ERROR, but no message !!!");
 			}
 		});
 
@@ -295,14 +293,10 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 				+ notExpected.stream().collect(Collectors.joining("; ")));
 
 		// clean database
-		// messages.stream().forEach(m -> em.remove(m));
-		// resources.stream().forEach(r -> em.remove(r));
-		// em.remove(task);
+		messages.stream().forEach(m -> em.remove(m));
+		resources.stream().forEach(r -> em.remove(r));
+		em.remove(task);
 		utx.commit();
-
-		// ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
-		// log.info(valReport.getCheckPointErrors());
-		// Assert.assertEquals(valReport.getResult().toString(), expectedValidationResult);
 
 	}
 
