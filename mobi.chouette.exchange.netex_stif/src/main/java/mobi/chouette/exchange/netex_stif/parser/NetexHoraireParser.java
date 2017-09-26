@@ -37,6 +37,7 @@ public class NetexHoraireParser implements Parser, Constant {
 		}
 	}
 	
+
 	static{
 		ParserFactory.register(NetexHoraireParser.class.getName(), new ParserFactory() {
 			private NetexHoraireParser instance = new NetexHoraireParser();

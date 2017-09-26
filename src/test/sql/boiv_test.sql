@@ -30,6 +30,16 @@ SET search_path = public, pg_catalog;
 DROP TABLE IF EXISTS public.access_links CASCADE;
 DROP TABLE IF EXISTS public.access_points CASCADE;
 DROP TABLE IF EXISTS public.companies CASCADE;
+
+DROP TABLE IF EXISTS public.compliance_check_blocks  CASCADE;
+DROP TABLE IF EXISTS public.compliance_check_resources  CASCADE;
+DROP TABLE IF EXISTS public.compliance_check_results  CASCADE;
+DROP TABLE IF EXISTS public.compliance_check_sets  CASCADE;
+DROP TABLE IF EXISTS public.compliance_checks  CASCADE;
+DROP TABLE IF EXISTS public.compliance_control_blocks  CASCADE;
+DROP TABLE IF EXISTS public.compliance_control_sets  CASCADE;
+DROP TABLE IF EXISTS public.compliance_controls  CASCADE;
+
 DROP TABLE IF EXISTS public.connection_links CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines_lines CASCADE;
@@ -47,6 +57,7 @@ DROP TABLE IF EXISTS public.stop_area_referentials CASCADE;
 DROP TABLE IF EXISTS public.stop_areas CASCADE;
 DROP TABLE IF EXISTS public.users CASCADE;
 DROP TABLE IF EXISTS public.workbenches CASCADE;
+
 
 
 CREATE TABLE access_links (
@@ -149,6 +160,226 @@ CREATE SEQUENCE companies_id_seq
     CACHE 1;
 ALTER TABLE companies_id_seq OWNER TO chouette;
 ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
+
+
+--
+-- Compliance
+--
+
+CREATE TABLE compliance_check_blocks (
+    id bigint NOT NULL,
+    name character varying,
+    condition_attributes shared_extensions.hstore,
+    compliance_check_set_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+ALTER TABLE compliance_check_blocks OWNER TO chouette;
+
+
+
+CREATE SEQUENCE compliance_check_blocks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE compliance_check_blocks_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_check_blocks_id_seq OWNED BY compliance_check_blocks.id;
+
+
+CREATE TABLE compliance_check_resources (
+    id bigint NOT NULL,
+    status character varying,
+    name character varying,
+    type character varying,
+    reference character varying,
+    metrics shared_extensions.hstore,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_check_resources OWNER TO chouette;
+
+CREATE SEQUENCE compliance_check_resources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_check_resources_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_check_resources_id_seq OWNED BY compliance_check_resources.id;
+
+CREATE TABLE compliance_check_results (
+    id bigint NOT NULL,
+    compliance_check_id integer,
+    compliance_check_resource_id integer,
+    message_key character varying,
+    message_attributes shared_extensions.hstore,
+    resource_attributes shared_extensions.hstore,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_check_results OWNER TO chouette;
+
+CREATE SEQUENCE compliance_check_results_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_check_results_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_check_results_id_seq OWNED BY compliance_check_results.id;
+
+CREATE TABLE compliance_check_sets (
+    id bigint NOT NULL,
+    referential_id integer,
+    compliance_control_set_id integer,
+    workbench_id integer,
+    creator character varying,
+    status character varying,
+    parent_id integer,
+    parent_type character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_check_sets OWNER TO chouette;
+
+CREATE SEQUENCE compliance_check_sets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_check_sets_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_check_sets_id_seq OWNED BY compliance_check_sets.id;
+
+CREATE TABLE compliance_checks (
+    id bigint NOT NULL,
+    compliance_check_set_id integer,
+    compliance_check_block_id integer,
+    type character varying,
+    control_attributes json,
+    name character varying,
+    code character varying,
+    criticity integer,
+    comment text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_checks OWNER TO chouette;
+
+CREATE SEQUENCE compliance_checks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_checks_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_checks_id_seq OWNED BY compliance_checks.id;
+
+
+CREATE TABLE compliance_control_blocks (
+    id bigint NOT NULL,
+    name character varying,
+    condition_attributes shared_extensions.hstore,
+    compliance_control_set_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_control_blocks OWNER TO chouette;
+
+CREATE SEQUENCE compliance_control_blocks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_control_blocks_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_control_blocks_id_seq OWNED BY compliance_control_blocks.id;
+
+
+CREATE TABLE compliance_control_sets (
+    id bigint NOT NULL,
+    name character varying,
+    organisation_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_control_sets OWNER TO chouette;
+
+
+CREATE SEQUENCE compliance_control_sets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_control_sets_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_control_sets_id_seq OWNED BY compliance_control_sets.id;
+
+CREATE TABLE compliance_controls (
+    id bigint NOT NULL,
+    compliance_control_set_id integer,
+    compliance_control_block_id integer,
+    type character varying,
+    control_attributes json,
+    name character varying,
+    code character varying,
+    criticity character varying,
+    comment text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_controls OWNER TO chouette;
+
+CREATE SEQUENCE compliance_controls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_controls_id_seq OWNER TO chouette;
+
+ALTER SEQUENCE compliance_controls_id_seq OWNED BY compliance_controls.id;
+
+
+
+
 
 
 CREATE TABLE connection_links (
@@ -604,6 +835,16 @@ ALTER SEQUENCE workbenches_id_seq OWNED BY workbenches.id;
 ALTER TABLE ONLY access_links ALTER COLUMN id SET DEFAULT nextval('access_links_id_seq'::regclass);
 ALTER TABLE ONLY access_points ALTER COLUMN id SET DEFAULT nextval('access_points_id_seq'::regclass);
 ALTER TABLE ONLY companies ALTER COLUMN id SET DEFAULT nextval('companies_id_seq'::regclass);
+
+ALTER TABLE ONLY compliance_check_blocks ALTER COLUMN id SET DEFAULT nextval('compliance_check_blocks_id_seq'::regclass);
+ALTER TABLE ONLY compliance_check_resources ALTER COLUMN id SET DEFAULT nextval('compliance_check_resources_id_seq'::regclass);
+ALTER TABLE ONLY compliance_check_results ALTER COLUMN id SET DEFAULT nextval('compliance_check_results_id_seq'::regclass);
+ALTER TABLE ONLY compliance_check_sets ALTER COLUMN id SET DEFAULT nextval('compliance_check_sets_id_seq'::regclass);
+ALTER TABLE ONLY compliance_checks ALTER COLUMN id SET DEFAULT nextval('compliance_checks_id_seq'::regclass);
+ALTER TABLE ONLY compliance_control_blocks ALTER COLUMN id SET DEFAULT nextval('compliance_control_blocks_id_seq'::regclass);
+ALTER TABLE ONLY compliance_control_sets ALTER COLUMN id SET DEFAULT nextval('compliance_control_sets_id_seq'::regclass);
+ALTER TABLE ONLY compliance_controls ALTER COLUMN id SET DEFAULT nextval('compliance_controls_id_seq'::regclass);
+
 ALTER TABLE ONLY connection_links ALTER COLUMN id SET DEFAULT nextval('connection_links_id_seq'::regclass);
 ALTER TABLE ONLY group_of_lines ALTER COLUMN id SET DEFAULT nextval('group_of_lines_id_seq'::regclass);
 ALTER TABLE ONLY import_messages ALTER COLUMN id SET DEFAULT nextval('import_messages_id_seq'::regclass);
@@ -619,6 +860,7 @@ ALTER TABLE ONLY stop_area_referentials ALTER COLUMN id SET DEFAULT nextval('sto
 ALTER TABLE ONLY stop_areas ALTER COLUMN id SET DEFAULT nextval('stop_areas_id_seq'::regclass);
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 ALTER TABLE ONLY workbenches ALTER COLUMN id SET DEFAULT nextval('workbenches_id_seq'::regclass);
+
 
 -----------------------------------------------------------
 -- insert init data here !
@@ -10296,6 +10538,25 @@ ALTER TABLE ONLY access_points
     ADD CONSTRAINT access_points_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY compliance_check_blocks
+    ADD CONSTRAINT compliance_check_blocks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_check_resources
+    ADD CONSTRAINT compliance_check_resources_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_check_results
+    ADD CONSTRAINT compliance_check_results_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT compliance_check_sets_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_checks
+    ADD CONSTRAINT compliance_checks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_control_blocks
+    ADD CONSTRAINT compliance_control_blocks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_control_sets
+    ADD CONSTRAINT compliance_control_sets_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT compliance_controls_pkey PRIMARY KEY (id);   
+
+    
 ALTER TABLE ONLY connection_links
     ADD CONSTRAINT connection_links_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY group_of_lines
@@ -10334,6 +10595,21 @@ CREATE INDEX companies_registration_number_key ON companies USING btree (registr
 CREATE UNIQUE INDEX connection_links_objectid_key ON connection_links USING btree (objectid);
 CREATE UNIQUE INDEX group_of_lines_objectid_key ON group_of_lines USING btree (objectid);
 CREATE INDEX index_companies_on_line_referential_id ON companies USING btree (line_referential_id);
+
+CREATE INDEX index_compliance_check_blocks_on_compliance_check_set_id ON compliance_check_blocks USING btree (compliance_check_set_id);
+CREATE INDEX index_compliance_check_results_on_compliance_check_id ON compliance_check_results USING btree (compliance_check_id);
+CREATE INDEX index_compliance_check_results_on_compliance_check_resource_id ON compliance_check_results USING btree (compliance_check_resource_id);
+CREATE INDEX index_compliance_check_sets_on_compliance_control_set_id ON compliance_check_sets USING btree (compliance_control_set_id);
+CREATE INDEX index_compliance_check_sets_on_parent_type_and_parent_id ON compliance_check_sets USING btree (parent_type, parent_id);
+CREATE INDEX index_compliance_check_sets_on_referential_id ON compliance_check_sets USING btree (referential_id);
+CREATE INDEX index_compliance_check_sets_on_workbench_id ON compliance_check_sets USING btree (workbench_id);
+CREATE INDEX index_compliance_checks_on_compliance_check_block_id ON compliance_checks USING btree (compliance_check_block_id);
+CREATE INDEX index_compliance_checks_on_compliance_check_set_id ON compliance_checks USING btree (compliance_check_set_id);
+CREATE INDEX index_compliance_control_blocks_on_compliance_control_set_id ON compliance_control_blocks USING btree (compliance_control_set_id);
+CREATE INDEX index_compliance_control_sets_on_organisation_id ON compliance_control_sets USING btree (organisation_id);
+CREATE INDEX index_compliance_controls_on_compliance_control_block_id ON compliance_controls USING btree (compliance_control_block_id);
+CREATE INDEX index_compliance_controls_on_compliance_control_set_id ON compliance_controls USING btree (compliance_control_set_id);
+
 CREATE INDEX index_group_of_lines_on_line_referential_id ON group_of_lines USING btree (line_referential_id);
 CREATE INDEX index_import_messages_on_import_id ON import_messages USING btree (import_id);
 CREATE INDEX index_import_messages_on_resource_id ON import_messages USING btree (resource_id);
@@ -10370,6 +10646,32 @@ ALTER TABLE ONLY stop_areas
 ALTER TABLE ONLY group_of_lines_lines
     ADD CONSTRAINT groupofline_group_fkey FOREIGN KEY (group_of_line_id) REFERENCES group_of_lines(id) ON DELETE CASCADE;
 
+ALTER TABLE ONLY compliance_control_blocks
+    ADD CONSTRAINT fk_rails_0f26e226bd FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+ALTER TABLE ONLY compliance_check_results
+    ADD CONSTRAINT fk_rails_1361178dd5 FOREIGN KEY (compliance_check_id) REFERENCES compliance_checks(id);
+ALTER TABLE ONLY compliance_checks
+    ADD CONSTRAINT fk_rails_2cbc8a0142 FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT fk_rails_4145f3761b FOREIGN KEY (referential_id) REFERENCES referentials(id);
+ALTER TABLE ONLY compliance_check_results
+    ADD CONSTRAINT fk_rails_70bd95092e FOREIGN KEY (compliance_check_resource_id) REFERENCES compliance_check_resources(id);
+ALTER TABLE ONLY compliance_check_blocks
+    ADD CONSTRAINT fk_rails_7d7a89703f FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
+ALTER TABLE ONLY compliance_control_sets
+    ADD CONSTRAINT fk_rails_aa1e909966 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT fk_rails_d227ba43d7 FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+ALTER TABLE ONLY compliance_check_sets
+    ADD CONSTRAINT fk_rails_d61509f1a9 FOREIGN KEY (workbench_id) REFERENCES workbenches(id);
+ALTER TABLE ONLY compliance_checks
+    ADD CONSTRAINT fk_rails_df077b5b35 FOREIGN KEY (compliance_check_block_id) REFERENCES compliance_check_blocks(id);
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT fk_rails_f402e905ef FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+
+    
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
@@ -10844,6 +11146,11 @@ ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT departure_point_fkey FOREIGN KEY (departure_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
 ALTER TABLE ONLY journey_pattern_sections
     ADD CONSTRAINT journey_pattern_sections_journey_pattern_id_fk FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
+    
+    
+
+    
+    
 ALTER TABLE ONLY journey_patterns
     ADD CONSTRAINT jp_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_patterns_stop_points
@@ -10872,9 +11179,3 @@ ALTER TABLE ONLY time_tables_vehicle_journeys
 
 GRANT ALL ON SCHEMA chouette_gui TO chouette;
 GRANT ALL ON SCHEMA chouette_gui TO PUBLIC;
-
-
---
---
-
-

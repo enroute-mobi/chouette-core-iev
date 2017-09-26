@@ -7,7 +7,10 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.ParserUtils;
+import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.parameters.AbstractImportParameter;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
@@ -17,7 +20,7 @@ import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ChouetteModelUtil;
 
 @Log4j
-public class NetexStifUtils extends ParserUtils {
+public class NetexStifUtils extends ParserUtils implements Constant {
 
 	public static String fromPTDirectionType(PTDirectionEnum type) {
 		if (type == null)
@@ -104,9 +107,9 @@ public class NetexStifUtils extends ParserUtils {
 	public static String genStopPointId(String id, String order, Route route) {
 		String suffix =  id.split(ID_SEPARATOR)[2];
 		String routeSuffix = route.objectIdSuffix();
-		if (!suffix.startsWith(routeSuffix) ) {
+		// if (!suffix.startsWith(routeSuffix) ) {
 			suffix = routeSuffix+"-"+suffix;
-		}
+		// }
 		suffix += "-"+order;
 		
 		return ChouetteModelUtil.changeSuffix(id,suffix);
@@ -115,9 +118,9 @@ public class NetexStifUtils extends ParserUtils {
 	public static String genRoutingConstrainId(String id, Route route) {
 		String suffix =  id.split(ID_SEPARATOR)[2];
 		String routeSuffix = route.objectIdSuffix();
-		if (!suffix.startsWith(routeSuffix) ) {
+		// if (!suffix.startsWith(routeSuffix) ) {
 			suffix = routeSuffix+"-"+suffix;
-		}
+		// }
 		
 		return ChouetteModelUtil.changeSuffix(id,suffix);
 	}
@@ -127,12 +130,21 @@ public class NetexStifUtils extends ParserUtils {
 //
 //	}
 
-	public static void uniqueObjectIdOnLine(ChouetteIdentifiedObject object, LineLite line) {
+	public static void uniqueObjectIdOnLine(Context context, ChouetteIdentifiedObject object, LineLite line) {
 		String suffix = object.objectIdSuffix();
 		String lineSuffix = line.objectIdSuffix();
 		if (suffix.startsWith(lineSuffix) && !suffix.equals(lineSuffix))
 			return;
 		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), lineSuffix + "-" + suffix);
+		object.setObjectId(objectId);
+		uniqueObjectId(context, object);
+	}
+	
+	public static void uniqueObjectId(Context context, ChouetteIdentifiedObject object) {
+		String suffix = object.objectIdSuffix();
+		AbstractImportParameter parameters = (AbstractImportParameter) context.get(CONFIGURATION);
+		Long refId = parameters.getReferentialId();
+		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), refId.toString() + "-" + suffix);
 		object.setObjectId(objectId);
 	}
 	

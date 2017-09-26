@@ -66,8 +66,8 @@ public class RouteParser implements Parser, Constant {
 				if (line != null) {
 					route.setLineId(line.getId());
 					route.setLineLite(line);
-					NetexStifUtils.uniqueObjectIdOnLine(route, line);
-					validator.addXmlId(context, route.getObjectId(), id);
+					// NetexStifUtils.uniqueObjectIdOnLine(context,route, line);
+					// validator.addXmlId(context, route.getObjectId(), id);
 					context.put(LINE, line);
 				}
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {

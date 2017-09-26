@@ -195,16 +195,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	}
 	
-	public void addXmlId(Context context, String objectId, String xmlId) {
-		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
-		objectContext.put(ID, xmlId);
-	}
-
-	protected  String getXmlId(Context context, String objectId) {
-		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
-		return (String) objectContext.get(ID);
-	}
-
+//	public void addXmlId(Context context, String objectId, String xmlId) {
+//		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
+//		objectContext.put(ID, xmlId);
+//	}
+//
+//	protected  String getXmlId(Context context, String objectId) {
+//		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
+//		return (String) objectContext.get(ID);
+//	}
+//
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des identifiants
 	 * <p>
@@ -286,7 +286,7 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			int columnNumber) {
 
 		Calendar c = Calendar.getInstance();
-		c.add(1, Calendar.DATE);
+		c.add(Calendar.DATE,1); 
 
 		boolean result = object.getCreationTime().before(c.getTime());
 

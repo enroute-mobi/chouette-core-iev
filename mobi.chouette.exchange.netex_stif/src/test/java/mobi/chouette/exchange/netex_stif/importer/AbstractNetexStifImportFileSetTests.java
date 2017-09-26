@@ -82,7 +82,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 	@Inject
 	UserTransaction utx;
 
-	public static EnterpriseArchive createDeployment(Class testClass) {
+	public static EnterpriseArchive createDeployment(Class<? extends Arquillian> testClass) {
 
 		EnterpriseArchive result;
 		File[] files = Maven.resolver().loadPomFromFile("pom.xml")
@@ -162,6 +162,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		configuration.setCleanRepository(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
+		configuration.setReferentialId(1L);
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L });
@@ -218,8 +219,6 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 
 		ActionReport actionReport = (ActionReport) context.get(REPORT);
-		log.info(actionReport);
-		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
 
 		utx.begin();
 		em.joinTransaction();
@@ -228,7 +227,10 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		List<ImportResource> resources = getRessources(task);
 		Map<Long, ImportResource> mapImportResources = new HashMap<Long, ImportResource>();
-		resources.stream().forEach(x -> mapImportResources.put(x.getId(), x));
+		resources.stream().forEach(x -> {
+			mapImportResources.put(x.getId(), x);
+			log.info(x.toString());
+			});
 
 		Set<String> actualErrors = new TreeSet<String>();
 		List<ImportMessage> messages = getMessages(task);
@@ -249,6 +251,9 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
+			
+			
+			log.info("POUR ANALYSE : "+ zipFile+";" + sb.toString() + ";MSG="+message); 
 
 			actualErrors.add(sb.toString());
 		});
@@ -270,6 +275,10 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		if (!expectedNotDetected.isEmpty()) {
 			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
 		}
+		
+		log.info(actionReport);
+		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
+
 		Assert.assertTrue(expectedNotDetected.isEmpty(),
 				expectedNotDetected.size() + " Error(s) not detected (but expected) : "
 						+ expectedNotDetected.stream().collect(Collectors.joining("; ")));

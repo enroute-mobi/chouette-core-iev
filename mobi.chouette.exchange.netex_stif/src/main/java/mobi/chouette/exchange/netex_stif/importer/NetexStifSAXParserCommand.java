@@ -26,15 +26,19 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.netex_stif.validator.NetexCheckPoints;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.exchange.report.ActionReporter.FILE_ERROR_CODE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.exchange.validation.report.CheckPointReport;
+import mobi.chouette.exchange.validation.report.DataLocation;
+import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 @Log4j
-public class NetexStifSAXParserCommand implements Command, Constant {
+public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckPoints {
 
 	public static final String COMMAND = "NetexStifSAXParserCommand";
 
@@ -56,6 +60,7 @@ public class NetexStifSAXParserCommand implements Command, Constant {
 
 		String fileName = new File(new URL(fileURL).toURI()).getName();
 		reporter.addFileReport(context, fileName, IO_TYPE.INPUT);
+		log.info("check " + fileName + " for XML/XSD syntax");
 
 		Schema schema = (Schema) context.get(SCHEMA);
 		if (schema == null) {
@@ -69,39 +74,53 @@ public class NetexStifSAXParserCommand implements Command, Constant {
 		NetexStifSAXErrorHandler handler = new NetexStifSAXErrorHandler(context, fileURL);
 		Reader reader = null;
 		try {
-			reader = new BufferedReader(CharSetChecker.getEncodedInputStreamReader(url.toString(), url.openStream()), 8192 * 10);
+			reader = new BufferedReader(CharSetChecker.getEncodedInputStreamReader(fileName, url.openStream()),
+					8192 * 10);
 			StreamSource file = new StreamSource(reader);
 
 			Validator validator = schema.newValidator();
 			validator.setErrorHandler(handler);
 			validator.validate(file);
 			if (handler.isHasErrors()) {
-				addLineEntry(context, reporter, fileName,"XML/XSD errors");
+				addLineEntry(context, reporter, fileName, "XML/XSD errors");
 				reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, "XML/XSD errors");
 				return result;
 			}
 			result = SUCCESS;
-		} catch (IOException | SAXException e) {
+		} catch (SAXException e) {
 			log.error(e.getMessage());
-			addLineEntry(context, reporter, fileName,e.getMessage());
-			reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT,e.getMessage());
+			addLineEntry(context, reporter, fileName, e.getMessage());
+			reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			reportError(context, e, fileName, reporter);
 		} finally {
-			if (reader != null ) reader.close();
+			if (reader != null)
+				reader.close();
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
 
 		return result;
 	}
 
+	private void reportError(Context context, Exception e, String fileName, ActionReporter reporter) {
+		addLineEntry(context, reporter, fileName, e.getMessage());
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+		DataLocation location = new DataLocation(fileName, 1, 1);
+		validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_2, CheckPointReport.SEVERITY.ERROR);
+		validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, e.getMessage());
+		reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, e.getMessage());
+	}
+
 	private void addLineEntry(Context context, ActionReporter reporter, String fileName, String description) {
-		if (fileName.startsWith("offre_"))
-		{
+		if (fileName.startsWith("offre_")) {
 			// insert dummy line entry in report
 			String name = fileName.replace(".xml", "");
 			String[] tokens = name.split("_");
-			reporter.addObjectReport(context, "STIF:CODIFLIGNE:Line:"+tokens[1], OBJECT_TYPE.LINE, tokens[2], OBJECT_STATE.OK, IO_TYPE
-			.INPUT);
-			reporter.addErrorToObjectReport(context, "STIF:CODIFLIGNE:Line:"+tokens[1], OBJECT_TYPE.LINE, ERROR_CODE.INVALID_FORMAT , description);
+			reporter.addObjectReport(context, "STIF:CODIFLIGNE:Line:" + tokens[1], OBJECT_TYPE.LINE, tokens[2],
+					OBJECT_STATE.OK, IO_TYPE.INPUT);
+			reporter.addErrorToObjectReport(context, "STIF:CODIFLIGNE:Line:" + tokens[1], OBJECT_TYPE.LINE,
+					ERROR_CODE.INVALID_FORMAT, description);
 		}
 	}
 

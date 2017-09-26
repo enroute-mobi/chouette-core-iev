@@ -65,15 +65,15 @@ public class RouteRegisterCommand implements Command {
 		Referential referential = (Referential) context.get(REFERENTIAL);
 		Map<String, Timetable> timetables = referential.getTimetables();
 		for (Timetable timetable : timetables.values()) {
-			if (timetable.getId() != null) {
-				log.info("timetable " + timetable.getObjectId() + " already saved ");
+			// if (timetable.getId() != null) {
 				Timetable saved = timetableDAO.findByObjectId(timetable.getObjectId());
 				if (saved != null) {
+					log.info("timetable " + timetable.getObjectId() + " already saved ");
 					for (VehicleJourney vj : timetable.getVehicleJourneys()) {
 						vj.getTimetables().remove(timetable);
 						vj.getTimetables().add(saved);
 					}
-				}
+				// }
 			} else {
 				ChecksumUtil.checksum(context, timetable);
 			}

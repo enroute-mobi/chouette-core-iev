@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -12,7 +11,6 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.StopPoint;
 
-@Log4j
 public class ServiceJourneyPatternValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = SERVICE_JOURNEY_PATTERN;
@@ -49,6 +47,17 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
 		objectContext.put(SERVICE_JOURNEY_PATTERN_TYPE, value);
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addStopPointOrder(Context context, String objectId, Integer order, String spId) {
+		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
+		Map<Integer, String> map = (Map<Integer, String>) objectContext.get(ORDER);
+		if (map == null) {
+			map = new HashMap<Integer, String>();
+			objectContext.put(ORDER, map);
+		}
+		map.put( order,spId);
 	}
 
 	@SuppressWarnings("unchecked")

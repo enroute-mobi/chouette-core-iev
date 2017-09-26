@@ -2,7 +2,6 @@ package mobi.chouette.exchange.netex_stif.importer;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import javax.naming.InitialContext;
 
