@@ -230,7 +230,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		resources.stream().forEach(x -> {
 			mapImportResources.put(x.getId(), x);
 			log.info(x.toString());
-			});
+		});
 
 		Set<String> actualErrors = new TreeSet<String>();
 		List<ImportMessage> messages = getMessages(task);
@@ -251,11 +251,20 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
-			
-			
-			log.info("POUR ANALYSE : "+ zipFile+";" + sb.toString() + ";MSG="+message); 
+
+			log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";MSG=" + message);
 
 			actualErrors.add(sb.toString());
+		});
+
+		resources.stream().forEach(x -> {
+			List<ImportMessage> msgs = getMessages(task, x);
+			System.err.println("x="+x);
+			System.err.println("x.getType()="+x.getType());
+			System.err.println("x.getStatus()="+x.getStatus());
+			if (x.getType().equalsIgnoreCase("file") && x.getStatus().equalsIgnoreCase("ERROR")) {
+				Assert.assertTrue(((msgs != null) ? msgs.size() : 0) > 0, "ImportResource " + x.getName() + " contains ERROR, but no message !!!");
+			}
 		});
 
 		Set<String> expectedErrors = new TreeSet<String>();
@@ -275,7 +284,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		if (!expectedNotDetected.isEmpty()) {
 			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
 		}
-		
+
 		log.info(actionReport);
 		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
 
@@ -310,11 +319,21 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 	}
 
 	private List<ImportMessage> getMessages(ImportTask task) {
+		return getMessages(task, null);
+	}
+
+	private List<ImportMessage> getMessages(ImportTask task, ImportResource ressource) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<ImportMessage> criteria = builder.createQuery(ImportMessage.class);
 		Root<ImportMessage> root = criteria.from(ImportMessage.class);
-		Predicate predicate = builder.equal(root.get(ImportMessage_.taskId), task.getId());
-		criteria.where(predicate);
+		Predicate predicateTaskId = builder.equal(root.get(ImportMessage_.taskId), task.getId());
+		if (ressource != null) {
+			Predicate predicateResourceId = builder.equal(root.get(ImportMessage_.resourceId), ressource.getId());
+			criteria.where(predicateTaskId, predicateResourceId);
+		} else {
+			criteria.where(predicateTaskId);
+		}
+
 		TypedQuery<ImportMessage> query = em.createQuery(criteria);
 
 		return query.getResultList();
