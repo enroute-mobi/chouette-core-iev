@@ -3,6 +3,7 @@ package mobi.chouette.exchange.netex_stif.validator;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -16,6 +17,7 @@ import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
 import mobi.chouette.model.util.Referential;
 
+@Log4j
 public class RouteValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = ROUTE;
@@ -41,7 +43,6 @@ public class RouteValidator extends AbstractValidator {
 		objectContext.put(INVERSE_ROUTE_REF, inverseRouteRef);
 	}
 
-
 	/**
 	 * @param context
 	 * @param route
@@ -58,9 +59,10 @@ public class RouteValidator extends AbstractValidator {
 			check2NeTExSTIFRoute2_1(context, route, lineNumber, columnNumber);
 		if (result3)
 			check2NeTExSTIFRoute2_2(context, route, lineNumber, columnNumber);
-		if (result3)
-			result3 = check2NeTExSTIFRoute3(context, route, lineNumber, columnNumber);
 		// must be done after ServiceJourneyPatterns loaded
+		// if (result3)
+		// result3 = check2NeTExSTIFRoute3(context, route, lineNumber,
+		// columnNumber);
 		// if (result3)
 		// check2NeTExSTIFRoute4(context, route, lineNumber, columnNumber);
 		return result2 && result3;
@@ -72,7 +74,9 @@ public class RouteValidator extends AbstractValidator {
 		referential.getRoutes().values().stream().forEach(r -> {
 			if (r.isFilled()) {
 				DataLocation d = getLocation(context, r.getObjectId());
-				check2NeTExSTIFRoute4(context, r, d.getLineNumber(), d.getColumnNumber());
+				if (check2NeTExSTIFRoute3(context, r, d.getLineNumber(), d.getColumnNumber())) {
+					check2NeTExSTIFRoute4(context, r, d.getLineNumber(), d.getColumnNumber());
+				}
 			}
 		});
 	}
@@ -156,13 +160,15 @@ public class RouteValidator extends AbstractValidator {
 	public boolean check2NeTExSTIFRoute2_1(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
 
-		if (route.getOppositeRoute() == null || !route.getOppositeRoute().isFilled())
-		{
-//			log.info("2-NeTExSTIF-Route-2-1 : Route " + route.getObjectId() +
-//		     (route.getOppositeRoute() == null ? " pas de route inverse" : " route inverse non lue : "+route.getOppositeRoute().getObjectId()));
+		if (route.getOppositeRoute() == null || !route.getOppositeRoute().isFilled()) {
+			// log.info("2-NeTExSTIF-Route-2-1 : Route " + route.getObjectId() +
+			// (route.getOppositeRoute() == null ? " pas de route inverse" : "
+			// route inverse non lue :
+			// "+route.getOppositeRoute().getObjectId()));
 			return result;
 		}
-//		log.info("2-NeTExSTIF-Route-2-1 : check Route " + route.getObjectId() );
+		// log.info("2-NeTExSTIF-Route-2-1 : check Route " + route.getObjectId()
+		// );
 
 		Context routeContext = getObjectContext(context, LOCAL_CONTEXT, route.getObjectId());
 		Context waybackContext = getObjectContext(context, LOCAL_CONTEXT, route.getOppositeRoute().getObjectId());
@@ -170,7 +176,8 @@ public class RouteValidator extends AbstractValidator {
 		String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
 		String inverseRouteRef = (String) routeContext.get(INVERSE_ROUTE_REF);
 
-		result = route.getObjectId().equals(wayBackInverseRouteRef) && route.getOppositeRoute().getObjectId().equals(inverseRouteRef);
+		result = route.getObjectId().equals(wayBackInverseRouteRef)
+				&& route.getOppositeRoute().getObjectId().equals(inverseRouteRef);
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
@@ -244,18 +251,38 @@ public class RouteValidator extends AbstractValidator {
 	 * @param context
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean check2NeTExSTIFRoute3(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
 
-		List<StopPoint> list = route.getStopPoints();
-		Integer lastPosition = 0;
-		for (StopPoint p : list) {
-			if (lastPosition > p.getPosition()) {
-				result = false;
+		StopPoint stopPointOnError = null;
+
+		for (JourneyPattern jp : route.getJourneyPatterns()) {
+			// log.warn("JP  "+ jp.getObjectId() );
+			Context objectContext = getObjectContext(context, ServiceJourneyPatternValidator.LOCAL_CONTEXT,
+					jp.getObjectId());
+			Map<Integer, String> mapOrder = (Map<Integer, String>) objectContext.get(ORDER);
+			if (mapOrder != null) {
+				Integer position = 1;
+				for (StopPoint sp : jp.getStopPoints()) {
+					// log.warn("stopPoint("+position+") position "+ sp.getPosition() +", objectId = "+sp.getObjectId());
+
+					String objectId = mapOrder.get(sp.getPosition());
+					// log.warn(" check "+ sp.getObjectId() + " with "+ objectId);
+					if (!sp.getObjectId().equals(objectId)) {
+						// log.warn(" error found");
+						result = false;
+						stopPointOnError = sp;
+                        break;
+					}
+					position++;
+				}
+			}
+			if (!result) {
 				break;
 			}
-			lastPosition = p.getPosition();
 		}
+
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
@@ -263,7 +290,7 @@ public class RouteValidator extends AbstractValidator {
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
 			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Route_3, location,
-					lastPosition.toString());
+					stopPointOnError.getPosition().toString());
 		}
 
 		return result;

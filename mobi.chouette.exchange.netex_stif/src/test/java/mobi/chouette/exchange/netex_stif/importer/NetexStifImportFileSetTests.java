@@ -287,7 +287,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 			"2310" }, testName = "2310-00", description = "[Netex] Contrôle de l'objet Route : Séquence des arrêts", priority = 33)
 	public void verifyCard2310_00() throws Exception {
 		doImport("OFFRE_SNTYO_2310_00.zip", "NOK",
-				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-4:2_netexstif_servicejourneypattern_4");
+				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-Route-3:2_netexstif_route_3");
 	}
 
 	@Test(groups = {

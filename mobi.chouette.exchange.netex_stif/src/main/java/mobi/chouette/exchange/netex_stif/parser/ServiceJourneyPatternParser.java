@@ -41,9 +41,9 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		}
 		String modification = xpp.getAttributeValue(null, MODIFICATION);
 		Long version = (Long) context.get(VERSION);
-//		LineLite line = (LineLite) context.get(LINE);
-//		if (line != null)
-//			NetexStifUtils.uniqueObjectIdOnLine(context,journeyPattern, line);
+		// LineLite line = (LineLite) context.get(LINE);
+		// if (line != null)
+		// NetexStifUtils.uniqueObjectIdOnLine(context,journeyPattern, line);
 
 		journeyPattern.setObjectVersion(version);
 
@@ -77,7 +77,7 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 					}
 				}
 			} else if (xpp.getName().equals(SERVICE_JOURNEY_PATTERN_TYPE)) {
-				validator.addPatternType(context,journeyPattern.getObjectId(),xpp.nextText());
+				validator.addPatternType(context, journeyPattern.getObjectId(), xpp.nextText());
 				// journeyPattern.setPatternType(xpp.nextText());
 			} else if (xpp.getName().equals(ROUTE_REF)) {
 				String ref = xpp.getAttributeValue(null, REF);
@@ -139,12 +139,15 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 		}
 		if (scheduledStopPointId != null) {
 			Route route = (Route) context.get(ROUTE_FROM_SERVICE_JOURNEY_PATTERN);
+			StopPoint stopPoint = findStopPoint(route, Integer.parseInt(order));
 			String objectId = NetexStifUtils.genStopPointId(scheduledStopPointId, order, route);
-			StopPoint stopPoint = ObjectFactory.getStopPoint(referential, objectId);
-			stopPoint.setObjectVersion(version);
-			stopPoint.setRoute(route);
+			if (stopPoint == null) {
+				stopPoint = ObjectFactory.getStopPoint(referential, objectId);
+				stopPoint.setObjectVersion(version);
+				stopPoint.setRoute(route);
+				stopPoint.setPosition(Integer.parseInt(order));
+			}
 			// log.info("set position : " + order);
-			stopPoint.setPosition(Integer.parseInt(order));
 			if (forAlighting != null) {
 				validator.addStopPointAlighting(context, journeyPattern.getObjectId(), stopPoint.getPosition(),
 						forAlighting);
@@ -166,7 +169,16 @@ public class ServiceJourneyPatternParser implements Parser, Constant {
 			}
 			factory.addStopPoint(scheduledStopPointId, stopPoint);
 			journeyPattern.addStopPoint(stopPoint);
+			validator.addStopPointOrder(context, journeyPattern.getObjectId(), stopPoint.getPosition(), objectId);
 		}
+	}
+
+	private StopPoint findStopPoint(Route route, Integer pos) {
+        for (StopPoint sp : route.getStopPoints())
+        {
+        	if (sp.getPosition().equals(pos)) return sp;
+        }
+		return null;
 	}
 
 	static {

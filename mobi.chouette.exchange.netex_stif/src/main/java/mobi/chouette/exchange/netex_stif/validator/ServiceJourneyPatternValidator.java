@@ -50,6 +50,17 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	}
 
 	@SuppressWarnings("unchecked")
+	public void addStopPointOrder(Context context, String objectId, Integer order, String spId) {
+		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
+		Map<Integer, String> map = (Map<Integer, String>) objectContext.get(ORDER);
+		if (map == null) {
+			map = new HashMap<Integer, String>();
+			objectContext.put(ORDER, map);
+		}
+		map.put( order,spId);
+	}
+
+	@SuppressWarnings("unchecked")
 	public void addStopPointAlighting(Context context, String objectId, Integer position, Boolean alighting) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
 		Map<Integer, Boolean> map = (Map<Integer, Boolean>) objectContext.get(FOR_ALIGHTING);
