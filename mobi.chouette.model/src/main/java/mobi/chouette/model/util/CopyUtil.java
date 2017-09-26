@@ -20,89 +20,76 @@ import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 
-
 public abstract class CopyUtil {
 
-	public static Network copy(Network object)
-	{
+	public static Network copy(Network object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static Company copy(Company object)
-	{
+
+	public static Company copy(Company object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static GroupOfLine copy(GroupOfLine object)
-	{
+
+	public static GroupOfLine copy(GroupOfLine object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static StopArea copy(StopArea object)
-	{
+
+	public static StopArea copy(StopArea object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static AccessPoint copy(AccessPoint object)
-	{
+
+	public static AccessPoint copy(AccessPoint object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static AccessLink copy(AccessLink object)
-	{
+
+	public static AccessLink copy(AccessLink object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static ConnectionLink copy(ConnectionLink object)
-	{
+
+	public static ConnectionLink copy(ConnectionLink object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static Timetable copy(Timetable object)
-	{
-	      Timetable tm = new Timetable();
-	      tm.setObjectId(object.getObjectId());
-	      tm.setObjectVersion(object.getObjectVersion());
-	      tm.setComment(object.getComment());
-	      tm.setVersion(object.getVersion());
-	      tm.setIntDayTypes(object.getIntDayTypes());
-	      tm.setStartOfPeriod(object.getStartOfPeriod());
-	      tm.setEndOfPeriod(object.getEndOfPeriod());
-	      tm.setPeriods(new ArrayList<Period>());
-	      for (Period period : object.getPeriods())
-	      {
-	         tm.addPeriod(new Period((Date)(period.getStartDate().clone()),(Date)(period.getEndDate().clone())));
-	      }
-	      tm.setCalendarDays(new ArrayList<CalendarDay>());
-	      for (CalendarDay day : object.getCalendarDays())
-	      {
-	         tm.addCalendarDay(new CalendarDay((Date)(day.getDate().clone()), day.getIncluded()));
-	      }
-	      return tm;
+
+	public static Timetable copy(Timetable object) {
+		Timetable tm = new Timetable();
+		tm.setObjectId(object.getObjectId());
+		tm.setObjectVersion(object.getObjectVersion());
+		tm.setComment(object.getComment());
+		tm.setVersion(object.getVersion());
+		tm.setIntDayTypes(object.getIntDayTypes());
+		tm.setStartOfPeriod(object.getStartOfPeriod());
+		tm.setEndOfPeriod(object.getEndOfPeriod());
+		tm.setPeriods(new ArrayList<Period>());
+		for (Period period : object.getPeriods()) {
+			if (period != null && period.getStartDate() != null && period.getEndDate() != null)
+				tm.addPeriod(new Period((Date) (period.getStartDate().clone()), (Date) (period.getEndDate().clone())));
+		}
+		tm.setCalendarDays(new ArrayList<CalendarDay>());
+		for (CalendarDay day : object.getCalendarDays()) {
+			if (day != null && day.getDate() != null && day.getIncluded() != null)
+				tm.addCalendarDay(new CalendarDay((Date) (day.getDate().clone()), day.getIncluded()));
+		}
+		return tm;
 
 	}
-	public static StopPoint copy(StopPoint object)
-	{
+
+	public static StopPoint copy(StopPoint object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static Line copy(Line object)
-	{
+
+	public static Line copy(Line object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static Route copy(Route object)
-	{
+
+	public static Route copy(Route object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static JourneyPattern copy(JourneyPattern object)
-	{
+
+	public static JourneyPattern copy(JourneyPattern object) {
 		throw new RuntimeException("not implemented");
 	}
-	
-	public static VehicleJourney copy(VehicleJourney object)
-	{
+
+	public static VehicleJourney copy(VehicleJourney object) {
 		throw new RuntimeException("not implemented");
 	}
 
