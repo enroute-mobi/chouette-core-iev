@@ -1,5 +1,5 @@
 /**
- *  !!! Generated Code (2017-09-25 13:38:37)!!!
+ *  !!! Generated Code (2017-09-27 10:23:45)!!!
  *  Do not edit !
  *  Created by create_NetexStifImportFileSetTests.py
  */
@@ -331,8 +331,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2316" }, testName = "2316-00", description = "[Netex] Contrôle de l'objet ServiceJourneyPattern : ordre des StopPointInJourneyPattern", priority = 39)
 	public void verifyCard2316_00() throws Exception {
-		doImport("OFFRE_SNTYO_2316_00.zip", "NOK", "offre_C00163_01.xml:ERROR:2-NeTExSTIF-Route-3:2_netexstif_route_3",
-				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourney-3:2_netexstif_servicejourney_3",
+		doImport("OFFRE_SNTYO_2316_00.zip", "NOK",
 				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-ServiceJourneyPattern-4:2_netexstif_servicejourneypattern_4");
 	}
 
