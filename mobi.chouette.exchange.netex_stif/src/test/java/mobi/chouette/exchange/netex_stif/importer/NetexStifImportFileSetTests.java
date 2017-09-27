@@ -1,5 +1,5 @@
 /**
- *  !!! Generated Code (2017-09-25 13:38:37)!!!
+ *  !!! Generated Code (2017-09-27 10:23:45)!!!
  *  Do not edit !
  *  Created by create_NetexStifImportFileSetTests.py
  */
@@ -278,7 +278,8 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2309" }, testName = "2309-00", description = "[Netex] Contrôle de l'objet Route : cohérence des routes inverses", priority = 32)
 	public void verifyCard2309_00() throws Exception {
-		doImport("OFFRE_SNTYO_2309_00.zip", "OK", "offre_C00163_01.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_1",
+		doImport("OFFRE_SNTYO_2309_00.zip", "OK",
+				"offre_C00163_01.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_1",
 				"offre_C00164_03.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2",
 				"offre_C00171_11.xml:WARNING:2-NeTExSTIF-Route-2:2_netexstif_route_2_2");
 	}
@@ -286,8 +287,7 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 	@Test(groups = {
 			"2310" }, testName = "2310-00", description = "[Netex] Contrôle de l'objet Route : Séquence des arrêts", priority = 33)
 	public void verifyCard2310_00() throws Exception {
-		doImport("OFFRE_SNTYO_2310_00.zip", "NOK",
-				"offre_C00171_11.xml:ERROR:2-NeTExSTIF-Route-3:2_netexstif_route_3");
+		doImport("OFFRE_SNTYO_2310_00.zip", "NOK", "offre_C00171_11.xml:ERROR:2-NeTExSTIF-Route-3:2_netexstif_route_3");
 	}
 
 	@Test(groups = {

@@ -134,7 +134,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		referential.getSharedReadOnlyStopAreas().put(quay4.getObjectId(), quay4);
 	}
 
-	@Test(groups = { "Nominal" }, description = "offre", priority = 3)
+	@Test(groups = { "Nominal" }, description = "offre", priority = 303)
 	public void verifyOfferParser() throws Exception{
 		verifyOfferParser("calendriers.xml", "commun.xml", "offre.xml");
 		
@@ -270,7 +270,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	}
 
-	@Test(groups = { "Nominal" }, description = "commun", priority = 2)
+	@Test(groups = { "Nominal" }, description = "commun", priority = 301)
 	public void verifyCommunParser() throws Exception {
 		Context context = initImportContext();
 
@@ -293,7 +293,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	}
 
-	@Test(groups = { "Nominal" }, description = "calendrier", priority = 1)
+	@Test(groups = { "Nominal" }, description = "calendrier", priority = 304)
 	public void verifyCalendrierParser() throws Exception {
 		Context context = initImportContext();
 

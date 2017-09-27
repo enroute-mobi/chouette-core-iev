@@ -1,6 +1,5 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
-import java.util.List;
 import java.util.Map;
 
 import lombok.extern.log4j.Log4j;

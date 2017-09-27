@@ -82,7 +82,7 @@ public class NoticeValidatorTests extends AbstractTest {
 		tc.setResult(result);
 	}
 
-	@Test(groups = { "Notice", "Label" }, description = "Nominal : Footnote label is set", priority = 1)
+	@Test(groups = { "Notice", "Label" }, description = "Nominal : Footnote label is set", priority = 801)
 	public void verifyNoticeLabelIsSet() throws Exception {
 		TestContext tc = new TestContext();
 		tc.getFakeFootnote().setLabel("not-empty-label");
@@ -91,7 +91,7 @@ public class NoticeValidatorTests extends AbstractTest {
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 	}
 
-	@Test(groups = { "Notice", "Label" }, description = "Error : Footnote label is not set or empty", priority = 1)
+	@Test(groups = { "Notice", "Label" }, description = "Error : Footnote label is not set or empty", priority = 802)
 	public void verifyNoticeLabelIsNotSetOrEmpty() throws Exception {
 		TestContext tc = new TestContext();
 
@@ -133,7 +133,7 @@ public class NoticeValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Notice",
-			"TypeOfNoticeRef" }, description = "Nominal : Footnote  TypeOfNoticeRef is incorrect", priority = 1)
+			"TypeOfNoticeRef" }, description = "Nominal : Footnote  TypeOfNoticeRef is incorrect", priority = 803)
 	public void verifyTypeOfNoticeRefForGivenFootNoteCorrect() throws Exception {
 		TestContext tc = new TestContext();
 
@@ -143,7 +143,7 @@ public class NoticeValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = { "Notice",
-			"TypeOfNoticeRef" }, description = "Error : Footnote  TypeOfNoticeRef is incorrect", priority = 1)
+			"TypeOfNoticeRef" }, description = "Error : Footnote  TypeOfNoticeRef is incorrect", priority = 804)
 	public void verifyTypeOfNoticeRefForGivenFootNoteNotCorrect() throws Exception {
 		TestContext tc = new TestContext();
 

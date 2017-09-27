@@ -110,7 +110,7 @@ public class ServiceJourneyValidatorTests extends AbstractTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(groups = { "PassingTimeComparator" }, description = "valid comparator", priority = 1)
+	@Test(groups = { "PassingTimeComparator" }, description = "valid comparator", priority = 1301)
 	public void validatePassingTimeComparator() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
@@ -148,7 +148,7 @@ public class ServiceJourneyValidatorTests extends AbstractTest {
 		Assert.assertTrue(res > 0, "passing times should be bad");
 	}
 
-	@Test(groups = { "ServiceJourney" }, description = "missing journeyPattern", priority = 2)
+	@Test(groups = { "ServiceJourney" }, description = "missing journeyPattern", priority = 1302)
 	public void validateMissingJourneyPattern() throws Exception {
 		Context context = initImportContext();
 		VehicleJourney journey = new VehicleJourney();
@@ -163,7 +163,7 @@ public class ServiceJourneyValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "ServiceJourney" }, description = "too many train numbers", priority = 3)
+	@Test(groups = { "ServiceJourney" }, description = "too many train numbers", priority = 1303)
 	public void validateTooManyTrainNumbers() throws Exception {
 
 		Context context = initImportContext();
@@ -179,7 +179,7 @@ public class ServiceJourneyValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "ServiceJourney" }, description = "wrong passingTime count", priority = 4)
+	@Test(groups = { "ServiceJourney" }, description = "wrong passingTime count", priority = 1304)
 	public void validateWrongPassingTimeCount() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
@@ -194,7 +194,7 @@ public class ServiceJourneyValidatorTests extends AbstractTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(groups = { "ServiceJourney" }, description = "wrong passingTime times", priority = 5)
+	@Test(groups = { "ServiceJourney" }, description = "wrong passingTime times", priority = 1305)
 	public void validateWrongPassingTimes() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,

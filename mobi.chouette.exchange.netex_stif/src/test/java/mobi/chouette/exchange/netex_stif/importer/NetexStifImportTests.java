@@ -203,7 +203,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	}
 
-	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file")
+	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file", priority = 101)
 	public void verifyImportLine() throws Exception {
 		verifyImportLine("OFFRE_TRANSDEV_20170301122517.zip");
 	}
@@ -250,7 +250,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	}
 
-	@Test(groups = { "ImportBadFiles" }, description = "Import invalid Zip format")
+	@Test(groups = { "ImportBadFiles" }, description = "Import invalid Zip format", priority = 102)
 	public void verifyImportBadZip() throws Exception {
 		String zipFile = "badformated.zip";
 		Context context = initImportContext();
@@ -286,7 +286,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		Assert.assertEquals(error.getSource().getFile().getFilename(),zipFile,"source filename");
 
 	}
-	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without calendar")
+	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without calendar", priority = 103)
 	public void verifyImportNoCalendarZip() throws Exception {
 		String zipFile = "nocalendar.zip";
 		Context context = initImportContext();
@@ -325,7 +325,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	}
 
-	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without offer")
+	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without offer", priority = 105)
 	public void verifyImportNoOfferZip() throws Exception {
 		String zipFile = "nooffer.zip";
 		Context context = initImportContext();

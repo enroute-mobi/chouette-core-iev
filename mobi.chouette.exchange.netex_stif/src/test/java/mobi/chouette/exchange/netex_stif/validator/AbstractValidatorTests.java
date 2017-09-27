@@ -123,7 +123,7 @@ public class AbstractValidatorTests extends AbstractTest {
 	}
 
 
-	@Test(groups = { "Cas erreur 1" }, description = "nombre de champs composant ObjectId incorrect", priority = 3)
+	@Test(groups = { "Cas erreur 1" }, description = "nombre de champs composant ObjectId incorrect", priority = 501)
 	public void verifyIdNumberOfFieldsIncorrect() throws Exception {
 		String id = "abc";
 		String expectedType = "";
@@ -134,7 +134,7 @@ public class AbstractValidatorTests extends AbstractTest {
 	}
 
 	@Test(groups = {
-			"Cas erreur 2" }, description = "Type indiqué dans ObjectId ne correspond pas à celui attendu", priority = 3)
+			"Cas erreur 2" }, description = "Type indiqué dans ObjectId ne correspond pas à celui attendu", priority = 502)
 	public void verifyIdTypeIncorrect() throws Exception {
 		String id = "Code_Space-1:autretype:identifiant-Technique_1:LOC";
 		String expectedType = "montype";
@@ -144,7 +144,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		Assert.assertFalse(result);
 	}
 
-	@Test(groups = { "Cas erreur 3" }, description = "Caractères non autorisés", priority = 3)
+	@Test(groups = { "Cas erreur 3" }, description = "Caractères non autorisés", priority = 503)
 	public void verifiyIdBadChars() throws Exception {
 		String expectedType = "montype";
 
@@ -165,7 +165,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		Assert.assertFalse(result, "accent dans identifiant");
 	}
 
-	@Test(groups = { "Nominal" }, description = "ObjectId correct ", priority = 3)
+	@Test(groups = { "Nominal" }, description = "ObjectId correct ", priority = 504)
 	public void verifyId() throws Exception {
 		String id = "Code_Space-1:montype:identifiant-Technique_1:LOC";
 		String expectedType = "montype";
@@ -174,7 +174,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		Assert.assertTrue(result);
 	}
 
-	@Test(groups = { "Nominal" }, description = "ObjectId correct ", priority = 3)
+	@Test(groups = { "Nominal" }, description = "ObjectId correct ", priority = 505)
 	public void verifyRef() throws Exception {
 		String type = LINE_REF;
 		String ref = "STIF:CODIFLIGNE:Line:1234"; // old fashion line ref
@@ -208,7 +208,7 @@ public class AbstractValidatorTests extends AbstractTest {
 
 	}
 	
-	@Test(groups = { "Cas d'erreur de ref" }, description = "ObjectId incorrect ", priority = 3)
+	@Test(groups = { "Cas d'erreur de ref" }, description = "ObjectId incorrect ", priority = 506)
 	public void verifyBadRef() throws Exception {
 		String type = LINE_REF;
 		String ref = "STIF:CODIFIGNE:Line:1234"; // old fashion line ref

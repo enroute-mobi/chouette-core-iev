@@ -122,7 +122,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(groups = { "PassingTime" }, description = "GoodPassingTime", priority = 1)
+	@Test(groups = { "PassingTime" }, description = "GoodPassingTime", priority = 901)
 	public void verifyGoodPassingTime() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, "offre_xxx.xml");
@@ -146,7 +146,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 		checkNoReports(context, "offre_xxx.xml");
 	}
 
-	@Test(groups = { "PassingTime" }, description = "missing departure time", priority = 2)
+	@Test(groups = { "PassingTime" }, description = "missing departure time", priority = 902)
 	public void verifyMissingDepartureTime() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, "offre_xxx.xml");
@@ -170,7 +170,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(groups = { "PassingTime" }, description = "arrival time after departure time", priority = 3)
+	@Test(groups = { "PassingTime" }, description = "arrival time after departure time", priority = 903)
 	public void verifyArrivalTimeAfterDepartureTime() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, "offre_xxx.xml");
@@ -188,7 +188,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(groups = { "PassingTime" }, description = "arrival offest after departure offset", priority = 3)
+	@Test(groups = { "PassingTime" }, description = "arrival offest after departure offset", priority = 904)
 	public void verifyArrivalDayOffestAfterDepartureDayOffset() throws Exception {
 		Context context = initImportContext();
 		context.put(FILE_NAME, "offre_xxx.xml");
