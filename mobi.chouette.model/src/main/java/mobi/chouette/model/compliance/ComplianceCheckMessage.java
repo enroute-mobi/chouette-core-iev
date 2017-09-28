@@ -6,8 +6,11 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CollectionType;
@@ -22,9 +25,8 @@ import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionMessage;
 import mobi.chouette.model.converter.HstoreConverter;
 
-
 @Entity
-@Table(name = "compliance_check_results") 
+@Table(name = "compliance_check_results")
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class ComplianceCheckMessage extends ActionMessage {
@@ -52,26 +54,29 @@ public class ComplianceCheckMessage extends ActionMessage {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "compliance_check_messages_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "public.compliance_check_messages_id_seq"),
+	@GenericGenerator(name = "compliance_check_results_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "public.compliance_check_results_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })
-	@GeneratedValue(generator = "compliance_check_messages_id_seq")
+	@GeneratedValue(generator = "compliance_check_results_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
 	@Getter
 	@Setter
-	@Column(name = "compliance_id") //TODO : à vérifier
-	private Long taskId;
-
-	@Getter
-	@Setter
-	@Column(name = "name")
-	private String name;
+	@Column(name = "compliance_check_id")
+	private Long complianceCheckId;
+	
 	
 	@Getter
 	@Setter
+	private Long taskId;
+	//TODO : taskId => compliance_check_sets ???
+
+	@Getter
+	@Setter
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "compliance_check_resource_id")
 	private ComplianceCheckResource resource;
 
 	@Getter

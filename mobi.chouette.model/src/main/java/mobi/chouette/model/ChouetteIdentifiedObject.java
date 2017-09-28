@@ -31,7 +31,7 @@ import org.hibernate.annotations.NaturalId;
 @MappedSuperclass
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @ToString(callSuper = true)
-public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
+public abstract class ChouetteIdentifiedObject extends ChouetteDatedObject implements
 		ObjectIdTypes {
 
 	/**
@@ -80,30 +80,6 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	@Column(name = "creator_id")
 	protected String creatorId;
  
-	/**
-	 * creation time
-	 * 
-	 * @param creationTime
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "created_at")
-	protected Date creationTime = new Date();
-
-	/**
-	 * update time
-	 * 
-	 * @param updateTime
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "updated_at")
-	protected Date updatedTime = new Date();
-
 	@Getter
 	@Setter
 	@Transient

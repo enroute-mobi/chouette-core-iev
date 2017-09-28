@@ -14,12 +14,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import mobi.chouette.model.ChouetteDatedObject;
 
 @Entity
-@Table(name = "compliance_check")
+@Table(name = "compliance_checks")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class ComplianceCheck {
+public class ComplianceCheck extends ChouetteDatedObject {
+
+	private static final long serialVersionUID = -6471679594238033395L;
+
 	// @formatter:off
 	/**
 	 * compliance_checks -> classe ComplianceCheck 
@@ -43,26 +47,37 @@ public class ComplianceCheck {
 
 	@Getter
 	@Setter
-	@SequenceGenerator(name = "compliances_id_seq", sequenceName = "compliances_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "compliances_id_seq")
+	@SequenceGenerator(name = "compliance_checks_id_seq", sequenceName = "compliance_checks_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "compliance_checks_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
 	@Getter
 	@Setter
+	@Column(name = "compliance_check_set_id")
+	private Long taskId;
+
+	@Getter
+	@Setter
+	@Column(name = "compliance_check_block_id")
+	private Long blockId;
+
+	@Getter
+	@Setter
+	@Column(name = "type", nullable = false)
+	protected String type; 
+
+	//control attribute json ?!!
+	//voir avec AF
+	
+	@Getter
+	@Setter
 	@Column(name = "name")
 	protected String name;
-
+	
 	@Getter
 	@Setter
-	@Id
-	@Column(name = "type", nullable = false)
-	protected Object type; // TODO : demander à AF !
-
-	@Getter
-	@Setter
-	@Id
 	@Column(name = "code", nullable = false)
 	protected String code; // TODO : demander à AF : code des cartes Redmine ou le code redéfini ; dans le second cas,
 							// demander le champs du code Redmine
@@ -75,8 +90,10 @@ public class ComplianceCheck {
 
 	@Getter
 	@Setter
-	@Id
 	@Column(name = "comment", nullable = false)
 	protected String comment;
+	
+	
+	
 
 }
