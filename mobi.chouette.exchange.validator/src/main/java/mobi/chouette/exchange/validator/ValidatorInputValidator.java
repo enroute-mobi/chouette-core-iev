@@ -2,7 +2,9 @@ package mobi.chouette.exchange.validator;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JSONUtil;
@@ -11,13 +13,19 @@ import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
+import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
+import mobi.chouette.exchange.validator.checkpoints.ControlParameters;
+import mobi.chouette.exchange.validator.checkpoints.GenericCheckpointParameters;
 import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
+import mobi.chouette.model.compliance.ComplianceCheck;
+import mobi.chouette.model.compliance.ComplianceCheck.CRITICITY;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
 
 @Log4j
 public class ValidatorInputValidator extends AbstractInputValidator {
 
+	private static final String ATTRIBUTE_NAME_KEY = "attribute_name";
 	private static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
 
 	@Override
@@ -130,11 +138,51 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
 			parameter.setOrganisationCode(organisation.getCode());
+			
+			// populate controlParameter
+			ControlParameters controlParameters = parameter.getControlParameters();
+			checkTask.getComplianceChecks().stream().forEach(check -> {
+				CheckpointParameters cp = buildCheckpoint(check);
+				// if check has a block, add check to transportModeCheckpoints map
+				if (check.getBlockId() != null)
+				{
+					// get key for mode/submode 
+				}
+				// else add to globalCheckPoints map
+				else
+				{
+					Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().get(cp.getCode());
+					if (list == null) 
+					{
+						list = new ArrayList<>();
+						controlParameters.getGlobalCheckPoints().put(cp.getCode(),list);
+					}
+					list.add(cp);
+				}
+			});
 
 			return parameter;
 		}
 
 		return null;
+	}
+
+	private CheckpointParameters buildCheckpoint(ComplianceCheck check) 
+	{
+		CheckpointParameters result = null;
+		if (check.getControlAttributes().containsKey(ATTRIBUTE_NAME_KEY))
+		{
+			GenericCheckpointParameters generic = new GenericCheckpointParameters();
+			result = generic;
+			generic.setAttributeName(check.getControlAttributes().get(ATTRIBUTE_NAME_KEY));
+			// TODO : manage a map between types and classes
+			generic.setClassName(check.getType());
+		}
+		result.setFirstValue(check.getControlAttributes().get("first_value"));
+		result.setSecondValue(check.getControlAttributes().get("last_value"));
+		result.setCode(check.getCode());
+		result.setErrorType(check.getCriticity().equals(CRITICITY.ERROR));
+		return result;
 	}
 
 }
