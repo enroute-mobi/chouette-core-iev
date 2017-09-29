@@ -47,7 +47,7 @@ else
 		opt_tables="${opt_tables} --table=${i}"
 	done
 	CMD="pg_dump --schema-only --format=plain --file=${output} ${opt_tables} --username=${user} --host=${host} --port=${port} ${database}"
-	echo "cmd=$CMD"
+	#echo "cmd=$CMD"
 	$CMD
 fi
 

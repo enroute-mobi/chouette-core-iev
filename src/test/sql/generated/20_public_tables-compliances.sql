@@ -68,7 +68,8 @@ CREATE TABLE compliance_check_resources (
     reference character varying,
     metrics shared_extensions.hstore,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    compliance_check_set_id integer
 );
 
 
@@ -151,7 +152,8 @@ CREATE TABLE compliance_checks (
     criticity integer,
     comment text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    origin_code character varying
 );
 
 
@@ -188,8 +190,7 @@ CREATE TABLE compliance_control_blocks (
     condition_attributes shared_extensions.hstore,
     compliance_control_set_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    compliance_control_id integer
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -267,7 +268,8 @@ CREATE TABLE compliance_controls (
     comment text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    origin_code character varying
+    origin_code character varying,
+    compliance_control_block_id integer
 );
 
 
@@ -407,6 +409,13 @@ CREATE INDEX index_compliance_check_blocks_on_compliance_check_set_id ON complia
 
 
 --
+-- Name: index_compliance_check_resources_on_compliance_check_set_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_compliance_check_resources_on_compliance_check_set_id ON compliance_check_resources USING btree (compliance_check_set_id);
+
+
+--
 -- Name: index_compliance_check_sets_on_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
 --
 
@@ -449,13 +458,6 @@ CREATE INDEX index_compliance_checks_on_compliance_check_set_id ON compliance_ch
 
 
 --
--- Name: index_compliance_control_blocks_on_compliance_control_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_compliance_control_blocks_on_compliance_control_id ON compliance_control_blocks USING btree (compliance_control_id);
-
-
---
 -- Name: index_compliance_control_blocks_on_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
 --
 
@@ -467,6 +469,13 @@ CREATE INDEX index_compliance_control_blocks_on_compliance_control_set_id ON com
 --
 
 CREATE INDEX index_compliance_control_sets_on_organisation_id ON compliance_control_sets USING btree (organisation_id);
+
+
+--
+-- Name: index_compliance_controls_on_compliance_control_block_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_compliance_controls_on_compliance_control_block_id ON compliance_controls USING btree (compliance_control_block_id);
 
 
 --
@@ -501,6 +510,14 @@ ALTER TABLE ONLY compliance_check_sets
 
 
 --
+-- Name: fk_rails_45cd323eca; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_check_resources
+    ADD CONSTRAINT fk_rails_45cd323eca FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
+
+
+--
 -- Name: fk_rails_7d7a89703f; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -517,6 +534,14 @@ ALTER TABLE ONLY compliance_control_sets
 
 
 --
+-- Name: fk_rails_c613154a10; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
+
+
+--
 -- Name: fk_rails_d227ba43d7; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -530,14 +555,6 @@ ALTER TABLE ONLY compliance_check_sets
 
 ALTER TABLE ONLY compliance_check_sets
     ADD CONSTRAINT fk_rails_d61509f1a9 FOREIGN KEY (workbench_id) REFERENCES workbenches(id);
-
-
---
--- Name: fk_rails_db69520893; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_control_blocks
-    ADD CONSTRAINT fk_rails_db69520893 FOREIGN KEY (compliance_control_id) REFERENCES compliance_controls(id);
 
 
 --

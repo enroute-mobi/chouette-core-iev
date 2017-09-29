@@ -3564,6 +3564,13 @@ ALTER TABLE ONLY access_links
     ADD CONSTRAINT aclk_acpt_fkey FOREIGN KEY (access_point_id) REFERENCES access_points(id);
 
 
+--
+-- Name: area_parent_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY stop_areas
+    ADD CONSTRAINT area_parent_fkey FOREIGN KEY (parent_id) REFERENCES stop_areas(id) ON DELETE SET NULL;
+
 
 --
 -- Name: arrival_point_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette

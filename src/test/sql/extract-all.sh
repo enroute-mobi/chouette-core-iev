@@ -36,17 +36,34 @@ do
  esac
 done
 
+flist=""
+outdir="generated"
+[ ! -e ${outdir} ] && mkdir ${outdir}
 while read line; do
 	echo "$line" | grep "^#" > /dev/null
 	if [ "$?" != "0" ] && [ "$line" != "" ];then
 		file=${line%% *}
+		flist="${flist} ${file}"
 		tables=${line#* }
-		./extract-sql-from-db.sh -t "${tables}" -o ${file} -p ${port} -d ${database} -u ${user} -h ${host}
+		${WORK_DIR}/extract-sql-from-db.sh -t "${tables}" -o ${outdir}/${file} -p ${port} -d ${database} -u ${user} -h ${host}
 	fi 
 done < tables-file.txt
 
 	
+for i in ${flist}; do
+	cat ${outdir}/$i |grep "CREATE TABLE"| sed "s/CREATE TABLE /DROP TABLE IF EXISTS /g" | sed "s/ (/ CASCADE;/g"
+done > ${outdir}/00_drop_all_tables.sql
 
+
+current=$(pwd)
+cd $outdir
+for sqlfile in ${flist}; do
+	${WORK_DIR}/split-constraints.sh "$sqlfile"
+done 
+
+cd $current
+
+${WORK_DIR}/update-sql-scripts.sh ${outdir}
 
 
 
