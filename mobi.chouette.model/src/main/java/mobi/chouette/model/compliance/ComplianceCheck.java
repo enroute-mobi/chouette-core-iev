@@ -1,6 +1,10 @@
 package mobi.chouette.model.compliance;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,11 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CollectionType;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.ChouetteDatedObject;
+import mobi.chouette.model.converter.HstoreConverter;
 
 @Entity
 @Table(name = "compliance_checks")
@@ -68,8 +75,12 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	@Column(name = "type", nullable = false)
 	protected String type; 
 
-	//control attribute json ?!!
-	//voir avec AF
+	@Getter
+	@Setter
+	@Column(name = "control_attributes")
+	@CollectionType(type = "java.util.HashMap")
+	@Convert(converter = HstoreConverter.class)
+	private Map<String, String> controlAttributes = new HashMap<String, String>();
 	
 	@Getter
 	@Setter
