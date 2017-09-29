@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,13 +19,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData.ACTION;
-import mobi.chouette.model.ActionTask;
+import mobi.chouette.model.BasicActionTask;
 
 @Entity
 @Table(name = "compliance_check_sets")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class ComplianceCheckTask extends ActionTask {
+public class ComplianceCheckTask extends BasicActionTask {
 
 	// @formatter:off
 		/**
@@ -66,12 +67,12 @@ public class ComplianceCheckTask extends ActionTask {
 
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "youpilélé", cascade = { CascadeType.PERSIST })
+	@OneToMany(mappedBy = "taskId", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	private List<ComplianceCheckBlock> complianceCheckBlocks = new ArrayList<ComplianceCheckBlock>(0);
-
+	//
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "youpilélé", cascade = { CascadeType.PERSIST })
+	@OneToMany(mappedBy = "taskId", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	private List<ComplianceCheck> complianceChecks = new ArrayList<ComplianceCheck>(0);
 
 }

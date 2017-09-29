@@ -121,8 +121,14 @@
 								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_without-constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_without-constraints.sql</srcFile>
 
+
+								<srcFile>${project.rootDir}/src/test/sql/FIX_DATABASE_MISTAKES.sql</srcFile>
+
 								<srcFile>${project.rootDir}/src/test/sql/50_referentiel-chouette_gui.sql</srcFile>
-								<srcFile>${project.rootDir}/src/test/sql/80_public_insert.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/80_public_insert_offer.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/80_public_insert_compliance-data-test.sql</srcFile>
+								
+								
 
 								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_constraints.sql</srcFile>

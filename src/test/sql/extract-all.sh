@@ -63,7 +63,7 @@ done
 
 cd $current
 
-${WORK_DIR}/update-sql-scripts.sh ${outdir}
+${WORK_DIR}/remove-row-security.sh ${outdir}
 
 
 

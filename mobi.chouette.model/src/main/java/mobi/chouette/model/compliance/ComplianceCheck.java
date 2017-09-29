@@ -89,7 +89,7 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	
 	@Getter
 	@Setter
-	@Column(name = "code", nullable = false)
+	@Column(name = "origin_code", nullable = false)
 	protected String code; // TODO : demander à AF : code des cartes Redmine ou le code redéfini ; dans le second cas,
 							// demander le champs du code Redmine
 

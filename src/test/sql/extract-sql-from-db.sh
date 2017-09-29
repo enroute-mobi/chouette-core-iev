@@ -7,14 +7,16 @@ database=chouette2
 user=chouette
 host=localhost
 port=5432
+datatype="--schema-only"
+
 
 
 function usage(){
-    echo "Usage `basename $0`  [-p port] [-d database] [-u user] [-t tables separated with space] [-o outputfile] [-h host]"
-    echo "  example: `basename $0`  -p 5433 -d chouette -u chouette -t 'compliances* referentiel' -o toto.sql -h localhost"
+    echo "Usage `basename $0`  [-p port] [-d database] [-u user] [-t tables separated with space] [-o outputfile] [-h host] -s [schema | data]"
+    echo "  example: `basename $0`  -p 5433 -d chouette -u chouette -t 'compliances* referentiel' -o toto.sql -h localhost -s "
 }
 
-while getopts p:d:u:t:o:h: option
+while getopts p:d:u:t:o:h:s: option
 do
  case $option in
   p)
@@ -35,6 +37,11 @@ do
   h)
    host=$OPTARG
    ;; 
+  s)
+   if [ "$OPTARG" == "data" ]; then
+	datatype="--data-only --inserts"
+   fi
+   ;; 
  esac
 done
 
@@ -46,8 +53,8 @@ else
 	for i in ${tables}; do
 		opt_tables="${opt_tables} --table=${i}"
 	done
-	CMD="pg_dump --schema-only --format=plain --file=${output} ${opt_tables} --username=${user} --host=${host} --port=${port} ${database}"
-	#echo "cmd=$CMD"
+	CMD="pg_dump ${datatype} --format=plain --file=${output} ${opt_tables} --username=${user} --host=${host} --port=${port} ${database}"
+	echo "cmd=$CMD"
 	$CMD
 fi
 
