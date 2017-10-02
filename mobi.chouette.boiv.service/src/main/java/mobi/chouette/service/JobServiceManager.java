@@ -25,9 +25,11 @@ import org.apache.commons.io.FileUtils;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.PropertyNames;
-import mobi.chouette.dao.ImportTaskDAO;
+import mobi.chouette.dao.ActionDAO;
 import mobi.chouette.dao.ReferentialDAO;
+import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.compliance.ComplianceCheckTask;
 import mobi.chouette.scheduler.Scheduler;
 import mobi.chouette.service.JobService.STATUS;
 
@@ -44,7 +46,7 @@ public class JobServiceManager {
 	ReferentialDAO referentialDAO;
 
 	@EJB
-	ImportTaskDAO importTaskDAO;
+	ActionDAO actionDAO;
 
 	@EJB
 	JobServiceManager jobServiceManager;
@@ -110,6 +112,8 @@ public class JobServiceManager {
 		// Instancier le modèle du service 'upload'
 		if (action.equals(JobData.ACTION.importer.name())) {
 			return createImportJob(id);
+		} else if (action.equals(JobData.ACTION.validator.name())) {
+			return createValidatorJob(id);
 		} else {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, action);
 		}
@@ -120,7 +124,7 @@ public class JobServiceManager {
 		ImportTask importTask = null;
 		try {
 			// Instancier le modèle du service 'upload'
-			importTask = importTaskDAO.find(id);
+			importTask = (ImportTask) actionDAO.find(JobData.ACTION.importer, id);
 			if (importTask == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
@@ -156,7 +160,7 @@ public class JobServiceManager {
 
 			jobService.setStatus(JobService.STATUS.PENDING);
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
-			importTaskDAO.update(importTask);
+			actionDAO.update(importTask);
 			return jobService;
 
 		} catch (RequestServiceException ex) {
@@ -164,9 +168,10 @@ public class JobServiceManager {
 			if (importTask != null) {
 				try {
 					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					importTaskDAO.update(importTask);
+					actionDAO.update(importTask);
 				} catch (Exception e) {
-					log.error("cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
+					log.error(
+							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
 				}
 			}
 			throw ex;
@@ -175,9 +180,10 @@ public class JobServiceManager {
 			if (importTask != null) {
 				try {
 					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					importTaskDAO.update(importTask);
+					actionDAO.update(importTask);
 				} catch (Exception e) {
-					log.error("cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
+					log.error(
+							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
 				}
 			}
 			throw ex;
@@ -186,9 +192,77 @@ public class JobServiceManager {
 			if (importTask != null) {
 				try {
 					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					importTaskDAO.update(importTask);
+					actionDAO.update(importTask);
 				} catch (Exception e) {
-					log.error("cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
+					log.error(
+							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
+				}
+			}
+			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
+		}
+
+	}
+
+	private JobService createValidatorJob(Long id) throws ServiceException {
+		ActionTask task = null;
+		try {
+			// Instancier le modèle du service 'upload'
+			task =  actionDAO.find(JobData.ACTION.validator, id);
+			if (task == null) {
+				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown validator id " + id);
+			}
+			if (!task.getStatus().equals(JobService.STATUS.NEW.name().toLowerCase())) {
+				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
+			}
+			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, task);
+
+			log.info("job " + jobService.getId() + " found for validator ");
+			// mkdir
+			if (Files.exists(jobService.getPath())) {
+				// réutilisation anormale d'un id de job (réinitialisation de la
+				// séquence à l'extérieur de l'appli?)
+				FileUtils.deleteDirectory(jobService.getPath().toFile());
+			}
+			Files.createDirectories(jobService.getPath());
+
+			jobService.setStatus(JobService.STATUS.PENDING);
+			task.setStatus(jobService.getStatus().name().toLowerCase());
+			actionDAO.update(task);
+			return jobService;
+
+		} catch (RequestServiceException ex) {
+			log.info("fail to create validator job " + ex.getMessage());
+			if (task != null) {
+				try {
+					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+					actionDAO.update(task);
+				} catch (Exception e) {
+					log.error(
+							"cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
+				}
+			}
+			throw ex;
+		} catch (ServiceException ex) {
+			log.info("invalid validator job data" + ex.getMessage());
+			if (task != null) {
+				try {
+					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+					actionDAO.update(task);
+				} catch (Exception e) {
+					log.error(
+							"cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
+				}
+			}
+			throw ex;
+		} catch (Exception ex) {
+			log.info("fail to create validator job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
+			if (task != null) {
+				try {
+					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+					actionDAO.update(task);
+				} catch (Exception e) {
+					log.error(
+							"cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
 				}
 			}
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
@@ -205,14 +279,14 @@ public class JobServiceManager {
 	 */
 	public JobService getNextJob() {
 
-		List<ImportTask> pendingImportTasks = importTaskDAO.getTasks(JobService.STATUS.PENDING.name().toLowerCase());
-		List<ImportTask> startedImportTasks = importTaskDAO.getTasks(JobService.STATUS.RUNNING.name().toLowerCase());
+		List<ActionTask> pendingTasks = actionDAO.getTasks(JobService.STATUS.PENDING.name().toLowerCase());
+		List<ActionTask> startedTasks = actionDAO.getTasks(JobService.STATUS.RUNNING.name().toLowerCase());
 
 		Set<Long> refIds = new HashSet<>();
-		for (ImportTask task : startedImportTasks) {
+		for (ActionTask task : startedTasks) {
 			refIds.add(task.getReferential().getId());
 		}
-		for (ImportTask task : pendingImportTasks) {
+		for (ActionTask task : pendingTasks) {
 			if (refIds.contains(task.getReferential().getId()))
 				continue;
 			JobService js = null;
@@ -233,51 +307,47 @@ public class JobServiceManager {
 		jobService.setUpdatedAt(new Date());
 		jobService.setStartedAt(new Date());
 		if (jobService.getAction().equals(JobData.ACTION.importer)) {
-			ImportTask importTask = importTaskDAO.find(jobService.getId());
+			ImportTask importTask = (ImportTask) actionDAO.find(JobData.ACTION.importer, jobService.getId());
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
 			importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 			importTask.setStartedAt(new Timestamp(jobService.getStartedAt().getTime()));
 			importTask.setCurrentStepId("Initialization");
 			importTask.setCurrentStepProgress(0.);
-			importTaskDAO.update(importTask);
+			actionDAO.update(importTask);
 		}
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public JobService cancel(String action, Long id) throws ServiceException {
 
-		// Instancier le modèle du service 'upload'
-		if (action.equals(JobData.ACTION.importer.name())) {
-			return cancelImport(id);
-		} else {
+		JobData.ACTION jobAction = null;
+		try {
+			jobAction = JobData.ACTION.valueOf(action);
+		} catch (Exception ex) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, action);
 		}
-	}
-
-	private JobService cancelImport(Long id) throws ServiceException {
 		try {
-			// Instancier le modèle du service 'upload'
-			ImportTask importTask = importTaskDAO.find(id);
-			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
+			ActionTask actionTask = actionDAO.find(jobAction, id);
+			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, actionTask);
 			// Enregistrer le jobService pour obtenir un id
 
-			log.info("job " + jobService.getId() + " found for import ");
+			log.info("job " + jobService.getId() + " found for " + action);
 			if (jobService.getStatus().equals(JobService.STATUS.PENDING)
 					|| jobService.getStatus().equals(JobService.STATUS.RUNNING)) {
 				jobService.setUpdatedAt(new Date());
 				jobService.setStatus(JobService.STATUS.CANCELLED);
-				importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
-				importTask.setStatus(jobService.getStatus().name().toLowerCase());
-				importTaskDAO.update(importTask);
+				actionTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
+				actionTask.setStatus(jobService.getStatus().name().toLowerCase());
+				actionDAO.update(actionTask);
 				// TODO clean directory
 			}
 			return jobService;
 
 		} catch (RequestServiceException ex) {
-			log.info("fail to cancel import job " + ex.getMessage());
+			log.info("fail to cancel " + action + " job " + ex.getMessage());
 			throw ex;
 		} catch (Exception ex) {
-			log.info("fail to cancel import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName());
+			log.info("fail to cancel " + action + " job " + id + " " + ex.getMessage() + " " + ex.getClass().getName());
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
@@ -288,39 +358,38 @@ public class JobServiceManager {
 		jobService.setStatus(status);
 		jobService.setUpdatedAt(new Date());
 		jobService.setEndedAt(new Date());
-		if (jobService.getAction().equals(JobData.ACTION.importer)) {
-			updateImportTask(jobService);
-		}
+		updateTask(jobService);
+
 		// TODO delete directory
 
 		// TODO send termination to BOIV
 
 	}
 
-	private void updateImportTask(JobService jobService) {
+	private void updateTask(JobService jobService) {
 		if (jobService.getId() == null) {
 			log.error("null id for jobService");
 			throw new NullPointerException("null id for jobService");
 		}
-		if (importTaskDAO == null) {
-			log.error("importTaskDAO is null");
-			throw new NullPointerException("null importTaskDAO");
+		if (actionDAO == null) {
+			log.error("actionDAO is null");
+			throw new NullPointerException("null actionDAO");
 		}
 
-		ImportTask importTask = importTaskDAO.find(jobService.getId());
-		if (importTask == null) {
-			log.error("null importTask for jobService id = " + jobService.getId());
-			throw new NullPointerException("null importTask for jobService");
+		ActionTask actionTask = actionDAO.find(JobData.ACTION.importer, jobService.getId());
+		if (actionTask == null) {
+			log.error("null " + jobService.getAction() + " task for jobService id = " + jobService.getId());
+			throw new NullPointerException("null " + jobService.getAction() + " Task for jobService");
 		}
-		importTask.setStatus(jobService.getStatus().name().toLowerCase());
+		actionTask.setStatus(jobService.getStatus().name().toLowerCase());
 		if (jobService.getStatus() == null) {
 			log.error("null status for jobService");
 			throw new NullPointerException("null status for jobService");
 		}
-		importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
+		actionTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 		if (jobService.getEndedAt() != null)
-			importTask.setEndedAt(new Timestamp(jobService.getEndedAt().getTime()));
-		importTaskDAO.update(importTask);
+			actionTask.setEndedAt(new Timestamp(jobService.getEndedAt().getTime()));
+		actionDAO.update(actionTask);
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -328,9 +397,8 @@ public class JobServiceManager {
 
 		jobService.setStatus(JobService.STATUS.ABORTED);
 		jobService.setUpdatedAt(new Date());
-		if (jobService.getAction().equals(JobData.ACTION.importer)) {
-			updateImportTask(jobService);
-		}
+		updateTask(jobService);
+
 		// TODO delete directory
 
 		// TODO send termination to BOIV
@@ -339,16 +407,16 @@ public class JobServiceManager {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public List<JobService> findAll(STATUS status) {
 		List<JobService> jobs = new ArrayList<>();
-		List<ImportTask> importTasks = importTaskDAO.getTasks(status.name().toLowerCase());
-		for (ImportTask importTask : importTasks) {
+		List<ActionTask> actionTasks = actionDAO.getTasks(status.name().toLowerCase());
+		for (ActionTask actionTask : actionTasks) {
 
 			try {
-				JobService job = new JobService(APPLICATION_NAME, rootDirectory, importTask);
+				JobService job = new JobService(APPLICATION_NAME, rootDirectory, actionTask);
 				jobs.add(job);
 			} catch (ServiceException e) {
-				log.error("fail to manage import task " + importTask);
+				log.error("fail to manage task " + actionTask);
 			} catch (Exception e) {
-				log.error("fail to manage import task " + importTask, e);
+				log.error("fail to manage task " + actionTask, e);
 			}
 		}
 		return jobs;
