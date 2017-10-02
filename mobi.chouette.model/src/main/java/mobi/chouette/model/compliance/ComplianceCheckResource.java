@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -56,7 +57,7 @@ public class ComplianceCheckResource extends ActionResource {
 
 	@Getter
 	@Setter
-	@Column(name = "check_id")
+	@Column(name = "compliance_check_set_id")
 	private Long taskId;
 
 	@Getter

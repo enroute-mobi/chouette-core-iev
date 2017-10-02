@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import mobi.chouette.model.ActionMessage;
 import mobi.chouette.model.ActionResource;
 import mobi.chouette.model.ImportMessage;
+import mobi.chouette.model.compliance.ComplianceCheckMessage;
 
 @Stateless  (name="ActionMessageDAO")
 public class ActionMessageDAOImpl implements ActionMessageDAO {
@@ -24,6 +25,7 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 //			resource = new ExportResource(job.getId());
 			break;
 		case validator:
+			message  = new ComplianceCheckMessage(resource.getTaskId(),resource.getId());
 //			resource = new ValidationResource(job.getId());
 			break;
 		}
