@@ -11,7 +11,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import mobi.chouette.model.ImportTask;
 import mobi.chouette.model.ImportTask_;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
 
@@ -26,15 +25,15 @@ public class ComplianceCheckTaskDAOImpl extends GenericDAOImpl<ComplianceCheckTa
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}
-	
-	
-	public List<ComplianceCheckTask> getTasks(String status)
-	{
+
+	@Override
+	public List<ComplianceCheckTask> getTasks(String status) {
 		List<ComplianceCheckTask> result = null;
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<ComplianceCheckTask> criteria = builder.createQuery(type);
 		Root<ComplianceCheckTask> root = criteria.from(type);
-		Predicate predicate = builder.and(builder.isNotNull(root.get(ImportTask_.referential)),builder.equal(root.get(ImportTask_.status), status));
+		Predicate predicate = builder.and(builder.isNotNull(root.get(ImportTask_.referential)),
+				builder.equal(root.get(ImportTask_.status), status));
 		criteria.where(predicate);
 		criteria.orderBy(builder.asc(root.get(ImportTask_.createdAt)));
 		TypedQuery<ComplianceCheckTask> query = em.createQuery(criteria);

@@ -18,23 +18,26 @@ public class ActionDAOImpl implements ActionDAO {
 	@EJB
 	ImportTaskDAO importTaskDAO;
 
+	@EJB
+	ComplianceCheckTaskDAO complianceCheckTaskDAO;
+
 	// @EJB
 	// ExportTaskDAO exportTaskDAO;
 	//
-	@EJB
-	ComplianceCheckTaskDAO complianceCheckTaskDAO;
 
 	public ActionTask getTask(JobData job) {
 		ActionTask task = null;
 		switch (job.getAction()) {
 		case importer:
+			ComplianceCheckTask vTask = (ComplianceCheckTask) task;
+			complianceCheckTaskDAO.update(vTask);
 			task = importTaskDAO.find(job.getId());
 			break;
 		case exporter:
 			// task = exportTaskDAO.find(job.getId());
 			break;
 		case validator:
-			// task = validationTaskDAO.find(job.getId());
+			task = complianceCheckTaskDAO.find(job.getId());
 			break;
 		}
 		return task;
@@ -49,6 +52,8 @@ public class ActionDAOImpl implements ActionDAO {
 			importTaskDAO.update(iTask);
 			break;
 		case validator:
+			ComplianceCheckTask vTask = (ComplianceCheckTask) task;
+			complianceCheckTaskDAO.update(vTask);
 			break;
 
 		}
@@ -85,13 +90,12 @@ public class ActionDAOImpl implements ActionDAO {
 
 	@Override
 	public List<ActionTask> getTasks(String status) {
-        List<ActionTask> result = new ArrayList<>();
-        result.addAll(importTaskDAO.getTasks(status));
-        // result.addAll(complianceCheckTaskDAO.getTasks(status));
-        // result.addAll(publicationTaskDAO.getTasks(status));
-        
-        result.sort(new Comparator<ActionTask>() 
-        {
+		List<ActionTask> result = new ArrayList<>();
+		result.addAll(importTaskDAO.getTasks(status));
+		result.addAll(complianceCheckTaskDAO.getTasks(status));
+		// result.addAll(publicationTaskDAO.getTasks(status));
+
+		result.sort(new Comparator<ActionTask>() {
 			@Override
 			public int compare(ActionTask o1, ActionTask o2) {
 				return o1.getCreatedAt().compareTo(o2.getCreatedAt());
