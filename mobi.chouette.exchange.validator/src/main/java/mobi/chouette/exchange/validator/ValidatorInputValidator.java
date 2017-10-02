@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JSONUtil;
@@ -20,13 +22,18 @@ import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.compliance.ComplianceCheck;
 import mobi.chouette.model.compliance.ComplianceCheck.CRITICITY;
+import mobi.chouette.model.compliance.ComplianceCheckBlock;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
 
 @Log4j
 public class ValidatorInputValidator extends AbstractInputValidator {
 
-	private static final String ATTRIBUTE_NAME_KEY = "attribute_name";
-	private static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
+	protected static final String TRANSPORT_MODE_KEY = "transport_mode";
+	protected static final String TRANSPORT_SUBMODE_KEY = "transport_sub_mode";
+	protected static final String SECOND_VALUE_KEY = "second_value";
+	protected static final String FIRST_VALUE_KEY = "first_value";
+	protected static final String ATTRIBUTE_NAME_KEY = "attribute_name";
+	protected static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
 
 	@Override
 	public AbstractParameter toActionParameter(String abstractParameter) {
@@ -111,10 +118,11 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
-		// TODO : convertir task en ComplianceeCheckTask
+		// TODO : convertir task en ComplianceCheckTask
 		// puis s'en servir pour créer et habiller un ValidateParameter
 		// le ValidateParameter est à retourner par cette fonction
-		// voir NetexStifImporterInputValidator comme exemple au moins sur les éléménts communs (AbstactParameter et
+		// voir NetexStifImporterInputValidator comme exemple au moins sur les
+		// éléménts communs (AbstactParameter et
 		// ActionTask)
 
 		if (task instanceof ComplianceCheckTask) {
@@ -123,7 +131,8 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			Organisation organisation = referential.getOrganisation();
 			ValidateParameters parameter = new ValidateParameters();
 
-			// TODO : Didier ===> développement en cours !...Non fonctionnnel !!!!!!!!!!!!!!!!
+			// TODO : Didier ===> développement en cours !...Non fonctionnnel
+			// !!!!!!!!!!!!!!!!
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
@@ -138,24 +147,39 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
 			parameter.setOrganisationCode(organisation.getCode());
-			
+
 			// populate controlParameter
 			ControlParameters controlParameters = parameter.getControlParameters();
 			checkTask.getComplianceChecks().stream().forEach(check -> {
 				CheckpointParameters cp = buildCheckpoint(check);
-				// if check has a block, add check to transportModeCheckpoints map
-				if (check.getBlockId() != null)
-				{
-					// get key for mode/submode 
+				// if check has a block, add check to transportModeCheckpoints
+				// map
+				if (check.getBlock() != null) {
+					// get key for mode/submode
+					ComplianceCheckBlock block = check.getBlock();
+					String key = block.getConditionAttributes().get(TRANSPORT_MODE_KEY);
+					if (block.getConditionAttributes().containsKey(TRANSPORT_SUBMODE_KEY)) {
+						key += "/" + block.getConditionAttributes().get(TRANSPORT_SUBMODE_KEY);
+					}
+					Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints()
+							.get(key);
+					if (map == null) {
+						map = new HashMap<>();
+						controlParameters.getTransportModeCheckpoints().put(key, map);
+					}
+					Collection<CheckpointParameters> list = map.get(cp.getCode());
+					if (list == null) {
+						list = new ArrayList<>();
+						map.put(cp.getCode(), list);
+					}
+					list.add(cp);
 				}
 				// else add to globalCheckPoints map
-				else
-				{
+				else {
 					Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().get(cp.getCode());
-					if (list == null) 
-					{
+					if (list == null) {
 						list = new ArrayList<>();
-						controlParameters.getGlobalCheckPoints().put(cp.getCode(),list);
+						controlParameters.getGlobalCheckPoints().put(cp.getCode(), list);
 					}
 					list.add(cp);
 				}
@@ -167,19 +191,19 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		return null;
 	}
 
-	private CheckpointParameters buildCheckpoint(ComplianceCheck check) 
-	{
+	private CheckpointParameters buildCheckpoint(ComplianceCheck check) {
 		CheckpointParameters result = null;
-		if (check.getControlAttributes().containsKey(ATTRIBUTE_NAME_KEY))
-		{
+		if (check.getControlAttributes().containsKey(ATTRIBUTE_NAME_KEY)) {
 			GenericCheckpointParameters generic = new GenericCheckpointParameters();
 			result = generic;
 			generic.setAttributeName(check.getControlAttributes().get(ATTRIBUTE_NAME_KEY));
 			// TODO : manage a map between types and classes
 			generic.setClassName(check.getType());
+		} else {
+			result = new CheckpointParameters();
 		}
-		result.setFirstValue(check.getControlAttributes().get("first_value"));
-		result.setSecondValue(check.getControlAttributes().get("last_value"));
+		result.setFirstValue(check.getControlAttributes().get(FIRST_VALUE_KEY));
+		result.setSecondValue(check.getControlAttributes().get(SECOND_VALUE_KEY));
 		result.setCode(check.getCode());
 		result.setErrorType(check.getCriticity().equals(CRITICITY.ERROR));
 		return result;
