@@ -62,7 +62,7 @@ public class ComplianceCheckDaoTest extends Arquillian {
 		try {
 			utx.begin();
 			em.joinTransaction();
-			ComplianceCheck cc = complianceCheckDAO.findByCode("3-NETEX-8");
+			ComplianceCheck cc = complianceCheckDAO.find(1L);
 			Assert.assertEquals( cc.getCode(), "3-NETEX-8");
 			Assert.assertEquals( cc.getCriticity(), CRITICITY.ERROR);
 			Assert.assertEquals( cc.getComment(), "my comment");

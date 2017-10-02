@@ -24,16 +24,4 @@ public class ComplianceCheckDAOImpl extends GenericDAOImpl<ComplianceCheck> impl
 		this.em = em;
 	}
 
-	public ComplianceCheck findByCode(final String code) {
-		ComplianceCheck result = null;
-
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<ComplianceCheck> criteria = builder.createQuery(type);
-		Root<ComplianceCheck> root = criteria.from(type);
-		Predicate predicate = builder.in(root.get(ComplianceCheck_.code)).value(code);
-		criteria.where(predicate);
-		TypedQuery<ComplianceCheck> query = em.createQuery(criteria);
-		result = query.getSingleResult();
-		return result;
-	}
 }
