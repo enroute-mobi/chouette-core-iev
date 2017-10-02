@@ -8,9 +8,12 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,7 +29,7 @@ import mobi.chouette.model.converter.HstoreConverter;
 @Entity
 @Table(name = "compliance_checks")
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = { "task", "block" })
 public class ComplianceCheck extends ChouetteDatedObject {
 
 	private static final long serialVersionUID = -6471679594238033395L;
@@ -62,18 +65,20 @@ public class ComplianceCheck extends ChouetteDatedObject {
 
 	@Getter
 	@Setter
-	@Column(name = "compliance_check_set_id")
-	private Long taskId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "compliance_check_set_id")
+	private ComplianceCheckTask task;
 
 	@Getter
 	@Setter
-	@Column(name = "compliance_check_block_id")
-	private Long blockId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "compliance_check_block_id")
+	private ComplianceCheckBlock block;
 
 	@Getter
 	@Setter
 	@Column(name = "type", nullable = false)
-	protected String type; 
+	protected String type;
 
 	@Getter
 	@Setter
@@ -81,12 +86,12 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	@CollectionType(type = "java.util.HashMap")
 	@Convert(converter = HstoreConverter.class)
 	private Map<String, String> controlAttributes = new HashMap<String, String>();
-	
+
 	@Getter
 	@Setter
 	@Column(name = "name")
 	protected String name;
-	
+
 	@Getter
 	@Setter
 	@Column(name = "origin_code", nullable = false)
@@ -103,8 +108,5 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	@Setter
 	@Column(name = "comment", nullable = false)
 	protected String comment;
-	
-	
-	
 
 }

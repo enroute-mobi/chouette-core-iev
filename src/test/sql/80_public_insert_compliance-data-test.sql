@@ -25,14 +25,14 @@ SET search_path = public, pg_catalog;
 -- Data for Name: compliance_check_sets; Type: TABLE DATA; Schema: public; Owner: chouette
 --
 
-INSERT INTO compliance_check_sets VALUES (1, 1, NULL, 1, 'raoul', 'YOUPIIII', NULL, NULL, '2017-09-29 00:00:00', '2017-09-29 00:00:00');
+INSERT INTO compliance_check_sets VALUES (1, 1, NULL, 1, 'zeus', 'OKAY', NULL, NULL, '2017-09-29 00:00:00', '2017-09-29 00:00:00', '2017-09-29 00:00:00', '2017-09-29 00:00:01', '8', 52, 'name0');
 
 
 --
 -- Data for Name: compliance_check_blocks; Type: TABLE DATA; Schema: public; Owner: chouette
 --
 
-INSERT INTO compliance_check_blocks VALUES (1, 'mon check block à moi', '"toto"=>"titi"', 1, '2017-09-29 23:09:00', '2017-09-29 23:09:00');
+INSERT INTO compliance_check_blocks VALUES (1, 'my_checkblock_00', '"la_vie"=>"est_belle"', 1, '2017-09-29 23:09:00', '2017-09-29 23:09:00');
 
 
 --
@@ -79,7 +79,7 @@ SELECT pg_catalog.setval('compliance_check_sets_id_seq', 1, false);
 -- Data for Name: compliance_checks; Type: TABLE DATA; Schema: public; Owner: chouette
 --
 
-INSERT INTO compliance_checks VALUES (1, 1, 1, NULL, 'blip', 'mon code', 1, 'my comment', '2017-09-29 23:23:45', '2017-09-29 23:23:45', '3-NETEX-8', '"toto"=>"titi"');
+INSERT INTO compliance_checks VALUES (1, 1, 1, NULL, 'blip', 'mon code', 1, 'my comment', '2017-09-29 23:23:45', '2017-09-29 23:23:45', '3-NETEX-8', '"rien_ne_sert"=>"de_courir"');
 
 
 --

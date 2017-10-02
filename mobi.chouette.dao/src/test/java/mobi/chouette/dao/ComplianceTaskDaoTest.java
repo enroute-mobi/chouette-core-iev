@@ -66,17 +66,18 @@ public class ComplianceTaskDaoTest extends Arquillian {
 			ComplianceCheckTask cct = complianceCheckTaskDAO.find(1L);
 
 			Assert.assertEquals(new Long(1L), cct.getId());
-			Assert.assertEquals("YOUPIIII", cct.getStatus());
+			Assert.assertEquals("OKAY", cct.getStatus());
+			Assert.assertEquals("name0", cct.getName());
+			Assert.assertEquals("8", cct.getCurrentStepId());
+			Assert.assertEquals(52d, cct.getCurrentStepProgress());
 			Assert.assertEquals(new Long(1L), cct.getWorkbenchId());
 
 			ComplianceCheckBlock ccb = cct.getComplianceCheckBlocks().get(0);
-			
-			Assert.assertEquals("toto => titi", ccb.getConditionAttributes().keySet().stream().map( x -> x + " => " + ccb.getConditionAttributes().get(x)).collect(Collectors.joining(", ")
-					));
-		
+
+			Assert.assertEquals("la_vie => est_belle", ccb.getConditionAttributes().keySet().stream()
+					.map(x -> x + " => " + ccb.getConditionAttributes().get(x)).collect(Collectors.joining(", ")));
 
 			ComplianceCheck cc = cct.getComplianceChecks().get(0);
-
 
 			Assert.assertEquals("3-NETEX-8", cc.getCode());
 

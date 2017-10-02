@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData.ACTION;
-import mobi.chouette.model.BasicActionTask;
+import mobi.chouette.model.ActionTask;
 
 @Entity
 @Table(name = "compliance_check_sets")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class ComplianceCheckTask extends BasicActionTask {
+public class ComplianceCheckTask extends ActionTask {
 
 	// @formatter:off
 		/**
@@ -67,12 +67,12 @@ public class ComplianceCheckTask extends BasicActionTask {
 
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "taskId", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "task", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	private List<ComplianceCheckBlock> complianceCheckBlocks = new ArrayList<ComplianceCheckBlock>(0);
 	//
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "taskId", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "task", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	private List<ComplianceCheck> complianceChecks = new ArrayList<ComplianceCheck>(0);
 
 }

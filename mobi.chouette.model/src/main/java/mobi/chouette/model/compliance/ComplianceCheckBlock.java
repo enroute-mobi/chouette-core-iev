@@ -6,9 +6,12 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -24,7 +27,7 @@ import mobi.chouette.model.converter.HstoreConverter;
 @Entity
 @Table(name = "compliance_check_blocks")
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = { "task" })
 public class ComplianceCheckBlock extends ChouetteDatedObject {
 
 	/**
@@ -47,8 +50,6 @@ public class ComplianceCheckBlock extends ChouetteDatedObject {
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
-	
-	
 
 	@Getter
 	@Setter
@@ -57,15 +58,16 @@ public class ComplianceCheckBlock extends ChouetteDatedObject {
 	@Convert(converter = HstoreConverter.class)
 	private Map<String, String> conditionAttributes = new HashMap<String, String>();
 	// TODO: voir avec AF pour cohérence avec le type de condition_attributes dans les autres tables...(!)
-	
 
 	@Getter
 	@Setter
-	@Column(name = "compliance_check_set_id")
-	private Long taskId;
-	
-	
-	
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "compliance_check_set_id")
+	private ComplianceCheckTask task;
+
+	@Getter
+	@Setter
+	@Column(name = "name", nullable = false)
+	private String name;
 
 }
