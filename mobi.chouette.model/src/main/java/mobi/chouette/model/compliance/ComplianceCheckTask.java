@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -64,6 +65,12 @@ public class ComplianceCheckTask extends ActionTask {
 	public ACTION getAction() {
 		return ACTION.validator;
 	}
+
+	// used by service module 
+	@Getter
+	@Setter
+	@Transient
+	private String format = null;	
 
 	@Getter
 	@Setter

@@ -4,9 +4,6 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
 import org.apache.log4j.BasicConfigurator;
 import org.testng.Assert;
 import org.testng.annotations.Test;

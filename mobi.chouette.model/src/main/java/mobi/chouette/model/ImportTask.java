@@ -35,7 +35,7 @@ public class ImportTask extends ActionTask {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 	
-	
+	// used by service module 
 	@Getter
 	@Setter
 	@Transient

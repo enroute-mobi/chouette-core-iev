@@ -26,6 +26,8 @@ public abstract class ActionTask implements Serializable {
 	public abstract Long getId();
 
 	public abstract JobData.ACTION getAction();
+	
+	public abstract String getFormat();
 
 	@Getter
 	@Setter

@@ -27,21 +27,16 @@ public class ActionDAOImpl implements ActionDAO {
 
 	@Override
 	public ActionTask getTask(JobData job) {
-		ActionTask task = null;
 		switch (job.getAction()) {
 		case importer:
-			ComplianceCheckTask vTask = (ComplianceCheckTask) task;
-			complianceCheckTaskDAO.update(vTask);
-			task = importTaskDAO.find(job.getId());
-			break;
+			return importTaskDAO.find(job.getId());
 		case exporter:
-			// task = exportTaskDAO.find(job.getId());
+			// return exportTaskDAO.find(job.getId());
 			break;
 		case validator:
-			task = complianceCheckTaskDAO.find(job.getId());
-			break;
+			return complianceCheckTaskDAO.find(job.getId());
 		}
-		return task;
+		return null;
 	}
 
 	@Override

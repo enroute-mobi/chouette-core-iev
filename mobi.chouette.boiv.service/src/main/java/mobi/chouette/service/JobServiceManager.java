@@ -29,7 +29,6 @@ import mobi.chouette.dao.ActionDAO;
 import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.ImportTask;
-import mobi.chouette.model.compliance.ComplianceCheckTask;
 import mobi.chouette.scheduler.Scheduler;
 import mobi.chouette.service.JobService.STATUS;
 
@@ -207,7 +206,7 @@ public class JobServiceManager {
 		ActionTask task = null;
 		try {
 			// Instancier le modèle du service 'upload'
-			task =  actionDAO.find(JobData.ACTION.validator, id);
+			task = actionDAO.find(JobData.ACTION.validator, id);
 			if (task == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown validator id " + id);
 			}
@@ -237,8 +236,7 @@ public class JobServiceManager {
 					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
 					actionDAO.update(task);
 				} catch (Exception e) {
-					log.error(
-							"cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
+					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
 				}
 			}
 			throw ex;
@@ -249,8 +247,7 @@ public class JobServiceManager {
 					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
 					actionDAO.update(task);
 				} catch (Exception e) {
-					log.error(
-							"cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
+					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
 				}
 			}
 			throw ex;
@@ -261,8 +258,7 @@ public class JobServiceManager {
 					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
 					actionDAO.update(task);
 				} catch (Exception e) {
-					log.error(
-							"cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
+					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
 				}
 			}
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
@@ -306,15 +302,13 @@ public class JobServiceManager {
 		jobService.setStatus(JobService.STATUS.RUNNING);
 		jobService.setUpdatedAt(new Date());
 		jobService.setStartedAt(new Date());
-		if (jobService.getAction().equals(JobData.ACTION.importer)) {
-			ImportTask importTask = (ImportTask) actionDAO.find(JobData.ACTION.importer, jobService.getId());
-			importTask.setStatus(jobService.getStatus().name().toLowerCase());
-			importTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
-			importTask.setStartedAt(new Timestamp(jobService.getStartedAt().getTime()));
-			importTask.setCurrentStepId("Initialization");
-			importTask.setCurrentStepProgress(0.);
-			actionDAO.update(importTask);
-		}
+		ActionTask task = actionDAO.find(jobService.getAction(), jobService.getId());
+		task.setStatus(jobService.getStatus().name().toLowerCase());
+		task.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
+		task.setStartedAt(new Timestamp(jobService.getStartedAt().getTime()));
+		task.setCurrentStepId("Initialization");
+		task.setCurrentStepProgress(0.);
+		actionDAO.update(task);
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

@@ -7,21 +7,20 @@
  */
 package mobi.chouette.model;
 
-import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.NaturalId;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.util.ObjectIdTypes;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.NaturalId;
 
 /**
  * Abstract object used for all Identified Chouette Object

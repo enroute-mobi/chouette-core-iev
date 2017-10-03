@@ -16,4 +16,9 @@ public class DummyActionTask extends ActionTask  {
 		return ACTION.importer;
 	}
 
+	@Override
+	public String getFormat() {
+		return null;
+	}
+
 }
