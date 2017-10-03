@@ -225,7 +225,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 			validator = new LineValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, firstParam, secondParam);
+			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, firstParam, secondParam, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
 			String transportMode = line.getTransportModeName();

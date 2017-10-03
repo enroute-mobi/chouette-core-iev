@@ -27,12 +27,12 @@ public class ValidatorInputValidatorTests {
 	private static final String[] blockModes = { "bus", "bus/schoolBus", "rail", "rail/suburbanRailway" };
 	// origin_code/criticity/(attributes)/(type)
 	// attributes : key=value,...
-	private static final String[] checksForBlock = { "3-VehicleJourney-1/warning/first_value=5/VehicleJourney",
-			"3-VehicleJourney-2/warning/first_value=5,last_value=50/VehicleJourney",
-			"3-VehicleJourney-3/warning/first_value=10/VehicleJourney",
-			"3-Generique-1/warning/attribute_name=name,first_value=^[a-zA-Z ]+$/Route",
-			"3-Generique-2/warning/attribute_name=number,first_value=1,last_value=30000/VehicleJourney",
-			"3-Generique-3/warning/attribute_name=number/VehicleJourney" };
+	private static final String[] checksForBlock = { "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
+			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
+			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney",
+			"3-Generique-1/warning/target=route#name,pattern=^[a-zA-Z ]+$/Route",
+			"3-Generique-2/warning/target=vehicle_journey#number,minimum=1,maximum=30000/VehicleJourney",
+			"3-Generique-3/warning/target=vehicle_journey#numbernumber/VehicleJourney" };
 
 	private static final String[] checks = { "3-JourneyPattern-1/warning//JourneyPattern",
 			"3-JourneyPattern-2/warning//JourneyPattern", "3-Line-1/warning//Line", "3-Route-1/warning//Route",

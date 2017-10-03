@@ -114,7 +114,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 				previous = vjs;
 			}
 		});
-		String tmp = parameters.getFirstValue();
+		String tmp = parameters.getMaximumValue();
 		Long threshold = Long.parseLong(tmp);
 
 		travelTimeMap.keySet().stream().forEach(s -> {

@@ -30,9 +30,10 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 
 	protected static final String TRANSPORT_MODE_KEY = "transport_mode";
 	protected static final String TRANSPORT_SUBMODE_KEY = "transport_sub_mode";
-	protected static final String SECOND_VALUE_KEY = "second_value";
-	protected static final String FIRST_VALUE_KEY = "first_value";
-	protected static final String ATTRIBUTE_NAME_KEY = "attribute_name";
+	protected static final String MAXIMUM_VALUE_KEY = "maximum";
+	protected static final String MINIMUM_VALUE_KEY = "minimum";
+	protected static final String PATTERN_VALUE_KEY = "PATTERN";
+	protected static final String ATTRIBUTE_NAME_KEY = "target";
 	protected static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
 
 	@Override
@@ -196,17 +197,47 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		if (check.getControlAttributes().containsKey(ATTRIBUTE_NAME_KEY)) {
 			GenericCheckpointParameters generic = new GenericCheckpointParameters();
 			result = generic;
-			generic.setAttributeName(check.getControlAttributes().get(ATTRIBUTE_NAME_KEY));
+			String key = check.getControlAttributes().get(ATTRIBUTE_NAME_KEY);
+			String[] keys = key.split("#");
+			generic.setAttributeName(keys[1]);
 			// TODO : manage a map between types and classes
-			generic.setClassName(check.getType());
+			generic.setClassName(toCamelCase(keys[0]));
 		} else {
 			result = new CheckpointParameters();
 		}
-		result.setFirstValue(check.getControlAttributes().get(FIRST_VALUE_KEY));
-		result.setSecondValue(check.getControlAttributes().get(SECOND_VALUE_KEY));
+		result.setMinimumValue(check.getControlAttributes().get(MINIMUM_VALUE_KEY));
+		result.setMaximumValue(check.getControlAttributes().get(MAXIMUM_VALUE_KEY));
+		result.setPatternValue(check.getControlAttributes().get(PATTERN_VALUE_KEY));
 		result.setCode(check.getCode());
 		result.setErrorType(check.getCriticity().equals(CRITICITY.ERROR));
 		return result;
+	}
+
+	/**
+	 * @param underscore
+	 * @return
+	 */
+	protected static String toCamelCase(String underscore) {
+		StringBuffer b = new StringBuffer();
+		boolean underChar = false;
+		boolean first = true;
+		for (char c : underscore.toCharArray()) {
+			if (first) {
+				b.append(Character.toUpperCase(c));
+				first = false;
+				continue;
+			}
+			if (c == '_') {
+				underChar = true;
+				continue;
+			}
+			if (underChar) {
+				b.append(Character.toUpperCase(c));
+				underChar = false;
+			} else
+				b.append(c);
+		}
+		return b.toString();
 	}
 
 }

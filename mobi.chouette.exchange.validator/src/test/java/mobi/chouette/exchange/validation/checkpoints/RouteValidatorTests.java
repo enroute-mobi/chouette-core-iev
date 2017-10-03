@@ -67,7 +67,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_1, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_1, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_1, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -111,7 +111,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_2, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_2, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_2, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -162,7 +162,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_3, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_3, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_3, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -201,7 +201,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_5, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_5, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_5, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -240,7 +240,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_6, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_6, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_6, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -281,7 +281,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_8, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_8, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_8, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -327,7 +327,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_9, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_9, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_9, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -373,7 +373,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_10, false, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_Route_10, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Route_10, checkPoints);
 			String transportMode = line.getTransportModeName();

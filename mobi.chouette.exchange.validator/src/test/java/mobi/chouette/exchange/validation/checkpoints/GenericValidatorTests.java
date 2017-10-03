@@ -68,7 +68,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generique_1, false, "^[\\w ]+$", null, "Route", "name");
+			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generique_1, false, null,null, "^[\\w ]+$", "Route", "name");
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Generique_1, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -107,7 +107,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generique_2, false, "3", "6", "VehicleJourney", "number");
+			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generique_2, false, "3", "6",null, "VehicleJourney", "number");
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Generique_2, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -164,7 +164,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			RouteValidator validator = new RouteValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generique_3, false, null, null, "Route", "name");
+			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generique_3, false, null, null, null,"Route", "name");
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Generique_3, checkPoints);
 			String transportMode = line.getTransportModeName();

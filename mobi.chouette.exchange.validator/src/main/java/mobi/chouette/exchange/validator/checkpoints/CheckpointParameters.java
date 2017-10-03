@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Data
-@XmlType(propOrder = { "code", "errorType", "firstValue", "secondValue" })
+@XmlType(propOrder = { "code", "errorType", "minimumValue", "maximumValue", "patternValue" })
 @AllArgsConstructor
 @NoArgsConstructor
 public class CheckpointParameters {
@@ -19,9 +19,11 @@ public class CheckpointParameters {
 	private String code;
 	@XmlElement(name = "error_type")
 	private boolean errorType = false;
-	@XmlElement(name = "first_value")
-	private String firstValue;
-	@XmlElement(name = "second_value")
-	private String secondValue;
+	@XmlElement(name = "minimum_value")
+	private String minimumValue;
+	@XmlElement(name = "maximum_value")
+	private String maximumValue;
+	@XmlElement(name = "pattern_value")
+	private String patternValue;
 
 }

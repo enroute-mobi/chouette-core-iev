@@ -182,7 +182,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
 				String value = objVal.toString();
-				String regex = parameters.getFirstValue();
+				String regex = parameters.getPatternValue();
 				if (!Pattern.matches(regex, value)) {
 					// pattern don't matches
 					DataLocation source = new DataLocation(object, parameters.getAttributeName());
@@ -245,20 +245,20 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
 				long value = Long.parseLong(objVal.toString());
-				if (parameters.getFirstValue() != null) {
-					long minVal = Long.parseLong(parameters.getFirstValue());
+				if (parameters.getMinimumValue() != null) {
+					long minVal = Long.parseLong(parameters.getMinimumValue());
 					if (value < minVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
 						validationReporter.addCheckPointReportError(context, L3_Generique_2, "2", source,
-								objVal.toString(), parameters.getFirstValue());
+								objVal.toString(), parameters.getMinimumValue());
 					}
 				}
-				if (parameters.getSecondValue() != null) {
-					long maxVal = Long.parseLong(parameters.getSecondValue());
+				if (parameters.getMaximumValue() != null) {
+					long maxVal = Long.parseLong(parameters.getMaximumValue());
 					if (value > maxVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
 						validationReporter.addCheckPointReportError(context, L3_Generique_2, "1", source,
-								objVal.toString(), parameters.getSecondValue());
+								objVal.toString(), parameters.getMaximumValue());
 					}
 				}
 			}

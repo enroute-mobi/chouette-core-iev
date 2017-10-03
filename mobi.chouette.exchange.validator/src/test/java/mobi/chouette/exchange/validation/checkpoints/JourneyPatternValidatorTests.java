@@ -12,6 +12,8 @@ import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
@@ -91,7 +93,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			JourneyPattern jp = tc.getObjectForTest();
 
 			// -- Nominal
-			tc.setFirstParam(Long.toString(threshold));
+			tc.setMaximumParam(Long.toString(threshold));
 			tc.runValidation();
 			checkNoReports(context, jp.getObjectId());
 
@@ -101,7 +103,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			Time at = vjs.getArrivalTime();
 			vjs.setArrivalTime(new Time(at.getTime() + (2 *threshold )  * 1000));
 
-			tc.setFirstParam(Long.toString(threshold));
+			tc.setMaximumParam(Long.toString(threshold));
 			tc.runValidation();
 			checkReports(context, tc.getLine().getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(),
 					null, OBJECT_STATE.WARNING);
@@ -113,22 +115,23 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 
 	class TestContext {
 
+		@Getter @Setter 
 		private Context context;
+		@Getter @Setter 
 		private Referential referential;
+		@Getter @Setter 
 		private JourneyPattern objectForTest;
+		@Getter @Setter 
 		private LineLite line;
+		@Getter @Setter 
 		private String checkPointName;
+		@Getter @Setter 
 		private JourneyPatternValidator validator;
-		private String firstParam;
-		private String secondParam;
+		@Getter @Setter 
+		private String minimumParam;
+		@Getter @Setter 
+		private String maximumParam;
 
-		public String getCheckPointName() {
-			return checkPointName;
-		}
-
-		public void setCheckPointName(String checkPointName) {
-			this.checkPointName = checkPointName;
-		}
 
 		public TestContext(Context context, String checkPointName) {
 			this.context = context;
@@ -153,52 +156,14 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			validator = new JourneyPatternValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, firstParam, secondParam);
+			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, minimumParam, maximumParam,null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
 			String transportMode = line.getTransportModeName();
 			validator.validate(context, objectForTest, parameters, transportMode);
 		}
 
-		public String getFirstParam() {
-			return firstParam;
-		}
-
-		public void setFirstParam(String firstParam) {
-			this.firstParam = firstParam;
-		}
-
-		public String getSecondParam() {
-			return secondParam;
-		}
-
-		public void setSecondParam(String secondParam) {
-			this.secondParam = secondParam;
-		}
-
-		public Referential getReferential() {
-			return referential;
-		}
-
-		public void setReferential(Referential referential) {
-			this.referential = referential;
-		}
-
-		public JourneyPattern getObjectForTest() {
-			return objectForTest;
-		}
-
-		public void setObjectForTest(JourneyPattern objectForTest) {
-			this.objectForTest = objectForTest;
-		}
-
-		public LineLite getLine() {
-			return line;
-		}
-
-		public void setLine(LineLite line) {
-			this.line = line;
-		}
+		
 
 		public String getFormattedCheckPointName() {
 			return checkPointName.replace('-', '_').toLowerCase();
