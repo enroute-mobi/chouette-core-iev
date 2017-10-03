@@ -13,7 +13,10 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 
 	@EJB
 	ImportMessageDAO importMessageDAO;
-	
+
+	@EJB
+	ComplianceCheckMessageDAO complianceCheckMessageDAO;
+
 	@Override
 	public ActionMessage createMessage(ActionResource resource) {
 		ActionMessage message = null;
@@ -22,11 +25,10 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 			message = new ImportMessage(resource.getTaskId(),resource.getId());
 			break;
 		case exporter:
-//			resource = new ExportResource(job.getId());
+//			message = new ExportMessage(resource.getTaskId(),resource.getId());
 			break;
 		case validator:
 			message  = new ComplianceCheckMessage(resource.getTaskId(),resource.getId());
-//			resource = new ValidationResource(job.getId());
 			break;
 		}
 		return message;
@@ -43,6 +45,8 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 			importMessageDAO.create(importMessage);
 			break;
 		case validator:
+			ComplianceCheckMessage checkMessage = (ComplianceCheckMessage) message;
+			complianceCheckMessageDAO.create(checkMessage);
 			break;
 		
 		}

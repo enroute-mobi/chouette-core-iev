@@ -4,14 +4,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import mobi.chouette.model.compliance.ComplianceCheckMessage;
+import mobi.chouette.model.compliance.ComplianceCheckResource;
 
 @Stateless
-public class ComplianceCheckResourceDAOImpl extends GenericDAOImpl<ComplianceCheckMessage>
-		implements ComplianceCheckMessageDAO {
+public class ComplianceCheckResourceDAOImpl extends GenericDAOImpl<ComplianceCheckResource>
+		implements ComplianceCheckResourceDAO {
 
 	public ComplianceCheckResourceDAOImpl() {
-		super(ComplianceCheckMessage.class);
+		super(ComplianceCheckResource.class);
 	}
 
 	@PersistenceContext(unitName = "public")

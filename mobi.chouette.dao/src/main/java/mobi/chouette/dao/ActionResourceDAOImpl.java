@@ -14,6 +14,9 @@ public class ActionResourceDAOImpl implements ActionResourceDAO {
 	@EJB
 	ImportResourceDAO importResourceDAO;
 	
+	@EJB
+	ComplianceCheckResourceDAO complianceCheckResourceDAO;
+	
 	@Override
 	public ActionResource createResource(JobData job) {
 		ActionResource resource = null;
@@ -42,6 +45,8 @@ public class ActionResourceDAOImpl implements ActionResourceDAO {
 			importResourceDAO.create(importResource);
 			break;
 		case validator:
+			ComplianceCheckResource checkResource = (ComplianceCheckResource) resource;
+			complianceCheckResourceDAO.create(checkResource);
 			break;
 		
 		}
