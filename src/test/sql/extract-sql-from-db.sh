@@ -39,7 +39,7 @@ do
    ;; 
   s)
    if [ "$OPTARG" == "data" ]; then
-	datatype="--data-only --inserts"
+	datatype="--data-only --column-inserts"
    fi
    ;; 
  esac

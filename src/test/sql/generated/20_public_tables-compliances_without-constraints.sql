@@ -55,7 +55,13 @@ CREATE TABLE compliance_check_sets (
     parent_id integer,
     parent_type character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    current_step_id character varying,
+    string character varying,
+    current_step_progress double precision,
+    name character varying,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone
 );
 ALTER TABLE compliance_check_sets OWNER TO chouette;
 CREATE SEQUENCE compliance_check_sets_id_seq
@@ -71,7 +77,7 @@ CREATE TABLE compliance_checks (
     compliance_check_set_id integer,
     compliance_check_block_id integer,
     type character varying,
-    control_attributes json,
+    control_attributes shared_extensions.hstore,
     name character varying,
     code character varying,
     criticity integer,
@@ -126,7 +132,7 @@ CREATE TABLE compliance_controls (
     id bigint NOT NULL,
     compliance_control_set_id integer,
     type character varying,
-    control_attributes json,
+    control_attributes shared_extensions.hstore,
     name character varying,
     code character varying,
     criticity character varying,
