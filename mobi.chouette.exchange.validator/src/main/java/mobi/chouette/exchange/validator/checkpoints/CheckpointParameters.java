@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Data
-@XmlType(propOrder = { "code", "errorType", "minimumValue", "maximumValue", "patternValue" })
+@XmlType(propOrder = { "code", "checkId", "errorType", "minimumValue", "maximumValue", "patternValue" })
 @AllArgsConstructor
 @NoArgsConstructor
 public class CheckpointParameters {
 	@XmlElement(name = "code")
 	private String code;
+	@XmlElement(name = "check_id")
+	private Long checkId;
 	@XmlElement(name = "error_type")
 	private boolean errorType = false;
 	@XmlElement(name = "minimum_value")

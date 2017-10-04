@@ -30,9 +30,9 @@ public class ValidatorInputValidatorTests {
 	private static final String[] checksForBlock = { "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
 			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
 			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney",
-			"3-Generique-1/warning/target=route#name,pattern=^[a-zA-Z ]+$/Route",
-			"3-Generique-2/warning/target=vehicle_journey#number,minimum=1,maximum=30000/VehicleJourney",
-			"3-Generique-3/warning/target=vehicle_journey#numbernumber/VehicleJourney" };
+			"3-Generic-1/warning/target=route#name,pattern=^[a-zA-Z ]+$/Route",
+			"3-Generic-2/warning/target=vehicle_journey#number,minimum=1,maximum=30000/VehicleJourney",
+			"3-Generic-3/warning/target=vehicle_journey#numbernumber/VehicleJourney" };
 
 	private static final String[] checks = { "3-JourneyPattern-1/warning//JourneyPattern",
 			"3-JourneyPattern-2/warning//JourneyPattern", "3-Line-1/warning//Line", "3-Route-1/warning//Route",

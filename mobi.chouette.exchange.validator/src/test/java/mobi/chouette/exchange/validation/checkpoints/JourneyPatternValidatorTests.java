@@ -156,7 +156,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			validator = new JourneyPatternValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, false, minimumParam, maximumParam,null);
+			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, 0L, false, minimumParam, maximumParam,null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
 			String transportMode = line.getTransportModeName();

@@ -200,11 +200,11 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			String key = check.getControlAttributes().get(ATTRIBUTE_NAME_KEY);
 			String[] keys = key.split("#");
 			generic.setAttributeName(keys[1]);
-			// TODO : manage a map between types and classes
 			generic.setClassName(toCamelCase(keys[0]));
 		} else {
 			result = new CheckpointParameters();
 		}
+		result.setCheckId(check.getId());
 		result.setMinimumValue(check.getControlAttributes().get(MINIMUM_VALUE_KEY));
 		result.setMaximumValue(check.getControlAttributes().get(MAXIMUM_VALUE_KEY));
 		result.setPatternValue(check.getControlAttributes().get(PATTERN_VALUE_KEY));
