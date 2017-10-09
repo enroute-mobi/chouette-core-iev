@@ -119,12 +119,6 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
-		// TODO : convertir task en ComplianceCheckTask
-		// puis s'en servir pour créer et habiller un ValidateParameter
-		// le ValidateParameter est à retourner par cette fonction
-		// voir NetexStifImporterInputValidator comme exemple au moins sur les
-		// éléménts communs (AbstactParameter et
-		// ActionTask)
 
 		if (task instanceof ComplianceCheckTask) {
 			ComplianceCheckTask checkTask = (ComplianceCheckTask) task;
@@ -132,8 +126,6 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			Organisation organisation = referential.getOrganisation();
 			ValidateParameters parameter = new ValidateParameters();
 
-			// TODO : Didier ===> développement en cours !...Non fonctionnnel
-			// !!!!!!!!!!!!!!!!
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");

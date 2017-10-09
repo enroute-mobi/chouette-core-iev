@@ -11,9 +11,9 @@ import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
-import mobi.chouette.model.ImportTask;
 import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
+import mobi.chouette.model.importer.ImportTask;
 
 @Log4j
 public class NetexStifImporterInputValidator extends AbstractInputValidator {

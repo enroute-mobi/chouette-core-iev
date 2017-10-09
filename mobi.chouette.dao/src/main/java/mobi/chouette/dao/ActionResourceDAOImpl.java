@@ -5,8 +5,8 @@ import javax.ejb.Stateless;
 
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionResource;
-import mobi.chouette.model.ImportResource;
 import mobi.chouette.model.compliance.ComplianceCheckResource;
+import mobi.chouette.model.importer.ImportResource;
 
 @Stateless  (name="ActionResourceDAO")
 public class ActionResourceDAOImpl implements ActionResourceDAO {

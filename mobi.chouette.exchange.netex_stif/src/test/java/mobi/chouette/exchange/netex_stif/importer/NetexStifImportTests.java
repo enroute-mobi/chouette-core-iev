@@ -240,7 +240,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		buidAndSaveJson();
 		verifyFromJson();
 		// JSONWriter writer = new JSONWriter(w);
-		List<RoutingConstraint> routingConstraints = routingConstraintDao.findAll();
+		// List<RoutingConstraint> routingConstraints = routingConstraintDao.findAll();
 //		for (RoutingConstraint routingConstraint : routingConstraints) {
 //			log.info("routing constraint" + routingConstraint.getName());
 //		}

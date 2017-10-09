@@ -27,7 +27,6 @@ public class ComplianceCheckResource extends ActionResource {
 
 	// @formatter:off
 	/**
-	 * TODO : 
 	 * compliance_check_resources  -> classe ComplianceCheckResource extends ActionResource
      * attributs : 
      *     id : 

@@ -35,7 +35,7 @@ public class ComplianceCheckMessage extends ActionMessage {
 
 	// @formatter:off
 	/**
-	 * TODO : compliance_check_results -> classe ComplianceCheckMessage extends ActionMessage 
+	 * compliance_check_results -> classe ComplianceCheckMessage extends ActionMessage 
 	 * attributs : 
 	 * 		id : 
 	 * 		name : pour les logs ? 

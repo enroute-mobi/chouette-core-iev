@@ -101,7 +101,6 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	public List<? extends Command> getLineProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
-		// boolean level3validation = context.get(VALIDATION) != null;
 		List<Command> commands = new ArrayList<>();
 		JobData jobData = (JobData) context.get(JOB_DATA);
 		try {
@@ -135,8 +134,6 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 				Command validation = CommandFactory.create(initialContext, NetexStifValidationCommand.class.getName());
 				chain.add(validation);
 
-				// log.debug("WithDao : " + withDao + " / "+
-				// parameters.isNoSave());
 				if (withDao && !parameters.isNoSave()) {
 
 					// register
@@ -149,12 +146,6 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 					// CopyCommand.class.getName());
 					// chain.add(copy);
 				}
-				// if (level3validation) {
-				// // add validation
-				// Command validate = CommandFactory.create(initialContext,
-				// ImportedLineValidatorCommand.class.getName());
-				// chain.add(validate);
-				// }
 
 			}
 
