@@ -1,0 +1,15 @@
+#id=#jdc=control_name-code=minimum=maximum=target=pattern=criticity=block
+2=1=GenericAttributeControl::Uniqueness#3-Generic-3=====warning=
+3=2=GenericAttributeControl::MinMax#3-Generic-2=6=12===info=
+4=3=GenericAttributeControl::Pattern#3-Generic-3====My-pattern=info=
+5=4=JourneyPatternControl::Duplicates#3-JourneyPattern-1=====info=
+6=5=JourneyPatternControl::VehicleJourney#3-JourneyPattern-2=====info=
+7=6=LineControl::Route#3-Line-1=====info=
+8=7=RouteControl::Duplicates#3-Route-4=====info=
+9=8=RouteControl::JourneyPattern#3-Route-3=====info=
+10=9=RouteControl::MinimumLength#3-Route-6=====info=
+11=10=RouteControl::OmnibusJourneyPattern#3-Route-9=====info=
+12=11=RouteControl::OppositeRouteTerminus#3-Route-5=====info=
+13=12=RouteControl::OppositeRoute#3-Route-2=====info=
+15=13=RouteControl::StopPointsInJourneyPattern#3-Route-6=====info=
+16=14=RouteControl::TimeTable#3-VehicleJourney-4=====info=
