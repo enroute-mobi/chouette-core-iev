@@ -11,8 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import mobi.chouette.model.ImportTask;
-import mobi.chouette.model.ImportTask_;
+import mobi.chouette.model.importer.ImportTask_;
+import mobi.chouette.model.importer.ImportTask;
 
 
 @Stateless  (name="ImportTaskDAO")

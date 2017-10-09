@@ -2,7 +2,7 @@ package mobi.chouette.dao;
 
 import java.util.List;
 
-import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.importer.ImportTask;
 
 public interface ImportTaskDAO extends GenericDAO<ImportTask> {
 

@@ -1,4 +1,4 @@
-package mobi.chouette.model;
+package mobi.chouette.model.importer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData;
+import mobi.chouette.model.ActionTask;
 
 @Entity
 @Table(name = "imports")
