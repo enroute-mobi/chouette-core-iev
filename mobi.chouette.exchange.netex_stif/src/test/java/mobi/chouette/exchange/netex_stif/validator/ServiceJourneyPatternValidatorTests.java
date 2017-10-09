@@ -76,7 +76,7 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 	}
 
 
-	@Test(groups = { "RouteRef" }, description = "test routeRef", priority = 1)
+	@Test(groups = { "RouteRef" }, description = "test routeRef", priority = 1201)
 	public void validateRouteRef() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
@@ -95,7 +95,7 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 	}
 
 
-	@Test(groups = { "PatternType" }, description = "test patternType", priority = 1)
+	@Test(groups = { "PatternType" }, description = "test patternType", priority = 1202)
 	public void validatePatternType() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
@@ -131,7 +131,7 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 	}
 
 	
-	@Test(groups = { "Order" }, description = "test order", priority = 1)
+	@Test(groups = { "Order" }, description = "test order", priority = 1203)
 	public void validateOrder() throws Exception {
 		Context context = initImportContext();
 		ServiceJourneyPatternValidator validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,

@@ -32,7 +32,6 @@ public class NetworkBlueprint
    @Default
    int objectVersion = 1;
 
-   // TODO : Verify date
    @Default
    Date versionDate = new Date(1234479600);
 

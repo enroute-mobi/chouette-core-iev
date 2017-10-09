@@ -5,13 +5,17 @@ import javax.ejb.Stateless;
 
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionResource;
-import mobi.chouette.model.ImportResource;
+import mobi.chouette.model.compliance.ComplianceCheckResource;
+import mobi.chouette.model.importer.ImportResource;
 
 @Stateless  (name="ActionResourceDAO")
 public class ActionResourceDAOImpl implements ActionResourceDAO {
 
 	@EJB
 	ImportResourceDAO importResourceDAO;
+	
+	@EJB
+	ComplianceCheckResourceDAO complianceCheckResourceDAO;
 	
 	@Override
 	public ActionResource createResource(JobData job) {
@@ -24,7 +28,7 @@ public class ActionResourceDAOImpl implements ActionResourceDAO {
 //			resource = new ExportResource(job.getId());
 			break;
 		case validator:
-//			resource = new ValidationResource(job.getId());
+			resource = new ComplianceCheckResource(job.getId());
 			break;
 		}
 		return resource;
@@ -41,6 +45,8 @@ public class ActionResourceDAOImpl implements ActionResourceDAO {
 			importResourceDAO.create(importResource);
 			break;
 		case validator:
+			ComplianceCheckResource checkResource = (ComplianceCheckResource) resource;
+			complianceCheckResourceDAO.create(checkResource);
 			break;
 		
 		}

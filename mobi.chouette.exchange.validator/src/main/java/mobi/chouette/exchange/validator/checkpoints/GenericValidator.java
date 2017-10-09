@@ -32,7 +32,7 @@ import mobi.chouette.model.util.Referential;
 @Log4j
 public abstract class GenericValidator<T extends ChouetteIdentifiedObject> implements CheckPointConstant, Constant {
 
-	private static final String[] genericCodes = { L3_Generique_1, L3_Generique_2, L3_Generique_3 };
+	private static final String[] genericCodes = { L3_Generic_1, L3_Generic_2, L3_Generic_3 };
 
 	public abstract void validate(Context context, T object, ValidateParameters parameters, String transportMode);
 
@@ -169,7 +169,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3Generique1(Context context, T object, GenericCheckpointParameters parameters) {
+	protected void check3Generic1(Context context, T object, GenericCheckpointParameters parameters) {
 		String javaAttribute = toCamelCase(parameters.getAttributeName());
 		Method getter = findGetter(object.getClass(), javaAttribute);
 		if (getter == null) {
@@ -177,16 +177,16 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			return;
 		}
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_Generique_1);
+		validationReporter.prepareCheckPointReport(context, L3_Generic_1);
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
 				String value = objVal.toString();
-				String regex = parameters.getFirstValue();
+				String regex = parameters.getPatternValue();
 				if (!Pattern.matches(regex, value)) {
 					// pattern don't matches
 					DataLocation source = new DataLocation(object, parameters.getAttributeName());
-					validationReporter.addCheckPointReportError(context, L3_Generique_1, source, value, regex);
+					validationReporter.addCheckPointReportError(context, L3_Generic_1, source, value, regex);
 				}
 			}
 		} catch (IllegalAccessException | IllegalArgumentException e) {
@@ -227,7 +227,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3Generique2(Context context, T object, GenericCheckpointParameters parameters) {
+	protected void check3Generic2(Context context, T object, GenericCheckpointParameters parameters) {
 		String javaAttribute = toCamelCase(parameters.getAttributeName());
 		Method getter = findGetter(object.getClass(), javaAttribute);
 		if (getter == null) {
@@ -240,25 +240,25 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			return;
 		}
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_Generique_2);
+		validationReporter.prepareCheckPointReport(context, L3_Generic_2);
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
 				long value = Long.parseLong(objVal.toString());
-				if (parameters.getFirstValue() != null) {
-					long minVal = Long.parseLong(parameters.getFirstValue());
+				if (parameters.getMinimumValue() != null) {
+					long minVal = Long.parseLong(parameters.getMinimumValue());
 					if (value < minVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, L3_Generique_2, "2", source,
-								objVal.toString(), parameters.getFirstValue());
+						validationReporter.addCheckPointReportError(context, L3_Generic_2, "2", source,
+								objVal.toString(), parameters.getMinimumValue());
 					}
 				}
-				if (parameters.getSecondValue() != null) {
-					long maxVal = Long.parseLong(parameters.getSecondValue());
+				if (parameters.getMaximumValue() != null) {
+					long maxVal = Long.parseLong(parameters.getMaximumValue());
 					if (value > maxVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, L3_Generique_2, "1", source,
-								objVal.toString(), parameters.getSecondValue());
+						validationReporter.addCheckPointReportError(context, L3_Generic_2, "1", source,
+								objVal.toString(), parameters.getMaximumValue());
 					}
 				}
 			}
@@ -297,7 +297,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 *            paramètres du point de contrôle
 	 */
 	@SuppressWarnings("unchecked")
-	protected void check3Generique3(Context context, T object, GenericCheckpointParameters parameters) {
+	protected void check3Generic3(Context context, T object, GenericCheckpointParameters parameters) {
 		String javaAttribute = toCamelCase(parameters.getAttributeName());
 		Method getter = findGetter(object.getClass(), javaAttribute);
 		if (getter == null) {
@@ -320,7 +320,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			generic3Context.put(attributeKey, attributeContext);
 		}
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_Generique_3);
+		validationReporter.prepareCheckPointReport(context, L3_Generic_3);
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
@@ -329,7 +329,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 				if (attributeContext.containsKey(value)) {
 					// duplicate value
 					DataLocation target = attributeContext.get(value);
-					validationReporter.addCheckPointReportError(context, L3_Generique_3, source, value, null, target);
+					validationReporter.addCheckPointReportError(context, L3_Generic_3, source, value, null, target);
 				} else {
 					attributeContext.put(value, source);
 				}

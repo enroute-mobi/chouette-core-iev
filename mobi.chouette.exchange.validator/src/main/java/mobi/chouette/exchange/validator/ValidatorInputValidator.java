@@ -2,7 +2,11 @@ package mobi.chouette.exchange.validator;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JSONUtil;
@@ -11,14 +15,26 @@ import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
+import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
+import mobi.chouette.exchange.validator.checkpoints.ControlParameters;
+import mobi.chouette.exchange.validator.checkpoints.GenericCheckpointParameters;
 import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
+import mobi.chouette.model.compliance.ComplianceCheck;
+import mobi.chouette.model.compliance.ComplianceCheck.CRITICITY;
+import mobi.chouette.model.compliance.ComplianceCheckBlock;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
 
 @Log4j
 public class ValidatorInputValidator extends AbstractInputValidator {
 
-	private static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
+	protected static final String TRANSPORT_MODE_KEY = "transport_mode";
+	protected static final String TRANSPORT_SUBMODE_KEY = "transport_sub_mode";
+	protected static final String MAXIMUM_VALUE_KEY = "maximum";
+	protected static final String MINIMUM_VALUE_KEY = "minimum";
+	protected static final String PATTERN_VALUE_KEY = "PATTERN";
+	protected static final String ATTRIBUTE_NAME_KEY = "target";
+	protected static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
 
 	@Override
 	public AbstractParameter toActionParameter(String abstractParameter) {
@@ -103,11 +119,6 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
-		// TODO : convertir task en ComplianceeCheckTask
-		// puis s'en servir pour créer et habiller un ValidateParameter
-		// le ValidateParameter est à retourner par cette fonction
-		// voir NetexStifImporterInputValidator comme exemple au moins sur les éléménts communs (AbstactParameter et
-		// ActionTask)
 
 		if (task instanceof ComplianceCheckTask) {
 			ComplianceCheckTask checkTask = (ComplianceCheckTask) task;
@@ -115,7 +126,6 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			Organisation organisation = referential.getOrganisation();
 			ValidateParameters parameter = new ValidateParameters();
 
-			// TODO : Didier ===> développement en cours !...Non fonctionnnel !!!!!!!!!!!!!!!!
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
@@ -131,10 +141,95 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			parameter.setOrganisationName(organisation.getName());
 			parameter.setOrganisationCode(organisation.getCode());
 
+			// populate controlParameter
+			ControlParameters controlParameters = parameter.getControlParameters();
+			checkTask.getComplianceChecks().stream().forEach(check -> {
+				CheckpointParameters cp = buildCheckpoint(check);
+				// if check has a block, add check to transportModeCheckpoints
+				// map
+				if (check.getBlock() != null) {
+					// get key for mode/submode
+					ComplianceCheckBlock block = check.getBlock();
+					String key = block.getConditionAttributes().get(TRANSPORT_MODE_KEY);
+					if (block.getConditionAttributes().containsKey(TRANSPORT_SUBMODE_KEY)) {
+						key += "/" + block.getConditionAttributes().get(TRANSPORT_SUBMODE_KEY);
+					}
+					Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints()
+							.get(key);
+					if (map == null) {
+						map = new HashMap<>();
+						controlParameters.getTransportModeCheckpoints().put(key, map);
+					}
+					Collection<CheckpointParameters> list = map.get(cp.getCode());
+					if (list == null) {
+						list = new ArrayList<>();
+						map.put(cp.getCode(), list);
+					}
+					list.add(cp);
+				}
+				// else add to globalCheckPoints map
+				else {
+					Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().get(cp.getCode());
+					if (list == null) {
+						list = new ArrayList<>();
+						controlParameters.getGlobalCheckPoints().put(cp.getCode(), list);
+					}
+					list.add(cp);
+				}
+			});
+
 			return parameter;
 		}
 
 		return null;
+	}
+
+	private CheckpointParameters buildCheckpoint(ComplianceCheck check) {
+		CheckpointParameters result = null;
+		if (check.getControlAttributes().containsKey(ATTRIBUTE_NAME_KEY)) {
+			GenericCheckpointParameters generic = new GenericCheckpointParameters();
+			result = generic;
+			String key = check.getControlAttributes().get(ATTRIBUTE_NAME_KEY);
+			String[] keys = key.split("#");
+			generic.setAttributeName(keys[1]);
+			generic.setClassName(toCamelCase(keys[0]));
+		} else {
+			result = new CheckpointParameters();
+		}
+		result.setCheckId(check.getId());
+		result.setMinimumValue(check.getControlAttributes().get(MINIMUM_VALUE_KEY));
+		result.setMaximumValue(check.getControlAttributes().get(MAXIMUM_VALUE_KEY));
+		result.setPatternValue(check.getControlAttributes().get(PATTERN_VALUE_KEY));
+		result.setCode(check.getCode());
+		result.setErrorType(check.getCriticity().equals(CRITICITY.ERROR));
+		return result;
+	}
+
+	/**
+	 * @param underscore
+	 * @return
+	 */
+	protected static String toCamelCase(String underscore) {
+		StringBuffer b = new StringBuffer();
+		boolean underChar = false;
+		boolean first = true;
+		for (char c : underscore.toCharArray()) {
+			if (first) {
+				b.append(Character.toUpperCase(c));
+				first = false;
+				continue;
+			}
+			if (c == '_') {
+				underChar = true;
+				continue;
+			}
+			if (underChar) {
+				b.append(Character.toUpperCase(c));
+				underChar = false;
+			} else
+				b.append(c);
+		}
+		return b.toString();
 	}
 
 }

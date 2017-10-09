@@ -5,14 +5,18 @@ import javax.ejb.Stateless;
 
 import mobi.chouette.model.ActionMessage;
 import mobi.chouette.model.ActionResource;
-import mobi.chouette.model.ImportMessage;
+import mobi.chouette.model.compliance.ComplianceCheckMessage;
+import mobi.chouette.model.importer.ImportMessage;
 
 @Stateless  (name="ActionMessageDAO")
 public class ActionMessageDAOImpl implements ActionMessageDAO {
 
 	@EJB
 	ImportMessageDAO importMessageDAO;
-	
+
+	@EJB
+	ComplianceCheckMessageDAO complianceCheckMessageDAO;
+
 	@Override
 	public ActionMessage createMessage(ActionResource resource) {
 		ActionMessage message = null;
@@ -21,10 +25,10 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 			message = new ImportMessage(resource.getTaskId(),resource.getId());
 			break;
 		case exporter:
-//			resource = new ExportResource(job.getId());
+//			message = new ExportMessage(resource.getTaskId(),resource.getId());
 			break;
 		case validator:
-//			resource = new ValidationResource(job.getId());
+			message  = new ComplianceCheckMessage(resource.getTaskId(),resource.getId());
 			break;
 		}
 		return message;
@@ -41,6 +45,8 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 			importMessageDAO.create(importMessage);
 			break;
 		case validator:
+			ComplianceCheckMessage checkMessage = (ComplianceCheckMessage) message;
+			complianceCheckMessageDAO.create(checkMessage);
 			break;
 		
 		}

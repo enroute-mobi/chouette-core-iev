@@ -1,14 +1,19 @@
 package mobi.chouette.model.compliance;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,8 +55,8 @@ public class ComplianceCheckTask extends ActionTask {
 
 	@Getter
 	@Setter
-	@SequenceGenerator(name = "compliances_id_seq", sequenceName = "compliances_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "compliances_id_seq")
+	@SequenceGenerator(name = "compliance_check_sets_id_seq", sequenceName = "compliance_check_sets_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "compliance_check_sets_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
@@ -61,12 +66,20 @@ public class ComplianceCheckTask extends ActionTask {
 		return ACTION.validator;
 	}
 
+	// used by service module 
 	@Getter
 	@Setter
-	private List<ComplianceCheckBlock> complianceCheckBlocks;
+	@Transient
+	private String format = null;	
 
 	@Getter
 	@Setter
-	private List<ComplianceCheck> complianceChecks;
+	@OneToMany(mappedBy = "task", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	private List<ComplianceCheckBlock> complianceCheckBlocks = new ArrayList<ComplianceCheckBlock>(0);
+	//
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "task", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	private List<ComplianceCheck> complianceChecks = new ArrayList<ComplianceCheck>(0);
 
 }

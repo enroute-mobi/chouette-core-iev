@@ -19,7 +19,6 @@ import lombok.ToString;
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionResource;
 
-
 @Entity
 @Table(name = "compliance_check_resources")
 @NoArgsConstructor
@@ -28,7 +27,6 @@ public class ComplianceCheckResource extends ActionResource {
 
 	// @formatter:off
 	/**
-	 * TODO : 
 	 * compliance_check_resources  -> classe ComplianceCheckResource extends ActionResource
      * attributs : 
      *     id : 
@@ -57,9 +55,9 @@ public class ComplianceCheckResource extends ActionResource {
 
 	@Getter
 	@Setter
-	@Column(name = "check_id")
+	@Column(name = "compliance_check_set_id")
 	private Long taskId;
-	
+
 	@Getter
 	@Setter
 	private ComplianceCheckTask complianceCheckTask;
@@ -71,8 +69,8 @@ public class ComplianceCheckResource extends ActionResource {
 	public ComplianceCheckResource(Long taskId) {
 		this.taskId = taskId;
 		Timestamp now = new Timestamp(Calendar.getInstance().getTimeInMillis());
-		this.setCreatedAt(now);
-		this.setUpdatedAt((Timestamp) now.clone());
+		this.setCreationTime(now);
+		this.setUpdatedTime((Timestamp) now.clone());
 	}
 
 }

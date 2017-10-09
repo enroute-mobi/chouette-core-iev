@@ -19,19 +19,41 @@ import mobi.chouette.common.JobData;
 @SuppressWarnings("serial")
 @MappedSuperclass
 @Access(AccessType.FIELD)
-@ToString(exclude={"referential"})
+@ToString(exclude = { "referential" })
 @Data
 public abstract class ActionTask implements Serializable {
-	
+
 	public abstract Long getId();
-	
+
 	public abstract JobData.ACTION getAction();
+	
+	public abstract String getFormat();
 
 	@Getter
 	@Setter
 	@Column(name = "name")
 	private String name;
-	
+
+	@Getter
+	@Setter
+	@Column(name = "current_step_id")
+	private String currentStepId;
+
+	@Getter
+	@Setter
+	@Column(name = "current_step_progress")
+	private Double currentStepProgress;
+
+	@Getter
+	@Setter
+	@Column(name = "started_at")
+	private java.sql.Timestamp startedAt;
+
+	@Getter
+	@Setter
+	@Column(name = "ended_at")
+	private java.sql.Timestamp endedAt;
+
 	@Getter
 	@Setter
 	@Column(name = "status")
@@ -39,44 +61,23 @@ public abstract class ActionTask implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(name = "current_step_id")
-	private String currentStepId;
-	
-	@Getter
-	@Setter
-	@Column(name="current_step_progress")
-	private Double currentStepProgress;
-
-	@Getter
-	@Setter
-	@Column(name="workbench_id")
+	@Column(name = "workbench_id")
 	private Long workbenchId;
-	
-	@Getter
-	@Setter
-	@ManyToOne (fetch = FetchType.EAGER)
-	@JoinColumn(name="referential_id", updatable=false)
-	private Referential referential;
-	
-	@Getter
-	@Setter
-	@Column(name="created_at")
-	private java.sql.Timestamp createdAt;
-	
-	@Getter
-	@Setter
-	@Column(name="updated_at")
-	private java.sql.Timestamp updatedAt;
-	
-	@Getter
-	@Setter
-	@Column(name="started_at")
-	private java.sql.Timestamp startedAt;
-	
-	@Getter
-	@Setter
-	@Column(name="ended_at")
-	private java.sql.Timestamp endedAt;
 
-	
+	@Getter
+	@Setter
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "referential_id", updatable = false)
+	private Referential referential;
+
+	@Getter
+	@Setter
+	@Column(name = "created_at")
+	private java.sql.Timestamp createdAt;
+
+	@Getter
+	@Setter
+	@Column(name = "updated_at")
+	private java.sql.Timestamp updatedAt;
+
 }

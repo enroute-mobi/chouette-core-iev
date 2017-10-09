@@ -114,7 +114,7 @@ public class LineOptimiser {
 				cache.getStopAreas().put(object.getObjectId(), object);
 			}
 
-			// TODO check if stoparea really exists
+			// check if stoparea really exists
 			for (StopArea item : list) {
 				StopArea object = cache.getStopAreas().get(item.getObjectId());
 				if (object == null) {

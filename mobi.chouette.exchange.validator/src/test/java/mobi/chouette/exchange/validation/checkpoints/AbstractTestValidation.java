@@ -227,7 +227,6 @@ public abstract class AbstractTestValidation extends Arquillian
 				try {
 					r.close();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if (statement != null)
@@ -288,7 +287,7 @@ public abstract class AbstractTestValidation extends Arquillian
 
 	public static long diffTime(Time first, Time last) {
 		if (first == null || last == null)
-			return Long.MIN_VALUE; // TODO diffTime => action when first & last time are null
+			return Long.MIN_VALUE; // diffTime => action when first & last time are null
 		long diff = last.getTime() / 1000L - first.getTime() / 1000L;
 		if (diff < 0)
 			diff += 86400L; // step upon midnight : add one day in seconds

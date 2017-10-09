@@ -65,7 +65,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_1, false, "2", null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_1, 0L, false, null, "2", null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_VehicleJourney_1, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -106,7 +106,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_2, false, "11", "74");
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_2, 0L, false, "11", "74", null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_VehicleJourney_2, checkPoints);
 			// nominal
@@ -116,7 +116,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			
 			// speed error (in mode)
 			Collection<CheckpointParameters> modeCheckPoints = new ArrayList<>();
-			CheckpointParameters modeCheckPoint = new CheckpointParameters(L3_VehicleJourney_2, false, "11", "72");
+			CheckpointParameters modeCheckPoint = new CheckpointParameters(L3_VehicleJourney_2, 0L, false, "11", "72", null);
 			modeCheckPoints.add(modeCheckPoint);
 			parameters.getControlParameters().getTransportModeCheckpoints().put(transportMode, new HashMap<>());
 			parameters.getControlParameters().getTransportModeCheckpoints().get(transportMode).put(L3_VehicleJourney_2, modeCheckPoints);
@@ -128,8 +128,8 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			context.put(VALIDATION_REPORT, new ValidationReport());
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
 					null);
-			modeCheckPoint.setFirstValue("12");
-			modeCheckPoint.setSecondValue("74");
+			modeCheckPoint.setMinimumValue("12");
+			modeCheckPoint.setMaximumValue("74");
 			validator.validate(context, vehicleJourney, parameters, transportMode);
 			checkReports(context, line.getObjectId(), L3_VehicleJourney_2, "3_vehiclejourney_2_2", "11", OBJECT_STATE.WARNING);
 
@@ -164,7 +164,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_4, false, null,null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_4, 0L, false, null,null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_VehicleJourney_4, checkPoints);
 			// nominal
@@ -208,7 +208,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_5, false, null,null);
+			CheckpointParameters checkPoint = new CheckpointParameters(L3_VehicleJourney_5, 0L, false, null,null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(L3_VehicleJourney_5, checkPoints);
 			// nominal

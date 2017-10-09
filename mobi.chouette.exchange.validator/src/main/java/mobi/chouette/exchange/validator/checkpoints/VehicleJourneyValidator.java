@@ -69,7 +69,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_1);
 		Referential r = (Referential) context.get(REFERENTIAL);
 
-		long deltaMax = Long.parseLong(parameters.getFirstValue()) * 60L;
+		long deltaMax = Long.parseLong(parameters.getMaximumValue()) * 60L;
 
 		passingTimes.stream()
 				.filter(passingTime -> passingTime.getArrivalTime() != null && passingTime.getDepartureTime() != null)
@@ -86,7 +86,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 						DataLocation source = new DataLocation(object);
 						DataLocation target = new DataLocation(zdep);
 						validationReporter.addCheckPointReportError(context, L3_VehicleJourney_1, source,
-								Long.toString(delta / 60L), parameters.getFirstValue(), target);
+								Long.toString(delta / 60L), parameters.getMaximumValue(), target);
 
 					}
 				});
@@ -139,8 +139,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_2);
 		Referential r = (Referential) context.get(REFERENTIAL);
 
-		long speedMax = Long.parseLong(parameters.getSecondValue());
-		long speedMin = Long.parseLong(parameters.getFirstValue());
+		long speedMax = Long.parseLong(parameters.getMaximumValue());
+		long speedMin = Long.parseLong(parameters.getMinimumValue());
 
 		for (int i = 1; i < passingTimes.size(); i++) {
 			VehicleJourneyAtStop passingTime1 = passingTimes.get(i - 1);
@@ -155,7 +155,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
 				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_2, "1", source,
-						Long.toString(speed), parameters.getFirstValue(), target1, target2);
+						Long.toString(speed), parameters.getMaximumValue(), target1, target2);
 
 			}
 			if (speedMin > 0 && speed < speedMin) {
@@ -166,7 +166,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
 				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_2, "2", source,
-						Long.toString(speed), parameters.getFirstValue(), target1, target2);
+						Long.toString(speed), parameters.getMinimumValue(), target1, target2);
 			}
 		}
 	}

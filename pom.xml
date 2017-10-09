@@ -31,19 +31,11 @@
 		<boiv.testdb.port>5432</boiv.testdb.port>
 		<boiv.testdb.name>boiv_test</boiv.testdb.name>
 	</properties>
-	<!-- <distributionManagement>
-		<snapshotRepository>
-			<id>chouette-snapshot-repository</id>
-			<name>Chouette Snapshot Repository</name>
-			<url>scp://chouette.marseille.cityway.fr/var/lib/tomcat6/webapps/maven-snapshot</url>
-		</snapshotRepository>
-		<repository>
-			<id>chouette-repository</id>
-			<name>Chouette Repository</name>
-			<url>scp://chouette.marseille.cityway.fr/var/lib/tomcat6/webapps/maven</url>
-		</repository>
-		<downloadUrl>http://maven.chouette.mobi</downloadUrl>
-	</distributionManagement> -->
+	<!-- <distributionManagement> <snapshotRepository> <id>chouette-snapshot-repository</id> 
+		<name>Chouette Snapshot Repository</name> <url>scp://chouette.marseille.cityway.fr/var/lib/tomcat6/webapps/maven-snapshot</url> 
+		</snapshotRepository> <repository> <id>chouette-repository</id> <name>Chouette 
+		Repository</name> <url>scp://chouette.marseille.cityway.fr/var/lib/tomcat6/webapps/maven</url> 
+		</repository> <downloadUrl>http://maven.chouette.mobi</downloadUrl> </distributionManagement> -->
 	<repositories>
 		<repository>
 			<id>jboss</id>
@@ -60,11 +52,8 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!-- <repository>
-			<id>chouette-repository</id>
-			<name>Chouette Repository</name>
-			<url>http://maven.chouette.mobi/</url>
-		</repository> -->
+		<!-- <repository> <id>chouette-repository</id> <name>Chouette Repository</name> 
+			<url>http://maven.chouette.mobi/</url> </repository> -->
 		<repository>
 			<id>hibernate-spatial-repository</id>
 			<name>hibernate-spatial Repository</name>
@@ -128,7 +117,22 @@
 						<configuration>
 							<autocommit>true</autocommit>
 							<srcFiles>
-								<srcFile>${project.rootDir}/src/test/sql/boiv_test.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/generated/00_drop_all_tables.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_without-constraints.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_without-constraints.sql</srcFile>
+
+
+								<srcFile>${project.rootDir}/src/test/sql/FIX_DATABASE_MISTAKES.sql</srcFile>
+
+								<srcFile>${project.rootDir}/src/test/sql/50_referentiel-chouette_gui.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/80_public_insert_offer.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/80_public_insert_compliance-data-test.sql</srcFile>
+								
+								
+
+								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_constraints.sql</srcFile>
+								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_constraints.sql</srcFile>
+								<!-- <srcFile>${project.rootDir}/src/test/sql/boiv_test.sql</srcFile> -->
 							</srcFiles>
 						</configuration>
 					</execution>
@@ -334,7 +338,7 @@
 				<configuration>
 					<quiet>false</quiet>
 					<sourcepath>
-					target/generated-sources/delombok
+						target/generated-sources/delombok
 					</sourcepath>
 					<javaApiLinks>
 						<property>
@@ -360,9 +364,9 @@
 						</goals>
 						<phase>site</phase>
 						<configuration>
-<!-- 							<quiet>false</quiet> -->
-							 <sourcepath>
-							
+							<!-- <quiet>false</quiet> -->
+							<sourcepath>
+
 								mobi.chouette.common/target/generated-sources/delombok;
 								mobi.chouette.persistence.hibernate/target/generated-sources/delombok;
 								mobi.chouette.model/target/generated-sources/delombok;
@@ -372,8 +376,8 @@
 								mobi.chouette.exchange.validator/target/generated-sources/delombok;
 								mobi.chouette.boiv.service/target/generated-sources/delombok;
 								mobi.chouette.boiv.ws/target/generated-sources/delombok
-							
-							</sourcepath> 
+
+							</sourcepath>
 							<javaApiLinks>
 								<property>
 									<name>api_4.0</name>
@@ -390,35 +394,35 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-			<plugin>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok-maven-plugin</artifactId>
-				<version>1.16.12.0</version>
-				<dependencies>
-					<dependency>
-						<groupId>sun.jdk</groupId>
-						<artifactId>tools</artifactId>
-						<version>1.8</version>
-						<scope>system</scope>
-						<systemPath>${java.home}/../lib/tools.jar</systemPath>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>delombok</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>delombok</goal>
-						</goals>
-						<configuration>
-							<addOutputDirectory>false</addOutputDirectory>
-							<sourceDirectory>src/main/java</sourceDirectory>
-							<verbose>false</verbose>
-							<skip>${skipDelombok}</skip>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+				<plugin>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok-maven-plugin</artifactId>
+					<version>1.16.12.0</version>
+					<dependencies>
+						<dependency>
+							<groupId>sun.jdk</groupId>
+							<artifactId>tools</artifactId>
+							<version>1.8</version>
+							<scope>system</scope>
+							<systemPath>${java.home}/../lib/tools.jar</systemPath>
+						</dependency>
+					</dependencies>
+					<executions>
+						<execution>
+							<id>delombok</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>delombok</goal>
+							</goals>
+							<configuration>
+								<addOutputDirectory>false</addOutputDirectory>
+								<sourceDirectory>src/main/java</sourceDirectory>
+								<verbose>false</verbose>
+								<skip>${skipDelombok}</skip>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
@@ -545,34 +549,34 @@
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.19.1</version>
 			</plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-		<version>2.10.4</version>
-        <configuration>
-          <!-- Default configuration for all reports -->
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <id>non-aggregate</id>
-            <configuration>
-              <!-- Specific configuration for the non aggregate report -->
-            </configuration>
-            <reports>
-              <report>javadoc</report>
-            </reports>
-          </reportSet>
-          <reportSet>
-            <id>aggregate</id>
-            <configuration>
-              <!-- Specific configuration for the aggregate report -->
-            </configuration>
-            <reports>
-              <report>aggregate</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-         </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<!-- Default configuration for all reports -->
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>non-aggregate</id>
+						<configuration>
+							<!-- Specific configuration for the non aggregate report -->
+						</configuration>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+					<reportSet>
+						<id>aggregate</id>
+						<configuration>
+							<!-- Specific configuration for the aggregate report -->
+						</configuration>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
 		</plugins>
 	</reporting>
 	<dependencyManagement>

@@ -10,7 +10,6 @@ import mobi.chouette.common.Context;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Timetable;
-import mobi.chouette.model.type.DayTypeEnum;
 import mobi.chouette.model.util.NamingUtil;
 
 @Stateless(name = TimetableUpdater.BEAN_NAME)

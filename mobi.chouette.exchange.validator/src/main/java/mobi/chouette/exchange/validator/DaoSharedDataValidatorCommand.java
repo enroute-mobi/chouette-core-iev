@@ -83,7 +83,7 @@ public class DaoSharedDataValidatorCommand implements Command, Constant {
 		boolean result = ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		//InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
 		if (!context.containsKey(SOURCE))
 		{
 			context.put(SOURCE, SOURCE_DATABASE);

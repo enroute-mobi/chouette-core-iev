@@ -262,7 +262,7 @@ public class LineUpdater implements Updater<Line> {
 			routeUpdater.update(context, pair.getLeft(), pair.getRight());
 		}
 
-		// TODO stop area list (routingConstraintLines)
+		// stop area list (routingConstraintLines)
 		Collection<StopArea> addedRoutingConstraint = CollectionUtil.substract(newValue.getRoutingConstraints(),
 				oldValue.getRoutingConstraints(), NeptuneIdentifiedObjectComparator.INSTANCE);
 		List<StopArea> routingConstraints = null;

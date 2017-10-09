@@ -11,8 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import mobi.chouette.model.ImportTask;
-import mobi.chouette.model.ImportTask_;
+import mobi.chouette.model.importer.ImportTask_;
+import mobi.chouette.model.importer.ImportTask;
 
 
 @Stateless  (name="ImportTaskDAO")
@@ -27,6 +27,7 @@ public class ImportTaskDAOImpl extends GenericDAOImpl<ImportTask> implements Imp
 		this.em = em;
 	}
 
+	@Override
 	public List<ImportTask> getTasks(String status)
 	{
 		List<ImportTask> result = null;

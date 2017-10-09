@@ -73,7 +73,7 @@ public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 		}
 	}
 
-	@Test(groups = { "RoutingConstraintZone" }, description = "not enought ScheduledStopPoints", priority = 1)
+	@Test(groups = { "RoutingConstraintZone" }, description = "not enought ScheduledStopPoints", priority = 1101)
 	public void validateNotEnoughStops() throws Exception {
 		Context context = initImportContext();
 		RoutingConstraintZone zone = new RoutingConstraintZone();
@@ -90,7 +90,7 @@ public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "RoutingConstraintZone" }, description = "missing zoneUse", priority = 1)
+	@Test(groups = { "RoutingConstraintZone" }, description = "missing zoneUse", priority = 1102)
 	public void validateMissingZoneUse() throws Exception {
 		Context context = initImportContext();
 		RoutingConstraintZone zone = new RoutingConstraintZone();
@@ -106,7 +106,7 @@ public class RoutingConstraintZoneValidatorTests extends AbstractTest {
 
 	}
 
-	@Test(groups = { "RoutingConstraintZone" }, description = "wrong zone use", priority = 2)
+	@Test(groups = { "RoutingConstraintZone" }, description = "wrong zone use", priority = 1103)
 	public void validatewrongZoneUse() throws Exception {
 
 		Context context = initImportContext();

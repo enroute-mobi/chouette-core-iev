@@ -78,7 +78,6 @@ public class ObjectFactory {
 	}
 
 	public static VehicleJourneyAtStop getVehicleJourneyAtStop() {
-		// TODO [DSU] object pool
 		VehicleJourneyAtStop result = new VehicleJourneyAtStop();
 		return result;
 	}

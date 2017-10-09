@@ -23,7 +23,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import mobi.chouette.model.ImportResource;
+import mobi.chouette.model.importer.ImportResource;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 public class ActionResourceDaoTest extends Arquillian {
@@ -101,11 +101,10 @@ public class ActionResourceDaoTest extends Arquillian {
 //				ReferentialMetadata md = r.getMetadatas().get(0);
 //				Assert.assertEquals(md.getLineIds().length, 4, "lines size");
 //				Assert.assertEquals(md.getPeriods().length, 2, "periods size");
-				//importResourceDao.delete(r);
+				importResourceDao.delete(r);
 				utx.commit();
 			} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException
 					| RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

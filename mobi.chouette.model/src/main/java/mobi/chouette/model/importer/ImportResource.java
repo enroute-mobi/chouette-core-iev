@@ -1,4 +1,4 @@
-package mobi.chouette.model;
+package mobi.chouette.model.importer;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -17,32 +17,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData;
+import mobi.chouette.model.ActionResource;
 
 @Entity
 @Table(name = "import_resources")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class ImportResource extends ActionResource{
-	
+public class ImportResource extends ActionResource {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1257345220758519489L;
 
-	public JobData.ACTION getAction()
-	{
+	public JobData.ACTION getAction() {
 		return JobData.ACTION.importer;
 	}
-	
+
 	@Getter
 	@Setter
-	@GenericGenerator(name = "import_resources_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", 
-	parameters = {
-		@Parameter(name = "sequence_name", value = "public.import_resources_id_seq"),
-		@Parameter(name = "increment_size", value = "100") })
-    @GeneratedValue(generator = "import_resources_id_seq")
-//	@SequenceGenerator(name = "import_resources_id_seq", sequenceName = "import_resources_id_seq", allocationSize = 1)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "import_resources_id_seq")
+	@GenericGenerator(name = "import_resources_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "public.import_resources_id_seq"),
+			@Parameter(name = "increment_size", value = "100") })
+	@GeneratedValue(generator = "import_resources_id_seq")
+	// @SequenceGenerator(name = "import_resources_id_seq", sequenceName = "import_resources_id_seq", allocationSize =
+	// 1)
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "import_resources_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
@@ -55,8 +55,11 @@ public class ImportResource extends ActionResource{
 	public ImportResource(Long taskId) {
 		this.taskId = taskId;
 		Timestamp now = new Timestamp(Calendar.getInstance().getTimeInMillis());
-		this.setCreatedAt(now);
-		this.setUpdatedAt((Timestamp) now.clone());
+
+		this.setCreationTime(now);
+		this.setUpdatedTime((Timestamp) now.clone());
+		// this.setCreatedAt(now);
+		// this.setUpdatedAt((Timestamp) now.clone());
 	}
 
 }

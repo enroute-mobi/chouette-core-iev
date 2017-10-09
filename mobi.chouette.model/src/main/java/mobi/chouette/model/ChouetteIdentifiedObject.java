@@ -7,21 +7,20 @@
  */
 package mobi.chouette.model;
 
-import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.NaturalId;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.util.ObjectIdTypes;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.NaturalId;
 
 /**
  * Abstract object used for all Identified Chouette Object
@@ -31,7 +30,7 @@ import org.hibernate.annotations.NaturalId;
 @MappedSuperclass
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @ToString(callSuper = true)
-public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
+public abstract class ChouetteIdentifiedObject extends ChouetteDatedObject implements
 		ObjectIdTypes {
 
 	/**
@@ -80,30 +79,6 @@ public abstract class ChouetteIdentifiedObject extends ChouetteObject implements
 	@Column(name = "creator_id")
 	protected String creatorId;
  
-	/**
-	 * creation time
-	 * 
-	 * @param creationTime
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "created_at")
-	protected Date creationTime = new Date();
-
-	/**
-	 * update time
-	 * 
-	 * @param updateTime
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "updated_at")
-	protected Date updatedTime = new Date();
-
 	@Getter
 	@Setter
 	@Transient

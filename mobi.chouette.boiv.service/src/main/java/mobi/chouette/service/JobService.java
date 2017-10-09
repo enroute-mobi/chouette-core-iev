@@ -15,7 +15,8 @@ import mobi.chouette.common.PropertyNames;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
-import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.ActionTask;
+import mobi.chouette.model.importer.ImportTask;
 
 @Data
 @ToString(exclude = { "inputValidator" })
@@ -55,30 +56,44 @@ public class JobService implements JobData, ServiceConstants {
 	 * create a new jobService
 	 * 
 	 */
-	public JobService(String application, String rootDirectory, ImportTask importTask) throws ServiceException {
+	public JobService(String application, String rootDirectory, ActionTask actionTask) throws ServiceException {
 		this.rootDirectory = rootDirectory;
-		this.id = importTask.getId();
-		if (importTask.getReferential() == null) {
+		this.id = actionTask.getId();
+		if (actionTask.getReferential() == null) {
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS, "no referential");
 		}
-		this.referential = importTask.getReferential().getSchemaName();
-		this.action = ACTION.importer;
-		this.type = importTask.getFormat();
-		if (this.type == null)
-			this.type = "netex_stif";
-		if (importTask.getFile() != null && !importTask.getFile().isEmpty()) {
-			File f = new File(importTask.getFile());
-			this.inputFilename = f.getName();
-		} else {
-			this.inputFilename = ACTION.importer.name() + ".zip";
+		this.referential = actionTask.getReferential().getSchemaName();
+		this.action = actionTask.getAction();
+		switch (this.action)
+		{
+		case importer : 
+		{
+			ImportTask importTask = (ImportTask) actionTask;
+			this.type = importTask.getFormat();
+			if (this.type == null)
+				this.type = "netex_stif";
+			if (importTask.getFile() != null && !importTask.getFile().isEmpty()) {
+				File f = new File(importTask.getFile());
+				this.inputFilename = f.getName();
+			} else {
+				this.inputFilename = ACTION.importer.name() + ".zip";
+			}
+            break;
 		}
-		this.updatedAt = importTask.getUpdatedAt();
-		this.startedAt = importTask.getStartedAt();
-		this.endedAt = importTask.getEndedAt();
-		if (importTask.getStatus() == null) {
+		case exporter:
+			break;
+		case validator:
+			break;
+		default:
+			break;
+		}
+		this.updatedAt = actionTask.getUpdatedAt();
+		this.startedAt = actionTask.getStartedAt();
+		this.endedAt = actionTask.getEndedAt();
+		if (actionTask.getStatus() == null) {
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS, "Status is null");
 		}
-		this.status = STATUS.valueOf(importTask.getStatus().toUpperCase());
+		this.status = STATUS.valueOf(actionTask.getStatus().toUpperCase());
 
 		if (!commandExists()) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, getCommandName() + "not found");
@@ -90,7 +105,7 @@ public class JobService implements JobData, ServiceConstants {
 					getCommandName() + "has no input validator");
 		}
 		try {
-			actionParameter = inputValidator.toActionParameter(importTask);
+			actionParameter = inputValidator.toActionParameter(actionTask);
 		} catch (Exception ex) {
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS,
 					getCommandName() + "cannot read action parameters");

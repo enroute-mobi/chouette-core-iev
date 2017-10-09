@@ -71,8 +71,13 @@ public class NetexStifParserCommand implements Command, Constant {
 			if (fileName.startsWith("offre_")) {
 				// create line report entry
 				String id = fileName.split("_")[1];
-				id = "STIF:CODIFLIGNE:Line:" + id;
-				LineLite line = referential.getSharedReadOnlyLines().get(id);
+				String lid = "STIF:CODIFLIGNE:Line:" + id;
+				LineLite line = referential.getSharedReadOnlyLines().get(lid);
+				if (line == null)
+				{
+					lid = "STIF-LIGNE:Line:" + id+ ":STIF";
+					line = referential.getSharedReadOnlyLines().get(lid);
+				}
 				referential.setCurrentLine(line); // for reporting
 				if (line != null) {
 					reporter.addObjectReport(context, id, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,

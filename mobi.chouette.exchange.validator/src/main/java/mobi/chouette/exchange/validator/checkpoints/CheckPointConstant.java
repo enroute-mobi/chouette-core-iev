@@ -66,7 +66,7 @@ public interface CheckPointConstant {
 	public static final String L3_Route_3 = "3-Route-3";
 
 	// Check [Génériques] Contrôle du contenu selon un pattern
-	public static final String L3_Generique_1 = "3-Generique-1";
+	public static final String L3_Generic_1 = "3-Generic-1";
 
 	// Check [Tracé] Proximité d'un tracé avec l'itinéraire associé
 	public static final String L3_Shape_1 = "3-Shape-1";
@@ -75,7 +75,7 @@ public interface CheckPointConstant {
 	public static final String L3_Route_4 = "3-Route-4";
 
 	// Check [Génériques] Valeur min
-	public static final String L3_Generique_2 = "3-Generique-2";
+	public static final String L3_Generic_2 = "3-Generic-2";
 
 	// Check [Tracé] Cohérence d'un tracé avec l'itinéraire associé
 	public static final String L3_Shape_2 = "3-Shape-2";
@@ -84,6 +84,6 @@ public interface CheckPointConstant {
 	public static final String L3_Route_5 = "3-Route-5";
 
 	// Check [Génériques] Unicité d'un attribut d'un objet dans une ligne
-	public static final String L3_Generique_3 = "3-Generique-3";
+	public static final String L3_Generic_3 = "3-Generic-3";
 
 }
