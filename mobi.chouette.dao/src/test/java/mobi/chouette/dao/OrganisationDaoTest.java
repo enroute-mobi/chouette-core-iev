@@ -150,7 +150,6 @@ public class OrganisationDaoTest extends Arquillian
 			organisationDao.delete(r);
 			utx.commit();
 			} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

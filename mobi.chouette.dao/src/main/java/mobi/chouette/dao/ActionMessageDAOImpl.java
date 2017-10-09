@@ -5,8 +5,8 @@ import javax.ejb.Stateless;
 
 import mobi.chouette.model.ActionMessage;
 import mobi.chouette.model.ActionResource;
-import mobi.chouette.model.ImportMessage;
 import mobi.chouette.model.compliance.ComplianceCheckMessage;
+import mobi.chouette.model.importer.ImportMessage;
 
 @Stateless  (name="ActionMessageDAO")
 public class ActionMessageDAOImpl implements ActionMessageDAO {

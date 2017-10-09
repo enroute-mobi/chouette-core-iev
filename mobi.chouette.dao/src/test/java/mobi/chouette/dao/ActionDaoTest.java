@@ -28,9 +28,9 @@ import org.testng.annotations.Test;
 
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionTask;
-import mobi.chouette.model.ImportTask;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.ReferentialMetadata;
+import mobi.chouette.model.importer.ImportTask;
 import mobi.chouette.model.type.DateRange;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
@@ -121,7 +121,6 @@ public class ActionDaoTest extends Arquillian {
 				utx.commit();
 			} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException
 					| RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

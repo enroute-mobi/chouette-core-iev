@@ -28,7 +28,7 @@ import mobi.chouette.common.PropertyNames;
 import mobi.chouette.dao.ActionDAO;
 import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.model.ActionTask;
-import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.importer.ImportTask;
 import mobi.chouette.scheduler.Scheduler;
 import mobi.chouette.service.JobService.STATUS;
 

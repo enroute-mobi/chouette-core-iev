@@ -337,8 +337,8 @@ public class StopAreaUpdater implements Updater<StopArea> {
 			}
 		}
 
-		// TODO list routing_constraints_lines (routingConstraintLines)
-		// TODO list stop_areas_stop_areas (routingConstraintAreas)
+		// list routing_constraints_lines (routingConstraintLines)
+		// list stop_areas_stop_areas (routingConstraintAreas)
 		Collection<StopArea> addedStopAreas = CollectionUtil.substract(newValue.getRoutingConstraintAreas(),
 				oldValue.getRoutingConstraintAreas(), NeptuneIdentifiedObjectComparator.INSTANCE);
 

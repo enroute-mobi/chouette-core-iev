@@ -4,7 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import mobi.chouette.model.ImportMessage;
+import mobi.chouette.model.importer.ImportMessage;
 
 @Stateless  (name="ImportMessageDAO")
 public class ImportMessageDAOImpl extends GenericDAOImpl<ImportMessage> implements ImportMessageDAO {

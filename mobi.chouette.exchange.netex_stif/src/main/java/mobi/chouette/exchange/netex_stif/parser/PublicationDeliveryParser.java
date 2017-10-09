@@ -25,7 +25,7 @@ public class PublicationDeliveryParser implements Parser, Constant {
 
 		xpp.require(XmlPullParser.START_TAG, null, PUBLICATION_DELIVERY);
 		// Referential referential = (Referential) context.get(REFERENTIAL);
-		String version = xpp.getAttributeValue(null, VERSION);
+		// String version = xpp.getAttributeValue(null, VERSION);
 		// TODO vérifier que la version soit celle du stif : test non spécifié
 		Collection<String> compositeFrameNames =  new ArrayList<String>();
 		Collection<String> generalFrameNames =  new ArrayList<String>();

@@ -49,12 +49,12 @@ import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.model.ImportMessage;
-import mobi.chouette.model.ImportMessage_;
-import mobi.chouette.model.ImportResource;
-import mobi.chouette.model.ImportResource_;
-import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.importer.ImportMessage_;
+import mobi.chouette.model.importer.ImportResource_;
 import mobi.chouette.model.Referential;
+import mobi.chouette.model.importer.ImportMessage;
+import mobi.chouette.model.importer.ImportResource;
+import mobi.chouette.model.importer.ImportTask;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j

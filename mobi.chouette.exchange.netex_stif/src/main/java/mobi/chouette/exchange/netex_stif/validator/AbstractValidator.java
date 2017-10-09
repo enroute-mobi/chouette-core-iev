@@ -3,8 +3,6 @@ package mobi.chouette.exchange.netex_stif.validator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.Constant;
@@ -25,8 +23,6 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 	private static final String REGEX_REFLEX_PREFIX = "^FR:[\\d]{5}:";
 	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:STIF$";
-
-	protected static final String OBJECT_IDS = "encontered_ids";
 
 	private static final Collection<String> CodifLigneTypes;
 	private static final Collection<String> ReflexTypes;
@@ -154,7 +150,6 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		return data.getDataLocations().get(objectId);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected static Context getObjectContext(Context context, String localContextName, String objectId) {
 		Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
 		if (validationContext == null) {
@@ -162,14 +157,6 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			context.put(VALIDATION_CONTEXT, validationContext);
 
 		}
-
-		// TODO à retirer si non utilisé (contrôle d'existence des objectIds)
-		Set<String> objectIds = (Set<String>) validationContext.get(OBJECT_IDS);
-		if (objectIds == null) {
-			objectIds = new HashSet<String>();
-			validationContext.put(OBJECT_IDS, objectIds);
-		}
-		objectIds.add(objectId);
 
 		Context localContext = (Context) validationContext.get(localContextName);
 		

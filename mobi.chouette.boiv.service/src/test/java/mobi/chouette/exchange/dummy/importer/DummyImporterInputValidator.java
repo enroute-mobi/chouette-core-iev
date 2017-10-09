@@ -7,8 +7,8 @@ import mobi.chouette.common.JSONUtil;
 import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.parameters.ValidationParameters;
-import mobi.chouette.model.ImportTask;
 import mobi.chouette.model.Referential;
+import mobi.chouette.model.importer.ImportTask;
 
 public class DummyImporterInputValidator extends AbstractInputValidator {
 

@@ -2,7 +2,6 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 import java.util.Map;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -16,7 +15,6 @@ import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
 public class RouteValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = ROUTE;

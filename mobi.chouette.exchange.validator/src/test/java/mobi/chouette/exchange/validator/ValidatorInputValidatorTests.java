@@ -119,7 +119,7 @@ public class ValidatorInputValidatorTests {
 				}
 			}
 			check.setType(data[3]);
-			check.setBlock(block); // TODO replace by setBlock
+			check.setBlock(block); 
 			check.setTask(task);
 			task.getComplianceChecks().add(check);
 		}

@@ -9,8 +9,8 @@ import javax.ejb.Stateless;
 
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionTask;
-import mobi.chouette.model.ImportTask;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
+import mobi.chouette.model.importer.ImportTask;
 
 @Stateless(name = "ActionDAO")
 public class ActionDAOImpl implements ActionDAO {

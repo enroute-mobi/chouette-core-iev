@@ -16,7 +16,7 @@ import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.ActionTask;
-import mobi.chouette.model.ImportTask;
+import mobi.chouette.model.importer.ImportTask;
 
 @Data
 @ToString(exclude = { "inputValidator" })
