@@ -12,6 +12,7 @@ import lombok.Setter;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
@@ -101,7 +102,10 @@ public class ExportableData {
 	private Set<StopArea> sharedStops = new HashSet<>();
 	
 	@Getter @Setter 
-	private Map<Integer,StopAreaLite> mappedStopAreas = new HashMap<>();
+	private Map<Long,StopAreaLite> mappedStopAreas = new HashMap<>();
+
+	@Getter @Setter 
+	private Map<Long,CompanyLite> mappedCompanies = new HashMap<>();
 
 //	public Timetable findTimetable(String objectId) {
 //		for (Timetable tm : timetables) {
@@ -137,5 +141,6 @@ public class ExportableData {
 		stopPoints.clear();
 		sharedStops.clear();
 		mappedStopAreas.clear();
+		mappedCompanies.clear();
 	}
 }
