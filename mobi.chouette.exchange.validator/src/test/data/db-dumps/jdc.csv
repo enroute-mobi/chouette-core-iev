@@ -1,0 +1,16 @@
+#Id;#jdcId;Name-code;minimum;maximum;target;pattern;criticity;blockid
+100;100;GenericAttributeControl::Uniqueness#3-Generic-3;;;;;warning;100
+101;100;GenericAttributeControl::MinMax#3-Generic-2;6;12;;;info;
+102;100;GenericAttributeControl::Pattern#3-Generic-3;;;target;My-pattern;info;
+103;100;JourneyPatternControl::Duplicates#3-JourneyPattern-1;;;;;info;101
+104;100;JourneyPatternControl::VehicleJourney#3-JourneyPattern-2;;;;;info;
+105;100;LineControl::Route#3-Line-1;;;;;info;
+106;100;RouteControl::Duplicates#3-Route-4;;;;;info;
+107;100;RouteControl::JourneyPattern#3-Route-3;;;;;info;
+108;100;RouteControl::MinimumLength#3-Route-6;;;;;info;
+109;100;RouteControl::OmnibusJourneyPattern#3-Route-9;;;;;info;
+110;100;RouteControl::OppositeRouteTerminus#3-Route-5;;;;;info;
+111;100;RouteControl::OppositeRoute#3-Route-2;;;;;info;
+112;100;RouteControl::StopPointsInJourneyPattern#3-Route-6;;;;;info;
+113;100;RouteControl::TimeTable#3-VehicleJourney-4;;;;;info;
+114;100;RouteControl::TimeTable#3-VehicleJourney-4;;;;;info;
