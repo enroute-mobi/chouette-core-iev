@@ -11,7 +11,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
+-- SET row_security = off;
 
 SET search_path = public, pg_catalog;
 
@@ -65,7 +65,7 @@ SELECT pg_catalog.setval('compliance_check_resources_id_seq', 1, false);
 -- Name: compliance_check_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chouette
 --
 
-SELECT pg_catalog.setval('compliance_check_results_id_seq', 1, false);
+-- SELECT pg_catalog.setval('compliance_check_results_id_seq', 1, false);
 
 
 --

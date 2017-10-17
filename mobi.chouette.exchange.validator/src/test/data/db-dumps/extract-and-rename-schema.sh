@@ -64,7 +64,6 @@ else
 		opt_tables="${opt_tables} --table=${i}"
 	done
 	CMD="pg_dump ${datatype} ${opt_schema} --format=plain --file=${output} ${opt_tables} --username=${user} --host=${host} --port=${port} ${database}"
-	echo "cmd=$CMD"
 	$CMD
 	sed -i "s/${schema_name}/${new_name}/g" ${output}
 	sed -i "s/^SET row_security/-- SET row_security/g" ${output};
