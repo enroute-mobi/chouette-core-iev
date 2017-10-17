@@ -25,7 +25,7 @@ public class ShapeValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "shape" }, description = "3_Shape_1", priority = 20)
+	@Test(groups = { "shape" }, description = "3_Shape_1", priority = 81)
 	public void verifyTest_3_Shape_1() throws Exception {
 		String checkPointName = L3_Shape_1;
 		// log.info(Color.CYAN + " check " + checkPointName + Color.NORMAL);
@@ -37,7 +37,7 @@ public class ShapeValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "shape" }, description = "3_Shape_2", priority = 30)
+	@Test(groups = { "shape" }, description = "3_Shape_2", priority = 82)
 	public void verifyTest_3_Shape_2() throws Exception {
 		String checkPointName = L3_Shape_2;
 		// log.info(Color.CYAN + " check " + checkPointName + Color.NORMAL);
@@ -49,7 +49,7 @@ public class ShapeValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "shape" }, description = "3_Shape_2", priority = 40)
+	@Test(groups = { "shape" }, description = "3_Shape_2", priority = 83)
 	public void verifyTest_3_Shape_3() throws Exception {
 		String checkPointName = L3_Shape_3;
 		// log.info(Color.CYAN + " check " + checkPointName + Color.NORMAL);

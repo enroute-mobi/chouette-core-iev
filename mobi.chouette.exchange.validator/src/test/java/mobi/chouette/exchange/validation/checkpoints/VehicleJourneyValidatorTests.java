@@ -44,7 +44,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_1", priority = 1)
+	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_1", priority = 51)
 	public void verifyTest_3_VehicleJourney_1() throws Exception {
 		log.info(Color.CYAN + " check " + L3_VehicleJourney_1 + Color.NORMAL);
 		initSchema();
@@ -85,7 +85,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_2", priority = 2)
+	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_2", priority = 52)
 	public void verifyTest_3_VehicleJourney_2() throws Exception {
 		log.info(Color.CYAN + " check " + L3_VehicleJourney_2 + Color.NORMAL);
 		initSchema();
@@ -143,7 +143,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_4", priority = 3)
+	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_4", priority = 53)
 	public void verifyTest_3_VehicleJourney_4() throws Exception {
 		log.info(Color.CYAN + " check " + L3_VehicleJourney_4 + Color.NORMAL);
 		initSchema();
@@ -187,7 +187,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_5", priority = 5)
+	@Test(groups = { "vehicleJourney" }, description = "3_VehicleJourney_5", priority = 54)
 	public void verifyTest_3_VehicleJourney_5() throws Exception {
 		log.info(Color.CYAN + " check " + L3_VehicleJourney_5 + Color.NORMAL);
 		initSchema();
