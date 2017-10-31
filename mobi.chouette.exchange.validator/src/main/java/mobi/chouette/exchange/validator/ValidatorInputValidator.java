@@ -201,7 +201,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		result.setMaximumValue(check.getControlAttributes().get(MAXIMUM_VALUE_KEY));
 		result.setPatternValue(check.getControlAttributes().get(PATTERN_VALUE_KEY));
 		result.setCode(check.getCode());
-		result.setErrorType(check.getCriticity().equals(CRITICITY.ERROR));
+		result.setErrorType(check.getCriticity().equals(CRITICITY.error));
 		return result;
 	}
 

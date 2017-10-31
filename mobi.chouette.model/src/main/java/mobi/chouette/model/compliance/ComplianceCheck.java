@@ -52,7 +52,7 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	// @formatter:on
 
 	public enum CRITICITY {
-		WARNING, ERROR
+		warning, error
 	};
 
 	@Getter

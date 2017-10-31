@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.CollectionType;
@@ -34,12 +32,9 @@ public abstract class ActionMessage extends ChouetteDatedObject {
 	public abstract Long getTaskId();
 
 	public abstract void setTaskId(Long id);
+	
+	public abstract void setCriticity(CRITICITY criticity);
 
-	@Getter
-	@Setter
-	@Column(name = "criticity")
-	@Enumerated(EnumType.ORDINAL)
-	private CRITICITY criticity;
 
 	@Getter
 	@Setter

@@ -9,5 +9,5 @@ SET search_path = public, pg_catalog;
 --ALTER TABLE compliance_check_sets ADD COLUMN current_step_progress double precision;
 --ALTER TABLE compliance_check_sets ADD COLUMN name character varying;
 
-ALTER TABLE compliance_checks DROP COLUMN criticity;
-ALTER TABLE compliance_checks ADD COLUMN criticity character varying;
+-- ALTER TABLE compliance_checks DROP COLUMN criticity;
+-- ALTER TABLE compliance_checks ADD COLUMN criticity character varying;

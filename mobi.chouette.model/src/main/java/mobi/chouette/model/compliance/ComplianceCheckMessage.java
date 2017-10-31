@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CollectionType;
 import org.hibernate.annotations.GenericGenerator;
@@ -28,7 +29,7 @@ import mobi.chouette.model.ActionMessage;
 import mobi.chouette.model.converter.HstoreConverter;
 
 @Entity
-@Table(name = "compliance_check_results")
+@Table(name = "compliance_check_messages")
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class ComplianceCheckMessage extends ActionMessage {
@@ -56,13 +57,19 @@ public class ComplianceCheckMessage extends ActionMessage {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "compliance_check_results_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "public.compliance_check_results_id_seq"),
+	@GenericGenerator(name = "compliance_check_messages_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "public.compliance_check_messages_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })
-	@GeneratedValue(generator = "compliance_check_results_id_seq")
+	@GeneratedValue(generator = "compliance_check_messages_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
+	
+	@Getter
+	@Setter
+	@Transient
+	private CRITICITY criticity;
+
 
 	@Getter
 	@Setter
@@ -73,19 +80,6 @@ public class ComplianceCheckMessage extends ActionMessage {
 	@Setter
 	@Column(name = "compliance_check_set_id")
 	private Long taskId;
-
-	@Getter
-	@Setter
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "compliance_check_resource_id")
-	private ComplianceCheckResource resource;
-
-	@Getter
-	@Setter
-	@Column(name = "condition_attributes")
-	@CollectionType(type = "java.util.HashMap")
-	@Convert(converter = HstoreConverter.class)
-	private Map<String, String> conditionAttributs = new HashMap<String, String>();
 
 	public ComplianceCheckMessage(Long taskId, Long resouceId) {
 		this.taskId = taskId;

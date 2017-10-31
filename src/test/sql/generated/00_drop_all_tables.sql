@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS compliance_check_blocks CASCADE;
+DROP TABLE IF EXISTS compliance_check_messages CASCADE;
 DROP TABLE IF EXISTS compliance_check_resources CASCADE;
 DROP TABLE IF EXISTS compliance_check_sets CASCADE;
 DROP TABLE IF EXISTS compliance_checks CASCADE;

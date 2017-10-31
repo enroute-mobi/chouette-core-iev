@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.4.13
--- Dumped by pg_dump version 9.5.7
+-- Dumped from database version 9.4.14
+-- Dumped by pg_dump version 9.6.5
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+-- SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -2268,357 +2269,357 @@ ALTER SEQUENCE workbenches_id_seq OWNED BY workbenches.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: access_links id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY access_links ALTER COLUMN id SET DEFAULT nextval('access_links_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: access_points id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY access_points ALTER COLUMN id SET DEFAULT nextval('access_points_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: api_keys id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY api_keys ALTER COLUMN id SET DEFAULT nextval('api_keys_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: calendars id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY calendars ALTER COLUMN id SET DEFAULT nextval('calendars_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: clean_up_results id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY clean_up_results ALTER COLUMN id SET DEFAULT nextval('clean_up_results_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: clean_ups id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY clean_ups ALTER COLUMN id SET DEFAULT nextval('clean_ups_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: companies id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY companies ALTER COLUMN id SET DEFAULT nextval('companies_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: connection_links id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY connection_links ALTER COLUMN id SET DEFAULT nextval('connection_links_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: exports id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY exports ALTER COLUMN id SET DEFAULT nextval('exports_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: facilities id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY facilities ALTER COLUMN id SET DEFAULT nextval('facilities_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: footnotes id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: group_of_lines id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY group_of_lines ALTER COLUMN id SET DEFAULT nextval('group_of_lines_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: import_messages id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY import_messages ALTER COLUMN id SET DEFAULT nextval('import_messages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: import_resources id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY import_resources ALTER COLUMN id SET DEFAULT nextval('import_resources_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: imports id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY imports ALTER COLUMN id SET DEFAULT nextval('imports_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: journey_frequencies id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journey_frequencies_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: journey_pattern_sections id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: journey_patterns id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_patterns ALTER COLUMN id SET DEFAULT nextval('journey_patterns_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: line_referential_memberships id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referential_memberships ALTER COLUMN id SET DEFAULT nextval('line_referential_memberships_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: line_referential_sync_messages id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referential_sync_messages ALTER COLUMN id SET DEFAULT nextval('line_referential_sync_messages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: line_referential_syncs id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referential_syncs ALTER COLUMN id SET DEFAULT nextval('line_referential_syncs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: line_referentials id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referentials ALTER COLUMN id SET DEFAULT nextval('line_referentials_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: lines id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY lines ALTER COLUMN id SET DEFAULT nextval('lines_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: networks id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY networks ALTER COLUMN id SET DEFAULT nextval('networks_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: organisations id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY organisations ALTER COLUMN id SET DEFAULT nextval('organisations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: pt_links id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY pt_links ALTER COLUMN id SET DEFAULT nextval('pt_links_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: referential_clonings id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referential_clonings ALTER COLUMN id SET DEFAULT nextval('referential_clonings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: referential_metadata id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referential_metadata ALTER COLUMN id SET DEFAULT nextval('referential_metadata_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: referential_suites id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referential_suites ALTER COLUMN id SET DEFAULT nextval('referential_suites_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: referentials id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referentials ALTER COLUMN id SET DEFAULT nextval('referentials_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: route_sections id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY route_sections ALTER COLUMN id SET DEFAULT nextval('route_sections_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: routes id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY routes ALTER COLUMN id SET DEFAULT nextval('routes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: routing_constraint_zones id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY routing_constraint_zones ALTER COLUMN id SET DEFAULT nextval('routing_constraint_zones_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: rule_parameter_sets id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY rule_parameter_sets ALTER COLUMN id SET DEFAULT nextval('rule_parameter_sets_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: stop_area_referential_memberships id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referential_memberships ALTER COLUMN id SET DEFAULT nextval('stop_area_referential_memberships_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: stop_area_referential_sync_messages id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referential_sync_messages ALTER COLUMN id SET DEFAULT nextval('stop_area_referential_sync_messages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: stop_area_referential_syncs id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referential_syncs ALTER COLUMN id SET DEFAULT nextval('stop_area_referential_syncs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: stop_area_referentials id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referentials ALTER COLUMN id SET DEFAULT nextval('stop_area_referentials_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: stop_areas id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_areas ALTER COLUMN id SET DEFAULT nextval('stop_areas_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: stop_points id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_points ALTER COLUMN id SET DEFAULT nextval('stop_points_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: taggings id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: tags id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: time_table_dates id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_table_dates ALTER COLUMN id SET DEFAULT nextval('time_table_dates_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: time_table_periods id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_table_periods ALTER COLUMN id SET DEFAULT nextval('time_table_periods_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: time_tables id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_tables ALTER COLUMN id SET DEFAULT nextval('time_tables_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: timebands id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY timebands ALTER COLUMN id SET DEFAULT nextval('timebands_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: vehicle_journey_at_stops id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journey_at_stops ALTER COLUMN id SET DEFAULT nextval('vehicle_journey_at_stops_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: vehicle_journeys id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journeys ALTER COLUMN id SET DEFAULT nextval('vehicle_journeys_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: workbenches id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY workbenches ALTER COLUMN id SET DEFAULT nextval('workbenches_id_seq'::regclass);
 
 
 --
--- Name: access_links_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: access_links access_links_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY access_links
@@ -2626,7 +2627,7 @@ ALTER TABLE ONLY access_links
 
 
 --
--- Name: access_points_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: access_points access_points_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY access_points
@@ -2634,7 +2635,7 @@ ALTER TABLE ONLY access_points
 
 
 --
--- Name: api_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: api_keys api_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY api_keys
@@ -2642,7 +2643,7 @@ ALTER TABLE ONLY api_keys
 
 
 --
--- Name: calendars_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: calendars calendars_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY calendars
@@ -2650,7 +2651,7 @@ ALTER TABLE ONLY calendars
 
 
 --
--- Name: clean_up_results_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: clean_up_results clean_up_results_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY clean_up_results
@@ -2658,7 +2659,7 @@ ALTER TABLE ONLY clean_up_results
 
 
 --
--- Name: clean_ups_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: clean_ups clean_ups_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY clean_ups
@@ -2666,7 +2667,7 @@ ALTER TABLE ONLY clean_ups
 
 
 --
--- Name: companies_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY companies
@@ -2674,7 +2675,7 @@ ALTER TABLE ONLY companies
 
 
 --
--- Name: connection_links_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: connection_links connection_links_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY connection_links
@@ -2682,7 +2683,7 @@ ALTER TABLE ONLY connection_links
 
 
 --
--- Name: exports_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: exports exports_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY exports
@@ -2690,7 +2691,7 @@ ALTER TABLE ONLY exports
 
 
 --
--- Name: facilities_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: facilities facilities_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY facilities
@@ -2698,7 +2699,7 @@ ALTER TABLE ONLY facilities
 
 
 --
--- Name: footnotes_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: footnotes footnotes_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY footnotes
@@ -2706,7 +2707,7 @@ ALTER TABLE ONLY footnotes
 
 
 --
--- Name: group_of_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: group_of_lines group_of_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY group_of_lines
@@ -2714,7 +2715,7 @@ ALTER TABLE ONLY group_of_lines
 
 
 --
--- Name: import_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: import_messages import_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY import_messages
@@ -2722,7 +2723,7 @@ ALTER TABLE ONLY import_messages
 
 
 --
--- Name: import_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: import_resources import_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY import_resources
@@ -2730,7 +2731,7 @@ ALTER TABLE ONLY import_resources
 
 
 --
--- Name: imports_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: imports imports_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY imports
@@ -2738,7 +2739,7 @@ ALTER TABLE ONLY imports
 
 
 --
--- Name: journey_frequencies_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_frequencies journey_frequencies_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_frequencies
@@ -2746,7 +2747,7 @@ ALTER TABLE ONLY journey_frequencies
 
 
 --
--- Name: journey_pattern_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_pattern_sections journey_pattern_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_pattern_sections
@@ -2754,7 +2755,7 @@ ALTER TABLE ONLY journey_pattern_sections
 
 
 --
--- Name: journey_patterns_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_patterns journey_patterns_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_patterns
@@ -2762,7 +2763,7 @@ ALTER TABLE ONLY journey_patterns
 
 
 --
--- Name: line_referential_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: line_referential_memberships line_referential_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referential_memberships
@@ -2770,7 +2771,7 @@ ALTER TABLE ONLY line_referential_memberships
 
 
 --
--- Name: line_referential_sync_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: line_referential_sync_messages line_referential_sync_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referential_sync_messages
@@ -2778,7 +2779,7 @@ ALTER TABLE ONLY line_referential_sync_messages
 
 
 --
--- Name: line_referential_syncs_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: line_referential_syncs line_referential_syncs_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referential_syncs
@@ -2786,7 +2787,7 @@ ALTER TABLE ONLY line_referential_syncs
 
 
 --
--- Name: line_referentials_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: line_referentials line_referentials_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY line_referentials
@@ -2794,7 +2795,7 @@ ALTER TABLE ONLY line_referentials
 
 
 --
--- Name: lines_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: lines lines_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY lines
@@ -2802,7 +2803,7 @@ ALTER TABLE ONLY lines
 
 
 --
--- Name: networks_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: networks networks_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY networks
@@ -2810,7 +2811,7 @@ ALTER TABLE ONLY networks
 
 
 --
--- Name: organisations_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: organisations organisations_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY organisations
@@ -2818,7 +2819,7 @@ ALTER TABLE ONLY organisations
 
 
 --
--- Name: pt_links_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: pt_links pt_links_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY pt_links
@@ -2826,7 +2827,7 @@ ALTER TABLE ONLY pt_links
 
 
 --
--- Name: referential_clonings_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: referential_clonings referential_clonings_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referential_clonings
@@ -2834,7 +2835,7 @@ ALTER TABLE ONLY referential_clonings
 
 
 --
--- Name: referential_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: referential_metadata referential_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referential_metadata
@@ -2842,7 +2843,7 @@ ALTER TABLE ONLY referential_metadata
 
 
 --
--- Name: referential_suites_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: referential_suites referential_suites_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referential_suites
@@ -2850,7 +2851,7 @@ ALTER TABLE ONLY referential_suites
 
 
 --
--- Name: referentials_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: referentials referentials_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referentials
@@ -2858,7 +2859,7 @@ ALTER TABLE ONLY referentials
 
 
 --
--- Name: route_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: route_sections route_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY route_sections
@@ -2866,7 +2867,7 @@ ALTER TABLE ONLY route_sections
 
 
 --
--- Name: routes_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: routes routes_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY routes
@@ -2874,7 +2875,7 @@ ALTER TABLE ONLY routes
 
 
 --
--- Name: routing_constraint_zones_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: routing_constraint_zones routing_constraint_zones_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY routing_constraint_zones
@@ -2882,7 +2883,7 @@ ALTER TABLE ONLY routing_constraint_zones
 
 
 --
--- Name: rule_parameter_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: rule_parameter_sets rule_parameter_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY rule_parameter_sets
@@ -2890,7 +2891,7 @@ ALTER TABLE ONLY rule_parameter_sets
 
 
 --
--- Name: stop_area_referential_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_area_referential_memberships stop_area_referential_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referential_memberships
@@ -2898,7 +2899,7 @@ ALTER TABLE ONLY stop_area_referential_memberships
 
 
 --
--- Name: stop_area_referential_sync_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_area_referential_sync_messages stop_area_referential_sync_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referential_sync_messages
@@ -2906,7 +2907,7 @@ ALTER TABLE ONLY stop_area_referential_sync_messages
 
 
 --
--- Name: stop_area_referential_syncs_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_area_referential_syncs stop_area_referential_syncs_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referential_syncs
@@ -2914,7 +2915,7 @@ ALTER TABLE ONLY stop_area_referential_syncs
 
 
 --
--- Name: stop_area_referentials_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_area_referentials stop_area_referentials_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_area_referentials
@@ -2922,7 +2923,7 @@ ALTER TABLE ONLY stop_area_referentials
 
 
 --
--- Name: stop_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_areas stop_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_areas
@@ -2930,7 +2931,7 @@ ALTER TABLE ONLY stop_areas
 
 
 --
--- Name: stop_points_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_points stop_points_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_points
@@ -2938,7 +2939,7 @@ ALTER TABLE ONLY stop_points
 
 
 --
--- Name: taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: taggings taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY taggings
@@ -2946,7 +2947,7 @@ ALTER TABLE ONLY taggings
 
 
 --
--- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY tags
@@ -2954,7 +2955,7 @@ ALTER TABLE ONLY tags
 
 
 --
--- Name: time_table_dates_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: time_table_dates time_table_dates_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_table_dates
@@ -2962,7 +2963,7 @@ ALTER TABLE ONLY time_table_dates
 
 
 --
--- Name: time_table_periods_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: time_table_periods time_table_periods_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_table_periods
@@ -2970,7 +2971,7 @@ ALTER TABLE ONLY time_table_periods
 
 
 --
--- Name: time_tables_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: time_tables time_tables_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_tables
@@ -2978,7 +2979,7 @@ ALTER TABLE ONLY time_tables
 
 
 --
--- Name: timebands_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: timebands timebands_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY timebands
@@ -2986,7 +2987,7 @@ ALTER TABLE ONLY timebands
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY users
@@ -2994,7 +2995,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: vehicle_journey_at_stops_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: vehicle_journey_at_stops vehicle_journey_at_stops_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journey_at_stops
@@ -3002,7 +3003,7 @@ ALTER TABLE ONLY vehicle_journey_at_stops
 
 
 --
--- Name: vehicle_journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: vehicle_journeys vehicle_journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journeys
@@ -3010,7 +3011,7 @@ ALTER TABLE ONLY vehicle_journeys
 
 
 --
--- Name: workbenches_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: workbenches workbenches_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY workbenches
@@ -3557,7 +3558,7 @@ CREATE UNIQUE INDEX vehicle_journeys_objectid_key ON vehicle_journeys USING btre
 
 
 --
--- Name: aclk_acpt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: access_links aclk_acpt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY access_links
@@ -3565,7 +3566,7 @@ ALTER TABLE ONLY access_links
 
 
 --
--- Name: area_parent_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_areas area_parent_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_areas
@@ -3573,7 +3574,7 @@ ALTER TABLE ONLY stop_areas
 
 
 --
--- Name: arrival_point_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_patterns arrival_point_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_patterns
@@ -3581,7 +3582,7 @@ ALTER TABLE ONLY journey_patterns
 
 
 --
--- Name: departure_point_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_patterns departure_point_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_patterns
@@ -3589,7 +3590,7 @@ ALTER TABLE ONLY journey_patterns
 
 
 --
--- Name: fk_rails_0dbc726f14; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_pattern_sections fk_rails_0dbc726f14; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_pattern_sections
@@ -3597,7 +3598,7 @@ ALTER TABLE ONLY journey_pattern_sections
 
 
 --
--- Name: fk_rails_60bb6f7bd3; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_frequencies fk_rails_60bb6f7bd3; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_frequencies
@@ -3605,7 +3606,7 @@ ALTER TABLE ONLY journey_frequencies
 
 
 --
--- Name: fk_rails_65d1354ca5; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: referentials fk_rails_65d1354ca5; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY referentials
@@ -3613,7 +3614,7 @@ ALTER TABLE ONLY referentials
 
 
 --
--- Name: fk_rails_73ae46b20f; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_pattern_sections fk_rails_73ae46b20f; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_pattern_sections
@@ -3621,7 +3622,7 @@ ALTER TABLE ONLY journey_pattern_sections
 
 
 --
--- Name: fk_rails_7561c6e512; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: api_keys fk_rails_7561c6e512; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY api_keys
@@ -3629,7 +3630,7 @@ ALTER TABLE ONLY api_keys
 
 
 --
--- Name: fk_rails_97b8dcfe1a; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: route_sections fk_rails_97b8dcfe1a; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY route_sections
@@ -3637,7 +3638,7 @@ ALTER TABLE ONLY route_sections
 
 
 --
--- Name: fk_rails_d322c5d659; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_frequencies fk_rails_d322c5d659; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_frequencies
@@ -3645,7 +3646,7 @@ ALTER TABLE ONLY journey_frequencies
 
 
 --
--- Name: fk_rails_df1612606f; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: route_sections fk_rails_df1612606f; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY route_sections
@@ -3653,7 +3654,7 @@ ALTER TABLE ONLY route_sections
 
 
 --
--- Name: groupofline_group_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: group_of_lines_lines groupofline_group_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY group_of_lines_lines
@@ -3661,7 +3662,7 @@ ALTER TABLE ONLY group_of_lines_lines
 
 
 --
--- Name: jp_route_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_patterns jp_route_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_patterns
@@ -3669,7 +3670,7 @@ ALTER TABLE ONLY journey_patterns
 
 
 --
--- Name: jpsp_jp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_patterns_stop_points jpsp_jp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_patterns_stop_points
@@ -3677,7 +3678,7 @@ ALTER TABLE ONLY journey_patterns_stop_points
 
 
 --
--- Name: jpsp_stoppoint_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: journey_patterns_stop_points jpsp_stoppoint_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_patterns_stop_points
@@ -3685,7 +3686,7 @@ ALTER TABLE ONLY journey_patterns_stop_points
 
 
 --
--- Name: route_opposite_route_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: routes route_opposite_route_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY routes
@@ -3693,7 +3694,7 @@ ALTER TABLE ONLY routes
 
 
 --
--- Name: stoparea_child_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_areas_stop_areas stoparea_child_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_areas_stop_areas
@@ -3701,7 +3702,7 @@ ALTER TABLE ONLY stop_areas_stop_areas
 
 
 --
--- Name: stoparea_parent_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: stop_areas_stop_areas stoparea_parent_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY stop_areas_stop_areas
@@ -3709,7 +3710,7 @@ ALTER TABLE ONLY stop_areas_stop_areas
 
 
 --
--- Name: tm_date_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: time_table_dates tm_date_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_table_dates
@@ -3717,7 +3718,7 @@ ALTER TABLE ONLY time_table_dates
 
 
 --
--- Name: tm_period_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: time_table_periods tm_period_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_table_periods
@@ -3725,7 +3726,7 @@ ALTER TABLE ONLY time_table_periods
 
 
 --
--- Name: vj_jp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: vehicle_journeys vj_jp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journeys
@@ -3733,7 +3734,7 @@ ALTER TABLE ONLY vehicle_journeys
 
 
 --
--- Name: vj_route_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: vehicle_journeys vj_route_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journeys
@@ -3741,7 +3742,7 @@ ALTER TABLE ONLY vehicle_journeys
 
 
 --
--- Name: vjas_sp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: vehicle_journey_at_stops vjas_sp_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journey_at_stops
@@ -3749,7 +3750,7 @@ ALTER TABLE ONLY vehicle_journey_at_stops
 
 
 --
--- Name: vjas_vj_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: vehicle_journey_at_stops vjas_vj_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY vehicle_journey_at_stops
@@ -3757,7 +3758,7 @@ ALTER TABLE ONLY vehicle_journey_at_stops
 
 
 --
--- Name: vjtm_tm_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: time_tables_vehicle_journeys vjtm_tm_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_tables_vehicle_journeys
@@ -3765,7 +3766,7 @@ ALTER TABLE ONLY time_tables_vehicle_journeys
 
 
 --
--- Name: vjtm_vj_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+-- Name: time_tables_vehicle_journeys vjtm_vj_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY time_tables_vehicle_journeys

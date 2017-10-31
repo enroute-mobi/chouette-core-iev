@@ -5,6 +5,8 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -46,6 +48,13 @@ public class ImportMessage extends ActionMessage {
 	@Setter
 	@Column(name = "import_id")
 	private Long taskId;
+	
+	@Getter
+	@Setter
+	@Column(name = "criticity")
+	@Enumerated(EnumType.ORDINAL)
+	private CRITICITY criticity;
+
 
 	public ImportMessage(Long taskId, Long resouceId) {
 		this.taskId = taskId;
