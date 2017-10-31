@@ -105,7 +105,7 @@ public class JobServiceManager {
 		return jobService;
 	}
 
-	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public JobService createJob(String action, Long id) throws ServiceException {
 
 		// Instancier le modèle du service 'upload'
