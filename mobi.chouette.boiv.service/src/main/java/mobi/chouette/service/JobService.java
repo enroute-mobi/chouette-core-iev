@@ -10,6 +10,7 @@ import org.apache.commons.lang.WordUtils;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.PropertyNames;
 import mobi.chouette.exchange.InputValidator;
@@ -17,7 +18,7 @@ import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.importer.ImportTask;
-
+@Log4j
 @Data
 @ToString(exclude = { "inputValidator" })
 public class JobService implements JobData, ServiceConstants {
@@ -96,19 +97,20 @@ public class JobService implements JobData, ServiceConstants {
 		this.status = STATUS.valueOf(actionTask.getStatus().toUpperCase());
 
 		if (!commandExists()) {
-			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, getCommandName() + "not found");
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, getCommandName() + " not found");
 		}
 		try {
 			inputValidator = getCommandInputValidator(action.name(), type);
 		} catch (ClassNotFoundException | IOException e) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION,
-					getCommandName() + "has no input validator");
+					getCommandName() + " has no input validator");
 		}
 		try {
 			actionParameter = inputValidator.toActionParameter(actionTask);
 		} catch (Exception ex) {
+			log.error("problem while reading parameters" + ex.getMessage(),ex);
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS,
-					getCommandName() + "cannot read action parameters");
+					getCommandName() + " cannot read action parameters");
 		}
 		if (System.getProperty(application + PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null) {
 			long stepWait = Long
