@@ -136,11 +136,11 @@ public class NetexStifImportFileSetTests extends AbstractNetexStifImportFileSetT
 				"offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7");
 	}
 
-	@Test(groups = {
-			"2294" }, testName = "2294-00", description = "[Netex] Contrôle de l'attribut 'changed'", priority = 13)
-	public void verifyCard2294_00() throws Exception {
-		doImport("OFFRE_SNTYO_2294_00.zip", "OK", "calendriers.xml:WARNING:2-NeTExSTIF-5:2_netexstif_5");
-	}
+//	@Test(groups = {
+//			"2294" }, testName = "2294-00", description = "[Netex] Contrôle de l'attribut 'changed'", priority = 13)
+//	public void verifyCard2294_00() throws Exception {
+//		doImport("OFFRE_SNTYO_2294_00.zip", "OK", "calendriers.xml:WARNING:2-NeTExSTIF-5:2_netexstif_5");
+//	}
 
 	@Test(groups = {
 			"2294" }, testName = "2294-01", description = "[Netex] Contrôle de l'attribut 'changed'", priority = 14)
