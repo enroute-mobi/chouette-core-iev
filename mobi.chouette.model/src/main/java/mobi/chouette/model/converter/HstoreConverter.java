@@ -1,5 +1,6 @@
 package mobi.chouette.model.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.AttributeConverter;
@@ -19,6 +20,7 @@ public class HstoreConverter implements AttributeConverter<Map<String, String>, 
     @SuppressWarnings("unchecked")
 	@Override
     public Map<String, String> convertToEntityAttribute(String dbData) {
+    	if (dbData == null) return new HashMap<String, String>();
         return HStoreConverter.fromString(dbData);
     }
 
