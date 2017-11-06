@@ -20,7 +20,7 @@ import mobi.chouette.model.converter.HstoreConverter;
 public abstract class ActionMessage extends ChouetteDatedObject {
 
 	public enum CRITICITY {
-		INFO, WARNING, ERROR
+		info, warning, error
 	};
 
 	private static final long serialVersionUID = -4385137259926047441L;

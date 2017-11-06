@@ -206,7 +206,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 			for (Integer key : report.getCheckPointErrorKeys()) {
 				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
 				ActionMessage message = actionMessageDAO.createMessage(actionResource);
-				message.setCriticity(ActionMessage.CRITICITY.ERROR);
+				message.setCriticity(ActionMessage.CRITICITY.error);
 				populateMessage(message, error);
 				actionMessageDAO.saveMessage(message);
 			}
@@ -215,7 +215,7 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 			for (Integer key : report.getCheckPointWarningKeys()) {
 				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
 				ActionMessage message = actionMessageDAO.createMessage(actionResource);
-				message.setCriticity(ActionMessage.CRITICITY.WARNING);
+				message.setCriticity(ActionMessage.CRITICITY.warning);
 				populateMessage(message, error);
 				actionMessageDAO.saveMessage(message);
 			}
