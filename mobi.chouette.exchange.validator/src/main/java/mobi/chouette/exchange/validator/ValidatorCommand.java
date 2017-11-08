@@ -68,6 +68,7 @@ public class ValidatorCommand implements Command, Constant {
 			ValidateParameters parameters = (ValidateParameters) configuration;
 			progression.initialize(context, 1);
 			context.put(VALIDATION_DATA, new ValidationData());
+			context.put(REFERENTIAL, new Referential());
 
 			String type = parameters.getReferencesType();
 			// set default type
