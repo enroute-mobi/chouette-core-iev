@@ -14,7 +14,6 @@ import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
-import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.ControlParameters;
 import mobi.chouette.exchange.validator.checkpoints.GenericCheckpointParameters;
@@ -46,15 +45,12 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	}
 
 	@Override
-	public boolean checkParameters(String abstractParameterString, String validationParametersString) {
+	public boolean checkParameters(String abstractParameterString) {
 
 		try {
 			ValidateParameters parameters = JSONUtil.fromJSON(abstractParameterString, ValidateParameters.class);
 
-			ValidationParameters validationParameters = JSONUtil.fromJSON(validationParametersString,
-					ValidationParameters.class);
-
-			return checkParameters(parameters, validationParameters);
+			return checkParameters(parameters);
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			return false;
@@ -62,7 +58,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	}
 
 	@Override
-	public boolean checkParameters(AbstractParameter abstractParameter, ValidationParameters validationParameters) {
+	public boolean checkParameters(AbstractParameter abstractParameter) {
 		if (!(abstractParameter instanceof ValidateParameters)) {
 			log.error("invalid parameters for validator " + abstractParameter.getClass().getName());
 			return false;
@@ -78,10 +74,6 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			}
 		}
 
-		if (validationParameters == null) {
-			log.error("validation parameters expected");
-			return false;
-		}
 		return true;
 	}
 

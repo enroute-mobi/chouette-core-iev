@@ -10,7 +10,6 @@ import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
-import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 
 @Log4j
 public class NetexStifExporterInputValidator extends AbstractInputValidator {
@@ -26,22 +25,19 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 		}
 	}
 	@Override
-	public boolean checkParameters(String abstractParameterString, String validationParametersString) {
+	public boolean checkParameters(String abstractParameterString) {
 
 		try {
 			NetexStifExportParameters parameters = JSONUtil.fromJSON(abstractParameterString, NetexStifExportParameters.class);
 
-			ValidationParameters validationParameters = JSONUtil.fromJSON(validationParametersString,
-					ValidationParameters.class);
-
-			return checkParameters(parameters, validationParameters);
+			return checkParameters(parameters);
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			return false;
 		}
 	}
 	@Override
-	public boolean checkParameters(AbstractParameter abstractParameter, ValidationParameters validationParameters) {
+	public boolean checkParameters(AbstractParameter abstractParameter) {
 		if (!(abstractParameter instanceof NetexStifExportParameters)) {
 			log.error("invalid parameters for netex export " + abstractParameter.getClass().getName());
 			return false;
