@@ -37,13 +37,13 @@
 		Repository</name> <url>scp://chouette.marseille.cityway.fr/var/lib/tomcat6/webapps/maven</url> 
 		</repository> <downloadUrl>http://maven.chouette.mobi</downloadUrl> </distributionManagement> -->
 	<repositories>
-		<!-- <repository>
+		<repository>
 			<id>jboss</id>
 			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</repository> -->
+		</repository>
 		<repository>
 			<id>osgeo</id>
 			<name>Open Source Geospatial Foundation Repository</name>
