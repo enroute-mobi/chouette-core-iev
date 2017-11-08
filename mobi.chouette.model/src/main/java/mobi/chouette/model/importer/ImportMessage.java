@@ -52,7 +52,7 @@ public class ImportMessage extends ActionMessage {
 	@Getter
 	@Setter
 	@Column(name = "criticity")
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private CRITICITY criticity;
 
 
