@@ -58,10 +58,6 @@ public class ComplianceCheckResource extends ActionResource {
 	@Column(name = "compliance_check_set_id")
 	private Long taskId;
 
-	@Getter
-	@Setter
-	private ComplianceCheckTask complianceCheckTask;
-
 	public JobData.ACTION getAction() {
 		return JobData.ACTION.validator;
 	}
