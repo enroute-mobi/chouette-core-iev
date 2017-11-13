@@ -66,7 +66,7 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, dayTypeAssignment);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_DayTypeAssignment_1, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayTypeAssignment_1, location);
 
 		}
 		return result;
@@ -111,7 +111,7 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, dayTypeAssignment);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_DayTypeAssignment_2, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayTypeAssignment_2, location);
 
 		}
 		return result;

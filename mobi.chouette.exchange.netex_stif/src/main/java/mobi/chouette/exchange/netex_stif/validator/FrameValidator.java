@@ -126,7 +126,7 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_1, "1", location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_1, "1", location);
 		}
 		return result;
 	}
@@ -144,7 +144,7 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_1, "2", location, frameName);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_1, "2", location, frameName);
 			result = false;
 		}
 		return result;
@@ -195,7 +195,7 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_2, "1", location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_2, "1", location);
 		}
 		return result;
 	}
@@ -213,7 +213,7 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_2, "2", location, frameName);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_2, "2", location, frameName);
 			result = false;
 		}
 		return result;
@@ -268,7 +268,7 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "1", location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_3, "1", location);
 		}
 		return result;
 	}
@@ -286,7 +286,7 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "2", location, frameName);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_3, "2", location, frameName);
 			result = false;
 		}
 
@@ -321,14 +321,14 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "3", location, NETEX_STRUCTURE);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_3, "3", location, NETEX_STRUCTURE);
 			result = false;
 		}
 		if (!horaire) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "3", location, NETEX_HORAIRE);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_3, "3", location, NETEX_HORAIRE);
 			result = false;
 		}
 		return result;
@@ -348,7 +348,7 @@ public class FrameValidator extends AbstractValidator implements Constant {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_3, "4", location, frameName);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_3, "4", location, frameName);
 			result = false;
 		}
 

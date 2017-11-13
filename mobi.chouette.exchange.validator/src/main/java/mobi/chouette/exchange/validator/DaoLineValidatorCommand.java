@@ -69,6 +69,7 @@ public class DaoLineValidatorCommand implements Command, Constant {
 			r.setCurrentLine(line);
 			List<Route> routes = routeDAO.findByLineId(lineId);
 			routes.forEach(route -> {
+				route.setLineLite(line);
 				r.getRoutes().put(route.getObjectId(), route);
 				route.getRoutingConstraints().forEach(rc -> r.getRoutingConstraints().put(rc.getObjectId(), rc));
 				route.getJourneyPatterns().forEach(jp -> {

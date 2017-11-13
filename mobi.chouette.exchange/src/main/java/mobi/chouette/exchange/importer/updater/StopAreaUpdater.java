@@ -385,7 +385,7 @@ public class StopAreaUpdater implements Updater<StopArea> {
 	private void twoDatabaseStopAreaOneTest(ValidationReporter validationReporter, Context context, StopArea oldValue,
 			StopArea newValue, ValidationData data) {
 		if (!ChouetteModelUtil.sameValue(oldValue.getParent(), newValue.getParent()))
-			validationReporter.addCheckPointReportError(context, DATABASE_STOP_AREA_1,
+			validationReporter.addCheckPointReportError(context, null, DATABASE_STOP_AREA_1,
 					data.getDataLocations().get(newValue.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_STOP_AREA_1);
@@ -403,7 +403,7 @@ public class StopAreaUpdater implements Updater<StopArea> {
 			StopArea newSA, ValidationData data) {
 		if (oldSA != null && newSA != null) {
 			if (!ChouetteModelUtil.sameValue(oldSA.getAreaType(), newSA.getAreaType()))
-				validationReporter.addCheckPointReportError(context, DATABASE_STOP_AREA_2,
+				validationReporter.addCheckPointReportError(context, null, DATABASE_STOP_AREA_2,
 						data.getDataLocations().get(newSA.getObjectId()));
 			else
 				validationReporter.reportSuccess(context, DATABASE_STOP_AREA_2);
@@ -422,7 +422,7 @@ public class StopAreaUpdater implements Updater<StopArea> {
 	private void twoDatabaseAccessPointOneTest(ValidationReporter validationReporter, Context context,
 			AccessPoint oldAP, AccessPoint newAP, ValidationData data) {
 		if (!ChouetteModelUtil.sameValue(oldAP.getContainedIn(), newAP.getContainedIn()))
-			validationReporter.addCheckPointReportError(context, DATABASE_ACCESS_POINT_1,
+			validationReporter.addCheckPointReportError(context, null, DATABASE_ACCESS_POINT_1,
 					data.getDataLocations().get(newAP.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_ACCESS_POINT_1);

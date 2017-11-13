@@ -62,7 +62,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 		if (vjs == null || vjs.size() < 1) {
 			log.error("JourneyPattern " + object.getObjectId() + " has less than 1 VehicleJourney");
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, L3_JourneyPattern_2, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_JourneyPattern_2, source);
 		}
 	}
 
@@ -134,7 +134,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 				log.error("Le temps de parcours sur la course "+tt.getVehicleJourney().getObjectId()+" entre les arrêts {"+sa1.getName()+"} ({"+sa1.getObjectId()+"}) et {"+sa2.getName()+"} ({"+sa2.getObjectId()+"}) s'écarte de {"+delta+"} du temps moyen constaté sur la mission");
 				DataLocation target1 = new DataLocation(sa1);
 				DataLocation target2 = new DataLocation(sa2);
-				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_3, source, null, null, target1,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_3, source, null, null, target1,
 						target2);
 			});
 			System.out.println("For parcours " + s + "  => err=" + list.size() + " total="+travelTimeMap.get(s).size() );

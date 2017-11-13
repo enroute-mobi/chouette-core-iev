@@ -24,6 +24,9 @@ public class CheckPointErrorReport extends AbstractReport {
 
 	@XmlElement(name = "test_id")
 	private String testId;
+	
+	@XmlElement(name = "check_point_def_id")
+	private Long checkPointDefId;
 
 	@XmlElement(name = "source")
 	private Location source;
@@ -40,38 +43,39 @@ public class CheckPointErrorReport extends AbstractReport {
 	@XmlElement(name = "reference_value")
 	private String referenceValue = "";
 
-	protected CheckPointErrorReport(String testId, String key, Location source) {
+	protected CheckPointErrorReport(Long checkPointId, String testId, String key, Location source) {
 		setKey(key.replaceAll("-", "_").toLowerCase());
 		this.source = source;
 		this.testId = testId;
+		this.checkPointDefId=checkPointId;
 
 	}
 
-	protected CheckPointErrorReport(String testId, String key, Location source, String value) {
-		this(testId, key, source);
+	protected CheckPointErrorReport(Long checkPointId, String testId, String key, Location source, String value) {
+		this(checkPointId,testId, key, source);
 		this.value = value;
 
 	}
 
-	protected CheckPointErrorReport(String testId, String key, Location source, String value, String refValue) {
-		this(testId, key, source, value);
+	protected CheckPointErrorReport(Long checkPointId, String testId, String key, Location source, String value, String refValue) {
+		this(checkPointId,testId, key, source, value);
 		this.referenceValue = refValue;
 
 	}
 
-	protected CheckPointErrorReport(String testId, String key, Location source, Location... targets) {
-		this(testId, key, source);
+	protected CheckPointErrorReport(Long checkPointId, String testId, String key, Location source, Location... targets) {
+		this(checkPointId,testId, key, source);
 		this.getTargets().addAll(Arrays.asList(targets));
 	}
 
-	protected CheckPointErrorReport(String testId, String key, Location source, String value, Location... targets) {
-		this(testId, key, source, value);
+	protected CheckPointErrorReport(Long checkPointId, String testId, String key, Location source, String value, Location... targets) {
+		this(checkPointId,testId, key, source, value);
 		this.getTargets().addAll(Arrays.asList(targets));
 	}
 
-	protected CheckPointErrorReport(String testId, String key, Location source, String value, String refValue,
+	protected CheckPointErrorReport(Long checkPointId, String testId, String key, Location source, String value, String refValue,
 			Location... targets) {
-		this(testId, key, source, value, refValue);
+		this(checkPointId,testId, key, source, value, refValue);
 		this.getTargets().addAll(Arrays.asList(targets));
 	}
 
@@ -82,6 +86,8 @@ public class CheckPointErrorReport extends AbstractReport {
 		out.print(addLevel(ret, level).append('{'));
 		out.print(toJsonString(ret, level+1, "test_id", testId, true));
 		out.print(toJsonString(ret, level+1, "error_id", key, false));
+		if (checkPointDefId != null)
+			out.print(toJsonString(ret, level+1, "check_point_id", checkPointDefId, false));
 		if (source != null)
 			printObject(out, ret, level+1, "source", source, false);
 		if (!targets.isEmpty()) {

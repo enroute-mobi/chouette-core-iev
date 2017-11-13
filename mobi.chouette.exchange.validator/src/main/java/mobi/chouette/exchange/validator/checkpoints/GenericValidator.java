@@ -73,6 +73,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 								try {
 									validationReporter.addItemToValidationReport(context, code,
 											checkParam.isErrorType() ? "E" : "W");
+									log.info("call generic compliance_check : "+param.getCode());
 									method.invoke(this, context, object, param);
 								} catch (ValidationException ve) {
 									throw ve;
@@ -91,7 +92,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		});
 
 		// then check specific codes
-		// log.info(Arrays.asList(codes));
+		log.info(Arrays.asList(codes));
 		Arrays.stream(codes).forEach(code -> {
 			// find checkpoint for code
 			Collection<CheckpointParameters> checkParams = null;
@@ -99,17 +100,17 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			Map<String, Collection<CheckpointParameters>> modeParameters = controlParameters
 					.getTransportModeCheckpoints().get(transportMode);
 			if (modeParameters != null) {
-				// log.info("check mode parameter");
+				log.info("check mode parameter");
 				checkParams = modeParameters.get(code);
 			}
 			// else in global
 			if (isEmpty(checkParams)) {
-				// log.info("no mode parameter, check global");
+				log.info("no mode parameter, check global");
 				checkParams = controlParameters.getGlobalCheckPoints().get(code);
 			}
 			// if tests are found
 			if (!isEmpty(checkParams)) {
-				// log.info("checkpoints found");
+				log.info("checkpoints found");
 				checkParams.stream().forEach(checkParam -> {
 
 					Method method = findCheckMethod(this.getClass(), checkParam.getCode());
@@ -117,7 +118,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 						try {
 							validationReporter.addItemToValidationReport(context, code,
 									checkParam.isErrorType() ? "E" : "W");
-							// log.info("call test for "+ checkParam.getCode());
+							log.info("call compliance_check for "+ checkParam.getCode());
 							method.invoke(this, context, object, checkParam);
 						} catch (ValidationException ve) {
 							throw ve;
@@ -186,7 +187,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 				if (!Pattern.matches(regex, value)) {
 					// pattern don't matches
 					DataLocation source = new DataLocation(object, parameters.getAttributeName());
-					validationReporter.addCheckPointReportError(context, L3_Generic_1, source, value, regex);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_1, source, value, regex);
 				}
 			}
 		} catch (IllegalAccessException | IllegalArgumentException e) {
@@ -249,7 +250,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 					long minVal = Long.parseLong(parameters.getMinimumValue());
 					if (value < minVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, L3_Generic_2, "2", source,
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_2, "2", source,
 								objVal.toString(), parameters.getMinimumValue());
 					}
 				}
@@ -257,7 +258,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 					long maxVal = Long.parseLong(parameters.getMaximumValue());
 					if (value > maxVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, L3_Generic_2, "1", source,
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_2, "1", source,
 								objVal.toString(), parameters.getMaximumValue());
 					}
 				}
@@ -329,7 +330,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 				if (attributeContext.containsKey(value)) {
 					// duplicate value
 					DataLocation target = attributeContext.get(value);
-					validationReporter.addCheckPointReportError(context, L3_Generic_3, source, value, null, target);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_3, source, value, null, target);
 				} else {
 					attributeContext.put(value, source);
 				}

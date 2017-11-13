@@ -63,7 +63,7 @@ public class DirectionValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, direction);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_1, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Direction_1, location);
 		}
 
 		return result;
@@ -116,10 +116,10 @@ public class DirectionValidator extends AbstractValidator {
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, direction);
 			if (forbiddenDirectionType)
-				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_2, location,
+				validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Direction_2, location,
 						DIRECTION_TYPE);
 			if (forbiddenOppositeDirectionRef)
-				validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_Direction_2, location,
+				validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Direction_2, location,
 						OPPOSITE_DIRECTION_REF);
 		}
 

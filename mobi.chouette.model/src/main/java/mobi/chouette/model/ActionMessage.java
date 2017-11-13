@@ -35,6 +35,13 @@ public abstract class ActionMessage extends ChouetteDatedObject {
 	
 	public abstract void setCriticity(CRITICITY criticity);
 
+	public abstract void setResourceId(Long id);
+	
+	public abstract Long getResourceId();
+	
+	public abstract Long getCheckPointId();
+	
+	public abstract void setCheckPointId(Long id);
 
 	@Getter
 	@Setter
@@ -48,10 +55,6 @@ public abstract class ActionMessage extends ChouetteDatedObject {
 	@Convert(converter = HstoreConverter.class)
 	private Map<String, String> messageAttributs = new HashMap<String, String>();
 
-	@Getter
-	@Setter
-	@Column(name = "resource_id")
-	private Long resourceId;
 	
 	//TODO : AF doit renommer compliance_check_resource_id en resourceId
 

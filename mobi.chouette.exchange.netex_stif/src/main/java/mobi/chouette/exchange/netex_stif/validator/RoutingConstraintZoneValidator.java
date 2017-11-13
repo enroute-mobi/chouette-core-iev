@@ -72,7 +72,7 @@ public class RoutingConstraintZoneValidator extends AbstractValidator {
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, zone);
 			location.setName(zone.getName());
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_RoutingConstraintZone_1, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_RoutingConstraintZone_1, location);
  		}
  		return result;
  	}
@@ -113,7 +113,7 @@ public class RoutingConstraintZoneValidator extends AbstractValidator {
 			location.setName(zone.getName());
 			String zoneUse = zone.getZoneUse();
 			if (zoneUse == null) zoneUse = "null";
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_RoutingConstraintZone_2, location, zoneUse);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_RoutingConstraintZone_2, location, zoneUse);
  		} 				
  		return result;
  	}

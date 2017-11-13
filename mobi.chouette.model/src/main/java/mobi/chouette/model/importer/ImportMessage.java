@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -49,6 +50,16 @@ public class ImportMessage extends ActionMessage {
 	@Column(name = "import_id")
 	private Long taskId;
 	
+	@Getter
+	@Setter
+	@Column(name = "resource_id")
+	private Long resourceId;
+	
+	@Getter
+	@Setter
+	@Transient
+	private Long checkPointId;
+
 	@Getter
 	@Setter
 	@Column(name = "criticity")

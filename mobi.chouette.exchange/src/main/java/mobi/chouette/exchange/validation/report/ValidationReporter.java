@@ -35,14 +35,14 @@ public interface ValidationReporter {
 	 * @param checkPointName
 	 * @param location
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, DataLocation location);
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, DataLocation location);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
 	 * @param checkPointName
 	 * @param location
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation location);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, String detail, DataLocation location);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
@@ -50,7 +50,7 @@ public interface ValidationReporter {
 	 * @param location
 	 * @param value
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, DataLocation location, String value);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, DataLocation location, String value);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
@@ -59,7 +59,7 @@ public interface ValidationReporter {
 	 * @param location
 	 * @param value
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation location, String value);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, String detail, DataLocation location, String value);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
@@ -68,7 +68,7 @@ public interface ValidationReporter {
 	 * @param value
 	 * @param refValue
 	 */
-	void addCheckPointReportError(Context context, String checkPointName,  DataLocation location, String value, String refValue);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName,  DataLocation location, String value, String refValue);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
@@ -77,7 +77,7 @@ public interface ValidationReporter {
 	 * @param value
 	 * @param refValue
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation location, String value, String refValue);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, String detail, DataLocation location, String value, String refValue);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
@@ -87,7 +87,7 @@ public interface ValidationReporter {
 	 * @param refValue
 	 * @param targetLocations
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, DataLocation sourceLocation, String value, String refValue, DataLocation... targetLocations);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, DataLocation sourceLocation, String value, String refValue, DataLocation... targetLocations);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
@@ -97,7 +97,7 @@ public interface ValidationReporter {
 	 * @param refValue
 	 * @param targetLocations
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation sourceLocation, String value, String refValue, DataLocation... targetLocations);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, String detail, DataLocation sourceLocation, String value, String refValue, DataLocation... targetLocations);
 	/**
 	 * Bind error and location to checkpoint in validation report
 	 * @param context
@@ -105,7 +105,7 @@ public interface ValidationReporter {
 	 * @param locations
 	 * @param value
 	 */
-	void addCheckPointReportError(Context context, String checkPointName, DataLocation[] locations, String value);
+	void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, DataLocation[] locations, String value);
 	
 	/**
 	 * Report if test is successful for specific checkpoint

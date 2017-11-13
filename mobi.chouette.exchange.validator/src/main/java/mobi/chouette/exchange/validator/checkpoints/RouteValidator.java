@@ -90,7 +90,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, L3_Route_1, source, null, null, target1, target2);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_1, source, null, null, target1, target2);
 			}
 			// prepare next control step
 			zdep1 = zdep2;
@@ -143,14 +143,14 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 			// routes pair mismatch
 			DataLocation source = new DataLocation(object);
 			DataLocation target = new DataLocation(opposite);
-			validationReporter.addCheckPointReportError(context, L3_Route_2, source, null, null, target);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_2, source, null, null, target);
 		} else if (opposite.getWayBack() == null || object.getWayBack() == null) {
 			log.error("wayback is null for route");
 		} else if (opposite.getWayBack().equals(object.getWayBack())) {
 			// routes direction are same
 			DataLocation source = new DataLocation(object);
 			DataLocation target = new DataLocation(opposite);
-			validationReporter.addCheckPointReportError(context, L3_Route_2, source, null, null, target);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_2, source, null, null, target);
 		}
 
 	}
@@ -190,7 +190,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 		if (object.getJourneyPatterns().isEmpty()) {
 			// route has no journey pattern
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, L3_Route_3, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_3, source);
 		}
 	}
 
@@ -268,7 +268,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 			}
 			DataLocation target1 = new DataLocation(zdl1);
 			DataLocation target2 = new DataLocation(zdl2);
-			validationReporter.addCheckPointReportError(context, L3_Route_5, source, null, null, target1, target2);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_5, source, null, null, target1, target2);
 		}
 
 	}
@@ -309,7 +309,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 		if (object.getStopPoints().size() < 2) {
 			// route has not enough stopPoints
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, L3_Route_6, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_6, source);
 		}
 	}
 
@@ -363,7 +363,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 			undeservedStops.stream().forEach(stopPoint -> {
 				StopAreaLite zdep = r.findStopArea(stopPoint.getStopAreaId());
 				DataLocation target = new DataLocation(zdep);
-				validationReporter.addCheckPointReportError(context, L3_Route_8, source, null, null, target);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_8, source, null, null, target);
 			});
 		}
 
@@ -414,7 +414,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 		if (!found) {
 			// no journeypattern for complete route stops found
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, L3_Route_9, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_9, source);
 		}
 
 	}
@@ -466,7 +466,7 @@ public class RouteValidator extends GenericValidator<Route> implements CheckPoin
 				// deleted stopArea
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(zdep);
-				validationReporter.addCheckPointReportError(context, L3_Route_10, source, null, null, target);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Route_10, source, null, null, target);
 			} 
 		});
 	}

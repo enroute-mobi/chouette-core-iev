@@ -13,7 +13,7 @@ CREATE TABLE compliance_check_blocks (
     id bigint NOT NULL,
     name character varying,
     condition_attributes shared_extensions.hstore,
-    compliance_check_set_id integer,
+    compliance_check_set_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -28,15 +28,15 @@ ALTER TABLE compliance_check_blocks_id_seq OWNER TO chouette;
 ALTER SEQUENCE compliance_check_blocks_id_seq OWNED BY compliance_check_blocks.id;
 CREATE TABLE compliance_check_messages (
     id bigint NOT NULL,
-    compliance_check_id integer,
-    compliance_check_resource_id integer,
+    compliance_check_id bigint,
+    compliance_check_resource_id bigint,
     message_key character varying,
     message_attributes shared_extensions.hstore,
     resource_attributes shared_extensions.hstore,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     status character varying,
-    compliance_check_set_id integer
+    compliance_check_set_id bigint
 );
 ALTER TABLE compliance_check_messages OWNER TO chouette;
 CREATE SEQUENCE compliance_check_messages_id_seq
@@ -51,12 +51,12 @@ CREATE TABLE compliance_check_resources (
     id bigint NOT NULL,
     status character varying,
     name character varying,
-    type character varying,
+    resource_type character varying,
     reference character varying,
     metrics shared_extensions.hstore,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    compliance_check_set_id integer
+    compliance_check_set_id bigint
 );
 ALTER TABLE compliance_check_resources OWNER TO chouette;
 CREATE SEQUENCE compliance_check_resources_id_seq
@@ -69,12 +69,12 @@ ALTER TABLE compliance_check_resources_id_seq OWNER TO chouette;
 ALTER SEQUENCE compliance_check_resources_id_seq OWNED BY compliance_check_resources.id;
 CREATE TABLE compliance_check_sets (
     id bigint NOT NULL,
-    referential_id integer,
-    compliance_control_set_id integer,
-    workbench_id integer,
+    referential_id bigint,
+    compliance_control_set_id bigint,
+    workbench_id bigint,
     creator character varying,
     status character varying,
-    parent_id integer,
+    parent_id bigint,
     parent_type character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -95,8 +95,8 @@ ALTER TABLE compliance_check_sets_id_seq OWNER TO chouette;
 ALTER SEQUENCE compliance_check_sets_id_seq OWNED BY compliance_check_sets.id;
 CREATE TABLE compliance_checks (
     id bigint NOT NULL,
-    compliance_check_set_id integer,
-    compliance_check_block_id integer,
+    compliance_check_set_id bigint,
+    compliance_check_block_id bigint,
     type character varying,
     control_attributes shared_extensions.hstore,
     name character varying,
@@ -120,7 +120,7 @@ CREATE TABLE compliance_control_blocks (
     id bigint NOT NULL,
     name character varying,
     condition_attributes shared_extensions.hstore,
-    compliance_control_set_id integer,
+    compliance_control_set_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -136,7 +136,7 @@ ALTER SEQUENCE compliance_control_blocks_id_seq OWNED BY compliance_control_bloc
 CREATE TABLE compliance_control_sets (
     id bigint NOT NULL,
     name character varying,
-    organisation_id integer,
+    organisation_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -151,7 +151,7 @@ ALTER TABLE compliance_control_sets_id_seq OWNER TO chouette;
 ALTER SEQUENCE compliance_control_sets_id_seq OWNED BY compliance_control_sets.id;
 CREATE TABLE compliance_controls (
     id bigint NOT NULL,
-    compliance_control_set_id integer,
+    compliance_control_set_id bigint,
     type character varying,
     control_attributes shared_extensions.hstore,
     name character varying,
@@ -161,7 +161,7 @@ CREATE TABLE compliance_controls (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     origin_code character varying,
-    compliance_control_block_id integer
+    compliance_control_block_id bigint
 );
 ALTER TABLE compliance_controls OWNER TO chouette;
 CREATE SEQUENCE compliance_controls_id_seq

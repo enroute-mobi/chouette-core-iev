@@ -108,7 +108,7 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		DataLocation location = new DataLocation(fileName, 1, 1);
 		validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_2, CheckPointReport.SEVERITY.ERROR);
-		validationReporter.addCheckPointReportError(context, L1_NetexStif_2, location, e.getMessage());
+		validationReporter.addCheckPointReportError(context, null, L1_NetexStif_2, location, e.getMessage());
 		reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, e.getMessage());
 	}
 

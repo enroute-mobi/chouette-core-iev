@@ -69,7 +69,7 @@ public class DayTypeValidator extends AbstractValidator {
 		if (!result) {
 			DataLocation location = getLocation(context, timetable.getObjectId());
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_DayType_1, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayType_1, location);
 		}
 		return result;
 	}
@@ -108,7 +108,7 @@ public class DayTypeValidator extends AbstractValidator {
 		if (!result) {
 			DataLocation location = getLocation(context, timetable.getObjectId());
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_DayType_2, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayType_2, location);
 		}
 		return result;
 	}

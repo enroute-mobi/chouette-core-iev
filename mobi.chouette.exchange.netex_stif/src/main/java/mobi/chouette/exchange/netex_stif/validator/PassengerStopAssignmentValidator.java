@@ -61,7 +61,7 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, stopAssignment);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassengerStopAssignment_1, location, "ScheduledStopPointRef");
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_PassengerStopAssignment_1, location, "ScheduledStopPointRef");
 
  		}
  		if (!result2)
@@ -70,7 +70,7 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, stopAssignment);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_PassengerStopAssignment_1, location, "QuayRef");
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_PassengerStopAssignment_1, location, "QuayRef");
 
  		}
 

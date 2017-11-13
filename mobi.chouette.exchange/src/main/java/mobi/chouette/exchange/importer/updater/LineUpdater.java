@@ -343,7 +343,7 @@ public class LineUpdater implements Updater<Line> {
 	 */
 	private void twoDatabaseLineOneTest(ValidationReporter validationReporter, Context context, Line oldLine, Line newLine, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldLine.getNetwork(), newLine.getNetwork()))
-			validationReporter.addCheckPointReportError(context, DATABASE_LINE_1, data.getDataLocations().get(newLine.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, DATABASE_LINE_1, data.getDataLocations().get(newLine.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_LINE_1);
 	}
@@ -357,7 +357,7 @@ public class LineUpdater implements Updater<Line> {
 	 */
 	private void twoDatabaseLineTwoTest(ValidationReporter validationReporter, Context context, Line oldLine, Line newLine, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldLine.getCompany(), newLine.getCompany()))
-			validationReporter.addCheckPointReportError(context, DATABASE_LINE_2, data.getDataLocations().get(newLine.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, DATABASE_LINE_2, data.getDataLocations().get(newLine.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_LINE_2);
 	}
@@ -371,7 +371,7 @@ public class LineUpdater implements Updater<Line> {
 	 */
 	private void twoDatabaseRouteOneTest(ValidationReporter validationReporter, Context context, Route oldRoute, Route newRoute, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldRoute.getLine(), newRoute.getLine()))
-			validationReporter.addCheckPointReportError(context, DATABASE_ROUTE_1, data.getDataLocations().get(newRoute.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, DATABASE_ROUTE_1, data.getDataLocations().get(newRoute.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_ROUTE_1);
 	}
