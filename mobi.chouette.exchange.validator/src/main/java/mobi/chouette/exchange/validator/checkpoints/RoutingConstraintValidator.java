@@ -84,7 +84,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 				// log.error("ITL " + object.getObjectId() + " contains disabled stop " + sa.getObjectId());
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(sa);
-				validationReporter.addCheckPointReportError(context, L3_ITL_1, source, null, null, target);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_ITL_1, source, null, null, target);
 			}
 
 		}
@@ -137,7 +137,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 			validationReporter.prepareCheckPointReport(context, L3_ITL_2);
 			log.error("ITL " + object.getObjectId() + " contains all route stops");
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, L3_ITL_2, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_ITL_2, source);
 		}
 	}
 
@@ -205,7 +205,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 			validationReporter.prepareCheckPointReport(context, L3_ITL_3);
 			log.error("ITL " + object.getObjectId() + " has not enough stops");
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, L3_ITL_3, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_ITL_3, source);
 		}
 	}
 

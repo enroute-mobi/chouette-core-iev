@@ -29,7 +29,6 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.validation.ValidationData;
-import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
@@ -66,18 +65,10 @@ public class ValidatorCommand implements Command, Constant {
 				return ERROR;
 			}
 
-			ValidationParameters validationParameters = (ValidationParameters) context.get(VALIDATION);
-			if (validationParameters == null) {
-				log.error("no validation parameters for validation ");
-				reporter.setActionError(context, ActionReporter.ERROR_CODE.INVALID_PARAMETERS,
-						"no validation parameters for validation ");
-				return ERROR;
-
-			}
-
 			ValidateParameters parameters = (ValidateParameters) configuration;
 			progression.initialize(context, 1);
 			context.put(VALIDATION_DATA, new ValidationData());
+			context.put(REFERENTIAL, new Referential());
 
 			String type = parameters.getReferencesType();
 			// set default type

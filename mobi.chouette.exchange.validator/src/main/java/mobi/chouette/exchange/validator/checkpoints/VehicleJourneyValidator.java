@@ -85,7 +85,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 						}
 						DataLocation source = new DataLocation(object);
 						DataLocation target = new DataLocation(zdep);
-						validationReporter.addCheckPointReportError(context, L3_VehicleJourney_1, source,
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_1, source,
 								Long.toString(delta / 60L), parameters.getMaximumValue(), target);
 
 					}
@@ -154,7 +154,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_2, "1", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_2, "1", source,
 						Long.toString(speed), parameters.getMaximumValue(), target1, target2);
 
 			}
@@ -165,7 +165,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_2, "2", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_2, "2", source,
 						Long.toString(speed), parameters.getMinimumValue(), target1, target2);
 			}
 		}
@@ -209,7 +209,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 
 		if (object.getTimetables().isEmpty()) {
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, L3_VehicleJourney_4, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_4, source);
 
 		}
 	}
@@ -269,7 +269,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				}
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(zdep);
-				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_5, "1", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_5, "1", source,
 						format.format(passingTime.getArrivalTime()), format.format(passingTime.getDepartureTime()),
 						target);
 			}
@@ -291,7 +291,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, L3_VehicleJourney_5, "2", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_5, "2", source,
 						format.format(passingTime1.getDepartureTime()), format.format(passingTime2.getArrivalTime()),
 						target1, target2);
 

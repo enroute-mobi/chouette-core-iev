@@ -72,7 +72,7 @@ if __name__ == '__main__':
 	
 	
 	
-	priority=0
+	priority=500
 	
 	with open("expected-result.csv", encoding="utf-8") as f:
 		lines = f.readlines()

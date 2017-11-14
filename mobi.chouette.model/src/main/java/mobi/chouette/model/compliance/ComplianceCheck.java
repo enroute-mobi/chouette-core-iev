@@ -52,7 +52,7 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	// @formatter:on
 
 	public enum CRITICITY {
-		WARNING, ERROR
+		warning, error
 	};
 
 	@Getter
@@ -101,7 +101,7 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	@Getter
 	@Setter
 	@Column(name = "criticity")
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private CRITICITY criticity;
 
 	@Getter

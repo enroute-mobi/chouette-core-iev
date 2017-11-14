@@ -405,7 +405,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 	 */
 	private void twoDatabaseVehicleJourneyTwoTest(ValidationReporter validationReporter, Context context, Company oldCompany,  Company newCompany, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldCompany, newCompany))
-			validationReporter.addCheckPointReportError(context, DATABASE_VEHICLE_JOURNEY_2, data.getDataLocations().get(newCompany.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, DATABASE_VEHICLE_JOURNEY_2, data.getDataLocations().get(newCompany.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_VEHICLE_JOURNEY_2);
 	}

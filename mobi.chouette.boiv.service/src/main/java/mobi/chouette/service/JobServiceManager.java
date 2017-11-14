@@ -105,7 +105,7 @@ public class JobServiceManager {
 		return jobService;
 	}
 
-	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public JobService createJob(String action, Long id) throws ServiceException {
 
 		// Instancier le modèle du service 'upload'
@@ -369,8 +369,7 @@ public class JobServiceManager {
 			log.error("actionDAO is null");
 			throw new NullPointerException("null actionDAO");
 		}
-
-		ActionTask actionTask = actionDAO.find(JobData.ACTION.importer, jobService.getId());
+		ActionTask actionTask = actionDAO.find(jobService.getAction(), jobService.getId());
 		if (actionTask == null) {
 			log.error("null " + jobService.getAction() + " task for jobService id = " + jobService.getId());
 			throw new NullPointerException("null " + jobService.getAction() + " Task for jobService");

@@ -66,7 +66,7 @@ public class OperatingPeriodValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, period);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_OperatingPeriod_1, location,sdf.format(period.getPeriod().getEndDate()),sdf.format(period.getPeriod().getStartDate()));
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_OperatingPeriod_1, location,sdf.format(period.getPeriod().getEndDate()),sdf.format(period.getPeriod().getStartDate()));
 		}
 		return result;
 	}

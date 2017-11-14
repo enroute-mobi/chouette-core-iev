@@ -142,7 +142,7 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 				{
 					// check for no link change
 					if (!ChouetteModelUtil.sameValue(oldValue.getStartOfLink(), newValue.getStartOfLink()))
-						validationReporter.addCheckPointReportError(context, DATABASE_CONNECTION_LINK_1, "1", data
+						validationReporter.addCheckPointReportError(context, null, DATABASE_CONNECTION_LINK_1, "1", data
 								.getDataLocations().get(newValue.getObjectId()));
 					else
 						validationReporter.reportSuccess(context, DATABASE_CONNECTION_LINK_1);
@@ -169,7 +169,7 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 				else
 				{
 					if (!ChouetteModelUtil.sameValue(oldValue.getEndOfLink(), newValue.getEndOfLink()))
-						validationReporter.addCheckPointReportError(context, DATABASE_CONNECTION_LINK_1, "2", data
+						validationReporter.addCheckPointReportError(context, null, DATABASE_CONNECTION_LINK_1, "2", data
 								.getDataLocations().get(newValue.getObjectId()));
 					else
 						validationReporter.reportSuccess(context, DATABASE_CONNECTION_LINK_1);

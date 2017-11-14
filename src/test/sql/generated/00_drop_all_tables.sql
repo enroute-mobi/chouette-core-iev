@@ -1,4 +1,8 @@
+DROP TABLE IF EXISTS import_messages CASCADE;
+DROP TABLE IF EXISTS import_resources CASCADE;
+DROP TABLE IF EXISTS imports CASCADE;
 DROP TABLE IF EXISTS compliance_check_blocks CASCADE;
+DROP TABLE IF EXISTS compliance_check_messages CASCADE;
 DROP TABLE IF EXISTS compliance_check_resources CASCADE;
 DROP TABLE IF EXISTS compliance_check_sets CASCADE;
 DROP TABLE IF EXISTS compliance_checks CASCADE;
@@ -20,9 +24,6 @@ DROP TABLE IF EXISTS footnotes CASCADE;
 DROP TABLE IF EXISTS footnotes_vehicle_journeys CASCADE;
 DROP TABLE IF EXISTS group_of_lines CASCADE;
 DROP TABLE IF EXISTS group_of_lines_lines CASCADE;
-DROP TABLE IF EXISTS import_messages CASCADE;
-DROP TABLE IF EXISTS import_resources CASCADE;
-DROP TABLE IF EXISTS imports CASCADE;
 DROP TABLE IF EXISTS journey_frequencies CASCADE;
 DROP TABLE IF EXISTS journey_pattern_sections CASCADE;
 DROP TABLE IF EXISTS journey_patterns CASCADE;

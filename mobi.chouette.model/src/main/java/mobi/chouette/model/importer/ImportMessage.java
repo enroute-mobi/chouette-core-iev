@@ -5,9 +5,12 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -46,6 +49,23 @@ public class ImportMessage extends ActionMessage {
 	@Setter
 	@Column(name = "import_id")
 	private Long taskId;
+	
+	@Getter
+	@Setter
+	@Column(name = "resource_id")
+	private Long resourceId;
+	
+	@Getter
+	@Setter
+	@Transient
+	private Long checkPointId;
+
+	@Getter
+	@Setter
+	@Column(name = "criticity")
+	@Enumerated(EnumType.STRING)
+	private CRITICITY criticity;
+
 
 	public ImportMessage(Long taskId, Long resouceId) {
 		this.taskId = taskId;

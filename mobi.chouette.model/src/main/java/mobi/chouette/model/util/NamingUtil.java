@@ -7,6 +7,7 @@ import java.util.Calendar;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
@@ -31,6 +32,12 @@ public abstract class NamingUtil {
 	}
 
 	public static String getName(Company object) {
+		if (isFilled(object.getName()))
+			return object.getName();
+		return object.getObjectId();
+	}
+
+	public static String getName(CompanyLite object) {
 		if (isFilled(object.getName()))
 			return object.getName();
 		return object.getObjectId();

@@ -242,7 +242,7 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 	 */
 	private void twoDatabaseVehicleJourneyOneTest(ValidationReporter validationReporter, Context context, VehicleJourney oldVj, VehicleJourney newVj, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldVj.getJourneyPattern(), newVj.getJourneyPattern()))
-			validationReporter.addCheckPointReportError(context, DATABASE_VEHICLE_JOURNEY_1, data.getDataLocations().get(newVj.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, DATABASE_VEHICLE_JOURNEY_1, data.getDataLocations().get(newVj.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, DATABASE_VEHICLE_JOURNEY_1);
 	}

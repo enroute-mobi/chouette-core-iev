@@ -6,7 +6,6 @@ import java.util.Arrays;
 import mobi.chouette.common.JSONUtil;
 import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.parameters.AbstractParameter;
-import mobi.chouette.exchange.validation.parameters.ValidationParameters;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.importer.ImportTask;
 
@@ -22,14 +21,10 @@ public class DummyImporterInputValidator extends AbstractInputValidator {
 	}
 
 	@Override
-	public boolean checkParameters(String abstractParameter, String validationParameters) {
+	public boolean checkParameters(String abstractParameter) {
 		return true;
 	}
 
-	@Override
-	public boolean checkParameters(AbstractParameter abstractParameter, ValidationParameters validationParameters) {
-		return true;
-	}
 
 	@Override
 	public boolean checkFilename(String fileName) {
@@ -62,6 +57,12 @@ public class DummyImporterInputValidator extends AbstractInputValidator {
 			return parameter;
 		}
 		return null;
+	}
+
+	@Override
+	public boolean checkParameters(AbstractParameter abstractParameter) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

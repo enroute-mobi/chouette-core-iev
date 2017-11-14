@@ -3,12 +3,10 @@ package mobi.chouette.exchange.netex_stif.exporter;
 import java.nio.file.Paths;
 import java.util.Date;
 
-import mobi.chouette.exchange.netex_stif.exporter.NetexStifExportParameters;
-import mobi.chouette.exchange.netex_stif.exporter.NetexStifExporterInputValidator;
-import mobi.chouette.exchange.parameters.AbstractExportParameter;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import mobi.chouette.exchange.parameters.AbstractExportParameter;
 
 public class NetexStifExporterInputValidatorTests {
 	@SuppressWarnings("deprecation")
@@ -22,7 +20,7 @@ public class NetexStifExporterInputValidatorTests {
 		parameters.setStartDate(startDate);
 		parameters.setEndDate(endDate);
 		parameters.setReferencesType("line");
-		boolean result = validator.checkParameters(parameters,null);
+		boolean result = validator.checkParameters(parameters);
 
 		Assert.assertTrue(result, "check for good parameters");
 	}
@@ -33,7 +31,7 @@ public class NetexStifExporterInputValidatorTests {
 	{
 		NetexStifExporterInputValidator validator = new NetexStifExporterInputValidator();
 
-		boolean result = validator.checkParameters(new BadParameters(),null);
+		boolean result = validator.checkParameters(new BadParameters());
 		Assert.assertFalse(result, "check for parameter class");
 		
 		NetexStifExportParameters parameters = new NetexStifExportParameters();
@@ -42,18 +40,18 @@ public class NetexStifExporterInputValidatorTests {
 		parameters.setStartDate(endDate);
 		parameters.setEndDate(startDate);
 		parameters.setReferencesType("line");
-		result = validator.checkParameters(parameters,null);
+		result = validator.checkParameters(parameters);
 		Assert.assertFalse(result, "check for bad dates");
 
 		parameters.setStartDate(startDate);
 		parameters.setEndDate(endDate);
 		
 		parameters.setReferencesType("bidon");
-		result = validator.checkParameters(parameters,null);
+		result = validator.checkParameters(parameters);
 		Assert.assertFalse(result, "check for wrong type");
 
 		parameters.setReferencesType("stop_area");
-		result = validator.checkParameters(parameters,null);
+		result = validator.checkParameters(parameters);
 		Assert.assertFalse(result, "check for wrong type");
 
 

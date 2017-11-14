@@ -1,5 +1,6 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+-- SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -322,77 +323,6 @@ CREATE TABLE group_of_lines_lines (
     line_id bigint
 );
 ALTER TABLE group_of_lines_lines OWNER TO chouette;
-CREATE TABLE import_messages (
-    id bigint NOT NULL,
-    criticity integer,
-    message_key character varying,
-    message_attributes shared_extensions.hstore,
-    import_id bigint,
-    resource_id bigint,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    resource_attributes shared_extensions.hstore
-);
-ALTER TABLE import_messages OWNER TO chouette;
-CREATE SEQUENCE import_messages_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-ALTER TABLE import_messages_id_seq OWNER TO chouette;
-ALTER SEQUENCE import_messages_id_seq OWNED BY import_messages.id;
-CREATE TABLE import_resources (
-    id bigint NOT NULL,
-    import_id bigint,
-    status character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    resource_type character varying,
-    reference character varying,
-    name character varying,
-    metrics shared_extensions.hstore
-);
-ALTER TABLE import_resources OWNER TO chouette;
-CREATE SEQUENCE import_resources_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-ALTER TABLE import_resources_id_seq OWNER TO chouette;
-ALTER SEQUENCE import_resources_id_seq OWNED BY import_resources.id;
-CREATE TABLE imports (
-    id bigint NOT NULL,
-    status character varying,
-    current_step_id character varying,
-    current_step_progress double precision,
-    workbench_id bigint,
-    referential_id bigint,
-    name character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    file character varying,
-    started_at timestamp without time zone,
-    ended_at timestamp without time zone,
-    token_download character varying,
-    type character varying,
-    parent_id bigint,
-    parent_type character varying,
-    notified_parent_at timestamp without time zone,
-    current_step integer DEFAULT 0,
-    total_steps integer DEFAULT 0,
-    creator character varying
-);
-ALTER TABLE imports OWNER TO chouette;
-CREATE SEQUENCE imports_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-ALTER TABLE imports_id_seq OWNER TO chouette;
-ALTER SEQUENCE imports_id_seq OWNED BY imports.id;
 CREATE TABLE journey_frequencies (
     id bigint NOT NULL,
     vehicle_journey_id bigint,
@@ -1212,9 +1142,6 @@ ALTER TABLE ONLY exports ALTER COLUMN id SET DEFAULT nextval('exports_id_seq'::r
 ALTER TABLE ONLY facilities ALTER COLUMN id SET DEFAULT nextval('facilities_id_seq'::regclass);
 ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq'::regclass);
 ALTER TABLE ONLY group_of_lines ALTER COLUMN id SET DEFAULT nextval('group_of_lines_id_seq'::regclass);
-ALTER TABLE ONLY import_messages ALTER COLUMN id SET DEFAULT nextval('import_messages_id_seq'::regclass);
-ALTER TABLE ONLY import_resources ALTER COLUMN id SET DEFAULT nextval('import_resources_id_seq'::regclass);
-ALTER TABLE ONLY imports ALTER COLUMN id SET DEFAULT nextval('imports_id_seq'::regclass);
 ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journey_frequencies_id_seq'::regclass);
 ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
 ALTER TABLE ONLY journey_patterns ALTER COLUMN id SET DEFAULT nextval('journey_patterns_id_seq'::regclass);
@@ -1262,9 +1189,6 @@ ALTER TABLE ONLY exports    ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY facilities    ADD CONSTRAINT facilities_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY footnotes    ADD CONSTRAINT footnotes_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY group_of_lines    ADD CONSTRAINT group_of_lines_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY import_messages    ADD CONSTRAINT import_messages_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY import_resources    ADD CONSTRAINT import_resources_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY imports    ADD CONSTRAINT imports_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY journey_frequencies    ADD CONSTRAINT journey_frequencies_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY journey_pattern_sections    ADD CONSTRAINT journey_pattern_sections_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT journey_patterns_pkey PRIMARY KEY (id);
@@ -1315,11 +1239,6 @@ CREATE INDEX index_clean_ups_on_referential_id ON clean_ups USING btree (referen
 CREATE INDEX index_companies_on_line_referential_id ON companies USING btree (line_referential_id);
 CREATE INDEX index_exports_on_referential_id ON exports USING btree (referential_id);
 CREATE INDEX index_group_of_lines_on_line_referential_id ON group_of_lines USING btree (line_referential_id);
-CREATE INDEX index_import_messages_on_import_id ON import_messages USING btree (import_id);
-CREATE INDEX index_import_messages_on_resource_id ON import_messages USING btree (resource_id);
-CREATE INDEX index_import_resources_on_import_id ON import_resources USING btree (import_id);
-CREATE INDEX index_imports_on_referential_id ON imports USING btree (referential_id);
-CREATE INDEX index_imports_on_workbench_id ON imports USING btree (workbench_id);
 CREATE INDEX index_journey_frequencies_on_timeband_id ON journey_frequencies USING btree (timeband_id);
 CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequencies USING btree (vehicle_journey_id);
 CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey_patterns_stop_points USING btree (journey_pattern_id);

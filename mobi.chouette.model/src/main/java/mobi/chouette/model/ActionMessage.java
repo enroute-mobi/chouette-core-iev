@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.CollectionType;
@@ -22,7 +20,7 @@ import mobi.chouette.model.converter.HstoreConverter;
 public abstract class ActionMessage extends ChouetteDatedObject {
 
 	public enum CRITICITY {
-		INFO, WARNING, ERROR
+		info, warning, error
 	};
 
 	private static final long serialVersionUID = -4385137259926047441L;
@@ -34,12 +32,16 @@ public abstract class ActionMessage extends ChouetteDatedObject {
 	public abstract Long getTaskId();
 
 	public abstract void setTaskId(Long id);
+	
+	public abstract void setCriticity(CRITICITY criticity);
 
-	@Getter
-	@Setter
-	@Column(name = "criticity")
-	@Enumerated(EnumType.ORDINAL)
-	private CRITICITY criticity;
+	public abstract void setResourceId(Long id);
+	
+	public abstract Long getResourceId();
+	
+	public abstract Long getCheckPointId();
+	
+	public abstract void setCheckPointId(Long id);
 
 	@Getter
 	@Setter
@@ -53,10 +55,6 @@ public abstract class ActionMessage extends ChouetteDatedObject {
 	@Convert(converter = HstoreConverter.class)
 	private Map<String, String> messageAttributs = new HashMap<String, String>();
 
-	@Getter
-	@Setter
-	@Column(name = "resource_id")
-	private Long resourceId;
 	
 	//TODO : AF doit renommer compliance_check_resource_id en resourceId
 

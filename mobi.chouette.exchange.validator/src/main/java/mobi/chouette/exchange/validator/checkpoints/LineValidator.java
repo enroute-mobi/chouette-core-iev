@@ -68,7 +68,7 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 					log.error("Route " + r.getObjectId() + " of Line " + object.getObjectId()
 							+ " has incorrect opposite Route");
 					DataLocation source = new DataLocation(object);
-					validationReporter.addCheckPointReportError(context, checkPointName, source);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), checkPointName, source);
 				}
 			}
 		} else {
@@ -134,7 +134,7 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 				if (sameExist != null) {
 					DataLocation source = new DataLocation(object);
 					DataLocation target = new DataLocation(sameExist);
-					validationReporter.addCheckPointReportError(context, checkPointName, source, null, null, target);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), checkPointName, source, null, null, target);
 				} else {
 					map.put(key, r);
 				}
@@ -201,7 +201,7 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 			if (sameExist != null) {
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(sameExist);
-				validationReporter.addCheckPointReportError(context, checkPointName, source, null, null, target);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), checkPointName, source, null, null, target);
 			} else {
 				map.put(key, jp);
 			}	

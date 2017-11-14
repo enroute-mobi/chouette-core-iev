@@ -103,7 +103,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_ServiceJourney_1, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_1, location);
 
 		}
 		return result;
@@ -146,7 +146,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_ServiceJourney_2, location);
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_2, location);
 		}
 		return result;
 	}
@@ -184,7 +184,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_ServiceJourney_3, location,Integer.toString(journey.getVehicleJourneyAtStops().size()));
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_3, location,Integer.toString(journey.getVehicleJourneyAtStops().size()));
 		}
 		return result;
 	}
@@ -231,7 +231,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, L2_NeTExSTIF_ServiceJourney_4, location, Integer.toString(rank));			
+			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_4, location, Integer.toString(rank));			
 		}
 		return result;
 	}

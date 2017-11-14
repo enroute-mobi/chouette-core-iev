@@ -1,0 +1,116 @@
+fr:
+  compliance_controls:
+    min_max_values: "la valeur de minimum (%{min}) ne doit pas être superieur à la valuer du maximum (%{max})"
+    errors:
+      incoherent_control_sets: "Le contrôle ne peut pas être associé à un jeu de contrôle (id: %{direct_set_name}) différent de celui de son groupe (id: %{indirect_set_name})"
+      mandatory_control_type: "Un type de contrôle doit être sélectionné"
+    show:
+      title: "Consulter un contrôle"
+    new:
+      title: "Ajouter un contrôle"
+    edit:
+      title: "Editer un contrôle"
+    select_type:
+      title: "Sélectionner un type de contrôle"
+    route_control/zdl_stop_area:
+      messages:
+        3_route_1: "L'itinéraire %{source_objectid} dessert successivement les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) de la même zone de lieu"
+      description: "Deux arrêts d’une même ZDL ne peuvent pas se succéder dans un itinéraire"
+    route_control/opposite_route:
+      messages:
+        3_route_2: "L'itinéraire %{source_objectid} référence un itinéraire retour %{target_0_objectid} incohérent"
+      description: |
+        "Si l'itinéraire référence un itinéraire inverse, celui-ci doit :
+          - référencer l'itinéraire inverse
+          - avoir un sens opposé à l'itinéraire testé"
+    route_control/journey_pattern:
+      messages:
+        3_route_3: "L'itinéraire %{source_objectid} n'a pas de mission"
+      description: "Un itinéraire doit avoir au moins une mission"
+    route_control/duplicates:
+      messages:
+        3_route_4: "L'itinéraire %{source_objectid} est identique à l'itinéraire %{target_0_objectid}"
+      description: "2 itinéraires ne doivent pas desservir strictement les mêmes arrêts dans le même ordre avec les mêmes critères de monté/descente"
+    route_control/opposite_route_terminus:
+      messages:
+        3_route_5: "L'itinéraire %{source_objectid} dessert au départ un arrêt de la ZDL %{target_0_label} alors que l'itinéraire inverse dessert à l'arrivée un arrêt de la ZDL %{target_1_label}"
+      description: "Deux itinéraires en aller/retour doivent desservir les mêmes terminus"
+    route_control/minimum_length:
+      messages:
+        3_route_6: "L'itinéraire %{source_objectid} ne dessert pas assez d'arrêts (minimum 2 requis)"
+      description: "Un itinéraire doit référencer au moins 2 arrêts"
+    route_control/stop_points_in_journey_pattern:
+      messages:
+        3_route_8: "l'arrêt %{target_0_label} (%{target_0_objectid}) de l'itinéraire %{source_objectid} n'est desservi par aucune mission"
+      description: "Les arrêts de l'itinéraire doivent être desservis par au moins une mission"
+    route_control/omnibus_journey_pattern:
+      messages:
+        3_route_9: "L'itinéraire %{source_objectid} n'a aucune mission desservant l'ensemble de ses arrêts"
+      description: "Une mission de l'itinéraire devrait desservir l'ensemble des arrêts de celui-ci"
+    route_control/unactivated_stop_point:
+      messages:
+        3_route_10: "L'itinéraire %{source_objectid} référence un arrêt (ZDEp) désactivé %{target_0_label} (%{target_0_objectid})"
+      description: "Les arrêts d'un itinéraire ne doivent pas être désactivés"
+    journey_pattern_control/duplicates:
+      messages:
+        3_journeypattern_1: "La mission %{source_objectid} est identique à la mission %{target_0_objectid}"
+      description: "Deux missions de la même ligne ne doivent pas desservir les mêmes arrêts dans le même ordre"
+    journey_pattern_control/vehicle_journey:
+      messages:
+        3_journeypattern_2: "La mission %{source_objectid} n'a pas de course"
+      description: "Une mission doit avoir au moins une course"
+    vehicle_journey_control/waiting_time:
+      messages:
+        3_vehiclejourney_1: "Sur la course %{source_objectid}, le temps d'attente %{error_value} à l'arrêt %{target_0_label} (%{target_0_objectid}) est supérieur au seuil toléré (%{reference_value})"
+      description: "La durée d’attente à un arrêt ne doit pas être trop grande"
+    vehicle_journey_control/speed:
+      messages:
+        3_vehiclejourney_2_1: "Sur la course %{source_objectid}, la vitesse calculée %{error_value} entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) est supérieur au seuil toléré (%{reference_value})"
+        3_vehiclejourney_2_2: "Sur la course %{source_objectid}, la vitesse calculée %{error_value} entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) est inférieur au seuil toléré (%{reference_value})"
+      description: "La vitesse entre deux arrêts doit être dans une fourchette paramétrable"
+    vehicle_journey_control/delta:
+      messages:
+        3_vehiclejourney_3: "Le temps de parcours sur la course %{source_objectid} entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) s'écarte de %{error_value} du temps moyen constaté sur la mission"
+      description: "Les temps de parcours entre 2 arrêts successifs doivent être similaires pour toutes les courses d’une même mission"
+    vehicle_journey_control/time_table:
+      messages:
+        3_vehiclejourney_4: "La course %{source_objectid} n'a pas de calendrier d'application"
+      description: "Une course doit avoir au moins un calendrier d’application"
+    vehicle_journey_control/vehicle_journey_at_stops:
+      messages:
+        3_vehiclejourney_5_1: "La course %{source_objectid} a un horaire d'arrivé %{error_value} supérieur à l'horaire de départ %{reference_value} à l'arrêt %{target_0_label} (%{target_0_objectid})"
+        3_vehiclejourney_5_2: "La course %{source_objectid} a un horaire de départ %{error_value} à l'arrêt %{target_0_label} (%{target_0_objectid}) supérieur à l'horaire d'arrivé % à l'arrêt suivant"
+      description: "L'horaire d'arrivée à un arrêt doit être antérieur à l'horaire de départ de cet arrêt ET les horaires de départ aux arrêts doivent être dans l'ordre chronologique croissant."
+    routing_constraint_zone_control/vehicle_journey_at_stops:
+      messages:
+        3_routingconstraint_1: "L'ITL %{source_objectid} référence un arrêt (ZDEp) désactivé %{target_0_label} (%{target_0_objectid})"
+      description: "Les arrêts d'une ITL ne doivent pas être désactivés"
+    routing_constraint_zone_control/maximum_length:
+      messages:
+        3_routingconstraint_2: "L'ITL %{source_objectid} couvre tous les arrêts de l'itinéraire %{target_0_objectid}."
+      description: "Une ITL ne peut pas couvrir l'ensemble des arrêts de l'itinéraire"
+    routing_constraint_zone_control/minimum_length:
+      messages:
+        3_routingconstraint_3: "L'ITL %{source_objectid} n'a pas suffisament d'arrêts (minimum 2 arrêts requis)"
+      description: "Une ITL doit référencer au moins 2 arrêts"
+    line_control/route:
+      messages:
+        3_line_1: "Sur la ligne %{source_label} (%{source_objectid}), aucun itinéraire n'a d'itinéraire inverse"
+      description: "Les itinéraires d'une ligne doivent être associés en aller/retour"
+    generic_attribute_control/pattern:
+      messages:
+        3_generic_1: "%{source_objectid} : l'attribut % à une valeur %{error_value} qui ne respecte pas le motif %{reference_value}"
+      description: "l'attribut de l'objet doit respecter un motif (expression régulière)"
+    generic_attribute_control/min_max:
+      messages:
+        3_generic_2_1: "%{source_objectid} : l'attribut %{source_label} à une valeur %{error_value} supérieure à la valeur maximale autorisée %{reference_value}"
+        3_generic_2_2: "%{source_objectid} : l'attribut %{source_label} à une valeur %{error_value} inférieure à la valeur minimale autorisée %{reference_value}"
+      description: "La valeur numérique de l'attribut doit rester comprise entre 2 valeurs"
+    generic_attribute_control/uniqueness:
+      messages:
+        3_generic_3: "%{source_objectid} : l'attribut %{source_label} à une valeur %{error_value}en conflit avec %{reference_value}"
+      description: "La valeur de l'attribut doit être unique au sein des objets de la ligne"
+    shape_control:
+      3_shape_1: "Tracé %{source_objectid} : le tracé passe trop loin de l'arrêt %{target_0_label} (%{target_0_objectid}) : %{error_value} > %{reference_value}"
+      3_shape_2: "Tracé %{source_objectid} : le tracé n'est pas défini entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid})"
+      3_shape_3: "Le tracé de l'itinéraire %{source_objectid} est en écart avec la voirie sur %{error_value} sections"

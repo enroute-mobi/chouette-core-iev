@@ -18,6 +18,7 @@ import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
@@ -204,6 +205,9 @@ public class Location extends AbstractReport {
 		} else if (chouetteObject instanceof Line) {
 			Line object = (Line) chouetteObject;
 			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof LineLite) {
+			LineLite object = (LineLite) chouetteObject;
+			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof AccessLink) {
 			AccessLink object = (AccessLink) chouetteObject;
 			return NamingUtil.getName(object);
@@ -213,6 +217,9 @@ public class Location extends AbstractReport {
 		} else if (chouetteObject instanceof StopArea) {
 			StopArea object = (StopArea) chouetteObject;
 			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof StopAreaLite) {
+			StopAreaLite object = (StopAreaLite) chouetteObject;
+			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof ConnectionLink) {
 			ConnectionLink object = (ConnectionLink) chouetteObject;
 			return NamingUtil.getName(object);
@@ -221,6 +228,9 @@ public class Location extends AbstractReport {
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof Company) {
 			Company object = (Company) chouetteObject;
+			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof CompanyLite) {
+			CompanyLite object = (CompanyLite) chouetteObject;
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof GroupOfLine) {
 			GroupOfLine object = (GroupOfLine) chouetteObject;

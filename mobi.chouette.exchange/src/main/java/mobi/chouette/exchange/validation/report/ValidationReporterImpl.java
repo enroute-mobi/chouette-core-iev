@@ -46,35 +46,35 @@ public class ValidationReporterImpl implements ValidationReporter, Constant {
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation location) {
-		addCheckPointReportError(context, checkPointName, detail, location, null, null);
+	public void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, String detail, DataLocation location) {
+		addCheckPointReportError(context, checkPointId, checkPointName, detail, location, null, null);
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, DataLocation location) {
-		addCheckPointReportError(context, checkPointName, null, location, null, null);
+	public void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, DataLocation location) {
+		addCheckPointReportError(context, checkPointId, checkPointName, null, location, null, null);
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, DataLocation location, String value) {
-		addCheckPointReportError(context, checkPointName, null, location, value, null);
+	public void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, DataLocation location, String value) {
+		addCheckPointReportError(context, checkPointId, checkPointName, null, location, value, null);
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation location,
+	public void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, String detail, DataLocation location,
 			String value) {
-		addCheckPointReportError(context, checkPointName, detail, location, value, null);
+		addCheckPointReportError(context, checkPointId, checkPointName, detail, location, value, null);
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, DataLocation location, String value,
+	public void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, DataLocation location, String value,
 			String refValue) {
-		addCheckPointReportError(context, checkPointName, null, location, value, refValue);
+		addCheckPointReportError(context, checkPointId, checkPointName, null, location, value, refValue);
 
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation location,
+	public void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String detail, DataLocation location,
 			String value, String refValue) {
 		ValidationReport validationReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		Location detailLocation = null;
@@ -89,10 +89,10 @@ public class ValidationReporterImpl implements ValidationReporter, Constant {
 		CheckPointErrorReport newCheckPointError;
 
 		if (detail != null)
-			newCheckPointError = new CheckPointErrorReport(checkPointName, checkPointName + "_" + detail,
+			newCheckPointError = new CheckPointErrorReport(checkPointId, checkPointName, checkPointName + "_" + detail,
 					detailLocation, value, refValue);
 		else
-			newCheckPointError = new CheckPointErrorReport(checkPointName, checkPointName, detailLocation, value,
+			newCheckPointError = new CheckPointErrorReport(checkPointId, checkPointName, checkPointName, detailLocation, value,
 					refValue);
 
 		int index = validationReport.getCheckPointErrors().size();
@@ -105,13 +105,13 @@ public class ValidationReporterImpl implements ValidationReporter, Constant {
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, DataLocation location, String value,
+	public void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, DataLocation location, String value,
 			String refValue, DataLocation... targetLocations) {
-		addCheckPointReportError(context, checkPointName, null, location, value, refValue, targetLocations);
+		addCheckPointReportError(context, checkPointId, checkPointName, null, location, value, refValue, targetLocations);
 	}
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, String detail, DataLocation location,
+	public void addCheckPointReportError(Context context,  Long checkPointId, String checkPointName, String detail, DataLocation location,
 			String value, String refValue, DataLocation... targetLocations) {
 		ValidationReport validationReport = (ValidationReport) context.get(VALIDATION_REPORT);
 		Location detailLocation = null;
@@ -126,10 +126,10 @@ public class ValidationReporterImpl implements ValidationReporter, Constant {
 		CheckPointErrorReport newCheckPointError;
 
 		if (detail != null)
-			newCheckPointError = new CheckPointErrorReport(checkPointName, checkPointName + "_" + detail,
+			newCheckPointError = new CheckPointErrorReport(checkPointId, checkPointName, checkPointName + "_" + detail,
 					detailLocation, value, refValue);
 		else
-			newCheckPointError = new CheckPointErrorReport(checkPointName, checkPointName, detailLocation, value,
+			newCheckPointError = new CheckPointErrorReport(checkPointId, checkPointName, checkPointName, detailLocation, value,
 					refValue);
 
 		if (targetLocations.length > 0) {
@@ -205,7 +205,7 @@ public class ValidationReporterImpl implements ValidationReporter, Constant {
 	// }
 
 	@Override
-	public void addCheckPointReportError(Context context, String checkPointName, DataLocation[] locations,
+	public void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, DataLocation[] locations,
 			String value) {
 		ValidationReport validationReport = (ValidationReport) context.get(VALIDATION_REPORT);
 
@@ -217,7 +217,7 @@ public class ValidationReporterImpl implements ValidationReporter, Constant {
 				throw new NullPointerException("unknown checkPointName " + checkPointName);
 			checkPoint.setState(RESULT.NOK);
 
-			CheckPointErrorReport newCheckPointError = new CheckPointErrorReport(checkPointName, checkPointName,
+			CheckPointErrorReport newCheckPointError = new CheckPointErrorReport(checkPointId, checkPointName, checkPointName,
 					detailLocation, value);
 			int index = validationReport.getCheckPointErrors().size();
 			boolean checkPointAdded = checkPoint.addCheckPointError(index);

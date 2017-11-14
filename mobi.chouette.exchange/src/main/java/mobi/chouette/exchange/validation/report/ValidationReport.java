@@ -132,10 +132,13 @@ public class ValidationReport extends AbstractReport implements Report {
 				uncheckCount++;
 				break;
 			case NOK:
-				if (error)
-					errorCount++;
-				else
-					warningCount++;
+				if (error) {
+					errorCount += checkPoint.getCheckPointErrorCount();
+					// errorCount++;
+				} else {
+					warningCount += checkPoint.getCheckPointWarningCount();
+					// warningCount++;
+				}
 				break;
 			case OK:
 				okCount++;

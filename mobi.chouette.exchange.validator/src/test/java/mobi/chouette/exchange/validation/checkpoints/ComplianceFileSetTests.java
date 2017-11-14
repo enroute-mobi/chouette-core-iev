@@ -17,15 +17,15 @@ public class ComplianceFileSetTests extends AbstractComplianceFileSetTests {
 		return AbstractComplianceFileSetTests.createDeployment(ComplianceFileSetTests.class);
 	}
 
-	@Test(groups = {
-			"2100" }, testName = "2100-04", description = "[Itinéraire] Existence d’une mission passant par tous les arrêts de l'itinéraire", priority = 1)
-	public void verifyCard2100_04() throws Exception {
-		doValidation("testcompliance_2100_04", "OK", "a", "b");
-	}
-
-	@Test(groups = {
-			"2100" }, testName = "2100-05", description = "[Itinéraire] Existence d’une mission passant par tous les arrêts de l'itinéraire", priority = 2)
-	public void verifyCard2100_05() throws Exception {
-		doValidation("testcompliance_2100_05", "NOK", "aaaa", "bb");
-	}
+//	@Test(groups = {
+//			"2100" }, testName = "2100-04", description = "[Itinéraire] Existence d’une mission passant par tous les arrêts de l'itinéraire", priority = 1)
+//	public void verifyCard2100_04() throws Exception {
+//		doValidation("testcompliance_2100_04", "OK", "a", "b");
+//	}
+//
+//	@Test(groups = {
+//			"2100" }, testName = "2100-05", description = "[Itinéraire] Existence d’une mission passant par tous les arrêts de l'itinéraire", priority = 2)
+//	public void verifyCard2100_05() throws Exception {
+//		doValidation("testcompliance_2100_05", "NOK", "aaaa", "bb");
+//	}
 }

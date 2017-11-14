@@ -95,7 +95,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "line" }, description = L3_Route_4 + " : error routes with same ordered stops", priority = 32)
+	@Test(groups = { "line" }, description = L3_Route_4 + " : error routes with same ordered stops", priority = 31)
 	public void verifyTest_3_Line_1_ErrorRoutesWithSameOrderedStops() throws Exception {
 		log.info(Color.CYAN + " check " + L3_Route_4 + Color.NORMAL);
 		initSchema();

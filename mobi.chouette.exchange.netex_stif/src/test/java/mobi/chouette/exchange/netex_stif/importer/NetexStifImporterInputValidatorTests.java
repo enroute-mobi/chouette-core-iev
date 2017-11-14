@@ -13,7 +13,7 @@ public class NetexStifImporterInputValidatorTests {
 		NetexStifImporterInputValidator validator = new NetexStifImporterInputValidator();
 		NetexStifImportParameters parameters = new NetexStifImportParameters();
 	
-		boolean result = validator.checkParameters(parameters,null);
+		boolean result = validator.checkParameters(parameters);
 
 		Assert.assertTrue(result, "check for good parameters");
 		 result = validator.checkFilename("data.zip");
@@ -37,20 +37,20 @@ public class NetexStifImporterInputValidatorTests {
 	{
 		NetexStifImporterInputValidator validator = new NetexStifImporterInputValidator();
 
-		boolean result = validator.checkParameters(new BadParameters(),null);
+		boolean result = validator.checkParameters(new BadParameters());
 		Assert.assertFalse(result, "check for parameter class");
 		
 		NetexStifImportParameters parameters = new NetexStifImportParameters();
 		
-		result = validator.checkParameters(parameters,null);
+		result = validator.checkParameters(parameters);
 		Assert.assertFalse(result, "check for wrong type");
 
 		
-		result = validator.checkParameters(parameters,null);
+		result = validator.checkParameters(parameters);
 		Assert.assertFalse(result, "check for no object_id_prefix");
 
 		
-		result = validator.checkParameters(parameters,null);
+		result = validator.checkParameters(parameters);
 		Assert.assertFalse(result, "check for empty object_id_prefix");
 
 		
