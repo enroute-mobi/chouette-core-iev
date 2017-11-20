@@ -154,10 +154,10 @@ public class DaoProgressionCommand implements ProgressionCommand, Constant, Repo
 			actionResource.setStatus(fileReport.getStatus().name());
 			if (valReport != null) {
 				// just set warning and error messages count !
-				actionResource.getMetrics().put("ok_count", "n.a.");
+				// actionResource.getMetrics().put("ok_count", "n.a.");
 				actionResource.getMetrics().put("warning_count", Integer.toString(valReport.getWarningCount()));
 				actionResource.getMetrics().put("error_count", Integer.toString(valReport.getErrorCount()));
-				actionResource.getMetrics().put("uncheck_count", "n.a.");
+				// actionResource.getMetrics().put("uncheck_count", "n.a.");
 			}
 			actionResourceDAO.saveResource(actionResource);
 
