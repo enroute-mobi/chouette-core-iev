@@ -44,6 +44,15 @@ public class RouteParser implements Parser, Constant {
 			route.setCreationTime(NetexStifUtils.getDate(changed));
 		}
 		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		LineLite line = (LineLite) context.get(LINE);
+		if (line != null) {
+			route.setLineId(line.getId());
+			route.setLineLite(line);
+		}
+		else
+		{
+			throw new NullPointerException("LINE not set in context");
+		}
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			// log.info("RouteParser tag: " + xpp.getName());
@@ -62,14 +71,7 @@ public class RouteParser implements Parser, Constant {
 				if (checked)
 					checked = validator.checkExistsRef(context, route, LINE_REF, ref, att_version,
 							content, lineNumber, columnNumber);
-				LineLite line = referential.getSharedReadOnlyLines().get(ref);
-				if (line != null) {
-					route.setLineId(line.getId());
-					route.setLineLite(line);
-					// NetexStifUtils.uniqueObjectIdOnLine(context,route, line);
-					// validator.addXmlId(context, route.getObjectId(), id);
-					context.put(LINE, line);
-				}
+				// TODO : check version with line of file
 			} else if (xpp.getName().equals(DIRECTION_TYPE)) {
 
 				String tmpDirType = xpp.nextText();

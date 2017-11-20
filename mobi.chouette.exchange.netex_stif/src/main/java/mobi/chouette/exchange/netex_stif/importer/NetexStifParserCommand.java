@@ -80,8 +80,9 @@ public class NetexStifParserCommand implements Command, Constant {
 				}
 				referential.setCurrentLine(line); // for reporting
 				if (line != null) {
-					reporter.addObjectReport(context, id, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,
+					reporter.addObjectReport(context, lid, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,
 							IO_TYPE.INPUT);
+					context.put(LINE, line);
 				} else {
 					// TODO : manage invalid line for referential
 				}
