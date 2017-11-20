@@ -83,7 +83,7 @@ CREATE TABLE api_keys (
     name character varying,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    organisation_id integer
+    organisation_id bigint
 );
 ALTER TABLE api_keys OWNER TO chouette;
 CREATE SEQUENCE api_keys_id_seq
@@ -343,23 +343,6 @@ CREATE SEQUENCE journey_frequencies_id_seq
     CACHE 1;
 ALTER TABLE journey_frequencies_id_seq OWNER TO chouette;
 ALTER SEQUENCE journey_frequencies_id_seq OWNED BY journey_frequencies.id;
-CREATE TABLE journey_pattern_sections (
-    id bigint NOT NULL,
-    journey_pattern_id bigint NOT NULL,
-    route_section_id bigint NOT NULL,
-    rank integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-ALTER TABLE journey_pattern_sections OWNER TO chouette;
-CREATE SEQUENCE journey_pattern_sections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-ALTER TABLE journey_pattern_sections_id_seq OWNER TO chouette;
-ALTER SEQUENCE journey_pattern_sections_id_seq OWNED BY journey_pattern_sections.id;
 CREATE TABLE journey_patterns (
     id bigint NOT NULL,
     route_id bigint,
@@ -652,29 +635,6 @@ CREATE SEQUENCE referentials_id_seq
     CACHE 1;
 ALTER TABLE referentials_id_seq OWNER TO chouette;
 ALTER SEQUENCE referentials_id_seq OWNED BY referentials.id;
-CREATE TABLE route_sections (
-    id bigint NOT NULL,
-    departure_id bigint,
-    arrival_id bigint,
-    input_geometry shared_extensions.geometry(LineString,4326),
-    processed_geometry shared_extensions.geometry(LineString,4326),
-    objectid character varying NOT NULL,
-    object_version bigint,
-    creator_id character varying,
-    distance double precision,
-    no_processing boolean,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-ALTER TABLE route_sections OWNER TO chouette;
-CREATE SEQUENCE route_sections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-ALTER TABLE route_sections_id_seq OWNER TO chouette;
-ALTER SEQUENCE route_sections_id_seq OWNED BY route_sections.id;
 CREATE TABLE routes (
     id bigint NOT NULL,
     line_id bigint,
@@ -970,7 +930,7 @@ CREATE TABLE time_tables (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     color character varying,
-    created_from_id integer,
+    created_from_id bigint,
     checksum character varying,
     checksum_source text,
     data_source_ref character varying
@@ -1143,7 +1103,6 @@ ALTER TABLE ONLY facilities ALTER COLUMN id SET DEFAULT nextval('facilities_id_s
 ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq'::regclass);
 ALTER TABLE ONLY group_of_lines ALTER COLUMN id SET DEFAULT nextval('group_of_lines_id_seq'::regclass);
 ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journey_frequencies_id_seq'::regclass);
-ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
 ALTER TABLE ONLY journey_patterns ALTER COLUMN id SET DEFAULT nextval('journey_patterns_id_seq'::regclass);
 ALTER TABLE ONLY line_referential_memberships ALTER COLUMN id SET DEFAULT nextval('line_referential_memberships_id_seq'::regclass);
 ALTER TABLE ONLY line_referential_sync_messages ALTER COLUMN id SET DEFAULT nextval('line_referential_sync_messages_id_seq'::regclass);
@@ -1157,7 +1116,6 @@ ALTER TABLE ONLY referential_clonings ALTER COLUMN id SET DEFAULT nextval('refer
 ALTER TABLE ONLY referential_metadata ALTER COLUMN id SET DEFAULT nextval('referential_metadata_id_seq'::regclass);
 ALTER TABLE ONLY referential_suites ALTER COLUMN id SET DEFAULT nextval('referential_suites_id_seq'::regclass);
 ALTER TABLE ONLY referentials ALTER COLUMN id SET DEFAULT nextval('referentials_id_seq'::regclass);
-ALTER TABLE ONLY route_sections ALTER COLUMN id SET DEFAULT nextval('route_sections_id_seq'::regclass);
 ALTER TABLE ONLY routes ALTER COLUMN id SET DEFAULT nextval('routes_id_seq'::regclass);
 ALTER TABLE ONLY routing_constraint_zones ALTER COLUMN id SET DEFAULT nextval('routing_constraint_zones_id_seq'::regclass);
 ALTER TABLE ONLY rule_parameter_sets ALTER COLUMN id SET DEFAULT nextval('rule_parameter_sets_id_seq'::regclass);
@@ -1190,7 +1148,6 @@ ALTER TABLE ONLY facilities    ADD CONSTRAINT facilities_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY footnotes    ADD CONSTRAINT footnotes_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY group_of_lines    ADD CONSTRAINT group_of_lines_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY journey_frequencies    ADD CONSTRAINT journey_frequencies_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY journey_pattern_sections    ADD CONSTRAINT journey_pattern_sections_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT journey_patterns_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY line_referential_memberships    ADD CONSTRAINT line_referential_memberships_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY line_referential_sync_messages    ADD CONSTRAINT line_referential_sync_messages_pkey PRIMARY KEY (id);
@@ -1204,7 +1161,6 @@ ALTER TABLE ONLY referential_clonings    ADD CONSTRAINT referential_clonings_pke
 ALTER TABLE ONLY referential_metadata    ADD CONSTRAINT referential_metadata_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY referential_suites    ADD CONSTRAINT referential_suites_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY referentials    ADD CONSTRAINT referentials_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY route_sections    ADD CONSTRAINT route_sections_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY routes    ADD CONSTRAINT routes_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY routing_constraint_zones    ADD CONSTRAINT routing_constraint_zones_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY rule_parameter_sets    ADD CONSTRAINT rule_parameter_sets_pkey PRIMARY KEY (id);
@@ -1242,9 +1198,6 @@ CREATE INDEX index_group_of_lines_on_line_referential_id ON group_of_lines USING
 CREATE INDEX index_journey_frequencies_on_timeband_id ON journey_frequencies USING btree (timeband_id);
 CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequencies USING btree (vehicle_journey_id);
 CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey_patterns_stop_points USING btree (journey_pattern_id);
-CREATE INDEX index_journey_pattern_sections_on_journey_pattern_id ON journey_pattern_sections USING btree (journey_pattern_id);
-CREATE INDEX index_journey_pattern_sections_on_route_section_id ON journey_pattern_sections USING btree (route_section_id);
-CREATE UNIQUE INDEX index_jps_on_journey_pattern_id_and_route_section_id_and_rank ON journey_pattern_sections USING btree (journey_pattern_id, route_section_id, rank);
 CREATE INDEX index_line_referential_syncs_on_line_referential_id ON line_referential_syncs USING btree (line_referential_id);
 CREATE INDEX index_lines_on_line_referential_id ON lines USING btree (line_referential_id);
 CREATE INDEX index_lines_on_secondary_company_ids ON lines USING gin (secondary_company_ids);

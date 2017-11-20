@@ -26,7 +26,7 @@
 		<class>mobi.chouette.model.Line</class>
 		<class>mobi.chouette.model.Network</class>
 		<class>mobi.chouette.model.StopArea</class>
-		<class>mobi.chouette.model.RouteSection</class>
+		<!--		<class>mobi.chouette.model.RouteSection</class> -->
 		<class>mobi.chouette.model.CompanyLite</class>
 		<class>mobi.chouette.model.LineLite</class>
 		<class>mobi.chouette.model.StopAreaLite</class>

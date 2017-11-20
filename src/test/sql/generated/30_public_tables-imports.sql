@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 9.4.14
--- Dumped by pg_dump version 9.6.5
+-- Dumped by pg_dump version 9.6.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -26,7 +26,7 @@ SET default_with_oids = false;
 
 CREATE TABLE import_messages (
     id bigint NOT NULL,
-    criticity integer,
+    criticity character varying,
     message_key character varying,
     message_attributes shared_extensions.hstore,
     import_id bigint,

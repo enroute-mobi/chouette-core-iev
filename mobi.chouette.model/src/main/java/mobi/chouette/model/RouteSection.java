@@ -32,8 +32,8 @@ import lombok.ToString;
  * 
  */
 
-@Entity
-@Table(name = "route_sections",schema="public")
+// @Entity
+// @Table(name = "route_sections",schema="public")
 @NoArgsConstructor
 @ToString
 public class RouteSection extends ChouetteIdentifiedObject {
@@ -41,10 +41,10 @@ public class RouteSection extends ChouetteIdentifiedObject {
 
 	@Getter
 	@Setter
-	@SequenceGenerator(name="route_sections_id_seq", sequenceName="public.route_sections_id_seq", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="route_sections_id_seq")
-	@Id
-	@Column(name = "id", nullable = false)
+// 	@SequenceGenerator(name="route_sections_id_seq", sequenceName="public.route_sections_id_seq", allocationSize=1)
+//     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="route_sections_id_seq")
+// 	@Id
+// 	@Column(name = "id", nullable = false)
 	protected Long id;
 
 	/**
@@ -56,7 +56,7 @@ public class RouteSection extends ChouetteIdentifiedObject {
 	 */
 	@Getter
 	@Setter
-	@Column(name = "distance")
+// 	@Column(name = "distance")
 	private BigDecimal distance;
 
 	/**
@@ -73,19 +73,19 @@ public class RouteSection extends ChouetteIdentifiedObject {
 	 */
 	@Getter
 	@Setter
-	@Column(name = "no_processing")
+// 	@Column(name = "no_processing")
 	private Boolean noProcessing = false;
 
 	@Getter
 	@Setter
-	@Column(name = "input_geometry")
-	@Type(type = "org.hibernate.spatial.GeometryType")
+// 	@Column(name = "input_geometry")
+// 	@Type(type = "org.hibernate.spatial.GeometryType")
 	private LineString inputGeometry;
 
 	@Getter
 	@Setter
-	@Column(name = "processed_geometry")
-	@Type(type = "org.hibernate.spatial.GeometryType")
+// 	@Column(name = "processed_geometry")
+// 	@Type(type = "org.hibernate.spatial.GeometryType")
 	private LineString processedGeometry;
 
 	/**
@@ -94,8 +94,8 @@ public class RouteSection extends ChouetteIdentifiedObject {
 	 * @return The actual value
 	 */
 	@Getter
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "departure_id")
+// 	@ManyToOne(fetch = FetchType.LAZY)
+// 	@JoinColumn(name = "departure_id")
 	private StopArea departure;
 
 	/**
@@ -113,8 +113,8 @@ public class RouteSection extends ChouetteIdentifiedObject {
 	 * @return The actual value
 	 */
 	@Getter
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "arrival_id")
+// 	@ManyToOne(fetch = FetchType.LAZY)
+// 	@JoinColumn(name = "arrival_id")
 	private StopArea arrival;
 
 	/**
