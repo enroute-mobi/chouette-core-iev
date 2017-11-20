@@ -49,11 +49,11 @@ import mobi.chouette.exchange.netex_stif.JobDataTest;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.model.importer.ImportMessage_;
-import mobi.chouette.model.importer.ImportResource_;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.importer.ImportMessage;
+import mobi.chouette.model.importer.ImportMessage_;
 import mobi.chouette.model.importer.ImportResource;
+import mobi.chouette.model.importer.ImportResource_;
 import mobi.chouette.model.importer.ImportTask;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
@@ -197,7 +197,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 	}
 
-	protected void doImport(String zipFile, String expectedActionReportResult, String... expectedData)
+	protected void doImport(String zipFile, String expectedActionReportResult, int zipCount, int fileCount, int lineCount, String... expectedData)
 			throws Exception {
 
 		log.info("########## Import " + zipFile + " ##########");
@@ -227,10 +227,19 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		List<ImportResource> resources = getRessources(task);
 		Map<Long, ImportResource> mapImportResources = new HashMap<Long, ImportResource>();
-		resources.stream().forEach(x -> {
+		int zips = 0;
+		int files = 0;
+		int lines = 0;
+		for (ImportResource x : resources) {
 			mapImportResources.put(x.getId(), x);
 			log.info(x.toString());
-		});
+			if (x.getType().equals("zip")) zips++;
+			else if (x.getType().equals("file")) files++;
+			else if (x.getType().equals("line")) lines++;
+		}
+		Assert.assertEquals(zips, zipCount, "unexpected zip count");
+		Assert.assertEquals(files, fileCount, "unexpected file count");
+		Assert.assertEquals(lines, lineCount, "unexpected line count");
 
 		Set<String> actualErrors = new TreeSet<String>();
 		List<ImportMessage> messages = getMessages(task);

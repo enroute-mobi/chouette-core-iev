@@ -31,7 +31,7 @@ def endJavaClass():
 	#print("javaClass=%s" %(javaClass))
 	return javaClass
 
-def addTest(priority, issueId,testnumber, zipfilename, actionReportStatus, expectedData):
+def addTest(priority, issueId,testnumber, zipfilename, actionReportStatus, expectedData,zip_count,file_count,line_count):
 	description=""
 	group=issueId
 	testname=issueId+"-"+testnumber
@@ -52,8 +52,8 @@ def addTest(priority, issueId,testnumber, zipfilename, actionReportStatus, expec
 	
 	test =	"\n	@Test(groups = { \"%s\" }, testName = \"%s\", description = \"%s\", priority=%s)\n \
 		public void verifyCard%s_%s() throws Exception {\n  \
-			doImport(\"%s\",\"%s\" %s);\n\
-		}\n" %(group, testname, description,priority, issueId,testnumber, zipfilename, actionReportStatus, args )
+			doImport(\"%s\",\"%s\",%s,%s,%s %s);\n\
+		}\n" %(group, testname, description,priority, issueId,testnumber, zipfilename, actionReportStatus, zip_count,file_count,line_count, args )
 
 	return test
  
@@ -83,7 +83,10 @@ if __name__ == '__main__':
 			
 			filename=fields[0]
 			report_status=fields[1]
-			expectedData = fields[2:]
+			zip_count=fields[2]
+			file_count=fields[3]
+			line_count=fields[4]
+			expectedData = fields[5:]
 			#parse filename
 			newfilename = filename.replace("-", "_")
 			tmp=newfilename.split(".")[0]
@@ -93,7 +96,7 @@ if __name__ == '__main__':
 			testnumber=tmp[3]
 			
 			priority=priority+1
-			result = addTest(priority, issueId, testnumber, filename, report_status,expectedData)
+			result = addTest(priority, issueId, testnumber, filename, report_status,expectedData,zip_count,file_count,line_count)
 			#print(result)
 			javaClass = javaClass + result
 		f.close()

@@ -112,6 +112,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		line.setId(1L);
 		line.setObjectId("STIF:CODIFLIGNE:Line:C00108");
 		referential.getSharedReadOnlyLines().put(line.getObjectId(), line);
+		context.put(LINE, line);
 		CompanyLite company = new CompanyLite();
 		company.setId(1L);
 		company.setObjectId("STIF:CODIFLIGNE:Operator:011");
