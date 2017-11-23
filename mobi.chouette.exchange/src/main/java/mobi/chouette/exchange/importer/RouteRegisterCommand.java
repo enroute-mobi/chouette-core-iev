@@ -95,7 +95,7 @@ public class RouteRegisterCommand implements Command {
 						if (note.getChecksum() == null)
 							ChecksumUtil.checksum(context, note);
 					}
-
+					ChecksumUtil.checksum(context, vj);
 				}
 				ChecksumUtil.checksum(context, jp);
 			}
@@ -103,6 +103,7 @@ public class RouteRegisterCommand implements Command {
 				if (rc.getChecksum() == null)
 					ChecksumUtil.checksum(context, rc);
 			}
+			ChecksumUtil.checksum(context, route);
 			routeDAO.create(route);
 			routeDAO.flush();
 		}
