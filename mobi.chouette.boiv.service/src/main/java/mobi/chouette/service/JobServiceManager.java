@@ -3,6 +3,7 @@ package mobi.chouette.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Timestamp;
@@ -64,6 +65,7 @@ public class JobServiceManager {
 		System.setProperty(APPLICATION_NAME + PropertyNames.MAX_STARTED_JOBS, "5");
 		System.setProperty(APPLICATION_NAME + PropertyNames.MAX_COPY_BY_JOB, "5");
 		System.setProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME, "");
+		System.setProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN, "");
 		try {
 			// set default properties
 			System.setProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY, System.getProperty("user.home"));
@@ -143,10 +145,18 @@ public class JobServiceManager {
 			// copy file from Ruby server
 			String urlName = importTask.getUrl();
 			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+			String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 			if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
 				// build url with token
-				urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/" + importTask.getId()
-						+ "/download?token=" + urlName;
+				if (guiToken != null && !guiToken.isEmpty()) {
+					// new fashion url
+					urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()
+							+ "/download_file?token=" + guiToken;
+				} else {
+					// old fashion url
+					urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/"
+							+ importTask.getId() + "/download?token=" + urlName;
+				}
 			}
 			try {
 				URL url = new URL(urlName);
@@ -333,7 +343,14 @@ public class JobServiceManager {
 				actionTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 				actionTask.setStatus(jobService.getStatus().name().toLowerCase());
 				actionDAO.update(actionTask);
-				// TODO clean directory
+				// delete directory
+				if (Files.exists(jobService.getPath())) {
+					try {
+						FileUtils.deleteDirectory(jobService.getPath().toFile());
+					} catch (IOException e) {
+						log.warn("unable to delete directory " + jobService.getPath().toString());
+					}
+				}
 			}
 			return jobService;
 
@@ -354,10 +371,51 @@ public class JobServiceManager {
 		jobService.setEndedAt(new Date());
 		updateTask(jobService);
 
-		// TODO delete directory
+		// delete directory
+		if (Files.exists(jobService.getPath())) {
+			try {
+				FileUtils.deleteDirectory(jobService.getPath().toFile());
+			} catch (IOException e) {
+				log.warn("unable to delete directory " + jobService.getPath().toString());
+			}
+		}
+		// send termination to BOIV
+		notifyGui(jobService);
 
-		// TODO send termination to BOIV
+	}
 
+	private void notifyGui(JobService jobService) {
+		String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+		if (guiBaseUrl != null && !guiBaseUrl.isEmpty() && guiToken != null && !guiToken.isEmpty()) {
+			
+			String urlName = "";
+			switch (jobService.getAction())
+			{
+			case importer : 
+				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId()
+				+ "/notify_parent?token=" + guiToken;
+				break;
+			case validator : 
+				urlName = guiBaseUrl + "/api/v1/internals/compliance_check_sets/" + jobService.getId()
+				+ "/notify_parent?token=" + guiToken;
+				break;
+			case exporter : 
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId()
+				+ "/upload?token=" + guiToken+"&file="; // TODO add file name ? 
+				break;
+			}
+			// TODO 
+			// send message with some delay to let transaction terminate
+			// (thread)
+			try {
+				URL url = new URL(urlName);
+				
+			} catch (Exception e) {
+				log.error("End of task not notified, cannot invoke url "+urlName+", cause : "+e.getMessage());
+			}
+			
+		}
 	}
 
 	private void updateTask(JobService jobService) {
@@ -392,9 +450,18 @@ public class JobServiceManager {
 		jobService.setUpdatedAt(new Date());
 		updateTask(jobService);
 
-		// TODO delete directory
+		// delete directory
+		if (Files.exists(jobService.getPath())) {
+			try {
+				FileUtils.deleteDirectory(jobService.getPath().toFile());
+			} catch (IOException e) {
+				log.warn("unable to delete directory " + jobService.getPath().toString());
+			}
+		}
 
-		// TODO send termination to BOIV
+		// send termination to BOIV
+		notifyGui(jobService);
+
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
