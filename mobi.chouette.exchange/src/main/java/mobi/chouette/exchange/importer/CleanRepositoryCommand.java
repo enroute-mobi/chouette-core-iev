@@ -14,6 +14,7 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -61,7 +62,7 @@ public class CleanRepositoryCommand implements Command {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		
 		try {
@@ -75,7 +76,7 @@ public class CleanRepositoryCommand implements Command {
 			footnoteDAO.truncate();
 			
 
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 		} catch (Exception e) {
 			log.error(e);
 			throw e;
@@ -106,6 +107,6 @@ public class CleanRepositoryCommand implements Command {
 	}
 
 	static {
-		CommandFactory.factories.put(CleanRepositoryCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(CleanRepositoryCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

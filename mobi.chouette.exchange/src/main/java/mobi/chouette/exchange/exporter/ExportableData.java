@@ -24,7 +24,6 @@ import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 
 public class ExportableData {
-	// private Network network;
 	
 	@Getter
 	@Setter
@@ -94,14 +93,6 @@ public class ExportableData {
 	@Getter
 	@Setter
 	private Set<StopArea> sharedStops = new HashSet<>();
-
-//	public Timetable findTimetable(String objectId) {
-//		for (Timetable tm : timetables) {
-//			if (tm.getObjectId().equals(objectId))
-//				return tm;
-//		}
-//		return null;
-//	}
 	
 	public void clear()
 	{

@@ -6,7 +6,7 @@ import javax.ejb.TransactionAttributeType;
 
 import mobi.chouette.common.ContenerChecker;
 
-@Stateless(name = ContenerChecker.NAME)
+@Stateless(name = "ContenerChecker")
 
 public class DummyChecker implements ContenerChecker
 {

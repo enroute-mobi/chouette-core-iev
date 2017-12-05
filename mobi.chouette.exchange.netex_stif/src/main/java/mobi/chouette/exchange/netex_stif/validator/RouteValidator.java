@@ -4,6 +4,7 @@ import java.util.Map;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
@@ -17,7 +18,7 @@ import mobi.chouette.model.util.Referential;
 
 public class RouteValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = ROUTE;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.ROUTE;
 
 	protected String getLocalContext() {
 		return LOCAL_CONTEXT;
@@ -29,15 +30,15 @@ public class RouteValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_2);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_3);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Route_4);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_2);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_3);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_4);
 	}
 
 	public void addInverseRouteRef(Context context, String objectId, String inverseRouteRef) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		objectContext.put(INVERSE_ROUTE_REF, inverseRouteRef);
+		objectContext.put(NetexStifConstant.INVERSE_ROUTE_REF, inverseRouteRef);
 	}
 
 	/**
@@ -49,8 +50,8 @@ public class RouteValidator extends AbstractValidator {
 	 */
 	public boolean validate(Context context, Route route, int lineNumber, int columnNumber) {
 		addLocation(context, route, lineNumber, columnNumber);
-		checkChanged(context, ROUTE, route, lineNumber, columnNumber);
-		boolean result2 = checkModification(context, ROUTE, route, lineNumber, columnNumber);
+		checkChanged(context, NetexStifConstant.ROUTE, route, lineNumber, columnNumber);
+		boolean result2 = checkModification(context, NetexStifConstant.ROUTE, route, lineNumber, columnNumber);
 		boolean result3 = check2NeTExSTIFRoute1(context, route, lineNumber, columnNumber);
 		if (result3)
 			check2NeTExSTIFRoute2_1(context, route, lineNumber, columnNumber);
@@ -67,7 +68,7 @@ public class RouteValidator extends AbstractValidator {
 	}
 
 	public void validateAll(Context context) {
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		referential.getRoutes().values().stream().forEach(r -> {
 			if (r.isFilled()) {
 				DataLocation d = getLocation(context, r.getObjectId());
@@ -108,16 +109,16 @@ public class RouteValidator extends AbstractValidator {
 	public boolean check2NeTExSTIFRoute1(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
 		String wayback = route.getWayBack();
-		if (wayback == null || (!wayback.equals(DIRECTION_OUTBOUND) && !wayback.equals(DIRECTION_INBOUND))) {
+		if (wayback == null || (!wayback.equals(NetexStifConstant.DIRECTION_OUTBOUND) && !wayback.equals(NetexStifConstant.DIRECTION_INBOUND))) {
 			result = false;
 		}
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Route_1, location, "" + wayback);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_1, location, "" + wayback);
 		}
 		return result;
 	}
@@ -170,8 +171,8 @@ public class RouteValidator extends AbstractValidator {
 		Context routeContext = getObjectContext(context, LOCAL_CONTEXT, route.getObjectId());
 		Context waybackContext = getObjectContext(context, LOCAL_CONTEXT, route.getOppositeRoute().getObjectId());
 		// récupération de la valeur d'attribut sauvegardée
-		String wayBackInverseRouteRef = (String) waybackContext.get(INVERSE_ROUTE_REF);
-		String inverseRouteRef = (String) routeContext.get(INVERSE_ROUTE_REF);
+		String wayBackInverseRouteRef = (String) waybackContext.get(NetexStifConstant.INVERSE_ROUTE_REF);
+		String inverseRouteRef = (String) routeContext.get(NetexStifConstant.INVERSE_ROUTE_REF);
 
 		result = route.getObjectId().equals(wayBackInverseRouteRef)
 				&& route.getOppositeRoute().getObjectId().equals(inverseRouteRef);
@@ -179,9 +180,9 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Route_2, "1", location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_2, "1", location,
 					route.getOppositeRoute().getObjectId());
 		}
 
@@ -211,9 +212,9 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Route_2, "2", location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2", location,
 					route.getOppositeRoute().getObjectId());
 		}
 
@@ -258,7 +259,7 @@ public class RouteValidator extends AbstractValidator {
 			// log.warn("JP  "+ jp.getObjectId() );
 			Context objectContext = getObjectContext(context, ServiceJourneyPatternValidator.LOCAL_CONTEXT,
 					jp.getObjectId());
-			Map<Integer, String> mapOrder = (Map<Integer, String>) objectContext.get(ORDER);
+			Map<Integer, String> mapOrder = (Map<Integer, String>) objectContext.get(NetexStifConstant.ORDER);
 			if (mapOrder != null) {
 				Integer position = 1;
 				for (StopPoint sp : jp.getStopPoints()) {
@@ -284,9 +285,9 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Route_3, location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_3, location,
 					stopPointOnError.getPosition().toString());
 		}
 
@@ -362,8 +363,8 @@ public class RouteValidator extends AbstractValidator {
 
 			Context objectContext = getObjectContext(context, ServiceJourneyPatternValidator.LOCAL_CONTEXT,
 					jp.getObjectId());
-			Map<Integer, Boolean> mapAlighting = (Map<Integer, Boolean>) objectContext.get(FOR_ALIGHTING);
-			Map<Integer, Boolean> mapBoarding = (Map<Integer, Boolean>) objectContext.get(FOR_BOARDING);
+			Map<Integer, Boolean> mapAlighting = (Map<Integer, Boolean>) objectContext.get(NetexStifConstant.FOR_ALIGHTING);
+			Map<Integer, Boolean> mapBoarding = (Map<Integer, Boolean>) objectContext.get(NetexStifConstant.FOR_BOARDING);
 			for (StopPoint sp : route.getStopPoints()) {
 				// log.warn("stopPoint position "+ sp.getPosition() );
 				if (mapAlighting != null && mapAlighting.containsKey(sp.getPosition())) {
@@ -399,8 +400,8 @@ public class RouteValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
-			Referential referential = (Referential) context.get(REFERENTIAL);
+			LineLite line = (LineLite) context.get(Constant.LINE);
+			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 			String refId = stopPointOnError.getObjectId();
 			if (referential != null && !referential.getSharedReadOnlyStopAreas().isEmpty()) {
 				// protection from testng conditions
@@ -408,7 +409,7 @@ public class RouteValidator extends AbstractValidator {
 				refId = stopArea.getObjectId();
 			}
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Route_4, location, refId);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_4, location, refId);
 
 			// clean boarding and alighting data
 			for (StopPoint sp : route.getStopPoints()) {

@@ -7,8 +7,14 @@ import java.nio.file.Paths;
 
 import javax.naming.InitialContext;
 
+import org.apache.commons.io.FilenameUtils;
+
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.FileUtil;
 import mobi.chouette.common.JobData;
@@ -16,12 +22,6 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.exchange.report.ReportConstant;
-
-import org.apache.commons.io.FilenameUtils;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
 
 /**
  * execute use in context : 
@@ -34,17 +34,17 @@ import com.jamonapi.MonitorFactory;
  *
  */
 @Log4j
-public class UncompressCommand implements Command, ReportConstant {
+public class UncompressCommand implements Command {
 
 	public static final String COMMAND = "UncompressCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		JobData jobData = (JobData) context.get(JOB_DATA);
+		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 
 		String path = jobData.getPathName();
 		String file = jobData.getInputFilename(); 
@@ -54,7 +54,7 @@ public class UncompressCommand implements Command, ReportConstant {
 			return result;
 		}
 		Path filename = Paths.get(path, file);
-		Path target = Paths.get(path, INPUT);
+		Path target = Paths.get(path, Constant.INPUT);
 		if (!Files.exists(target)) {
 			Files.createDirectories(target);
 		}
@@ -63,7 +63,7 @@ public class UncompressCommand implements Command, ReportConstant {
             reporter.addZipReport(context, file,IO_TYPE.INPUT);
 			try {
 				FileUtil.uncompress(filename.toString(), target.toString());
-				result = SUCCESS;
+				result = Constant.SUCCESS;
 			} catch (Exception e) {
 				log.error(e.getMessage());
 				reporter.addZipErrorInReport(context, file, ActionReporter.FILE_ERROR_CODE.READ_ERROR, e.getMessage());
@@ -73,7 +73,7 @@ public class UncompressCommand implements Command, ReportConstant {
 		else
 		{
 			org.apache.commons.io.FileUtils.copyFileToDirectory(filename.toFile(), target.toFile());
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 		}
 
 		log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
@@ -90,7 +90,6 @@ public class UncompressCommand implements Command, ReportConstant {
 	}
 
 	static {
-		CommandFactory.factories
-				.put(UncompressCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(UncompressCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

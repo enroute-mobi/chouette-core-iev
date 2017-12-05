@@ -14,7 +14,7 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LineRegisterCommandTest implements Constant {
+public class LineRegisterCommandTest {
 	
 	
 	private LineRegisterCommand lineRegister = null;
@@ -27,7 +27,7 @@ public class LineRegisterCommandTest implements Constant {
 	{
 		InitialContext initialContext = new InitialContext();
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
 		
 		StringWriter buffer = new StringWriter(); 
 		VehicleJourney neptuneObject = new VehicleJourney();

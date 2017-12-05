@@ -9,10 +9,11 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.parser.NetexStifUtils;
 import mobi.chouette.exchange.netex_stif.validator.DayTypeValidator;
 import mobi.chouette.exchange.netex_stif.validator.RouteValidator;
@@ -26,38 +27,38 @@ import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class NetexStifValidationCommand implements Command, Constant {
+public class NetexStifValidationCommand implements Command {
 
 	public static final String COMMAND = "NetexStifValidationCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		String fileName = (String) context.get(FILE_NAME);
+		String fileName = (String) context.get(Constant.FILE_NAME);
 		try {
-			Referential referential = (Referential) context.get(REFERENTIAL);
+			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 
-			if (fileName.equals(CALENDRIER_FILE_NAME)) {
+			if (fileName.equals(NetexStifConstant.CALENDRIER_FILE_NAME)) {
 				boolean res = validateCalendrier(context) && !reporter.hasFileValidationErrors(context, fileName);
 				if (!res) {
 					// block save mode to check other files
-					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 					parameters.setNoSave(true);
 				} else {
-					result = SUCCESS;
+					result = Constant.SUCCESS;
 				}
-			} else if (fileName.equals(COMMUN_FILE_NAME)) {
+			} else if (fileName.equals(NetexStifConstant.COMMUN_FILE_NAME)) {
 				boolean res = !reporter.hasFileValidationErrors(context, fileName);
 				if (!res) {
 					// block save mode to check other files
-					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+					NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 					parameters.setNoSave(true);
 				} else {
-					result = SUCCESS;
+					result = Constant.SUCCESS;
 				}
 			} else {
 				RouteValidator validator = (RouteValidator) ValidatorFactory.getValidator(context,
@@ -67,7 +68,7 @@ public class NetexStifValidationCommand implements Command, Constant {
 				if (!reporter.hasFileValidationErrors(context, fileName)) {
 					addStats(context, reporter, referential);
 					updateObjectIds(context);
-					result = SUCCESS;
+					result = Constant.SUCCESS;
 				}
 
 			}
@@ -78,7 +79,7 @@ public class NetexStifValidationCommand implements Command, Constant {
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
-		if (result == ERROR) {
+		if (result == Constant.ERROR) {
 			reporter.addFileErrorInReport(context, fileName, ActionReporter.FILE_ERROR_CODE.INVALID_FORMAT,
 					"Netex Stif compliance failed");
 		}
@@ -86,8 +87,8 @@ public class NetexStifValidationCommand implements Command, Constant {
 	}
 	
 	private void updateObjectIds(Context context) {
-		Referential referential = (Referential) context.get(REFERENTIAL);
-		LineLite line = (LineLite) context.get(LINE);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+		LineLite line = (LineLite) context.get(Constant.LINE);
 		if (line == null) return;
 		referential.getRoutes().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectIdOnLine(context,obj, line));
 		referential.getStopPoints().values().stream().forEach(obj -> NetexStifUtils.uniqueObjectIdOnLine(context,obj, line));
@@ -124,7 +125,7 @@ public class NetexStifValidationCommand implements Command, Constant {
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
 					referential.getJourneyPatterns().size());
 
-			NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+			NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 			if (parameters.isNoSave()) {
 				reporter.setObjectStatus(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_STATE.IGNORED);
 			}
@@ -142,6 +143,6 @@ public class NetexStifValidationCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifValidationCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifValidationCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

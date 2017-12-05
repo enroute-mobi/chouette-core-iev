@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class SharedDataKeys {
-	// private Network network;
 	
 	@Getter
 	@Setter

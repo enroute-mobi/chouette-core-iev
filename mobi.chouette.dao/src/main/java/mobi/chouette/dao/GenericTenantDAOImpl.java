@@ -6,9 +6,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.Cache;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,16 +17,12 @@ import javax.persistence.metamodel.Attribute;
 
 import com.google.common.collect.Iterables;
 
-public abstract class GenericTenantDAOImpl<T> implements GenericTenantDAO<T> {
-
-	protected EntityManager em;
-
-	protected Class<T> type;
+public abstract class GenericTenantDAOImpl<T> extends DAOImpl<T> implements GenericTenantDAO<T> {
 
 	protected Attribute<T, Long> tenantAttribute;
 
 	public GenericTenantDAOImpl(Attribute<T, Long> tenantAttribute, Class<T> type) {
-		this.type = type;
+		super(type);
 		this.tenantAttribute = tenantAttribute;
 	}
 
@@ -41,10 +34,9 @@ public abstract class GenericTenantDAOImpl<T> implements GenericTenantDAO<T> {
 		}
 		try {
 			Method method = type.getMethod(methodName);
-			Long value = (Long) method.invoke(object);
-			return value;
+			return (Long) method.invoke(object);
 		} catch (Exception e) {
-			throw new RuntimeException("unable to access to tenant id " + tenantAttribute.getName(), e);
+			throw new DaoRuntimeException(DaoExceptionCode.TENANT_ATTRIBUTE,"unable to access to tenant id " + tenantAttribute.getName(), e);
 		}
 
 	}
@@ -75,7 +67,7 @@ public abstract class GenericTenantDAOImpl<T> implements GenericTenantDAO<T> {
 	}
 
 	public List<T> findAll(final Long tenantId, final Collection<Long> ids) {
-		if (ids == null || ids.size() == 0) {
+		if (ids == null || ids.isEmpty()) {
 			return Collections.emptyList();
 		}
 		List<T> result = null;
@@ -121,7 +113,6 @@ public abstract class GenericTenantDAOImpl<T> implements GenericTenantDAO<T> {
 	}
 
 	public List<T> findByObjectId(final Long tenantId, final Collection<String> objectIds) {
-		// System.out.println("GenericDAOImpl.findByObjectId() : " + objectIds);
 		List<T> result = null;
 		if (objectIds.isEmpty())
 			return result;
@@ -143,22 +134,6 @@ public abstract class GenericTenantDAOImpl<T> implements GenericTenantDAO<T> {
 		return result;
 	}
 
-	public void create(final T entity) {
-		em.persist(entity);
-	}
-
-	public T update(final T entity) {
-		return em.merge(entity);
-	}
-
-	public void delete(final T entity) {
-		em.remove(entity);
-	}
-
-	public void detach(final T entity) {
-		em.detach(entity);
-	}
-
 	public int deleteAll(final Long tenantId) {
 		int result = 0;
 		CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -169,35 +144,6 @@ public abstract class GenericTenantDAOImpl<T> implements GenericTenantDAO<T> {
     	Query query = em.createQuery(criteria);
 		result = query.executeUpdate();
 		return result;
-	}
-
-	// public int truncate() {
-	// String query = new StringBuilder("TRUNCATE TABLE
-	// ").append(type.getAnnotation(Table.class).name())
-	// .append(" CASCADE").toString();
-	// return em.createNativeQuery(query).executeUpdate();
-	// }
-
-	public void evictAll() {
-		EntityManagerFactory factory = em.getEntityManagerFactory();
-		Cache cache = factory.getCache();
-		cache.evictAll();
-	}
-
-	public void flush() {
-		em.flush();
-	}
-
-	@Override
-	public void clear() {
-		em.clear();
-	}
-
-	@Override
-	public void detach(Collection<?> list) {
-		for (Object object : list) {
-			em.detach(object);
-		}
 	}
 
 }

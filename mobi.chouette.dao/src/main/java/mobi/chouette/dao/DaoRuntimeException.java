@@ -5,26 +5,26 @@
  * voir LICENSE.txt pour plus de details
  *
  */
-package mobi.chouette.core;
+package mobi.chouette.dao;
 
+import mobi.chouette.core.ChouetteRuntimeException;
 
 @SuppressWarnings("serial")
-public class CoreRuntimeException extends ChouetteRuntimeException {
-	private static final String PREFIX = "COR";
-	private final CoreExceptionCode code;
+public class DaoRuntimeException extends ChouetteRuntimeException {
+	private static final String PREFIX = "DAO";
+	private DaoExceptionCode code;
 
-	public CoreRuntimeException(CoreExceptionCode code, String message) {
+	public DaoRuntimeException(DaoExceptionCode code, String message) {
 		super(message);
 		this.code = code;
 	}
 
-	public CoreRuntimeException(CoreExceptionCode code, Throwable cause,
-			String message) {
-		super(message,cause);
+	public DaoRuntimeException(DaoExceptionCode code, String message, Throwable cause) {
+		super(message, cause);
 		this.code = code;
 	}
 
-	public CoreExceptionCode getExceptionCode() {
+	public DaoExceptionCode getExceptionCode() {
 		return code;
 	}
 

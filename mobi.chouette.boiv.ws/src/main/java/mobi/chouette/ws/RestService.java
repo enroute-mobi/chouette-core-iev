@@ -18,7 +18,6 @@ import javax.ws.rs.core.UriInfo;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
-import mobi.chouette.common.Constant;
 import mobi.chouette.service.JobServiceManager;
 import mobi.chouette.service.RequestExceptionCode;
 import mobi.chouette.service.RequestServiceException;
@@ -28,10 +27,11 @@ import mobi.chouette.service.ServiceExceptionCode;
 @Path("/referentials")
 @Log4j
 @RequestScoped
-public class RestService implements Constant {
+public class RestService {
 
 	// voir swagger
 
+	private static final String MESSAGE = ", Message = ";
 	private static String api_version_key = "X-BOIV_IEV-Media-Type";
 	private static String api_version = "iev.v1.0; format=json";
 
@@ -51,9 +51,9 @@ public class RestService implements Constant {
 			return Status.BAD_REQUEST;
 		case INTERNAL_ERROR:
 			return Status.INTERNAL_SERVER_ERROR;
-
+		default:
+			return Status.INTERNAL_SERVER_ERROR;
 		}
-		return Status.INTERNAL_SERVER_ERROR;
 	}
 
 	private WebApplicationException toWebApplicationException(RequestServiceException exception) {
@@ -106,10 +106,10 @@ public class RestService implements Constant {
 			result = builder.build();
 			return result;
 		} catch (RequestServiceException ex) {
-			log.info("RequestCode = " + ex.getRequestCode() + ", Message = " + ex.getMessage());
+			log.info("RequestCode = " + ex.getRequestCode() + MESSAGE + ex.getMessage());
 			throw toWebApplicationException(ex);
 		} catch (ServiceException e) {
-			log.error("Code = " + e.getCode() + ", Message = " + e.getMessage());
+			log.error("Code = " + e.getCode() + MESSAGE + e.getMessage());
 			throw toWebApplicationException(e);
 		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -136,10 +136,10 @@ public class RestService implements Constant {
 
 			return result;
 		} catch (RequestServiceException ex) {
-			log.info("RequestCode = " + ex.getRequestCode() + ", Message = " + ex.getMessage());
+			log.info("RequestCode = " + ex.getRequestCode() + MESSAGE + ex.getMessage());
 			throw toWebApplicationException(ex);
 		} catch (ServiceException ex) {
-			log.error("Code = " + ex.getCode() + ", Message = " + ex.getMessage());
+			log.error("Code = " + ex.getCode() + MESSAGE + ex.getMessage());
 			throw toWebApplicationException(ex);
 		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

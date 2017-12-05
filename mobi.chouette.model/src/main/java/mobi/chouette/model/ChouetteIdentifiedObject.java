@@ -20,7 +20,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.util.ObjectIdTypes;
 
 /**
  * Abstract object used for all Identified Chouette Object
@@ -30,8 +29,7 @@ import mobi.chouette.model.util.ObjectIdTypes;
 @MappedSuperclass
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @ToString(callSuper = true)
-public abstract class ChouetteIdentifiedObject extends ChouetteDatedObject implements
-		ObjectIdTypes {
+public abstract class ChouetteIdentifiedObject extends ChouetteDatedObject {
 
 	/**
 	 * Neptune object id <br>

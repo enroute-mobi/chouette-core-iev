@@ -33,6 +33,8 @@ import lombok.ToString;
 @ToString(callSuper=true)
 public class CompanyLite extends ChouetteIdentifiedObject {
 
+	private static final String OLD_FASHION_PREFIX = "STIF:CODIFLIGNE";
+
 	/**
 	 * 
 	 */
@@ -64,13 +66,13 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 	
 	@Override
 	public String objectIdPrefix() {
-		if (objectId.startsWith("STIF:CODIFLIGNE")) return "STIF:CODIFLIGNE";
+		if (objectId.startsWith(OLD_FASHION_PREFIX)) return OLD_FASHION_PREFIX;
 		return super.objectIdPrefix();
 	}
 
 	@Override
 	public String objectIdSuffix() {
-		if (objectId.startsWith("STIF:CODIFLIGNE") )
+		if (objectId.startsWith(OLD_FASHION_PREFIX) )
 		{
 			String[] tokens = objectIdArray();
 			if (tokens.length > 3)

@@ -29,9 +29,9 @@ import mobi.chouette.model.VehicleJourney;
 public class ObjectReference extends AbstractReport {
 
 	public enum TYPE {
-		network("Network"), company("Company"), group_of_line("GroupOfLine"), stop_area("StopArea"), stop_point(
-				"StopPoint"), connection_link("ConnectionLink"), access_point("AccessPoint"), access_link("AccessLink"), time_table(
-				"Timetable"), line("Line"), route("Route"), journey_pattern("JourneyPattern"), vehicle_journey(
+		NETWORK("Network"), COMPANY("Company"), GROUP_OF_LINE("GroupOfLine"), STOP_AREA("StopArea"), STOP_POINT(
+				"StopPoint"), CONNECTION_LINK("ConnectionLink"), ACCESS_POINT("AccessPoint"), ACCESS_LINK("AccessLink"), TIME_TABLE(
+				"Timetable"), LINE("Line"), ROUTE("Route"), JOURNEY_PATTERN("JourneyPattern"), VEHICLE_JOURNEY(
 				"VehicleJourney");
 
 		private java.lang.String value;
@@ -60,7 +60,7 @@ public class ObjectReference extends AbstractReport {
 	private String objectId;
 
 	public ObjectReference(Network object) {
-		this.type = TYPE.network;
+		this.type = TYPE.NETWORK;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
@@ -68,95 +68,95 @@ public class ObjectReference extends AbstractReport {
 	}
 
 	public ObjectReference(Company object) {
-		this.type = TYPE.company;
+		this.type = TYPE.COMPANY;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 	public ObjectReference(CompanyLite object) {
-		this.type = TYPE.company;
+		this.type = TYPE.COMPANY;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(GroupOfLine object) {
-		this.type = TYPE.group_of_line;
+		this.type = TYPE.GROUP_OF_LINE;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(StopArea object) {
-		this.type = TYPE.stop_area;
+		this.type = TYPE.STOP_AREA;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 	public ObjectReference(StopAreaLite object) {
-		this.type = TYPE.stop_area;
+		this.type = TYPE.STOP_AREA;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(ConnectionLink object) {
-		this.type = TYPE.connection_link;
+		this.type = TYPE.CONNECTION_LINK;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(AccessPoint object) {
-		this.type = TYPE.access_point;
+		this.type = TYPE.ACCESS_POINT;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(AccessLink object) {
-		this.type = TYPE.access_link;
+		this.type = TYPE.ACCESS_LINK;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(Timetable object) {
-		this.type = TYPE.time_table;
+		this.type = TYPE.TIME_TABLE;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(Line object) {
-		this.type = TYPE.line;
+		this.type = TYPE.LINE;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 	public ObjectReference(LineLite object) {
-		this.type = TYPE.line;
+		this.type = TYPE.LINE;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(Route object) {
-		this.type = TYPE.route;
+		this.type = TYPE.ROUTE;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(JourneyPattern object) {
-		this.type = TYPE.journey_pattern;
+		this.type = TYPE.JOURNEY_PATTERN;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
 
 	public ObjectReference(VehicleJourney object) {
-		this.type = TYPE.vehicle_journey;
+		this.type = TYPE.VEHICLE_JOURNEY;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
@@ -164,7 +164,7 @@ public class ObjectReference extends AbstractReport {
 	
 	public ObjectReference(StopPoint object)
 	{
-		this.type = TYPE.stop_point;
+		this.type = TYPE.STOP_POINT;
 		this.id = object.getId();
 	}
 
@@ -177,7 +177,7 @@ public class ObjectReference extends AbstractReport {
 	public void print(PrintStream out, StringBuilder ret, int level, boolean first) {
 		ret.setLength(0);
 		out.print(addLevel(ret, level).append('{'));
-		out.print(toJsonString(ret, level + 1, "type", type, true));
+		out.print(toJsonString(ret, level + 1, "type", type.name().toLowerCase(), true));
 		if (id != null)
 			out.print(toJsonString(ret, level + 1, "id", id, false));
 		else

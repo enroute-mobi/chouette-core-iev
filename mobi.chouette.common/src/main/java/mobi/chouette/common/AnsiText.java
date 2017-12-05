@@ -1,6 +1,6 @@
 package mobi.chouette.common;
 
-public class AnsiText implements Color {
+public class AnsiText {
 
 	public enum Attribute {
 		NORMAL(0), BRIGHT(1), DIM(2), UNDERLINE(4), BLINK(5), REVERSE(7), HIDDEN(8);
@@ -11,6 +11,7 @@ public class AnsiText implements Color {
 			this.value = String.valueOf(value);
 		}
 
+		@Override
 		public String toString() {
 			return "" + value;
 		}

@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -46,17 +47,17 @@ public class ConnectionLinkRegisterBlocCommand implements Command {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		// Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
 			Boolean optimized = Boolean.TRUE;
 
 			// Monitor monitorInit = MonitorFactory.start(COMMAND+".init");
-			context.put(OPTIMIZED, optimized);
-			Collection<ConnectionLink> connectionLinks = (Collection<ConnectionLink>) context.get(CONNECTION_LINK_BLOC);
+			context.put(Constant.OPTIMIZED, optimized);
+			Collection<ConnectionLink> connectionLinks = (Collection<ConnectionLink>) context.get(Constant.CONNECTION_LINK_BLOC);
 			Referential cache = new Referential();
-			context.put(CACHE, cache);
+			context.put(Constant.CACHE, cache);
 			initializeStopArea(cache, connectionLinks);
 			initializeConnectionLink(cache, connectionLinks);
 			// log.info(Color.CYAN + monitorInit.stop() + Color.NORMAL);
@@ -71,7 +72,7 @@ public class ConnectionLinkRegisterBlocCommand implements Command {
 			// Monitor monitorFlush = MonitorFactory.start(COMMAND + ".flush");
 			connectionLinkDAO.flush();
 //			log.info(Color.CYAN + monitorFlush.stop() + Color.NORMAL);
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 		} catch (Exception e) {
 			log.error(e);
 			throw e;
@@ -135,6 +136,6 @@ public class ConnectionLinkRegisterBlocCommand implements Command {
 	}
 
 	static {
-		CommandFactory.factories.put(ConnectionLinkRegisterBlocCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(ConnectionLinkRegisterBlocCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

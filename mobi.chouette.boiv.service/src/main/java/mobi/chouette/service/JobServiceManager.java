@@ -3,7 +3,6 @@ package mobi.chouette.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Timestamp;
@@ -71,25 +70,9 @@ public class JobServiceManager {
 			System.setProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY, System.getProperty("user.home"));
 
 			// try to read properties
-			File propertyFile = new File("/etc/chouette/" + APPLICATION_NAME + "/" + APPLICATION_NAME + ".properties");
+			File propertyFile = new File("/etc/chouette/" + APPLICATION_NAME + File.separatorChar + APPLICATION_NAME + ".properties");
 			if (propertyFile.exists() && propertyFile.isFile()) {
-				try {
-					FileInputStream fileInput = new FileInputStream(propertyFile);
-					Properties properties = new Properties();
-					properties.load(fileInput);
-					fileInput.close();
-					log.info("reading properties from " + propertyFile.getAbsolutePath());
-					for (String key : properties.stringPropertyNames()) {
-						if (key.startsWith(APPLICATION_NAME))
-							System.setProperty(key, properties.getProperty(key));
-						else
-							System.setProperty(APPLICATION_NAME + "." + key, properties.getProperty(key));
-					}
-				} catch (IOException e) {
-					log.error(
-							"cannot read properties " + propertyFile.getAbsolutePath() + " , using default properties",
-							e);
-				}
+				loadProperties(propertyFile);
 			} else {
 				log.info("no property file found " + propertyFile.getAbsolutePath() + " , using default properties");
 			}
@@ -98,6 +81,25 @@ public class JobServiceManager {
 		}
 		rootDirectory = System.getProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY);
 
+	}
+
+	private void loadProperties(File propertyFile) {
+		try (FileInputStream fileInput = new FileInputStream(propertyFile);) {
+			Properties properties = new Properties();
+			properties.load(fileInput);
+			fileInput.close();
+			log.info("reading properties from " + propertyFile.getAbsolutePath());
+			for (String key : properties.stringPropertyNames()) {
+				if (key.startsWith(APPLICATION_NAME))
+					System.setProperty(key, properties.getProperty(key));
+				else
+					System.setProperty(APPLICATION_NAME + "." + key, properties.getProperty(key));
+			}
+		} catch (IOException e) {
+			log.error(
+					"cannot read properties " + propertyFile.getAbsolutePath() + " , using default properties",
+					e);
+		}
 	}
 
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -129,18 +131,14 @@ public class JobServiceManager {
 			if (importTask == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
-			if (!importTask.getStatus().equals(JobService.STATUS.NEW.name().toLowerCase())) {
+			if (!importTask.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
 				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
 			}
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
 
 			log.info("job " + jobService.getId() + " found for import ");
 			// mkdir
-			if (Files.exists(jobService.getPath())) {
-				// réutilisation anormale d'un id de job (réinitialisation de la
-				// séquence à l'extérieur de l'appli?)
-				FileUtils.deleteDirectory(jobService.getPath().toFile());
-			}
+			deleteDirectory(jobService);
 			Files.createDirectories(jobService.getPath());
 			// copy file from Ruby server
 			String urlName = importTask.getUrl();
@@ -158,14 +156,7 @@ public class JobServiceManager {
 							+ importTask.getId() + "/download?token=" + urlName;
 				}
 			}
-			try {
-				URL url = new URL(urlName);
-				File dest = new File(jobService.getPathName(), jobService.getInputFilename());
-				FileUtils.copyURLToFile(url, dest);
-			} catch (Exception ex) {
-				log.error("fail to get file for import job " + ex.getMessage());
-				throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
-			}
+			uploadImportFile(jobService, urlName);
 
 			jobService.setStatus(JobService.STATUS.PENDING);
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
@@ -174,42 +165,41 @@ public class JobServiceManager {
 
 		} catch (RequestServiceException ex) {
 			log.info("fail to create import job " + ex.getMessage());
-			if (importTask != null) {
-				try {
-					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(importTask);
-				} catch (Exception e) {
-					log.error(
-							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(importTask);
 			throw ex;
 		} catch (ServiceException ex) {
 			log.info("invalid import job data" + ex.getMessage());
-			if (importTask != null) {
-				try {
-					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(importTask);
-				} catch (Exception e) {
-					log.error(
-							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(importTask);
 			throw ex;
 		} catch (Exception ex) {
 			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
-			if (importTask != null) {
-				try {
-					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(importTask);
-				} catch (Exception e) {
-					log.error(
-							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(importTask);
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
+	}
+
+	private void abortTask(ActionTask actionTask) {
+		if (actionTask != null) {
+			try {
+				actionTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+				actionDAO.update(actionTask);
+			} catch (Exception e) {
+				log.error(
+						"cannot set bad "+actionTask.getAction()+" task status or task " + actionTask.getId() + " : " + e.getMessage());
+			}
+		}
+	}
+
+	private void uploadImportFile(JobService jobService, String urlName) throws ServiceException {
+		try {
+			URL url = new URL(urlName);
+			File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+			FileUtils.copyURLToFile(url, dest);
+		} catch (Exception ex) {
+			log.error("fail to get file for import job " + ex.getMessage());
+			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
+		}
 	}
 
 	private JobService createValidatorJob(Long id) throws ServiceException {
@@ -220,18 +210,14 @@ public class JobServiceManager {
 			if (task == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown validator id " + id);
 			}
-			if (!task.getStatus().equals(JobService.STATUS.NEW.name().toLowerCase())) {
+			if (!task.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
 				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
 			}
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, task);
 
 			log.info("job " + jobService.getId() + " found for validator ");
 			// mkdir
-			if (Files.exists(jobService.getPath())) {
-				// réutilisation anormale d'un id de job (réinitialisation de la
-				// séquence à l'extérieur de l'appli?)
-				FileUtils.deleteDirectory(jobService.getPath().toFile());
-			}
+			deleteDirectory(jobService);
 			Files.createDirectories(jobService.getPath());
 
 			jobService.setStatus(JobService.STATUS.PENDING);
@@ -241,36 +227,15 @@ public class JobServiceManager {
 
 		} catch (RequestServiceException ex) {
 			log.info("fail to create validator job " + ex.getMessage());
-			if (task != null) {
-				try {
-					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(task);
-				} catch (Exception e) {
-					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(task);
 			throw ex;
 		} catch (ServiceException ex) {
 			log.info("invalid validator job data" + ex.getMessage());
-			if (task != null) {
-				try {
-					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(task);
-				} catch (Exception e) {
-					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(task);
 			throw ex;
 		} catch (Exception ex) {
 			log.info("fail to create validator job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
-			if (task != null) {
-				try {
-					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(task);
-				} catch (Exception e) {
-					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(task);
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
@@ -344,13 +309,7 @@ public class JobServiceManager {
 				actionTask.setStatus(jobService.getStatus().name().toLowerCase());
 				actionDAO.update(actionTask);
 				// delete directory
-				if (Files.exists(jobService.getPath())) {
-					try {
-						FileUtils.deleteDirectory(jobService.getPath().toFile());
-					} catch (IOException e) {
-						log.warn("unable to delete directory " + jobService.getPath().toString());
-					}
-				}
+				deleteDirectory(jobService);
 			}
 			return jobService;
 
@@ -364,6 +323,16 @@ public class JobServiceManager {
 
 	}
 
+	private void deleteDirectory(JobService jobService) {
+		if (jobService.getPath().toFile().exists()) {
+			try {
+				FileUtils.deleteDirectory(jobService.getPath().toFile());
+			} catch (IOException e) {
+				log.warn("unable to delete directory " + jobService.getPath().toString());
+			}
+		}
+	}
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void terminate(JobService jobService, JobService.STATUS status) {
 		jobService.setStatus(status);
@@ -372,13 +341,7 @@ public class JobServiceManager {
 		updateTask(jobService);
 
 		// delete directory
-		if (Files.exists(jobService.getPath())) {
-			try {
-				FileUtils.deleteDirectory(jobService.getPath().toFile());
-			} catch (IOException e) {
-				log.warn("unable to delete directory " + jobService.getPath().toString());
-			}
-		}
+		deleteDirectory(jobService);
 		// send termination to BOIV
 		notifyGui(jobService);
 
@@ -388,33 +351,32 @@ public class JobServiceManager {
 		String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 		if (guiBaseUrl != null && !guiBaseUrl.isEmpty() && guiToken != null && !guiToken.isEmpty()) {
-			
+
 			String urlName = "";
-			switch (jobService.getAction())
-			{
-			case importer : 
-				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId()
-				+ "/notify_parent?token=" + guiToken;
+			switch (jobService.getAction()) {
+			case importer:
+				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent?token="
+						+ guiToken;
 				break;
-			case validator : 
+			case validator:
 				urlName = guiBaseUrl + "/api/v1/internals/compliance_check_sets/" + jobService.getId()
-				+ "/notify_parent?token=" + guiToken;
+						+ "/notify_parent?token=" + guiToken;
 				break;
-			case exporter : 
-				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId()
-				+ "/upload?token=" + guiToken+"&file="; // TODO add file name ? 
+			case exporter:
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?token="
+						+ guiToken + "&file="; // TODO add file name ?
 				break;
 			}
-			// TODO 
+			// TODO
 			// send message with some delay to let transaction terminate
 			// (thread)
 			try {
 				URL url = new URL(urlName);
-				
+
 			} catch (Exception e) {
-				log.error("End of task not notified, cannot invoke url "+urlName+", cause : "+e.getMessage());
+				log.error("End of task not notified, cannot invoke url " + urlName + ", cause : " + e.getMessage());
 			}
-			
+
 		}
 	}
 
@@ -451,14 +413,7 @@ public class JobServiceManager {
 		updateTask(jobService);
 
 		// delete directory
-		if (Files.exists(jobService.getPath())) {
-			try {
-				FileUtils.deleteDirectory(jobService.getPath().toFile());
-			} catch (IOException e) {
-				log.warn("unable to delete directory " + jobService.getPath().toString());
-			}
-		}
-
+		deleteDirectory(jobService);
 		// send termination to BOIV
 		notifyGui(jobService);
 

@@ -1,7 +1,6 @@
 package mobi.chouette.dao;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -92,12 +91,7 @@ public class ActionDAOImpl implements ActionDAO {
 		result.addAll(complianceCheckTaskDAO.getTasks(status));
 		// result.addAll(publicationTaskDAO.getTasks(status));
 
-		result.sort(new Comparator<ActionTask>() {
-			@Override
-			public int compare(ActionTask o1, ActionTask o2) {
-				return o1.getCreatedAt().compareTo(o2.getCreatedAt());
-			}
-		});
+		result.sort((o1,o2) -> o1.getCreatedAt().compareTo(o2.getCreatedAt()));
 		return result;
 	}
 }

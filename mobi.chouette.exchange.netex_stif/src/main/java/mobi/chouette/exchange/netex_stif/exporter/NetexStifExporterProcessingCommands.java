@@ -12,6 +12,8 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.core.CoreExceptionCode;
+import mobi.chouette.core.CoreRuntimeException;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.exporter.CompressCommand;
@@ -19,9 +21,11 @@ import mobi.chouette.exchange.exporter.SaveMetadataCommand;
 
 @Data
 @Log4j
-public class NetexStifExporterProcessingCommands implements ProcessingCommands, Constant {
+public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 
 	
+	private static final String NO_FACTORIES = "unable to call factories";
+
 	public static class DefaultFactory extends ProcessingCommandsFactory {
 
 		@Override
@@ -32,27 +36,27 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands, 
 	}
 
 	static {
-		ProcessingCommandsFactory.factories.put(NetexStifExporterProcessingCommands.class.getName(),
+		ProcessingCommandsFactory.register(NetexStifExporterProcessingCommands.class.getName(),
 				new DefaultFactory());
 	}
 
 	@Override
-	public List<? extends Command> getPreProcessingCommands(Context context,boolean withDao) {
-		InitialContext initCtx = (InitialContext) context.get(INITIAL_CONTEXT);
+	public List<Command> getPreProcessingCommands(Context context,boolean withDao) {
+		InitialContext initCtx = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
 			commands.add(CommandFactory.create(initCtx, NetexStifInitExportCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
 		}
 		
 		return commands;
 	}
 
 	@Override
-	public List<? extends Command> getLineProcessingCommands(Context context,boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+	public List<Command> getLineProcessingCommands(Context context,boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
 			if (withDao)
@@ -61,7 +65,7 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands, 
 				commands.add(CommandFactory.create(initialContext, NetexStifLineProducerCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
 		}
 		
 		return commands;
@@ -69,9 +73,9 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands, 
 	}
 
 	@Override
-	public List<? extends Command> getPostProcessingCommands(Context context,boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
-		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(CONFIGURATION);
+	public List<Command> getPostProcessingCommands(Context context,boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 		List<Command> commands = new ArrayList<>();
 		try {
 			if (parameters.isAddMetadata())
@@ -79,20 +83,19 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands, 
 			commands.add(CommandFactory.create(initialContext, CompressCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
 		}
 		return commands;
 	}
 
 	@Override
-	public List<? extends Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
+	public List<Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
 		return new ArrayList<>();
 	}
 	
 	@Override
-	public List<? extends Command> getDisposeCommands(Context context, boolean withDao) {
-		List<Command> commands = new ArrayList<>();
-		return commands;
+	public List<Command> getDisposeCommands(Context context, boolean withDao) {
+		return new ArrayList<>();
 	}
 
 }

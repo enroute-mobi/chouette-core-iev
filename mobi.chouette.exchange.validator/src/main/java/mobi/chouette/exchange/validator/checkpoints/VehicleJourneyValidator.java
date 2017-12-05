@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.model.StopAreaLite;
@@ -16,10 +17,16 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> implements CheckPointConstant {
+public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 
-	private static final String[] codes = { L3_VehicleJourney_1, L3_VehicleJourney_2, L3_VehicleJourney_4,
-			L3_VehicleJourney_5 };
+	private static final String MISSING_STOP_AREA_REFERENCE = " : missing StopArea reference";
+	private static final String VEHICLE_JOURNEY = "VehicleJourney ";
+	private static final String PASSING_TIME_FOR_MISSING_STOP_AREA = "passingTime for missing stop area ";
+	private static final String[] codes = { 
+			CheckPointConstant.L3_VehicleJourney_1, 
+			CheckPointConstant.L3_VehicleJourney_2, 
+			CheckPointConstant.L3_VehicleJourney_4,
+			CheckPointConstant.L3_VehicleJourney_5 };
 
 	@Override
 	public void validate(Context context, VehicleJourney object, ValidateParameters parameters, String transportMode) {
@@ -66,8 +73,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 			return;
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_1);
-		Referential r = (Referential) context.get(REFERENTIAL);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_1);
+		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 
 		long deltaMax = Long.parseLong(parameters.getMaximumValue()) * 60L;
 
@@ -79,13 +86,13 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 					if (delta > deltaMax) {
 						StopAreaLite zdep = r.findStopArea(passingTime.getStopPoint().getStopAreaId());
 						if (zdep == null) {
-							log.error("passingTime for missing stop area ");
+							log.error(PASSING_TIME_FOR_MISSING_STOP_AREA);
 							throw new ValidationException(
-									"VehicleJourney " + object.getId() + " : missing StopArea reference");
+									VEHICLE_JOURNEY + object.getId() + MISSING_STOP_AREA_REFERENCE);
 						}
 						DataLocation source = new DataLocation(object);
 						DataLocation target = new DataLocation(zdep);
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_1, source,
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_1, source,
 								Long.toString(delta / 60L), parameters.getMaximumValue(), target);
 
 					}
@@ -136,8 +143,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 			return;
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_2);
-		Referential r = (Referential) context.get(REFERENTIAL);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_2);
+		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 
 		long speedMax = Long.parseLong(parameters.getMaximumValue());
 		long speedMin = Long.parseLong(parameters.getMinimumValue());
@@ -154,7 +161,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_2, "1", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_2, "1", source,
 						Long.toString(speed), parameters.getMaximumValue(), target1, target2);
 
 			}
@@ -165,7 +172,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_2, "2", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_2, "2", source,
 						Long.toString(speed), parameters.getMinimumValue(), target1, target2);
 			}
 		}
@@ -205,11 +212,11 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 		// prerequisites
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_4);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_4);
 
 		if (object.getTimetables().isEmpty()) {
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_4, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_4, source);
 
 		}
 	}
@@ -255,8 +262,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 			return;
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_5);
-		Referential r = (Referential) context.get(REFERENTIAL);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_5);
+		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 		DateFormat format = new SimpleDateFormat("HH:mm");
 		// check first passingTime
 		{
@@ -264,12 +271,12 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 			if (getArrivalTime(passingTime).after(passingTime.getDepartureTime())) {
 				StopAreaLite zdep = r.findStopArea(passingTime.getStopPoint().getStopAreaId());
 				if (zdep == null) {
-					log.error("passingTime for missing stop area ");
-					throw new ValidationException("VehicleJourney " + object.getId() + " : missing StopArea reference");
+					log.error(PASSING_TIME_FOR_MISSING_STOP_AREA);
+					throw new ValidationException(VEHICLE_JOURNEY + object.getId() + MISSING_STOP_AREA_REFERENCE);
 				}
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(zdep);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_5, "1", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_5, "1", source,
 						format.format(passingTime.getArrivalTime()), format.format(passingTime.getDepartureTime()),
 						target);
 			}
@@ -284,14 +291,14 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> im
 
 				StopAreaLite zdep2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
 				if (zdep2 == null) {
-					log.error("passingTime for missing stop area ");
-					throw new ValidationException("VehicleJourney " + object.getId() + " : missing StopArea reference");
+					log.error(PASSING_TIME_FOR_MISSING_STOP_AREA);
+					throw new ValidationException(VEHICLE_JOURNEY + object.getId() + MISSING_STOP_AREA_REFERENCE);
 				}
 
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_5, "2", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_5, "2", source,
 						format.format(passingTime1.getDepartureTime()), format.format(passingTime2.getArrivalTime()),
 						target1, target2);
 

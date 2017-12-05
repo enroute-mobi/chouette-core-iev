@@ -15,13 +15,14 @@ import mobi.chouette.common.JobData;
 import mobi.chouette.common.PropertyNames;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
+import mobi.chouette.common.Constant;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.importer.ImportTask;
 @Log4j
 @Data
 @ToString(exclude = { "inputValidator" })
-public class JobService implements JobData, ServiceConstants {
+public class JobService implements JobData {
 
 	public enum STATUS {
 		NEW, PENDING, RUNNING, SUCCESSFUL, WARNING, FAILED, CANCELLED, ABORTED
@@ -129,11 +130,11 @@ public class JobService implements JobData, ServiceConstants {
 	 */
 	public String getPathName() {
 
-		return Paths.get(rootDirectory, ROOT_PATH, action.name(), id.toString()).toString();
+		return Paths.get(rootDirectory, Constant.ROOT_PATH, action.name(), id.toString()).toString();
 	}
 
 	public static String getRootPathName(String rootDirectory) {
-		return Paths.get(rootDirectory, ROOT_PATH).toString();
+		return Paths.get(rootDirectory, Constant.ROOT_PATH).toString();
 	}
 
 	public java.nio.file.Path getPath() {

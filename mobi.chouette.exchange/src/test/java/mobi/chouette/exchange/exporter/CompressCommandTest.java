@@ -14,7 +14,7 @@ import mobi.chouette.exchange.TestJobData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class CompressCommandTest implements Constant 
+public class CompressCommandTest 
 {
 	private  File d = new File("target/referential/test");
 	
@@ -23,9 +23,9 @@ public class CompressCommandTest implements Constant
 	{
 		InitialContext initialContext = new InitialContext();
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
 		TestJobData test = new TestJobData();
-		context.put(JOB_DATA, test);
+		context.put(Constant.JOB_DATA, test);
 		test.setPathName("target/referential/test");
 		test.setOutputFilename("output.zip");
 		if (d.exists())
@@ -36,7 +36,7 @@ public class CompressCommandTest implements Constant
 			}
 		d.mkdirs();
 		File source = new File("src/test/data/compressTest.zip");
-		File output = new File(d,OUTPUT);
+		File output = new File(d,Constant.OUTPUT);
 		output.mkdir();
 		FileUtil.uncompress(source.getAbsolutePath(), d.getAbsolutePath());
 		CompressCommand command = (CompressCommand) CommandFactory

@@ -2,15 +2,14 @@ package mobi.chouette.exchange.report;
 
 import java.io.PrintStream;
 
-import mobi.chouette.common.Constant;
-import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.codehaus.jettison.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ActionErrorTest implements Constant{
+import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
+
+public class ActionErrorTest {
 	@Test(groups = { "JsonGeneration" }, description = "Json generated" ,priority=105 )
 	public void verifyJsonGeneration() throws Exception {
 		

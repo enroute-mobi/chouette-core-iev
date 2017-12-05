@@ -1,6 +1,6 @@
 package mobi.chouette.common;
 
-public interface Constant {
+public class Constant {
 
 	public static final boolean ERROR = false;
 	public static final boolean SUCCESS = true;
@@ -23,7 +23,7 @@ public interface Constant {
 	public static final String SCHEMA = "schema";
 	public static final String IMPORTER = "importer";
 	public static final String EXPORTER = "exporter";
-	public static final String VALIDATOR = "validator";	
+	public static final String VALIDATOR = "validator";
 	public static final String INPUT = "input";
 	public static final String OUTPUT = "output";
 	public static final String PARAMETERS_FILE = "parameters.json";
@@ -35,8 +35,9 @@ public interface Constant {
 	public static final String VALIDATION_FILE = "validation_report.json";
 	public static final String CANCEL_ASKED = "cancel_asked";
 	public static final String COMMAND_CANCELLED = "command_cancelled";
-	
-	public static final String TESTNG = "testng" ; // use to bypass action in testing mode
+
+	public static final String TESTNG = "testng"; // use to bypass action in
+													// testing mode
 
 	public static final String COLUMN_NUMBER = "column_number";
 	public static final String LINE_NUMBER = "line_number";
@@ -48,7 +49,6 @@ public interface Constant {
 	public static final String AREA_BLOC = "area_bloc";
 	public static final String CONNECTION_LINK_BLOC = "connection_link_bloc";
 
-	
 	public static final String VALIDATION_DATA = "validation_data";
 	public static final String EXPORTABLE_DATA = "exportable_data";
 	public static final String SHARED_DATA_KEYS = "shared_data_keys";
@@ -59,8 +59,7 @@ public interface Constant {
 
 	public static final char SEP = '|';
 	public static final String NULL = "\\N";
-	
+
 	public static final String BUFFER = "buffer";
-	
 
 }

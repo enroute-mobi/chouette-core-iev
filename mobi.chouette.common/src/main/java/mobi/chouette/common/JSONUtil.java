@@ -123,7 +123,7 @@ public class JSONUtil {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static List<String> getListElements(final Class<?> obj) {
-		List<String> ret = new ArrayList<String>();
+		List<String> ret = new ArrayList<>();
 
 		Field[] fields = obj.getDeclaredFields();
 
@@ -151,7 +151,7 @@ public class JSONUtil {
 
 						if (actualType[0] instanceof Class) {
 							Class<?> typeClass = (Class) actualType[0];
-							if (!typeClass.isPrimitive() && !typeClass.getName().equals("java.lang.String")
+							if (!typeClass.isPrimitive() && !typeClass.isAssignableFrom(String.class)
 									&& !typeClass.getName().equals(obj.getName())) {
 								List<String> names = getListElements(typeClass);
 								ret.addAll(names);
@@ -159,7 +159,7 @@ public class JSONUtil {
 
 						}
 
-					} else if (!returnType.isPrimitive() && !returnType.getName().equals("java.lang.String")
+					} else if (!returnType.isPrimitive() && !returnType.isAssignableFrom(String.class)
 							&& !returnType.getName().equals(obj.getName())) {
 						List<String> names = getListElements(fields[iCount].getType());
 						ret.addAll(names);
@@ -173,5 +173,5 @@ public class JSONUtil {
 		return ret;
 	}
 	
-
+    private JSONUtil(){}
 }

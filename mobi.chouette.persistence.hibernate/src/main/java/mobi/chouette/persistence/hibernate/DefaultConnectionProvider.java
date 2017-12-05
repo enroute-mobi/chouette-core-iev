@@ -2,6 +2,7 @@ package mobi.chouette.persistence.hibernate;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -17,50 +18,41 @@ import org.hibernate.service.spi.ServiceRegistryAwareService;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.hibernate.service.spi.Stoppable;
 
-public class DefaultConnectionProvider implements
-		MultiTenantConnectionProvider, ServiceRegistryAwareService, Stoppable {
+public class DefaultConnectionProvider
+		implements MultiTenantConnectionProvider, ServiceRegistryAwareService, Stoppable {
 
 	private static final long serialVersionUID = 1L;
 
-	private DataSource _datasource;
+	private transient DataSource datasource;
 
 	@Override
 	public Connection getAnyConnection() throws SQLException {
-		return _datasource.getConnection();
+		return datasource.getConnection();
 	}
 
 	@Override
 	public Connection getConnection(String identifier) throws SQLException {
+		
 		final Connection connection = getAnyConnection();
 		try {
 			if (identifier != null && !identifier.isEmpty()) {
-				connection.createStatement().execute(
-						"SET SCHEMA '" + identifier + "'");
+				try (Statement stmt = connection.createStatement();) {
+					stmt.execute("SET SCHEMA '" + identifier + "'");
+				}
 			}
 		} catch (SQLException e) {
-			throw new HibernateException(
-					"Could not alter JDBC connection to specified schema ["
-							+ identifier + "]", e);
+			throw new HibernateException("Could not alter JDBC connection to specified schema [" + identifier + "]", e);
 		}
 		return connection;
 	}
 
 	@Override
 	public void releaseAnyConnection(Connection connection) throws SQLException {
-//		try {
-//			connection.createStatement().execute("SET SCHEMA 'public'");
-//
-//		} catch (SQLException e) {
-//			throw new HibernateException(
-//					"Could not alter JDBC connection to specified schema [public]",
-//					e);
-//		}
 		connection.close();
 	}
 
 	@Override
-	public void releaseConnection(String tenantIdentifier, Connection connection)
-			throws SQLException {
+	public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
 		releaseAnyConnection(connection);
 	}
 
@@ -73,8 +65,7 @@ public class DefaultConnectionProvider implements
 	@Override
 	public boolean isUnwrappableAs(Class unwrapType) {
 		return MultiTenantConnectionProvider.class.equals(unwrapType)
-				|| AbstractMultiTenantConnectionProvider.class
-						.isAssignableFrom(unwrapType);
+				|| AbstractMultiTenantConnectionProvider.class.isAssignableFrom(unwrapType);
 	}
 
 	@Override
@@ -91,7 +82,7 @@ public class DefaultConnectionProvider implements
 	public void injectServices(ServiceRegistryImplementor registry) {
 
 		Map<?, ?> settings = getSettings(registry);
-		String datasource = (String) settings.get(AvailableSettings.DATASOURCE);
+		String datasourceName = (String) settings.get(AvailableSettings.DATASOURCE);
 
 		ContextHolder.setDefaultSchema(null);
 
@@ -101,31 +92,28 @@ public class DefaultConnectionProvider implements
 					"Could not locate JndiService from DataSourceBasedMultiTenantConnectionProviderImpl");
 		}
 
-		Object namedObject = jndi.locate(datasource);
+		Object namedObject = jndi.locate(datasourceName);
 		if (namedObject == null) {
-			throw new HibernateException("JNDI name [" + datasource
-					+ "] could not be resolved");
+			throw new HibernateException("JNDI name [" + datasourceName + "] could not be resolved");
 		}
 
 		if (DataSource.class.isInstance(namedObject)) {
-			_datasource = (DataSource) namedObject;
+			datasource = (DataSource) namedObject;
 		} else {
-			throw new HibernateException("Unknown object type ["
-					+ namedObject.getClass().getName()
-					+ "] found in JNDI location [" + datasource + "]");
+			throw new HibernateException("Unknown object type [" + namedObject.getClass().getName()
+					+ "] found in JNDI location [" + datasourceName + "]");
 		}
 
 	}
 
 	private Map<?, ?> getSettings(ServiceRegistryImplementor registry) {
-		Map<?, ?> result = registry.getService(ConfigurationService.class)
-				.getSettings();
+		Map<?, ?> result = registry.getService(ConfigurationService.class).getSettings();
 		return result;
 	}
 
 	@Override
 	public void stop() {
-		_datasource = null;
+		datasource = null;
 	}
 
 }

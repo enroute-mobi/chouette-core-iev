@@ -12,28 +12,29 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.AbstractDisposeImportCommand;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 
 @Log4j
-public class NetexStifDisposeImportCommand extends AbstractDisposeImportCommand implements Constant {
+public class NetexStifDisposeImportCommand extends AbstractDisposeImportCommand {
 
 	public static final String COMMAND = "NetexStifDisposeImportCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
 			super.execute(context);
-			JobData jobData = (JobData) context.get(JOB_DATA);
+			JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 			File target = new File(jobData.getPathName());
 			if (target.exists()) {
 				try {
@@ -42,11 +43,11 @@ public class NetexStifDisposeImportCommand extends AbstractDisposeImportCommand 
 					log.warn("cannot purge inport directory " + e.getMessage());
 				}
 			}
-			NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+			NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
 			if (factory != null) {
 				factory.dispose();
 			}
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 
 		} catch (Exception e) {
 			log.error(e, e);
@@ -68,7 +69,7 @@ public class NetexStifDisposeImportCommand extends AbstractDisposeImportCommand 
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifDisposeImportCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifDisposeImportCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

@@ -4,9 +4,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.Cache;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.TypedQuery;
@@ -20,41 +17,30 @@ import org.hibernate.Session;
 
 import com.google.common.collect.Iterables;
 
-public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
-
-	protected EntityManager em;
-
-	protected Class<T> type;
+public abstract class GenericDAOImpl<T> extends DAOImpl<T> implements GenericDAO<T> {
 
 	public GenericDAOImpl(Class<T> type) {
-		this.type = type;
+		super(type);
 	}
-
 	
 	public T find(final Object id) {
 		return em.find(type, id);
 	}
-
 	
 	public List<T> find(final String hql, final List<Object> values) {
-		List<T> result = null;
-		if (values.isEmpty()) {
-			TypedQuery<T> query = em.createQuery(hql, type);
-			result = query.getResultList();
-		} else {
-			TypedQuery<T> query = em.createQuery(hql, type);
+		TypedQuery<T> query = em.createQuery(hql, type);
+		if (!values.isEmpty()) {
 			int pos = 0;
 			for (Object value : values) {
 				query.setParameter(pos++, value);
 			}
-			result = query.getResultList();
 		}
-		return result;
+		return query.getResultList();
 	}
 
 	
 	public List<T> findAll(final Collection<Long> ids) {
-		if (ids == null || ids.size() == 0){
+		if (ids == null || ids.isEmpty()){
 			return Collections.emptyList();
 		}
 		List<T> result = null;
@@ -68,7 +54,6 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 		return result;
 	}
 
-	
 	public List<T> findAll() {
 		List<T> result = null;
 		CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -83,14 +68,10 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 	
 	public T findByObjectId(final String objectId) {
 		Session session = em.unwrap(Session.class);
-		T result = (T) session.bySimpleNaturalId(type).load(objectId);
-
-		return result;
+		return (T) session.bySimpleNaturalId(type).load(objectId);
 	}
 
-	
 	public List<T> findByObjectId(final Collection<String> objectIds) {
-		// System.out.println("GenericDAOImpl.findByObjectId() : " + objectIds);
 		List<T> result = null;
 		if (objectIds.isEmpty())
 			return result;
@@ -110,27 +91,6 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 		}
 		return result;
 	}
-
-	
-	public void create(final T entity) {
-		em.persist(entity);
-	}
-
-	
-	public T update(final T entity) {
-		return em.merge(entity);
-	}
-
-	
-	public void delete(final T entity) {
-		em.remove(entity);
-	}
-
-	
-	public void detach(final T entity) {
-		em.detach(entity);
-	}
-
 	
 	public int deleteAll() {
 		int result = 0;
@@ -141,37 +101,11 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 		result = query.executeUpdate();
 		return result;
 	}
-
 	
 	public int truncate() {
 		String query = new StringBuilder("TRUNCATE TABLE ").append(type.getAnnotation(Table.class).name())
 				.append(" CASCADE").toString();
 		return em.createNativeQuery(query).executeUpdate();
 	}
-
-	
-	public void evictAll() {
-		EntityManagerFactory factory = em.getEntityManagerFactory();
-		Cache cache = factory.getCache();
-		cache.evictAll();
-	}
-
-	
-	public void flush() {
-		em.flush();
-	}
-
-	@Override
-	public void clear() {
-		em.clear();
-	}
-
-	@Override
-	public void detach(Collection<?> list) {
-		for (Object object : list) {
-			em.detach(object);
-		}
-	}
-
 	
 }

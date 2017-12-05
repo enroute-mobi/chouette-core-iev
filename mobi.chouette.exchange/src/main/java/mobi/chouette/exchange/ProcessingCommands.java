@@ -17,9 +17,9 @@ import mobi.chouette.common.chain.Command;
  */
 public interface ProcessingCommands {
 
-	List<? extends Command> getPreProcessingCommands(Context context,boolean withDao);
-	List<? extends Command> getLineProcessingCommands(Context context,boolean withDao);
-	List<? extends Command> getStopAreaProcessingCommands(Context context,boolean withDao);
-	List<? extends Command> getPostProcessingCommands(Context context,boolean withDao);
-	List<? extends Command> getDisposeCommands(Context context,boolean withDao);
+	List<Command> getPreProcessingCommands(Context context,boolean withDao);
+	List<Command> getLineProcessingCommands(Context context,boolean withDao);
+	List<Command> getStopAreaProcessingCommands(Context context,boolean withDao);
+	List<Command> getPostProcessingCommands(Context context,boolean withDao);
+	List<Command> getDisposeCommands(Context context,boolean withDao);
 }

@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @EqualsAndHashCode
 @ToString
-public class Pair<L, R> implements Serializable {
+public class Pair<L extends Serializable , R extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = -1L;
 
@@ -17,8 +17,8 @@ public class Pair<L, R> implements Serializable {
 	@Getter
 	public final R right;
 
-	public static <L, R> Pair<L, R> of(final L left, final R right) {
-		return new Pair<L, R>(left, right);
+	public static <L extends Serializable, R extends Serializable> Pair<L, R> of(final L left, final R right) {
+		return new Pair<>(left, right);
 	}
 
 	public Pair(final L left, final R right) {

@@ -1,6 +1,8 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.Timetable;
@@ -8,7 +10,7 @@ import mobi.chouette.model.util.Referential;
 
 public class DayTypeValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = DAY_TYPE;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.DAY_TYPE;
 
 	protected String getLocalContext() {
 		return LOCAL_CONTEXT;
@@ -20,17 +22,17 @@ public class DayTypeValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_DayType_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_DayType_2);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_DayType_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_DayType_2);
 	}
 
 	public boolean validateAll(Context context) {
 		boolean result = true;
-		Referential ref = (Referential) context.get(REFERENTIAL);
+		Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 		for (Timetable timetable : ref.getSharedTimetableTemplates().values()) {
 			DataLocation location = getLocation(context, timetable.getObjectId());
-			checkChanged(context,  DAY_TYPE, timetable, location.getLineNumber(), location.getColumnNumber());
-			result &= checkModification(context, DAY_TYPE, timetable, location.getLineNumber(), location.getColumnNumber());
+			checkChanged(context,  NetexStifConstant.DAY_TYPE, timetable, location.getLineNumber(), location.getColumnNumber());
+			result &= checkModification(context, NetexStifConstant.DAY_TYPE, timetable, location.getLineNumber(), location.getColumnNumber());
 			check2NeTExSTIFDayType1(context, timetable);
             result &= check2NeTExSTIFDayType2(context, timetable);
 		}
@@ -69,7 +71,7 @@ public class DayTypeValidator extends AbstractValidator {
 		if (!result) {
 			DataLocation location = getLocation(context, timetable.getObjectId());
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayType_1, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_DayType_1, location);
 		}
 		return result;
 	}
@@ -108,7 +110,7 @@ public class DayTypeValidator extends AbstractValidator {
 		if (!result) {
 			DataLocation location = getLocation(context, timetable.getObjectId());
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayType_2, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_DayType_2, location);
 		}
 		return result;
 	}

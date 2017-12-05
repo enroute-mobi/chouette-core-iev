@@ -13,22 +13,22 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.FileReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 @Log4j
-public class NetexStifSAXParserCommandTests implements Constant, ReportConstant {
+public class NetexStifSAXParserCommandTests {
 
 	private static final String path = "src/test/data/";
 
@@ -53,20 +53,20 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
-		context.put(REFERENTIAL, new Referential());
-		context.put(NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
+		context.put(Constant.CONFIGURATION, configuration);
+		context.put(Constant.REFERENTIAL, new Referential());
+		context.put(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
-		JobDataTest test = new JobDataTest();
-		context.put(JOB_DATA, test);
+		JobDataImpl test = new JobDataImpl();
+		context.put(Constant.JOB_DATA, test);
 
 		test.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
@@ -80,8 +80,8 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		test.setReferential("chouette_gui");
 		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
-		context.put(TESTNG, "true");
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true");
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
@@ -99,8 +99,8 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
 		// check error report
-		ActionReport report = (ActionReport) context.get(REPORT);
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "NOK", "result");
@@ -129,8 +129,8 @@ public class NetexStifSAXParserCommandTests implements Constant, ReportConstant 
 		parser.setFileURL("file://" + f.getAbsolutePath());
 		parser.execute(context);
 		// check error report
-		ActionReport report = (ActionReport) context.get(REPORT);
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "NOK", "result");

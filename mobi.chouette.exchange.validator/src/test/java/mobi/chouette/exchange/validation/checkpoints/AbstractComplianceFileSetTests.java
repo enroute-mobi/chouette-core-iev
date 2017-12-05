@@ -16,11 +16,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 
 import org.hibernate.Session;
@@ -43,23 +38,17 @@ import mobi.chouette.dao.ComplianceCheckResourceDAO;
 import mobi.chouette.dao.ComplianceCheckTaskDAO;
 import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.exchange.report.ActionReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.exchange.validator.JobDataTest;
+import mobi.chouette.exchange.validator.JobDataImpl;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.exchange.validator.ValidatorCommand;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
-import mobi.chouette.model.importer.ImportMessage;
-import mobi.chouette.model.importer.ImportMessage_;
-import mobi.chouette.model.importer.ImportResource;
-import mobi.chouette.model.importer.ImportResource_;
-import mobi.chouette.model.importer.ImportTask;
 import mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class AbstractComplianceFileSetTests extends Arquillian implements Constant, ReportConstant {
+public class AbstractComplianceFileSetTests extends Arquillian {
 
 	protected static InitialContext initialContext;
 
@@ -119,7 +108,7 @@ public class AbstractComplianceFileSetTests extends Arquillian implements Consta
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(AbstractComplianceFileSetTests.class)
-				.addClass(testClass).addClass(JobDataTest.class);
+				.addClass(testClass).addClass(JobDataImpl.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -146,13 +135,13 @@ public class AbstractComplianceFileSetTests extends Arquillian implements Consta
 		ContextHolder.setContext(schema); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 
 		ValidateParameters configuration = new ValidateParameters();
 
-		context.put(CONFIGURATION, configuration);
+		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		// configuration.setNoSave(true);
@@ -189,7 +178,7 @@ public class AbstractComplianceFileSetTests extends Arquillian implements Consta
 		// jobData.setAction(JobData.ACTION.validator);
 		// jobData.setType("netex_stif");
 		// // context.put(TESTNG, "true"); // mode test
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
@@ -315,7 +304,7 @@ public class AbstractComplianceFileSetTests extends Arquillian implements Consta
 		
 		
 		Context context = initImportContext(schema);
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		ValidatorCommand command = (ValidatorCommand) CommandFactory.create(initialContext,
 				ValidatorCommand.class.getName());
 
@@ -332,7 +321,7 @@ public class AbstractComplianceFileSetTests extends Arquillian implements Consta
 			throw ex;
 		}
 
-		ActionReport actionReport = (ActionReport) context.get(REPORT);
+		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
 
 		// utx.begin();
 		// em.joinTransaction();
@@ -417,37 +406,37 @@ public class AbstractComplianceFileSetTests extends Arquillian implements Consta
 
 	}
 
-	private List<ImportResource> getRessources(ImportTask task) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<ImportResource> criteria = builder.createQuery(ImportResource.class);
-		Root<ImportResource> root = criteria.from(ImportResource.class);
-		Predicate predicate = builder.equal(root.get(ImportResource_.taskId), task.getId());
-		criteria.where(predicate);
-		TypedQuery<ImportResource> query = em.createQuery(criteria);
+//	private List<ImportResource> getRessources(ImportTask task) {
+//		CriteriaBuilder builder = em.getCriteriaBuilder();
+//		CriteriaQuery<ImportResource> criteria = builder.createQuery(ImportResource.class);
+//		Root<ImportResource> root = criteria.from(ImportResource.class);
+//		Predicate predicate = builder.equal(root.get(ImportResource_.taskId), task.getId());
+//		criteria.where(predicate);
+//		TypedQuery<ImportResource> query = em.createQuery(criteria);
+//
+//		return query.getResultList();
+//
+//	}
+//
+//	private List<ImportMessage> getMessages(ImportTask task) {
+//		return getMessages(task, null);
+//	}
 
-		return query.getResultList();
-
-	}
-
-	private List<ImportMessage> getMessages(ImportTask task) {
-		return getMessages(task, null);
-	}
-
-	private List<ImportMessage> getMessages(ImportTask task, ImportResource ressource) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<ImportMessage> criteria = builder.createQuery(ImportMessage.class);
-		Root<ImportMessage> root = criteria.from(ImportMessage.class);
-		Predicate predicateTaskId = builder.equal(root.get(ImportMessage_.taskId), task.getId());
-		if (ressource != null) {
-			Predicate predicateResourceId = builder.equal(root.get(ImportMessage_.resourceId), ressource.getId());
-			criteria.where(predicateTaskId, predicateResourceId);
-		} else {
-			criteria.where(predicateTaskId);
-		}
-
-		TypedQuery<ImportMessage> query = em.createQuery(criteria);
-
-		return query.getResultList();
-
-	}
+//	private List<ImportMessage> getMessages(ImportTask task, ImportResource ressource) {
+//		CriteriaBuilder builder = em.getCriteriaBuilder();
+//		CriteriaQuery<ImportMessage> criteria = builder.createQuery(ImportMessage.class);
+//		Root<ImportMessage> root = criteria.from(ImportMessage.class);
+//		Predicate predicateTaskId = builder.equal(root.get(ImportMessage_.taskId), task.getId());
+//		if (ressource != null) {
+//			Predicate predicateResourceId = builder.equal(root.get(ImportMessage_.resourceId), ressource.getId());
+//			criteria.where(predicateTaskId, predicateResourceId);
+//		} else {
+//			criteria.where(predicateTaskId);
+//		}
+//
+//		TypedQuery<ImportMessage> query = em.createQuery(criteria);
+//
+//		return query.getResultList();
+//
+//	}
 }

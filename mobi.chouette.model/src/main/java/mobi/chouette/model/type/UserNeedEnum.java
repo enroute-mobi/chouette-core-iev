@@ -153,20 +153,13 @@ public enum UserNeedEnum implements java.io.Serializable
       return valueOf(value);
    }
 
-   /**
-    * 
-    * 
-    * @param value
-    */
-   public void setValue(final java.lang.String value)
-   {
-   }
 
    /**
     * Method toString.
     * 
     * @return the value of this constant
     */
+   @Override
    public java.lang.String toString()
    {
       return this.value;
@@ -274,6 +267,7 @@ public enum UserNeedEnum implements java.io.Serializable
        * 
        * @return the value of this constant
        */
+      @Override
       public java.lang.String toString()
       {
          return this.value;

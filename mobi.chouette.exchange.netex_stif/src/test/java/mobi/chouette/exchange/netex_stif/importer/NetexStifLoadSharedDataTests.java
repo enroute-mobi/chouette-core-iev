@@ -29,23 +29,22 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.LineDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
-import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
 import mobi.chouette.exchange.report.ActionReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class NetexStifLoadSharedDataTests extends Arquillian implements Constant, ReportConstant {
+public class NetexStifLoadSharedDataTests extends Arquillian {
 
 	@EJB
 	LineDAO lineDao;
@@ -96,7 +95,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(NetexStifLoadSharedDataTests.class)
-				.addClass(JobDataTest.class);
+				.addClass(JobDataImpl.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -123,11 +122,11 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
+		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
@@ -138,8 +137,8 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L });
 		configuration.setIds(ids);
-		JobDataTest jobData = new JobDataTest();
-		context.put(JOB_DATA, jobData);
+		JobDataImpl jobData = new JobDataImpl();
+		context.put(Constant.JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
@@ -152,8 +151,8 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType("netex_stif");
-		context.put(TESTNG, "true");
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true");
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
@@ -162,7 +161,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 	public void verifyCheckLoadData() throws Exception {
 
 		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		Command command = CommandFactory.create(initialContext, NetexStifLoadSharedDataCommand.class.getName());
 		try {
 			command.execute(context);
@@ -170,7 +169,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian implements Constant
 			log.error("test failed", ex);
 			throw ex;
 		}
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		Assert.assertEquals(referential.getSharedReadOnlyLines().size(), 2, "line size");
 		Assert.assertNotNull(referential.getSharedReadOnlyLines().get("STIF:CODIFLIGNE:Line:C00108"),
 				"objectid STIF:CODIFLIGNE:Line:C00108 should be found for lines");

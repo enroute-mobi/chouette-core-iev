@@ -64,7 +64,7 @@ public class LongArrayUserType implements UserType {
 			Long[] castObject = (Long[]) value;
 			Array array = session.connection().createArrayOf("bigint", castObject);
 			st.setArray(index, array);
-		} else {
+		} else if (st != null) {
 			st.setNull(index, arrayTypes[0]);
 		}
 

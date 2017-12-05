@@ -104,9 +104,9 @@ public class ValidationReport extends AbstractReport implements Report {
 	}
 
 	@Override
-	public void print(PrintStream out, StringBuilder ret, int level, boolean first) {
+	public void print(PrintStream out, StringBuilder ret, int initLevel, boolean first) {
 		ret.setLength(0);
-		level = 1;
+		int level = 1;
 		out.print("{\"validation_report\": {");
 		out.print(toJsonString(ret, level, "result", result, true));
 		if (!checkPoints.isEmpty())

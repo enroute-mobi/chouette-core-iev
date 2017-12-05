@@ -38,7 +38,7 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 @Log4j
-public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckPoints {
+public class NetexStifSAXParserCommand implements Command {
 
 	public static final String COMMAND = "NetexStifSAXParserCommand";
 
@@ -51,10 +51,10 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 	@Override
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		context.remove(VALIDATION_CONTEXT);
+		context.remove(Constant.VALIDATION_CONTEXT);
 
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
@@ -62,20 +62,18 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 		reporter.addFileReport(context, fileName, IO_TYPE.INPUT);
 		log.info("check " + fileName + " for XML/XSD syntax");
 
-		Schema schema = (Schema) context.get(SCHEMA);
+		Schema schema = (Schema) context.get(Constant.SCHEMA);
 		if (schema == null) {
 			SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			schema = factory.newSchema(getClass().getResource(SCHEMA_FILE));
-			context.put(SCHEMA, schema);
+			context.put(Constant.SCHEMA, schema);
 		}
 
 		URL url = new URL(fileURL);
 
 		NetexStifSAXErrorHandler handler = new NetexStifSAXErrorHandler(context, fileURL);
-		Reader reader = null;
-		try {
-			reader = new BufferedReader(CharSetChecker.getEncodedInputStreamReader(fileName, url.openStream()),
-					8192 * 10);
+		try (Reader reader = new BufferedReader(CharSetChecker.getEncodedInputStreamReader(fileName, url.openStream()),
+				8192 * 10);) {
 			StreamSource file = new StreamSource(reader);
 
 			Validator validator = schema.newValidator();
@@ -86,7 +84,7 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 				reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, "XML/XSD errors");
 				return result;
 			}
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 		} catch (SAXException e) {
 			log.error(e.getMessage());
 			addLineEntry(context, reporter, fileName, e.getMessage());
@@ -95,8 +93,6 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 			log.error(e.getMessage());
 			reportError(context, e, fileName, reporter);
 		} finally {
-			if (reader != null)
-				reader.close();
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
 
@@ -107,8 +103,10 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 		addLineEntry(context, reporter, fileName, e.getMessage());
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		DataLocation location = new DataLocation(fileName, 1, 1);
-		validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_2, CheckPointReport.SEVERITY.ERROR);
-		validationReporter.addCheckPointReportError(context, null, L1_NetexStif_2, location, e.getMessage());
+		validationReporter.updateCheckPointReportSeverity(context, NetexCheckPoints.L1_NetexStif_2,
+				CheckPointReport.SEVERITY.ERROR);
+		validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_2, location,
+				e.getMessage());
 		reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, e.getMessage());
 	}
 
@@ -128,12 +126,11 @@ public class NetexStifSAXParserCommand implements Command, Constant, NetexCheckP
 
 		@Override
 		protected Command create(InitialContext context) throws IOException {
-			Command result = new NetexStifSAXParserCommand();
-			return result;
+			return new NetexStifSAXParserCommand();
 		}
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifSAXParserCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifSAXParserCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

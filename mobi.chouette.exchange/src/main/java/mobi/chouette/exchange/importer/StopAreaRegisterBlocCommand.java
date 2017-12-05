@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -50,18 +51,18 @@ public class StopAreaRegisterBlocCommand implements Command {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		// Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
 			Boolean optimized = Boolean.TRUE;
 
 			// Monitor monitorInit = MonitorFactory.start(COMMAND + ".init");
-			context.put(OPTIMIZED, optimized);
-			Collection<StopArea> areas = (Collection<StopArea>) context.get(AREA_BLOC);
+			context.put(Constant.OPTIMIZED, optimized);
+			Collection<StopArea> areas = (Collection<StopArea>) context.get(Constant.AREA_BLOC);
 			Referential cache = new Referential();
-			context.put(CACHE, cache);
-			Referential referential = (Referential) context.get(REFERENTIAL);
+			context.put(Constant.CACHE, cache);
+			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 
 			initializeStopArea(cache, areas);
 			initializeAccessLink(cache, referential.getAccessLinks().values());
@@ -79,7 +80,7 @@ public class StopAreaRegisterBlocCommand implements Command {
 			// Monitor monitorFlush = MonitorFactory.start(COMMAND + ".flush");
 			stopAreaDAO.flush();
 			// log.info(Color.CYAN + monitorFlush.stop() + Color.NORMAL);
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 		} catch (Exception e) {
 			log.error(e);
 			throw e;
@@ -174,6 +175,6 @@ public class StopAreaRegisterBlocCommand implements Command {
 	}
 
 	static {
-		CommandFactory.factories.put(StopAreaRegisterBlocCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(StopAreaRegisterBlocCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

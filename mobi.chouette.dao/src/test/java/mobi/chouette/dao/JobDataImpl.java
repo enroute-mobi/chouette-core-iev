@@ -4,7 +4,7 @@ import lombok.Data;
 import mobi.chouette.common.JobData;
 
 @Data
-public class TestJobData implements JobData {
+public class JobDataImpl implements JobData {
 	private Long id;
 
 	private String inputFilename;
@@ -19,7 +19,7 @@ public class TestJobData implements JobData {
 
 	private String pathName;
 
-	public TestJobData(Long id, JobData.ACTION action) {
+	public JobDataImpl(Long id, JobData.ACTION action) {
 		this.action = action;
 		this.id = id;
 	}

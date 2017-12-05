@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import mobi.chouette.common.CollectionUtil;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.Pair;
 import mobi.chouette.dao.AccessLinkDAO;
@@ -35,7 +36,7 @@ public class AccessPointUpdater implements Updater<AccessPoint> {
 		}
 		newValue.setSaved(true);
 
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 
 		if (newValue.getObjectId() != null
 				&& !newValue.getObjectId().equals(oldValue.getObjectId())) {

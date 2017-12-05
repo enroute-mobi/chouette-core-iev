@@ -8,45 +8,18 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import lombok.extern.log4j.Log4j;
-import mobi.chouette.common.Constant;
 
 @Log4j
-public abstract class AbstractInputValidator implements InputValidator, Constant {
-//	public boolean initReport2(JobData data) {
-//		Context context = new Context();
-//		context.put(REPORT, new ActionReport());
-//		context.put(JOB_DATA, data);
-////		ProgressionCommand progression = new ProgressionCommand();
-////		progression.initialize(context, 1);
-//		return true;
-//	}
+public abstract class AbstractInputValidator implements InputValidator {
 
-	/* (non-Javadoc)
-	 * @see mobi.chouette.exchange.InputValidator#toValidation(java.lang.String)
-	 */
-//	@Override
-//	public ValidationParameters toValidation(String validationParameters) {
-//		try {
-//			return JSONUtil.fromJSON(validationParameters,
-//					ValidationParameters.class);
-//		} catch (Exception e) {
-//			return null;
-//		}
-//	}
-	
-	
 	protected boolean checkFileExistenceInZip(String fileName, Path filePath, String format) {
 		boolean isZipFileValid = true;
-		
+
 		if (fileName.endsWith(".zip")) {
 			isZipFileValid = false;
-			ZipFile zipFile = null;
-			File file = null;
-			try {
-				file = new File(filePath.toString());
-				zipFile = new ZipFile(file);
-				for (Enumeration<? extends ZipEntry> e = zipFile.entries();
-						e.hasMoreElements();) {
+			File file = new File(filePath.toString());
+			try (ZipFile zipFile = new ZipFile(file);) {
+				for (Enumeration<? extends ZipEntry> e = zipFile.entries(); e.hasMoreElements();) {
 					ZipEntry ze = e.nextElement();
 					String name = ze.getName();
 					if (name.endsWith("." + format) && !name.contains("metadata")) {
@@ -54,11 +27,11 @@ public abstract class AbstractInputValidator implements InputValidator, Constant
 						break;
 					}
 				}
-			}catch (IOException e) {
+			} catch (IOException e) {
 				log.error("Erreur ouverture fichier zip " + fileName);
-			} 
+			}
 		}
-		
+
 		return isZipFileValid;
 	}
 }

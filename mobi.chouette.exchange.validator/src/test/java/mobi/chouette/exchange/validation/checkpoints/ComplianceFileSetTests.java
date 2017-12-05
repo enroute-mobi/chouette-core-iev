@@ -8,7 +8,6 @@ package mobi.chouette.exchange.validation.checkpoints;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
-import org.testng.annotations.Test;
 
 public class ComplianceFileSetTests extends AbstractComplianceFileSetTests {
 

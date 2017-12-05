@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 import mobi.chouette.model.Organisation;
 
 @Stateless (name="OrganisationDAO")
-public class OrganisationDAOImpl extends GenericDAOImpl<Organisation> implements OrganisationDAO{
+public class OrganisationDAOImpl extends GenericDAOImpl<Organisation> implements OrganisationDAO {
 
 	public OrganisationDAOImpl() {
 		super(Organisation.class);

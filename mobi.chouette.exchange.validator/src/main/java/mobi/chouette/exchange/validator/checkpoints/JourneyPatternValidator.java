@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -20,9 +21,11 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class JourneyPatternValidator extends GenericValidator<JourneyPattern> implements CheckPointConstant {
+public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 
-	private static final String[] codes = { L3_JourneyPattern_2, L3_VehicleJourney_3 };
+	private static final String[] codes = { 
+			CheckPointConstant.L3_JourneyPattern_2, 
+			CheckPointConstant.L3_VehicleJourney_3 };
 
 	@Override
 	public void validate(Context context, JourneyPattern object, ValidateParameters parameters, String transportMode) {
@@ -58,11 +61,10 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	protected void check3JourneyPattern2(Context context, JourneyPattern object, CheckpointParameters parameters) {
 		List<VehicleJourney> vjs = object.getVehicleJourneys();
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_JourneyPattern_2);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_JourneyPattern_2);
 		if (vjs == null || vjs.size() < 1) {
-			log.error("JourneyPattern " + object.getObjectId() + " has less than 1 VehicleJourney");
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_JourneyPattern_2, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_JourneyPattern_2, source);
 		}
 	}
 
@@ -98,13 +100,12 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 	 */
 	protected void check3VehicleJourney3(Context context, JourneyPattern object, CheckpointParameters parameters) {
 		List<VehicleJourney> vj = object.getVehicleJourneys();
-		Referential ref = (Referential) context.get(REFERENTIAL);
+		Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_VehicleJourney_3);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_3);
 		Map<String, List<TravelTime>> travelTimeMap = new HashMap<String, List<TravelTime>>();
 
 		vj.stream().forEach(v -> {
-			System.out.println(v.getObjectId());
 			VehicleJourneyAtStop previous = null;
 			List<VehicleJourneyAtStop> list = v.getVehicleJourneyAtStops();
 			for (VehicleJourneyAtStop vjs : list) {
@@ -118,11 +119,8 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 		Long threshold = Long.parseLong(tmp);
 
 		travelTimeMap.keySet().stream().forEach(s -> {
-			System.out.println(s + "(#" + travelTimeMap.get(s).size() + ") -> ");
 			final Long average = (long) travelTimeMap.get(s).stream().mapToLong(t -> t.getDelta()).average()
 					.getAsDouble();
-			System.out.println("avg=" + average + ", threshold=" + threshold + ", smin=" + (average - threshold)
-					+ ", smax=" + (average + threshold));
 			List<TravelTime> list = travelTimeMap.get(s).stream()
 					.filter(tt -> (tt.getDelta() > (average + threshold)) || (tt.getDelta() < (average - threshold)))
 					.collect(Collectors.toList());
@@ -131,13 +129,11 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern> im
 				StopAreaLite sa1 = ref.findStopArea(tt.getVehicleJourneyAtStop1().getStopPoint().getStopAreaId());
 				StopAreaLite sa2 = ref.findStopArea(tt.getVehicleJourneyAtStop2().getStopPoint().getStopAreaId());
 				long delta = Math.abs(tt.getDelta() - average);
-				log.error("Le temps de parcours sur la course "+tt.getVehicleJourney().getObjectId()+" entre les arrêts {"+sa1.getName()+"} ({"+sa1.getObjectId()+"}) et {"+sa2.getName()+"} ({"+sa2.getObjectId()+"}) s'écarte de {"+delta+"} du temps moyen constaté sur la mission");
 				DataLocation target1 = new DataLocation(sa1);
 				DataLocation target2 = new DataLocation(sa2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_VehicleJourney_3, source, null, null, target1,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_3, source, Long.toString(delta), null, target1,
 						target2);
 			});
-			System.out.println("For parcours " + s + "  => err=" + list.size() + " total="+travelTimeMap.get(s).size() );
 		});
 	}
 

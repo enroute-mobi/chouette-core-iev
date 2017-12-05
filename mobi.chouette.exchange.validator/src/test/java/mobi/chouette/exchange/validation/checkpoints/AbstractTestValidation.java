@@ -43,13 +43,11 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.ObjectCollectionReport;
 import mobi.chouette.exchange.report.ObjectReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.CheckPointReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.exchange.validator.JobDataTest;
+import mobi.chouette.exchange.validator.JobDataImpl;
 import mobi.chouette.exchange.validator.ValidateParameters;
-import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator;
@@ -57,7 +55,7 @@ import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
 public abstract class AbstractTestValidation extends Arquillian
-		implements Constant, ReportConstant, CheckPointConstant {
+		{
 
 	public static final String SCHEMA_NAME = "iev_check_points";
 
@@ -116,7 +114,7 @@ public abstract class AbstractTestValidation extends Arquillian
 			}
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
-				.addAsWebInfResource("postgres-ds.xml").addClass(JobDataTest.class)
+				.addAsWebInfResource("postgres-ds.xml").addClass(JobDataImpl.class)
 				.addClass(AbstractTestValidation.class).addClass(clazz);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
@@ -135,12 +133,12 @@ public abstract class AbstractTestValidation extends Arquillian
 		ContextHolder.setContext(SCHEMA_NAME); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(REFERENTIAL, new Referential());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.REFERENTIAL, new Referential());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		ValidateParameters configuration = new ValidateParameters();
-		context.put(CONFIGURATION, configuration);
+		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setOrganisationName("organisation");
@@ -149,8 +147,8 @@ public abstract class AbstractTestValidation extends Arquillian
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		configuration.setIds(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
-		JobDataTest test = new JobDataTest();
-		context.put(JOB_DATA, test);
+		JobDataImpl test = new JobDataImpl();
+		context.put(Constant.JOB_DATA, test);
 		test.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
@@ -163,8 +161,8 @@ public abstract class AbstractTestValidation extends Arquillian
 		test.setReferential(SCHEMA_NAME);
 		test.setAction(ACTION.validator);
 		context.put("testng", "true");
-		context.put(SOURCE, SOURCE_DATABASE);
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.SOURCE, Constant.SOURCE_DATABASE);
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
@@ -326,9 +324,9 @@ public abstract class AbstractTestValidation extends Arquillian
 
 	protected void checkReports(Context context, String lineId, String checkPointCode, String messageCode, String value,
 			OBJECT_STATE state, int reportCount) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "OK", "result");
@@ -360,9 +358,9 @@ public abstract class AbstractTestValidation extends Arquillian
 	}
 
 	protected final void checkNoReports(Context context, String lineId) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "OK", "result");

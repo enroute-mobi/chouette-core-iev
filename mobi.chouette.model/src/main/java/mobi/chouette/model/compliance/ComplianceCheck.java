@@ -53,7 +53,7 @@ public class ComplianceCheck extends ChouetteDatedObject {
 
 	public enum CRITICITY {
 		warning, error
-	};
+	}
 
 	@Getter
 	@Setter
@@ -85,7 +85,7 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	@Column(name = "control_attributes")
 	@CollectionType(type = "java.util.HashMap")
 	@Convert(converter = HstoreConverter.class)
-	private Map<String, String> controlAttributes = new HashMap<String, String>();
+	private Map<String, String> controlAttributes = new HashMap<>();
 
 	@Getter
 	@Setter
@@ -95,8 +95,7 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	@Getter
 	@Setter
 	@Column(name = "origin_code", nullable = false)
-	protected String code; // TODO : demander à AF : code des cartes Redmine ou le code redéfini ; dans le second cas,
-							// demander le champs du code Redmine
+	protected String code;
 
 	@Getter
 	@Setter

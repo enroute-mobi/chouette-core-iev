@@ -1,5 +1,6 @@
 package mobi.chouette.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,9 @@ import lombok.ToString;
 @Table(name = "referentials")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Referential {
+public class Referential implements Serializable{
+	private static final long serialVersionUID = 2852542529784275643L;
+
 	@Getter
 	@Setter
 	@SequenceGenerator(name="referentials_id_seq", sequenceName="referentials_id_seq", allocationSize=1)

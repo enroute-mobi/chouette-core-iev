@@ -29,7 +29,9 @@ public class SchemaDAO {
 	}
 	
 	public void setCurrentSchema(String identifier) {
-		Query query = em.createNativeQuery("SET SCHEMA '" + identifier + "'");
+		
+		String queryString = "SET SCHEMA '" + identifier + "'";
+		Query query = em.createNativeQuery(queryString);
 		query.executeUpdate();
 	}
 }

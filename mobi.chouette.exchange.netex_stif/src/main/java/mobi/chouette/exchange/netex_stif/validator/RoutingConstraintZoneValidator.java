@@ -1,7 +1,8 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.RoutingConstraintZone;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -9,7 +10,7 @@ import mobi.chouette.model.LineLite;
 
 public class RoutingConstraintZoneValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = ROUTING_CONSTRAINT_ZONE;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.ROUTING_CONSTRAINT_ZONE;
 	private final static String VALID_ZONE_USE = "cannotBoardAndAlightInSameZone";
 
 	
@@ -24,15 +25,15 @@ public class RoutingConstraintZoneValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_RoutingConstraintZone_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_RoutingConstraintZone_2);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2);
 	}
 	
 	public boolean validate(Context context, RoutingConstraintZone zone, int lineNumber, int columnNumber)
 	{
-		boolean result1 = checkNetexId(context, ROUTING_CONSTRAINT_ZONE, zone.getObjectId(), lineNumber, columnNumber);
-		checkChanged(context, ROUTING_CONSTRAINT_ZONE, zone, lineNumber, columnNumber);
-		boolean result2 = checkModification(context, ROUTING_CONSTRAINT_ZONE, zone, lineNumber, columnNumber);
+		boolean result1 = checkNetexId(context, NetexStifConstant.ROUTING_CONSTRAINT_ZONE, zone.getObjectId(), lineNumber, columnNumber);
+		checkChanged(context, NetexStifConstant.ROUTING_CONSTRAINT_ZONE, zone, lineNumber, columnNumber);
+		boolean result2 = checkModification(context, NetexStifConstant.ROUTING_CONSTRAINT_ZONE, zone, lineNumber, columnNumber);
 		boolean result3 = check2NeTExSTIFRoutingConstraintZone1(context, zone, lineNumber, columnNumber);
 		if (result3)
 			result3 = check2NeTExSTIFRoutingConstraintZone2(context, zone, lineNumber, columnNumber);
@@ -69,10 +70,10 @@ public class RoutingConstraintZoneValidator extends AbstractValidator {
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, zone);
 			location.setName(zone.getName());
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_RoutingConstraintZone_1, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_1, location);
  		}
  		return result;
  	}
@@ -108,12 +109,12 @@ public class RoutingConstraintZoneValidator extends AbstractValidator {
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line,  zone);
 			location.setName(zone.getName());
 			String zoneUse = zone.getZoneUse();
 			if (zoneUse == null) zoneUse = "null";
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_RoutingConstraintZone_2, location, zoneUse);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2, location, zoneUse);
  		} 				
  		return result;
  	}

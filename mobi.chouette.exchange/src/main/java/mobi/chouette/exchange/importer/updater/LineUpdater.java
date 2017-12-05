@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import mobi.chouette.common.CollectionUtil;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.Pair;
 import mobi.chouette.dao.CompanyDAO;
@@ -75,13 +76,13 @@ public class LineUpdater implements Updater<Line> {
 		}
 		newValue.setSaved(true);
 //		Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 		
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.addItemToValidationReport(context, "2-DATABASE-", "Line", 2, "W", "W");
-		validationReporter.addItemToValidationReport(context, DATABASE_ROUTE_1, "E");
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_ROUTE_1, "E");
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 		
 		if (oldValue.isDetached()) {
 			// object does not exist in database
@@ -343,9 +344,9 @@ public class LineUpdater implements Updater<Line> {
 	 */
 	private void twoDatabaseLineOneTest(ValidationReporter validationReporter, Context context, Line oldLine, Line newLine, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldLine.getNetwork(), newLine.getNetwork()))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_LINE_1, data.getDataLocations().get(newLine.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_LINE_1, data.getDataLocations().get(newLine.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_LINE_1);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_LINE_1);
 	}
 	
 	/**
@@ -357,9 +358,9 @@ public class LineUpdater implements Updater<Line> {
 	 */
 	private void twoDatabaseLineTwoTest(ValidationReporter validationReporter, Context context, Line oldLine, Line newLine, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldLine.getCompany(), newLine.getCompany()))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_LINE_2, data.getDataLocations().get(newLine.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_LINE_2, data.getDataLocations().get(newLine.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_LINE_2);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_LINE_2);
 	}
 	
 	/**
@@ -371,8 +372,8 @@ public class LineUpdater implements Updater<Line> {
 	 */
 	private void twoDatabaseRouteOneTest(ValidationReporter validationReporter, Context context, Route oldRoute, Route newRoute, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldRoute.getLine(), newRoute.getLine()))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_ROUTE_1, data.getDataLocations().get(newRoute.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_ROUTE_1, data.getDataLocations().get(newRoute.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_ROUTE_1);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_ROUTE_1);
 	}
 }

@@ -12,6 +12,29 @@
    <properties>
       <project.rootDir>${project.basedir}/..</project.rootDir>
       <skipInitDb>true</skipInitDb>
+		<!-- Sonar exclusions -->
+      <sonar.issue.ignore.multicriteria>g1,e1,e2,e3,e4,e5,e6</sonar.issue.ignore.multicriteria>
+      <!-- Just to see other problems before ; TO BE REMOVED RAPIDLY : Cognitive Complexity of methods should not be too high -->
+      <sonar.issue.ignore.multicriteria.g1.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.g1.ruleKey>
+      <sonar.issue.ignore.multicriteria.g1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.g1.resourceKey>
+      <!-- Utility classes should not have public constructors -->
+      <sonar.issue.ignore.multicriteria.e1.ruleKey>squid:S1118</sonar.issue.ignore.multicriteria.e1.ruleKey>
+      <sonar.issue.ignore.multicriteria.e1.resourceKey>**/mobi/chouette/common/Constant.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
+      <!-- "java.nio.Files#delete" should be preferred -->
+      <sonar.issue.ignore.multicriteria.e2.ruleKey>squid:S4042</sonar.issue.ignore.multicriteria.e2.ruleKey>
+      <sonar.issue.ignore.multicriteria.e2.resourceKey>**/mobi/chouette/common/FileUtil.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
+      <!-- Classes should not be compared by name -->
+      <sonar.issue.ignore.multicriteria.e3.ruleKey>squid:S1872</sonar.issue.ignore.multicriteria.e3.ruleKey>
+      <sonar.issue.ignore.multicriteria.e3.resourceKey>**/mobi/chouette/common/JSONUtil.java</sonar.issue.ignore.multicriteria.e3.resourceKey>
+      <!-- Cognitive Complexity of methods should not be too high -->
+      <sonar.issue.ignore.multicriteria.e4.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.e4.ruleKey>
+      <sonar.issue.ignore.multicriteria.e4.resourceKey>**/mobi/chouette/common/JSONUtil.java</sonar.issue.ignore.multicriteria.e4.resourceKey>
+      <!-- Constant names should comply with a naming convention -->
+      <sonar.issue.ignore.multicriteria.e5.ruleKey>squid:S00115</sonar.issue.ignore.multicriteria.e5.ruleKey>
+      <sonar.issue.ignore.multicriteria.e5.resourceKey>**/mobi/chouette/common/JobData.java</sonar.issue.ignore.multicriteria.e5.resourceKey>
+      <!-- Generic exceptions should never be thrown -->
+      <sonar.issue.ignore.multicriteria.e6.ruleKey>squid:S00112</sonar.issue.ignore.multicriteria.e6.ruleKey>
+      <sonar.issue.ignore.multicriteria.e6.resourceKey>**/mobi/chouette/common/chain/Command.java</sonar.issue.ignore.multicriteria.e6.resourceKey>
    </properties>
 	<dependencies>
 

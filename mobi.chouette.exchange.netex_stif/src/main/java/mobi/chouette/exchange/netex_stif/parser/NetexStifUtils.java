@@ -7,9 +7,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.ParserUtils;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.parameters.AbstractImportParameter;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.LineLite;
@@ -20,7 +20,7 @@ import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ChouetteModelUtil;
 
 @Log4j
-public class NetexStifUtils extends ParserUtils implements Constant {
+public class NetexStifUtils extends ParserUtils {
 
 	public static String fromPTDirectionType(PTDirectionEnum type) {
 		if (type == null)
@@ -142,7 +142,7 @@ public class NetexStifUtils extends ParserUtils implements Constant {
 	
 	public static void uniqueObjectId(Context context, ChouetteIdentifiedObject object) {
 		String suffix = object.objectIdSuffix();
-		AbstractImportParameter parameters = (AbstractImportParameter) context.get(CONFIGURATION);
+		AbstractImportParameter parameters = (AbstractImportParameter) context.get(Constant.CONFIGURATION);
 		Long refId = parameters.getReferentialId();
 		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), refId.toString() + "-" + suffix);
 		object.setObjectId(objectId);

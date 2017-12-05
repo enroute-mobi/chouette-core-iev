@@ -64,7 +64,7 @@ public class IntegerArrayUserType implements UserType {
 			Integer[] castObject = (Integer[]) value;
 			Array array = session.connection().createArrayOf("integer", castObject);
 			st.setArray(index, array);
-		} else {
+		} else if (st != null) {
 			st.setNull(index, arrayTypes[0]);
 		}
 

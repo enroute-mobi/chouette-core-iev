@@ -3,6 +3,7 @@ package mobi.chouette.exchange.importer.updater;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.TimebandDAO;
 import mobi.chouette.model.JourneyFrequency;
@@ -23,7 +24,7 @@ public class JourneyFrequencyUpdater implements Updater<JourneyFrequency> {
 
 	@Override
 	public void update(Context context, JourneyFrequency oldValue, JourneyFrequency newValue) throws Exception {
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 
 		if (newValue.getFirstDepartureTime() != null
 				&& !newValue.getFirstDepartureTime().equals(oldValue.getFirstDepartureTime())) {

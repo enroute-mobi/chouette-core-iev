@@ -9,7 +9,6 @@ import org.xml.sax.SAXParseException;
 
 import lombok.Getter;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.validator.NetexCheckPoints;
 import mobi.chouette.exchange.validation.report.CheckPointReport;
 import mobi.chouette.exchange.validation.report.CheckPointReport.SEVERITY;
@@ -37,7 +36,7 @@ import mobi.chouette.exchange.validation.report.ValidationReporter;
  * 
  */
 
-public class NetexStifSAXErrorHandler implements ErrorHandler, Constant, NetexCheckPoints {
+public class NetexStifSAXErrorHandler implements ErrorHandler {
 
 	private ValidationReporter validationReporter;
 	private Context context;
@@ -49,8 +48,8 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant, NetexCh
 	public NetexStifSAXErrorHandler(Context context, String fileURL) throws Exception {
 		this.context = context;
 		validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context, L1_NetexStif_2, "E");
-		validationReporter.updateCheckPointReportState(context, L1_NetexStif_2, ValidationReporter.RESULT.OK);
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L1_NetexStif_2, "E");
+		validationReporter.updateCheckPointReportState(context, NetexCheckPoints.L1_NetexStif_2, ValidationReporter.RESULT.OK);
 
 		fileName = new File(new URL(fileURL).toURI()).getName();
 	}
@@ -61,8 +60,8 @@ public class NetexStifSAXErrorHandler implements ErrorHandler, Constant, NetexCh
 
 			DataLocation location = new DataLocation(fileName, error.getLineNumber(), error.getColumnNumber());
 
-			validationReporter.updateCheckPointReportSeverity(context, L1_NetexStif_2, severity);
-			validationReporter.addCheckPointReportError(context, null, L1_NetexStif_2, location, error.getMessage());
+			validationReporter.updateCheckPointReportSeverity(context, NetexCheckPoints.L1_NetexStif_2, severity);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_2, location, error.getMessage());
 		}
 
 		return;

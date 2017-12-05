@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.exchange.validation.ValidationData;
@@ -35,11 +36,11 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 		newValue.setSaved(true);
 
 		Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context, DATABASE_CONNECTION_LINK_1, "W");
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_CONNECTION_LINK_1, "W");
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 
 
 		if (newValue.getName() == null) {
@@ -136,16 +137,16 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 
 			if (startOfLink != null) {
 				// log.info("update connectionLink starts"+startOfLink.getName());
-				if (context.containsKey(CONNECTION_LINK_BLOC))
+				if (context.containsKey(Constant.CONNECTION_LINK_BLOC))
 					oldValue.forceStartOfLink(startOfLink);
 				else
 				{
 					// check for no link change
 					if (!ChouetteModelUtil.sameValue(oldValue.getStartOfLink(), newValue.getStartOfLink()))
-						validationReporter.addCheckPointReportError(context, null, DATABASE_CONNECTION_LINK_1, "1", data
+						validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_CONNECTION_LINK_1, "1", data
 								.getDataLocations().get(newValue.getObjectId()));
 					else
-						validationReporter.reportSuccess(context, DATABASE_CONNECTION_LINK_1);
+						validationReporter.reportSuccess(context, ValidationConstant.DATABASE_CONNECTION_LINK_1);
 					oldValue.setStartOfLink(startOfLink);
 				}
 			}
@@ -164,15 +165,15 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 
 			if (endOfLink != null) {
 				// log.info("update connectionLink ends"+endOfLink.getName());
-				if (context.containsKey(CONNECTION_LINK_BLOC))
+				if (context.containsKey(Constant.CONNECTION_LINK_BLOC))
 					oldValue.forceEndOfLink(endOfLink);
 				else
 				{
 					if (!ChouetteModelUtil.sameValue(oldValue.getEndOfLink(), newValue.getEndOfLink()))
-						validationReporter.addCheckPointReportError(context, null, DATABASE_CONNECTION_LINK_1, "2", data
+						validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_CONNECTION_LINK_1, "2", data
 								.getDataLocations().get(newValue.getObjectId()));
 					else
-						validationReporter.reportSuccess(context, DATABASE_CONNECTION_LINK_1);
+						validationReporter.reportSuccess(context, ValidationConstant.DATABASE_CONNECTION_LINK_1);
 				}
 			}
 		}

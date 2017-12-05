@@ -20,34 +20,36 @@ import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 
-public abstract class CopyUtil {
+public class CopyUtil {
+
+	private static final String NOT_IMPLEMENTED = "not implemented";
 
 	public static Network copy(Network object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static Company copy(Company object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static GroupOfLine copy(GroupOfLine object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static StopArea copy(StopArea object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static AccessPoint copy(AccessPoint object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static AccessLink copy(AccessLink object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static ConnectionLink copy(ConnectionLink object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static Timetable copy(Timetable object) {
@@ -74,23 +76,23 @@ public abstract class CopyUtil {
 	}
 
 	public static StopPoint copy(StopPoint object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static Line copy(Line object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static Route copy(Route object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static JourneyPattern copy(JourneyPattern object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static VehicleJourney copy(VehicleJourney object) {
-		throw new RuntimeException("not implemented");
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 
 	public static Footnote copy(Footnote footnote) {
@@ -99,4 +101,6 @@ public abstract class CopyUtil {
 		ft.setLabel(footnote.getLabel());
 		return ft;
 	}
+	
+	private CopyUtil(){}
 }

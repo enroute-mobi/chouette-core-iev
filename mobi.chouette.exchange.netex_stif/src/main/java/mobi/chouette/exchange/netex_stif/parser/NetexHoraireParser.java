@@ -3,31 +3,32 @@ package mobi.chouette.exchange.netex_stif.parser;
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 
 @Log4j
-public class NetexHoraireParser implements Parser, Constant {
+public class NetexHoraireParser implements Parser {
 
 	// level members
 
 	@Override
 	public void parse(Context context) throws Exception {
-		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		XmlPullParser xpp = (XmlPullParser) context.get(Constant.PARSER);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals(SERVICE_JOURNEYS)) {
+			if (xpp.getName().equals(NetexStifConstant.SERVICE_JOURNEYS)) {
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					if (xpp.getName().equals(SERVICE_JOURNEY)) {
+					if (xpp.getName().equals(NetexStifConstant.SERVICE_JOURNEY)) {
 						Parser parser = ParserFactory.create(ServiceJourneyParser.class.getName());
 						parser.parse(context);
 					} else {
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
-			}else if (xpp.getName().equals(SERVICE_JOURNEY)){
+			}else if (xpp.getName().equals(NetexStifConstant.SERVICE_JOURNEY)){
 				Parser parser = ParserFactory.create(ServiceJourneyParser.class.getName());
 				parser.parse(context);
 			}

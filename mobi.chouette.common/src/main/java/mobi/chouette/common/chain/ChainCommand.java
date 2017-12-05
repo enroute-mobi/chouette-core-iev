@@ -11,11 +11,11 @@ import lombok.Setter;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 
-public class ChainCommand implements Chain, Constant {
+public class ChainCommand implements Chain {
 
 	public static final String COMMAND = "ChainCommand";
 
-	private List<Command> commands = new ArrayList<Command>();
+	private List<Command> commands = new ArrayList<>();
 
 	@Getter
 	@Setter
@@ -41,19 +41,16 @@ public class ChainCommand implements Chain, Constant {
 			throw new IllegalArgumentException();
 		}
 
-		boolean result = SUCCESS;
+		boolean result = Constant.SUCCESS;
 		for (Command command : commands) {
 			try {
 				result = command.execute(context);
-				if (result == ERROR && !ignored) {
+				if (result == Constant.ERROR && !ignored) {
 					break;
 				}
 				executedCommands ++;
 			} catch (Exception e) {
-				// if (!ignored) {
-					result = ERROR;
 					throw e;
-				// }
 			}
 		}
 		return result;
@@ -74,13 +71,12 @@ public class ChainCommand implements Chain, Constant {
 
 		@Override
 		protected Command create(InitialContext context) throws IOException {
-			Command result = new ChainCommand();
-			return result;
+			return new ChainCommand();
 		}
 	}
 
 	static {
-		CommandFactory.factories.put(ChainCommand.class.getName(),
+		CommandFactory.register(ChainCommand.class.getName(),
 				new DefaultCommandFactory());
 	}
 

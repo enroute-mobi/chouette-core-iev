@@ -20,7 +20,6 @@ import org.codehaus.jettison.json.JSONObject;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import mobi.chouette.common.Constant;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 
@@ -29,7 +28,7 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 @XmlType(propOrder = { "progression", "result","warning", "zip", "files", "lines", "stats", "failure", "objects", "collections" })
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ActionReport extends AbstractReport implements Constant, ProgressionReport, Report {
+public class ActionReport extends AbstractReport implements ProgressionReport, Report {
 
 	@XmlElement(name = "progression", required = true)
 	private Progression progression = new Progression();
@@ -50,10 +49,10 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 	private boolean warning = false;
 
 	@XmlElement(name = "objects")
-	private Map<ActionReporter.OBJECT_TYPE, ObjectReport> objects = new HashMap<ActionReporter.OBJECT_TYPE, ObjectReport>();
+	private Map<ActionReporter.OBJECT_TYPE, ObjectReport> objects = new HashMap<>();
 
 	@XmlElement(name = "collections")
-	private Map<ActionReporter.OBJECT_TYPE, ObjectCollectionReport> collections = new HashMap<ActionReporter.OBJECT_TYPE, ObjectCollectionReport>();
+	private Map<ActionReporter.OBJECT_TYPE, ObjectCollectionReport> collections = new HashMap<>();
 
 	@XmlTransient
 	private Date date = new Date(0);
@@ -97,9 +96,9 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 		for (FileReport fileReport : files) {
 			if (fileReport.getName().equals(name)
 					&& (fileReport.getStatus().name().equals(state.name())
-							|| FILE_STATE.OK.equals(fileReport.getStatus().name()) || FILE_STATE.OK
-								.equals(state.name()))) {
-				if (FILE_STATE.OK.equals(fileReport.getStatus().name()))
+							|| FILE_STATE.OK.equals(fileReport.getStatus()) || FILE_STATE.OK
+								.equals(state))) {
+				if (FILE_STATE.OK.equals(fileReport.getStatus()))
 					fileReport.setStatus(state);
 				return fileReport;
 			}
@@ -237,10 +236,10 @@ public class ActionReport extends AbstractReport implements Constant, Progressio
 	}
 
 	@Override
-	public void print(PrintStream out, StringBuilder ret , int level, boolean first) {
+	public void print(PrintStream out, StringBuilder ret , int initLevel, boolean initFirst) {
 		ret.setLength(0);
-		level = 0;
-		first = true;
+		int level = 0;
+		boolean first = true;
 		out.print("{\"action_report\": {");
 		if (progression != null) {
 			printObject(out, ret, level + 1, "progression", progression, first);

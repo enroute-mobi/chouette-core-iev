@@ -83,7 +83,7 @@ public class FileReport extends AbstractReport implements CheckedReport{
 
 		switch (severity) {
 		case WARNING:
-			if (checkPointWarningCount < maxErrors) {
+			if (checkPointWarningCount < MAX_ERRORS) {
 				checkPointWarningKeys.add(new Integer(checkPointErrorId));
 				ret = true;
 			}
@@ -92,7 +92,7 @@ public class FileReport extends AbstractReport implements CheckedReport{
 			break;
 
 		default: // ERROR
-			if (checkPointErrorCount < maxErrors) {
+			if (checkPointErrorCount < MAX_ERRORS) {
 				checkPointErrorKeys.add(new Integer(checkPointErrorId));
 				ret = true;
 			}
@@ -142,13 +142,13 @@ public class FileReport extends AbstractReport implements CheckedReport{
 		
 		List<Integer> lstErrorKeys = new ArrayList<Integer>();
 		for(Integer numError: checkPointErrorKeys) {
-			if(lstErrorKeys.size() < maxErrors)
+			if(lstErrorKeys.size() < MAX_ERRORS)
 				lstErrorKeys.add(numError);
 			else
 				break;
 		}
 		for(Integer numWarning: checkPointWarningKeys) {
-			if(lstErrorKeys.size() < maxErrors)
+			if(lstErrorKeys.size() < MAX_ERRORS)
 				lstErrorKeys.add(numWarning);
 			else
 				break;

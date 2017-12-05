@@ -11,7 +11,15 @@
    <properties>
         <project.rootDir>${project.basedir}/..</project.rootDir>
         <skipInitDb>true</skipInitDb>
-    </properties>
+		<!-- Sonar exclusions -->
+      <sonar.issue.ignore.multicriteria>g1,e1</sonar.issue.ignore.multicriteria>
+      <!-- Just to see other problems before ; TO BE REMOVED RAPIDLY : Cognitive Complexity of methods should not be too high -->
+      <sonar.issue.ignore.multicriteria.g1.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.g1.ruleKey>
+      <sonar.issue.ignore.multicriteria.g1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.g1.resourceKey>
+       <!-- Class names should not shadow interfaces or superclasses -->
+      <sonar.issue.ignore.multicriteria.e1.ruleKey>squid:S2176</sonar.issue.ignore.multicriteria.e1.ruleKey>
+      <sonar.issue.ignore.multicriteria.e1.resourceKey>**/mobi/chouette/ws/Application.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
+   </properties>
     <dependencies>
 
         <!-- Default Dependencies -->

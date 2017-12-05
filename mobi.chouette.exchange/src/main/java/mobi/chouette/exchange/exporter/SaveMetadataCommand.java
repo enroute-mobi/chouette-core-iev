@@ -22,20 +22,20 @@ import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
 @Log4j
-public class SaveMetadataCommand implements Command, Constant {
+public class SaveMetadataCommand implements Command {
 
 	public static final String COMMAND = "SaveMetadataCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		JobData jobData = (JobData) context.get(JOB_DATA);
+		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 
-		Metadata metadata = (Metadata) context.get(METADATA);
-		AbstractExportParameter parameters = (AbstractExportParameter) context.get(CONFIGURATION);
+		Metadata metadata = (Metadata) context.get(Constant.METADATA);
+		AbstractExportParameter parameters = (AbstractExportParameter) context.get(Constant.CONFIGURATION);
 		String creator = parameters.getReferentialName();
 		if (creator == null)
 			creator = jobData.getReferential();
@@ -44,19 +44,19 @@ public class SaveMetadataCommand implements Command, Constant {
 			publisher = parameters.getName();
 		try {
 			if (metadata == null)
-				return SUCCESS;
+				return Constant.SUCCESS;
 			// force time window if asked
 			metadata.getTemporalCoverage().force(parameters.getStartDate(), parameters.getEndDate());
 			metadata.setCreator(creator);
 			metadata.setPublisher(publisher);
 			String path = jobData.getPathName();
-			Path target = Paths.get(path, OUTPUT);
+			Path target = Paths.get(path, Constant.OUTPUT);
 			DublinCoreFileWriter dcWriter = new DublinCoreFileWriter();
 
 			dcWriter.writePlainFile(metadata, target);
 			TextFileWriter tWriter = new TextFileWriter();
 			tWriter.writePlainFile(metadata, target);
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		} finally {
@@ -70,12 +70,11 @@ public class SaveMetadataCommand implements Command, Constant {
 
 		@Override
 		protected Command create(InitialContext context) throws IOException {
-			Command result = new SaveMetadataCommand();
-			return result;
+			return new SaveMetadataCommand();
 		}
 	}
 
 	static {
-		CommandFactory.factories.put(SaveMetadataCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(SaveMetadataCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

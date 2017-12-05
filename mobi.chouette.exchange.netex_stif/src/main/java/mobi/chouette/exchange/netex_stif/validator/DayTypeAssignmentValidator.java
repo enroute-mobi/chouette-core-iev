@@ -2,13 +2,14 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.DayTypeAssignment;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public class DayTypeAssignmentValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = DAY_TYPE_ASSIGNMENT;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.DAY_TYPE_ASSIGNMENT;
 
 	protected String getLocalContext() {
 		return LOCAL_CONTEXT;
@@ -20,12 +21,12 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_DayTypeAssignment_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_DayTypeAssignment_2);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_DayTypeAssignment_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_DayTypeAssignment_2);
 	}
 
 	public boolean validate(Context context, DayTypeAssignment dayTypeAssignment, int lineNumber, int columnNumber) {
-		boolean result3 = checkModification(context, DAY_TYPE_ASSIGNMENT, dayTypeAssignment, lineNumber, columnNumber);
+		boolean result3 = checkModification(context, NetexStifConstant.DAY_TYPE_ASSIGNMENT, dayTypeAssignment, lineNumber, columnNumber);
 		boolean result1 = check2NeTExSTIFDayTypeAssignment1(context, dayTypeAssignment, lineNumber, columnNumber);
 		boolean result2 = check2NeTExSTIFDayTypeAssignment2(context, dayTypeAssignment, lineNumber, columnNumber);
 		return result1 && result2 && result3;
@@ -66,7 +67,7 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, dayTypeAssignment);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayTypeAssignment_1, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_DayTypeAssignment_1, location);
 
 		}
 		return result;
@@ -111,7 +112,7 @@ public class DayTypeAssignmentValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, dayTypeAssignment);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_DayTypeAssignment_2, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_DayTypeAssignment_2, location);
 
 		}
 		return result;

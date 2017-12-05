@@ -3,7 +3,6 @@ package mobi.chouette.common;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,23 +22,30 @@ import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 public class FileUtil {
+	private static final String GLOB = "glob:";
+
+	private FileUtil() {
+	}
 
 	public static List<Path> listFiles(Path path, String glob) throws IOException {
-		final PathMatcher matcher = path.getFileSystem().getPathMatcher("glob:" + glob);
+		final PathMatcher matcher = path.getFileSystem().getPathMatcher(GLOB + glob);
 
 		final DirectoryStream.Filter<Path> filter = new DirectoryStream.Filter<Path>() {
 
 			@Override
 			public boolean accept(Path entry) throws IOException {
-				return Files.isDirectory(entry) || matcher.matches(entry.getFileName());
+				return entry.toFile().isDirectory() || matcher.matches(entry.getFileName());
 			}
 		};
-		List<Path> result = new ArrayList<Path>();
+		List<Path> result = new ArrayList<>();
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, filter)) {
 			for (Path entry : stream) {
-				if (Files.isDirectory(entry)) {
+				if (entry.toFile().isDirectory()) {
 					result.addAll(listFiles(entry, glob));
 					return result;
 				}
@@ -50,23 +56,23 @@ public class FileUtil {
 	}
 
 	public static List<Path> listFiles(Path path, String glob, String exclusionGlob) throws IOException {
-		final PathMatcher matcher = path.getFileSystem().getPathMatcher("glob:" + glob);
+		final PathMatcher matcher = path.getFileSystem().getPathMatcher(GLOB + glob);
 
-		final PathMatcher excludeMatcher = path.getFileSystem().getPathMatcher("glob:" + exclusionGlob);
+		final PathMatcher excludeMatcher = path.getFileSystem().getPathMatcher(GLOB + exclusionGlob);
 
 		final DirectoryStream.Filter<Path> filter = new DirectoryStream.Filter<Path>() {
 
 			@Override
 			public boolean accept(Path entry) throws IOException {
-				return Files.isDirectory(entry)
+				return entry.toFile().isDirectory()
 						|| (matcher.matches(entry.getFileName()) && !excludeMatcher.matches(entry.getFileName()));
 			}
 		};
-		List<Path> result = new ArrayList<Path>();
+		List<Path> result = new ArrayList<>();
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, filter)) {
 			for (Path entry : stream) {
-				if (Files.isDirectory(entry)) {
+				if (entry.toFile().isDirectory()) {
 					result.addAll(listFiles(entry, glob, exclusionGlob));
 					return result;
 				}
@@ -77,59 +83,32 @@ public class FileUtil {
 	}
 
 	public static void uncompress(String filename, String path) throws IOException, ArchiveException {
-		ArchiveInputStream in = new ArchiveStreamFactory().createArchiveInputStream(new BufferedInputStream(
-				new FileInputStream(new File(filename))));
-		ArchiveEntry entry = null;
-		while ((entry = in.getNextEntry()) != null) {
+		try (ArchiveInputStream in = new ArchiveStreamFactory()
+				.createArchiveInputStream(new BufferedInputStream(new FileInputStream(new File(filename))));) {
+			ArchiveEntry entry = null;
+			while ((entry = in.getNextEntry()) != null) {
 
-			String name = FilenameUtils.getName(entry.getName());
-			File file = new File(path, name);
-			if (entry.isDirectory()) {
-				// if (!file.exists()) {
-				// file.mkdirs();
-				// }
-			} else {
-				if (file.exists()) {
-					file.delete();
+				String name = FilenameUtils.getName(entry.getName());
+				File file = new File(path, name);
+				if (!entry.isDirectory()) {
+					if (file.exists()) {
+						file.delete();
+					}
+					file.createNewFile();
+					try (OutputStream out = new FileOutputStream(file);) {
+						IOUtils.copy(in, out);
+					}
 				}
-				file.createNewFile();
-				OutputStream out = new FileOutputStream(file);
-				IOUtils.copy(in, out);
-				IOUtils.closeQuietly(out);
 			}
 		}
-		IOUtils.closeQuietly(in);
-
 	}
 
-	public static void compress(String path, String filename) throws IOException {
+	public static void compress(String path, String filename)  {
 
 		File directoryToZip = new File(path);
-		List<File> fileList = new ArrayList<File>();
+		List<File> fileList = new ArrayList<>();
 		getAllFiles(directoryToZip, fileList);
 		writeZipFile(directoryToZip, filename, fileList);
-
-		// Path dir = Paths.get(path);
-		// DirectoryStream<Path> stream = Files.newDirectoryStream(dir);
-		//
-		// ZipArchiveOutputStream zout = new
-		// ZipArchiveOutputStream(Files.newOutputStream(Paths.get(filename)));
-		// for (Path file : stream) {
-		//
-		// String name = file.getName(file.getNameCount() - 1).toString();
-		// long size = Files.size(file);
-		//
-		// ZipArchiveEntry entry = new ZipArchiveEntry(name);
-		// entry.setSize(size);
-		// InputStream in = Files.newInputStream(file);
-		//
-		// zout.putArchiveEntry(entry);
-		// IOUtils.copy(in, zout);
-		// zout.closeArchiveEntry();
-		// IOUtils.closeQuietly(in);
-		//
-		// }
-		// IOUtils.closeQuietly(zout);
 
 	}
 
@@ -147,9 +126,7 @@ public class FileUtil {
 
 	private static void writeZipFile(File path, String zipName, List<File> fileList) {
 
-		try {
-			FileOutputStream fos = new FileOutputStream(zipName);
-			ZipOutputStream zos = new ZipOutputStream(fos);
+		try (FileOutputStream fos = new FileOutputStream(zipName); ZipOutputStream zos = new ZipOutputStream(fos);) {
 
 			for (File file : fileList) {
 				if (!file.isDirectory()) { // we only zip files, not directories
@@ -157,35 +134,31 @@ public class FileUtil {
 				}
 			}
 
-			zos.close();
-			fos.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			log.error("fail to write in zip "+zipName,e);
+		
+		} 
 	}
 
-	private static void addToZip(File directoryToZip, File file, ZipOutputStream zos) throws FileNotFoundException,
-			IOException {
-
-		FileInputStream fis = new FileInputStream(file);
+	private static void addToZip(File directoryToZip, File file, ZipOutputStream zos)
+			throws IOException {
 
 		// we want the zipEntry's path to be a relative path that is relative
 		// to the directory being zipped, so chop off the rest of the path
 		String zipFilePath = file.getCanonicalPath().substring(directoryToZip.getCanonicalPath().length() + 1,
 				file.getCanonicalPath().length());
-		ZipEntry zipEntry = new ZipEntry(zipFilePath);
-		zos.putNextEntry(zipEntry);
+		try (FileInputStream fis = new FileInputStream(file);) {
+			ZipEntry zipEntry = new ZipEntry(zipFilePath);
+			zos.putNextEntry(zipEntry);
 
-		byte[] bytes = new byte[1024];
-		int length;
-		while ((length = fis.read(bytes)) >= 0) {
-			zos.write(bytes, 0, length);
+			byte[] bytes = new byte[1024];
+			int length;
+			while ((length = fis.read(bytes)) >= 0) {
+				zos.write(bytes, 0, length);
+			}
+
+			zos.closeEntry();
 		}
-
-		zos.closeEntry();
-		fis.close();
 	}
 
 }

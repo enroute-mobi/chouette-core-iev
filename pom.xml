@@ -30,12 +30,12 @@
 		<boiv.testdb.hostname>localhost</boiv.testdb.hostname>
 		<boiv.testdb.port>5432</boiv.testdb.port>
 		<boiv.testdb.name>boiv_test</boiv.testdb.name>
+
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.language>java</sonar.language>
+		
 	</properties>
-	<!-- <distributionManagement> <snapshotRepository> <id>chouette-snapshot-repository</id> 
-		<name>Chouette Snapshot Repository</name> <url>scp://chouette.marseille.cityway.fr/var/lib/tomcat6/webapps/maven-snapshot</url> 
-		</snapshotRepository> <repository> <id>chouette-repository</id> <name>Chouette 
-		Repository</name> <url>scp://chouette.marseille.cityway.fr/var/lib/tomcat6/webapps/maven</url> 
-		</repository> <downloadUrl>http://maven.chouette.mobi</downloadUrl> </distributionManagement> -->
 	<repositories>
 		<repository>
 			<id>jboss</id>
@@ -52,8 +52,6 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!-- <repository> <id>chouette-repository</id> <name>Chouette Repository</name> 
-			<url>http://maven.chouette.mobi/</url> </repository> -->
 		<repository>
 			<id>hibernate-spatial-repository</id>
 			<name>hibernate-spatial Repository</name>
@@ -127,7 +125,7 @@
 								<srcFile>${project.rootDir}/src/test/sql/50_referentiel-chouette_gui.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/80_public_insert_offer.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/80_public_insert_compliance-data-test.sql</srcFile>
-								
+
 								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/30_public_tables-imports_constraints.sql</srcFile>
@@ -282,11 +280,34 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.9</version>
+				<configuration>
+					<append>true</append>
+				</configuration>
+				<executions>
+					<execution>
+					<phase>initialize</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19.1</version>
 				<configuration>
-					<argLine>-Djboss.socket.binding.port-offset=300</argLine>
+					<argLine>${argLine} -Djboss.socket.binding.port-offset=300</argLine>
 					<!-- Fork every test because it will launch a separate AS instance -->
 					<forkCount>1</forkCount>
 					<systemPropertyVariables>
@@ -392,6 +413,11 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.4.0.905</version>
+      </plugin>
 				<plugin>
 					<groupId>org.projectlombok</groupId>
 					<artifactId>lombok-maven-plugin</artifactId>

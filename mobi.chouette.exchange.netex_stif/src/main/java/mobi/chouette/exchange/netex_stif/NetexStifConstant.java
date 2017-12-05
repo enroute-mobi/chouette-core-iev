@@ -1,6 +1,6 @@
 package mobi.chouette.exchange.netex_stif;
 
-public interface Constant extends mobi.chouette.common.Constant {
+public class NetexStifConstant {
 
 	// Tags NeTEx
 	public static final String ARRIVAL_DAY_OFFSET = "ArrivalDayOffset";
@@ -56,7 +56,9 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String OPERATING_PERIODS = "operatingPeriods";
 	public static final String OPERATING_PERIOD_REF = "OperatingPeriodRef";
 	public static final String OPERATOR_REF = "OperatorRef";
-	public static final String OPPOSITE_DIRECTION_REF = "OppositeDIrectionRef"; // Attention le I est en majuscule dans la XSD
+	 // Attention le I est en majuscule dans la XSD
+	public static final String OPPOSITE_DIRECTION_REF = "OppositeDIrectionRef";
+	
 	public static final String ORDER = "order";
 	public static final String PARTICIPANT_REF = "ParticipantRef";
 	public static final String PASSENGER_STOP_ASSIGNMENT = "PassengerStopAssignment";
@@ -109,4 +111,6 @@ public interface Constant extends mobi.chouette.common.Constant {
 	public static final String COMMUN_FILE_NAME = "commun.xml";
 	public static final String OFFRE_FILE_PREFIX = "offre";
 
+	private NetexStifConstant() {
+	}
 }

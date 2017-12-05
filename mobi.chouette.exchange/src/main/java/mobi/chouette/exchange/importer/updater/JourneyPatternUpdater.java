@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import mobi.chouette.common.CollectionUtil;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.Pair;
 import mobi.chouette.dao.RouteSectionDAO;
@@ -51,13 +52,13 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 		newValue.setSaved(true);
 
 //		Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 		
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context, DATABASE_JOURNEY_PATTERN_1, "E");
-		validationReporter.addItemToValidationReport(context, DATABASE_VEHICLE_JOURNEY_1, "E");
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_JOURNEY_PATTERN_1, "E");
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_VEHICLE_JOURNEY_1, "E");
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 		
 		if (oldValue.isDetached()) {
 			// object does not exist in database
@@ -242,9 +243,9 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 	 */
 	private void twoDatabaseVehicleJourneyOneTest(ValidationReporter validationReporter, Context context, VehicleJourney oldVj, VehicleJourney newVj, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldVj.getJourneyPattern(), newVj.getJourneyPattern()))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_VEHICLE_JOURNEY_1, data.getDataLocations().get(newVj.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_VEHICLE_JOURNEY_1, data.getDataLocations().get(newVj.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_VEHICLE_JOURNEY_1);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_VEHICLE_JOURNEY_1);
 	}
 	
 }

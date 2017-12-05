@@ -18,18 +18,18 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class AbstractImporterCommand implements Constant {
+public class AbstractImporterCommand {
 
 	protected enum Mode {
 		line, stopareas
-	};
+	}
 
 	@SuppressWarnings("unchecked")
 	public boolean process(Context context, ProcessingCommands commands, ProgressionCommand progression,
 			boolean continueProcesingOnError, Mode mode) throws Exception {
-		boolean result = ERROR;
-		boolean disposeResult = SUCCESS;
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		boolean result = Constant.ERROR;
+		boolean disposeResult = Constant.SUCCESS;
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
@@ -42,7 +42,7 @@ public class AbstractImporterCommand implements Constant {
 					if (!reporter.hasActionError(context))
 					   reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data to import");
 					progression.execute(context);
-					return ERROR;
+					return Constant.ERROR;
 				}
 				progression.execute(context);
 			}
@@ -61,24 +61,23 @@ public class AbstractImporterCommand implements Constant {
 				}
 				progression.execute(context);
 
-				Referential referential = (Referential) context.get(REFERENTIAL);
+				Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 				if (referential != null) {
 					referential.clear(true);
-					// System.gc();
 				}
-				if (lineProcessingCommands.size() > 0) {
+				if (!lineProcessingCommands.isEmpty()) {
 					progression.start(context, lineProcessingCommands.size());
-					if (master.execute(context) == ERROR && !continueProcesingOnError) {
-						return ERROR;
+					if (master.execute(context) == Constant.ERROR && !continueProcesingOnError) {
+						return Constant.ERROR;
 					}
 				}
 
 				// check if CopyCommands ended (with timeout to 5 minutes >
 				// transaction timeout)
-				if (context.containsKey(COPY_IN_PROGRESS)) {
+				if (context.containsKey(Constant.COPY_IN_PROGRESS)) {
 					long timeout = 5;
 					TimeUnit unit = TimeUnit.MINUTES;
-					List<Future<Void>> futures = (List<Future<Void>>) context.get(COPY_IN_PROGRESS);
+					List<Future<Void>> futures = (List<Future<Void>>) context.get(Constant.COPY_IN_PROGRESS);
 					for (Future<Void> future : futures) {
 						if (!future.isDone()) {
 							log.info("waiting for CopyCommand");
@@ -94,7 +93,7 @@ public class AbstractImporterCommand implements Constant {
 				for (Command command : stopProcessingCommands) {
 					result = command.execute(context);
 					if (!result) {
-						return ERROR;
+						return Constant.ERROR;
 					}
 					progression.execute(context);
 				}
@@ -110,7 +109,7 @@ public class AbstractImporterCommand implements Constant {
 				for (Command command : postProcessingCommands) {
 					result = command.execute(context);
 					if (!result) {
-						return ERROR;
+						return Constant.ERROR;
 					}
 					progression.execute(context);
 				}
@@ -133,9 +132,9 @@ public class AbstractImporterCommand implements Constant {
 			} catch (Exception e) {
 				log.warn("problem on dispose commands " + e.getMessage());
 			}
-			context.remove(CACHE);
+			context.remove(Constant.CACHE);
 		}
-		return result ; // && disposeResult;
+		return result ;
 	}
 
 }

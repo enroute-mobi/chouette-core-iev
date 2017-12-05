@@ -2,6 +2,7 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -9,7 +10,7 @@ import mobi.chouette.model.LineLite;
 
 public class DirectionValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = DIRECTION;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.DIRECTION;
 
 	protected String getLocalContext() {
 		return LOCAL_CONTEXT;
@@ -21,8 +22,8 @@ public class DirectionValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Direction_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_Direction_2);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_Direction_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_Direction_2);
 	}
 
 	/**
@@ -61,9 +62,9 @@ public class DirectionValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, direction);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Direction_1, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Direction_1, location);
 		}
 
 		return result;
@@ -113,14 +114,14 @@ public class DirectionValidator extends AbstractValidator {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, direction);
 			if (forbiddenDirectionType)
-				validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Direction_2, location,
-						DIRECTION_TYPE);
+				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Direction_2, location,
+						NetexStifConstant.DIRECTION_TYPE);
 			if (forbiddenOppositeDirectionRef)
-				validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_Direction_2, location,
-						OPPOSITE_DIRECTION_REF);
+				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Direction_2, location,
+						NetexStifConstant.OPPOSITE_DIRECTION_REF);
 		}
 
 		return result;
@@ -134,7 +135,7 @@ public class DirectionValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean validate(Context context, Direction direction, int lineNumber, int columnNumber) {
-		boolean result3 = checkModification(context, DIRECTION, direction, lineNumber, columnNumber);
+		boolean result3 = checkModification(context, NetexStifConstant.DIRECTION, direction, lineNumber, columnNumber);
 		boolean result1 = check2NeTExSTIFDirection1(context, direction, lineNumber, columnNumber);
 		boolean result2 = check2NeTExSTIFDirection2(context, direction, lineNumber, columnNumber);
 

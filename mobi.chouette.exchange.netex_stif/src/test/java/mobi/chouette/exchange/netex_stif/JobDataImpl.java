@@ -1,10 +1,10 @@
-package mobi.chouette.exchange.validator;
+package mobi.chouette.exchange.netex_stif;
 
 import lombok.Data;
 import mobi.chouette.common.JobData;
 
 @Data
-public class JobDataTest implements JobData {
+public class JobDataImpl implements JobData {
 
 	private Long id;
 
@@ -19,4 +19,6 @@ public class JobDataTest implements JobData {
 	private String referential;
 	
 	private String pathName;
+	
+	
 }

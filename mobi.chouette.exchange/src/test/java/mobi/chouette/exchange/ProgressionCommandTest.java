@@ -24,7 +24,7 @@ import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 @Log4j
-public class ProgressionCommandTest implements Constant {
+public class ProgressionCommandTest {
 	private DaoProgressionCommand progression = null;
 	private DummyActionTaskDAO taskDao = null;
 	private DummyActionResourceDAO resourceDao = null;
@@ -34,14 +34,14 @@ public class ProgressionCommandTest implements Constant {
 	@Test(groups = { "progression" }, description = "initialize progression command")
 	public void testProgressionInitialize() throws Exception {
 		InitialContext initialContext = new InitialContext();
-		context.put(INITIAL_CONTEXT, initialContext);
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
 		TestJobData jobData = new TestJobData();
-		context.put(JOB_DATA, jobData);
+		context.put(Constant.JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
-		context.put(REPORT, new ActionReport());
-		ActionReport report = (ActionReport) context.get(REPORT);
-		context.put(VALIDATION_REPORT, new ValidationReport());
-		context.put(CONFIGURATION, new DummyParameter());
+		context.put(Constant.REPORT, new ActionReport());
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.CONFIGURATION, new DummyParameter());
 		if (d.exists())
 			try {
 				FileUtils.deleteDirectory(d);
@@ -79,7 +79,7 @@ public class ProgressionCommandTest implements Constant {
 	@Test(groups = { "progression" }, description = "start progression command", dependsOnMethods = { "testProgressionInitialize" })
 	public void testProgressionStart() throws Exception {
 		progression.start(context, 2);
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 		Assert.assertNotNull(report.getProgression(), "progression should be reported");
 		Assert.assertEquals(report.getProgression().getCurrentStep(), STEP.PROCESSING.ordinal() + 1,
 				" progression should be on step processing");
@@ -102,7 +102,7 @@ public class ProgressionCommandTest implements Constant {
 		reporter.addObjectReport(context, "TEST:Line:12", OBJECT_TYPE.LINE, "Test Line", OBJECT_STATE.OK, IO_TYPE.INPUT);
 		resourceDao.getSaved().clear();
 		progression.execute(context);
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 		Assert.assertNotNull(report.getProgression(), "progression should be reported");
 		Assert.assertEquals(report.getProgression().getCurrentStep(), STEP.PROCESSING.ordinal() + 1,
 				" progression should be on step processing");
@@ -118,7 +118,7 @@ public class ProgressionCommandTest implements Constant {
 		Assert.assertEquals(resourceDao.getSaved().size(),3, "resources should be saved");
 
 		// ValidationReport validation = new ValidationReport();
-		// context.put(VALIDATION_REPORT, validation);
+		// context.put(Constant.VALIDATION_REPORT, validation);
 		// ValidationReporter reporter =
 		// ValidationReporter.Factory.getInstance();
 		// reporter.addItemToValidationReport(context, "1-TEST-1", "E");
@@ -133,11 +133,11 @@ public class ProgressionCommandTest implements Constant {
 	@Test(groups = { "progression" }, description = "terminate progression command", dependsOnMethods = { "testProgressionExecute" })
 	public void testProgressionTerminate() throws Exception {
 		ValidationReport validation = new ValidationReport();
-		context.put(VALIDATION_REPORT, validation);
+		context.put(Constant.VALIDATION_REPORT, validation);
 		ValidationReporter reporter = ValidationReporter.Factory.getInstance();
 		reporter.addItemToValidationReport(context, "1-TEST-1", "E");
 		progression.terminate(context, 2);
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 		Assert.assertNotNull(report.getProgression(), "progression should be reported");
 		Assert.assertEquals(report.getProgression().getCurrentStep(), STEP.FINALISATION.ordinal() + 1,
 				" progression should be on step finalisation");
@@ -148,7 +148,7 @@ public class ProgressionCommandTest implements Constant {
 		Assert.assertEquals(taskDao.getSaved().getCurrentStepId(), STEP.FINALISATION.name(),"task should be on process step");
 		Assert.assertEquals(taskDao.getSaved().getCurrentStepProgress(), 0. ,"task progression should be 0.");
 		Assert.assertNotNull(taskDao.getSaved().getUpdatedAt(), "task should has updated time updated");
-		context.remove(VALIDATION_REPORT);
+		context.remove(Constant.VALIDATION_REPORT);
 //		File validationFile = new File(d, VALIDATION_FILE);
 //		Assert.assertTrue(validationFile.exists(), VALIDATION_FILE + " should exists");
 	}
@@ -156,7 +156,7 @@ public class ProgressionCommandTest implements Constant {
 	@Test(groups = { "progression" }, description = "dispose progression command", dependsOnMethods = { "testProgressionTerminate" })
 	public void testProgressionDispose() throws Exception {
 		progression.dispose(context);
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 		Assert.assertEquals(report.getResult(), ReportConstant.STATUS_OK, " result should be ok");
 	}
 

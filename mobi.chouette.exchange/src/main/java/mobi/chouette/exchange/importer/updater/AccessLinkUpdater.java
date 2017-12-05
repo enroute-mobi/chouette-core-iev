@@ -3,6 +3,7 @@ package mobi.chouette.exchange.importer.updater;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.AccessPointDAO;
 import mobi.chouette.model.AccessLink;
@@ -26,7 +27,7 @@ public class AccessLinkUpdater implements Updater<AccessLink> {
 		}
 		newValue.setSaved(true);
 
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 
 		if (newValue.getName() == null) {
 			NamingUtil.setDefaultName(newValue);

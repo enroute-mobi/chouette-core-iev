@@ -19,16 +19,21 @@ import mobi.chouette.common.chain.Chain;
 import mobi.chouette.common.chain.ChainCommand;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.core.CoreExceptionCode;
+import mobi.chouette.core.CoreRuntimeException;
 import mobi.chouette.exchange.LoadSharedDataCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
 import mobi.chouette.exchange.importer.FootnoteRegisterCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 
 @Data
 @Log4j
-public class NetexStifImporterProcessingCommands implements ProcessingCommands, Constant {
+public class NetexStifImporterProcessingCommands implements ProcessingCommands {
+
+	private static final String NO_FACTORIES = "unable to call factories";
 
 	public static class DefaultFactory extends ProcessingCommandsFactory {
 
@@ -40,13 +45,13 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	}
 
 	static {
-		ProcessingCommandsFactory.factories.put(NetexStifImporterProcessingCommands.class.getName(),
+		ProcessingCommandsFactory.register(NetexStifImporterProcessingCommands.class.getName(),
 				new DefaultFactory());
 	}
 
 	@Override
-	public List<? extends Command> getPreProcessingCommands(Context context, boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+	public List<Command> getPreProcessingCommands(Context context, boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		// NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
 		List<Command> commands = new ArrayList<>();
 		try {
@@ -58,7 +63,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 			commands.add(CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
 		}
 
 		return commands;
@@ -66,21 +71,20 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 
 	private Chain treatOneFile(Context context, String filename, JobData jobData, boolean mandatory)
 			throws ClassNotFoundException, IOException {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		String path = jobData.getPathName();
 		Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
-		File file = new File(path + "/" + INPUT + "/" + filename);
+		File file = new File(path + File.separatorChar + Constant.INPUT + File.separatorChar + filename);
 		if (!file.exists()) {
 			if (mandatory) {
 				// may not occurs : rejected by NetexStifUncompressCommand
-				NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+				NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 				parameters.setNoSave(true); // block save mode to check other
 											// files
 			}
 			return chain;
 		}
 
-		// log.info(file);
 		String url = file.toURI().toURL().toExternalForm();
 		log.info("url : " + url);
 		// validation schema
@@ -98,22 +102,22 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	}
 
 	@Override
-	public List<? extends Command> getLineProcessingCommands(Context context, boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
-		NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(CONFIGURATION);
+	public List<Command> getLineProcessingCommands(Context context, boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+		NetexStifImportParameters parameters = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 		List<Command> commands = new ArrayList<>();
-		JobData jobData = (JobData) context.get(JOB_DATA);
+		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 		try {
-			Chain tmp = treatOneFile(context, "calendriers.xml", jobData, true);
+			Chain tmp = treatOneFile(context, NetexStifConstant.CALENDRIER_FILE_NAME, jobData, true);
 			commands.add(tmp);
-			tmp = treatOneFile(context, "commun.xml", jobData, false);
+			tmp = treatOneFile(context, NetexStifConstant.COMMUN_FILE_NAME, jobData, false);
 			commands.add(tmp);
 
 			// TODO a supprimer quand copycommand sera ok
-			context.put(OPTIMIZED, Boolean.FALSE);
+			context.put(Constant.OPTIMIZED, Boolean.FALSE);
 
-			Path path = Paths.get(jobData.getPathName(), INPUT);
-			List<Path> stream = FileUtil.listFiles(path, "offre*.xml", "*metadata*");
+			Path path = Paths.get(jobData.getPathName(), Constant.INPUT);
+			List<Path> stream = FileUtil.listFiles(path, NetexStifConstant.OFFRE_FILE_PREFIX+"*.xml", "*metadata*");
 			for (Path file : stream) {
 				Chain chain = (Chain) CommandFactory.create(initialContext, ChainCommand.class.getName());
 				commands.add(chain);
@@ -151,7 +155,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
 
 		}
 
@@ -159,41 +163,26 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands, 
 	}
 
 	@Override
-	public List<? extends Command> getPostProcessingCommands(Context context, boolean withDao) {
-		// InitialContext initialContext = (InitialContext)
-		// context.get(INITIAL_CONTEXT);
-		// boolean level3validation = context.get(VALIDATION) != null;
+	public List<Command> getPostProcessingCommands(Context context, boolean withDao) {
 
-		List<Command> commands = new ArrayList<>();
-		// try {
-		// if (level3validation) {
-		// // add shared data validation
-		// commands.add(CommandFactory.create(initialContext,
-		// SharedDataValidatorCommand.class.getName()));
-		// }
-		//
-		// } catch (Exception e) {
-		// log.error(e, e);
-		// throw new RuntimeException("unable to call factories");
-		// }
-		return commands;
-	}
-
-	@Override
-	public List<? extends Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
 		return new ArrayList<>();
 	}
 
 	@Override
-	public List<? extends Command> getDisposeCommands(Context context, boolean withDao) {
+	public List<Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<Command> getDisposeCommands(Context context, boolean withDao) {
 		 InitialContext initialContext = (InitialContext)
-		 context.get(INITIAL_CONTEXT);
+		 context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
 			commands.add(CommandFactory.create(initialContext, NetexStifDisposeImportCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
 		}
 		return commands;
 	}

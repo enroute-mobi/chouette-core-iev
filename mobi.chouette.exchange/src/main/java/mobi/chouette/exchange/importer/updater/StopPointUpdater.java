@@ -3,6 +3,7 @@ package mobi.chouette.exchange.importer.updater;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.exchange.validation.ValidationData;
@@ -33,14 +34,14 @@ public class StopPointUpdater implements Updater<StopPoint> {
 		newValue.setSaved(true);
 
 //		Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 		cache.getStopPoints().put(oldValue.getObjectId(), oldValue);
 		
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context, DATABASE_STOP_POINT_2, "E");
-		validationReporter.addItemToValidationReport(context, DATABASE_STOP_POINT_3, "W");
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_STOP_POINT_2, "E");
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_STOP_POINT_3, "W");
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 		
 		if (oldValue.isDetached()) {
 			// object does not exist in database
@@ -97,7 +98,7 @@ public class StopPointUpdater implements Updater<StopPoint> {
 			
 			oldValue.setContainedInStopArea(stopArea);
 
-			if (!context.containsKey(AREA_BLOC))
+			if (!context.containsKey(Constant.AREA_BLOC))
 			   stopAreaUpdater.update(context, oldValue.getContainedInStopArea(), newValue.getContainedInStopArea());
 		}
 //		monitor.stop();
@@ -116,9 +117,9 @@ public class StopPointUpdater implements Updater<StopPoint> {
 		if(oldSp !=null && newSp != null) {
 			if(oldSp.getPosition() != null && newSp.getPosition() != null) {
 				if(!oldSp.getPosition().equals(newSp.getPosition()))
-					validationReporter.addCheckPointReportError(context, null, DATABASE_STOP_POINT_2, data.getDataLocations().get(newSp.getObjectId()));
+					validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_2, data.getDataLocations().get(newSp.getObjectId()));
 				else
-					validationReporter.reportSuccess(context, DATABASE_STOP_POINT_2);
+					validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_POINT_2);
 			}
 		}
 	}
@@ -133,8 +134,8 @@ public class StopPointUpdater implements Updater<StopPoint> {
 	 */
 	private void twoDatabaseStopPointThreeTest(ValidationReporter validationReporter, Context context, StopArea oldSA, StopArea newSA, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldSA, newSA))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_STOP_POINT_3, data.getDataLocations().get(newSA.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_3, data.getDataLocations().get(newSA.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_STOP_POINT_3);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_POINT_3);
 	}
 }

@@ -30,7 +30,7 @@ public class DataCollector {
 		collection.getStopPoints().clear();
 		collection.getVehicleJourneys().clear();
 		List<Footnote> notes = line.getFootnotes();
-		
+
 		for (Route route : line.getRoutes()) {
 			boolean validRoute = false;
 			if (route.getStopPoints().size() < 2)
@@ -97,16 +97,17 @@ public class DataCollector {
 							validLine = true;
 							boolean validNotes = true;
 							for (Footnote note : vehicleJourney.getFootnotes()) {
-								if (!notes.contains(note)) validNotes = false;
+								if (!notes.contains(note))
+									validNotes = false;
 							}
 							if (!validNotes)
-							   log.warn("vehicle journey  has invalid foot notes");
+								log.warn("vehicle journey  has invalid foot notes");
 						}
 					}
 				} // end vehiclejourney loop
 				if (validJourneyPattern)
 					collection.getJourneyPatterns().add(jp);
-			}// end journeyPattern loop
+			} // end journeyPattern loop
 			if (validRoute) {
 				collection.getRoutes().add(route);
 				route.getOppositeRoute(); // to avoid lazy loading afterward
@@ -117,7 +118,7 @@ public class DataCollector {
 					collectStopAreas(collection, stopPoint.getContainedInStopArea(), skipNoCoordinate, followLinks);
 				}
 			}
-		}// end route loop
+		} // end route loop
 		if (validLine) {
 			collection.setLine(line);
 			collection.getNetworks().add(line.getNetwork());
@@ -186,11 +187,9 @@ public class DataCollector {
 	protected void addConnectionLinks(ExportableData collection, List<ConnectionLink> links, boolean skipNoCoordinate,
 			boolean followLinks) {
 		for (ConnectionLink link : links) {
-			if (collection.getConnectionLinks().contains(link))
-				continue;
-			if (link.getStartOfLink() == null || link.getEndOfLink() == null)
-				continue;
-			if (!link.getStartOfLink().hasCoordinates() || !link.getEndOfLink().hasCoordinates())
+			if (collection.getConnectionLinks().contains(link) || link.getStartOfLink() == null
+					|| link.getEndOfLink() == null || !link.getStartOfLink().hasCoordinates()
+					|| !link.getEndOfLink().hasCoordinates())
 				continue;
 			collection.getConnectionLinks().add(link);
 			if (followLinks) {
@@ -202,21 +201,17 @@ public class DataCollector {
 
 	protected void addAccessLinks(ExportableData collection, List<AccessLink> links) {
 		for (AccessLink link : links) {
-			if (collection.getAccessLinks().contains(link))
-				continue;
-			if (link.getAccessPoint() == null)
-				continue;
-			if (!link.getAccessPoint().hasCoordinates())
+			if (collection.getAccessLinks().contains(link) || link.getAccessPoint() == null
+					|| !link.getAccessPoint().hasCoordinates())
 				continue;
 			collection.getAccessLinks().add(link);
 		}
 	}
 
-	protected void addAccessPoints(ExportableData collection, List<AccessPoint> accessPoints, boolean skipNoCoordinate) {
+	protected void addAccessPoints(ExportableData collection, List<AccessPoint> accessPoints,
+			boolean skipNoCoordinate) {
 		for (AccessPoint point : accessPoints) {
-			if (collection.getAccessPoints().contains(point))
-				continue;
-			if (skipNoCoordinate && !point.hasCoordinates())
+			if (collection.getAccessPoints().contains(point) || (skipNoCoordinate && !point.hasCoordinates()))
 				continue;
 			collection.getAccessPoints().add(point);
 		}

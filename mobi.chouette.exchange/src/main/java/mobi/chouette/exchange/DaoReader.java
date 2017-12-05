@@ -35,8 +35,8 @@ public class DaoReader {
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Set<Long> loadLines(String type, List<Long> ids) {
-		Set<Line> lines = new HashSet<Line>();
-		Set<Long> lineIds = new HashSet<Long>();
+		Set<Line> lines = new HashSet<>();
+		Set<Long> lineIds = new HashSet<>();
 		if (ids == null || ids.isEmpty()) {
 			lines.addAll(lineDAO.findAll());
 		} else {

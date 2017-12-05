@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.CollectionUtil;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.Pair;
 import mobi.chouette.dao.AccessLinkDAO;
@@ -67,14 +68,14 @@ public class StopAreaUpdater implements Updater<StopArea> {
 		newValue.setSaved(true);
 
 		Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential cache = (Referential) context.get(Constant.CACHE);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.addItemToValidationReport(context, "2-DATABASE-", "StopArea", 2, "W", "E");
-		validationReporter.addItemToValidationReport(context, DATABASE_ACCESS_POINT_1, "E");
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_ACCESS_POINT_1, "E");
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 
 		if (newValue.getAreaType() == null) {
 			log.error("stoparea without mandatory areatype " + newValue.getObjectId());
@@ -201,7 +202,7 @@ public class StopAreaUpdater implements Updater<StopArea> {
 			if (stopArea == null) {
 				stopArea = ObjectFactory.getStopArea(cache, objectId);
 			}
-			if (context.containsKey(AREA_BLOC))
+			if (context.containsKey(Constant.AREA_BLOC))
 				oldValue.forceParent(stopArea);
 			else
 				oldValue.setParent(stopArea);
@@ -269,7 +270,7 @@ public class StopAreaUpdater implements Updater<StopArea> {
 			accessLinkUpdater.update(context, pair.getLeft(), pair.getRight());
 		}
 
-		if (!context.containsKey(AREA_BLOC)) {
+		if (!context.containsKey(Constant.AREA_BLOC)) {
 			// StartOfLink
 			Collection<ConnectionLink> addedStartOfLink = CollectionUtil.substract(newValue.getConnectionStartLinks(),
 					oldValue.getConnectionStartLinks(), NeptuneIdentifiedObjectComparator.INSTANCE);
@@ -385,10 +386,10 @@ public class StopAreaUpdater implements Updater<StopArea> {
 	private void twoDatabaseStopAreaOneTest(ValidationReporter validationReporter, Context context, StopArea oldValue,
 			StopArea newValue, ValidationData data) {
 		if (!ChouetteModelUtil.sameValue(oldValue.getParent(), newValue.getParent()))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_STOP_AREA_1,
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_AREA_1,
 					data.getDataLocations().get(newValue.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_STOP_AREA_1);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_AREA_1);
 	}
 
 	/**
@@ -403,10 +404,10 @@ public class StopAreaUpdater implements Updater<StopArea> {
 			StopArea newSA, ValidationData data) {
 		if (oldSA != null && newSA != null) {
 			if (!ChouetteModelUtil.sameValue(oldSA.getAreaType(), newSA.getAreaType()))
-				validationReporter.addCheckPointReportError(context, null, DATABASE_STOP_AREA_2,
+				validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_AREA_2,
 						data.getDataLocations().get(newSA.getObjectId()));
 			else
-				validationReporter.reportSuccess(context, DATABASE_STOP_AREA_2);
+				validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_AREA_2);
 		}
 	}
 
@@ -422,10 +423,10 @@ public class StopAreaUpdater implements Updater<StopArea> {
 	private void twoDatabaseAccessPointOneTest(ValidationReporter validationReporter, Context context,
 			AccessPoint oldAP, AccessPoint newAP, ValidationData data) {
 		if (!ChouetteModelUtil.sameValue(oldAP.getContainedIn(), newAP.getContainedIn()))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_ACCESS_POINT_1,
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_ACCESS_POINT_1,
 					data.getDataLocations().get(newAP.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_ACCESS_POINT_1);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_ACCESS_POINT_1);
 	}
 
 }

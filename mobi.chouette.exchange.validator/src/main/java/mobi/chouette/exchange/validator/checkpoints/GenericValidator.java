@@ -30,9 +30,17 @@ import mobi.chouette.model.util.Referential;
  * @param <T>
  */
 @Log4j
-public abstract class GenericValidator<T extends ChouetteIdentifiedObject> implements CheckPointConstant, Constant {
+public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 
-	private static final String[] genericCodes = { L3_Generic_1, L3_Generic_2, L3_Generic_3 };
+	private static final String GETTER_FOR = "getter for ";
+	private static final String FOR = " for ";
+	private static final String UNKNOWN_COLUMN = "unknown column ";
+	private static final String NOT_FOUND = " not found";
+	private static final String FAILED = " failed ";
+	private static final String NOT_ACCESSIBLE = " not accessible";
+	private static final String METHOD_FOR = "method for ";
+	private static final String[] genericCodes = { CheckPointConstant.L3_Generic_1, CheckPointConstant.L3_Generic_2,
+			CheckPointConstant.L3_Generic_3 };
 
 	public abstract void validate(Context context, T object, ValidateParameters parameters, String transportMode);
 
@@ -73,17 +81,16 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 								try {
 									validationReporter.addItemToValidationReport(context, code,
 											checkParam.isErrorType() ? "E" : "W");
-									log.info("call generic compliance_check : "+param.getCode());
 									method.invoke(this, context, object, param);
 								} catch (ValidationException ve) {
 									throw ve;
 								} catch (IllegalAccessException | IllegalArgumentException e) {
-									log.error("method for " + checkParam.getCode() + " not accessible", e);
+									log.error(METHOD_FOR + checkParam.getCode() + NOT_ACCESSIBLE, e);
 								} catch (InvocationTargetException e) {
-									log.error("method for " + checkParam.getCode() + " failed ", e);
+									log.error(METHOD_FOR + checkParam.getCode() + FAILED, e);
 								}
 							} else {
-								log.error("method for " + checkParam.getCode() + " not found");
+								log.error(METHOD_FOR + checkParam.getCode() + NOT_FOUND);
 							}
 						}
 					}
@@ -92,7 +99,6 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		});
 
 		// then check specific codes
-		log.info(Arrays.asList(codes));
 		Arrays.stream(codes).forEach(code -> {
 			// find checkpoint for code
 			Collection<CheckpointParameters> checkParams = null;
@@ -100,17 +106,14 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 			Map<String, Collection<CheckpointParameters>> modeParameters = controlParameters
 					.getTransportModeCheckpoints().get(transportMode);
 			if (modeParameters != null) {
-				log.info("check mode parameter");
 				checkParams = modeParameters.get(code);
 			}
 			// else in global
 			if (isEmpty(checkParams)) {
-				log.info("no mode parameter, check global");
 				checkParams = controlParameters.getGlobalCheckPoints().get(code);
 			}
 			// if tests are found
 			if (!isEmpty(checkParams)) {
-				log.info("checkpoints found");
 				checkParams.stream().forEach(checkParam -> {
 
 					Method method = findCheckMethod(this.getClass(), checkParam.getCode());
@@ -118,24 +121,21 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 						try {
 							validationReporter.addItemToValidationReport(context, code,
 									checkParam.isErrorType() ? "E" : "W");
-							log.info("call compliance_check for "+ checkParam.getCode());
 							method.invoke(this, context, object, checkParam);
 						} catch (ValidationException ve) {
 							throw ve;
 						} catch (IllegalAccessException | IllegalArgumentException e) {
-							log.error("method for " + checkParam.getCode() + " not accessible", e);
+							log.error(METHOD_FOR + checkParam.getCode() + NOT_ACCESSIBLE, e);
 						} catch (InvocationTargetException e) {
 							log.error("target exception :" + e.getTargetException());
 							if (e.getTargetException() instanceof mobi.chouette.exchange.validator.ValidationException) {
-								mobi.chouette.exchange.validator.ValidationException ve = (mobi.chouette.exchange.validator.ValidationException) e.getTargetException();
-								throw ve;
+								throw (mobi.chouette.exchange.validator.ValidationException) e.getTargetException();
 							} else {
-								log.error("method for " + checkParam.getCode() + " failed ",
-										e);
+								log.error(METHOD_FOR + checkParam.getCode() + FAILED, e);
 							}
 						}
 					} else {
-						log.error("method for " + checkParam.getCode() + " not found");
+						log.error(METHOD_FOR + checkParam.getCode() + NOT_FOUND);
 					}
 				});
 			}
@@ -145,7 +145,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	/**
 	 * <b>Titre</b> :[Génériques] Contrôle du contenu selon un pattern
 	 * <p>
-	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes #2192</a>
+	 * <b>Référence Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2192">Cartes
+	 * #2192</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-1
 	 * <p>
@@ -154,10 +156,11 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : l'attribut de l'objet doit respecter un motif (expression régulière)
+	 * <b>Prédicat</b> : l'attribut de l'objet doit respecter un motif
+	 * (expression régulière)
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur {valeur} qui ne respecte pas le motif
-	 * {expression régulière}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur
+	 * {valeur} qui ne respecte pas le motif {expression régulière}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -174,11 +177,11 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		String javaAttribute = toCamelCase(parameters.getAttributeName());
 		Method getter = findGetter(object.getClass(), javaAttribute);
 		if (getter == null) {
-			log.error("unknown column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName());
+			log.error(UNKNOWN_COLUMN + parameters.getAttributeName() + FOR + object.getClass().getSimpleName());
 			return;
 		}
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_Generic_1);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_Generic_1);
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
@@ -187,13 +190,14 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 				if (!Pattern.matches(regex, value)) {
 					// pattern don't matches
 					DataLocation source = new DataLocation(object, parameters.getAttributeName());
-					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_1, source, value, regex);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+							CheckPointConstant.L3_Generic_1, source, value, regex);
 				}
 			}
 		} catch (IllegalAccessException | IllegalArgumentException e) {
-			log.error("getter for " + parameters.getAttributeName() + " not accessible", e);
+			log.error(GETTER_FOR + parameters.getAttributeName() + NOT_ACCESSIBLE, e);
 		} catch (InvocationTargetException e) {
-			log.error("getter for " + parameters.getAttributeName() + " failed ", e);
+			log.error(GETTER_FOR + parameters.getAttributeName() + FAILED, e);
 		}
 
 	}
@@ -201,7 +205,9 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	/**
 	 * <b>Titre</b> :[Génériques] Valeur min
 	 * <p>
-	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes #2193</a>
+	 * <b>Référence Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2193">Cartes
+	 * #2193</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-2
 	 * <p>
@@ -211,11 +217,13 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : Néant
 	 * <p>
-	 * <b>Prédicat</b> : la valeur numérique de l'attribut doit rester comprise entre 2 valeurs
+	 * <b>Prédicat</b> : la valeur numérique de l'attribut doit rester comprise
+	 * entre 2 valeurs
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur {valeur} supérieure à la valeur maximale
-	 * autorisée {max}<br>
-	 * {objet} : l'attribut {nom attribut} à une valeur {valeur} inférieure à la valeur minimale autorisée {min}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} à une valeur
+	 * {valeur} supérieure à la valeur maximale autorisée {max}<br>
+	 * {objet} : l'attribut {nom attribut} à une valeur {valeur} inférieure à la
+	 * valeur minimale autorisée {min}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -232,16 +240,16 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		String javaAttribute = toCamelCase(parameters.getAttributeName());
 		Method getter = findGetter(object.getClass(), javaAttribute);
 		if (getter == null) {
-			log.error("unknown column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName());
+			log.error(UNKNOWN_COLUMN + parameters.getAttributeName() + FOR + object.getClass().getSimpleName());
 			return;
 		}
 		if (!Number.class.isAssignableFrom(getter.getReturnType())) {
-			log.error("column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName()
+			log.error("column " + parameters.getAttributeName() + FOR + object.getClass().getSimpleName()
 					+ " is not numeric");
 			return;
 		}
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_Generic_2);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_Generic_2);
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
@@ -250,31 +258,36 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 					long minVal = Long.parseLong(parameters.getMinimumValue());
 					if (value < minVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_2, "2", source,
-								objVal.toString(), parameters.getMinimumValue());
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+								CheckPointConstant.L3_Generic_2, "2", source, objVal.toString(),
+								parameters.getMinimumValue());
 					}
 				}
 				if (parameters.getMaximumValue() != null) {
 					long maxVal = Long.parseLong(parameters.getMaximumValue());
 					if (value > maxVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_2, "1", source,
-								objVal.toString(), parameters.getMaximumValue());
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+								CheckPointConstant.L3_Generic_2, "1", source, objVal.toString(),
+								parameters.getMaximumValue());
 					}
 				}
 			}
 		} catch (IllegalAccessException | IllegalArgumentException e) {
-			log.error("getter for " + parameters.getAttributeName() + " not accessible", e);
+			log.error(GETTER_FOR + parameters.getAttributeName() + NOT_ACCESSIBLE, e);
 		} catch (InvocationTargetException e) {
-			log.error("getter for " + parameters.getAttributeName() + " failed ", e);
+			log.error(GETTER_FOR + parameters.getAttributeName() + FAILED, e);
 		}
 
 	}
 
 	/**
-	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une ligne
+	 * <b>Titre</b> :[Génériques] Unicité d'un attribut d'un objet dans une
+	 * ligne
 	 * <p>
-	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes #2194</a>
+	 * <b>Référence Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2194">Cartes
+	 * #2194</a>
 	 * <p>
 	 * <b>Code</b> :3-Generique-3
 	 * <p>
@@ -282,9 +295,11 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * <p>
 	 * <b>Prérequis</b> : Néant
 	 * <p>
-	 * <b>Prédicat</b> : la valeur de l'attribut doit être unique au sein des objets de la ligne
+	 * <b>Prédicat</b> : la valeur de l'attribut doit être unique au sein des
+	 * objets de la ligne
 	 * <p>
-	 * <b>Message</b> : {objet} : l'attribut {nom attribut} de {ref X} à une valeur {valeur} en conflit avec {ref Y}
+	 * <b>Message</b> : {objet} : l'attribut {nom attribut} de {ref X} à une
+	 * valeur {valeur} en conflit avec {ref Y}
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
@@ -302,26 +317,19 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 		String javaAttribute = toCamelCase(parameters.getAttributeName());
 		Method getter = findGetter(object.getClass(), javaAttribute);
 		if (getter == null) {
-			log.error("unknown column " + parameters.getAttributeName() + " for " + object.getClass().getSimpleName());
+			log.error(UNKNOWN_COLUMN + parameters.getAttributeName() + FOR + object.getClass().getSimpleName());
 			return;
 		}
 
 		// save data for iterative check
 		// TODO : reset ATTRIBUTE_CONTEXT after validation completed
 		Map<String, Map<String, DataLocation>> generic3Context = (Map<String, Map<String, DataLocation>>) context
-				.get(ATTRIBUTE_CONTEXT);
-		if (generic3Context == null) {
-			generic3Context = new HashMap<>();
-			context.put(ATTRIBUTE_CONTEXT, generic3Context);
-		}
+				.computeIfAbsent(Constant.ATTRIBUTE_CONTEXT, k -> new HashMap<>());
 		String attributeKey = parameters.getClassName() + ":" + parameters.getAttributeName();
-		Map<String, DataLocation> attributeContext = generic3Context.get(attributeKey);
-		if (attributeContext == null) {
-			attributeContext = new HashMap<>();
-			generic3Context.put(attributeKey, attributeContext);
-		}
+		Map<String, DataLocation> attributeContext = generic3Context.computeIfAbsent(attributeKey,
+				k -> new HashMap<>());
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, L3_Generic_3);
+		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_Generic_3);
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
@@ -330,15 +338,16 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 				if (attributeContext.containsKey(value)) {
 					// duplicate value
 					DataLocation target = attributeContext.get(value);
-					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_Generic_3, source, value, null, target);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+							CheckPointConstant.L3_Generic_3, source, value, null, target);
 				} else {
 					attributeContext.put(value, source);
 				}
 			}
 		} catch (IllegalAccessException | IllegalArgumentException e) {
-			log.error("getter for " + parameters.getAttributeName() + " not accessible", e);
+			log.error(GETTER_FOR + parameters.getAttributeName() + NOT_ACCESSIBLE, e);
 		} catch (InvocationTargetException e) {
-			log.error("getter for " + parameters.getAttributeName() + " failed ", e);
+			log.error(GETTER_FOR + parameters.getAttributeName() + FAILED, e);
 		}
 
 	}
@@ -348,7 +357,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 * @return
 	 */
 	protected static String toCamelCase(String underscore) {
-		StringBuffer b = new StringBuffer();
+		StringBuilder b = new StringBuilder();
 		boolean underChar = false;
 		for (char c : underscore.toCharArray()) {
 			if (c == '_') {
@@ -403,7 +412,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	}
 
 	protected static final double R = 6371008.8; // Earth radius
-	protected static final double toRad = 0.017453292519943; // degree/rad ratio
+	protected static final double TO_RAD = 0.017453292519943; // degree/rad ratio
 
 	/**
 	 * calculate distance on spheroid
@@ -427,10 +436,10 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 */
 	private static Double computeHaversineFormula(double dlon1, double dlat1, double dlon2, double dlat2) {
 
-		double lon1 = dlon1 * toRad;
-		double lat1 = dlat1 * toRad;
-		double lon2 = dlon2 * toRad;
-		double lat2 = dlat2 * toRad;
+		double lon1 = dlon1 * TO_RAD;
+		double lat1 = dlat1 * TO_RAD;
+		double lon2 = dlon2 * TO_RAD;
+		double lat2 = dlat2 * TO_RAD;
 
 		double dlon = Math.sin((lon2 - lon1) / 2);
 		double dlat = Math.sin((lat2 - lat1) / 2);
@@ -453,7 +462,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	protected static Double quickDistance(ChouetteLocalizedObject obj1, ChouetteLocalizedObject obj2) {
 		if (obj1.hasCoordinates() && obj2.hasCoordinates()) {
 			double dlon = (obj2.getLongitude().doubleValue() - obj1.getLongitude().doubleValue()) * A;
-			dlon *= Math.cos((obj2.getLatitude().doubleValue() + obj1.getLatitude().doubleValue()) * toRad / 2.);
+			dlon *= Math.cos((obj2.getLatitude().doubleValue() + obj1.getLatitude().doubleValue()) * TO_RAD / 2.);
 			double dlat = (obj2.getLatitude().doubleValue() - obj1.getLatitude().doubleValue()) * A;
 			double ret = Math.sqrt(dlon * dlon + dlat * dlat);
 			if (ret > 2000.)
@@ -476,7 +485,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	public static double quickDistanceFromCoordinates(double lat1, double lat2, double long1, double long2) {
 
 		double dlon = (long2 - long1) * A;
-		dlon *= Math.cos((lat2 + lat1) * toRad / 2.);
+		dlon *= Math.cos((lat2 + lat1) * TO_RAD / 2.);
 		double dlat = (lat2 - lat1) * A;
 		double ret = Math.sqrt(dlon * dlon + dlat * dlat);
 		if (ret > 2000.)
@@ -497,7 +506,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 */
 	protected long diffTime(Time first, Time last) {
 		if (first == null || last == null)
-			return Long.MIN_VALUE; // TODO diffTime => action when first & last time are null
+			return Long.MIN_VALUE; // TODO diffTime => action when first & last
+									// time are null
 
 		long lastTime = (last.getTime() / 1000L);
 		long firstTime = (first.getTime() / 1000L);
@@ -531,7 +541,6 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	@SuppressWarnings("rawtypes")
 	private Method findCheckMethod(Class<? extends GenericValidator> class1, String checkPoint) {
 		String methodName = "check" + checkPoint.replaceAll("-", "");
-		// log.info("search "+methodName+" method in "+class1.getName());
 		Method[] methods = class1.getDeclaredMethods();
 		Optional<Method> result = Arrays.stream(methods).filter(method -> method.getName().equalsIgnoreCase(methodName))
 				.findFirst();
@@ -544,10 +553,10 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 
 	@SuppressWarnings("unchecked")
 	protected Double getDistance(Context context, ChouetteLocalizedObject stop1, ChouetteLocalizedObject stop2) {
-		Map<String, Double> distances = (Map<String, Double>) context.get(DISTANCE_CONTEXT);
+		Map<String, Double> distances = (Map<String, Double>) context.get(Constant.DISTANCE_CONTEXT);
 		if (distances == null) {
 			distances = new HashMap<>();
-			context.put(DISTANCE_CONTEXT, distances);
+			context.put(Constant.DISTANCE_CONTEXT, distances);
 		}
 
 		String key = stop1.getObjectId() + "#" + stop2.getObjectId();
@@ -576,7 +585,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> imple
 	 */
 	protected double getSpeedBetweenStops(Context context, VehicleJourneyAtStop passingTime1,
 			VehicleJourneyAtStop passingTime2) {
-		Referential r = (Referential) context.get(REFERENTIAL);
+		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 		// TODO find distance with shapes if present
 
 		// else use flying distance

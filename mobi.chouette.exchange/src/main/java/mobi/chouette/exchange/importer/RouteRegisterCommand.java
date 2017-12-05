@@ -16,6 +16,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -53,22 +54,22 @@ public class RouteRegisterCommand implements Command {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
         // save has been abandoned
-		AbstractImportParameter parameters = (AbstractImportParameter) context.get(CONFIGURATION);
+		AbstractImportParameter parameters = (AbstractImportParameter) context.get(Constant.CONFIGURATION);
 		if (parameters.isNoSave()) return false;
 
-		if (!context.containsKey(OPTIMIZED)) {
-			context.put(OPTIMIZED, Boolean.TRUE);
+		if (!context.containsKey(Constant.OPTIMIZED)) {
+			context.put(Constant.OPTIMIZED, Boolean.TRUE);
 		}
 		Referential cache = new Referential();
-		context.put(CACHE, cache);
+		context.put(Constant.CACHE, cache);
 
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		Map<String, Timetable> timetables = referential.getTimetables();
 		for (Timetable timetable : timetables.values()) {
 			// if (timetable.getId() != null) {
 				Timetable saved = timetableDAO.findByObjectId(timetable.getObjectId());
 				if (saved != null) {
-					log.info("timetable " + timetable.getObjectId() + " already saved ");
+					// log.info("timetable " + timetable.getObjectId() + " already saved ");
 					for (VehicleJourney vj : timetable.getVehicleJourneys()) {
 						vj.getTimetables().remove(timetable);
 						vj.getTimetables().add(saved);
@@ -107,16 +108,13 @@ public class RouteRegisterCommand implements Command {
 			routeDAO.create(route);
 			routeDAO.flush();
 		}
-		// RoutingConstraint routingConstraint = (RoutingConstraint) entity;
 		Map<String, RoutingConstraint> routingConstraints = referential.getRoutingConstraints();
-		log.info("list of rc size : " + routingConstraints.size());
 		Iterator<RoutingConstraint> iterator2 = routingConstraints.values().iterator();
 		while (iterator2.hasNext()) {
 			RoutingConstraint routingConstraint = iterator2.next();
 
 			List<StopPoint> stopPoints = routingConstraint.getStopPoints();
 			Long ids[] = new Long[stopPoints.size()];
-			log.info("RC nb stop point: " + stopPoints.size());
 			int c = 0;
 			for (StopPoint stopPoint : stopPoints) {
 				ids[c++] = stopPoint.getId();
@@ -134,21 +132,21 @@ public class RouteRegisterCommand implements Command {
 
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		buffer.write(vehicleJourney.getId().toString());
-		buffer.append(SEP);
+		buffer.append(Constant.SEP);
 		buffer.write(stopPoint.getId().toString());
-		buffer.append(SEP);
+		buffer.append(Constant.SEP);
 		if (vehicleJourneyAtStop.getArrivalTime() != null)
 			buffer.write(timeFormat.format(vehicleJourneyAtStop.getArrivalTime()));
 		else
-			buffer.write(NULL);
-		buffer.append(SEP);
+			buffer.write(Constant.NULL);
+		buffer.append(Constant.SEP);
 		if (vehicleJourneyAtStop.getDepartureTime() != null)
 			buffer.write(timeFormat.format(vehicleJourneyAtStop.getDepartureTime()));
 		else
-			buffer.write(NULL);
-		buffer.append(SEP);
+			buffer.write(Constant.NULL);
+		buffer.append(Constant.SEP);
 		buffer.write(Integer.toString(vehicleJourneyAtStop.getArrivalDayOffset()));
-		buffer.append(SEP);
+		buffer.append(Constant.SEP);
 		buffer.write(Integer.toString(vehicleJourneyAtStop.getDepartureDayOffset()));
 
 		buffer.append('\n');
@@ -177,6 +175,6 @@ public class RouteRegisterCommand implements Command {
 	}
 
 	static {
-		CommandFactory.factories.put(RouteRegisterCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(RouteRegisterCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

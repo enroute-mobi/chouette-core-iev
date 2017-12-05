@@ -15,18 +15,18 @@ import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.parameters.AbstractExportParameter;
 import mobi.chouette.exchange.report.ActionReporter;
 
-public class AbstractExporterCommand implements Constant {
+public class AbstractExporterCommand {
 
 	@EJB DaoReader reader;
 	
 	protected enum Mode {
 		line, stopareas
-	};
+	}
 
 	public boolean process(Context context, ProcessingCommands commands, ProgressionCommand progression,
 			boolean continueLineProcesingOnError, Mode mode) throws Exception {
-		boolean result = ERROR;
-		AbstractExportParameter parameters = (AbstractExportParameter) context.get(CONFIGURATION);
+		boolean result = Constant.ERROR;
+		AbstractExportParameter parameters = (AbstractExportParameter) context.get(Constant.CONFIGURATION);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		// initialisation
@@ -37,7 +37,7 @@ public class AbstractExporterCommand implements Constant {
 			if (!result) {
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
 				progression.execute(context);
-				return ERROR;
+				return Constant.ERROR;
 			}
 			progression.execute(context);
 		}
@@ -55,13 +55,13 @@ public class AbstractExporterCommand implements Constant {
 
 			List<Long> ids = null;
 			if (parameters.getIds() != null) {
-				ids = new ArrayList<Long>(parameters.getIds());
+				ids = new ArrayList<>(parameters.getIds());
 			}
 
 			Set<Long> lines = reader.loadLines(type, ids);
 			if (lines.isEmpty()) {
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
-				return ERROR;
+				return Constant.ERROR;
 
 			}
 			progression.execute(context);
@@ -72,7 +72,7 @@ public class AbstractExporterCommand implements Constant {
 			int lineCount = 0;
 			// export each line
 			for (Long line : lines) {
-				context.put(LINE_ID, line);
+				context.put(Constant.LINE_ID, line);
 				boolean exportFailed = false;
 				for (Command exportCommand : lineProcessingCommands) {
 					result = exportCommand.execute(context);
@@ -86,7 +86,7 @@ public class AbstractExporterCommand implements Constant {
 					lineCount++;
 				} else if (!continueLineProcesingOnError) {
 					reporter.setActionError(context, ActionReporter.ERROR_CODE.INVALID_DATA, "unable to export data");
-					return ERROR;
+					return Constant.ERROR;
 				}
 			}
 			// check if data where exported
@@ -94,7 +94,7 @@ public class AbstractExporterCommand implements Constant {
 				progression.terminate(context, 1);
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED, "no data exported");
 				progression.execute(context);
-				return ERROR;
+				return Constant.ERROR;
 			}
 		} else // stopareas
 		{
@@ -104,7 +104,7 @@ public class AbstractExporterCommand implements Constant {
 			for (Command command : stopProcessingCommands) {
 				result = command.execute(context);
 				if (!result) {
-					return ERROR;
+					return Constant.ERROR;
 				}
 				progression.execute(context);
 			}
@@ -118,7 +118,7 @@ public class AbstractExporterCommand implements Constant {
 			if (!result) {
 				if (!reporter.hasActionError(context))
 					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED, "no data exported");
-				return ERROR;
+				return Constant.ERROR;
 			}
 			progression.execute(context);
 		}

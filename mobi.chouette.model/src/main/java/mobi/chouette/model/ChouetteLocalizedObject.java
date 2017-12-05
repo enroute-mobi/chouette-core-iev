@@ -211,12 +211,12 @@ public abstract class ChouetteLocalizedObject extends ChouetteIdentifiedObject {
 	}
 
 	/**
-	 * check if x, x and projectionType are not null
+	 * check if x, y and projectionType are not null
 	 * 
 	 * @return true when all 3 attributes are present
 	 */
 	public boolean hasProjection() {
-		return x != null && x != null && notEmptyString(projectionType);
+		return x != null && y != null && notEmptyString(projectionType);
 	}
 
 	/**

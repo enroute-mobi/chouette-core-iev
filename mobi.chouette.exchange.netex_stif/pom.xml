@@ -12,6 +12,20 @@
 	<properties>
 		<project.rootDir>${project.basedir}/..</project.rootDir>
 		<skipInitDb>true</skipInitDb>
+		<!-- Sonar exclusions -->
+      <sonar.issue.ignore.multicriteria>g1,e1,e2,e3</sonar.issue.ignore.multicriteria>
+      <!-- Just to see other problems before ; TO BE REMOVED RAPIDLY : Cognitive Complexity of methods should not be too high -->
+      <sonar.issue.ignore.multicriteria.g1.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.g1.ruleKey>
+      <sonar.issue.ignore.multicriteria.g1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.g1.resourceKey>
+      <!-- Package names should comply with a naming convention : netex_stif should not have an underscore in name-->
+      <sonar.issue.ignore.multicriteria.e1.ruleKey>squid:S00120</sonar.issue.ignore.multicriteria.e1.ruleKey>
+      <sonar.issue.ignore.multicriteria.e1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
+      <!-- Constant names should comply with a naming convention -->
+      <sonar.issue.ignore.multicriteria.e2.ruleKey>squid:S00115</sonar.issue.ignore.multicriteria.e2.ruleKey>
+      <sonar.issue.ignore.multicriteria.e2.resourceKey>**/mobi/chouette/exchange/netex_stif/validator/NetexCheckPoints.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
+       <!-- Class names should not shadow interfaces or superclasses -->
+      <sonar.issue.ignore.multicriteria.e3.ruleKey>squid:S2176</sonar.issue.ignore.multicriteria.e3.ruleKey>
+      <sonar.issue.ignore.multicriteria.e3.resourceKey>**/mobi/chouette/exchange/netex_stif/exporter/Exportabledata.java</sonar.issue.ignore.multicriteria.e3.resourceKey>
 	</properties>
 	<dependencies>
 

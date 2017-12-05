@@ -10,11 +10,12 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.model.RoutingConstraintZone;
 import mobi.chouette.exchange.netex_stif.validator.RoutingConstraintZoneValidator;
@@ -26,39 +27,39 @@ import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class RoutingConstraintZoneParser implements Parser, Constant {
+public class RoutingConstraintZoneParser implements Parser {
 
 
 	@Override
 	public void parse(Context context) throws Exception {
-		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		XmlPullParser xpp = (XmlPullParser) context.get(Constant.PARSER);
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
-		Referential referential = (Referential) context.get(REFERENTIAL);
-		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
 		Map<Route, List<StopPoint>> stopPoints = new HashMap<Route, List<StopPoint>>();
 		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory.getValidator(context, RoutingConstraintZoneValidator.class);
 
-		String id = xpp.getAttributeValue(null, ID);
+		String id = xpp.getAttributeValue(null, NetexStifConstant.ID);
 		RoutingConstraintZone zone = factory.getRoutingConstraintZone(id);
-		String changed = xpp.getAttributeValue(null, CHANGED);
+		String changed = xpp.getAttributeValue(null, NetexStifConstant.CHANGED);
 		if (changed != null) {
 			zone.setCreationTime(NetexStifUtils.getDate(changed));
 		}
-		String modification = xpp.getAttributeValue(null, MODIFICATION);
-//		LineLite line = (LineLite) context.get(LINE);
+		String modification = xpp.getAttributeValue(null, NetexStifConstant.MODIFICATION);
+//		LineLite line = (LineLite) context.get(Constant.LINE);
 //		if (line != null)
 //			NetexStifUtils.uniqueObjectIdOnLine(context,zone, line);
 		
 		String name = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals(NAME)) {
+			if (xpp.getName().equals(NetexStifConstant.NAME)) {
 				name = xpp.nextText();
 				zone.setName(name);
-			} else if (xpp.getName().equals(ZONE_USE)) {
+			} else if (xpp.getName().equals(NetexStifConstant.ZONE_USE)) {
 				String zoneUse = xpp.nextText();
 				zone.setZoneUse(zoneUse);
-			} else if (xpp.getName().equals(MEMBERS)) {
+			} else if (xpp.getName().equals(NetexStifConstant.MEMBERS)) {
 				parseScheduledStopPoints(context, xpp, factory, stopPoints, zone, validator);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
@@ -87,17 +88,17 @@ public class RoutingConstraintZoneParser implements Parser, Constant {
 	private void parseScheduledStopPoints(Context context, XmlPullParser xpp, NetexStifObjectFactory factory,
 			Map<Route, List<StopPoint>> stopPoints, RoutingConstraintZone zone, RoutingConstraintZoneValidator validator) throws XmlPullParserException, IOException {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals(SCHEDULED_STOP_POINT_REF)) {
+			if (xpp.getName().equals(NetexStifConstant.SCHEDULED_STOP_POINT_REF)) {
 				int columnNumber = xpp.getColumnNumber();
 				int lineNumber = xpp.getLineNumber();
-				String ref = xpp.getAttributeValue(null, REF);
-				String attr_version = xpp.getAttributeValue(null, VERSION);
+				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
+				String attr_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
-				boolean checked = validator.checkNetexRef(context, zone, SCHEDULED_STOP_POINT_REF, ref, lineNumber,
+				boolean checked = validator.checkNetexRef(context, zone, NetexStifConstant.SCHEDULED_STOP_POINT_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, zone, SCHEDULED_STOP_POINT_REF, ref,
+					checked = validator.checkInternalRef(context, zone, NetexStifConstant.SCHEDULED_STOP_POINT_REF, ref,
 							attr_version, content, lineNumber, columnNumber);
 				zone.getStopPointsRef().add(ref);
 				List<StopPoint> list = factory.getStopPoints(ref);

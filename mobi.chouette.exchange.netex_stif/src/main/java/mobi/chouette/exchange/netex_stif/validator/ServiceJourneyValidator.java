@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.LineLite;
@@ -14,7 +15,7 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 
 public class ServiceJourneyValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = SERVICE_JOURNEY;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.SERVICE_JOURNEY;
 	
 	protected String getLocalContext()
 	{
@@ -27,19 +28,19 @@ public class ServiceJourneyValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_2);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_3);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_ServiceJourney_4);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void addTrainNumberRef(Context context, String objectId, String trainNumberRef) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		List<String> list = (List<String>) objectContext.get(TRAIN_NUMBER_REF);
+		List<String> list = (List<String>) objectContext.get(NetexStifConstant.TRAIN_NUMBER_REF);
 		if (list == null) {
 			list = new ArrayList<String>();
-			objectContext.put(TRAIN_NUMBER_REF, list);
+			objectContext.put(NetexStifConstant.TRAIN_NUMBER_REF, list);
 		}
 		list.add(trainNumberRef);
 	}
@@ -54,9 +55,9 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	 * @return
 	 */
 	public boolean validate(Context context, VehicleJourney journey, int lineNumber, int columnNumber) {
-		boolean result1 = checkNetexId(context, SERVICE_JOURNEY, journey.getObjectId(), lineNumber, columnNumber);
-		checkChanged(context, SERVICE_JOURNEY, journey, lineNumber, columnNumber);
-		boolean result2 = checkModification(context, SERVICE_JOURNEY, journey, lineNumber, columnNumber);
+		boolean result1 = checkNetexId(context, NetexStifConstant.SERVICE_JOURNEY, journey.getObjectId(), lineNumber, columnNumber);
+		checkChanged(context, NetexStifConstant.SERVICE_JOURNEY, journey, lineNumber, columnNumber);
+		boolean result2 = checkModification(context, NetexStifConstant.SERVICE_JOURNEY, journey, lineNumber, columnNumber);
 		boolean result3 = check2NeTExSTIFServiceJourney1(context, journey, lineNumber, columnNumber);
 		if (result3)
 			result3 = check2NeTExSTIFServiceJourney2(context, journey, lineNumber, columnNumber);
@@ -101,9 +102,9 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			result = false;
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_1, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1, location);
 
 		}
 		return result;
@@ -139,14 +140,14 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			int columnNumber) {
 		boolean result = true;
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, journey.getObjectId());
-		List<String> list = (List<String>) objectContext.get(TRAIN_NUMBER_REF);
+		List<String> list = (List<String>) objectContext.get(NetexStifConstant.TRAIN_NUMBER_REF);
 		if (list != null && list.size() > 1) {
 			result = false;
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_2, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2, location);
 		}
 		return result;
 	}
@@ -182,9 +183,9 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			result = false;
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_3, location,Integer.toString(journey.getVehicleJourneyAtStops().size()));
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3, location,Integer.toString(journey.getVehicleJourneyAtStops().size()));
 		}
 		return result;
 	}
@@ -229,9 +230,9 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			result = false;
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_ServiceJourney_4, location, Integer.toString(rank));			
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4, location, Integer.toString(rank));			
 		}
 		return result;
 	}

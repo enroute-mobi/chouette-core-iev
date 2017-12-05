@@ -9,6 +9,7 @@ import javax.naming.InitialContext;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -27,48 +28,41 @@ import com.jamonapi.MonitorFactory;
 @Log4j
 public class StopAreaRegisterCommand implements Command {
 
-	private Predicate<StopArea> predicate = new Predicate<StopArea>() {
-		@Override
-		public boolean apply(StopArea area) {
-			return area.getAreaType().equals(ChouetteAreaEnum.Quay)
-					|| area.getAreaType().equals(ChouetteAreaEnum.BoardingPosition);
-		}
-	};
+	private Predicate<StopArea> predicate = area -> area.getAreaType().equals(ChouetteAreaEnum.Quay)
+			|| area.getAreaType().equals(ChouetteAreaEnum.BoardingPosition);
 
 	public static final String COMMAND = "StopAreaRegisterCommand";
 
-	private static final int batchSizeA = 30000;
-	private static final int batchSizeC = 10000;
+	private static final int BATCH_SIZE_A = 30000;
+	private static final int BATCH_SIZE_C = 10000;
 
 	@Override
 	public boolean execute(Context context) throws Exception {
 
 
-		boolean result = ERROR;
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		boolean result = Constant.ERROR;
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		Command command = CommandFactory.create(initialContext, StopAreaRegisterBlocCommand.class.getName());
 		Command commandLink = CommandFactory.create(initialContext, ConnectionLinkRegisterBlocCommand.class.getName());
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		try {
-			Referential referential = (Referential) context.get(REFERENTIAL);
+			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 			Collection<StopArea> orderedAreas = Collections2.filter(referential.getStopAreas().values(), predicate);
-			Iterable<List<StopArea>> iterator = Iterables.partition(orderedAreas, batchSizeA);
+			Iterable<List<StopArea>> iterator = Iterables.partition(orderedAreas, BATCH_SIZE_A);
 			int count = 0;
 			for (List<StopArea> areas : iterator) {
 				count += areas.size();
-				context.put(AREA_BLOC, areas);
+				context.put(Constant.AREA_BLOC, areas);
 				command.execute(context);
-				// executeBloc( context, areas);
 				log.info("Areas proceded :" + count + "/" + orderedAreas.size());
 			}
 			Collection<ConnectionLink> orderedlinks = referential.getConnectionLinks().values();
-			Iterable<List<ConnectionLink>> iterator2 = Iterables.partition(orderedlinks, batchSizeC);
+			Iterable<List<ConnectionLink>> iterator2 = Iterables.partition(orderedlinks, BATCH_SIZE_C);
 			count = 0;
 			for (List<ConnectionLink> links : iterator2) {
 				count += links.size();
-				context.put(CONNECTION_LINK_BLOC, links);
+				context.put(Constant.CONNECTION_LINK_BLOC, links);
 				commandLink.execute(context);
-				// executeBloc( context, areas);
 				log.info("ConnectionLinks proceded :" + count + "/" + orderedlinks.size());
 			}
 		} catch (Exception ex) {
@@ -101,13 +95,11 @@ public class StopAreaRegisterCommand implements Command {
 
 		@Override
 		protected Command create(InitialContext context) throws IOException {
-
-			Command result = new StopAreaRegisterCommand();
-			return result;
+			return new StopAreaRegisterCommand();
 		}
 	}
 
 	static {
-		CommandFactory.factories.put(StopAreaRegisterCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(StopAreaRegisterCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

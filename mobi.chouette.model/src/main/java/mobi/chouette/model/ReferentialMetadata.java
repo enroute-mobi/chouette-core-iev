@@ -20,7 +20,9 @@ import mobi.chouette.model.type.DateRange;
 @Table(name = "referential_metadata")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class ReferentialMetadata {
+public class ReferentialMetadata extends ChouetteObject{
+	private static final long serialVersionUID = 2598860486989210732L;
+
 	@Getter
 	@Setter
 	@SequenceGenerator(name="referential_metadata_id_seq", sequenceName="referential_metadata_id_seq", allocationSize=1)

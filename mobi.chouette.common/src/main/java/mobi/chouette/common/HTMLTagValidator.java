@@ -14,4 +14,6 @@ public class HTMLTagValidator {
 	public static boolean validate(final String tag){
 		return pattern.matcher(tag).matches();
 	}
+	
+	private HTMLTagValidator(){}
 }

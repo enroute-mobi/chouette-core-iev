@@ -19,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.util.ObjectIdTypes;
 
 /**
  * Chouette Line readonly lite version: a group of Routes which is generally known to the public by a
@@ -33,7 +32,9 @@ import mobi.chouette.model.util.ObjectIdTypes;
 @Immutable
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes {
+public class LineLite extends ChouetteIdentifiedObject {
+	private static final String OLD_FASHION_PREFIX = "STIF:CODIFLIGNE";
+
 	private static final long serialVersionUID = 8809993452599427585L;
 
 	@Getter
@@ -128,13 +129,13 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 
 	@Override
 	public String objectIdPrefix() {
-		if (objectId.startsWith("STIF:CODIFLIGNE")) return "STIF:CODIFLIGNE";
+		if (objectId.startsWith(OLD_FASHION_PREFIX)) return OLD_FASHION_PREFIX;
 		return super.objectIdPrefix();
 	}
 
 	@Override
 	public String objectIdSuffix() {
-		if (objectId.startsWith("STIF:CODIFLIGNE") )
+		if (objectId.startsWith(OLD_FASHION_PREFIX) )
 		{
 			String[] tokens = objectIdArray();
 			if (tokens.length > 3)

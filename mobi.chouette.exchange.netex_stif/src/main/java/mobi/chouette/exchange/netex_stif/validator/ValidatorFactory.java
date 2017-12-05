@@ -4,23 +4,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 
-public class ValidatorFactory implements Constant{
+public class ValidatorFactory {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static AbstractValidator getValidator(Context context, Class<?  extends AbstractValidator> clazz)
 	{
-		Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
+		Context validationContext = (Context) context.get(Constant.VALIDATION_CONTEXT);
 		if (validationContext == null) {
 			validationContext = new Context();
-			context.put(VALIDATION_CONTEXT, validationContext);
+			context.put(Constant.VALIDATION_CONTEXT, validationContext);
 		}
-		Map<Class,AbstractValidator> validatorMap = (Map<Class, AbstractValidator>) validationContext.get(VALIDATORS);
+		Map<Class,AbstractValidator> validatorMap = (Map<Class, AbstractValidator>) validationContext.get(NetexStifConstant.VALIDATORS);
         if (validatorMap == null)
         {
         	validatorMap = new HashMap<>();
-        	validationContext.put(VALIDATORS, validatorMap);
+        	validationContext.put(NetexStifConstant.VALIDATORS, validatorMap);
         }
         AbstractValidator validator = validatorMap.get(clazz);
         if (validator == null)

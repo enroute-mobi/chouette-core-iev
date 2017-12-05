@@ -22,32 +22,28 @@ import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
 @Log4j
-public class CompressCommand implements Command, Constant {
+public class CompressCommand implements Command {
 
 	public static final String COMMAND = "CompressCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
-			JobData jobData = (JobData) context.get(JOB_DATA);
+			JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 			String path = jobData.getPathName();
 			String file = jobData.getOutputFilename();
-			Path target = Paths.get(path, OUTPUT);
+			Path target = Paths.get(path, Constant.OUTPUT);
 			Path filename = Paths.get(path, file);
 			File outputFile = filename.toFile();
 			if (outputFile.exists()) outputFile.delete();
 			FileUtil.compress(target.toString(), filename.toString());
-			result = SUCCESS;
-			try {
-				FileUtils.deleteDirectory(target.toFile());
-			} catch (Exception e) {
-				log.warn("cannot purge output directory " + e.getMessage());
-			}
+			result = Constant.SUCCESS;
+			deleteDirectory(target);
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -58,16 +54,23 @@ public class CompressCommand implements Command, Constant {
 		return result;
 	}
 
+	private void deleteDirectory(Path dirPath) {
+		try {
+			FileUtils.deleteDirectory(dirPath.toFile());
+		} catch (Exception e) {
+			log.warn("cannot purge output directory " + e.getMessage());
+		}
+	}
+
 	public static class DefaultCommandFactory extends CommandFactory {
 
 		@Override
 		protected Command create(InitialContext context) throws IOException {
-			Command result = new CompressCommand();
-			return result;
+			return new CompressCommand();
 		}
 	}
 
 	static {
-		CommandFactory.factories.put(CompressCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(CompressCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

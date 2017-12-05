@@ -52,8 +52,8 @@ public class CoordinateUtil
                p.y.doubleValue(), p.y.doubleValue());
          Envelope geometry = JTS.transform(envelope, transform);
 
-         result = new Coordinate(new BigDecimal(geometry.getMinX()),
-               new BigDecimal(geometry.getMinY()));
+         result = new Coordinate(BigDecimal.valueOf(geometry.getMinX()),
+        		 BigDecimal.valueOf(geometry.getMinY()));
 
       } catch (Exception e)
       {

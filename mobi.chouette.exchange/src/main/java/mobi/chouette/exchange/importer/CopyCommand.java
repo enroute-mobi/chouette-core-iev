@@ -21,6 +21,7 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -45,16 +46,16 @@ public class CopyCommand implements Command {
 		
 		int maxCopy = 1;
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		try {
 
-			Boolean optimized = (Boolean) context.get(OPTIMIZED);
+			Boolean optimized = (Boolean) context.get(Constant.OPTIMIZED);
 			if (optimized) {
-				List<Future<Void>> futures = (List<Future<Void>>) context.get(COPY_IN_PROGRESS);
+				List<Future<Void>> futures = (List<Future<Void>>) context.get(Constant.COPY_IN_PROGRESS);
 				if (futures == null) {
 					futures = new ArrayList<>();
-					context.put(COPY_IN_PROGRESS, futures);
+					context.put(Constant.COPY_IN_PROGRESS, futures);
 				}
 				while (futures.size() >= maxCopy)
 				{
@@ -77,13 +78,13 @@ public class CopyCommand implements Command {
 					}
 				}
 				CommandCallable callable = new CommandCallable();
-				callable.buffer = (String) context.remove(BUFFER);
+				callable.buffer = (String) context.remove(Constant.BUFFER);
 				callable.schema = ContextHolder.getContext();
 				Future<Void> future = executor.submit(callable);
 				futures.add(future);
 			}
 
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 		} catch (Exception e) {
 			log.error(e);
 			throw e;
@@ -132,6 +133,6 @@ public class CopyCommand implements Command {
 	}
 
 	static {
-		CommandFactory.factories.put(CopyCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(CopyCommand.class.getName(), new DefaultCommandFactory());
 	}
 }
