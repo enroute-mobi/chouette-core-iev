@@ -147,7 +147,6 @@ CREATE TABLE compliance_check_sets (
     referential_id bigint,
     compliance_control_set_id bigint,
     workbench_id bigint,
-    creator character varying,
     status character varying,
     parent_id bigint,
     parent_type character varying,
@@ -600,14 +599,6 @@ ALTER TABLE ONLY compliance_checks
 
 
 --
--- Name: compliance_check_sets fk_rails_4145f3761b; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_check_sets
-    ADD CONSTRAINT fk_rails_4145f3761b FOREIGN KEY (referential_id) REFERENCES referentials(id);
-
-
---
 -- Name: compliance_check_resources fk_rails_45cd323eca; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -645,14 +636,6 @@ ALTER TABLE ONLY compliance_control_sets
 
 ALTER TABLE ONLY compliance_controls
     ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
-
-
---
--- Name: compliance_check_sets fk_rails_d227ba43d7; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_check_sets
-    ADD CONSTRAINT fk_rails_d227ba43d7 FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 
 
 --

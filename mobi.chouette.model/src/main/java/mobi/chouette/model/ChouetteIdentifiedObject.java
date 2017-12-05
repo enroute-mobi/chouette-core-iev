@@ -66,18 +66,6 @@ public abstract class ChouetteIdentifiedObject extends ChouetteDatedObject imple
 	@Setter
 	@Column(name = "object_version")
 	protected Long objectVersion = 1L;
-
-	/**
-	 * creator id
-	 * 
-	 * @param creatorId
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "creator_id")
-	protected String creatorId;
  
 	@Getter
 	@Setter

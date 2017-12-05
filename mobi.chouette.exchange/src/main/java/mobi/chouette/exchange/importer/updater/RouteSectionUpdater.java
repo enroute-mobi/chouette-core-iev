@@ -44,10 +44,6 @@ public class RouteSectionUpdater implements Updater<RouteSection> {
 						oldValue.getCreationTime())) {
 			oldValue.setCreationTime(newValue.getCreationTime());
 		}
-		if (newValue.getCreatorId() != null
-				&& !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-			oldValue.setCreatorId(newValue.getCreatorId());
-		}
 		if (newValue.getDistance() != null
 				&& !newValue.getDistance().equals(oldValue.getDistance())) {
 			oldValue.setDistance(newValue.getDistance());

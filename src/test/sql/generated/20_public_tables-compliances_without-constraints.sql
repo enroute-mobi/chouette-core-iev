@@ -72,7 +72,6 @@ CREATE TABLE compliance_check_sets (
     referential_id bigint,
     compliance_control_set_id bigint,
     workbench_id bigint,
-    creator character varying,
     status character varying,
     parent_id bigint,
     parent_type character varying,

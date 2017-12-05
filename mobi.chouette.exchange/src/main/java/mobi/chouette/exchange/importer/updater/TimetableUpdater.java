@@ -62,10 +62,6 @@ public class TimetableUpdater implements Updater<Timetable> {
 						oldValue.getCreationTime())) {
 			oldValue.setCreationTime(newValue.getCreationTime());
 		}
-		if (newValue.getCreatorId() != null
-				&& !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-			oldValue.setCreatorId(newValue.getCreatorId());
-		}
 		if (newValue.getComment() != null
 				&& !newValue.getComment().equals(oldValue.getComment())) {
 			oldValue.setComment(newValue.getComment());

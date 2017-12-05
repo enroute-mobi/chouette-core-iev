@@ -117,43 +117,6 @@ ALTER SEQUENCE journey_frequencies_id_seq OWNED BY journey_frequencies.id;
 
 
 --
--- Name: journey_pattern_sections; Type: TABLE; Schema: chouette_gui; Owner: chouette
---
-
-CREATE TABLE journey_pattern_sections (
-    id bigint NOT NULL,
-    journey_pattern_id bigint NOT NULL,
-    route_section_id bigint NOT NULL,
-    rank integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
-ALTER TABLE journey_pattern_sections OWNER TO chouette;
-
---
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
---
-
-CREATE SEQUENCE journey_pattern_sections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE journey_pattern_sections_id_seq OWNER TO chouette;
-
---
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
---
-
-ALTER SEQUENCE journey_pattern_sections_id_seq OWNED BY journey_pattern_sections.id;
-
-
---
 -- Name: journey_patterns; Type: TABLE; Schema: chouette_gui; Owner: chouette
 --
 
@@ -162,7 +125,6 @@ CREATE TABLE journey_patterns (
     route_id bigint,
     objectid character varying(255) NOT NULL,
     object_version bigint,
-    creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
     registration_number character varying(255),
@@ -221,7 +183,6 @@ CREATE TABLE routes (
     line_id bigint,
     objectid character varying(255) NOT NULL,
     object_version bigint,
-    creator_id character varying(255),
     name character varying(255),
     comment character varying(255),
     opposite_route_id bigint,
@@ -270,7 +231,6 @@ CREATE TABLE routing_constraint_zones (
     route_id bigint,
     objectid character varying(255) NOT NULL,
     object_version bigint,
-    creator_id character varying(255),
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
@@ -311,7 +271,6 @@ CREATE TABLE stop_points (
     stop_area_id bigint,
     objectid character varying(255) NOT NULL,
     object_version bigint,
-    creator_id character varying(255),
     "position" integer,
     for_boarding character varying(255),
     for_alighting character varying(255),
@@ -427,7 +386,6 @@ CREATE TABLE time_tables (
     id bigint NOT NULL,
     objectid character varying(255) NOT NULL,
     object_version bigint DEFAULT 1,
-    creator_id character varying(255),
     version character varying(255),
     comment character varying(255),
     int_day_types integer DEFAULT 0,
@@ -484,7 +442,6 @@ CREATE TABLE timebands (
     id bigint NOT NULL,
     objectid character varying(255) NOT NULL,
     object_version bigint,
-    creator_id character varying(255),
     name character varying(255),
     start_time time without time zone NOT NULL,
     end_time time without time zone NOT NULL,
@@ -571,7 +528,6 @@ CREATE TABLE vehicle_journeys (
     company_id bigint,
     objectid character varying(255) NOT NULL,
     object_version bigint,
-    creator_id character varying(255),
     comment character varying(255),
     status_value character varying(255),
     transport_mode character varying(255),
@@ -626,12 +582,6 @@ ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq
 
 ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journey_frequencies_id_seq'::regclass);
 
-
---
--- Name: id; Type: DEFAULT; Schema: chouette_gui; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
 
 
 --
@@ -718,14 +668,6 @@ ALTER TABLE ONLY footnotes
 
 ALTER TABLE ONLY journey_frequencies
     ADD CONSTRAINT journey_frequencies_pkey PRIMARY KEY (id);
-
-
---
--- Name: journey_pattern_sections_pkey; Type: CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT journey_pattern_sections_pkey PRIMARY KEY (id);
 
 
 --
@@ -827,27 +769,6 @@ CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequenc
 --
 
 CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey_patterns_stop_points USING btree (journey_pattern_id);
-
-
---
--- Name: index_journey_pattern_sections_on_journey_pattern_id; Type: INDEX; Schema: chouette_gui; Owner: chouette
---
-
-CREATE INDEX index_journey_pattern_sections_on_journey_pattern_id ON journey_pattern_sections USING btree (journey_pattern_id);
-
-
---
--- Name: index_journey_pattern_sections_on_route_section_id; Type: INDEX; Schema: chouette_gui; Owner: chouette
---
-
-CREATE INDEX index_journey_pattern_sections_on_route_section_id ON journey_pattern_sections USING btree (route_section_id);
-
-
---
--- Name: index_jps_on_journey_pattern_id_and_route_section_id_and_rank; Type: INDEX; Schema: chouette_gui; Owner: chouette
---
-
-CREATE UNIQUE INDEX index_jps_on_journey_pattern_id_and_route_section_id_and_rank ON journey_pattern_sections USING btree (journey_pattern_id, route_section_id, rank);
 
 
 --
@@ -964,14 +885,6 @@ ALTER TABLE ONLY journey_frequencies
 
 ALTER TABLE ONLY journey_frequencies
     ADD CONSTRAINT journey_frequencies_vehicle_journey_id_fk FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE SET NULL;
-
-
---
--- Name: journey_pattern_sections_journey_pattern_id_fk; Type: FK CONSTRAINT; Schema: chouette_gui; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT journey_pattern_sections_journey_pattern_id_fk FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
 
 
 --
