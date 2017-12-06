@@ -42,7 +42,6 @@ DROP TABLE IF EXISTS referentials CASCADE;
 DROP TABLE IF EXISTS routes CASCADE;
 DROP TABLE IF EXISTS routing_constraint_zones CASCADE;
 DROP TABLE IF EXISTS routing_constraints_lines CASCADE;
-DROP TABLE IF EXISTS rule_parameter_sets CASCADE;
 DROP TABLE IF EXISTS schema_migrations CASCADE;
 DROP TABLE IF EXISTS stop_area_referential_memberships CASCADE;
 DROP TABLE IF EXISTS stop_area_referential_sync_messages CASCADE;

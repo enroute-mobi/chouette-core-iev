@@ -48,7 +48,6 @@ public class StopPointUpdater implements Updater<StopPoint> {
 			oldValue.setObjectId(newValue.getObjectId());
 			oldValue.setObjectVersion(newValue.getObjectVersion());
 			oldValue.setCreationTime(newValue.getCreationTime());
-			oldValue.setCreatorId(newValue.getCreatorId());
 			oldValue.setForAlighting(newValue.getForAlighting());
 			oldValue.setForBoarding(newValue.getForBoarding());
 			oldValue.setDetached(false);
@@ -63,9 +62,6 @@ public class StopPointUpdater implements Updater<StopPoint> {
 			}
 			if (newValue.getCreationTime() != null && !newValue.getCreationTime().equals(oldValue.getCreationTime())) {
 				oldValue.setCreationTime(newValue.getCreationTime());
-			}
-			if (newValue.getCreatorId() != null && !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-				oldValue.setCreatorId(newValue.getCreatorId());
 			}
 
 			// Boarding and alighting

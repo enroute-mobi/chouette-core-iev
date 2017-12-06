@@ -30,7 +30,6 @@ CREATE TABLE access_links (
     stop_area_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     link_distance numeric(19,2),
@@ -80,7 +79,6 @@ CREATE TABLE access_points (
     id bigint NOT NULL,
     objectid character varying,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     longitude numeric(19,16),
@@ -291,7 +289,6 @@ CREATE TABLE companies (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     short_name character varying,
     organizational_unit character varying,
@@ -343,7 +340,6 @@ CREATE TABLE connection_links (
     arrival_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     link_distance numeric(19,2),
@@ -437,7 +433,6 @@ CREATE TABLE facilities (
     objectid character varying NOT NULL,
     object_version bigint,
     creation_time timestamp without time zone,
-    creator_id character varying,
     name character varying,
     comment character varying,
     description character varying,
@@ -549,7 +544,6 @@ CREATE TABLE group_of_lines (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     registration_number character varying,
@@ -644,7 +638,6 @@ CREATE TABLE journey_patterns (
     route_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     registration_number character varying,
@@ -815,7 +808,8 @@ CREATE TABLE line_referentials (
     name character varying,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    sync_interval integer DEFAULT 1
+    sync_interval integer DEFAULT 1,
+    objectid_format character varying
 );
 
 
@@ -852,7 +846,6 @@ CREATE TABLE lines (
     company_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     number character varying,
     published_name character varying,
@@ -908,7 +901,6 @@ CREATE TABLE networks (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     version_date date,
     description character varying,
     name character varying,
@@ -959,7 +951,8 @@ CREATE TABLE organisations (
     data_format character varying DEFAULT 'neptune'::character varying,
     code character varying,
     synced_at timestamp without time zone,
-    sso_attributes shared_extensions.hstore
+    sso_attributes shared_extensions.hstore,
+    custom_view character varying
 );
 
 
@@ -997,7 +990,6 @@ CREATE TABLE pt_links (
     route_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     link_distance numeric(19,2),
@@ -1167,7 +1159,8 @@ CREATE TABLE referentials (
     archived_at timestamp without time zone,
     created_from_id bigint,
     ready boolean DEFAULT false,
-    referential_suite_id bigint
+    referential_suite_id bigint,
+    objectid_format character varying
 );
 
 
@@ -1203,7 +1196,6 @@ CREATE TABLE routes (
     line_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     opposite_route_id bigint,
@@ -1253,7 +1245,6 @@ CREATE TABLE routing_constraint_zones (
     updated_at timestamp without time zone,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     route_id bigint,
     stop_point_ids bigint[],
     checksum character varying,
@@ -1296,43 +1287,6 @@ CREATE TABLE routing_constraints_lines (
 
 
 ALTER TABLE routing_constraints_lines OWNER TO chouette;
-
---
--- Name: rule_parameter_sets; Type: TABLE; Schema: public; Owner: chouette
---
-
-CREATE TABLE rule_parameter_sets (
-    id bigint NOT NULL,
-    parameters text,
-    name character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    organisation_id bigint
-);
-
-
-ALTER TABLE rule_parameter_sets OWNER TO chouette;
-
---
--- Name: rule_parameter_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
---
-
-CREATE SEQUENCE rule_parameter_sets_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE rule_parameter_sets_id_seq OWNER TO chouette;
-
---
--- Name: rule_parameter_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
---
-
-ALTER SEQUENCE rule_parameter_sets_id_seq OWNED BY rule_parameter_sets.id;
-
 
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: chouette
@@ -1464,7 +1418,8 @@ CREATE TABLE stop_area_referentials (
     id bigint NOT NULL,
     name character varying,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    objectid_format character varying
 );
 
 
@@ -1500,7 +1455,6 @@ CREATE TABLE stop_areas (
     parent_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     area_type character varying,
@@ -1575,7 +1529,6 @@ CREATE TABLE stop_points (
     stop_area_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     "position" integer,
     for_boarding character varying,
     for_alighting character varying,
@@ -1764,7 +1717,6 @@ CREATE TABLE time_tables (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint DEFAULT 1,
-    creator_id character varying,
     version character varying,
     comment character varying,
     int_day_types integer DEFAULT 0,
@@ -1824,7 +1776,6 @@ CREATE TABLE timebands (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     start_time time without time zone NOT NULL,
     end_time time without time zone NOT NULL,
@@ -1975,7 +1926,6 @@ CREATE TABLE vehicle_journeys (
     company_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     comment character varying,
     status_value character varying,
     transport_mode character varying,
@@ -2030,7 +1980,8 @@ CREATE TABLE workbenches (
     updated_at timestamp without time zone,
     line_referential_id bigint,
     stop_area_referential_id bigint,
-    output_id bigint
+    output_id bigint,
+    objectid_format character varying
 );
 
 
@@ -2251,13 +2202,6 @@ ALTER TABLE ONLY routes ALTER COLUMN id SET DEFAULT nextval('routes_id_seq'::reg
 --
 
 ALTER TABLE ONLY routing_constraint_zones ALTER COLUMN id SET DEFAULT nextval('routing_constraint_zones_id_seq'::regclass);
-
-
---
--- Name: rule_parameter_sets id; Type: DEFAULT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY rule_parameter_sets ALTER COLUMN id SET DEFAULT nextval('rule_parameter_sets_id_seq'::regclass);
 
 
 --
@@ -2594,14 +2538,6 @@ ALTER TABLE ONLY routes
 
 ALTER TABLE ONLY routing_constraint_zones
     ADD CONSTRAINT routing_constraint_zones_pkey PRIMARY KEY (id);
-
-
---
--- Name: rule_parameter_sets rule_parameter_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY rule_parameter_sets
-    ADD CONSTRAINT rule_parameter_sets_pkey PRIMARY KEY (id);
 
 
 --

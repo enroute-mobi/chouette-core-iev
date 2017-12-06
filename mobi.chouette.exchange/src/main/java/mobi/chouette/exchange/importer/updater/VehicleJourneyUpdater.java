@@ -129,7 +129,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			oldValue.setObjectId(newValue.getObjectId());
 			oldValue.setObjectVersion(newValue.getObjectVersion());
 			oldValue.setCreationTime(newValue.getCreationTime());
-			oldValue.setCreatorId(newValue.getCreatorId());
 			oldValue.setComment(newValue.getComment());
 			oldValue.setTransportMode(newValue.getTransportMode());
 			oldValue.setPublishedJourneyName(newValue.getPublishedJourneyName());
@@ -151,9 +150,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			}
 			if (newValue.getCreationTime() != null && !newValue.getCreationTime().equals(oldValue.getCreationTime())) {
 				oldValue.setCreationTime(newValue.getCreationTime());
-			}
-			if (newValue.getCreatorId() != null && !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-				oldValue.setCreatorId(newValue.getCreatorId());
 			}
 			if (newValue.getComment() != null && !newValue.getComment().equals(oldValue.getComment())) {
 				oldValue.setComment(newValue.getComment());

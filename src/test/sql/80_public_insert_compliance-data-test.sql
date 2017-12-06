@@ -25,7 +25,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: compliance_check_sets; Type: TABLE DATA; Schema: public; Owner: chouette
 --
 
-INSERT INTO compliance_check_sets (id, referential_id, compliance_control_set_id, workbench_id, creator, status, parent_id, parent_type, created_at, updated_at, current_step_id, current_step_progress, name, started_at, ended_at) VALUES (1, 1, NULL, 1, 'zeus', 'OKAY', NULL, NULL, '2017-09-29 00:00:00', '2017-09-29 00:00:00', '8', 52, 'name0', '2017-09-29 00:00:00', '2017-09-29 00:00:01');
+INSERT INTO compliance_check_sets (id, referential_id, compliance_control_set_id, workbench_id, status, parent_id, parent_type, created_at, updated_at, current_step_id, current_step_progress, name, started_at, ended_at) VALUES (1, 1, NULL, 1, 'OKAY', NULL, NULL, '2017-09-29 00:00:00', '2017-09-29 00:00:00', '8', 52, 'name0', '2017-09-29 00:00:00', '2017-09-29 00:00:01');
 
 
 --

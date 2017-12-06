@@ -64,7 +64,6 @@ public class RouteUpdater implements Updater<Route> {
 			oldValue.setObjectId(newValue.getObjectId());
 			oldValue.setObjectVersion(newValue.getObjectVersion());
 			oldValue.setCreationTime(newValue.getCreationTime());
-			oldValue.setCreatorId(newValue.getCreatorId());
 			oldValue.setName(newValue.getName());
 			oldValue.setComment(newValue.getComment());
 			oldValue.setPublishedName(newValue.getPublishedName());
@@ -82,9 +81,6 @@ public class RouteUpdater implements Updater<Route> {
 			}
 			if (newValue.getCreationTime() != null && !newValue.getCreationTime().equals(oldValue.getCreationTime())) {
 				oldValue.setCreationTime(newValue.getCreationTime());
-			}
-			if (newValue.getCreatorId() != null && !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-				oldValue.setCreatorId(newValue.getCreatorId());
 			}
 			if (newValue.getName() != null && !newValue.getName().equals(oldValue.getName())) {
 				oldValue.setName(newValue.getName());
