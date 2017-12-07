@@ -156,7 +156,8 @@ CREATE TABLE compliance_check_sets (
     current_step_progress double precision,
     name character varying,
     started_at timestamp without time zone,
-    ended_at timestamp without time zone
+    ended_at timestamp without time zone,
+    notified_parent_at timestamp without time zone
 );
 
 
