@@ -73,7 +73,7 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 			}
 		} else {
 			log.error("Line ID = " + object.getId() + " has no route !");
-			throw new ValidationException("Line ID = " + object.getId() + " has no route !");
+			// throw new ValidationException("Line ID = " + object.getId() + " has no route !");
 		}
 	}
 
@@ -141,7 +141,7 @@ public class LineValidator extends GenericValidator<LineLite> implements CheckPo
 			}
 		} else {
 			log.error("Line ID = " + object.getId() + " has no route !");
-			throw new ValidationException("Line ID = " + object.getId() + " has no route !");
+			// throw new ValidationException("Line ID = " + object.getId() + " has no route !");
 		}
 
 	}
