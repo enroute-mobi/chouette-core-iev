@@ -30,8 +30,13 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
+import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
 /**
@@ -58,6 +63,7 @@ public class DaoLineValidatorCommand implements Command {
 		{
 			context.put(Constant.SOURCE, Constant.SOURCE_DATABASE);
 		}
+		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
 			Command lineValidatorCommand = CommandFactory.create(initialContext,
@@ -68,6 +74,7 @@ public class DaoLineValidatorCommand implements Command {
             r.clear(false);
 			LineLite line = r.findLine(lineId);
 			r.setCurrentLine(line);
+			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
 			List<Route> routes = routeDAO.findByLineId(lineId);
 			routes.forEach(route -> {
 				route.setLineLite(line);

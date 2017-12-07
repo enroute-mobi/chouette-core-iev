@@ -77,7 +77,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 			}
 		} else {
 			log.error(LINE_ID + object.getId() + HAS_NO_ROUTE);
-			throw new ValidationException(LINE_ID + object.getId() + HAS_NO_ROUTE);
+			// throw new ValidationException(LINE_ID + object.getId() + HAS_NO_ROUTE);
 		}
 	}
 
@@ -144,7 +144,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 			}
 		} else {
 			log.error(LINE_ID + object.getId() + HAS_NO_ROUTE);
-			throw new ValidationException(LINE_ID + object.getId() + HAS_NO_ROUTE);
+			// throw new ValidationException(LINE_ID + object.getId() + HAS_NO_ROUTE);
 		}
 
 	}
