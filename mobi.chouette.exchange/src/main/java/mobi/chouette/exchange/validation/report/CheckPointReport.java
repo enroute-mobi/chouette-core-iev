@@ -8,14 +8,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import mobi.chouette.exchange.report.AbstractReport;
-import mobi.chouette.exchange.report.CheckedReport;
 import mobi.chouette.exchange.validation.report.ValidationReporter.RESULT;
 
 
 @Data
 @EqualsAndHashCode(callSuper=false)
 @ToString
-public class CheckPointReport extends AbstractReport  implements CheckedReport {
+public class CheckPointReport extends AbstractReport  {
 
 	public enum SEVERITY {
 		WARNING, ERROR, IMPROVMENT
@@ -35,12 +34,7 @@ public class CheckPointReport extends AbstractReport  implements CheckedReport {
 
 	private int checkPointErrorCount = 0;
 	
-	private int checkPointWarningCount = 0;
-
 	private List<Integer> checkPointErrorKeys = new ArrayList<Integer>();
-	
-	private List<Integer> checkPointWarningKeys = new ArrayList<Integer>();
-
 
 	private boolean maxByFile = true;
 

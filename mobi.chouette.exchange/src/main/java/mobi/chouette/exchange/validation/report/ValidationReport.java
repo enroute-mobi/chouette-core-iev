@@ -136,7 +136,7 @@ public class ValidationReport extends AbstractReport implements Report {
 					errorCount += checkPoint.getCheckPointErrorCount();
 					// errorCount++;
 				} else {
-					warningCount += checkPoint.getCheckPointWarningCount();
+					warningCount += checkPoint.getCheckPointErrorCount();
 					// warningCount++;
 				}
 				break;
