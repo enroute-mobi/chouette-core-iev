@@ -79,15 +79,6 @@ public class LineValidatorTests extends AbstractTestValidation {
 			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
 					OBJECT_STATE.WARNING, warningCount);
 
-			// -- Error test : no route for line
-			tc.getReferential().getRoutes().clear();
-			ValidationException e = null;
-			try {
-				tc.runValidation();
-			} catch (ValidationException exp) {
-				e = exp;
-			}
-			Assert.assertNotNull(e, "ValidationException should have been thrown, but nothing...");
 		} finally {
 			utx.rollback();
 		}
