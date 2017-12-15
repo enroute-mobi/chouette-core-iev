@@ -21,6 +21,14 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JobData;
@@ -70,7 +78,8 @@ public class JobServiceManager {
 			System.setProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY, System.getProperty("user.home"));
 
 			// try to read properties
-			File propertyFile = new File("/etc/chouette/" + APPLICATION_NAME + File.separatorChar + APPLICATION_NAME + ".properties");
+			File propertyFile = new File(
+					"/etc/chouette/" + APPLICATION_NAME + File.separatorChar + APPLICATION_NAME + ".properties");
 			if (propertyFile.exists() && propertyFile.isFile()) {
 				loadProperties(propertyFile);
 			} else {
@@ -96,9 +105,7 @@ public class JobServiceManager {
 					System.setProperty(APPLICATION_NAME + "." + key, properties.getProperty(key));
 			}
 		} catch (IOException e) {
-			log.error(
-					"cannot read properties " + propertyFile.getAbsolutePath() + " , using default properties",
-					e);
+			log.error("cannot read properties " + propertyFile.getAbsolutePath() + " , using default properties", e);
 		}
 	}
 
@@ -185,8 +192,8 @@ public class JobServiceManager {
 				actionTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
 				actionDAO.update(actionTask);
 			} catch (Exception e) {
-				log.error(
-						"cannot set bad "+actionTask.getAction()+" task status or task " + actionTask.getId() + " : " + e.getMessage());
+				log.error("cannot set bad " + actionTask.getAction() + " task status or task " + actionTask.getId()
+						+ " : " + e.getMessage());
 			}
 		}
 	}
@@ -351,8 +358,7 @@ public class JobServiceManager {
 		String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 		if (guiBaseUrl != null && !guiBaseUrl.isEmpty() && guiToken != null && !guiToken.isEmpty()) {
-
-			String urlName = "";
+			final String urlName;
 			switch (jobService.getAction()) {
 			case importer:
 				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent?token="
@@ -366,17 +372,46 @@ public class JobServiceManager {
 				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?token="
 						+ guiToken + "&file="; // TODO add file name ?
 				break;
-			}
-			// TODO
-			// send message with some delay to let transaction terminate
-			// (thread)
-			try {
-				URL url = new URL(urlName);
-
-			} catch (Exception e) {
-				log.error("End of task not notified, cannot invoke url " + urlName + ", cause : " + e.getMessage());
+			default:
+				log.warn("no notify URL for job type " + jobService.getAction());
+				urlName = "";
 			}
 
+			if (!urlName.isEmpty()) {
+				// send message with some delay to let transaction terminate
+				Runnable r = () -> {
+
+					try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+						Thread.sleep(1000L);
+						HttpGet httpget = new HttpGet(urlName);
+						ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+
+							@Override
+							public String handleResponse(final HttpResponse response)
+									throws ClientProtocolException, IOException {
+								int status = response.getStatusLine().getStatusCode();
+								if (status >= 200 && status < 300) {
+									HttpEntity entity = response.getEntity();
+									return entity != null ? EntityUtils.toString(entity) : null;
+								} else {
+									throw new ClientProtocolException("Unexpected response status: " + status);
+								}
+							}
+
+						};
+						String responseBody = httpclient.execute(httpget, responseHandler);
+						log.info("End of task notified : response = " + responseBody);
+
+					} catch (Exception e) {
+						log.error("End of task not notified, cannot invoke url " + urlName + ", cause : "
+								+ e.getMessage());
+					}
+
+				};
+				new Thread(r).start();
+			}
+		} else {
+			log.warn("no URL to notify end of job");
 		}
 	}
 

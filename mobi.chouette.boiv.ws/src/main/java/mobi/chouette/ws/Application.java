@@ -13,9 +13,6 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import lombok.extern.log4j.Log4j;
-
-@Log4j
 public class Application extends javax.ws.rs.core.Application implements
 		ServletContextListener {
 
@@ -50,7 +47,6 @@ public class Application extends javax.ws.rs.core.Application implements
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-        log.info("context destroyed");
 	}
 
 }

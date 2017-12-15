@@ -35,8 +35,7 @@ public class JobServiceManagerTest extends Arquillian {
 			List<File> jars = new ArrayList<>();
 			List<JavaArchive> modules = new ArrayList<>();
 			for (File file : files) {
-				if (file.getName().startsWith("mobi.chouette.exchange")
-						|| file.getName().startsWith("mobi.chouette.boiv.service")
+				if (file.getName().startsWith("mobi.chouette.boiv.service")
 						|| file.getName().startsWith("mobi.chouette.dao")) {
 					String name = file.getName().split("\\-")[0] + ".jar";
 					JavaArchive archive = ShrinkWrap.create(ZipImporter.class, name).importFrom(file)
@@ -57,7 +56,6 @@ public class JobServiceManagerTest extends Arquillian {
 
 					JavaArchive archive = ShrinkWrap.create(ZipImporter.class, name).importFrom(file)
 							.as(JavaArchive.class);
-					modules.add(archive);
 					if (!modules.contains(archive))
 						modules.add(archive);
 				} else {
