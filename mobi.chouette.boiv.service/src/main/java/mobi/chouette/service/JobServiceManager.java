@@ -1,8 +1,11 @@
 package mobi.chouette.service;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Timestamp;
@@ -21,7 +24,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -61,7 +66,7 @@ public class JobServiceManager {
 	@EJB
 	Scheduler scheduler;
 
-	private String rootDirectory;
+	private static String rootDirectory;
 
 	private static Set<String> intializedContexts = new HashSet<>();
 
@@ -89,7 +94,7 @@ public class JobServiceManager {
 			log.error("cannot process properties", e);
 		}
 		rootDirectory = System.getProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY);
-
+		intializedContexts.add(APPLICATION_NAME);
 	}
 
 	private void loadProperties(File propertyFile) {
@@ -150,7 +155,8 @@ public class JobServiceManager {
 			// copy file from Ruby server
 			String urlName = importTask.getUrl();
 			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
-			String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+			String guiToken = ""; // System.getProperty(APPLICATION_NAME +
+									// PropertyNames.GUI_URL_TOKEN);
 			if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
 				// build url with token
 				if (guiToken != null && !guiToken.isEmpty()) {
@@ -207,6 +213,33 @@ public class JobServiceManager {
 			log.error("fail to get file for import job " + ex.getMessage());
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
 		}
+	}
+
+	private void uploadImportFileFromHttp(JobService jobService, String urlName) throws ServiceException {
+		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+		File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+		try (CloseableHttpClient httpclient = HttpClients.createDefault();
+			 BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
+			Thread.sleep(1000L);
+			HttpGet httpget = new HttpGet(urlName);
+			httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
+
+			HttpResponse response = httpclient.execute(httpget);
+			// check response headers.
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode >= 200 && statusCode < 300) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				IOUtils.copy(content, baos);
+			} else {
+				throw new ClientProtocolException("Unexpected response status: " + statusCode);
+			}
+
+		} catch (Exception ex) {
+			log.error("fail to get file for import job " + ex.getMessage());
+			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
+		}
+
 	}
 
 	private JobService createValidatorJob(Long id) throws ServiceException {
@@ -359,18 +392,20 @@ public class JobServiceManager {
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 		if (guiBaseUrl != null && !guiBaseUrl.isEmpty() && guiToken != null && !guiToken.isEmpty()) {
 			final String urlName;
+			final String method;
 			switch (jobService.getAction()) {
 			case importer:
-				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent?token="
-						+ guiToken;
+				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent";
+                method="GET";
 				break;
 			case validator:
 				urlName = guiBaseUrl + "/api/v1/internals/compliance_check_sets/" + jobService.getId()
-						+ "/notify_parent?token=" + guiToken;
+						+ "/notify_parent";
+                method="GET";
 				break;
 			case exporter:
-				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?token="
-						+ guiToken + "&file="; // TODO add file name ?
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO add file name ?
+                method="POST";
 				break;
 			default:
 				log.warn("no notify URL for job type " + jobService.getAction());
@@ -383,7 +418,9 @@ public class JobServiceManager {
 
 					try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 						Thread.sleep(1000L);
+						log.info("Notify End of Task : " + urlName);
 						HttpGet httpget = new HttpGet(urlName);
+						httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
 						ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 
 							@Override
@@ -411,7 +448,7 @@ public class JobServiceManager {
 				new Thread(r).start();
 			}
 		} else {
-			log.warn("no URL to notify end of job");
+			log.warn("no URL or no Token to notify end of job");
 		}
 	}
 
