@@ -8,6 +8,8 @@ import lombok.extern.log4j.Log4j;
 
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
@@ -16,10 +18,11 @@ import com.vividsolutions.jts.geom.Envelope;
 @Log4j
 public class CoordinateUtil
 {
-   private static Map<String, MathTransform> map = new HashMap<String, MathTransform>();
+   private static Map<String, MathTransform> map = new HashMap<>();
 
-   private static MathTransform createMathTransform(String source, String target)
-         throws Exception
+   private static Exception ex;
+
+   private static MathTransform createMathTransform(String source, String target) throws NoSuchAuthorityCodeException, FactoryException
    {
       String key = source + "-" + target;
       MathTransform transform = map.get(key);
@@ -33,7 +36,6 @@ public class CoordinateUtil
       return transform;
    }
    
-   private static Exception ex;
    
    public static Exception getLastException()
    {

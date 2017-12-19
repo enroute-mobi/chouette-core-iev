@@ -46,14 +46,14 @@ public class DayTypeAssignmentParser implements Parser {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NetexStifConstant.OPERATING_PERIOD_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String attr_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
 				boolean checked = validator.checkNetexRef(context, dayTypeAssignment, NetexStifConstant.OPERATING_PERIOD_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, dayTypeAssignment, NetexStifConstant.OPERATING_PERIOD_REF, ref,
-							attr_version, content, lineNumber, columnNumber);
+					validator.checkInternalRef(context, dayTypeAssignment, NetexStifConstant.OPERATING_PERIOD_REF, ref,
+							attrVersion, content, lineNumber, columnNumber);
 				dayTypeAssignment.setOperatingPeriodRef(ref);
 				period = factory.getOperatingPeriod(ref);
 			} else if (xpp.getName().equals(NetexStifConstant.OPERATING_DAY_REF)) {
@@ -67,14 +67,14 @@ public class DayTypeAssignmentParser implements Parser {
 				dayTypeAssignment.setDay(day);
 			}else if (xpp.getName().equals(NetexStifConstant.DAY_TYPE_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String attr_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
 				boolean checked = validator.checkNetexRef(context, dayTypeAssignment, NetexStifConstant.DAY_TYPE_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, dayTypeAssignment, NetexStifConstant.DAY_TYPE_REF, ref,
-							attr_version, content, lineNumber, columnNumber);
+					validator.checkInternalRef(context, dayTypeAssignment, NetexStifConstant.DAY_TYPE_REF, ref,
+							attrVersion, content, lineNumber, columnNumber);
 				timetable = ObjectFactory.getTimetable(referential, ref);
 			} else if (xpp.getName().equals(NetexStifConstant.IS_AVAILABLE)) {
 				isAvailable = xpp.nextText();

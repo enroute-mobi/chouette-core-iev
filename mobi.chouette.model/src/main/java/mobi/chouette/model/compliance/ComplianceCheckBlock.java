@@ -56,7 +56,7 @@ public class ComplianceCheckBlock extends ChouetteDatedObject {
 	@Column(name = "condition_attributes")
 	@CollectionType(type = "java.util.HashMap")
 	@Convert(converter = HstoreConverter.class)
-	private Map<String, String> conditionAttributes = new HashMap<String, String>();
+	private Map<String, String> conditionAttributes = new HashMap<>();
 	// TODO: voir avec AF pour cohérence avec le type de condition_attributes dans les autres tables...(!)
 
 	@Getter

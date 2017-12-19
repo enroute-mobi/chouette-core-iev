@@ -3,7 +3,7 @@ package mobi.chouette.exchange.report;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,10 +49,10 @@ public class ActionReport extends AbstractReport implements ProgressionReport, R
 	private boolean warning = false;
 
 	@XmlElement(name = "objects")
-	private Map<ActionReporter.OBJECT_TYPE, ObjectReport> objects = new HashMap<>();
+	private Map<ActionReporter.OBJECT_TYPE, ObjectReport> objects = new EnumMap<>(ActionReporter.OBJECT_TYPE.class);
 
 	@XmlElement(name = "collections")
-	private Map<ActionReporter.OBJECT_TYPE, ObjectCollectionReport> collections = new HashMap<>();
+	private Map<ActionReporter.OBJECT_TYPE, ObjectCollectionReport> collections = new EnumMap<>(ActionReporter.OBJECT_TYPE.class);
 
 	@XmlTransient
 	private Date date = new Date(0);

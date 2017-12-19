@@ -60,8 +60,7 @@ public class ActionReporterImpl implements ActionReporter {
 		// FILE_STATE.ERROR));
 		//
 		fileReport.addError(new FileError(code, message));
-		setActionError(context,ERROR_CODE.INVALID_DATA,"File error for "+fileInfoName);
-		
+		setActionError(context, ERROR_CODE.INVALID_DATA, "File error for " + fileInfoName);
 
 	}
 
@@ -88,16 +87,16 @@ public class ActionReporterImpl implements ActionReporter {
 		if (actionReport != null) {
 			ObjectReport old = actionReport.findObjectReport(objectId, type);
 			if (old != null) {
-				// objectreport exists, set 
+				// objectreport exists, set
 				old.setDescription(description);
-//				if (old.getStatus().ordinal() < status.ordinal())
-//					old.setStatTus(status);
+				// if (old.getStatus().ordinal() < status.ordinal())
+				// old.setStatTus(status);
 			} else {
 				// lines are to be reported separatedly in a collection
 				switch (type) {
 				case LINE:
-					actionReport.addObjectReportToSpecificCollection(new ObjectReport(objectId, type, description,
-							status, ioType));
+					actionReport.addObjectReportToSpecificCollection(
+							new ObjectReport(objectId, type, description, status, ioType));
 					break;
 				default:
 					actionReport.addObjectReport(new ObjectReport(objectId, type, description, status, ioType));
@@ -120,19 +119,18 @@ public class ActionReporterImpl implements ActionReporter {
 			}
 		}
 	}
-	
+
 	@Override
-	public void setObjectStatus(Context context, String objectId, OBJECT_TYPE type, OBJECT_STATE state)
-	{
+	public void setObjectStatus(Context context, String objectId, OBJECT_TYPE type, OBJECT_STATE state) {
 		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
 		if (actionReport != null) {
-			
+
 			ObjectReport object = actionReport.findObjectReport(objectId, type);
 			if (object != null) {
 				object.setStatus(state);
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -188,7 +186,7 @@ public class ActionReporterImpl implements ActionReporter {
 			if (actionReport.getObjects().containsKey(type)) {
 				return true;
 			} else if (actionReport.getCollections().containsKey(type)) {
-				return actionReport.getCollections().get(type).getObjectReports().size() > 0;
+				return !actionReport.getCollections().get(type).getObjectReports().isEmpty();
 			}
 		}
 		return false;
@@ -203,7 +201,8 @@ public class ActionReporterImpl implements ActionReporter {
 			FileReport fileReport = actionReport.findZipReport(fileInfoName);
 			if (fileReport != null) {
 				ret = fileReport.addCheckPointError(code, severity);
-				if (severity.equals(SEVERITY.WARNING)) actionReport.setWarning(true);
+				if (severity.equals(SEVERITY.WARNING))
+					actionReport.setWarning(true);
 			}
 		}
 		return ret;
@@ -217,7 +216,8 @@ public class ActionReporterImpl implements ActionReporter {
 			FileReport fileReport = actionReport.findFileReport(fileInfoName);
 			if (fileReport != null) {
 				ret = fileReport.addCheckPointError(code, severity);
-				if (severity.equals(SEVERITY.WARNING)) actionReport.setWarning(true);
+				if (severity.equals(SEVERITY.WARNING))
+					actionReport.setWarning(true);
 			}
 		}
 		return ret;
@@ -235,7 +235,8 @@ public class ActionReporterImpl implements ActionReporter {
 			ObjectReport objectReport = actionReport.findObjectReport(objectId, type);
 			if (objectReport != null) {
 				ret = objectReport.addCheckPointError(code, severity);
-				if (severity.equals(SEVERITY.WARNING)) actionReport.setWarning(true);
+				if (severity.equals(SEVERITY.WARNING))
+					actionReport.setWarning(true);
 			}
 		}
 		return ret;

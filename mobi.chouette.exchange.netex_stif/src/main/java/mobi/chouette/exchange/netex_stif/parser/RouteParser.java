@@ -61,16 +61,16 @@ public class RouteParser implements Parser {
 				route.setName(xpp.nextText());
 			} else if (xpp.getName().equals(NetexStifConstant.LINE_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String att_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
 				boolean checked = validator.checkNetexRef(context, route, NetexStifConstant.LINE_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkExternalRef(context, route, NetexStifConstant.LINE_REF, ref, att_version,
+					checked = validator.checkExternalRef(context, route, NetexStifConstant.LINE_REF, ref, attrVersion,
 							content, lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkExistsRef(context, route, NetexStifConstant.LINE_REF, ref, att_version,
+					validator.checkExistsRef(context, route, NetexStifConstant.LINE_REF, ref, attrVersion,
 							content, lineNumber, columnNumber);
 				// TODO : check version with line of file
 			} else if (xpp.getName().equals(NetexStifConstant.DIRECTION_TYPE)) {
@@ -88,13 +88,13 @@ public class RouteParser implements Parser {
 			} else if (xpp.getName().equals(NetexStifConstant.DIRECTION_REF)) {
 				NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String att_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
 				boolean checked = validator.checkNetexRef(context, route, NetexStifConstant.DIRECTION_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, route, NetexStifConstant.DIRECTION_REF, ref, att_version, content,
+					validator.checkInternalRef(context, route, NetexStifConstant.DIRECTION_REF, ref, attrVersion, content,
 							lineNumber, columnNumber);
 				Direction direction = factory.getDirection(ref);
 				if (direction.isFilled()) {
@@ -104,13 +104,13 @@ public class RouteParser implements Parser {
 				}
 			} else if (xpp.getName().equals(NetexStifConstant.INVERSE_ROUTE_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String att_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
 				boolean checked = validator.checkNetexRef(context, route, NetexStifConstant.ROUTE_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, route, NetexStifConstant.ROUTE_REF, ref, att_version, content,
+					validator.checkInternalRef(context, route, NetexStifConstant.ROUTE_REF, ref, attrVersion, content,
 							lineNumber, columnNumber);
 				validator.addInverseRouteRef(context, route.getObjectId(), ref);
 				Route wayBackRoute = ObjectFactory.getRoute(referential, ref);

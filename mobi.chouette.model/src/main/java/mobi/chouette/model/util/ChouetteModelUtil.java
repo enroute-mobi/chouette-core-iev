@@ -2,18 +2,16 @@ package mobi.chouette.model.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import lombok.extern.log4j.Log4j;
-import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.ChouetteObject;
+import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
@@ -29,7 +27,7 @@ public abstract class ChouetteModelUtil {
 	 * @return the object ids list
 	 */
 	public static List<String> extractObjectIds(Collection<? extends ChouetteIdentifiedObject> neptuneObjects) {
-		List<String> objectIds = new ArrayList<String>();
+		List<String> objectIds = new ArrayList<>();
 		if (neptuneObjects != null) {
 			for (ChouetteIdentifiedObject neptuneObject : neptuneObjects) {
 				if (neptuneObject != null) {
@@ -52,7 +50,7 @@ public abstract class ChouetteModelUtil {
 	 * @return the ids map
 	 */
 	public static <T extends ChouetteIdentifiedObject> Map<String, T> mapOnObjectIds(Collection<T> neptuneObjects) {
-		Map<String, T> map = new HashMap<String, T>();
+		Map<String, T> map = new HashMap<>();
 		if (neptuneObjects != null) {
 			for (T neptuneObject : neptuneObjects) {
 				if (neptuneObject != null) {
@@ -74,7 +72,7 @@ public abstract class ChouetteModelUtil {
 	 * @return the ids list
 	 */
 	public static List<Long> extractIds(Collection<? extends ChouetteObject> neptuneObjects) {
-		List<Long> ids = new ArrayList<Long>();
+		List<Long> ids = new ArrayList<>();
 		if (neptuneObjects != null) {
 			for (ChouetteObject neptuneObject : neptuneObjects) {
 				if (neptuneObject != null) {
@@ -97,7 +95,7 @@ public abstract class ChouetteModelUtil {
 	 * @return the ids map
 	 */
 	public static <T extends ChouetteObject> Map<Long, T> mapOnIds(Collection<T> neptuneObjects) {
-		Map<Long, T> map = new HashMap<Long, T>();
+		Map<Long, T> map = new HashMap<>();
 		if (neptuneObjects != null) {
 			for (T neptuneObject : neptuneObjects) {
 				if (neptuneObject != null) {
@@ -146,17 +144,13 @@ public abstract class ChouetteModelUtil {
 		ArrayList<StopArea> areas = new ArrayList<>();
 		ArrayList<StopPoint> points = new ArrayList<>(route.getStopPoints());
 		for (Iterator<StopPoint> iterator = points.iterator(); iterator.hasNext();) {
-			StopPoint stopPoint =  iterator.next();
-			if (stopPoint == null) iterator.remove();
-			
-		}
-		Collections.sort(points, new Comparator<StopPoint>() {
+			StopPoint stopPoint = iterator.next();
+			if (stopPoint == null)
+				iterator.remove();
 
-			@Override
-			public int compare(StopPoint arg0, StopPoint arg1) {
-				return arg0.getPosition().intValue() - arg1.getPosition().intValue();
-			}
-		});
+		}
+		points.sort((arg0,arg1) -> arg0.getPosition().intValue() - arg1.getPosition().intValue());
+		
 		for (StopPoint point : points) {
 			areas.add(point.getContainedInStopArea());
 		}
@@ -165,29 +159,29 @@ public abstract class ChouetteModelUtil {
 
 	public static String changePrefix(String objectId, String prefix) {
 		String[] tokens = objectId.split(":");
-		String changed = prefix;
-		for (int i = 1; i < tokens.length; i++)
-		{
-			changed += ":"+tokens[i];
+		StringBuilder changed = new StringBuilder(prefix);
+		for (int i = 1; i < tokens.length; i++) {
+			changed.append(":");
+			changed.append(tokens[i]);
 		}
-		return changed;
+		return changed.toString();
 	}
-	
-	public static String changeSuffix(String objectId, String suffix)
-	{
+
+	public static String changeSuffix(String objectId, String suffix) {
 		String[] tokens = objectId.split(":");
-		if (tokens.length < 2) return objectId;
-		String changed = "";
-		for (int i = 0; i < 2; i++)
-		{
-			changed += tokens[i]+":";
+		if (tokens.length < 2)
+			return objectId;
+		StringBuilder changed = new StringBuilder();
+		for (int i = 0; i < 2; i++) {
+			changed.append(tokens[i]);
+			changed.append(":");
 		}
-		changed += suffix;
-		for (int i = 3; i < tokens.length; i++)
-		{
-			changed += ":"+tokens[i];
+		changed.append(suffix);
+		for (int i = 3; i < tokens.length; i++) {
+			changed.append(":");
+			changed.append(tokens[i]);
 		}
-		return changed;
+		return changed.toString();
 	}
 
 	/**
@@ -206,24 +200,17 @@ public abstract class ChouetteModelUtil {
 					return;
 				}
 			}
-			Collections.sort(jp.getStopPoints(), new Comparator<StopPoint>() {
-
-				@Override
-				public int compare(StopPoint arg0, StopPoint arg1) {
-					return arg0.getPosition().intValue() - arg1.getPosition().intValue();
-				}
-			});
+			jp.getStopPoints().sort((arg0,arg1) -> arg0.getPosition().intValue() - arg1.getPosition().intValue());
 			jp.setDepartureStopPoint(stopPoints.get(0));
 			jp.setArrivalStopPoint(stopPoints.get(stopPoints.size() - 1));
 		}
 
 	}
-	
-	public static boolean sameValue(Object obj1, Object obj2)
-	{
-		if (obj1 == null) return obj2 == null;
+
+	public static boolean sameValue(Object obj1, Object obj2) {
+		if (obj1 == null)
+			return obj2 == null;
 		return obj1.equals(obj2);
 	}
-
 
 }

@@ -70,16 +70,7 @@ public class JobService implements JobData {
 		{
 		case importer : 
 		{
-			ImportTask importTask = (ImportTask) actionTask;
-			this.type = importTask.getFormat();
-			if (this.type == null)
-				this.type = "netex_stif";
-			if (importTask.getFile() != null && !importTask.getFile().isEmpty()) {
-				File f = new File(importTask.getFile());
-				this.inputFilename = f.getName();
-			} else {
-				this.inputFilename = ACTION.importer.name() + ".zip";
-			}
+			initImportJob(actionTask);
             break;
 		}
 		case exporter:
@@ -104,14 +95,14 @@ public class JobService implements JobData {
 			inputValidator = getCommandInputValidator(action.name(), type);
 		} catch (ClassNotFoundException | IOException e) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION,
-					getCommandName() + " has no input validator");
+					getCommandName() + " has no input validator",e);
 		}
 		try {
 			actionParameter = inputValidator.toActionParameter(actionTask);
 		} catch (Exception ex) {
-			log.error("problem while reading parameters" + ex.getMessage(),ex);
+			log.error("problem while reading parameters" + ex.getMessage());
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS,
-					getCommandName() + " cannot read action parameters");
+					getCommandName() + " cannot read action parameters",ex);
 		}
 		if (System.getProperty(application + PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null) {
 			long stepWait = Long
@@ -119,6 +110,19 @@ public class JobService implements JobData {
 			if (stepWait > 0) {
 				actionParameter.setTest(stepWait);
 			}
+		}
+	}
+
+	private void initImportJob(ActionTask actionTask) {
+		ImportTask importTask = (ImportTask) actionTask;
+		this.type = importTask.getFormat();
+		if (this.type == null)
+			this.type = "netex_stif";
+		if (importTask.getFile() != null && !importTask.getFile().isEmpty()) {
+			File f = new File(importTask.getFile());
+			this.inputFilename = f.getName();
+		} else {
+			this.inputFilename = ACTION.importer.name() + ".zip";
 		}
 	}
 
@@ -151,8 +155,8 @@ public class JobService implements JobData {
 	}
 
 	public String getCommandName() {
-		String type = getType() == null ? "" : getType();
-		return "mobi.chouette.exchange." + (type.isEmpty() ? "" : type + ".") + getAction() + "." + capitalize(type)
+		String computeType = getType() == null ? "" : getType();
+		return "mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + getAction() + "." + capitalize(computeType)
 				+ StringUtils.capitalize(getAction().name()) + "Command";
 	}
 
@@ -162,10 +166,9 @@ public class JobService implements JobData {
 
 	public static InputValidator getCommandInputValidator(String actionParam, String typeParam)
 			throws ClassNotFoundException, IOException {
-		String type = typeParam == null ? "" : typeParam;
-		final InputValidator inputValidator = InputValidatorFactory
-				.create("mobi.chouette.exchange." + (type.isEmpty() ? "" : type + ".") + actionParam + "."
-						+ capitalize(type) + StringUtils.capitalize(actionParam) + "InputValidator");
-		return inputValidator;
+		String computeType = typeParam == null ? "" : typeParam;
+		return InputValidatorFactory
+				.create("mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + actionParam + "."
+						+ capitalize(computeType) + StringUtils.capitalize(actionParam) + "InputValidator");
 	}
 }

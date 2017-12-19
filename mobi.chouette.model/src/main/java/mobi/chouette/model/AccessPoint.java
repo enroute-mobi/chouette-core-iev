@@ -217,6 +217,6 @@ public class AccessPoint extends ChouetteLocalizedObject {
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "accessPoint",cascade = { CascadeType.PERSIST })
-	private List<AccessLink> accessLinks = new ArrayList<AccessLink>(0);
+	private List<AccessLink> accessLinks = new ArrayList<>(0);
 
 }

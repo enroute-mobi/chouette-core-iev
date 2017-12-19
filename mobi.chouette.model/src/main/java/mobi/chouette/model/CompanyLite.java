@@ -27,10 +27,10 @@ import lombok.ToString;
  */
 
 @Entity
-@Table(name = "companies",schema="public")
+@Table(name = "companies", schema = "public")
 @Immutable
 @NoArgsConstructor
-@ToString(callSuper=true)
+@ToString(callSuper = true)
 public class CompanyLite extends ChouetteIdentifiedObject {
 
 	private static final String OLD_FASHION_PREFIX = "STIF:CODIFLIGNE";
@@ -45,7 +45,7 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 	@Id
 	@Column(name = "id")
 	protected Long id;
-	
+
 	/**
 	 * name
 	 * 
@@ -63,25 +63,24 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 	@Getter
 	@Column(name = "line_referential_id")
 	protected Long lineReferentialId;
-	
+
 	@Override
 	public String objectIdPrefix() {
-		if (objectId.startsWith(OLD_FASHION_PREFIX)) return OLD_FASHION_PREFIX;
+		if (objectId.startsWith(OLD_FASHION_PREFIX))
+			return OLD_FASHION_PREFIX;
 		return super.objectIdPrefix();
 	}
 
 	@Override
 	public String objectIdSuffix() {
-		if (objectId.startsWith(OLD_FASHION_PREFIX) )
-		{
+		if (objectId.startsWith(OLD_FASHION_PREFIX)) {
 			String[] tokens = objectIdArray();
 			if (tokens.length > 3)
 				return tokens[3].trim();
 			else
-				return ""; 
+				return "";
 		}
 		return super.objectIdSuffix();
 	}
-
 
 }

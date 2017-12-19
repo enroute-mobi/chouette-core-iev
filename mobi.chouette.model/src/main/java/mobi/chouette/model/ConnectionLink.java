@@ -247,7 +247,7 @@ public class ConnectionLink extends ChouetteIdentifiedObject {
 	 * @return UserNeeds
 	 */
 	public List<UserNeedEnum> getUserNeeds() {
-		List<UserNeedEnum> result = new ArrayList<UserNeedEnum>();
+		List<UserNeedEnum> result = new ArrayList<>();
 		if (intUserNeeds == null) return result;
 		for (UserNeedEnum userNeed : UserNeedEnum.values()) {
 			int mask = 1 << userNeed.ordinal();

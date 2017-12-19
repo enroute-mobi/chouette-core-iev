@@ -40,7 +40,8 @@ public class CompressCommand implements Command {
 			Path target = Paths.get(path, Constant.OUTPUT);
 			Path filename = Paths.get(path, file);
 			File outputFile = filename.toFile();
-			if (outputFile.exists()) outputFile.delete();
+			if (outputFile.exists())
+				outputFile.delete();
 			FileUtil.compress(target.toString(), filename.toString());
 			result = Constant.SUCCESS;
 			deleteDirectory(target);

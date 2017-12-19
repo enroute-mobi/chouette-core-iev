@@ -21,14 +21,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Chouette Line readonly lite version: a group of Routes which is generally known to the public by a
- * similar name or number
+ * Chouette Line readonly lite version: a group of Routes which is generally
+ * known to the public by a similar name or number
  * <p>
  * Neptune mapping : Line <br>
  * Gtfs mapping : Line <br>
  */
 @Entity
-@Table(name = "lines",schema="public")
+@Table(name = "lines", schema = "public")
 @Immutable
 @NoArgsConstructor
 @ToString(callSuper = true)
@@ -44,9 +44,9 @@ public class LineLite extends ChouetteIdentifiedObject {
 	protected Long id;
 
 	@Getter
-	@Column(name="deactivated")
+	@Column(name = "deactivated")
 	protected boolean deactivated;
-	
+
 	/**
 	 * name
 	 * 
@@ -55,7 +55,6 @@ public class LineLite extends ChouetteIdentifiedObject {
 	@Getter
 	@Column(name = "name")
 	protected String name;
-
 
 	/**
 	 * number or short name
@@ -74,7 +73,6 @@ public class LineLite extends ChouetteIdentifiedObject {
 	@Getter
 	@Column(name = "published_name")
 	protected String publishedName;
-
 
 	/**
 	 * Transport mode (default value = Bus)
@@ -97,7 +95,6 @@ public class LineLite extends ChouetteIdentifiedObject {
 	@Getter
 	@Column(name = "transport_submode")
 	protected String transportSubModeName;
-
 
 	/**
 	 * line referential reference
@@ -123,29 +120,27 @@ public class LineLite extends ChouetteIdentifiedObject {
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "secondary_company_ids",columnDefinition="bigint[]")
+	@Column(name = "secondary_company_ids", columnDefinition = "bigint[]")
 	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
 	private Long[] secondaryCompanyIds = new Long[0];
 
 	@Override
 	public String objectIdPrefix() {
-		if (objectId.startsWith(OLD_FASHION_PREFIX)) return OLD_FASHION_PREFIX;
+		if (objectId.startsWith(OLD_FASHION_PREFIX))
+			return OLD_FASHION_PREFIX;
 		return super.objectIdPrefix();
 	}
 
 	@Override
 	public String objectIdSuffix() {
-		if (objectId.startsWith(OLD_FASHION_PREFIX) )
-		{
+		if (objectId.startsWith(OLD_FASHION_PREFIX)) {
 			String[] tokens = objectIdArray();
 			if (tokens.length > 3)
 				return tokens[3].trim();
 			else
-				return ""; 
+				return "";
 		}
 		return super.objectIdSuffix();
 	}
-	
-	
 
 }

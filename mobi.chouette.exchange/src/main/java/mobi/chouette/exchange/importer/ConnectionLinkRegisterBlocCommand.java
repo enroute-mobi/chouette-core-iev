@@ -106,9 +106,8 @@ public class ConnectionLinkRegisterBlocCommand implements Command {
 		}
 
 		for (ConnectionLink item : list) {
-			ConnectionLink object = cache.getConnectionLinks().get(item.getObjectId());
-			if (object == null) {
-				object = ObjectFactory.getConnectionLink(cache, item.getObjectId());
+			if (!cache.getConnectionLinks().containsKey(item.getObjectId())) {
+				ObjectFactory.getConnectionLink(cache, item.getObjectId());
 			}
 		}
 	}

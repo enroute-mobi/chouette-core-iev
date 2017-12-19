@@ -34,16 +34,16 @@ public class CopyCommand implements Command {
 
 	public static final String COMMAND = "CopyCommand";
 
-	@EJB 
+	@EJB
 	private VehicleJourneyDAO vehicleJourneyDAO;
-	
+
 	@Resource(lookup = "java:comp/DefaultManagedExecutorService")
 	ManagedExecutorService executor;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean execute(Context context) throws Exception {
-		
+
 		int maxCopy = 1;
 
 		boolean result = Constant.ERROR;
@@ -57,24 +57,23 @@ public class CopyCommand implements Command {
 					futures = new ArrayList<>();
 					context.put(Constant.COPY_IN_PROGRESS, futures);
 				}
-				while (futures.size() >= maxCopy)
-				{
+				while (futures.size() >= maxCopy) {
 					for (Iterator<Future<Void>> iterator = futures.iterator(); iterator.hasNext();) {
 						Future<Void> future = iterator.next();
-						if (future.isDone()) iterator.remove();
+						if (future.isDone())
+							iterator.remove();
 					}
-					if (futures.size() >= maxCopy)
-					{
+					if (futures.size() >= maxCopy) {
 						for (Iterator<Future<Void>> iterator = futures.iterator(); iterator.hasNext();) {
 							Future<Void> future = iterator.next();
-							if (future.isDone()) iterator.remove();
-							else
-							{
+							if (future.isDone())
+								iterator.remove();
+							else {
 								log.info("too many copy in progress, waiting ...");
 								future.get();
 								break;
 							}
-						}						
+						}
 					}
 				}
 				CommandCallable callable = new CommandCallable();

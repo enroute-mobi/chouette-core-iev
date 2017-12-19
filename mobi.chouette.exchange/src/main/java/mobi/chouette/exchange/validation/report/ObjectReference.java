@@ -51,7 +51,7 @@ public class ObjectReference extends AbstractReport {
 			}
 			throw new IllegalArgumentException(value);
 		}
-	};
+	}
 
 	private TYPE type;
 

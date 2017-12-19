@@ -3,6 +3,8 @@ package mobi.chouette.model.util;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import org.hibernate.cfg.NotYetImplementedException;
+
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.CalendarDay;
@@ -22,34 +24,34 @@ import mobi.chouette.model.VehicleJourney;
 
 public class CopyUtil {
 
-	private static final String NOT_IMPLEMENTED = "not implemented";
+	private static final String MESSAGE = "not implemented";
 
 	public static Network copy(Network object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static Company copy(Company object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static GroupOfLine copy(GroupOfLine object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static StopArea copy(StopArea object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static AccessPoint copy(AccessPoint object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static AccessLink copy(AccessLink object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static ConnectionLink copy(ConnectionLink object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static Timetable copy(Timetable object) {
@@ -76,23 +78,23 @@ public class CopyUtil {
 	}
 
 	public static StopPoint copy(StopPoint object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static Line copy(Line object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static Route copy(Route object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static JourneyPattern copy(JourneyPattern object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static VehicleJourney copy(VehicleJourney object) {
-		throw new RuntimeException(NOT_IMPLEMENTED);
+		throw new NotYetImplementedException(MESSAGE);
 	}
 
 	public static Footnote copy(Footnote footnote) {

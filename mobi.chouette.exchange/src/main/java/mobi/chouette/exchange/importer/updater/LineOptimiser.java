@@ -116,9 +116,8 @@ public class LineOptimiser {
 
 			// check if stoparea really exists
 			for (StopArea item : list) {
-				StopArea object = cache.getStopAreas().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getStopArea(cache, item.getObjectId());
+				if (!cache.getStopAreas().containsKey(item.getObjectId())) {
+					ObjectFactory.getStopArea(cache, item.getObjectId());
 				}
 			}
 		}
@@ -133,9 +132,8 @@ public class LineOptimiser {
 			}
 
 			for (ConnectionLink item : list) {
-				ConnectionLink object = cache.getConnectionLinks().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getConnectionLink(cache, item.getObjectId());
+				if (!cache.getConnectionLinks().containsKey(item.getObjectId())) {
+					ObjectFactory.getConnectionLink(cache, item.getObjectId());
 				}
 			}
 		}
@@ -150,9 +148,8 @@ public class LineOptimiser {
 			}
 
 			for (AccessLink item : list) {
-				AccessLink object = cache.getAccessLinks().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getAccessLink(cache, item.getObjectId());
+				if (!cache.getAccessLinks().containsKey(item.getObjectId())) {
+					ObjectFactory.getAccessLink(cache, item.getObjectId());
 				}
 			}
 		}
@@ -167,9 +164,8 @@ public class LineOptimiser {
 			}
 
 			for (AccessPoint item : list) {
-				AccessPoint object = cache.getAccessPoints().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getAccessPoint(cache, item.getObjectId());
+				if (!cache.getAccessPoints().containsKey(item.getObjectId())) {
+					ObjectFactory.getAccessPoint(cache, item.getObjectId());
 				}
 			}
 		}
@@ -184,9 +180,8 @@ public class LineOptimiser {
 			}
 
 			for (Timetable item : list) {
-				Timetable object = cache.getTimetables().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getTimetable(cache, item.getObjectId());
+				if (!cache.getTimetables().containsKey(item.getObjectId())) {
+					ObjectFactory.getTimetable(cache, item.getObjectId());
 				}
 			}
 		}
@@ -201,9 +196,8 @@ public class LineOptimiser {
 			}
 
 			for (Network item : list) {
-				Network object = cache.getPtNetworks().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getPTNetwork(cache, item.getObjectId());
+				if (!cache.getPtNetworks().containsKey(item.getObjectId())) {
+					ObjectFactory.getPTNetwork(cache, item.getObjectId());
 				}
 			}
 		}
@@ -218,9 +212,8 @@ public class LineOptimiser {
 			}
 
 			for (Company item : list) {
-				Company object = cache.getCompanies().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getCompany(cache, item.getObjectId());
+				if (!cache.getCompanies().containsKey(item.getObjectId())) {
+					ObjectFactory.getCompany(cache, item.getObjectId());
 				}
 			}
 		}
@@ -235,9 +228,8 @@ public class LineOptimiser {
 			}
 
 			for (GroupOfLine item : list) {
-				GroupOfLine object = cache.getGroupOfLines().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getGroupOfLine(cache, item.getObjectId());
+				if (!cache.getGroupOfLines().containsKey(item.getObjectId())) {
+					ObjectFactory.getGroupOfLine(cache, item.getObjectId());
 				}
 			}
 		}
@@ -252,9 +244,8 @@ public class LineOptimiser {
 			}
 
 			for (Line item : list) {
-				Line object = cache.getLines().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getLine(cache, item.getObjectId());
+				if (!cache.getLines().containsKey(item.getObjectId())) {
+					ObjectFactory.getLine(cache, item.getObjectId());
 				}
 			}
 		}
@@ -269,9 +260,8 @@ public class LineOptimiser {
 			}
 
 			for (Route item : list) {
-				Route object = cache.getRoutes().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getRoute(cache, item.getObjectId());
+				if (!cache.getRoutes().containsKey(item.getObjectId())) {
+					ObjectFactory.getRoute(cache, item.getObjectId());
 				}
 			}
 		}
@@ -286,9 +276,8 @@ public class LineOptimiser {
 			}
 
 			for (StopPoint item : list) {
-				StopPoint object = cache.getStopPoints().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getStopPoint(cache, item.getObjectId());
+				if (!cache.getStopPoints().containsKey(item.getObjectId())) {
+					ObjectFactory.getStopPoint(cache, item.getObjectId());
 				}
 			}
 		}
@@ -303,9 +292,8 @@ public class LineOptimiser {
 			}
 
 			for (JourneyPattern item : list) {
-				JourneyPattern object = cache.getJourneyPatterns().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getJourneyPattern(cache, item.getObjectId());
+				if (!cache.getJourneyPatterns().containsKey(item.getObjectId())) {
+					ObjectFactory.getJourneyPattern(cache, item.getObjectId());
 				}
 			}
 		}
@@ -320,9 +308,8 @@ public class LineOptimiser {
 			}
 
 			for (VehicleJourney item : list) {
-				VehicleJourney object = cache.getVehicleJourneys().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getVehicleJourney(cache, item.getObjectId());
+				if (!cache.getVehicleJourneys().containsKey(item.getObjectId())) {
+					ObjectFactory.getVehicleJourney(cache, item.getObjectId());
 				}
 			}
 		}
@@ -337,9 +324,8 @@ public class LineOptimiser {
 			}
 
 			for (Timeband item : list) {
-				Timeband object = cache.getTimebands().get(item.getObjectId());
-				if (object == null) {
-					object = ObjectFactory.getTimeband(cache, item.getObjectId());
+				if (!cache.getTimebands().containsKey(item.getObjectId())) {
+					ObjectFactory.getTimeband(cache, item.getObjectId());
 				}
 			}
 		}

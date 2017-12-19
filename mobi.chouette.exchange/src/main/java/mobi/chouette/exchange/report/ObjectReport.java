@@ -21,7 +21,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 @ToString
-public class ObjectReport extends AbstractReport  implements CheckedReport{
+public class ObjectReport extends AbstractReport implements CheckedReport {
 
 	@XmlElement(name = "type", required = true)
 	@Getter
@@ -38,7 +38,7 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 
 	@XmlElement(name = "stats", required = true)
 	@Getter
-	private Map<OBJECT_TYPE, Integer> stats = new HashMap<OBJECT_TYPE, Integer>();
+	private Map<OBJECT_TYPE, Integer> stats = new HashMap<>();
 
 	@XmlElement(name = "io_type")
 	@Getter
@@ -46,15 +46,15 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 
 	@XmlElement(name = "errors")
 	@Getter
-	private List<ObjectError> errors = new ArrayList<ObjectError>();
+	private List<ObjectError> errors = new ArrayList<>();
 
 	@XmlElement(name = "checkpoint_errors")
 	@Getter
-	private List<Integer> checkPointErrorKeys = new ArrayList<Integer>();
-	
+	private List<Integer> checkPointErrorKeys = new ArrayList<>();
+
 	@XmlElement(name = "checkpoint_warnings")
 	@Getter
-	private List<Integer> checkPointWarningKeys = new ArrayList<Integer>();
+	private List<Integer> checkPointWarningKeys = new ArrayList<>();
 
 	@XmlElement(name = "checkpoint_error_count")
 	@Getter
@@ -86,15 +86,15 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 		errors.add(error);
 	}
 
-	/** 
+	/**
 	 * set status if not worst
 	 */
-	public void setStatus(OBJECT_STATE newStatus)
-	{
-		if (newStatus.ordinal() > status.ordinal() || (newStatus.equals(OBJECT_STATE.IGNORED) && !status.equals(OBJECT_STATE.ERROR))) 
+	public void setStatus(OBJECT_STATE newStatus) {
+		if (newStatus.ordinal() > status.ordinal()
+				|| (newStatus.equals(OBJECT_STATE.IGNORED) && !status.equals(OBJECT_STATE.ERROR)))
 			status = newStatus;
 	}
-	
+
 	/**
 	 * 
 	 * @param checkPointErrorId
@@ -102,28 +102,19 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 	protected boolean addCheckPointError(int checkPointErrorId, SEVERITY severity) {
 		boolean ret = false;
 
-		if (checkPointErrorCount + checkPointWarningCount < MAX_ERRORS) {
-			checkPointErrorKeys.add(new Integer(checkPointErrorId));
-			ret = true;
-		}
-
-		switch (severity) {
-		case WARNING:
+		if (severity.equals(SEVERITY.WARNING)) {
 			if (checkPointWarningCount < MAX_ERRORS) {
-				checkPointWarningKeys.add(new Integer(checkPointErrorId));
+				checkPointWarningKeys.add(Integer.valueOf(checkPointErrorId));
 				ret = true;
 			}
 			checkPointWarningCount++;
-			break;
-
-		default: // ERROR
+		} else {
 			if (checkPointErrorCount < MAX_ERRORS) {
-				checkPointErrorKeys.add(new Integer(checkPointErrorId));
+				checkPointErrorKeys.add(Integer.valueOf(checkPointErrorId));
 				ret = true;
 			}
 			checkPointErrorCount++;
 			status = OBJECT_STATE.ERROR;
-			break;
 		}
 		return ret;
 	}
@@ -137,9 +128,9 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 	protected void addStatTypeToObject(OBJECT_TYPE type, int count) {
 
 		if (stats.containsKey(type)) {
-			stats.put(type, new Integer(stats.get(type).intValue() + count));
+			stats.put(type, Integer.valueOf(stats.get(type).intValue() + count));
 		} else {
-			stats.put(type, new Integer(count));
+			stats.put(type, Integer.valueOf(count));
 		}
 
 	}
@@ -157,7 +148,7 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 		if (stats.containsKey(type)) {
 			oldvalue = stats.get(type).intValue();
 		}
-		stats.put(type, new Integer(count));
+		stats.put(type, Integer.valueOf(count));
 		return oldvalue;
 
 	}
@@ -202,7 +193,7 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 	}
 
 	@Override
-	public void print(PrintStream out, StringBuilder ret , int level, boolean first) {
+	public void print(PrintStream out, StringBuilder ret, int level, boolean first) {
 		ret.setLength(0);
 		out.print(addLevel(ret, level).append('{'));
 		out.print(toJsonString(ret, level + 1, "type", type.toString().toLowerCase(), true));
@@ -217,15 +208,15 @@ public class ObjectReport extends AbstractReport  implements CheckedReport{
 		if (!errors.isEmpty()) {
 			printArray(out, ret, level + 1, "errors", errors, false);
 		}
-		List<Integer> lstErrorKeys = new ArrayList<Integer>();
-		for(Integer numError: checkPointErrorKeys) {
-			if(lstErrorKeys.size() < MAX_ERRORS)
+		List<Integer> lstErrorKeys = new ArrayList<>();
+		for (Integer numError : checkPointErrorKeys) {
+			if (lstErrorKeys.size() < MAX_ERRORS)
 				lstErrorKeys.add(numError);
 			else
 				break;
 		}
-		for(Integer numWarning: checkPointWarningKeys) {
-			if(lstErrorKeys.size() < MAX_ERRORS)
+		for (Integer numWarning : checkPointWarningKeys) {
+			if (lstErrorKeys.size() < MAX_ERRORS)
 				lstErrorKeys.add(numWarning);
 			else
 				break;

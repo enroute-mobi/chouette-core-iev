@@ -53,14 +53,14 @@ public class ServiceJourneyPatternParser implements Parser {
 				journeyPattern.setName(xpp.nextText());
 			} else if (xpp.getName().equals(NetexStifConstant.DESTINATION_DISPLAY_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String att_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
 				boolean checked = validator.checkNetexRef(context, journeyPattern, NetexStifConstant.DESTINATION_DISPLAY_REF, ref,
 						lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, journeyPattern, NetexStifConstant.DESTINATION_DISPLAY_REF, ref,
-							att_version, content, lineNumber, columnNumber);
+					validator.checkInternalRef(context, journeyPattern, NetexStifConstant.DESTINATION_DISPLAY_REF, ref,
+							attrVersion, content, lineNumber, columnNumber);
 				DestinationDisplay display = factory.getDestinationDisplay(ref);
 				if (display.isFilled()) {
 					journeyPattern.setPublishedName(display.getFrontText());
@@ -82,13 +82,13 @@ public class ServiceJourneyPatternParser implements Parser {
 				// journeyPattern.setPatternType(xpp.nextText());
 			} else if (xpp.getName().equals(NetexStifConstant.ROUTE_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String att_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
 				boolean checked = validator.checkNetexRef(context, journeyPattern, NetexStifConstant.ROUTE_REF, ref, lineNumber,
 						columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, journeyPattern, NetexStifConstant.ROUTE_REF, ref, att_version, content,
+					checked = validator.checkInternalRef(context, journeyPattern, NetexStifConstant.ROUTE_REF, ref, attrVersion, content,
 							lineNumber, columnNumber);
 				Route route = ObjectFactory.getRoute(referential, ref);
 				journeyPattern.setRoute(route);
@@ -125,14 +125,14 @@ public class ServiceJourneyPatternParser implements Parser {
 
 			} else if (xpp.getName().equals(NetexStifConstant.SCHEDULED_STOP_POINT_REF)) {
 				scheduledStopPointId = xpp.getAttributeValue(null, NetexStifConstant.REF);
-				String att_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
 				boolean checked = validator.checkNetexRef(context, journeyPattern, NetexStifConstant.SCHEDULED_STOP_POINT_REF,
 						scheduledStopPointId, lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, journeyPattern, NetexStifConstant.SCHEDULED_STOP_POINT_REF,
-							scheduledStopPointId, att_version, content, lineNumber, columnNumber);
+					validator.checkInternalRef(context, journeyPattern, NetexStifConstant.SCHEDULED_STOP_POINT_REF,
+							scheduledStopPointId, attrVersion, content, lineNumber, columnNumber);
 
 			} else {
 				XPPUtil.skipSubTree(log, xpp);

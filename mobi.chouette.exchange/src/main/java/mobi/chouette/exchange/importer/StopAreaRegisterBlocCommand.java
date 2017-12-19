@@ -92,7 +92,6 @@ public class StopAreaRegisterBlocCommand implements Command {
 	}
 
 	private void initializeStopArea(Referential cache, Collection<StopArea> list) {
-		// Collection<String> objectIds = UpdaterUtils.getObjectIds(list);
 		List<StopArea> objects = stopAreaDAO.findAll();// ByObjectId(objectIds);
 		for (StopArea object : objects) {
 			cache.getStopAreas().put(object.getObjectId(), object);
@@ -104,9 +103,8 @@ public class StopAreaRegisterBlocCommand implements Command {
 	}
 
 	private void addStopAreaIfMissing(Referential cache, StopArea item) {
-		StopArea object = cache.getStopAreas().get(item.getObjectId());
-		if (object == null) {
-			object = ObjectFactory.getStopArea(cache, item.getObjectId());
+		if (!cache.getStopAreas().containsKey(item.getObjectId())) {
+			ObjectFactory.getStopArea(cache, item.getObjectId());
 			if (item.getParent() != null && item.getParent().getAreaType() == null) {
 				log.error("areatype missing for " + item.getParent());
 				return;
@@ -128,9 +126,8 @@ public class StopAreaRegisterBlocCommand implements Command {
 		}
 
 		for (AccessPoint item : list) {
-			AccessPoint object = cache.getAccessPoints().get(item.getObjectId());
-			if (object == null) {
-				object = ObjectFactory.getAccessPoint(cache, item.getObjectId());
+			if (!cache.getAccessPoints().containsKey(item.getObjectId())) {
+				ObjectFactory.getAccessPoint(cache, item.getObjectId());
 			}
 		}
 	}

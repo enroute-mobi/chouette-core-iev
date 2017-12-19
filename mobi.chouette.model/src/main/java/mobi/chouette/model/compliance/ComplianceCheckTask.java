@@ -61,11 +61,6 @@ public class ComplianceCheckTask extends ActionTask {
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
-	@Override
-	public ACTION getAction() {
-		return ACTION.validator;
-	}
-
 	// used by service module 
 	@Getter
 	@Setter
@@ -75,11 +70,17 @@ public class ComplianceCheckTask extends ActionTask {
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "task", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
-	private List<ComplianceCheckBlock> complianceCheckBlocks = new ArrayList<ComplianceCheckBlock>(0);
+	private List<ComplianceCheckBlock> complianceCheckBlocks = new ArrayList<>(0);
 	//
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "task", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
-	private List<ComplianceCheck> complianceChecks = new ArrayList<ComplianceCheck>(0);
+	private List<ComplianceCheck> complianceChecks = new ArrayList<>(0);
+
+	@Override
+	public ACTION getAction() {
+		return ACTION.validator;
+	}
+
 
 }

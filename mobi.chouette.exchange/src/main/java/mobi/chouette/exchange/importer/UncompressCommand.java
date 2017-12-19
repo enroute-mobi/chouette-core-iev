@@ -55,7 +55,7 @@ public class UncompressCommand implements Command {
 		}
 		Path filename = Paths.get(path, file);
 		Path target = Paths.get(path, Constant.INPUT);
-		if (!Files.exists(target)) {
+		if (!target.toFile().exists()) {
 			Files.createDirectories(target);
 		}
 		if (FilenameUtils.getExtension(filename.toString()).equalsIgnoreCase("zip"))
@@ -84,8 +84,7 @@ public class UncompressCommand implements Command {
 
 		@Override
 		protected Command create(InitialContext context) throws IOException {
-			Command result = new UncompressCommand();
-			return result;
+			return new UncompressCommand();
 		}
 	}
 

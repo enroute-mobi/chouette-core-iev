@@ -25,12 +25,9 @@ import mobi.chouette.exchange.DaoProgressionCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
-import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.model.LineLite;
-import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
@@ -130,7 +127,7 @@ public class ValidatorCommand implements Command {
 
 		List<Long> ids = new ArrayList<>();
 		if (parameters.getIds() != null) {
-			ids = new ArrayList<Long>(parameters.getIds());
+			ids = new ArrayList<>(parameters.getIds());
 		}
 
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);

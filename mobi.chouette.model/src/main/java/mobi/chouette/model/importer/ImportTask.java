@@ -23,11 +23,6 @@ import mobi.chouette.model.ActionTask;
 public class ImportTask extends ActionTask {
 	private static final long serialVersionUID = 9177879600144123687L;
 	
-	public JobData.ACTION getAction()
-	{
-		return JobData.ACTION.importer;
-	}
-	
 	@Getter
 	@Setter
 	@SequenceGenerator(name="imports_id_seq", sequenceName="imports_id_seq", allocationSize=1)
@@ -52,5 +47,11 @@ public class ImportTask extends ActionTask {
 	@Setter
 	@Column(name="token_download")
 	private String url;
+
+	public JobData.ACTION getAction()
+	{
+		return JobData.ACTION.importer;
+	}
+	
 
 }
