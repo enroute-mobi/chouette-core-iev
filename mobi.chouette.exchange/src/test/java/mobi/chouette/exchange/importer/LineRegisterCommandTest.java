@@ -50,7 +50,7 @@ public class LineRegisterCommandTest {
 		lineRegister.write(buffer, neptuneObject, sp, vjas);
 		
 		
-		Assert.assertEquals(buffer.toString(), "4321|1001|23:59:00|00:05:00|0|1\n", "Invalid data entry for buffer");
+		Assert.assertEquals(buffer.toString(), "4321"+Constant.COPY_SEP+"1001"+Constant.COPY_SEP+"23:59:00"+Constant.COPY_SEP+"00:05:00"+Constant.COPY_SEP+"0"+Constant.COPY_SEP+"1\n", "Invalid data entry for buffer");
 	
 		
 	}

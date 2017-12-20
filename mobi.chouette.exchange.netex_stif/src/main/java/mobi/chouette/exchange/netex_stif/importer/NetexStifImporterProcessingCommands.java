@@ -25,6 +25,7 @@ import mobi.chouette.exchange.LoadSharedDataCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.CleanRepositoryCommand;
+import mobi.chouette.exchange.importer.CopyCommand;
 import mobi.chouette.exchange.importer.FootnoteRegisterCommand;
 import mobi.chouette.exchange.importer.RouteRegisterCommand;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
@@ -114,7 +115,7 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands {
 			commands.add(tmp);
 
 			// TODO a supprimer quand copycommand sera ok
-			context.put(Constant.OPTIMIZED, Boolean.FALSE);
+			// context.put(Constant.OPTIMIZED, Boolean.FALSE);
 
 			Path path = Paths.get(jobData.getPathName(), Constant.INPUT);
 			List<Path> stream = FileUtil.listFiles(path, NetexStifConstant.OFFRE_FILE_PREFIX+"*.xml", "*metadata*");
@@ -146,9 +147,9 @@ public class NetexStifImporterProcessingCommands implements ProcessingCommands {
 					register = CommandFactory.create(initialContext, RouteRegisterCommand.class.getName());
 					chain.add(register);
 
-					// Command copy = CommandFactory.create(initialContext,
-					// CopyCommand.class.getName());
-					// chain.add(copy);
+					// save passing times
+					Command copy = CommandFactory.create(initialContext, CopyCommand.class.getName());
+					chain.add(copy);
 				}
 
 			}

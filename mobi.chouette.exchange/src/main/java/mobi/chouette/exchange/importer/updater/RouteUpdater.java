@@ -1,5 +1,6 @@
 package mobi.chouette.exchange.importer.updater;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,7 +18,9 @@ import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -70,6 +73,8 @@ public class RouteUpdater implements Updater<Route> {
 			oldValue.setNumber(newValue.getNumber());
 			oldValue.setDirection(newValue.getDirection());
 			oldValue.setWayBack(newValue.getWayBack());
+			oldValue.setLineId(newValue.getLineId());
+			oldValue.setLineLite(newValue.getLineLite());
 			oldValue.setDetached(false);
 		} else {
 
@@ -196,6 +201,15 @@ public class RouteUpdater implements Updater<Route> {
 		for (Pair<JourneyPattern, JourneyPattern> pair : modifiedJourneyPattern) {
 			journeyPatternUpdater.update(context, pair.getLeft(), pair.getRight());
 		}
+		
+		// RoutingConstraints
+		List<RoutingConstraint>  list = new ArrayList<>(newValue.getRoutingConstraints());
+		for (RoutingConstraint rc : list) {
+			ChecksumUtil.checksum(context, rc);
+			rc.setRoute(oldValue);
+		}
+		
+		ChecksumUtil.checksum(context, oldValue);
 //		monitor.stop();
 	}
 	

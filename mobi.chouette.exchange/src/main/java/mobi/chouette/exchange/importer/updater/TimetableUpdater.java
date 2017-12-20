@@ -10,6 +10,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Timetable;
+import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.NamingUtil;
 
 @Stateless(name = TimetableUpdater.BEAN_NAME)
@@ -115,6 +116,8 @@ public class TimetableUpdater implements Updater<Timetable> {
 		for (CalendarDay item : removedCalendarDays) {
 			oldValue.getCalendarDays().remove(item);
 		}
+		
+		ChecksumUtil.checksum(context, oldValue);
 //		monitor.stop();
 
 	}

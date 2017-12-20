@@ -7,6 +7,7 @@ import mobi.chouette.common.Context;
 import mobi.chouette.dao.StopPointDAO;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.ChecksumUtil;
 
 @Stateless(name = VehicleJourneyAtStopUpdater.BEAN_NAME)
 public class VehicleJourneyAtStopUpdater implements Updater<VehicleJourneyAtStop> {
@@ -37,17 +38,6 @@ public class VehicleJourneyAtStopUpdater implements Updater<VehicleJourneyAtStop
 			oldValue.setDepartureDayOffset(newValue.getDepartureDayOffset());
 		}
 
-		// if (newValue.getElapseDuration() != null
-		// && !newValue.getElapseDuration().equals(
-		// oldValue.getElapseDuration())) {
-		// oldValue.setElapseDuration(newValue.getElapseDuration());
-		// }
-		// if (newValue.getHeadwayFrequency() != null
-		// && !newValue.getHeadwayFrequency().equals(
-		// oldValue.getHeadwayFrequency())) {
-		// oldValue.setHeadwayFrequency(newValue.getHeadwayFrequency());
-		// }
-
 		// StopPoint
 		if (oldValue.getStopPoint() == null || !oldValue.getStopPoint().equals(newValue.getStopPoint())) {
 			StopPoint stopPoint = stopPointDAO.findByObjectId(newValue.getStopPoint().getObjectId());
@@ -55,6 +45,8 @@ public class VehicleJourneyAtStopUpdater implements Updater<VehicleJourneyAtStop
 				oldValue.setStopPoint(stopPoint);
 			}
 		}
+		
+		ChecksumUtil.checksum(context, oldValue);
 	}
 
 }

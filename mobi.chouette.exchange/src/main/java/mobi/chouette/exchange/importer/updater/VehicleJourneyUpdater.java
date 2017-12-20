@@ -31,6 +31,7 @@ import mobi.chouette.model.Timeband;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -67,12 +68,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			return result;
 		}
 	};
-
-	@EJB(beanName = CompanyUpdater.BEAN_NAME)
-	private Updater<Company> companyUpdater;
-
-	@EJB
-	private CompanyDAO companyDAO;
 
 	@EJB
 	private RouteDAO routeDAO;
@@ -139,6 +134,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			oldValue.setMobilityRestrictedSuitability(newValue.getMobilityRestrictedSuitability());
 			oldValue.setFlexibleService(newValue.getFlexibleService());
 			oldValue.setJourneyCategory(newValue.getJourneyCategory());
+			oldValue.setCompanyId(newValue.getCompanyId());
 			oldValue.setDetached(false);
 		} else {
 			twoDatabaseVehicleJourneyTwoTest(validationReporter, context, oldValue.getCompany(), newValue.getCompany(), data);
@@ -190,25 +186,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			}
 		}
 
-		// Company
-		if (newValue.getCompany() == null) {
-			oldValue.setCompany(null);
-		} else {
-			String objectId = newValue.getCompany().getObjectId();
-			Company company = cache.getCompanies().get(objectId);
-			if (company == null) {
-				company = companyDAO.findByObjectId(objectId);
-				if (company != null) {
-					cache.getCompanies().put(objectId, company);
-				}
-			}
-
-			if (company == null) {
-				company = ObjectFactory.getCompany(cache, objectId);
-			}
-			oldValue.setCompany(company);
-			companyUpdater.update(context, oldValue.getCompany(), newValue.getCompany());
-		}
 
 		// Route
 		if (oldValue.getRoute() == null || !oldValue.getRoute().equals(newValue.getRoute())) {
@@ -228,6 +205,11 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		}
 
 		// VehicleJourneyAtStop
+		// compute VJAS checkSums
+		for (VehicleJourneyAtStop vjas : newValue.getVehicleJourneyAtStops())
+		{
+			ChecksumUtil.checksum(context, vjas); 
+		}
 		if (!optimized) {
 
 			Collection<VehicleJourneyAtStop> addedVehicleJourneyAtStop = CollectionUtil.substract(
@@ -383,11 +365,14 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		}
 		
 		for(Footnote f : footnotes) {
-			Line line = cache.getLines().get(f.getLine().getObjectId());
-			f.setLine(line);
+			ChecksumUtil.checksum(context, f);
 		}
 		
 		oldValue.setFootnotes(footnotes);
+		
+		ChecksumUtil.checksum(context, newValue);
+		oldValue.setChecksum(newValue.getChecksum());
+		oldValue.setChecksumSource(newValue.getChecksumSource());
 //		monitor.stop();
 	}
 	

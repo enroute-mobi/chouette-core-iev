@@ -19,6 +19,7 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.RouteSection;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.VehicleJourney;
+import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -34,14 +35,8 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 	@EJB
 	private VehicleJourneyDAO vehicleJourneyDAO;
 
-	@EJB
-	private RouteSectionDAO routeSectionDAO;
-
 	@EJB(beanName = VehicleJourneyUpdater.BEAN_NAME)
 	private Updater<VehicleJourney> vehicleJourneyUpdater;
-
-	@EJB(beanName = RouteSectionUpdater.BEAN_NAME)
-	private Updater<RouteSection> routeSectionUpdater;
 
 	@Override
 	public void update(Context context, JourneyPattern oldValue, JourneyPattern newValue) throws Exception {
@@ -101,27 +96,6 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 		}
 		
 		
-		// RouteSections
-		if (!newValue.getRouteSections().equals(oldValue.getRouteSections())) {
-			// List<RouteSection> sections =
-			// routeSectionDAO.findByObjectId(UpdaterUtils.getObjectIds(newValue.getRouteSections()));
-			// for (RouteSection object : sections) {
-			// cache.getRouteSections().put(object.getObjectId(), object);
-			// }
-			oldValue.getRouteSections().clear();
-			for (RouteSection item : newValue.getRouteSections()) {
-				RouteSection section = cache.getRouteSections().get(item.getObjectId());
-				if (section == null) {
-					section = ObjectFactory.getRouteSection(cache, item.getObjectId());
-				}
-				oldValue.getRouteSections().add(section);
-			}
-		}
-		Collection<Pair<RouteSection, RouteSection>> modifiedRouteSection = CollectionUtil.intersection(
-				oldValue.getRouteSections(), newValue.getRouteSections(), NeptuneIdentifiedObjectComparator.INSTANCE);
-		for (Pair<RouteSection, RouteSection> pair : modifiedRouteSection) {
-			routeSectionUpdater.update(context, pair.getLeft(), pair.getRight());
-		}
 
 		// StopPoint
 		Collection<StopPoint> addedStopPoint = CollectionUtil.substract(newValue.getStopPoints(),
@@ -225,7 +199,7 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 			vehicleJourneyUpdater.update(context, pair.getLeft(), pair.getRight());
 		}
 
-
+        ChecksumUtil.checksum(context, oldValue);
 //		monitor.stop();
 	}
 	

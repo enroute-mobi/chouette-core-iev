@@ -1,17 +1,14 @@
 package mobi.chouette.exchange.importer.updater;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.ChouetteModelUtil;
-import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
 @Stateless(name = StopPointUpdater.BEAN_NAME)
@@ -19,12 +16,12 @@ public class StopPointUpdater implements Updater<StopPoint> {
 
 	public static final String BEAN_NAME = "StopPointUpdater";
 
-	@EJB
-	private StopAreaDAO stopAreaDAO;
-
-	@EJB(beanName = StopAreaUpdater.BEAN_NAME)
-	private Updater<StopArea> stopAreaUpdater;
-
+//	@EJB
+//	private StopAreaDAO stopAreaDAO;
+//
+//	@EJB(beanName = StopAreaUpdater.BEAN_NAME)
+//	private Updater<StopArea> stopAreaUpdater;
+//
 	@Override
 	public void update(Context context, StopPoint oldValue, StopPoint newValue) throws Exception {
 
@@ -50,6 +47,7 @@ public class StopPointUpdater implements Updater<StopPoint> {
 			oldValue.setCreationTime(newValue.getCreationTime());
 			oldValue.setForAlighting(newValue.getForAlighting());
 			oldValue.setForBoarding(newValue.getForBoarding());
+			oldValue.setStopAreaId(newValue.getStopAreaId());
 			oldValue.setDetached(false);
 		} else {
 			twoDatabaseStopPointTwoTest(validationReporter, context, oldValue, newValue, data);
@@ -76,27 +74,27 @@ public class StopPointUpdater implements Updater<StopPoint> {
 
 		// StopArea
 		
-		if (newValue.getContainedInStopArea() == null) {
-			oldValue.setContainedInStopArea(null);
-		} else {
-			String objectId = newValue.getContainedInStopArea().getObjectId();
-			StopArea stopArea = cache.getStopAreas().get(objectId);
-			if (stopArea == null) {
-				stopArea = stopAreaDAO.findByObjectId(objectId);
-				if (stopArea != null) {
-					cache.getStopAreas().put(objectId, stopArea);
-				}
-			}
-
-			if (stopArea == null) {
-				stopArea = ObjectFactory.getStopArea(cache, objectId);
-			}
-			
-			oldValue.setContainedInStopArea(stopArea);
-
-			if (!context.containsKey(Constant.AREA_BLOC))
-			   stopAreaUpdater.update(context, oldValue.getContainedInStopArea(), newValue.getContainedInStopArea());
-		}
+//		if (newValue.getContainedInStopArea() == null) {
+//			oldValue.setContainedInStopArea(null);
+//		} else {
+//			String objectId = newValue.getContainedInStopArea().getObjectId();
+//			StopArea stopArea = cache.getStopAreas().get(objectId);
+//			if (stopArea == null) {
+//				stopArea = stopAreaDAO.findByObjectId(objectId);
+//				if (stopArea != null) {
+//					cache.getStopAreas().put(objectId, stopArea);
+//				}
+//			}
+//
+//			if (stopArea == null) {
+//				stopArea = ObjectFactory.getStopArea(cache, objectId);
+//			}
+//			
+//			oldValue.setContainedInStopArea(stopArea);
+//
+//			if (!context.containsKey(Constant.AREA_BLOC))
+//			   stopAreaUpdater.update(context, oldValue.getContainedInStopArea(), newValue.getContainedInStopArea());
+//		}
 //		monitor.stop();
 
 	}
