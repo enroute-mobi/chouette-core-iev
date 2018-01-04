@@ -1,10 +1,6 @@
 package mobi.chouette.model.compliance;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,14 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CollectionType;
+import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.annotations.Type;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.ChouetteDatedObject;
-import mobi.chouette.model.converter.HstoreConverter;
 
 @Entity
 @Table(name = "compliance_checks")
@@ -82,10 +78,13 @@ public class ComplianceCheck extends ChouetteDatedObject {
 
 	@Getter
 	@Setter
-	@Column(name = "control_attributes")
-	@CollectionType(type = "java.util.HashMap")
-	@Convert(converter = HstoreConverter.class)
-	private Map<String, String> controlAttributes = new HashMap<>();
+//  @Column(name = "control_attributes")
+	@Column(name = "control_attributes",columnDefinition="json")
+	@Type(type = "mobi.chouette.model.usertype.JsonUserType")
+//	@CollectionType(type = "java.util.HashMap")
+//	@Convert(converter = HstoreConverter.class)
+//	private Map<String, String> controlAttributes = new HashMap<>();
+	private JSONObject controlAttributes = new JSONObject();
 
 	@Getter
 	@Setter

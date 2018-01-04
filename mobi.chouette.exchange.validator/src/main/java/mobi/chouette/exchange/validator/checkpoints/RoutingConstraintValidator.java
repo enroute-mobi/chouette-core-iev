@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -21,7 +20,7 @@ import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
+
 public class RoutingConstraintValidator extends GenericValidator<RoutingConstraint> {
 
 	private static final String ROUTING_CONSTRAINT_ID = "RoutingConstraint id = ";

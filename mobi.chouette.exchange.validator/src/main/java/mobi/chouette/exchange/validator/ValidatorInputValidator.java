@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jettison.json.JSONException;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JSONUtil;
 import mobi.chouette.core.CoreExceptionCode;
@@ -33,7 +35,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	protected static final String TRANSPORT_SUBMODE_KEY = "transport_sub_mode";
 	protected static final String MAXIMUM_VALUE_KEY = "maximum";
 	protected static final String MINIMUM_VALUE_KEY = "minimum";
-	protected static final String PATTERN_VALUE_KEY = "PATTERN";
+	protected static final String PATTERN_VALUE_KEY = "pattern";
 	protected static final String ATTRIBUTE_NAME_KEY = "target";
 	protected static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
 
@@ -126,7 +128,12 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			// populate controlParameter
 			ControlParameters controlParameters = parameter.getControlParameters();
 			checkTask.getComplianceChecks().stream().forEach(check -> {
-				CheckpointParameters cp = buildCheckpoint(check);
+				CheckpointParameters cp;
+				try {
+					cp = buildCheckpoint(check);
+				} catch (Exception e) {
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, e, "cannot parse ComplianceCheck Attributes for "+check.getCode());
+				}
 				ComplianceCheckBlock block = check.getBlock();
 				if (block != null) {
 					// if check has a block, add check to
@@ -173,12 +180,12 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		list.add(cp);
 	}
 
-	private CheckpointParameters buildCheckpoint(ComplianceCheck check) {
+	private CheckpointParameters buildCheckpoint(ComplianceCheck check) throws JSONException {
 		CheckpointParameters result = null;
-		if (check.getControlAttributes().containsKey(ATTRIBUTE_NAME_KEY)) {
+		if (check.getControlAttributes().has(ATTRIBUTE_NAME_KEY)) {
 			GenericCheckpointParameters generic = new GenericCheckpointParameters();
 			result = generic;
-			String key = check.getControlAttributes().get(ATTRIBUTE_NAME_KEY);
+			String key = check.getControlAttributes().getString(ATTRIBUTE_NAME_KEY);
 			String[] keys = key.split("#");
 			generic.setAttributeName(keys[1]);
 			generic.setClassName(toCamelCase(keys[0]));
@@ -186,9 +193,9 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			result = new CheckpointParameters();
 		}
 		result.setCheckId(check.getId());
-		result.setMinimumValue(check.getControlAttributes().get(MINIMUM_VALUE_KEY));
-		result.setMaximumValue(check.getControlAttributes().get(MAXIMUM_VALUE_KEY));
-		result.setPatternValue(check.getControlAttributes().get(PATTERN_VALUE_KEY));
+		result.setMinimumValue(check.getControlAttributes().optString(MINIMUM_VALUE_KEY,null));
+		result.setMaximumValue(check.getControlAttributes().optString(MAXIMUM_VALUE_KEY,null));
+		result.setPatternValue(check.getControlAttributes().optString(PATTERN_VALUE_KEY,null));
 		result.setCode(check.getCode());
 		result.setErrorType(check.getCriticity().equals(CRITICITY.error));
 		return result;

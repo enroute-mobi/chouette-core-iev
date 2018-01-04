@@ -18,4 +18,12 @@ public class ControlParameters {
 	private Map<String, Collection<CheckpointParameters>> globalCheckPoints = new HashMap<>();
 
 	private Map<String, Map<String, Collection<CheckpointParameters>>> transportModeCheckpoints = new HashMap<>();
+
+	public void clean() {
+		globalCheckPoints.values().forEach(col -> col.clear());
+		globalCheckPoints.clear();
+		transportModeCheckpoints.values().forEach(map -> map.values().forEach(col -> col.clear()));
+		transportModeCheckpoints.values().forEach(map -> map.clear());
+		transportModeCheckpoints.clear();
+	}
 }
