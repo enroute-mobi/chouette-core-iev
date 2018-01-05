@@ -79,7 +79,7 @@ SELECT pg_catalog.setval('compliance_check_sets_id_seq', 1, false);
 -- Data for Name: compliance_checks; Type: TABLE DATA; Schema: public; Owner: chouette
 --
 
-INSERT INTO compliance_checks (id, compliance_check_set_id, compliance_check_block_id, type, control_attributes, name, code, criticity, comment, created_at, updated_at, origin_code) VALUES (1, 1, 1, 'blip', '"rien_ne_sert"=>"de_courir"', 'mon code', '3-NETEX-8_zzz', 'error', 'my comment', '2017-09-29 23:23:45', '2017-09-29 23:23:45', '3-NETEX-8');
+INSERT INTO compliance_checks (id, compliance_check_set_id, compliance_check_block_id, type, control_attributes, name, code, criticity, comment, created_at, updated_at, origin_code) VALUES (1, 1, 1, 'blip', '{"rien_ne_sert":"de_courir"}', 'mon code', '3-NETEX-8_zzz', 'error', 'my comment', '2017-09-29 23:23:45', '2017-09-29 23:23:45', '3-NETEX-8');
 
 
 --

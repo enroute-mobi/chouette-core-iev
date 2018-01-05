@@ -64,13 +64,13 @@ public class CheckPointConstant {
 	public static final String L3_VehicleJourney_5 = "3-VehicleJourney-5";
 
 	// Check [ITL] ITL & arret désactivé
-	public static final String L3_ITL_1 = "3-ITL-1";
+	public static final String L3_ITL_1 = "3-RoutingConstraint-1";
 
 	// Check [ITL] Couverture de l'itinéraire
-	public static final String L3_ITL_2 = "3-ITL-2";
+	public static final String L3_ITL_2 = "3-RoutingConstraint-2";
 
 	// Check [ITL] Définition minimale d'une ITL
-	public static final String L3_ITL_3 = "3-ITL-3";
+	public static final String L3_ITL_3 = "3-RoutingConstraint-3";
 
 	// Check [Tracé] Proximité d'un tracé avec l'itinéraire associé
 	public static final String L3_Shape_1 = "3-Shape-1";

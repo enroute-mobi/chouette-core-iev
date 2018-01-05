@@ -16,6 +16,7 @@ import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
@@ -54,7 +55,7 @@ public abstract class NamingUtil {
 			return object.getName();
 		return object.getObjectId();
 	}
-	
+
 	public static String getName(StopAreaLite object) {
 		if (isFilled(object.getName()))
 			return object.getName();
@@ -232,5 +233,11 @@ public abstract class NamingUtil {
 			return object.getNumber();
 		return object.getObjectId();
 
+	}
+
+	public static String getName(RoutingConstraint object) {
+		if (isFilled(object.getName()))
+			return object.getName();
+		return object.getObjectId();
 	}
 }

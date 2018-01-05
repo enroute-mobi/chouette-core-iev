@@ -285,7 +285,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 		for (int i = 1; i < passingTimes.size(); i++) {
 			VehicleJourneyAtStop passingTime1 = passingTimes.get(i - 1);
 			VehicleJourneyAtStop passingTime2 = passingTimes.get(i);
-			if (passingTime1.getDepartureTime().after(passingTime2.getArrivalTime())
+			if (passingTime1.getDepartureTime().after(getArrivalTime(passingTime2))
 					&& passingTime1.getDepartureDayOffset() == passingTime2.getDepartureDayOffset()) {
 				StopAreaLite zdep1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
 
@@ -299,7 +299,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
 				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_5, "2", source,
-						format.format(passingTime1.getDepartureTime()), format.format(passingTime2.getArrivalTime()),
+						format.format(passingTime1.getDepartureTime()), format.format(getArrivalTime(passingTime2)),
 						target1, target2);
 
 			}

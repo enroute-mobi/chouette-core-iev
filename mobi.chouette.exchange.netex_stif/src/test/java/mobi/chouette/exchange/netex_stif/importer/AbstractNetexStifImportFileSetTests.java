@@ -157,7 +157,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian {
 		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
-		configuration.setNoSave(true);
+		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");

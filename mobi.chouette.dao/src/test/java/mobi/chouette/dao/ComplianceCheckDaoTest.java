@@ -67,8 +67,7 @@ public class ComplianceCheckDaoTest extends Arquillian {
 			Assert.assertEquals( cc.getCriticity(), CRITICITY.error);
 			Assert.assertEquals( cc.getComment(), "my comment");
 			
-			Assert.assertEquals("rien_ne_sert => de_courir", cc.getControlAttributes().keySet().stream()
-					.map(x -> x + " => " + cc.getControlAttributes().get(x)).collect(Collectors.joining(", ")));
+			Assert.assertEquals(cc.getControlAttributes().toString(),"{\"rien_ne_sert\":\"de_courir\"}");
 			
 			
 			ComplianceCheckBlock ccb  = cc.getBlock();

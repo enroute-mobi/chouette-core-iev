@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -20,7 +19,6 @@ import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
 public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 
 	private static final String[] codes = { 

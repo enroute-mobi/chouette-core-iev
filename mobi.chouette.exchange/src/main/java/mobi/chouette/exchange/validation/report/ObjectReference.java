@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import mobi.chouette.exchange.report.AbstractReport;
 import mobi.chouette.model.AccessLink;
@@ -17,6 +18,7 @@ import mobi.chouette.model.Line;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
@@ -29,15 +31,28 @@ import mobi.chouette.model.VehicleJourney;
 public class ObjectReference extends AbstractReport {
 
 	public enum TYPE {
-		NETWORK("Network"), COMPANY("Company"), GROUP_OF_LINE("GroupOfLine"), STOP_AREA("StopArea"), STOP_POINT(
-				"StopPoint"), CONNECTION_LINK("ConnectionLink"), ACCESS_POINT("AccessPoint"), ACCESS_LINK("AccessLink"), TIME_TABLE(
-				"Timetable"), LINE("Line"), ROUTE("Route"), JOURNEY_PATTERN("JourneyPattern"), VEHICLE_JOURNEY(
-				"VehicleJourney");
+		NETWORK("Network","networks"), 
+		COMPANY("Company","companies"), 
+		GROUP_OF_LINE("GroupOfLine","groups_of_lines"), 
+		STOP_AREA("StopArea","stop_areas"), 
+		STOP_POINT("StopPoint","stop_points"), 
+		CONNECTION_LINK("ConnectionLink","connection_links"), 
+		ACCESS_POINT("AccessPoint","access_points"),
+		ACCESS_LINK("AccessLink","access_links"), 
+		TIME_TABLE("Timetable","time_tables"), 
+		LINE("Line","lines"), 
+		ROUTE("Route","routes"), 
+		JOURNEY_PATTERN("JourneyPattern",""), 
+		VEHICLE_JOURNEY("VehicleJourney",""),
+		ROUTING_CONSTRAINT("RoutingConstraint","routing_constraint_zones");
 
 		private java.lang.String value;
+		@Getter
+		private java.lang.String guiValue;
 
-		private TYPE(final java.lang.String value) {
+		private TYPE(final java.lang.String value,String guiValue) {
 			this.value = value;
+			this.guiValue = guiValue;
 		}
 
 		public static TYPE fromValue(final java.lang.String value) {
@@ -162,6 +177,13 @@ public class ObjectReference extends AbstractReport {
 			this.objectId = object.getObjectId();
 	}
 	
+	public ObjectReference(RoutingConstraint object) {
+		this.type = TYPE.ROUTING_CONSTRAINT;
+		this.id = object.getId();
+		if (id == null)
+			this.objectId = object.getObjectId();
+	}
+
 	public ObjectReference(StopPoint object)
 	{
 		this.type = TYPE.STOP_POINT;

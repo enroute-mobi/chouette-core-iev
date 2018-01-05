@@ -23,7 +23,6 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.validator.ValidateParameters;
-import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.LineValidator;

@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -21,7 +20,7 @@ import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
+
 public class RoutingConstraintValidator extends GenericValidator<RoutingConstraint> {
 
 	private static final String ROUTING_CONSTRAINT_ID = "RoutingConstraint id = ";
@@ -41,7 +40,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2109">Cartes #2109</a>
 	 * <p>
-	 * <b>Code</b> :3-ITL-1
+	 * <b>Code</b> :3-RoutingConstraint-1
 	 * <p>
 	 * <b>Variables</b> : néant
 	 * <p>
@@ -62,7 +61,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3ITL1(Context context, RoutingConstraint object, CheckpointParameters parameters) {
+	protected void check3RoutingConstraint1(Context context, RoutingConstraint object, CheckpointParameters parameters) {
 		Long[] spIds = object.getStopPointIds();
 		Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 
@@ -99,7 +98,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2510">Cartes #2510</a>
 	 * <p>
-	 * <b>Code</b> :3-ITL-2
+	 * <b>Code</b> :3-RoutingConstraint-2
 	 * <p>
 	 * <b>Variables</b> : néant
 	 * <p>
@@ -120,7 +119,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3ITL2(Context context, RoutingConstraint object, CheckpointParameters parameters) {
+	protected void check3RoutingConstraint2(Context context, RoutingConstraint object, CheckpointParameters parameters) {
 		Long[] spIds = object.getStopPointIds();
 		boolean result = true;
 
@@ -140,7 +139,8 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_ITL_2);
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_ITL_2, source);
+			DataLocation target = new DataLocation(route);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_ITL_2, source,null,null,target);
 		}
 	}
 
@@ -149,7 +149,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2511">Cartes #2511</a>
 	 * <p>
-	 * <b>Code</b> :3-ITL-3
+	 * <b>Code</b> :3-RoutingConstraint-3
 	 * <p>
 	 * <b>Variables</b> : néant
 	 * <p>
@@ -170,7 +170,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3ITL3(Context context, RoutingConstraint object, CheckpointParameters parameters) {
+	protected void check3RoutingConstraint3(Context context, RoutingConstraint object, CheckpointParameters parameters) {
 		Long[] spIds = object.getStopPointIds();
 		boolean result = true;
 		if (spIds == null) {

@@ -7,4 +7,10 @@
          </package>
        </packages>
    </test>
+   <test name="Managment">
+       <packages>
+         <package name="mobi.chouette.exchange.validation" >
+         </package>
+       </packages>
+   </test>
 </suite> 
