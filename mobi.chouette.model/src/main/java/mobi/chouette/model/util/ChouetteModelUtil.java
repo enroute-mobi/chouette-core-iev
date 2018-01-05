@@ -7,17 +7,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.ChouetteObject;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
 
 @Log4j
 public abstract class ChouetteModelUtil {
+
+	public static final String FUNCTIONAL_SCOPE = "functional_scope";
 
 	/**
 	 * Build a list of Neptune Ids (ObjectId) from a list of Neptune Objects
@@ -140,6 +146,12 @@ public abstract class ChouetteModelUtil {
 		}
 	}
 
+	/**
+	 * get stop areas from route using stop point list
+	 * 
+	 * @param route
+	 * @return
+	 */
 	public static List<StopArea> getStopAreaOfRoute(Route route) {
 		ArrayList<StopArea> areas = new ArrayList<>();
 		ArrayList<StopPoint> points = new ArrayList<>(route.getStopPoints());
@@ -149,14 +161,21 @@ public abstract class ChouetteModelUtil {
 				iterator.remove();
 
 		}
-		points.sort((arg0,arg1) -> arg0.getPosition().intValue() - arg1.getPosition().intValue());
-		
+		points.sort((arg0, arg1) -> arg0.getPosition().intValue() - arg1.getPosition().intValue());
+
 		for (StopPoint point : points) {
 			areas.add(point.getContainedInStopArea());
 		}
 		return areas;
 	}
 
+	/**
+	 * replace prefix value in an object id (Neptune)
+	 * 
+	 * @param objectId
+	 * @param prefix
+	 * @return
+	 */
 	public static String changePrefix(String objectId, String prefix) {
 		String[] tokens = objectId.split(":");
 		StringBuilder changed = new StringBuilder(prefix);
@@ -167,6 +186,13 @@ public abstract class ChouetteModelUtil {
 		return changed.toString();
 	}
 
+	/**
+	 * replace suffix value in an object id (Neptune)
+	 * 
+	 * @param objectId
+	 * @param suffix
+	 * @return
+	 */
 	public static String changeSuffix(String objectId, String suffix) {
 		String[] tokens = objectId.split(":");
 		if (tokens.length < 2)
@@ -187,6 +213,8 @@ public abstract class ChouetteModelUtil {
 	/**
 	 * update departure and arrival of JourneyPattern <br>
 	 * to be used after stopPoints update
+	 *
+	 * @param jp
 	 */
 	public static void refreshDepartureArrivals(JourneyPattern jp) {
 		List<StopPoint> stopPoints = jp.getStopPoints();
@@ -200,17 +228,50 @@ public abstract class ChouetteModelUtil {
 					return;
 				}
 			}
-			jp.getStopPoints().sort((arg0,arg1) -> arg0.getPosition().intValue() - arg1.getPosition().intValue());
+			jp.getStopPoints().sort((arg0, arg1) -> arg0.getPosition().intValue() - arg1.getPosition().intValue());
 			jp.setDepartureStopPoint(stopPoints.get(0));
 			jp.setArrivalStopPoint(stopPoints.get(stopPoints.size() - 1));
 		}
 
 	}
 
+	/**
+	 * compare 2 objects even if null
+	 * 
+	 * @param obj1
+	 * @param obj2
+	 * @return true if objects are equals or both null
+	 */
 	public static boolean sameValue(Object obj1, Object obj2) {
 		if (obj1 == null)
 			return obj2 == null;
 		return obj1.equals(obj2);
+	}
+
+
+	/**
+	 * extract lines object id from organization
+	 * 
+	 * @param organisation
+	 * @return object ids of affected lines 
+	 */
+	public static List<String> getAuthorizedLines(Organisation organisation) {
+		List<String> ret = new ArrayList<>();
+		String codes = organisation.getSsoAttributes().get(FUNCTIONAL_SCOPE);
+		if (codes != null) {
+			try {
+				JSONArray json = new JSONArray(codes);
+				for (int i = 0; i < json.length(); i++) {
+					String code = json.getString(i);
+					if (code.contains(":Line:"))
+						ret.add(code);
+				}
+			} catch (JSONException e) {
+				log.error("JSON Error : " + e.getMessage() + " unable to decode data " + codes);
+			}
+		}
+		return ret;
+
 	}
 
 }

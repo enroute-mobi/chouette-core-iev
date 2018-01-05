@@ -65,8 +65,8 @@ fr:
       description: "La durée d’attente à un arrêt ne doit pas être trop grande"
     vehicle_journey_control/speed:
       messages:
-        3_vehiclejourney_2_1: "Sur la course %{source_objectid}, la vitesse calculée %{error_value} entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) est supérieur au seuil toléré (%{reference_value})"
-        3_vehiclejourney_2_2: "Sur la course %{source_objectid}, la vitesse calculée %{error_value} entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) est inférieur au seuil toléré (%{reference_value})"
+        3_vehiclejourney_2_1: "Sur la course %{source_objectid}, la vitesse calculée %{error_value} entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) est supérieure au seuil toléré (%{reference_value})"
+        3_vehiclejourney_2_2: "Sur la course %{source_objectid}, la vitesse calculée %{error_value} entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid}) est inférieure au seuil toléré (%{reference_value})"
       description: "La vitesse entre deux arrêts doit être dans une fourchette paramétrable"
     vehicle_journey_control/delta:
       messages:
@@ -79,7 +79,7 @@ fr:
     vehicle_journey_control/vehicle_journey_at_stops:
       messages:
         3_vehiclejourney_5_1: "La course %{source_objectid} a un horaire d'arrivé %{error_value} supérieur à l'horaire de départ %{reference_value} à l'arrêt %{target_0_label} (%{target_0_objectid})"
-        3_vehiclejourney_5_2: "La course %{source_objectid} a un horaire de départ %{error_value} à l'arrêt %{target_0_label} (%{target_0_objectid}) supérieur à l'horaire d'arrivé % à l'arrêt suivant"
+        3_vehiclejourney_5_2: "La course %{source_objectid} a un horaire de départ %{error_value} à l'arrêt %{target_0_label} (%{target_0_objectid}) supérieur à l'horaire d'arrivé %{reference_value} à l'arrêt suivant"
       description: "L'horaire d'arrivée à un arrêt doit être antérieur à l'horaire de départ de cet arrêt ET les horaires de départ aux arrêts doivent être dans l'ordre chronologique croissant."
     routing_constraint_zone_control/vehicle_journey_at_stops:
       messages:
@@ -99,18 +99,16 @@ fr:
       description: "Les itinéraires d'une ligne doivent être associés en aller/retour"
     generic_attribute_control/pattern:
       messages:
-        3_generic_1: "%{source_objectid} : l'attribut % à une valeur %{error_value} qui ne respecte pas le motif %{reference_value}"
+        3_generic_1: "%{source_objectid} : l'attribut %{source_attribute} a une valeur %{error_value} qui ne respecte pas le motif %{reference_value}"
       description: "l'attribut de l'objet doit respecter un motif (expression régulière)"
     generic_attribute_control/min_max:
       messages:
-        3_generic_2_1: "%{source_objectid} : l'attribut %{source_label} à une valeur %{error_value} supérieure à la valeur maximale autorisée %{reference_value}"
-        3_generic_2_2: "%{source_objectid} : l'attribut %{source_label} à une valeur %{error_value} inférieure à la valeur minimale autorisée %{reference_value}"
+        3_generic_2_1: "%{source_objectid} : l'attribut %{source_attribute} a une valeur %{error_value} supérieure à la valeur maximale autorisée %{reference_value}"
+        3_generic_2_2: "%{source_objectid} : l'attribut %{source_attribute} a une valeur %{error_value} inférieure à la valeur minimale autorisée %{reference_value}"
       description: "La valeur numérique de l'attribut doit rester comprise entre 2 valeurs"
     generic_attribute_control/uniqueness:
       messages:
-        3_generic_3: "%{source_objectid} : l'attribut %{source_label} à une valeur %{error_value}en conflit avec %{reference_value}"
-      description: "La valeur de l'attribut doit être unique au sein des objets de la ligne"
-    shape_control:
+        3_generic_3: "%{source_objectid} : l'attribut %{source_attribute} a une valeur %{error_value} partagée avec %{target_0_objectid}"
       3_shape_1: "Tracé %{source_objectid} : le tracé passe trop loin de l'arrêt %{target_0_label} (%{target_0_objectid}) : %{error_value} > %{reference_value}"
       3_shape_2: "Tracé %{source_objectid} : le tracé n'est pas défini entre les arrêts %{target_0_label} (%{target_0_objectid}) et %{target_1_label} (%{target_1_objectid})"
       3_shape_3: "Le tracé de l'itinéraire %{source_objectid} est en écart avec la voirie sur %{error_value} sections"

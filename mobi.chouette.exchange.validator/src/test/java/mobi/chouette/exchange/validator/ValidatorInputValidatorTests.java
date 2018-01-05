@@ -44,8 +44,8 @@ public class ValidatorInputValidatorTests {
 			"3-Route-2/error//Route", "3-Route-3/warning//Route", "3-Route-4/warning//Route",
 			"3-Route-5/warning//Route", "3-Route-6/warning//Route", "3-Route-8/warning//Route",
 			"3-Route-9/warning//Route", "3-Route-10/warning//Route", "3-Route-11/warning//Route",
-			"3-ITL-1/warning//RoutingConstraint", "3-ITL-2/warning//RoutingConstraint",
-			"3-ITL-3/warning//RoutingConstraint", "3-Shape-1/warning//Shape", "3-Shape-2/warning//Shape",
+			"3-RoutingConstraint-1/warning//RoutingConstraint", "3-RoutingConstraint-2/warning//RoutingConstraint",
+			"3-RoutingConstraint-3/warning//RoutingConstraint", "3-Shape-1/warning//Shape", "3-Shape-2/warning//Shape",
 			"3-Shape-3/warning//Shape", "3-VehicleJourney-4/warning//VehicleJourney",
 			"3-VehicleJourney-5/warning//VehicleJourney" };
 

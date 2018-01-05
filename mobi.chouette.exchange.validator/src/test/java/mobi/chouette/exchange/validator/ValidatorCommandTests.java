@@ -295,9 +295,9 @@ public class ValidatorCommandTests  extends Arquillian {
 			"3-Route-9/warning//Route", 
 			"3-Route-10/warning//Route", 
 			"3-Route-11/warning//Route",
-			"3-ITL-1/warning//RoutingConstraint", 
-			"3-ITL-2/warning//RoutingConstraint",
-			"3-ITL-3/warning//RoutingConstraint", 
+			"3-RoutingConstraint-1/warning//RoutingConstraint", 
+			"3-RoutingConstraint-2/warning//RoutingConstraint",
+			"3-RoutingConstraint-3/warning//RoutingConstraint", 
 			"3-Shape-1/warning//Shape", 
 			"3-Shape-2/warning//Shape",
 			"3-Shape-3/warning//Shape", 
@@ -455,7 +455,7 @@ public class ValidatorCommandTests  extends Arquillian {
 	protected void doValidate(String zipFile, String expectedActionReportResult,  int lineCount, String... expectedData)
 			throws Exception {
 
-		//doImport(zipFile);
+		doImport(zipFile);
 		
 		log.info("########## Validate " + zipFile + " ##########");
 		Context context = initValidatorContext();
@@ -546,9 +546,11 @@ public class ValidatorCommandTests  extends Arquillian {
 				+ notExpected.stream().collect(Collectors.joining("; ")));
 
 		// clean database
-		messages.stream().forEach(m -> em.remove(m));
-		resources.stream().forEach(r -> em.remove(r));
-		em.remove(task);
+//		messages.forEach(m -> em.remove(m));
+//		resources.forEach(r -> em.remove(r));
+//		task.getComplianceCheckBlocks().forEach(b -> em.remove(b));
+//		task.getComplianceChecks().forEach(c -> em.remove(c));
+//		em.remove(task);
 		utx.commit();
 
 	}

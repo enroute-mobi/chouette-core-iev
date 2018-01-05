@@ -63,14 +63,14 @@ public class YmlMessages {
 
 	public static String populateMessage(String key, Map<String, String> values) {
 		String message = getMessage(key);
-		log.info(message);
+//		log.info(key+" : "+message);
 		if (message == null)
 			return message;
 		for (Entry<String, String> e : values.entrySet()) {
 			try {
-				log.info(e);
+//				log.info(e);
 				message = message.replace("%{" + e.getKey() + "}", e.getValue());
-				log.info(message);
+//				log.info(message);
 			} catch (IllegalArgumentException iae) {
 				log.error("IAE : message=" + message + ", key=" + e.getKey() + ", value=" + e.getValue()
 						+ " => exception=" + iae.getMessage());
