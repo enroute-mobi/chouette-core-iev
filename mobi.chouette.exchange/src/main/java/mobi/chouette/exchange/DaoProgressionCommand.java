@@ -248,7 +248,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 		map.put(prefix + "objectid", asString(location.getObjectId()));
 		map.put(prefix + "attribute", asString(location.getAttribute()));
 		if (!location.getObjectRefs().isEmpty()) {
-			// TODO save path
+			map.put(prefix + "object_path", location.getGuiPath());
 		}
 
 	}

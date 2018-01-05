@@ -216,6 +216,9 @@ public class DataLocation {
 		} else if (chouetteObject instanceof Timetable) {
 			Timetable object = (Timetable) chouetteObject;
 			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof RoutingConstraint) {
+			RoutingConstraint object = (RoutingConstraint) chouetteObject;
+			return NamingUtil.getName(object);
 		}
 		return "unnammed";
 	}
