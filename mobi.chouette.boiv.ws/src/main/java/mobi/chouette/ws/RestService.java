@@ -49,6 +49,8 @@ public class RestService {
 		switch (errorCode) {
 		case INVALID_REQUEST:
 			return Status.BAD_REQUEST;
+		case DATABASE_CORRUPTED:
+			return Status.INTERNAL_SERVER_ERROR;
 		case INTERNAL_ERROR:
 			return Status.INTERNAL_SERVER_ERROR;
 		default:
@@ -93,7 +95,7 @@ public class RestService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response newJob(@PathParam("action") String action, @QueryParam("id") final Long id) {
 		try {
-			log.info(Color.CYAN + "Call new on action = " + action + Color.NORMAL);
+			log.info(Color.CYAN + "Call new on action = " + action + " id = "+ id + Color.NORMAL);
 
 			// create response
 			Response result = null;

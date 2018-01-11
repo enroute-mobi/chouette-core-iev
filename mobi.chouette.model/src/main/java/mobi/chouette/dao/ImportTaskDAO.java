@@ -6,5 +6,5 @@ import mobi.chouette.model.importer.ImportTask;
 
 public interface ImportTaskDAO extends GenericDAO<ImportTask> {
 
-	List<ImportTask> getTasks(String status);
+	List<ImportTask> getTasks(String status) throws DaoException;
 }

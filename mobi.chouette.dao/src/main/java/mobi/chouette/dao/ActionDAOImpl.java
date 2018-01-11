@@ -85,7 +85,7 @@ public class ActionDAOImpl implements ActionDAO {
 	}
 
 	@Override
-	public List<ActionTask> getTasks(String status) {
+	public List<ActionTask> getTasks(String status) throws DaoException {
 		List<ActionTask> result = new ArrayList<>();
 		result.addAll(importTaskDAO.getTasks(status));
 		result.addAll(complianceCheckTaskDAO.getTasks(status));
