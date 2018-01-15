@@ -25,9 +25,9 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 
 	private static final String ROUTING_CONSTRAINT_ID = "RoutingConstraint id = ";
 	private static final String[] codes = { 
-			CheckPointConstant.L3_ITL_1, 
-			CheckPointConstant.L3_ITL_2, 
-			CheckPointConstant.L3_ITL_3 };
+			CheckPointConstant.L3_RoutingConstraint_1, 
+			CheckPointConstant.L3_RoutingConstraint_2, 
+			CheckPointConstant.L3_RoutingConstraint_3 };
 
 	@Override
 	public void validate(Context context, RoutingConstraint object, ValidateParameters parameters,
@@ -84,10 +84,10 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 			StopAreaLite sa = ref.findStopArea(p.getStopAreaId());
 			if (sa.isDesactivated()) {
 				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-				validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_ITL_1);
+				validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_RoutingConstraint_1);
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(sa);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_ITL_1, source, null, null, target);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_RoutingConstraint_1, source, null, null, target);
 			}
 
 		}
@@ -137,10 +137,10 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_ITL_2);
+			validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_RoutingConstraint_2);
 			DataLocation source = new DataLocation(object);
 			DataLocation target = new DataLocation(route);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_ITL_2, source,null,null,target);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_RoutingConstraint_2, source,null,null,target);
 		}
 	}
 
@@ -205,9 +205,9 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_ITL_3);
+			validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_RoutingConstraint_3);
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_ITL_3, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_RoutingConstraint_3, source);
 		}
 	}
 

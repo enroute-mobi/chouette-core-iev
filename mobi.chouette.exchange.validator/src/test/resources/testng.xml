@@ -3,13 +3,13 @@
 <suite name="Validation Phase 3" verbose="1">
    <test name="CheckPoints">
        <packages>
-         <package name="mobi.chouette.exchange.validation.checkpoints" >
+         <package name="mobi.chouette.exchange.validator.checkpoints" >
          </package>
        </packages>
    </test>
    <test name="Managment">
        <packages>
-         <package name="mobi.chouette.exchange.validation" >
+         <package name="mobi.chouette.exchange.validator" >
          </package>
        </packages>
    </test>

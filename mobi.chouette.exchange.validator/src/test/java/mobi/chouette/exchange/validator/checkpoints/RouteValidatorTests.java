@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.sql.Date;
 import java.util.ArrayList;

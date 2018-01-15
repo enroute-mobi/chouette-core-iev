@@ -24,7 +24,7 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 		try {
 			return JSONUtil.fromJSON(abstractParameter, NetexStifImportParameters.class);
 		} catch (Exception e) {
-			log.error("Cannot parse parameter "+e.getMessage());
+			log.error("Cannot parse parameter " + e.getMessage());
 			return null;
 		}
 	}
@@ -90,23 +90,36 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 			if (!"netex_stif".equals(importTask.getFormat()))
 				return null;
 			Referential referential = importTask.getReferential();
+			if (referential == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			Organisation organisation = referential.getOrganisation();
+			if (organisation == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential organisation_id is null");
 			NetexStifImportParameters parameter = new NetexStifImportParameters();
 			parameter.setImportId(importTask.getId());
+			if (referential.getLineReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential line_referential_id is null");
 			parameter.setLineReferentialId(referential.getLineReferentialId());
+			if (referential.getStopAreaReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential stop_area_referential_id is null");
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
 			if (referential.getId() == null)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential id " + referential.getId() + " metadata is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential metadata is null");
 			if (referential.getMetadatas().get(0).getLineIds() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential's metadata line ids  null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
+			if (referential.getMetadatas().get(0).getLineIds().length == 0)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
 			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
 			parameter.setOrganisationCode(organisation.getCode());
+
+			// for debug only
+			parameter.setCleanRepository("true".equalsIgnoreCase(System.getProperty("boiv.clean.repository.on.import")));
 
 			return parameter;
 		}

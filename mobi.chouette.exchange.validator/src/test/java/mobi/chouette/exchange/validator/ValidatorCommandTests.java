@@ -39,7 +39,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
@@ -67,12 +66,12 @@ import mobi.chouette.model.importer.ImportTask;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class ValidatorCommandTests  extends Arquillian {
-	
+public class ValidatorCommandTests extends Arquillian {
+
 	protected static final String NETEX_TEST_FILES_DIR = "src/test/data/netex-files-set";
 
 	protected InitialContext initialContext;
-	
+
 	@EJB
 	ReferentialDAO referentialDAO;
 
@@ -87,7 +86,7 @@ public class ValidatorCommandTests  extends Arquillian {
 
 	@Inject
 	UserTransaction utx;
-	
+
 	@Deployment
 	public static EnterpriseArchive createDeployment() {
 		EnterpriseArchive result;
@@ -147,21 +146,17 @@ public class ValidatorCommandTests  extends Arquillian {
 					jars.add(file);
 			}
 		}
-		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war").addAsWebInfResource("postgres-ds.xml")
-				.addClass(JobDataImpl.class)
-				.addClass(YmlMessages.class)
+		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
+				.addAsWebInfResource("postgres-ds.xml").addClass(JobDataImpl.class).addClass(YmlMessages.class)
 				.addClass(ValidatorCommandTests.class);
-		
-		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear")
-				.addAsLibraries(jars.toArray(new File[0]))
-				.addAsModules(modules.toArray(new JavaArchive[0]))
-				.addAsModule(testWar)
+
+		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
+				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
 				.addAsResource(EmptyAsset.INSTANCE, "beans.xml");
 		return result;
 	}
-	
-	protected void init()
-	{
+
+	protected void init() {
 		Locale.setDefault(Locale.ENGLISH);
 		if (initialContext == null) {
 			try {
@@ -169,7 +164,6 @@ public class ValidatorCommandTests  extends Arquillian {
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
-
 
 		}
 
@@ -197,7 +191,7 @@ public class ValidatorCommandTests  extends Arquillian {
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L });
 		configuration.setIds(ids);
 		JobDataImpl jobData = new JobDataImpl();
-		utx.begin(); 
+		utx.begin();
 		em.joinTransaction();
 		Referential ref = referentialDAO.find(Long.valueOf(1L));
 		ImportTask task = new ImportTask();
@@ -246,7 +240,7 @@ public class ValidatorCommandTests  extends Arquillian {
 		ValidatorInputValidator validator = new ValidatorInputValidator();
 		context.put(Constant.CONFIGURATION, validator.toActionParameter(task));
 		context.put(Constant.JOB_DATA, jobData);
-		jobData.setPathName( "target/referential/test");
+		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
 			try {
@@ -255,59 +249,41 @@ public class ValidatorCommandTests  extends Arquillian {
 				e.printStackTrace();
 			}
 		f.mkdirs();
-		jobData.setReferential( "chouette_gui");
+		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.validator);
 		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
-	
+
 	private static final String[] blockModes = { "bus", "metro" };
 
-	
-	private static final String[] checksForBus = { 
-			"3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
+	private static final String[] checksForBus = { "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
 			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
 			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney",
 			"3-Generic-1/warning/target=route#name,pattern=^[a-zA-Z ]+$/Route",
 			"3-Generic-2/error/target=vehicle_journey#number,minimum=1,maximum=30000/VehicleJourney",
 			"3-Generic-3/warning/target=vehicle_journey#number/VehicleJourney" };
 
-	private static final String[] checksForMetro = { 
-			"3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
+	private static final String[] checksForMetro = { "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
 			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
 			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney",
 			"3-Generic-1/warning/target=route#name,pattern=^[a-zA-Z ]+$/Route",
 			"3-Generic-2/warning/target=vehicle_journey#number,minimum=1,maximum=30000/VehicleJourney",
 			"3-Generic-3/warning/target=vehicle_journey#number/VehicleJourney" };
-	
-	private static final String[] checksForAll = { 
-			"3-JourneyPattern-1/warning//JourneyPattern",
-			"3-JourneyPattern-2/warning//JourneyPattern", 
-			"3-Line-1/warning//Line", 
-			"3-Route-1/warning//Route",
-			"3-Route-2/error//Route", 
-			"3-Route-3/warning//Route", 
-			"3-Route-4/warning//Route",
-			"3-Route-5/warning//Route", 
-			"3-Route-6/warning//Route", 
-			"3-Route-8/warning//Route",
-			"3-Route-9/warning//Route", 
-			"3-Route-10/warning//Route", 
-			"3-Route-11/warning//Route",
-			"3-RoutingConstraint-1/warning//RoutingConstraint", 
-			"3-RoutingConstraint-2/warning//RoutingConstraint",
-			"3-RoutingConstraint-3/warning//RoutingConstraint", 
-			"3-Shape-1/warning//Shape", 
-			"3-Shape-2/warning//Shape",
-			"3-Shape-3/warning//Shape", 
-			"3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
+
+	private static final String[] checksForAll = { "3-JourneyPattern-1/warning//JourneyPattern",
+			"3-JourneyPattern-2/warning//JourneyPattern", "3-Line-1/warning//Line", "3-Route-1/warning//Route",
+			"3-Route-2/error//Route", "3-Route-3/warning//Route", "3-Route-4/warning//Route",
+			"3-Route-5/warning//Route", "3-Route-6/warning//Route", "3-Route-8/warning//Route",
+			"3-Route-9/warning//Route", "3-Route-10/warning//Route", "3-Route-11/warning//Route",
+			"3-RoutingConstraint-1/warning//RoutingConstraint", "3-RoutingConstraint-2/warning//RoutingConstraint",
+			"3-RoutingConstraint-3/warning//RoutingConstraint", "3-Shape-1/warning//Shape", "3-Shape-2/warning//Shape",
+			"3-Shape-3/warning//Shape", "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
 			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
-			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney",
-			"3-VehicleJourney-4/warning//VehicleJourney",
+			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney", "3-VehicleJourney-4/warning//VehicleJourney",
 			"3-VehicleJourney-5/warning//VehicleJourney" };
 
-	
 	private ComplianceCheckTask createTask(Referential referential) {
 		ComplianceCheckTask task = new ComplianceCheckTask();
 
@@ -330,15 +306,16 @@ public class ValidatorCommandTests  extends Arquillian {
 				block.getConditionAttributes().put(ValidatorInputValidator.TRANSPORT_SUBMODE_KEY, modes[1]);
 			task.getComplianceCheckBlocks().add(block);
 
-			addChecksToBlock(task, block, mode.equals("bus")? checksForBus:checksForMetro);
+			addChecksToBlock(task, block, mode.equals("bus") ? checksForBus : checksForMetro);
 		}
 		addCheckToTask(task);
 
 	}
+
 	private void addCheckToTask(ComplianceCheckTask task) {
 		for (String checkData : checksForAll) {
 			String[] data = checkData.split("/");
-			log.info("checkData = "+checkData+" , size = "+data.length);
+			log.info("checkData = " + checkData + " , size = " + data.length);
 			ComplianceCheck check = new ComplianceCheck();
 			check.setCode(data[0]);
 			check.setComment(checkData);
@@ -364,7 +341,7 @@ public class ValidatorCommandTests  extends Arquillian {
 	private void addChecksToBlock(ComplianceCheckTask task, ComplianceCheckBlock block, String[] checksForBlock) {
 		for (String checkData : checksForBlock) {
 			String[] data = checkData.split("/");
-			log.info("checkData = "+checkData+" , size = "+data.length);
+			log.info("checkData = " + checkData + " , size = " + data.length);
 			ComplianceCheck check = new ComplianceCheck();
 			check.setCode(data[0]);
 			check.setComment(checkData);
@@ -381,7 +358,7 @@ public class ValidatorCommandTests  extends Arquillian {
 				}
 			}
 			check.setType(data[3]);
-			check.setBlock(block); 
+			check.setBlock(block);
 			check.setTask(task);
 			task.getComplianceChecks().add(check);
 		}
@@ -394,9 +371,7 @@ public class ValidatorCommandTests  extends Arquillian {
 		FileUtils.copyFile(srcFile, destFile);
 	}
 
-	
-	protected void doImport(String zipFile) throws Exception
-	{
+	protected void doImport(String zipFile) throws Exception {
 		log.info("########## Import " + zipFile + " ##########");
 		Context context = initImportContext();
 		context.put(Constant.REFERENTIAL, new Referential());
@@ -414,9 +389,9 @@ public class ValidatorCommandTests  extends Arquillian {
 			log.error("test failed", ex);
 			throw ex;
 		}
-		
+
 	}
-	
+
 	private List<ComplianceCheckResource> getRessources(ComplianceCheckTask task) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<ComplianceCheckResource> criteria = builder.createQuery(ComplianceCheckResource.class);
@@ -439,7 +414,8 @@ public class ValidatorCommandTests  extends Arquillian {
 		Root<ComplianceCheckMessage> root = criteria.from(ComplianceCheckMessage.class);
 		Predicate predicateTaskId = builder.equal(root.get(ComplianceCheckMessage_.taskId), task.getId());
 		if (ressource != null) {
-			Predicate predicateResourceId = builder.equal(root.get(ComplianceCheckMessage_.resourceId), ressource.getId());
+			Predicate predicateResourceId = builder.equal(root.get(ComplianceCheckMessage_.resourceId),
+					ressource.getId());
 			criteria.where(predicateTaskId, predicateResourceId);
 		} else {
 			criteria.where(predicateTaskId);
@@ -451,17 +427,15 @@ public class ValidatorCommandTests  extends Arquillian {
 
 	}
 
-	
-	protected void doValidate(String zipFile, String expectedActionReportResult,  int lineCount, String... expectedData)
+	protected void doValidate(String zipFile, String expectedActionReportResult, int lineCount, String... expectedData)
 			throws Exception {
 
 		doImport(zipFile);
-		
+
 		log.info("########## Validate " + zipFile + " ##########");
 		Context context = initValidatorContext();
 		// context.put(Constant.REFERENTIAL, new Referential());
-		Command command =  CommandFactory.create(initialContext,
-				ValidatorCommand.class.getName());
+		Command command = CommandFactory.create(initialContext, ValidatorCommand.class.getName());
 		JobDataImpl jobData = (JobDataImpl) context.get(Constant.JOB_DATA);
 		// jobData.setInputFilename(zipFile);
 		try {
@@ -479,87 +453,95 @@ public class ValidatorCommandTests  extends Arquillian {
 		ComplianceCheckTask task = complianceCheckTaskDAO.find(jobData.getId());
 
 		List<ComplianceCheckResource> resources = getRessources(task);
-		Map<Long, ComplianceCheckResource> mapResources = new HashMap<Long, ComplianceCheckResource>();
-		int lines = 0;
-		for (ComplianceCheckResource x : resources) {
-			mapResources.put(x.getId(), x);
-			if (x.getType().equals("line")) lines++;
-		}
-		Assert.assertEquals(lines, lineCount, "unexpected line count");
-
-		Set<String> actualErrors = new TreeSet<String>();
 		List<ComplianceCheckMessage> messages = getMessages(task);
-
-		messages.stream().forEach(x -> {
-			ComplianceCheckResource ir = mapResources.get(x.getResourceId());
-			StringBuilder sb = new StringBuilder();
-			sb.append(ir.getName());
-			sb.append(":");
-			sb.append(ir.getStatus());
-			sb.append(":");
-			sb.append(x.getMessageAttributs().get("test_id"));
-			sb.append(":");
-			sb.append(x.getMessageKey());
-			
-			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
-			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
-			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
-					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
-
-			log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";MSG=" + message);
-
-			actualErrors.add(sb.toString());
-		});
-
-		resources.stream().forEach(x -> {
-			List<ComplianceCheckMessage> msgs = getMessages(task, x);
-			if (x.getType().equalsIgnoreCase("line") && x.getStatus().equalsIgnoreCase("ERROR")) {
-				Assert.assertTrue(((msgs != null) ? msgs.size() : 0) > 0,
-						"ComplianceCheckResource " + x.getName() + " contains ERROR, but no message !!!");
+		try {
+			Map<Long, ComplianceCheckResource> mapResources = new HashMap<Long, ComplianceCheckResource>();
+			int lines = 0;
+			for (ComplianceCheckResource x : resources) {
+				mapResources.put(x.getId(), x);
+				if (x.getType().equals("line"))
+					lines++;
 			}
-		});
+			Assert.assertEquals(lines, lineCount, "unexpected line count");
 
-		Set<String> expectedErrors = new TreeSet<String>();
-		Arrays.asList(expectedData).stream().forEach(x -> expectedErrors.add(x.trim()));
+			Set<String> actualErrors = new TreeSet<String>();
 
-		List<String> expectedNotDetected = expectedErrors.stream().filter(x -> !actualErrors.contains(x))
-				.collect(Collectors.toList());
-		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
-				.collect(Collectors.toList());// );
+			messages.stream().forEach(x -> {
+				ComplianceCheckResource ir = mapResources.get(x.getResourceId());
+				StringBuilder sb = new StringBuilder();
+				sb.append(ir.getName());
+				sb.append(":");
+				sb.append(ir.getStatus());
+				sb.append(":");
+				sb.append(x.getMessageAttributs().get("test_id"));
+				sb.append(":");
+				sb.append(x.getMessageKey());
 
-		log.info("ALL DETECTED ERRORS (" + actualErrors.size() + "):" + zipFile + ";" + actionReport.getResult() + ";"
-				+ actualErrors.stream().collect(Collectors.joining("; ")));
-		if (!notExpected.isEmpty()) {
-			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + actionReport.getResult() + ";"
+				String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
+				List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
+				Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
+						+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
+
+				Assert.assertTrue(x.getResourceAttributs().containsKey("object_path"),
+						"resource should contains object_path");
+
+				log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";PATH="
+						+ x.getResourceAttributs().get("object_path") + ";MSG=" + message);
+
+				actualErrors.add(sb.toString());
+			});
+
+			resources.stream().forEach(x -> {
+				List<ComplianceCheckMessage> msgs = getMessages(task, x);
+				if (x.getType().equalsIgnoreCase("line") && x.getStatus().equalsIgnoreCase("ERROR")) {
+					Assert.assertTrue(((msgs != null) ? msgs.size() : 0) > 0,
+							"ComplianceCheckResource " + x.getName() + " contains ERROR, but no message !!!");
+				}
+			});
+
+			Set<String> expectedErrors = new TreeSet<String>();
+			Arrays.asList(expectedData).stream().forEach(x -> expectedErrors.add(x.trim()));
+
+			List<String> expectedNotDetected = expectedErrors.stream().filter(x -> !actualErrors.contains(x))
+					.collect(Collectors.toList());
+			List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
+					.collect(Collectors.toList());// );
+
+			log.info("ALL DETECTED ERRORS (" + actualErrors.size() + "):" + zipFile + ";" + actionReport.getResult()
+					+ ";" + actualErrors.stream().collect(Collectors.joining("; ")));
+			if (!notExpected.isEmpty()) {
+				log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + actionReport.getResult() + ";"
+						+ notExpected.stream().collect(Collectors.joining("; ")));
+			}
+			if (!expectedNotDetected.isEmpty()) {
+				log.error(
+						"EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
+			}
+
+			Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
+
+			Assert.assertTrue(expectedNotDetected.isEmpty(),
+					expectedNotDetected.size() + " Error(s) not detected (but expected) : "
+							+ expectedNotDetected.stream().collect(Collectors.joining("; ")));
+			Assert.assertTrue(notExpected.isEmpty(), notExpected.size() + " Error(s) not expected (but detected) : "
 					+ notExpected.stream().collect(Collectors.joining("; ")));
+
+		} finally {
+			// clean database
+			messages.forEach(m -> em.remove(m));
+			resources.forEach(r -> em.remove(r));
+			task.getComplianceCheckBlocks().forEach(b -> em.remove(b));
+			task.getComplianceChecks().forEach(c -> em.remove(c));
+			em.remove(task);
+			utx.commit();
 		}
-		if (!expectedNotDetected.isEmpty()) {
-			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
-		}
-
-		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
-
-		Assert.assertTrue(expectedNotDetected.isEmpty(),
-				expectedNotDetected.size() + " Error(s) not detected (but expected) : "
-						+ expectedNotDetected.stream().collect(Collectors.joining("; ")));
-		Assert.assertTrue(notExpected.isEmpty(), notExpected.size() + " Error(s) not expected (but detected) : "
-				+ notExpected.stream().collect(Collectors.joining("; ")));
-
-		// clean database
-//		messages.forEach(m -> em.remove(m));
-//		resources.forEach(r -> em.remove(r));
-//		task.getComplianceCheckBlocks().forEach(b -> em.remove(b));
-//		task.getComplianceChecks().forEach(c -> em.remove(c));
-//		em.remove(task);
-		utx.commit();
 
 	}
-	
-	@Test(groups = { "Level3" }, testName = "nominal", description = "no error", priority=1)
-		public void verifyNominal() throws Exception {
-			doValidate("OFFRE_SNTYO_Nominal.zip","OK",8 );
+
+	// @Test(groups = { "Level3" }, testName = "nominal", description = "no
+	// error", priority=1)
+	public void verifyNominal() throws Exception {
+		doValidate("OFFRE_SNTYO_Nominal.zip", "OK", 8);
 	}
-	
-	
-	
+
 }
