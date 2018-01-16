@@ -549,7 +549,7 @@ public class ValidatorCommandTests extends Arquillian {
 
 	}
 
-	//@Test(groups = { "Level3" }, testName = "nominal", description = "no error", priority = 1)
+	@Test(groups = { "Level3" }, testName = "nominal", description = "no error", priority = 1)
 	public void verifyNominal() throws Exception {
 		doValidate("OFFRE_SNTYO_Nominal.zip", "NOK", 8, "01:ERROR:3-Generic-1:3_generic_1",
 "01:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
