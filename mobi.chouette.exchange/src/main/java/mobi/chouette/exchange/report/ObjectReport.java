@@ -9,16 +9,16 @@ import java.util.Map.Entry;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.validation.report.CheckPointReport.SEVERITY;
-
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 @ToString
 public class ObjectReport extends AbstractReport implements CheckedReport {
@@ -108,6 +108,8 @@ public class ObjectReport extends AbstractReport implements CheckedReport {
 				ret = true;
 			}
 			checkPointWarningCount++;
+			if (status.ordinal() < OBJECT_STATE.WARNING.ordinal())
+				status = OBJECT_STATE.WARNING;
 		} else {
 			if (checkPointErrorCount < MAX_ERRORS) {
 				checkPointErrorKeys.add(Integer.valueOf(checkPointErrorId));

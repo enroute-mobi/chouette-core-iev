@@ -20,6 +20,8 @@ import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validator.checkpoints.JourneyPatternValidator;
 import mobi.chouette.exchange.validator.checkpoints.LineValidator;
@@ -46,6 +48,7 @@ public class LineValidatorCommand implements Command {
 	public boolean execute(Context context) throws Exception {
 		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
+		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		ValidationReport report = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);
@@ -66,7 +69,12 @@ public class LineValidatorCommand implements Command {
 			r.getVehicleJourneys().values().stream().forEach(
 					vehicleJourney-> vehicleJourneyCheckPoints.validate(context, vehicleJourney,parameters,transportMode));
 
+			if (reporter.hasLineValidationErrors(context,line))
+			{
+				reporter.setActionError(context, ERROR_CODE.INVALID_DATA, "Line error for " + line.getPublishedName());			
+			}
 			result = Constant.SUCCESS;
+			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		} finally {

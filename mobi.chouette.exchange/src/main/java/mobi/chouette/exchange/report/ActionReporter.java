@@ -2,6 +2,7 @@ package mobi.chouette.exchange.report;
 
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.CheckPointReport.SEVERITY;
+import mobi.chouette.model.LineLite;
 
 public interface ActionReporter {
 
@@ -205,6 +206,8 @@ public interface ActionReporter {
 	 */
 	boolean hasFileValidationErrors(Context context, String filename);
 
+	boolean hasLineValidationErrors(Context context, LineLite line);
+
 	/**
 	 * @param context
 	 * @param objectId
@@ -233,5 +236,6 @@ public interface ActionReporter {
 			return actionReporter;
 		}
 	}
+
 
 }

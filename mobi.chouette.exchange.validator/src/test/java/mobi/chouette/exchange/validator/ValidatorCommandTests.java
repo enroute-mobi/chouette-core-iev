@@ -39,6 +39,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
@@ -259,14 +260,14 @@ public class ValidatorCommandTests extends Arquillian {
 	private static final String[] blockModes = { "bus", "metro" };
 
 	private static final String[] checksForBus = { "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
-			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
+			"3-VehicleJourney-2/error/minimum=5,maximum=50/VehicleJourney",
 			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney",
 			"3-Generic-1/warning/target=route#name,pattern=^[a-zA-Z ]+$/Route",
 			"3-Generic-2/error/target=vehicle_journey#number,minimum=1,maximum=30000/VehicleJourney",
 			"3-Generic-3/warning/target=vehicle_journey#number/VehicleJourney" };
 
 	private static final String[] checksForMetro = { "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
-			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
+			"3-VehicleJourney-2/error/minimum=5,maximum=50/VehicleJourney",
 			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney",
 			"3-Generic-1/warning/target=route#name,pattern=^[a-zA-Z ]+$/Route",
 			"3-Generic-2/warning/target=vehicle_journey#number,minimum=1,maximum=30000/VehicleJourney",
@@ -280,7 +281,7 @@ public class ValidatorCommandTests extends Arquillian {
 			"3-RoutingConstraint-1/warning//RoutingConstraint", "3-RoutingConstraint-2/warning//RoutingConstraint",
 			"3-RoutingConstraint-3/warning//RoutingConstraint", "3-Shape-1/warning//Shape", "3-Shape-2/warning//Shape",
 			"3-Shape-3/warning//Shape", "3-VehicleJourney-1/warning/maximum=5/VehicleJourney",
-			"3-VehicleJourney-2/warning/minimum=5,maximum=50/VehicleJourney",
+			"3-VehicleJourney-2/error/minimum=5,maximum=50/VehicleJourney",
 			"3-VehicleJourney-3/warning/maximum=10/VehicleJourney", "3-VehicleJourney-4/warning//VehicleJourney",
 			"3-VehicleJourney-5/warning//VehicleJourney" };
 
@@ -455,6 +456,10 @@ public class ValidatorCommandTests extends Arquillian {
 		List<ComplianceCheckResource> resources = getRessources(task);
 		List<ComplianceCheckMessage> messages = getMessages(task);
 		try {
+			log.info("task = " + task.toString());
+			log.info("report = " + actionReport.toString());
+
+			Assert.assertTrue(actionReport.isWarning(), "report should return warning status");
 			Map<Long, ComplianceCheckResource> mapResources = new HashMap<Long, ComplianceCheckResource>();
 			int lines = 0;
 			for (ComplianceCheckResource x : resources) {
@@ -485,17 +490,23 @@ public class ValidatorCommandTests extends Arquillian {
 				Assert.assertTrue(x.getResourceAttributs().containsKey("object_path"),
 						"resource should contains object_path");
 
-				log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";PATH="
-						+ x.getResourceAttributs().get("object_path") + ";MSG=" + message);
+//				log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";PATH="
+//						+ x.getResourceAttributs().get("object_path") + ";MSG=" + message);
 
 				actualErrors.add(sb.toString());
 			});
 
 			resources.stream().forEach(x -> {
+				log.info("resource = "+x);
 				List<ComplianceCheckMessage> msgs = getMessages(task, x);
-				if (x.getType().equalsIgnoreCase("line") && x.getStatus().equalsIgnoreCase("ERROR")) {
-					Assert.assertTrue(((msgs != null) ? msgs.size() : 0) > 0,
-							"ComplianceCheckResource " + x.getName() + " contains ERROR, but no message !!!");
+				if (x.getType().equalsIgnoreCase("line")) {
+					if (x.getStatus().equalsIgnoreCase("ERROR") || x.getStatus().equalsIgnoreCase("WARNING")) {
+						Assert.assertTrue(((msgs != null) ? msgs.size() : 0) > 0, "ComplianceCheckResource "
+								+ x.getName() + " contains " + x.getStatus() + ", but no message !!!");
+					} else {
+						Assert.assertTrue(((msgs != null) ? msgs.size() : 0) == 0,
+								"ComplianceCheckResource " + x.getName() + " contains OK, but with messages !!!");
+					}
 				}
 			});
 
@@ -538,10 +549,26 @@ public class ValidatorCommandTests extends Arquillian {
 
 	}
 
-	// @Test(groups = { "Level3" }, testName = "nominal", description = "no
-	// error", priority=1)
+	@Test(groups = { "Level3" }, testName = "nominal", description = "no error", priority = 1)
 	public void verifyNominal() throws Exception {
-		doValidate("OFFRE_SNTYO_Nominal.zip", "OK", 8);
+		doValidate("OFFRE_SNTYO_Nominal.zip", "NOK", 8, "01:ERROR:3-Generic-1:3_generic_1",
+"01:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
+"01:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_2", 
+"03:ERROR:3-Generic-1:3_generic_1", 
+"03:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
+"03:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_2", 
+"04:ERROR:3-Generic-1:3_generic_1", 
+"04:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
+"05:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
+"05:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_2", 
+"08:ERROR:3-Generic-1:3_generic_1", 
+"08:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
+"08:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_2", 
+"11:ERROR:3-Generic-1:3_generic_1", 
+"11:ERROR:3-Route-9:3_route_9", 
+"11:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
+"11:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_2", 
+"11:ERROR:3-VehicleJourney-5:3_vehiclejourney_5_2");
 	}
 
 }

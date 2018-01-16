@@ -47,6 +47,7 @@ import mobi.chouette.dao.ImportTaskDAO;
 import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.exchange.netex_stif.JobDataImpl;
 import mobi.chouette.exchange.report.ActionReport;
+import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.importer.ImportMessage;
@@ -258,7 +259,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian {
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
 
-			log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";MSG=" + message);
+//			log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";MSG=" + message);
 
 			actualErrors.add(sb.toString());
 		});
@@ -290,6 +291,10 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian {
 		}
 
 		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
+		if (actionReport.getResult().equals(ReportConstant.STATUS_ERROR))
+		{
+			log.info("ActionError = "+actionReport.getFailure());
+		}
 
 		Assert.assertTrue(expectedNotDetected.isEmpty(),
 				expectedNotDetected.size() + " Error(s) not detected (but expected) : "

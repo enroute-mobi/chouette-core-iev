@@ -342,7 +342,7 @@ public abstract class AbstractTestValidation extends Arquillian {
 			Assert.assertEquals(lineReport.getCheckPointErrorCount(), reportCount, "line error reported");
 			error = valReport.getCheckPointErrors().get(lineReport.getCheckPointErrorKeys().get(0).intValue());
 		} else {
-			Assert.assertEquals(lineReport.getStatus(), OBJECT_STATE.OK, "line status reported");
+			Assert.assertEquals(lineReport.getStatus(), state, "line status reported");
 			Assert.assertEquals(lineReport.getCheckPointWarningCount(), reportCount, "line warning reported");
 			error = valReport.getCheckPointErrors().get(lineReport.getCheckPointWarningKeys().get(0).intValue());
 		}
