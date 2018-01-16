@@ -49,7 +49,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_1", priority = 21)
+	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_1", priority = 141)
 	public void verifyTest_3_RoutingConstraint_1() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_RoutingConstraint_1 + Color.NORMAL);
 		initSchema();
@@ -96,7 +96,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_2", priority = 22)
+	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_2", priority = 142)
 	public void verifyTest_3_RoutingConstraint_2() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_RoutingConstraint_2 + Color.NORMAL);
 		initSchema();
@@ -133,7 +133,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_3", priority = 23)
+	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_3", priority = 143)
 	public void verifyTest_3_RoutingConstraint_3() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_RoutingConstraint_3 + Color.NORMAL);
 		initSchema();

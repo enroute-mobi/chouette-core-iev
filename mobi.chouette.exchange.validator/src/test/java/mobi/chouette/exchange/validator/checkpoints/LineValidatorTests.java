@@ -49,7 +49,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "line" }, description = "3_Line_1", priority = 31)
+	@Test(groups = { "line" }, description = "3_Line_1", priority = 121)
 	public void verifyTest_3_Line_1() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Line_1 + Color.NORMAL);
 		initSchema();
@@ -87,7 +87,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "line" }, description = CheckPointConstant.L3_Route_4 + " : error routes with same ordered stops", priority = 31)
+	@Test(groups = { "line" }, description = CheckPointConstant.L3_Route_4 + " : error routes with same ordered stops", priority = 122)
 	public void verifyTest_3_Line_1_ErrorRoutesWithSameOrderedStops() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_4 + Color.NORMAL);
 		initSchema();
@@ -131,7 +131,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@Test(groups = { "line" }, description = CheckPointConstant.L3_JourneyPattern_1
-			+ " : error 2 journeypatterns must have different different stops order ", priority = 32)
+			+ " : error 2 journeypatterns must have different different stops order ", priority = 123)
 	public void verifyTest_3_Line_1_ErrorJourneyPatternWithSameOrderedStops() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_JourneyPattern_1 + Color.NORMAL);
 		initSchema();

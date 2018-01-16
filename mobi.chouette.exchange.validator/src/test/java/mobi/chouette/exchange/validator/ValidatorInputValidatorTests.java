@@ -139,7 +139,7 @@ public class ValidatorInputValidatorTests {
 		return;
 	}
 
-	@Test(groups = { "input" }, description = "toActionParameter", priority = 1)
+	@Test(groups = { "input" }, description = "toActionParameter", priority = 100)
 	public void validateToActionParameter() throws Exception
 	{
 		init();
