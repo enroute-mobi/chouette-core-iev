@@ -152,7 +152,7 @@ public class NetexStifParserCommandTests  {
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		{
 			File f = new File(path, calendrier);
-			parser.setFileURL("file://" + f.getAbsolutePath());
+			parser.setFileURL(f.toURI().toString());
 			parser.execute(context);
 			log.info(report);
 			log.info(valReport.getCheckPointErrors());
@@ -160,7 +160,7 @@ public class NetexStifParserCommandTests  {
 		}
 		{
 			File f = new File(path, "commun.xml");
-			parser.setFileURL("file://" + f.getAbsolutePath());
+			parser.setFileURL(f.toURI().toString());
 			parser.execute(context);
 			log.info(report);
 			log.info(valReport.getCheckPointErrors());
@@ -168,7 +168,7 @@ public class NetexStifParserCommandTests  {
 			Assert.assertFalse(referential.getSharedTimetableTemplates().isEmpty(), " no timetables");
 		}
 		File f = new File(path, "offre.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
@@ -273,17 +273,25 @@ public class NetexStifParserCommandTests  {
 
 	@Test(groups = { "Nominal" }, description = "commun", priority = 301)
 	public void verifyCommunParser() throws Exception {
+		try
+		{
 		Context context = initImportContext();
 
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		File f = new File(path, "commun.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		assertNotice(referential, "CITYWAY:Notice:1:LOC", "Notice 1", "1");
 		assertNotice(referential, "CITYWAY:Notice:2:LOC", "Notice 2", "2");
 		assertNotice(referential, "CITYWAY:Notice:3:LOC", "Notice 3", "3");
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	private void assertNotice(Referential referential, String id, String text, String publicCode) {
@@ -301,7 +309,7 @@ public class NetexStifParserCommandTests  {
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		File f = new File(path, "calendriers.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		assertTimetable(referential, "CITYWAY:DayType:1:LOC", "Semaine", "Monday,Tuesday,Wednesday,Thursday,Friday", 0,

@@ -216,7 +216,7 @@ public class ValidatorCommandTests extends Arquillian {
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType("netex_stif");
 		// context.put(TESTNG, "true"); // mode test
-		context.put(Constant.OPTIMIZED, Boolean.FALSE);
+		// context.put(Constant.OPTIMIZED, Boolean.FALSE); // ne pas activer le thread copy
 		return context;
 
 	}
@@ -567,8 +567,7 @@ public class ValidatorCommandTests extends Arquillian {
 "11:ERROR:3-Generic-1:3_generic_1", 
 "11:ERROR:3-Route-9:3_route_9", 
 "11:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
-"11:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_2", 
-"11:ERROR:3-VehicleJourney-5:3_vehiclejourney_5_2");
+"11:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_2");
 	}
 
 }

@@ -96,7 +96,7 @@ public class NetexStifSAXParserCommandTests {
 				NetexStifSAXParserCommand.class.getName());
 		
 		File f = new File(path, "badxmlfile.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
 		// check error report
 		ActionReport report = (ActionReport) context.get(Constant.REPORT);
@@ -126,7 +126,7 @@ public class NetexStifSAXParserCommandTests {
 				NetexStifSAXParserCommand.class.getName());
 		
 		File f = new File(path, "badxsdfile.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
 		// check error report
 		ActionReport report = (ActionReport) context.get(Constant.REPORT);

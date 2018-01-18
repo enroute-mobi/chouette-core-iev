@@ -172,7 +172,7 @@ public class RouteRegisterCommand implements Command {
 			}
 			// vehicleJourneyDAO.deleteChildren(list);
 			context.put(Constant.BUFFER, buffer.toString());
-			log.warn(context.get(Constant.BUFFER));
+			// log.warn(context.get(Constant.BUFFER));
 		}
 
 		return true;
