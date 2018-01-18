@@ -56,7 +56,7 @@ public class DateRangeArrayUserType implements UserType {
 			Object[] results = (Object[]) rs.getArray(names[0]).getArray();
 			DateRange[] castObject = new DateRange[results.length];
 			for (int i = 0; i < results.length; i++) {
-				castObject[i] = new DateRange((PGobject)results[i]);
+				castObject[i] = new DateRange((PGobject) results[i]);
 			}
 			return castObject;
 		}
@@ -75,7 +75,7 @@ public class DateRangeArrayUserType implements UserType {
 			}
 			Array array = session.connection().createArrayOf("daterange", pgObject);
 			st.setArray(index, array);
-		} else {
+		} else if (st != null) {
 			st.setNull(index, arrayTypes[0]);
 		}
 

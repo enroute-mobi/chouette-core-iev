@@ -1,8 +1,11 @@
 package mobi.chouette.service;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Timestamp;
@@ -21,11 +24,22 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.PropertyNames;
 import mobi.chouette.dao.ActionDAO;
+import mobi.chouette.dao.DaoException;
 import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.importer.ImportTask;
@@ -53,7 +67,7 @@ public class JobServiceManager {
 	@EJB
 	Scheduler scheduler;
 
-	private String rootDirectory;
+	private static String rootDirectory;
 
 	private static Set<String> intializedContexts = new HashSet<>();
 
@@ -64,30 +78,16 @@ public class JobServiceManager {
 		System.setProperty(APPLICATION_NAME + PropertyNames.MAX_STARTED_JOBS, "5");
 		System.setProperty(APPLICATION_NAME + PropertyNames.MAX_COPY_BY_JOB, "5");
 		System.setProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME, "");
+		System.setProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN, "");
 		try {
 			// set default properties
 			System.setProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY, System.getProperty("user.home"));
 
 			// try to read properties
-			File propertyFile = new File("/etc/chouette/" + APPLICATION_NAME + "/" + APPLICATION_NAME + ".properties");
+			File propertyFile = new File(
+					"/etc/chouette/" + APPLICATION_NAME + File.separatorChar + APPLICATION_NAME + ".properties");
 			if (propertyFile.exists() && propertyFile.isFile()) {
-				try {
-					FileInputStream fileInput = new FileInputStream(propertyFile);
-					Properties properties = new Properties();
-					properties.load(fileInput);
-					fileInput.close();
-					log.info("reading properties from " + propertyFile.getAbsolutePath());
-					for (String key : properties.stringPropertyNames()) {
-						if (key.startsWith(APPLICATION_NAME))
-							System.setProperty(key, properties.getProperty(key));
-						else
-							System.setProperty(APPLICATION_NAME + "." + key, properties.getProperty(key));
-					}
-				} catch (IOException e) {
-					log.error(
-							"cannot read properties " + propertyFile.getAbsolutePath() + " , using default properties",
-							e);
-				}
+				loadProperties(propertyFile);
 			} else {
 				log.info("no property file found " + propertyFile.getAbsolutePath() + " , using default properties");
 			}
@@ -95,7 +95,24 @@ public class JobServiceManager {
 			log.error("cannot process properties", e);
 		}
 		rootDirectory = System.getProperty(APPLICATION_NAME + PropertyNames.ROOT_DIRECTORY);
+		intializedContexts.add(APPLICATION_NAME);
+	}
 
+	private void loadProperties(File propertyFile) {
+		try (FileInputStream fileInput = new FileInputStream(propertyFile);) {
+			Properties properties = new Properties();
+			properties.load(fileInput);
+			fileInput.close();
+			log.info("reading properties from " + propertyFile.getAbsolutePath());
+			for (String key : properties.stringPropertyNames()) {
+				if (key.startsWith(APPLICATION_NAME))
+					System.setProperty(key, properties.getProperty(key));
+				else
+					System.setProperty(APPLICATION_NAME + "." + key, properties.getProperty(key));
+			}
+		} catch (IOException e) {
+			log.error("cannot read properties " + propertyFile.getAbsolutePath() + " , using default properties", e);
+		}
 	}
 
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -120,6 +137,9 @@ public class JobServiceManager {
 	}
 
 	private JobService createImportJob(Long id) throws ServiceException {
+		if (id == 0L)
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "invalid import id " + id);
+
 		ImportTask importTask = null;
 		try {
 			// Instancier le modèle du service 'upload'
@@ -127,35 +147,33 @@ public class JobServiceManager {
 			if (importTask == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
-			if (!importTask.getStatus().equals(JobService.STATUS.NEW.name().toLowerCase())) {
+			if (!importTask.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
 				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
 			}
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
 
 			log.info("job " + jobService.getId() + " found for import ");
 			// mkdir
-			if (Files.exists(jobService.getPath())) {
-				// réutilisation anormale d'un id de job (réinitialisation de la
-				// séquence à l'extérieur de l'appli?)
-				FileUtils.deleteDirectory(jobService.getPath().toFile());
-			}
+			deleteDirectory(jobService);
 			Files.createDirectories(jobService.getPath());
 			// copy file from Ruby server
 			String urlName = importTask.getUrl();
 			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+			String guiToken = ""; // System.getProperty(APPLICATION_NAME +
+									// PropertyNames.GUI_URL_TOKEN);
 			if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
 				// build url with token
-				urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/" + importTask.getId()
-						+ "/download?token=" + urlName;
+				if (guiToken != null && !guiToken.isEmpty()) {
+					// new fashion url
+					urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()
+							+ "/download_file?token=" + guiToken;
+				} else {
+					// old fashion url
+					urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/"
+							+ importTask.getId() + "/download?token=" + urlName;
+				}
 			}
-			try {
-				URL url = new URL(urlName);
-				File dest = new File(jobService.getPathName(), jobService.getInputFilename());
-				FileUtils.copyURLToFile(url, dest);
-			} catch (Exception ex) {
-				log.error("fail to get file for import job " + ex.getMessage());
-				throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
-			}
+			uploadImportFile(jobService, urlName);
 
 			jobService.setStatus(JobService.STATUS.PENDING);
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
@@ -164,45 +182,73 @@ public class JobServiceManager {
 
 		} catch (RequestServiceException ex) {
 			log.info("fail to create import job " + ex.getMessage());
-			if (importTask != null) {
-				try {
-					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(importTask);
-				} catch (Exception e) {
-					log.error(
-							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(importTask);
 			throw ex;
 		} catch (ServiceException ex) {
 			log.info("invalid import job data" + ex.getMessage());
-			if (importTask != null) {
-				try {
-					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(importTask);
-				} catch (Exception e) {
-					log.error(
-							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(importTask);
 			throw ex;
 		} catch (Exception ex) {
 			log.info("fail to create import job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
-			if (importTask != null) {
-				try {
-					importTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(importTask);
-				} catch (Exception e) {
-					log.error(
-							"cannot set bad importtask status or task " + importTask.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(importTask);
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
 	}
 
+	private void abortTask(ActionTask actionTask) {
+		if (actionTask != null) {
+			try {
+				actionTask.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
+				actionDAO.update(actionTask);
+			} catch (Exception e) {
+				log.error("cannot set bad " + actionTask.getAction() + " task status or task " + actionTask.getId()
+						+ " : " + e.getMessage());
+			}
+		}
+	}
+
+	private void uploadImportFile(JobService jobService, String urlName) throws ServiceException {
+		try {
+			URL url = new URL(urlName);
+			File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+			FileUtils.copyURLToFile(url, dest);
+		} catch (Exception ex) {
+			log.error("fail to get file for import job " + ex.getMessage());
+			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
+		}
+	}
+
+	private void uploadImportFileFromHttp(JobService jobService, String urlName) throws ServiceException {
+		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+		File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+		try (CloseableHttpClient httpclient = HttpClients.createDefault();
+				BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
+			Thread.sleep(1000L);
+			HttpGet httpget = new HttpGet(urlName);
+			httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
+
+			HttpResponse response = httpclient.execute(httpget);
+			// check response headers.
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode >= 200 && statusCode < 300) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				IOUtils.copy(content, baos);
+			} else {
+				throw new ClientProtocolException("Unexpected response status: " + statusCode);
+			}
+
+		} catch (Exception ex) {
+			log.error("fail to get file for import job " + ex.getMessage());
+			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
+		}
+
+	}
+
 	private JobService createValidatorJob(Long id) throws ServiceException {
+		if (id == 0L)
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "invalid validator id " + id);
 		ActionTask task = null;
 		try {
 			// Instancier le modèle du service 'upload'
@@ -210,18 +256,14 @@ public class JobServiceManager {
 			if (task == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown validator id " + id);
 			}
-			if (!task.getStatus().equals(JobService.STATUS.NEW.name().toLowerCase())) {
+			if (!task.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
 				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
 			}
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, task);
 
 			log.info("job " + jobService.getId() + " found for validator ");
 			// mkdir
-			if (Files.exists(jobService.getPath())) {
-				// réutilisation anormale d'un id de job (réinitialisation de la
-				// séquence à l'extérieur de l'appli?)
-				FileUtils.deleteDirectory(jobService.getPath().toFile());
-			}
+			deleteDirectory(jobService);
 			Files.createDirectories(jobService.getPath());
 
 			jobService.setStatus(JobService.STATUS.PENDING);
@@ -231,36 +273,15 @@ public class JobServiceManager {
 
 		} catch (RequestServiceException ex) {
 			log.info("fail to create validator job " + ex.getMessage());
-			if (task != null) {
-				try {
-					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(task);
-				} catch (Exception e) {
-					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(task);
 			throw ex;
 		} catch (ServiceException ex) {
 			log.info("invalid validator job data" + ex.getMessage());
-			if (task != null) {
-				try {
-					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(task);
-				} catch (Exception e) {
-					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(task);
 			throw ex;
 		} catch (Exception ex) {
 			log.info("fail to create validator job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
-			if (task != null) {
-				try {
-					task.setStatus(JobService.STATUS.ABORTED.name().toLowerCase());
-					actionDAO.update(task);
-				} catch (Exception e) {
-					log.error("cannot set bad validator task status or task " + task.getId() + " : " + ex.getMessage());
-				}
-			}
+			abortTask(task);
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
 		}
 
@@ -273,10 +294,16 @@ public class JobServiceManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public JobService getNextJob() {
-
-		List<ActionTask> pendingTasks = actionDAO.getTasks(JobService.STATUS.PENDING.name().toLowerCase());
-		List<ActionTask> startedTasks = actionDAO.getTasks(JobService.STATUS.RUNNING.name().toLowerCase());
+	public JobService getNextJob() throws ServiceException {
+		List<ActionTask> pendingTasks = null;
+		List<ActionTask> startedTasks = null;
+		try {
+			pendingTasks = actionDAO.getTasks(JobService.STATUS.PENDING.name().toLowerCase());
+			startedTasks = actionDAO.getTasks(JobService.STATUS.RUNNING.name().toLowerCase());
+		} catch (DaoException ex) {
+			log.fatal("unable to get jobs " + ex.getMessage());
+			throw new ServiceException(ServiceExceptionCode.DATABASE_CORRUPTED, ex.getMessage());
+		}
 
 		Set<Long> refIds = new HashSet<>();
 		for (ActionTask task : startedTasks) {
@@ -333,7 +360,8 @@ public class JobServiceManager {
 				actionTask.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 				actionTask.setStatus(jobService.getStatus().name().toLowerCase());
 				actionDAO.update(actionTask);
-				// TODO clean directory
+				// delete directory
+				deleteDirectory(jobService);
 			}
 			return jobService;
 
@@ -347,6 +375,16 @@ public class JobServiceManager {
 
 	}
 
+	private void deleteDirectory(JobService jobService) {
+		if (jobService.getPath().toFile().exists()) {
+			try {
+				FileUtils.deleteDirectory(jobService.getPath().toFile());
+			} catch (IOException e) {
+				log.warn("unable to delete directory " + jobService.getPath().toString());
+			}
+		}
+	}
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void terminate(JobService jobService, JobService.STATUS status) {
 		jobService.setStatus(status);
@@ -354,10 +392,81 @@ public class JobServiceManager {
 		jobService.setEndedAt(new Date());
 		updateTask(jobService);
 
-		// TODO delete directory
+		// delete directory
+		deleteDirectory(jobService);
+		// send termination to BOIV
+		notifyGui(jobService);
 
-		// TODO send termination to BOIV
+	}
 
+	private void notifyGui(JobService jobService) {
+		String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+		if (guiBaseUrl != null && !guiBaseUrl.isEmpty() && guiToken != null && !guiToken.isEmpty()) {
+			final String urlName;
+			final String method;
+			switch (jobService.getAction()) {
+			case importer:
+				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent";
+				method = "GET";
+				break;
+			case validator:
+				urlName = guiBaseUrl + "/api/v1/internals/compliance_check_sets/" + jobService.getId()
+						+ "/notify_parent";
+				method = "GET";
+				break;
+			case exporter:
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO
+																													// add
+																													// file
+																													// name
+																													// ?
+				method = "PUT";
+				break;
+			default:
+				log.warn("no notify URL for job type " + jobService.getAction());
+				urlName = "";
+				method = "";
+			}
+
+			if (!urlName.isEmpty()) {
+				// send message with some delay to let transaction terminate
+				Runnable r = () -> {
+
+					try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+						Thread.sleep(1000L);
+						log.info("Notify End of Task : " + urlName);
+						HttpGet httpget = new HttpGet(urlName);
+						httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
+						ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+
+							@Override
+							public String handleResponse(final HttpResponse response)
+									throws ClientProtocolException, IOException {
+								int status = response.getStatusLine().getStatusCode();
+								if (status >= 200 && status < 300) {
+									HttpEntity entity = response.getEntity();
+									return entity != null ? EntityUtils.toString(entity) : null;
+								} else {
+									throw new ClientProtocolException("Unexpected response status: " + status);
+								}
+							}
+
+						};
+						String responseBody = httpclient.execute(httpget, responseHandler);
+						log.info("End of task notified : response = " + responseBody);
+
+					} catch (Exception e) {
+						log.error("End of task not notified, cannot invoke url " + urlName + ", cause : "
+								+ e.getMessage());
+					}
+
+				};
+				new Thread(r).start();
+			}
+		} else {
+			log.warn("no URL or no Token to notify end of job");
+		}
 	}
 
 	private void updateTask(JobService jobService) {
@@ -392,15 +501,29 @@ public class JobServiceManager {
 		jobService.setUpdatedAt(new Date());
 		updateTask(jobService);
 
-		// TODO delete directory
+		// delete directory
+		deleteDirectory(jobService);
+		// send termination to BOIV
+		notifyGui(jobService);
 
-		// TODO send termination to BOIV
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public List<JobService> findAll(STATUS status) {
+	public List<JobService> findAll(STATUS status) throws ServiceException {
+		// catch exception and detect if a PersistenceException is found ;
+		// if such case, return empty list and log FATAL error database
+		// corrupted !
+
 		List<JobService> jobs = new ArrayList<>();
-		List<ActionTask> actionTasks = actionDAO.getTasks(status.name().toLowerCase());
+		List<ActionTask> actionTasks = new ArrayList<>();
+
+		try {
+			actionTasks = actionDAO.getTasks(status.name().toLowerCase());
+		} catch (DaoException ex) {
+			log.fatal("Cannot process jobs : " + ex.getCode() + " : " + ex.getMessage());
+			log.fatal("contact DBA to correct problem");
+			throw new ServiceException(ServiceExceptionCode.DATABASE_CORRUPTED, ex.getMessage());
+		}
 		for (ActionTask actionTask : actionTasks) {
 
 			try {

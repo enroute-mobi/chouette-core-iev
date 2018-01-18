@@ -11,12 +11,13 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.validator.PassingTimeValidator;
 import mobi.chouette.exchange.netex_stif.validator.ServiceJourneyValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
@@ -36,64 +37,63 @@ import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class ServiceJourneyParser implements Parser, Constant {
+public class ServiceJourneyParser implements Parser {
 
 	@Override
 	public void parse(Context context) throws Exception {
-		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		XmlPullParser xpp = (XmlPullParser) context.get(Constant.PARSER);
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
 		ServiceJourneyValidator validator = (ServiceJourneyValidator) ValidatorFactory.getValidator(context,
 				ServiceJourneyValidator.class);
-		Referential referential = (Referential) context.get(REFERENTIAL);
-		Long version = (Long) context.get(VERSION);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+		Long version = (Long) context.get(NetexStifConstant.VERSION);
 
-		String id = xpp.getAttributeValue(null, ID);
+		String id = xpp.getAttributeValue(null, NetexStifConstant.ID);
 		VehicleJourney vehicleJourney = ObjectFactory.getVehicleJourney(referential, id);
-		String changed = xpp.getAttributeValue(null, CHANGED);
+		String changed = xpp.getAttributeValue(null, NetexStifConstant.CHANGED);
 		if (changed != null) {
 			vehicleJourney.setCreationTime(NetexStifUtils.getDate(changed));
 		}
-		String modification = xpp.getAttributeValue(null, MODIFICATION);
+		String modification = xpp.getAttributeValue(null, NetexStifConstant.MODIFICATION);
 		vehicleJourney.setObjectVersion(version);
-		LineLite line = (LineLite) context.get(LINE);
-//		if (line != null)
-//			NetexStifUtils.uniqueObjectIdOnLine(context,vehicleJourney, line);
+		LineLite line = (LineLite) context.get(Constant.LINE);
+		// if (line != null)
+		// NetexStifUtils.uniqueObjectIdOnLine(context,vehicleJourney, line);
 		JourneyPattern pattern = null;
 		Set<String> timetableRefs = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			// log.info("ServiceJourneyParser tag : " + xpp.getName());
-			if (xpp.getName().equals(NAME)) {
+			if (xpp.getName().equals(NetexStifConstant.NAME)) {
 				vehicleJourney.setPublishedJourneyName(xpp.nextText());
-			} else if (xpp.getName().equals(NOTICE_ASSIGNMENTS)) {
+			} else if (xpp.getName().equals(NetexStifConstant.NOTICE_ASSIGNMENTS)) {
 				parseNoticeAssignements(xpp, context, vehicleJourney, validator);
-			} else if (xpp.getName().equals(DAY_TYPES)) {
+			} else if (xpp.getName().equals(NetexStifConstant.DAY_TYPES)) {
 				timetableRefs.addAll(parseDayTypes(xpp, context, vehicleJourney, validator));
-			} else if (xpp.getName().equals(JOURNEY_PATTERN_REF)) {
-				String ref = xpp.getAttributeValue(null, REF);
-				String attr_version = xpp.getAttributeValue(null, VERSION);
+			} else if (xpp.getName().equals(NetexStifConstant.JOURNEY_PATTERN_REF)) {
+				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
-				boolean checked = validator.checkNetexRef(context, vehicleJourney, JOURNEY_PATTERN_REF, ref, lineNumber,
-						columnNumber);
+				boolean checked = validator.checkNetexRef(context, vehicleJourney,
+						NetexStifConstant.JOURNEY_PATTERN_REF, ref, lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkInternalRef(context, vehicleJourney, JOURNEY_PATTERN_REF, ref,
-							attr_version, content, lineNumber, columnNumber);
+					validator.checkInternalRef(context, vehicleJourney, NetexStifConstant.JOURNEY_PATTERN_REF, ref,
+							attrVersion, content, lineNumber, columnNumber);
 				pattern = ObjectFactory.getJourneyPattern(referential, ref);
 				vehicleJourney.setJourneyPattern(pattern);
 				vehicleJourney.setRoute(pattern.getRoute());
-			} else if (xpp.getName().equals(OPERATOR_REF)) {
-				String ref = xpp.getAttributeValue(null, REF);
-				String attr_version = xpp.getAttributeValue(null, VERSION);
+			} else if (xpp.getName().equals(NetexStifConstant.OPERATOR_REF)) {
+				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
-				boolean checked = validator.checkNetexRef(context, vehicleJourney, OPERATOR_REF, ref, lineNumber,
-						columnNumber);
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref,
+						lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkExternalRef(context, vehicleJourney, OPERATOR_REF, ref, attr_version,
-							content, lineNumber, columnNumber);
+					checked = validator.checkExternalRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref,
+							attrVersion, content, lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkExistsRef(context, vehicleJourney, OPERATOR_REF, ref, attr_version,
+					validator.checkExistsRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref, attrVersion,
 							content, lineNumber, columnNumber);
 				CompanyLite company = referential.getSharedReadOnlyCompanies().get(ref);
 				if (company != null) {
@@ -102,9 +102,9 @@ public class ServiceJourneyParser implements Parser, Constant {
 					if (line != null && company.getId().equals(line.getCompanyId()))
 						vehicleJourney.setCompanyId(null);
 				}
-			} else if (xpp.getName().equals(TRAIN_NUMBERS)) {
+			} else if (xpp.getName().equals(NetexStifConstant.TRAIN_NUMBERS)) {
 				parseTrainNumber(xpp, context, vehicleJourney, validator);
-			} else if (xpp.getName().equals(PASSING_TIMES)) {
+			} else if (xpp.getName().equals(NetexStifConstant.PASSING_TIMES)) {
 				parsePassingTimes(xpp, context, vehicleJourney);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
@@ -123,7 +123,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 		validator.addModification(context, vehicleJourney.getObjectId(), modification);
 		if (validator.validate(context, vehicleJourney, lineNumber, columnNumber)) {
 			// affect timetables
-			affectTimetables(context, referential, vehicleJourney, timetableRefs);
+			affectTimetables(referential, vehicleJourney, timetableRefs);
 		}
 
 	}
@@ -134,19 +134,19 @@ public class ServiceJourneyParser implements Parser, Constant {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			int lineNumber = xpp.getLineNumber();
 			int columnNumber = xpp.getColumnNumber();
-			if (xpp.getName().equals(DAY_TYPE_REF)) {
-				String ref = xpp.getAttributeValue(null, REF);
-				String att_version = xpp.getAttributeValue(null, VERSION);
+			if (xpp.getName().equals(NetexStifConstant.DAY_TYPE_REF)) {
+				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
+				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
-				boolean checked = validator.checkNetexRef(context, vehicleJourney, DAY_TYPE_REF, ref, lineNumber,
-						columnNumber);
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.DAY_TYPE_REF, ref,
+						lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkExternalRef(context, vehicleJourney, DAY_TYPE_REF, ref, att_version,
+					checked = validator.checkExternalRef(context, vehicleJourney, NetexStifConstant.DAY_TYPE_REF, ref,
+							attrVersion, content, lineNumber, columnNumber);
+				if (checked)
+					validator.checkExistsRef(context, vehicleJourney, NetexStifConstant.DAY_TYPE_REF, ref, attrVersion,
 							content, lineNumber, columnNumber);
-				if (checked)
-					checked = validator.checkExistsRef(context, vehicleJourney, DAY_TYPE_REF, ref, att_version, content,
-							lineNumber, columnNumber);
 				result.add(ref);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
@@ -158,52 +158,31 @@ public class ServiceJourneyParser implements Parser, Constant {
 	private Timetable getTimetable(Referential referential, String ref) {
 		Timetable tm = referential.getTimetables().get(ref);
 		if (tm == null) {
-			// tm = referential.getSharedTimetables().get(ref);
+			tm = referential.getSharedTimetableTemplates().get(ref);
 			if (tm == null) {
-				tm = referential.getSharedTimetableTemplates().get(ref);
-				if (tm == null) {
-					log.info("tm not found " + ref);
-					return null;
-				}
-				else
-				{
-					log.info("template tm found " + ref);
-				}
-				tm = CopyUtil.copy(tm);
+				return null;
 			}
-//			else
-//			{
-//				log.info("shared tm found " + ref);
-//				tm = CopyUtil.copy(tm);
-//			}
-		}
-		else
-		{
-			log.info("local tm found " + ref);
+			tm = CopyUtil.copy(tm);
 		}
 		return tm;
 	}
 
-	private void affectTimetables(Context context, Referential referential, VehicleJourney vehicleJourney,
-			Set<String> timetableRefs) {
+	private void affectTimetables(Referential referential, VehicleJourney vehicleJourney, Set<String> timetableRefs) {
 		if (referential.getSharedTimetableTemplates().isEmpty()) {
 			log.warn("no tm loaded ");
 			return;
 		}
 		Set<String> negative = getNegative(referential, timetableRefs);
 		if (negative.isEmpty()) {
-			// log.info("no negative timetable");
 			for (String ref : timetableRefs) {
 				Timetable tm = getTimetable(referential, ref);
 				if (tm != null) {
 					referential.getTimetables().put(ref, tm);
-					//log.info("affect tm " + ref + " on vj " + vehicleJourney.getObjectId());
 					tm.addVehicleJourney(vehicleJourney);
 				}
 			}
 		} else {
 			// combine excluded tm with others
-			// log.info("negative timetable");
 			for (String ref : timetableRefs) {
 				if (negative.contains(ref))
 					continue; // skip negative timetables
@@ -222,7 +201,6 @@ public class ServiceJourneyParser implements Parser, Constant {
 							}
 						}
 						if (hasActiveDay) {
-							// log.info("timetable will be combined");
 							key = combineTMId(key, refNeg);
 							tm = CopyUtil.copy(tm);
 							for (CalendarDay calendarDay : list) {
@@ -234,7 +212,6 @@ public class ServiceJourneyParser implements Parser, Constant {
 					}
 					tm.setObjectId(key);
 					referential.getTimetables().put(key, tm);
-					// log.info("affect tm " + key + " on vj " + vehicleJourney.getObjectId());
 					tm.addVehicleJourney(vehicleJourney);
 				}
 			}
@@ -262,7 +239,6 @@ public class ServiceJourneyParser implements Parser, Constant {
 				if (!tm.getPeriods().isEmpty())
 					continue;
 				if (tm.getEffectiveDates().isEmpty()) {
-					// log.info("negative tm found " + ref);
 					negative.add(ref);
 				}
 			}
@@ -272,7 +248,7 @@ public class ServiceJourneyParser implements Parser, Constant {
 
 	private void parsePassingTimes(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney) throws Exception {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals(TIMETABLED_PASSING_TIME)) {
+			if (xpp.getName().equals(NetexStifConstant.TIMETABLED_PASSING_TIME)) {
 				int columnNumber = xpp.getColumnNumber();
 				int lineNumber = xpp.getLineNumber();
 				PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context,
@@ -280,22 +256,27 @@ public class ServiceJourneyParser implements Parser, Constant {
 				VehicleJourneyAtStop vjas = new VehicleJourneyAtStop();
 				int rank = vehicleJourney.getVehicleJourneyAtStops().size();
 				vjas.setVehicleJourney(vehicleJourney);
-				if (vehicleJourney.getJourneyPattern() != null) {
-					if (rank < vehicleJourney.getJourneyPattern().getStopPoints().size()) {
-						StopPoint sp = vehicleJourney.getJourneyPattern().getStopPoints().get(rank);
-						vjas.setStopPoint(sp);
-					}
+				if (vehicleJourney.getJourneyPattern() != null
+						&& rank < vehicleJourney.getJourneyPattern().getStopPoints().size()) {
+					StopPoint sp = vehicleJourney.getJourneyPattern().getStopPoints().get(rank);
+					vjas.setStopPoint(sp);
 				}
+
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					if (xpp.getName().equals(ARRIVAL_TIME)) {
+					switch (xpp.getName()) {
+					case NetexStifConstant.ARRIVAL_TIME:
 						vjas.setArrivalTime(ParserUtils.getSQLTime(xpp.nextText()));
-					} else if (xpp.getName().equals(ARRIVAL_DAY_OFFSET)) {
+						break;
+					case NetexStifConstant.ARRIVAL_DAY_OFFSET:
 						vjas.setArrivalDayOffset(Integer.parseInt(xpp.nextText()));
-					} else if (xpp.getName().equals(DEPARTURE_TIME)) {
+						break;
+					case NetexStifConstant.DEPARTURE_TIME:
 						vjas.setDepartureTime(ParserUtils.getSQLTime(xpp.nextText()));
-					} else if (xpp.getName().equals(DEPARTURE_DAY_OFFSET)) {
+						break;
+					case NetexStifConstant.DEPARTURE_DAY_OFFSET:
 						vjas.setDepartureDayOffset(Integer.parseInt(xpp.nextText()));
-					} else {
+						break;
+					default:
 						XPPUtil.skipSubTree(log, xpp);
 					}
 				}
@@ -319,22 +300,22 @@ public class ServiceJourneyParser implements Parser, Constant {
 			ServiceJourneyValidator validator) throws Exception {
 		// On a 0 ou 1 TRAIN_NUMBER_REF ??
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals(TRAIN_NUMBER_REF)) {
+			if (xpp.getName().equals(NetexStifConstant.TRAIN_NUMBER_REF)) {
 				int lineNumber = xpp.getLineNumber();
 				int columnNumber = xpp.getColumnNumber();
 				// value of train number in the third field of the ref
-				String ref = xpp.getAttributeValue(null, REF);
+				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
 				validator.addTrainNumberRef(context, vehicleJourney.getObjectId(), ref);
-				String version = xpp.getAttributeValue(null, VERSION);
+				String version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
-				boolean checked = validator.checkNetexRef(context, vehicleJourney, TRAIN_NUMBER_REF, ref, lineNumber,
-						columnNumber);
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.TRAIN_NUMBER_REF,
+						ref, lineNumber, columnNumber);
 				if (checked)
-					checked = validator.checkExternalRef(context, vehicleJourney, TRAIN_NUMBER_REF, ref, version,
-							content, lineNumber, columnNumber);
+					checked = validator.checkExternalRef(context, vehicleJourney, NetexStifConstant.TRAIN_NUMBER_REF,
+							ref, version, content, lineNumber, columnNumber);
 				if (checked) {
-					String tab[] = ref.split(":");
+					String[] tab = ref.split(":");
 					if (tab.length >= 3) {
 						vehicleJourney.setPublishedJourneyIdentifier(tab[2]);
 					} else {
@@ -348,24 +329,24 @@ public class ServiceJourneyParser implements Parser, Constant {
 	private void parseNoticeAssignements(XmlPullParser xpp, Context context, VehicleJourney vehicleJourney,
 			ServiceJourneyValidator validator) throws Exception {
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			if (xpp.getName().equals(NOTICE_ASSIGNMENT)) {
+			if (xpp.getName().equals(NetexStifConstant.NOTICE_ASSIGNMENT)) {
 				int lineNumber = xpp.getLineNumber();
 				int columnNumber = xpp.getColumnNumber();
 				while (xpp.nextTag() == XmlPullParser.START_TAG) {
-					if (xpp.getName().equals(NOTICE_REF)) {
-						String ref = xpp.getAttributeValue(null, REF);
-						String att_version = xpp.getAttributeValue(null, VERSION);
+					if (xpp.getName().equals(NetexStifConstant.NOTICE_REF)) {
+						String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
+						String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 						String content = xpp.nextText();
 						// check external reference
-						boolean checked = validator.checkNetexRef(context, vehicleJourney, NOTICE_REF, ref, lineNumber,
-								columnNumber);
+						boolean checked = validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.NOTICE_REF,
+								ref, lineNumber, columnNumber);
 						if (checked)
-							checked = validator.checkExternalRef(context, vehicleJourney, NOTICE_REF, ref, att_version,
-									content, lineNumber, columnNumber);
+							checked = validator.checkExternalRef(context, vehicleJourney, NetexStifConstant.NOTICE_REF,
+									ref, attrVersion, content, lineNumber, columnNumber);
 						if (checked)
-							checked = validator.checkExistsRef(context, vehicleJourney, NOTICE_REF, ref, att_version,
-									content, lineNumber, columnNumber);
-						Referential referential = (Referential) context.get(REFERENTIAL);
+							validator.checkExistsRef(context, vehicleJourney, NetexStifConstant.NOTICE_REF,
+									ref, attrVersion, content, lineNumber, columnNumber);
+						Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 						Footnote footnote = referential.getFootnotes().get(ref);
 						if (footnote == null) {
 							footnote = referential.getSharedFootnotes().get(ref);

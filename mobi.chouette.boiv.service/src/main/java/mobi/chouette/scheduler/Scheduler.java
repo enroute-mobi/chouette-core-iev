@@ -20,9 +20,11 @@ import javax.naming.InitialContext;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.PropertyNames;
+import mobi.chouette.core.ChouetteException;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 import mobi.chouette.service.JobService;
 import mobi.chouette.service.JobServiceManager;
+import mobi.chouette.service.ServiceException;
 
 /**
  * @author michel
@@ -42,14 +44,13 @@ public class Scheduler {
 	ManagedExecutorService executor;
 
 	Map<Long, Future<JobService.STATUS>> startedFutures = new ConcurrentHashMap<>();
-	// Map<Long,Task> startedTasks = new ConcurrentHashMap<>();
 
 	public int getActiveJobsCount() {
 		return startedFutures.size();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public boolean schedule() {
+	public boolean schedule() throws ServiceException{
 		String context = "boiv";
 		String maxJobStr = System.getProperty(context + PropertyNames.MAX_STARTED_JOBS);
 
@@ -66,9 +67,8 @@ public class Scheduler {
 			log.info("start a new job " + jobService.getId());
 			jobManager.start(jobService);
 
-			Map<String, String> properties = new HashMap<String, String>();
+			Map<String, String> properties = new HashMap<>();
 			Task task = new Task(jobService, properties, new TaskListener());
-			// startedTasks.put(jobService.getId(), task);
 			Future<JobService.STATUS> future = executor.submit(task);
 			startedFutures.put(jobService.getId(), future);
 			return true;
@@ -94,19 +94,26 @@ public class Scheduler {
 			// manage new imported data
 			List<JobService> newJobs = jobManager.findAll(JobService.STATUS.NEW);
 			for (JobService job : newJobs) {
-				try {
-					jobManager.createJob(job.getAction().name(), job.getId());
-				} catch (Exception ex) {
-					log.error("cannot manage new job : " + job.getAction().name() + " " + job.getId());
-				}
+				createJob(job);
 			}
 
 			while (schedule()) {
 				log.info("schedule pending tasks");
 			}
 		} catch (RuntimeException ex) {
-			log.fatal("cannot start scheduler", ex);
-			throw ex;
+			log.fatal("cannot start scheduler "+ex.getClass().getName(), ex);
+			// throw ex;
+		} catch (ChouetteException e) {
+			// redmine #5531 : IEV should run even if database is corrupted
+			log.fatal("scheduler may not run :"+e.getMessage());
+		}
+	}
+
+	private void createJob(JobService job) {
+		try {
+			jobManager.createJob(job.getAction().name(), job.getId());
+		} catch (Exception ex) {
+			log.error("cannot manage new job : " + job.getAction().name() + " " + job.getId());
 		}
 	}
 
@@ -137,8 +144,8 @@ public class Scheduler {
 			if (task != null && task instanceof Task) {
 				log.info("cancel task");
 				((Task) task).cancel();
+				schedule((Task) task);
 			}
-			schedule((Task) task);
 		}
 
 		@Override
@@ -165,25 +172,21 @@ public class Scheduler {
 		 */
 		private void schedule(final Task task) {
 			// remove task from stated map
-			// startedTasks.remove(task.getJob().getId());
 			startedFutures.remove(task.getJob().getId());
 			// launch next task
-			executor.execute(new Runnable() {
+			Runnable runnable = () -> {
+				ContextHolder.setContext(null);
+				try {
+					InitialContext initialContext = new InitialContext();
+					Scheduler scheduler = (Scheduler) initialContext
+							.lookup("java:app/mobi.chouette.boiv.service/" + BEAN_NAME);
 
-				@Override
-				public void run() {
-					ContextHolder.setContext(null);
-					try {
-						InitialContext initialContext = new InitialContext();
-						Scheduler scheduler = (Scheduler) initialContext
-								.lookup("java:app/mobi.chouette.boiv.service/" + BEAN_NAME);
-
-						scheduler.schedule();
-					} catch (Exception e) {
-						log.error(e.getMessage(), e);
-					}
+					scheduler.schedule();
+				} catch (Exception e) {
+					log.error(e.getMessage(), e);
 				}
-			});
+			};
+			executor.execute(runnable);
 		}
 
 	}

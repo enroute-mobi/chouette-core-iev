@@ -4,25 +4,25 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.exchange.metadata.Metadata;
 import mobi.chouette.exchange.metadata.NeptuneObjectPresenter;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.StopArea;
 
-public class NetexStifLineProducer implements Constant {
+public class NetexStifLineProducer {
 
 	public void produce(Context context) throws Exception {
 
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-		ExportableData collection = (ExportableData) context.get(EXPORTABLE_DATA);
-		JobData jobData = (JobData) context.get(JOB_DATA);
+		ExportableData collection = (ExportableData) context.get(Constant.EXPORTABLE_DATA);
+		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 		String rootDirectory = jobData.getPathName();
 
-		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(CONFIGURATION);
+		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 		String projectionType = parameters.getProjectionType();
 		if (projectionType != null && !projectionType.isEmpty()) {
 			if (!projectionType.toUpperCase().startsWith("EPSG:"))
@@ -31,9 +31,9 @@ public class NetexStifLineProducer implements Constant {
 		for (StopArea stopArea : collection.getStopAreas()) {
 			stopArea.toProjection(projectionType);
 		}
-		Metadata metadata = (Metadata) context.get(METADATA);
+		Metadata metadata = (Metadata) context.get(Constant.METADATA);
 
-		Path dir = Paths.get(rootDirectory, OUTPUT);
+		Path dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		String fileName = collection.getLine().getId() + ".xml";
 		File file = new File(dir.toFile(), fileName);
 

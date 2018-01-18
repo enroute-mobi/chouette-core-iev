@@ -21,6 +21,7 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -67,19 +68,19 @@ public class LineRegisterCommand implements Command {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
-		if (!context.containsKey(OPTIMIZED)) {
-			context.put(OPTIMIZED, Boolean.TRUE);
+		if (!context.containsKey(Constant.OPTIMIZED)) {
+			context.put(Constant.OPTIMIZED, Boolean.TRUE);
 		}
-		Boolean optimized = (Boolean) context.get(OPTIMIZED);
+		Boolean optimized = (Boolean) context.get(Constant.OPTIMIZED);
 		Referential cache = new Referential();
-		context.put(CACHE, cache);
+		context.put(Constant.CACHE, cache);
 
-		AbstractImportParameter importParameter = (AbstractImportParameter) context.get(CONFIGURATION);
+		AbstractImportParameter importParameter = (AbstractImportParameter) context.get(Constant.CONFIGURATION);
 
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 
 		Line newValue = referential.getLines().values().iterator().next();
 		
@@ -99,7 +100,7 @@ public class LineRegisterCommand implements Command {
 				if (optimized) {
 					Monitor wMonitor = MonitorFactory.start("prepareCopy");
 					StringWriter buffer = new StringWriter(1024);
-					final List<String> list = new ArrayList<String>(referential.getVehicleJourneys().keySet());
+					final List<String> list = new ArrayList<>(referential.getVehicleJourneys().keySet());
 					for (VehicleJourney item : referential.getVehicleJourneys().values()) {
 						VehicleJourney vehicleJourney = cache.getVehicleJourneys().get(item.getObjectId());
 	
@@ -113,11 +114,11 @@ public class LineRegisterCommand implements Command {
 						}
 					}
 					vehicleJourneyDAO.deleteChildren(list);
-					context.put(BUFFER, buffer.toString());
+					context.put(Constant.BUFFER, buffer.toString());
 					wMonitor.stop();
 				}
 	
-				result = SUCCESS;
+				result = Constant.SUCCESS;
 			} catch (Exception ex) {
 				log.error(ex.getMessage());
 				ActionReporter reporter = ActionReporter.Factory.getInstance();
@@ -143,42 +144,6 @@ public class LineRegisterCommand implements Command {
 			} finally {
 				log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 				
-	//			monitor = MonitorFactory.getTimeMonitor("LineOptimiser");
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(LineUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(GroupOfLineUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(CompanyUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(RouteUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(JourneyPatternUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(VehicleJourneyUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(StopPointUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(StopAreaUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(ConnectionLinkUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor(TimetableUpdater.BEAN_NAME);
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
-	//			monitor = MonitorFactory.getTimeMonitor("prepareCopy");
-	//			if (monitor != null)
-	//				log.info(Color.LIGHT_GREEN + monitor.toString() + Color.NORMAL);
 			}
 		} else {
 			log.info("skipping obsolete line : " + newValue.getObjectId());
@@ -219,21 +184,21 @@ public class LineRegisterCommand implements Command {
 
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		buffer.write(vehicleJourney.getId().toString());
-		buffer.append(SEP);
+		buffer.append(Constant.COPY_SEP);
 		buffer.write(stopPoint.getId().toString());
-		buffer.append(SEP);
+		buffer.append(Constant.COPY_SEP);
 		if (vehicleJourneyAtStop.getArrivalTime() != null)
 			buffer.write(timeFormat.format(vehicleJourneyAtStop.getArrivalTime()));
 		else
-			buffer.write(NULL);
-		buffer.append(SEP);
+			buffer.write(Constant.NULL);
+		buffer.append(Constant.COPY_SEP);
 		if (vehicleJourneyAtStop.getDepartureTime() != null)
 			buffer.write(timeFormat.format(vehicleJourneyAtStop.getDepartureTime()));
 		else
-			buffer.write(NULL);
-		buffer.append(SEP);
+			buffer.write(Constant.NULL);
+		buffer.append(Constant.COPY_SEP);
 		buffer.write(Integer.toString(vehicleJourneyAtStop.getArrivalDayOffset()));
-		buffer.append(SEP);
+		buffer.append(Constant.COPY_SEP);
 		buffer.write(Integer.toString(vehicleJourneyAtStop.getDepartureDayOffset()));
 		
 		buffer.append('\n');
@@ -262,6 +227,6 @@ public class LineRegisterCommand implements Command {
 	}
 
 	static {
-		CommandFactory.factories.put(LineRegisterCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(LineRegisterCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

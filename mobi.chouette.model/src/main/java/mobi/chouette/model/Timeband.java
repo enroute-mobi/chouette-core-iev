@@ -62,8 +62,8 @@ public class Timeband extends ChouetteIdentifiedObject {
 	 * @param name
 	 *            The new name of this time band
 	 */
-	public void setName(String name) {
-		name = StringUtils.abbreviate(name, 255);
+	public void setName(String value) {
+		name = StringUtils.abbreviate(value, 255);
 	}
 
 	/**
@@ -93,11 +93,5 @@ public class Timeband extends ChouetteIdentifiedObject {
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "timeband", cascade = { CascadeType.PERSIST })
-	// @JoinColumn(name = "timeband_id", updatable = false)
-	private List<JourneyFrequency> journeyFrequencies = new ArrayList<JourneyFrequency>(0);
-	// @Getter
-	// @Setter
-	// @OneToMany(mappedBy = "route", cascade = { CascadeType.PERSIST })
-	// private List<JourneyPattern> journeyPatterns = new
-	// ArrayList<JourneyPattern>(0);
+	private List<JourneyFrequency> journeyFrequencies = new ArrayList<>(0);
 }

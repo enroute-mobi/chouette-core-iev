@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,7 +22,9 @@ import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
+import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.RoutingConstraintValidator;
 import mobi.chouette.model.LineLite;
@@ -47,9 +49,9 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "routing-contraints" }, description = "3_itl_1", priority = 21)
+	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_1", priority = 141)
 	public void verifyTest_3_RoutingConstraint_1() throws Exception {
-		log.info(Color.CYAN + " check " + L3_ITL_1 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_RoutingConstraint_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -57,7 +59,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			TestContext tc = new TestContext(context, L3_ITL_1);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_RoutingConstraint_1);
 			RoutingConstraint rc = tc.getObjectForTest();
 
 			// -- Nominal
@@ -94,9 +96,9 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "routing-contraints" }, description = "3_itl_2", priority = 22)
+	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_2", priority = 142)
 	public void verifyTest_3_RoutingConstraint_2() throws Exception {
-		log.info(Color.CYAN + " check " + L3_ITL_2 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_RoutingConstraint_2 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -104,7 +106,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			TestContext tc = new TestContext(context, L3_ITL_2);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_RoutingConstraint_2);
 
 			// -- Nominal
 			tc.runValidation();
@@ -131,9 +133,9 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "routing-contraints" }, description = "3_itl_3", priority = 23)
+	@Test(groups = { "routing-contraints" }, description = "3_RoutingConstraint_3", priority = 143)
 	public void verifyTest_3_RoutingConstraint_3() throws Exception {
-		log.info(Color.CYAN + " check " + L3_ITL_3 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_RoutingConstraint_3 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -141,7 +143,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 		try { // -- Nominal
 			em.joinTransaction();
 
-			TestContext tc = new TestContext(context, L3_ITL_3);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_RoutingConstraint_3);
 
 			// -- Nominal
 			tc.runValidation();
@@ -181,7 +183,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 
 		public TestContext(Context context, String checkPointName) {
 			this.context = context;
-			referential = (Referential) context.get(REFERENTIAL);
+			referential = (Referential) context.get(Constant.REFERENTIAL);
 			this.checkPointName = checkPointName;
 			// -- Object to TestprepareNewTest()
 			long rcId = 2;
@@ -200,7 +202,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 					null);
 			//
 			validator = new RoutingConstraintValidator();
-			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
 			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, 0L, false, null, null, null);
 			checkPoints.add(checkPoint);

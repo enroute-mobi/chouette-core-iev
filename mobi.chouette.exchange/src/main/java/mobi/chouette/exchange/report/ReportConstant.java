@@ -1,9 +1,10 @@
 package mobi.chouette.exchange.report;
 
-public interface ReportConstant {
+public class ReportConstant {
 	
-	String STATUS_OK = "OK";
-	String STATUS_ERROR = "NOK";
-	String STATUS_IGNORED = "UNCHECKED";
+	public static final String STATUS_OK = "OK";
+	public static final String STATUS_ERROR = "NOK";
+	public static final String STATUS_IGNORED = "UNCHECKED";
 
+	private ReportConstant(){}
 }

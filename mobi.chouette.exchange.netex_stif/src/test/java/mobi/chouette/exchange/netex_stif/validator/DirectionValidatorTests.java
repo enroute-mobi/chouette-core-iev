@@ -10,8 +10,9 @@ import org.testng.annotations.Test;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
@@ -95,21 +96,21 @@ public class DirectionValidatorTests extends AbstractTest {
 		validateAbsenceOfDirectionAttributes(tc, directionType, oppositeDirectionRef);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Direction_2,
-				"2_netexstif_direction_2", OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR,2);
+				"2_netexstif_direction_2", NetexStifConstant.OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR,2);
 
 		// -- DirectionType is incorrect
 		tc = new TestContext();
 		validateAbsenceOfDirectionAttributes(tc, directionType, null);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Direction_2,
-				"2_netexstif_direction_2", DIRECTION_TYPE, FILE_STATE.ERROR);
+				"2_netexstif_direction_2", NetexStifConstant.DIRECTION_TYPE, FILE_STATE.ERROR);
 
 		// -- OppositeDirectionRef is incorrect
 		tc = new TestContext();
 		validateAbsenceOfDirectionAttributes(tc, null, oppositeDirectionRef);
 		Assert.assertFalse(tc.isResult());
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Direction_2,
-				"2_netexstif_direction_2", OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR);
+				"2_netexstif_direction_2", NetexStifConstant.OPPOSITE_DIRECTION_REF, FILE_STATE.ERROR);
 	}
 
 	@Test(groups = { "Direction",

@@ -84,9 +84,11 @@ public class RoutingConstraint extends ChouetteIdentifiedObject implements Signe
 	private Route route;
 
 	public void setRoute(Route route) {
-		this.route = route;
 		if (this.route != null) {
 			this.route.getRoutingConstraints().remove(this);
+		}
+		this.route = route;
+		if (this.route != null) {
 			this.route.getRoutingConstraints().add(this);
 		}
 	}

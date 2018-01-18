@@ -18,9 +18,9 @@ import mobi.chouette.exchange.ProcessingCommandsFactory;
 
 @Log4j
 @Data
-public class ValidatorProcessingCommands implements ProcessingCommands, Constant {
+public class ValidatorProcessingCommands implements ProcessingCommands {
 
-	public static class DefaultFactory extends ProcessingCommandsFactory {
+	protected static class DefaultFactory extends ProcessingCommandsFactory {
 
 		@Override
 		protected ProcessingCommands create() throws IOException {
@@ -30,13 +30,13 @@ public class ValidatorProcessingCommands implements ProcessingCommands, Constant
 	}
 
 	static {
-		ProcessingCommandsFactory.factories.put(ValidatorProcessingCommands.class.getName(),
+		ProcessingCommandsFactory.register(ValidatorProcessingCommands.class.getName(),
 				new DefaultFactory());
 	}
 
 	@Override
-	public List<? extends Command> getPreProcessingCommands(Context context, boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+	public List<Command> getPreProcessingCommands(Context context, boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		
 		try {
@@ -49,8 +49,8 @@ public class ValidatorProcessingCommands implements ProcessingCommands, Constant
 	}
 
 	@Override
-	public List<? extends Command> getLineProcessingCommands(Context context, boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+	public List<Command> getLineProcessingCommands(Context context, boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
 			if (withDao)
@@ -67,8 +67,8 @@ public class ValidatorProcessingCommands implements ProcessingCommands, Constant
 	}
 
 	@Override
-	public List<? extends Command> getPostProcessingCommands(Context context, boolean withDao) {
-//		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+	public List<Command> getPostProcessingCommands(Context context, boolean withDao) {
+//		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 //		try {
 //			// commands.add(CommandFactory.create(initialContext, SharedDataValidatorCommand.class.getName()));
@@ -80,11 +80,11 @@ public class ValidatorProcessingCommands implements ProcessingCommands, Constant
 	}
 
 	@Override
-	public List<? extends Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
+	public List<Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
 		return new ArrayList<>();
 	}
 	@Override
-	public List<? extends Command> getDisposeCommands(Context context, boolean withDao) {
+	public List<Command> getDisposeCommands(Context context, boolean withDao) {
 		List<Command> commands = new ArrayList<>();
 		return commands;
 	}

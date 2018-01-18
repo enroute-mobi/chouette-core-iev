@@ -10,9 +10,11 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifImportParameters;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.report.ActionReport;
@@ -35,28 +37,28 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
-		context.put(REFERENTIAL, new Referential());
-		context.put(NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
+		context.put(Constant.CONFIGURATION, configuration);
+		context.put(Constant.REFERENTIAL, new Referential());
+		context.put(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
-		JobDataTest test = new JobDataTest();
-		context.put(JOB_DATA, test);
-		context.put(FILE_NAME, "offre_xxx.xml");
+		JobDataImpl test = new JobDataImpl();
+		context.put(Constant.JOB_DATA, test);
+		context.put(Constant.FILE_NAME, "offre_xxx.xml");
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		reporter.addFileReport(context, "offre_xxx.xml", IO_TYPE.INPUT);
 
 		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
-		context.put(TESTNG, "true");
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true");
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 	}
 

@@ -1,6 +1,6 @@
 package mobi.chouette.common;
 
-public interface Color {
+public final class Color {
 	public static final String NORMAL = (char) 27 + "[0;39m";
 	public static final String BLACK = (char) 27 + "[1;30m";
 	public static final String RED = (char) 27 + "[1;31m";
@@ -22,5 +22,8 @@ public interface Color {
 	public static final String SUCCESS = GREEN;
 	public static final String FAILURE = RED;
 	public static final String WARNING = YELLOW;
+
+	private Color() {
+	}
 
 }

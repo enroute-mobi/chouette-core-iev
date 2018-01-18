@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +24,7 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
+import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.GenericCheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.RouteValidator;
@@ -48,16 +49,16 @@ public class GenericValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Generic_1", priority = 1)
+	@Test(groups = { "route" }, description = "3_Generic_1", priority = 101)
 	public void verifyTest_3_Generic_1() throws Exception {
-		log.info(Color.CYAN + " check " + L3_Generic_1 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Generic_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
 		utx.begin();
 		try {
 			em.joinTransaction();
-			Referential ref = (Referential) context.get(REFERENTIAL);
+			Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 			Route route = dao.find(Long.valueOf(2));
 			Assert.assertNotNull(route, "route id 2 not found");
 			LineLite line = ref.findLine(route.getLineId());
@@ -66,18 +67,18 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
 					null);
 			RouteValidator validator = new RouteValidator();
-			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generic_1, 0L ,false, null,null, "^[\\w ]+$", "Route", "name");
+			CheckpointParameters checkPoint = new GenericCheckpointParameters(CheckPointConstant.L3_Generic_1, 0L ,false, null,null, "^[\\w ]+$", "Route", "name");
 			checkPoints.add(checkPoint);
-			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Generic_1, checkPoints);
+			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_Generic_1, checkPoints);
 			String transportMode = line.getTransportModeName();
 			validator.validate(context, route, parameters, transportMode);
 
 			checkNoReports(context, line.getObjectId());
 			route.setName("ça va pas!");
 			validator.validate(context, route, parameters, transportMode);
-			checkReports(context, line.getObjectId(), L3_Generic_1, "3_generic_1", route.getName(), OBJECT_STATE.WARNING);
+			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Generic_1, "3_generic_1", route.getName(), OBJECT_STATE.WARNING);
 		} finally {
 			utx.rollback();
 		}
@@ -87,16 +88,16 @@ public class GenericValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Generic_2", priority = 2)
+	@Test(groups = { "route" }, description = "3_Generic_2", priority = 102)
 	public void verifyTest_3_Generic_2() throws Exception {
-		log.info(Color.CYAN + " check " + L3_Generic_2 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Generic_2 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
 		utx.begin();
 		try {
 			em.joinTransaction();
-			Referential ref = (Referential) context.get(REFERENTIAL);
+			Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 			Route route = dao.find(Long.valueOf(2));
 			Assert.assertNotNull(route, "route id 2 not found");
 			LineLite line = ref.findLine(route.getLineId());
@@ -105,11 +106,11 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
 					null);
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
-			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generic_2, 0L, false, "3", "6",null, "VehicleJourney", "number");
+			CheckpointParameters checkPoint = new GenericCheckpointParameters(CheckPointConstant.L3_Generic_2, 0L, false, "3", "6",null, "VehicleJourney", "number");
 			checkPoints.add(checkPoint);
-			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Generic_2, checkPoints);
+			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_Generic_2, checkPoints);
 			String transportMode = line.getTransportModeName();
 			VehicleJourney vj = route.getJourneyPatterns().get(0).getVehicleJourneys().get(0);
 			vj.setNumber(4L);
@@ -119,16 +120,16 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			// max value
 			vj.setNumber(12L);
 			validator.validate(context, vj, parameters, transportMode);
-			checkReports(context, line.getObjectId(), L3_Generic_2, "3_generic_2_1", "12", OBJECT_STATE.WARNING);
+			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Generic_2, "3_generic_2_1", "12", OBJECT_STATE.WARNING);
 			
 			// min value
-			context.put(REPORT, new ActionReport());
-			context.put(VALIDATION_REPORT, new ValidationReport());
+			context.put(Constant.REPORT, new ActionReport());
+			context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
 					null);
 			vj.setNumber(2L);
 			validator.validate(context, vj, parameters, transportMode);
-			checkReports(context, line.getObjectId(), L3_Generic_2, "3_generic_2_2", "2", OBJECT_STATE.WARNING);
+			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Generic_2, "3_generic_2_2", "2", OBJECT_STATE.WARNING);
 
 		} finally {
 			utx.rollback();
@@ -140,16 +141,16 @@ public class GenericValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	@Test(groups = { "route" }, description = "3_Generic_3", priority = 3)
+	@Test(groups = { "route" }, description = "3_Generic_3", priority = 103)
 	public void verifyTest_3_Generic_3() throws Exception {
-		log.info(Color.CYAN + " check " + L3_Generic_3 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Generic_3 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
 		utx.begin();
 		try {
 			em.joinTransaction();
-			Referential ref = (Referential) context.get(REFERENTIAL);
+			Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 			List<Route> routes = dao.findByLineId(7L);
 			Assert.assertNotNull(routes, "routes for line 7 not found");
 			Assert.assertEquals(routes.size(), 4, " 4 routes for line 7 ");
@@ -162,11 +163,11 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
 					null);
 			RouteValidator validator = new RouteValidator();
-			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new GenericCheckpointParameters(L3_Generic_3, 0L, false, null, null, null,"Route", "name");
+			CheckpointParameters checkPoint = new GenericCheckpointParameters(CheckPointConstant.L3_Generic_3, 0L, false, null, null, null,"Route", "name");
 			checkPoints.add(checkPoint);
-			parameters.getControlParameters().getGlobalCheckPoints().put(L3_Generic_3, checkPoints);
+			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_Generic_3, checkPoints);
 			String transportMode = line.getTransportModeName();
 			routes.stream().forEach(route -> {
 			validator.validate(context, route, parameters, transportMode);
@@ -182,7 +183,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 			routes.stream().forEach(route -> {
 			validator.validate(context, route, parameters, transportMode);
 			} );
-			checkReports(context, line.getObjectId(), L3_Generic_3, "3_generic_3", routes.get(0).getName(), OBJECT_STATE.WARNING);
+			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Generic_3, "3_generic_3", routes.get(0).getName(), OBJECT_STATE.WARNING);
 		} finally {
 			utx.rollback();
 		}

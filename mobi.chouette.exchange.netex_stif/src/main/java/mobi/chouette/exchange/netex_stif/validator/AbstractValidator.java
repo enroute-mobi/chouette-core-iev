@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -13,7 +14,7 @@ import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.Referential;
 
-public abstract class AbstractValidator implements NetexCheckPoints, Constant {
+public abstract class AbstractValidator {
 
 	private static final String REGEX_ID_PREFIX = "^[\\w-]+:";
 	private static final String REGEX_ID_SUFFIX = ":[\\w-]+:LOC$";
@@ -46,66 +47,66 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	public void init(Context context) {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
-		String fileName = (String) context.get(FILE_NAME);
+		String fileName = (String) context.get(Constant.FILE_NAME);
 
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_4, "E");
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_5, "W");
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_6, "E");
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_7, "E");
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_8, "E");
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_9, "E");
-		validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_10, "E");
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_4, "E");
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_5, "W");
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_6, "E");
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_7, "E");
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_8, "E");
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_9, "E");
+		validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_10, "E");
 
-		if (fileName.equals(COMMUN_FILE_NAME)) {
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Notice_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Notice_2, "W");
-		} else if (fileName.equals(CALENDRIER_FILE_NAME)) {
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_2, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_DayTypeAssignment_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_DayTypeAssignment_2, "E");
+		if (fileName.equals(NetexStifConstant.COMMUN_FILE_NAME)) {
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Notice_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Notice_2, "W");
+		} else if (fileName.equals(NetexStifConstant.CALENDRIER_FILE_NAME)) {
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_DayTypeAssignment_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_DayTypeAssignment_2, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_DayType_1, "W");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_DayType_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_DayType_1, "W");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_DayType_2, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_OperatingPeriod_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_OperatingPeriod_1, "E");
 		} else {
 			// OFFRE FILE NAME
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_3, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Route_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Route_2, "W");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Route_3, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Route_4, "W");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_3, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_2, "W");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_3, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Route_4, "W");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Direction_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_Direction_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Direction_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_Direction_2, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourneyPattern_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourneyPattern_2, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourneyPattern_3, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourneyPattern_4, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassengerStopAssignment_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_PassengerStopAssignment_1, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_RoutingConstraintZone_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_RoutingConstraintZone_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourney_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourney_2, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourney_3, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_ServiceJourney_4, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4, "E");
 
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassingTime_1, "E");
-			validationReporter.addItemToValidationReport(context, L2_NeTExSTIF_PassingTime_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_PassingTime_1, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_PassingTime_2, "E");
 
 		}
 		// prepare local checkpoints
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_4);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_5);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_7);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_8);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_9);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_10);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_4);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_5);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_7);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_8);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_9);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_10);
 
 	}
 
@@ -128,14 +129,14 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	protected void addLocation(Context context, String localContext, ChouetteIdentifiedObject object, int lineNumber,
 			int columnNumber) {
 		String objectId = object.getObjectId();
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 		if (data == null) {
 			data = new ValidationData();
-			context.put(VALIDATION_DATA, data);
+			context.put(Constant.VALIDATION_DATA, data);
 		}
-		LineLite line = (LineLite) context.get(LINE);
-		String fileName = (String) context.get(FILE_NAME);
-		if (data != null && fileName != null) {
+		LineLite line = (LineLite) context.get(Constant.LINE);
+		String fileName = (String) context.get(Constant.FILE_NAME);
+		if (fileName != null) {
 			DataLocation loc = new DataLocation(fileName, lineNumber, columnNumber, line, object);
 			loc.setName(DataLocation.buildName(object));
 			data.getDataLocations().put(objectId, loc);
@@ -144,32 +145,34 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	}
 
 	public DataLocation getLocation(Context context, String objectId) {
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 		if (data == null)
 			return null;
 		return data.getDataLocations().get(objectId);
 	}
 
 	protected static Context getObjectContext(Context context, String localContextName, String objectId) {
-		Context validationContext = (Context) context.get(VALIDATION_CONTEXT);
-		if (validationContext == null) {
-			validationContext = new Context();
-			context.put(VALIDATION_CONTEXT, validationContext);
+		Context validationContext = (Context) context.computeIfAbsent(Constant.VALIDATION_CONTEXT, k -> new Context());
+		// if (validationContext == null) {
+		// validationContext = new Context();
+		// context.put(Constant.VALIDATION_CONTEXT, validationContext);
+		// }
 
-		}
+		Context localContext = (Context) validationContext.computeIfAbsent(localContextName, k -> new Context());
+		// Context localContext = (Context)
+		// validationContext.get(localContextName);
+		// if (localContext == null) {
+		// localContext = new Context();
+		// validationContext.put(localContextName, localContext);
+		// }
 
-		Context localContext = (Context) validationContext.get(localContextName);
-		
-		if (localContext == null) {
-			localContext = new Context();
-			validationContext.put(localContextName, localContext);
-		}
-		Context objectContext = (Context) localContext.get(objectId);
-
-		if (objectContext == null) {
-			objectContext = new Context();
-			localContext.put(objectId, objectContext);
-		}
+		Context objectContext = (Context) localContext.computeIfAbsent(objectId, k -> new Context());
+		// Context objectContext = (Context) localContext.get(objectId);
+		//
+		// if (objectContext == null) {
+		// objectContext = new Context();
+		// localContext.put(objectId, objectContext);
+		// }
 		return objectContext;
 
 	}
@@ -177,21 +180,23 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	public void addModification(Context context, String objectId, String modification) {
 		if (modification != null) {
 			Context objectContext = getObjectContext(context, getLocalContext(), objectId);
-			objectContext.put(MODIFICATION, modification);
+			objectContext.put(NetexStifConstant.MODIFICATION, modification);
 		}
 
 	}
-	
-//	public void addXmlId(Context context, String objectId, String xmlId) {
-//		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
-//		objectContext.put(ID, xmlId);
-//	}
-//
-//	protected  String getXmlId(Context context, String objectId) {
-//		Context objectContext = getObjectContext(context, getLocalContext(), objectId);
-//		return (String) objectContext.get(ID);
-//	}
-//
+
+	// public void addXmlId(Context context, String objectId, String xmlId) {
+	// Context objectContext = getObjectContext(context, getLocalContext(),
+	// objectId);
+	// objectContext.put(ID, xmlId);
+	// }
+	//
+	// protected String getXmlId(Context context, String objectId) {
+	// Context objectContext = getObjectContext(context, getLocalContext(),
+	// objectId);
+	// return (String) objectContext.get(ID);
+	// }
+	//
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des identifiants
 	 * <p>
@@ -234,7 +239,7 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, id);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_4, location, type, regex);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_4, location, type, regex);
 		}
 		return result;
 	}
@@ -273,16 +278,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 			int columnNumber) {
 
 		Calendar c = Calendar.getInstance();
-		c.add(Calendar.DATE,1); 
+		c.add(Calendar.DATE, 1);
 
 		boolean result = object.getCreationTime().before(c.getTime());
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_5, location, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_5, location, type);
 			// reset creation time to now
 			object.setCreationTime(Calendar.getInstance().getTime());
 		}
@@ -326,16 +331,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 
 		Context objectContext = getObjectContext(context, getLocalContext(), object.getObjectId());
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		if (objectContext.containsKey(MODIFICATION)) {
-			validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_6);
-			String modification = (String) objectContext.get(MODIFICATION);
+		if (objectContext.containsKey(NetexStifConstant.MODIFICATION)) {
+			validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_6);
+			String modification = (String) objectContext.get(NetexStifConstant.MODIFICATION);
 			result = !modification.equals("delete");
 		}
 		if (!result) {
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_6, location, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_6, location, type);
 		}
 		return result;
 	}
@@ -395,9 +400,9 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_7, location, ref, typeRef);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_7, location, ref, typeRef);
 		}
 		return result;
 	}
@@ -451,16 +456,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_8, "1", location, id, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_8, "1", location, id, type);
 		}
 		if (!result2) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_8, "2", location, id, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_8, "2", location, id, type);
 		}
 		return result1 && result2;
 	}
@@ -514,16 +519,16 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_9, "1", location, ref, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_9, "1", location, ref, type);
 		}
 		if (!result2) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_9, "2", location, ref, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_9, "2", location, ref, type);
 		}
 		return result1 && result2;
 	}
@@ -566,31 +571,32 @@ public abstract class AbstractValidator implements NetexCheckPoints, Constant {
 	public boolean checkExistsRef(Context context, ChouetteIdentifiedObject object, String type, String ref,
 			String versionAttribute, String content, int lineNumber, int columnNumber) {
 
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		boolean result = false;
 		switch (type) {
-		case DAY_TYPE_REF:
+		case NetexStifConstant.DAY_TYPE_REF:
 			result = referential.getSharedTimetableTemplates().containsKey(ref);
 			break;
-		case NOTICE_REF:
+		case NetexStifConstant.NOTICE_REF:
 			result = referential.getSharedFootnotes().containsKey(ref);
 			break;
-		case LINE_REF:
+		case NetexStifConstant.LINE_REF:
 			result = referential.getSharedReadOnlyLines().containsKey(ref);
 			break;
-		case OPERATOR_REF:
+		case NetexStifConstant.OPERATOR_REF:
 			result = referential.getSharedReadOnlyCompanies().containsKey(ref);
 			break;
-		case QUAY_REF:
+		case NetexStifConstant.QUAY_REF:
 			result = referential.getSharedReadOnlyStopAreas().containsKey(ref);
 			break;
+		default:
 		}
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, object);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_10, location, ref, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_10, location, ref, type);
 		}
 		return result;
 	}

@@ -39,6 +39,7 @@ public class AbstractImportParameter extends AbstractParameter {
 	@Setter
 	private boolean keepObsoleteLines = true;
 
+	@Override
 	public boolean isValid(Logger log) {
 		return super.isValid(log);
 	}

@@ -25,7 +25,7 @@ public class ParserUtils {
 		try {
 			factory = DatatypeFactory.newInstance();
 		} catch (DatatypeConfigurationException e) {
-
+            log.error("unable to load DatatypeFactory");
 		}
 	}
 
@@ -68,6 +68,7 @@ public class ParserUtils {
 			try {
 				result = Enum.valueOf(type, value);
 			} catch (Exception ignored) {
+	            log.debug("enum not found for value "+value);
 			}
 		}
 		return result;
@@ -76,13 +77,11 @@ public class ParserUtils {
 	@SuppressWarnings("deprecation")
 	public static Time getSQLDuration(String value) {
 		Time result = null;
-		assert value != null : "[DSU] invalid value : " + value;
 
 		if (value != null) {
 			try {
 				Duration duration = factory.newDuration(value);
-				result = new Time(duration.getHours(), duration.getMinutes(),
-						duration.getSeconds());
+				result = new Time(duration.getHours(), duration.getMinutes(), duration.getSeconds());
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 			}
@@ -92,28 +91,24 @@ public class ParserUtils {
 
 	public static Time getSQLTime(String value) throws ParseException {
 		Time result = null;
-		assert value != null : "invalid value : " + value;
-
 		if (value != null) {
-			DateFormat TIME_FORMAT = null;
-			if (value.contains(".")){
-				TIME_FORMAT = new SimpleDateFormat("HH:mm:ss.sss");
-			}else{
-				TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+			DateFormat timeFormat = null;
+			if (value.contains(".")) {
+				timeFormat = new SimpleDateFormat("HH:mm:ss.sss");
+			} else {
+				timeFormat = new SimpleDateFormat("HH:mm:ss");
 			}
-			result = new Time(getDate(TIME_FORMAT, value).getTime());
+			result = new Time(getDate(timeFormat, value).getTime());
 
 		}
 		return result;
 	}
 
-	public static Date getSQLDateTime(String value) throws ParseException {
+	public static Date getSQLDateTime(String value) {
 		Date result = null;
-		assert value != null : "[DSU] invalid value : " + value;
 
 		if (value != null) {
-			XMLGregorianCalendar calendar = factory
-					.newXMLGregorianCalendar(value);
+			XMLGregorianCalendar calendar = factory.newXMLGregorianCalendar(value);
 			result = new Date(calendar.toGregorianCalendar().getTimeInMillis());
 		}
 		return result;
@@ -121,20 +116,17 @@ public class ParserUtils {
 
 	public static Date getSQLDate(String value) throws ParseException {
 		Date result = null;
-		assert value != null : "[DSU] invalid value : " + value;
 
 		if (value != null) {
-			DateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-			long  time = getDate(SHORT_DATE_FORMAT, value).getTime();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			long time = getDate(dateFormat, value).getTime();
 			result = new Date(time);
 		}
 		return result;
 	}
 
-	public static java.util.Date getDate(DateFormat format, String value)
-			throws ParseException {
+	public static java.util.Date getDate(DateFormat format, String value) throws ParseException {
 		java.util.Date result = null;
-		assert value != null : "[DSU] invalid value : " + value;
 
 		if (value != null) {
 			result = format.parse(value);
@@ -143,14 +135,13 @@ public class ParserUtils {
 	}
 
 	public static java.util.Date getDate(String value) throws ParseException {
-	   String format = "yyyy-MM-dd'T'HH:mm:ss";
-	   if (value != null && value.endsWith("Z")) {
-	       format = format + "'Z'";
-	   }
-	   
-		DateFormat DATE_FORMAT = new SimpleDateFormat(
-				format);
-		return getDate(DATE_FORMAT, value);
+		String format = "yyyy-MM-dd'T'HH:mm:ss";
+		if (value != null && value.endsWith("Z")) {
+			format = format + "'Z'";
+		}
+
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		return getDate(dateFormat, value);
 	}
 
 	public static BigDecimal getBigDecimal(String value) {
@@ -159,6 +150,7 @@ public class ParserUtils {
 			try {
 				result = BigDecimal.valueOf(Double.valueOf(value));
 			} catch (Exception ignored) {
+	            log.debug("unable to convetr to BigDecimal "+value);
 			}
 		}
 		return result;
@@ -166,7 +158,6 @@ public class ParserUtils {
 
 	public static BigDecimal getBigDecimal(String value, String pattern) {
 		BigDecimal result = null;
-		assert value != null : "[DSU] invalid value : " + value;
 
 		if (value != null) {
 			Matcher m = Pattern.compile(pattern).matcher(value.trim());
@@ -185,7 +176,7 @@ public class ParserUtils {
 	public static BigDecimal getY(String value) {
 		return ParserUtils.getBigDecimal(value, "[\\d\\.]+ ([\\d\\.]+)");
 	}
-	
+
 	public static String objectIdPrefix(String objectId) {
 		if (objectIdArray(objectId).length > 2) {
 			return objectIdArray(objectId)[0].trim();

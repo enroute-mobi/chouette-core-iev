@@ -44,7 +44,7 @@ import mobi.chouette.exchange.validation.ValidationData;
  */
 @Log4j
 @Stateless(name = DaoSharedDataValidatorCommand.COMMAND)
-public class DaoSharedDataValidatorCommand implements Command, Constant {
+public class DaoSharedDataValidatorCommand implements Command {
 	public static final String COMMAND = "DaoSharedDataValidatorCommand";
 
 	@Resource
@@ -80,13 +80,13 @@ public class DaoSharedDataValidatorCommand implements Command, Constant {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 		//InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
-		if (!context.containsKey(SOURCE))
+		if (!context.containsKey(Constant.SOURCE))
 		{
-			context.put(SOURCE, SOURCE_DATABASE);
+			context.put(Constant.SOURCE, Constant.SOURCE_DATABASE);
 		}
 
 		try {
@@ -156,7 +156,7 @@ public class DaoSharedDataValidatorCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(DaoSharedDataValidatorCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(DaoSharedDataValidatorCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

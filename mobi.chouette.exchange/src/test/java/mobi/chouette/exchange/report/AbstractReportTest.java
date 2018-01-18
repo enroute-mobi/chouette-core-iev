@@ -6,16 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mobi.chouette.common.Constant;
-import mobi.chouette.exchange.report.DummyReport.DUMMY_ENUM;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AbstractReportTest implements Constant{
+import mobi.chouette.exchange.report.DummyReport.DUMMY_ENUM;
+
+public class AbstractReportTest {
 	@Test(groups = { "JsonGeneration" }, description = "Json generated", priority = 104)
 	public void verifyprintIntArray() throws Exception {
 		AbstractReport dummyReport = new DummyReport();

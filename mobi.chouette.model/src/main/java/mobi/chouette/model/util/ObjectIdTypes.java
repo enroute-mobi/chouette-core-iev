@@ -1,6 +1,6 @@
 package mobi.chouette.model.util;
 
-public interface ObjectIdTypes {
+public class ObjectIdTypes {
 	// constants for ObjectId prefixes
 	   /**
 	    * default objectId type for access points 

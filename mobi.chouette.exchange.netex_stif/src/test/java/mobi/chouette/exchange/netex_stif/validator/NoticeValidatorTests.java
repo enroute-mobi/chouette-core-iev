@@ -10,8 +10,9 @@ import org.testng.annotations.Test;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
@@ -23,7 +24,7 @@ import mobi.chouette.model.Line;
 @Log4j
 public class NoticeValidatorTests extends AbstractTest {
 
-	public static String TEST_FILENAME = COMMUN_FILE_NAME;
+	public static String TEST_FILENAME = NetexStifConstant.COMMUN_FILE_NAME;
 
 	@Getter
 	@Setter
@@ -137,7 +138,7 @@ public class NoticeValidatorTests extends AbstractTest {
 	public void verifyTypeOfNoticeRefForGivenFootNoteCorrect() throws Exception {
 		TestContext tc = new TestContext();
 
-		validateTypeOfNoticeRefOfFootNote(tc, SERVICE_JOURNEY_NOTICE);
+		validateTypeOfNoticeRefOfFootNote(tc, NetexStifConstant.SERVICE_JOURNEY_NOTICE);
 		Assert.assertTrue(tc.isResult());
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 	}

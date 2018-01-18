@@ -26,8 +26,6 @@ public interface GenericTenantDAO<T> {
 
 	int deleteAll(Long tenantId);
 
-	// int truncate();
-
 	void detach(T entity);
 
 	void evictAll();

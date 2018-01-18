@@ -13,8 +13,9 @@ import org.testng.annotations.Test;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
@@ -124,7 +125,7 @@ public class RouteValidatorTests extends AbstractTest {
 	@Test(groups = { "Route",
 			"DirectionType" }, description = "Cas nominal 1 : Route DirectionType is inbound", priority = 1003)
 	public void verifyRouteDirectionTypeWithInbound() throws Exception {
-		String directionType = DIRECTION_INBOUND;
+		String directionType = NetexStifConstant.DIRECTION_INBOUND;
 		TestContext tc = new TestContext();
 		validateRouteDirectionType(tc, directionType);
 
@@ -135,7 +136,7 @@ public class RouteValidatorTests extends AbstractTest {
 	@Test(groups = { "Route",
 			"DirectionType" }, description = "Cas nominal 2 : Route DirectionType is outbound", priority = 1004)
 	public void verifyRouteDirectionTypeWithOutbound() throws Exception {
-		String directionType = DIRECTION_OUTBOUND;
+		String directionType = NetexStifConstant.DIRECTION_OUTBOUND;
 		TestContext tc = new TestContext();
 		validateRouteDirectionType(tc, directionType);
 		Assert.assertTrue(tc.isResult());
@@ -237,16 +238,16 @@ public class RouteValidatorTests extends AbstractTest {
 		// -- error : 'inbound' twice
 		Route oppositeRoute = new Route();
 		oppositeRoute.setObjectId("Codespace:type:identifierAABB:LOC");
-		oppositeRoute.setWayBack(DIRECTION_INBOUND);
+		oppositeRoute.setWayBack(NetexStifConstant.DIRECTION_INBOUND);
 		oppositeRoute.setFilled(true);
-		TestContext tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_INBOUND);
+		TestContext tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_INBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'inbound' twice");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
 				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 		//
 		// -- error : 'outbound' twice
-		oppositeRoute.setWayBack(DIRECTION_OUTBOUND);
-		tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_OUTBOUND);
+		oppositeRoute.setWayBack(NetexStifConstant.DIRECTION_OUTBOUND);
+		tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_OUTBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'outbound' twice");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
 				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
@@ -265,7 +266,7 @@ public class RouteValidatorTests extends AbstractTest {
 	public void verifyInverseWaybackValueOK() throws Exception {
 		Route oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
-		oppositeRoute.setWayBack(DIRECTION_INBOUND);
+		oppositeRoute.setWayBack(NetexStifConstant.DIRECTION_INBOUND);
 		TestContext tc = validateOppositeRouteWaybackValue(oppositeRoute, null);
 		Assert.assertTrue(tc.isResult());
 		checkNoReports(tc.getContext(), TEST_FILENAME);
@@ -273,14 +274,14 @@ public class RouteValidatorTests extends AbstractTest {
 		oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
 		oppositeRoute.setWayBack(null);
-		tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_INBOUND);
+		tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_INBOUND);
 		Assert.assertTrue(tc.isResult());
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 		//
 		oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
 		oppositeRoute.setWayBack(null);
-		tc = validateOppositeRouteWaybackValue(oppositeRoute, DIRECTION_INBOUND);
+		tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_INBOUND);
 		Assert.assertTrue(tc.isResult());
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 	}

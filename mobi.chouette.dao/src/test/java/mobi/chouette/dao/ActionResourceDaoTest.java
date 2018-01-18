@@ -49,7 +49,7 @@ public class ActionResourceDaoTest extends Arquillian {
 				.withTransitivity().asFile();
 
 		result = ShrinkWrap.create(WebArchive.class, "test.war").addAsWebInfResource("postgres-ds.xml")
-				.addClass(TestJobData.class)
+				.addClass(JobDataImpl.class)
 				.addAsLibraries(files).addAsResource(EmptyAsset.INSTANCE, "beans.xml");
 		return result;
 

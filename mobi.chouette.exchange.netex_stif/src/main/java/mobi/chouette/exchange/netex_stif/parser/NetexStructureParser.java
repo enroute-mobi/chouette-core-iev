@@ -5,31 +5,34 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hsqldb.jdbc.jdbcBlob;
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.XPPUtil;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
+import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class NetexStructureParser implements Parser, Constant {
+public class NetexStructureParser implements Parser {
 
 	// Here we are at the members level
 
 	@Override
 	public void parse(Context context) throws Exception {
-		XmlPullParser xpp = (XmlPullParser) context.get(PARSER);
+		XmlPullParser xpp = (XmlPullParser) context.get(Constant.PARSER);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			String name = xpp.getName();
 			// check if it is one of the member we treat
@@ -50,14 +53,19 @@ public class NetexStructureParser implements Parser, Constant {
 	}
 
 	private void orderStopPointsInRoute(Context context) {
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		for (Route r : referential.getRoutes().values()) {
-			Collections.sort(r.getStopPoints(), new Comparator<StopPoint>() {
-				@Override
-				public int compare(StopPoint o1, StopPoint o2) {
-					return o1.getPosition() - o2.getPosition();
-				}
-			});
+			r.getStopPoints().sort((o1,o2) -> o1.getPosition() - o2.getPosition());
+//			Collections.sort(r.getStopPoints(), new Comparator<StopPoint>() {
+//				@Override
+//				public int compare(StopPoint o1, StopPoint o2) {
+//					return o1.getPosition() - o2.getPosition();
+//				}
+//			});
+			for (JourneyPattern jp : r.getJourneyPatterns())
+			{
+				ChouetteModelUtil.refreshDepartureArrivals(jp);
+			}
 		}
 
 	}
@@ -105,8 +113,8 @@ public class NetexStructureParser implements Parser, Constant {
 	 * @param context
 	 */
 	private void updateDestinationDisplayToJourneyPattern(Context context) {
-		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		Map<String, String> elts = factory.getJourneyPatternDestinations();
 		for (Map.Entry<String, String> entry : elts.entrySet()) {
 			JourneyPattern journeyPattern = ObjectFactory.getJourneyPattern(referential, entry.getKey());
@@ -123,8 +131,8 @@ public class NetexStructureParser implements Parser, Constant {
 	 * @param context
 	 */
 	private void updateDirectionsToRoute(Context context) {
-		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		Map<String, String> elts = factory.getRouteDirections();
 		for (Map.Entry<String, String> entry : elts.entrySet()) {
 			Route route = ObjectFactory.getRoute(referential, entry.getKey());
@@ -149,13 +157,13 @@ public class NetexStructureParser implements Parser, Constant {
 //		members.put(ROUTING_CONSTRAINT_ZONES, ROUTING_CONSTRAINT_ZONE);
 
 		// init used parsers
-		parsers.put(ROUTE, RouteParser.class.getName());
-		parsers.put(DIRECTION, DirectionParser.class.getName());
-		parsers.put(SERVICE_JOURNEY_PATTERN, ServiceJourneyPatternParser.class.getName());
-		parsers.put(DESTINATION_DISPLAY, DestinationDisplayParser.class.getName());
-		parsers.put(SCHEDULED_STOP_POINT, ScheduledStopPointParser.class.getName());
-		parsers.put(PASSENGER_STOP_ASSIGNMENT, PassengerStopAssignmentParser.class.getName());
-		parsers.put(ROUTING_CONSTRAINT_ZONE, RoutingConstraintZoneParser.class.getName());
+		parsers.put(NetexStifConstant.ROUTE, RouteParser.class.getName());
+		parsers.put(NetexStifConstant.DIRECTION, DirectionParser.class.getName());
+		parsers.put(NetexStifConstant.SERVICE_JOURNEY_PATTERN, ServiceJourneyPatternParser.class.getName());
+		parsers.put(NetexStifConstant.DESTINATION_DISPLAY, DestinationDisplayParser.class.getName());
+		parsers.put(NetexStifConstant.SCHEDULED_STOP_POINT, ScheduledStopPointParser.class.getName());
+		parsers.put(NetexStifConstant.PASSENGER_STOP_ASSIGNMENT, PassengerStopAssignmentParser.class.getName());
+		parsers.put(NetexStifConstant.ROUTING_CONSTRAINT_ZONE, RoutingConstraintZoneParser.class.getName());
 
 		ParserFactory.register(NetexStructureParser.class.getName(), new ParserFactory() {
 			private NetexStructureParser instance = new NetexStructureParser();

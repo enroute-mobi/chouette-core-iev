@@ -15,13 +15,14 @@ import mobi.chouette.common.JobData;
 import mobi.chouette.common.PropertyNames;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
+import mobi.chouette.common.Constant;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.importer.ImportTask;
 @Log4j
 @Data
 @ToString(exclude = { "inputValidator" })
-public class JobService implements JobData, ServiceConstants {
+public class JobService implements JobData {
 
 	public enum STATUS {
 		NEW, PENDING, RUNNING, SUCCESSFUL, WARNING, FAILED, CANCELLED, ABORTED
@@ -69,16 +70,7 @@ public class JobService implements JobData, ServiceConstants {
 		{
 		case importer : 
 		{
-			ImportTask importTask = (ImportTask) actionTask;
-			this.type = importTask.getFormat();
-			if (this.type == null)
-				this.type = "netex_stif";
-			if (importTask.getFile() != null && !importTask.getFile().isEmpty()) {
-				File f = new File(importTask.getFile());
-				this.inputFilename = f.getName();
-			} else {
-				this.inputFilename = ACTION.importer.name() + ".zip";
-			}
+			initImportJob(actionTask);
             break;
 		}
 		case exporter:
@@ -103,14 +95,14 @@ public class JobService implements JobData, ServiceConstants {
 			inputValidator = getCommandInputValidator(action.name(), type);
 		} catch (ClassNotFoundException | IOException e) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION,
-					getCommandName() + " has no input validator");
+					getCommandName() + " has no input validator",e);
 		}
 		try {
 			actionParameter = inputValidator.toActionParameter(actionTask);
 		} catch (Exception ex) {
-			log.error("problem while reading parameters" + ex.getMessage(),ex);
+			log.error("problem while reading parameters" + ex.getMessage());
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS,
-					getCommandName() + " cannot read action parameters");
+					getCommandName() + " cannot read action parameters",ex);
 		}
 		if (System.getProperty(application + PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null) {
 			long stepWait = Long
@@ -118,6 +110,19 @@ public class JobService implements JobData, ServiceConstants {
 			if (stepWait > 0) {
 				actionParameter.setTest(stepWait);
 			}
+		}
+	}
+
+	private void initImportJob(ActionTask actionTask) {
+		ImportTask importTask = (ImportTask) actionTask;
+		this.type = importTask.getFormat();
+		if (this.type == null)
+			this.type = "netex_stif";
+		if (importTask.getFile() != null && !importTask.getFile().isEmpty()) {
+			File f = new File(importTask.getFile());
+			this.inputFilename = f.getName();
+		} else {
+			this.inputFilename = ACTION.importer.name() + ".zip";
 		}
 	}
 
@@ -129,11 +134,11 @@ public class JobService implements JobData, ServiceConstants {
 	 */
 	public String getPathName() {
 
-		return Paths.get(rootDirectory, ROOT_PATH, action.name(), id.toString()).toString();
+		return Paths.get(rootDirectory, Constant.ROOT_PATH, action.name(), id.toString()).toString();
 	}
 
 	public static String getRootPathName(String rootDirectory) {
-		return Paths.get(rootDirectory, ROOT_PATH).toString();
+		return Paths.get(rootDirectory, Constant.ROOT_PATH).toString();
 	}
 
 	public java.nio.file.Path getPath() {
@@ -150,8 +155,8 @@ public class JobService implements JobData, ServiceConstants {
 	}
 
 	public String getCommandName() {
-		String type = getType() == null ? "" : getType();
-		return "mobi.chouette.exchange." + (type.isEmpty() ? "" : type + ".") + getAction() + "." + capitalize(type)
+		String computeType = getType() == null ? "" : getType();
+		return "mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + getAction() + "." + capitalize(computeType)
 				+ StringUtils.capitalize(getAction().name()) + "Command";
 	}
 
@@ -161,10 +166,9 @@ public class JobService implements JobData, ServiceConstants {
 
 	public static InputValidator getCommandInputValidator(String actionParam, String typeParam)
 			throws ClassNotFoundException, IOException {
-		String type = typeParam == null ? "" : typeParam;
-		final InputValidator inputValidator = InputValidatorFactory
-				.create("mobi.chouette.exchange." + (type.isEmpty() ? "" : type + ".") + actionParam + "."
-						+ capitalize(type) + StringUtils.capitalize(actionParam) + "InputValidator");
-		return inputValidator;
+		String computeType = typeParam == null ? "" : typeParam;
+		return InputValidatorFactory
+				.create("mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + actionParam + "."
+						+ capitalize(computeType) + StringUtils.capitalize(actionParam) + "InputValidator");
 	}
 }

@@ -8,12 +8,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jettison.json.JSONException;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JSONUtil;
+import mobi.chouette.core.CoreExceptionCode;
+import mobi.chouette.core.CoreRuntimeException;
 import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
+import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.ControlParameters;
 import mobi.chouette.exchange.validator.checkpoints.GenericCheckpointParameters;
@@ -31,7 +36,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	protected static final String TRANSPORT_SUBMODE_KEY = "transport_sub_mode";
 	protected static final String MAXIMUM_VALUE_KEY = "maximum";
 	protected static final String MINIMUM_VALUE_KEY = "minimum";
-	protected static final String PATTERN_VALUE_KEY = "PATTERN";
+	protected static final String PATTERN_VALUE_KEY = "pattern";
 	protected static final String ATTRIBUTE_NAME_KEY = "target";
 	protected static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
 
@@ -96,37 +101,35 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		return true;
 	}
 
-	public static class DefaultFactory extends InputValidatorFactory {
-
-		@Override
-		protected InputValidator create() throws IOException {
-			InputValidator result = new ValidatorInputValidator();
-			return result;
-		}
-	}
-
-	static {
-		InputValidatorFactory.factories.put(ValidatorInputValidator.class.getName(), new DefaultFactory());
-	}
-
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
 
 		if (task instanceof ComplianceCheckTask) {
 			ComplianceCheckTask checkTask = (ComplianceCheckTask) task;
 			Referential referential = checkTask.getReferential();
+			if (referential == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			Organisation organisation = referential.getOrganisation();
+			if (organisation == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential organisation_id is null");
 			ValidateParameters parameter = new ValidateParameters();
-
+			if (referential.getLineReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential line_referential_id is null");
 			parameter.setLineReferentialId(referential.getLineReferentialId());
+			if (referential.getStopAreaReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential stop_area_referential_id is null");
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
 			if (referential.getId() == null)
-				throw new RuntimeException("referential id is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
-				throw new RuntimeException("referential id " + referential.getId() + " metadata is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential metadata is null");
 			if (referential.getMetadatas().get(0).getLineIds() == null)
-				throw new RuntimeException("referential's metadata line ids  null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
+			if (referential.getMetadatas().get(0).getLineIds().length == 0)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
 			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
@@ -136,37 +139,21 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			// populate controlParameter
 			ControlParameters controlParameters = parameter.getControlParameters();
 			checkTask.getComplianceChecks().stream().forEach(check -> {
-				CheckpointParameters cp = buildCheckpoint(check);
-				// if check has a block, add check to transportModeCheckpoints
-				// map
-				if (check.getBlock() != null) {
-					// get key for mode/submode
-					ComplianceCheckBlock block = check.getBlock();
-					String key = block.getConditionAttributes().get(TRANSPORT_MODE_KEY);
-					if (block.getConditionAttributes().containsKey(TRANSPORT_SUBMODE_KEY)) {
-						key += "/" + block.getConditionAttributes().get(TRANSPORT_SUBMODE_KEY);
-					}
-					Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints()
-							.get(key);
-					if (map == null) {
-						map = new HashMap<>();
-						controlParameters.getTransportModeCheckpoints().put(key, map);
-					}
-					Collection<CheckpointParameters> list = map.get(cp.getCode());
-					if (list == null) {
-						list = new ArrayList<>();
-						map.put(cp.getCode(), list);
-					}
-					list.add(cp);
+				CheckpointParameters cp;
+				try {
+					cp = buildCheckpoint(check);
+				} catch (Exception e) {
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, e,
+							"cannot parse ComplianceCheck Attributes for " + check.getCode());
 				}
-				// else add to globalCheckPoints map
-				else {
-					Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().get(cp.getCode());
-					if (list == null) {
-						list = new ArrayList<>();
-						controlParameters.getGlobalCheckPoints().put(cp.getCode(), list);
-					}
-					list.add(cp);
+				ComplianceCheckBlock block = check.getBlock();
+				if (block != null) {
+					// if check has a block, add check to
+					// transportModeCheckpoints map
+					addToTransportModeCheckPoints(controlParameters, block, cp);
+				} else {
+					// else add to globalCheckPoints map
+					addToGlobalCheckPoints(controlParameters, cp);
 				}
 			});
 
@@ -176,22 +163,66 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		return null;
 	}
 
-	private CheckpointParameters buildCheckpoint(ComplianceCheck check) {
+	private void addToGlobalCheckPoints(ControlParameters controlParameters, CheckpointParameters cp) {
+		Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().get(cp.getCode());
+		if (list == null) {
+			list = new ArrayList<>();
+			controlParameters.getGlobalCheckPoints().put(cp.getCode(), list);
+		}
+		list.add(cp);
+	}
+
+	private void addToTransportModeCheckPoints(ControlParameters controlParameters, ComplianceCheckBlock block,
+			CheckpointParameters cp) {
+		// get key for mode/submode
+		String key = block.getConditionAttributes().get(TRANSPORT_MODE_KEY);
+		if (block.getConditionAttributes().containsKey(TRANSPORT_SUBMODE_KEY)) {
+			key += "/" + block.getConditionAttributes().get(TRANSPORT_SUBMODE_KEY);
+		}
+		Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints().get(key);
+		if (map == null) {
+			map = new HashMap<>();
+			controlParameters.getTransportModeCheckpoints().put(key, map);
+		}
+		Collection<CheckpointParameters> list = map.get(cp.getCode());
+		if (list == null) {
+			list = new ArrayList<>();
+			map.put(cp.getCode(), list);
+		}
+		list.add(cp);
+	}
+
+	private CheckpointParameters buildCheckpoint(ComplianceCheck check) throws JSONException {
 		CheckpointParameters result = null;
-		if (check.getControlAttributes().containsKey(ATTRIBUTE_NAME_KEY)) {
+		if (check.getControlAttributes().has(ATTRIBUTE_NAME_KEY)) {
 			GenericCheckpointParameters generic = new GenericCheckpointParameters();
 			result = generic;
-			String key = check.getControlAttributes().get(ATTRIBUTE_NAME_KEY);
+			String key = check.getControlAttributes().getString(ATTRIBUTE_NAME_KEY);
 			String[] keys = key.split("#");
 			generic.setAttributeName(keys[1]);
 			generic.setClassName(toCamelCase(keys[0]));
+			// TODO check valid class and attribute
+			try {
+				Class<?> clazz = Class.forName("mobi.chouette.model." + generic.getClassName());
+				String methodName = "get" + toCamelCase(generic.getAttributeName());
+				if (!Arrays.stream(clazz.getMethods()).anyMatch(m -> m.getName().equalsIgnoreCase(methodName)))
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "unknown check point attribute "
+							+ generic.getClassName() + " for class " + generic.getClassName());
+			} catch (ClassNotFoundException e) {
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"unknown check point class " + generic.getClassName());
+			}
 		} else {
 			result = new CheckpointParameters();
 		}
 		result.setCheckId(check.getId());
-		result.setMinimumValue(check.getControlAttributes().get(MINIMUM_VALUE_KEY));
-		result.setMaximumValue(check.getControlAttributes().get(MAXIMUM_VALUE_KEY));
-		result.setPatternValue(check.getControlAttributes().get(PATTERN_VALUE_KEY));
+		result.setMinimumValue(check.getControlAttributes().optString(MINIMUM_VALUE_KEY, null));
+		result.setMaximumValue(check.getControlAttributes().optString(MAXIMUM_VALUE_KEY, null));
+		result.setPatternValue(check.getControlAttributes().optString(PATTERN_VALUE_KEY, null));
+		// check existing code
+		if (!CheckPointConstant.exists(check.getCode()))
+			throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+					"unknown check point code " + check.getCode());
 		result.setCode(check.getCode());
 		result.setErrorType(check.getCriticity().equals(CRITICITY.error));
 		return result;
@@ -202,26 +233,36 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	 * @return
 	 */
 	protected static String toCamelCase(String underscore) {
-		StringBuffer b = new StringBuffer();
+		StringBuilder b = new StringBuilder();
 		boolean underChar = false;
 		boolean first = true;
 		for (char c : underscore.toCharArray()) {
 			if (first) {
 				b.append(Character.toUpperCase(c));
 				first = false;
-				continue;
-			}
-			if (c == '_') {
+			} else if (c == '_') {
 				underChar = true;
-				continue;
+			} else {
+				if (underChar) {
+					b.append(Character.toUpperCase(c));
+					underChar = false;
+				} else
+					b.append(c);
 			}
-			if (underChar) {
-				b.append(Character.toUpperCase(c));
-				underChar = false;
-			} else
-				b.append(c);
 		}
 		return b.toString();
+	}
+
+	public static class DefaultFactory extends InputValidatorFactory {
+
+		@Override
+		protected InputValidator create() throws IOException {
+			return new ValidatorInputValidator();
+		}
+	}
+
+	static {
+		InputValidatorFactory.factories.put(ValidatorInputValidator.class.getName(), new DefaultFactory());
 	}
 
 }

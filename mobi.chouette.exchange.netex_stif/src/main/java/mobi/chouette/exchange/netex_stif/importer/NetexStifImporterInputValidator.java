@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JSONUtil;
+import mobi.chouette.core.CoreExceptionCode;
+import mobi.chouette.core.CoreRuntimeException;
 import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
@@ -22,6 +24,7 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 		try {
 			return JSONUtil.fromJSON(abstractParameter, NetexStifImportParameters.class);
 		} catch (Exception e) {
+			log.error("Cannot parse parameter " + e.getMessage());
 			return null;
 		}
 	}
@@ -33,8 +36,8 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 			NetexStifImportParameters parameters = JSONUtil.fromJSON(abstractParameterString,
 					NetexStifImportParameters.class);
 			return checkParameters(parameters);
-		} catch (Exception ex) {
-			log.error(ex.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage());
 			return false;
 		}
 	}
@@ -72,8 +75,7 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 
 		@Override
 		protected InputValidator create() throws IOException {
-			InputValidator result = new NetexStifImporterInputValidator();
-			return result;
+			return new NetexStifImporterInputValidator();
 		}
 	}
 
@@ -81,40 +83,43 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 		InputValidatorFactory.factories.put(NetexStifImporterInputValidator.class.getName(), new DefaultFactory());
 	}
 
-//	@Override
-//	public List<TestDescription> getTestList() {
-//		DatabaseTestUtils dbTestUtils = DatabaseTestUtils.getInstance();
-//		List<TestDescription> lstTestWithDatabase = new ArrayList<TestDescription>();
-//		lstTestWithDatabase.addAll(dbTestUtils.getTestUtilsList());
-//		//lstTestWithDatabase.addAll(AbstractValidation.getTestLevel3FileList());
-//
-//		return lstTestWithDatabase;
-//	}
-
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
 		if (task instanceof ImportTask) {
 			ImportTask importTask = (ImportTask) task;
-			if (!importTask.getFormat().equals("netex_stif"))
+			if (!"netex_stif".equals(importTask.getFormat()))
 				return null;
 			Referential referential = importTask.getReferential();
+			if (referential == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			Organisation organisation = referential.getOrganisation();
+			if (organisation == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential organisation_id is null");
 			NetexStifImportParameters parameter = new NetexStifImportParameters();
 			parameter.setImportId(importTask.getId());
+			if (referential.getLineReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential line_referential_id is null");
 			parameter.setLineReferentialId(referential.getLineReferentialId());
+			if (referential.getStopAreaReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential stop_area_referential_id is null");
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
 			if (referential.getId() == null)
-				throw new RuntimeException("referential id is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
-				throw new RuntimeException("referential id " + referential.getId() + " metadata is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential metadata is null");
 			if (referential.getMetadatas().get(0).getLineIds() == null)
-				throw new RuntimeException("referential's metadata line ids  null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
+			if (referential.getMetadatas().get(0).getLineIds().length == 0)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
 			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
 			parameter.setOrganisationCode(organisation.getCode());
+
+			// for debug only
+			parameter.setCleanRepository("true".equalsIgnoreCase(System.getProperty("boiv.clean.repository.on.import")));
 
 			return parameter;
 		}

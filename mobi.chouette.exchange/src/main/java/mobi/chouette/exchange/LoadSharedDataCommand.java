@@ -31,7 +31,7 @@ import mobi.chouette.model.util.Referential;
 
 @Log4j
 @Stateless(name = LoadSharedDataCommand.COMMAND)
-public class LoadSharedDataCommand implements Command, Constant {
+public class LoadSharedDataCommand implements Command {
 
 	public static final String COMMAND = "LoadSharedDataCommand";
 
@@ -46,13 +46,13 @@ public class LoadSharedDataCommand implements Command, Constant {
 
 	@Override
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
-			Referential referential = (Referential) context.get(REFERENTIAL);
-			AbstractParameter parameters = (AbstractParameter) context.get(CONFIGURATION);
+			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+			AbstractParameter parameters = (AbstractParameter) context.get(Constant.CONFIGURATION);
 			List<Long> ids = parameters.getIds();
 			Set<Long> companyIds = new HashSet<>();
 			for (LineLite line : lineDAO.findAll(parameters.getLineReferentialId(), ids)) {
@@ -77,7 +77,7 @@ public class LoadSharedDataCommand implements Command, Constant {
 				stopAreaDAO.detach(stopArea);
 			}
 
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 
 		} catch (Exception e) {
 			log.error(e, e);
@@ -111,7 +111,7 @@ public class LoadSharedDataCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(LoadSharedDataCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(LoadSharedDataCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

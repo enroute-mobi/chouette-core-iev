@@ -4,9 +4,12 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.Shape;
 
-public class ShapeValidator extends GenericValidator<Shape> implements CheckPointConstant {
+public class ShapeValidator extends GenericValidator<Shape> {
 
-	private static final String[] codes = { L3_Shape_1, L3_Shape_2, L3_Shape_3 };
+	private static final String[] codes = { 
+			CheckPointConstant.L3_Shape_1, 
+			CheckPointConstant.L3_Shape_2, 
+			CheckPointConstant.L3_Shape_3 };
 
 	@Override
 	public void validate(Context context, Shape object, ValidateParameters parameters, String transportMode) {

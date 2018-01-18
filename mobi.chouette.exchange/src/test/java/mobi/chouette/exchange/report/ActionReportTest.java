@@ -15,15 +15,15 @@ import org.codehaus.jettison.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ActionReportTest implements Constant{
+public class ActionReportTest {
 	@Test(groups = { "JsonGeneration" }, description = "Json generated" ,priority=105 )
 	public void verifyJsonGeneration() throws Exception {
 		Context context = new Context();
-		context.put(VALIDATION_REPORT, new ValidationReport());
-		context.put(REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.REPORT, new ActionReport());
 		
 		ActionReporter actionReporter = ActionReporter.Factory.getInstance();
-		ActionReport actionReport = (ActionReport) context.get(REPORT);
+		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
 	
 		{
 		ByteArrayOutputStream oStream = new ByteArrayOutputStream();

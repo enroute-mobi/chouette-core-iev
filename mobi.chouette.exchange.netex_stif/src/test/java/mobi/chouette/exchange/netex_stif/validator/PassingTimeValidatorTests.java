@@ -12,9 +12,11 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifImportParameters;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.report.ActionReport;
@@ -57,33 +59,33 @@ public class PassingTimeValidatorTests extends AbstractTest {
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
-		context.put(REFERENTIAL, new Referential());
-		context.put(NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
+		context.put(Constant.CONFIGURATION, configuration);
+		context.put(Constant.REFERENTIAL, new Referential());
+		context.put(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
-		JobDataTest test = new JobDataTest();
-		context.put(JOB_DATA, test);
+		JobDataImpl test = new JobDataImpl();
+		context.put(Constant.JOB_DATA, test);
 
 		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
-		context.put(TESTNG, "true");
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true");
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 	}
 
 	private void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
 			String value) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
 		Assert.assertEquals(report.getResult(), "OK", "result");
@@ -125,7 +127,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 	@Test(groups = { "PassingTime" }, description = "GoodPassingTime", priority = 901)
 	public void verifyGoodPassingTime() throws Exception {
 		Context context = initImportContext();
-		context.put(FILE_NAME, "offre_xxx.xml");
+		context.put(Constant.FILE_NAME, "offre_xxx.xml");
 		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context,
 				PassingTimeValidator.class);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
@@ -149,7 +151,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 	@Test(groups = { "PassingTime" }, description = "missing departure time", priority = 902)
 	public void verifyMissingDepartureTime() throws Exception {
 		Context context = initImportContext();
-		context.put(FILE_NAME, "offre_xxx.xml");
+		context.put(Constant.FILE_NAME, "offre_xxx.xml");
 		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context,
 				PassingTimeValidator.class);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
@@ -158,8 +160,8 @@ public class PassingTimeValidatorTests extends AbstractTest {
 		boolean result = validator.validate(context, vjas, 1, 2, 0);
 		Assert.assertFalse(result, "validator result");
 
-		ValidationReport vr = (ValidationReport) context.get(VALIDATION_REPORT);
-		ActionReport ar = (ActionReport) context.get(REPORT);
+		ValidationReport vr = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
+		ActionReport ar = (ActionReport) context.get(Constant.REPORT);
 
 		log.info("Validation Report ===>" + vr.toString());
 		log.info("Validation Report Result = " + vr.getResult());
@@ -173,7 +175,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 	@Test(groups = { "PassingTime" }, description = "arrival time after departure time", priority = 903)
 	public void verifyArrivalTimeAfterDepartureTime() throws Exception {
 		Context context = initImportContext();
-		context.put(FILE_NAME, "offre_xxx.xml");
+		context.put(Constant.FILE_NAME, "offre_xxx.xml");
 		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context,
 				PassingTimeValidator.class);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
@@ -191,7 +193,7 @@ public class PassingTimeValidatorTests extends AbstractTest {
 	@Test(groups = { "PassingTime" }, description = "arrival offest after departure offset", priority = 904)
 	public void verifyArrivalDayOffestAfterDepartureDayOffset() throws Exception {
 		Context context = initImportContext();
-		context.put(FILE_NAME, "offre_xxx.xml");
+		context.put(Constant.FILE_NAME, "offre_xxx.xml");
 		PassingTimeValidator validator = (PassingTimeValidator) ValidatorFactory.getValidator(context,
 				PassingTimeValidator.class);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();

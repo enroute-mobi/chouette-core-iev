@@ -16,15 +16,15 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.ParserUtils;
-import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.report.ActionReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
@@ -43,7 +43,7 @@ import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class NetexStifParserCommandTests implements Constant, ReportConstant {
+public class NetexStifParserCommandTests  {
 
 	private static final String path = "src/test/data/";
 
@@ -68,21 +68,21 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
-		context.put(REFERENTIAL, new Referential());
-		context.put(NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
+		context.put(Constant.CONFIGURATION, configuration);
+		context.put(Constant.REFERENTIAL, new Referential());
+		context.put(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
 		configuration.setReferentialId(1L);
-		JobDataTest test = new JobDataTest();
-		context.put(JOB_DATA, test);
+		JobDataImpl test = new JobDataImpl();
+		context.put(Constant.JOB_DATA, test);
 
 		test.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
@@ -96,15 +96,15 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		test.setReferential("chouette_gui");
 		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
-		context.put(TESTNG, "true");
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true");
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		initLines(context);
 		return context;
 
 	}
 
 	private void initLines(Context context) {
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		// Line line = ObjectFactory.getLine(referential,
 		// "STIF:CODIFLIGNE:Line:12234");
 		// line.setObjectId("STIF:CODIFLIGNE:Line:12234");
@@ -112,6 +112,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		line.setId(1L);
 		line.setObjectId("STIF:CODIFLIGNE:Line:C00108");
 		referential.getSharedReadOnlyLines().put(line.getObjectId(), line);
+		context.put(Constant.LINE, line);
 		CompanyLite company = new CompanyLite();
 		company.setId(1L);
 		company.setObjectId("STIF:CODIFLIGNE:Operator:011");
@@ -144,14 +145,14 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 	//@Test(groups = { "Nominal" }, description = "offre", priority = 3)
 	public void verifyOfferParser(String calendrier, String commun, String offre) throws Exception {
 		Context context = initImportContext();
-        ActionReport report = (ActionReport) context.get(REPORT);
-        ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+        ActionReport report = (ActionReport) context.get(Constant.REPORT);
+        ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		{
 			File f = new File(path, calendrier);
-			parser.setFileURL("file://" + f.getAbsolutePath());
+			parser.setFileURL(f.toURI().toString());
 			parser.execute(context);
 			log.info(report);
 			log.info(valReport.getCheckPointErrors());
@@ -159,7 +160,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		}
 		{
 			File f = new File(path, "commun.xml");
-			parser.setFileURL("file://" + f.getAbsolutePath());
+			parser.setFileURL(f.toURI().toString());
 			parser.execute(context);
 			log.info(report);
 			log.info(valReport.getCheckPointErrors());
@@ -167,7 +168,7 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 			Assert.assertFalse(referential.getSharedTimetableTemplates().isEmpty(), " no timetables");
 		}
 		File f = new File(path, "offre.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
@@ -272,17 +273,25 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 
 	@Test(groups = { "Nominal" }, description = "commun", priority = 301)
 	public void verifyCommunParser() throws Exception {
+		try
+		{
 		Context context = initImportContext();
 
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		File f = new File(path, "commun.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		assertNotice(referential, "CITYWAY:Notice:1:LOC", "Notice 1", "1");
 		assertNotice(referential, "CITYWAY:Notice:2:LOC", "Notice 2", "2");
 		assertNotice(referential, "CITYWAY:Notice:3:LOC", "Notice 3", "3");
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	private void assertNotice(Referential referential, String id, String text, String publicCode) {
@@ -300,9 +309,9 @@ public class NetexStifParserCommandTests implements Constant, ReportConstant {
 		NetexStifParserCommand parser = (NetexStifParserCommand) CommandFactory.create(initialContext,
 				NetexStifParserCommand.class.getName());
 		File f = new File(path, "calendriers.xml");
-		parser.setFileURL("file://" + f.getAbsolutePath());
+		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		assertTimetable(referential, "CITYWAY:DayType:1:LOC", "Semaine", "Monday,Tuesday,Wednesday,Thursday,Friday", 0,
 				1);
 		assertTimetable(referential, "CITYWAY:DayType:2:LOC", "Fin de semaine", "Saturday,Sunday", 0, 1);

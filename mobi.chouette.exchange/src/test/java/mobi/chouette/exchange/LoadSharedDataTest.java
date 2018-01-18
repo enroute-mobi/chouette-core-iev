@@ -31,13 +31,12 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.parameters.DummyParameter;
 import mobi.chouette.exchange.report.ActionReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class LoadSharedDataTest extends Arquillian implements Constant, ReportConstant {
+public class LoadSharedDataTest extends Arquillian  {
 
 	@Deployment
 	public static EnterpriseArchive createDeployment() {
@@ -111,11 +110,11 @@ public class LoadSharedDataTest extends Arquillian implements Constant, ReportCo
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		DummyParameter configuration = new DummyParameter();
-		context.put(CONFIGURATION, configuration);
+		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setOrganisationName("organisation");
@@ -125,7 +124,7 @@ public class LoadSharedDataTest extends Arquillian implements Constant, ReportCo
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L });
 		configuration.setIds(ids);
 		TestJobData jobData = new TestJobData();
-		context.put(JOB_DATA, jobData);
+		context.put(Constant.JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
@@ -138,8 +137,8 @@ public class LoadSharedDataTest extends Arquillian implements Constant, ReportCo
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType("netex_stif");
-		context.put(TESTNG, "true");
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true");
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
@@ -148,7 +147,7 @@ public class LoadSharedDataTest extends Arquillian implements Constant, ReportCo
 	public void verifyCheckLoadData() throws Exception {
 
 		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		Command command = CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName());
 		Assert.assertNotNull(command,
 				"LoadSharedDataCommand not found");
@@ -158,7 +157,7 @@ public class LoadSharedDataTest extends Arquillian implements Constant, ReportCo
 			log.error("test failed", ex);
 			throw ex;
 		}
-		Referential referential = (Referential) context.get(REFERENTIAL);
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		Assert.assertEquals(referential.getSharedReadOnlyLines().size(), 2, "line size");
 		Assert.assertNotNull(referential.getSharedReadOnlyLines().get("STIF:CODIFLIGNE:Line:C00108"),
 				"objectid STIF:CODIFLIGNE:Line:C00108 should be found for lines");

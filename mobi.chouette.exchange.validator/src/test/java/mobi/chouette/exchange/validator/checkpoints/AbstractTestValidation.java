@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -43,21 +43,19 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.ObjectCollectionReport;
 import mobi.chouette.exchange.report.ObjectReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.CheckPointReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.exchange.validator.JobDataTest;
+import mobi.chouette.exchange.validator.JobDataImpl;
 import mobi.chouette.exchange.validator.ValidateParameters;
-import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
+import mobi.chouette.exchange.validator.YmlMessages;
 import mobi.chouette.model.ChouetteLocalizedObject;
 import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public abstract class AbstractTestValidation extends Arquillian
-		implements Constant, ReportConstant, CheckPointConstant {
+public abstract class AbstractTestValidation extends Arquillian {
 
 	public static final String SCHEMA_NAME = "iev_check_points";
 
@@ -116,7 +114,8 @@ public abstract class AbstractTestValidation extends Arquillian
 			}
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
-				.addAsWebInfResource("postgres-ds.xml").addClass(JobDataTest.class)
+				.addAsWebInfResource("postgres-ds.xml").addClass(JobDataImpl.class)
+				.addClass(YmlMessages.class)
 				.addClass(AbstractTestValidation.class).addClass(clazz);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
@@ -135,12 +134,12 @@ public abstract class AbstractTestValidation extends Arquillian
 		ContextHolder.setContext(SCHEMA_NAME); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(REFERENTIAL, new Referential());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.REFERENTIAL, new Referential());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		ValidateParameters configuration = new ValidateParameters();
-		context.put(CONFIGURATION, configuration);
+		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setOrganisationName("organisation");
@@ -149,8 +148,8 @@ public abstract class AbstractTestValidation extends Arquillian
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		configuration.setIds(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
-		JobDataTest test = new JobDataTest();
-		context.put(JOB_DATA, test);
+		JobDataImpl test = new JobDataImpl();
+		context.put(Constant.JOB_DATA, test);
 		test.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
@@ -163,8 +162,8 @@ public abstract class AbstractTestValidation extends Arquillian
 		test.setReferential(SCHEMA_NAME);
 		test.setAction(ACTION.validator);
 		context.put("testng", "true");
-		context.put(SOURCE, SOURCE_DATABASE);
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.SOURCE, Constant.SOURCE_DATABASE);
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
@@ -262,8 +261,6 @@ public abstract class AbstractTestValidation extends Arquillian
 		return b.toString();
 	}
 
-	
-
 	/**
 	 * calculate distance on spheroid
 	 * 
@@ -287,7 +284,8 @@ public abstract class AbstractTestValidation extends Arquillian
 
 	public static long diffTime(Time first, Time last) {
 		if (first == null || last == null)
-			return Long.MIN_VALUE; // diffTime => action when first & last time are null
+			return Long.MIN_VALUE; // diffTime => action when first & last time
+									// are null
 		long diff = last.getTime() / 1000L - first.getTime() / 1000L;
 		if (diff < 0)
 			diff += 86400L; // step upon midnight : add one day in seconds
@@ -326,9 +324,9 @@ public abstract class AbstractTestValidation extends Arquillian
 
 	protected void checkReports(Context context, String lineId, String checkPointCode, String messageCode, String value,
 			OBJECT_STATE state, int reportCount) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "OK", "result");
@@ -344,7 +342,7 @@ public abstract class AbstractTestValidation extends Arquillian
 			Assert.assertEquals(lineReport.getCheckPointErrorCount(), reportCount, "line error reported");
 			error = valReport.getCheckPointErrors().get(lineReport.getCheckPointErrorKeys().get(0).intValue());
 		} else {
-			Assert.assertEquals(lineReport.getStatus(), OBJECT_STATE.OK, "line status reported");
+			Assert.assertEquals(lineReport.getStatus(), state, "line status reported");
 			Assert.assertEquals(lineReport.getCheckPointWarningCount(), reportCount, "line warning reported");
 			error = valReport.getCheckPointErrors().get(lineReport.getCheckPointWarningKeys().get(0).intValue());
 		}
@@ -354,15 +352,57 @@ public abstract class AbstractTestValidation extends Arquillian
 			Assert.assertNull(error.getValue(), "value");
 		else
 			Assert.assertEquals(error.getValue(), value, "value");
-		Assert.assertNotNull(error.getSource().getObjectId(), "source objectId");
+		Assert.assertFalse(error.getSource().getObjectRefs().isEmpty(), "source path");
 		Assert.assertNull(error.getSource().getFile(), "no source filename");
+
+		List<String> keys = YmlMessages.getMessageKeys(error.getKey());
+		Assert.assertFalse(keys.isEmpty(),"message "+error.getKey()+ " should have populate tags");
+		final CheckPointErrorReport ferror = error;
+		keys.forEach(k -> {
+			switch (k) {
+			case "reference_value":
+				Assert.assertNotNull(ferror.getReferenceValue(), k);
+				break;
+			case "source_objectid":
+				Assert.assertNotNull(ferror.getSource().getObjectId(),  k);
+				break;
+			case "source_label":
+				Assert.assertNotNull(ferror.getSource().getName(),  k);
+				break;
+			case "source_attribute":
+				Assert.assertNotNull(ferror.getSource().getAttribute(),  k);
+				break;
+			case "target_0_objectid":
+				Assert.assertTrue(ferror.getTargets().size() > 0, "target 0");
+				Assert.assertNotNull(ferror.getTargets().get(0).getObjectId(),  k);
+				break;
+			case "target_0_label":
+				Assert.assertTrue(ferror.getTargets().size() > 0, "target 0");
+				Assert.assertNotNull(ferror.getTargets().get(0).getName(),  k);
+				break;
+			case "target_1_objectid":
+				Assert.assertTrue(ferror.getTargets().size() > 1, "target 1");
+				Assert.assertNotNull(ferror.getTargets().get(1).getObjectId(),  k);
+				break;
+			case "target_1_label":
+				Assert.assertTrue(ferror.getTargets().size() > 1, "target 1");
+				Assert.assertNotNull(ferror.getTargets().get(1).getName(),  k);
+				break;
+			case "error_value":
+				Assert.assertNotNull(ferror.getValue(), k);
+				break;
+			default:
+				Assert.assertNull(k, "unknown key "+k);
+				break;
+			}
+		});
 
 	}
 
 	protected final void checkNoReports(Context context, String lineId) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "OK", "result");

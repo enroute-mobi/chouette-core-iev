@@ -18,45 +18,50 @@ import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Network;
 
-@Stateless 
+@Stateless
 public class DaoReader {
 
-	@EJB 
+	@EJB
 	protected LineDAO lineDAO;
 
-	@EJB 
+	@EJB
 	protected NetworkDAO ptNetworkDAO;
 
-	@EJB 
+	@EJB
 	protected CompanyDAO companyDAO;
 
-	@EJB 
+	@EJB
 	protected GroupOfLineDAO groupOfLineDAO;
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Set<Long> loadLines(String type, List<Long> ids) {
-		Set<Line> lines = new HashSet<Line>();
-		Set<Long> lineIds = new HashSet<Long>();
+		Set<Line> lines = new HashSet<>();
+		Set<Long> lineIds = new HashSet<>();
 		if (ids == null || ids.isEmpty()) {
 			lines.addAll(lineDAO.findAll());
 		} else {
-			if (type.equals("line")) {
+			switch (type) {
+			case "line":
 				lines.addAll(lineDAO.findAll(ids));
-			} else if (type.equals("network")) {
-				List<Network> list = ptNetworkDAO.findAll(ids);
-				for (Network ptNetwork : list) {
+				break;
+			case "network":
+				List<Network> nlist = ptNetworkDAO.findAll(ids);
+				for (Network ptNetwork : nlist) {
 					lines.addAll(ptNetwork.getLines());
 				}
-			} else if (type.equals("company")) {
-				List<Company> list = companyDAO.findAll(ids);
-				for (Company company : list) {
+				break;
+			case "company":
+				List<Company> clist = companyDAO.findAll(ids);
+				for (Company company : clist) {
 					lines.addAll(company.getLines());
 				}
-			} else if (type.equals("group_of_line")) {
-				List<GroupOfLine> list = groupOfLineDAO.findAll(ids);
-				for (GroupOfLine groupOfLine : list) {
+				break;
+			case "group_of_line":
+				List<GroupOfLine> glist = groupOfLineDAO.findAll(ids);
+				for (GroupOfLine groupOfLine : glist) {
 					lines.addAll(groupOfLine.getLines());
 				}
+				break;
 			}
 		}
 		for (Line line : lines) {

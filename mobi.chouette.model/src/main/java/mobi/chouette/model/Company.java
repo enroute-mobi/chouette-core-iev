@@ -285,6 +285,6 @@ public class Company extends ChouetteIdentifiedObject {
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "company")
-	private List<Line> lines = new ArrayList<Line>(0);
+	private List<Line> lines = new ArrayList<>(0);
 
 }

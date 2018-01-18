@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.JourneyPatternDAO;
 import mobi.chouette.dao.RouteDAO;
@@ -22,7 +23,7 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.validator.ValidateParameters;
-import mobi.chouette.exchange.validator.ValidationException;
+import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.LineValidator;
 import mobi.chouette.model.JourneyPattern;
@@ -48,9 +49,9 @@ public class LineValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "line" }, description = "3_Line_1", priority = 31)
+	@Test(groups = { "line" }, description = "3_Line_1", priority = 121)
 	public void verifyTest_3_Line_1() throws Exception {
-		log.info(Color.CYAN + " check " + L3_Line_1 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Line_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -58,7 +59,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			TestContext tc = new TestContext(context, L3_Line_1);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_Line_1);
 			LineLite line = tc.getObjectForTest();
 			Collection<Route> routes = tc.getReferential().getRoutes().values();
 
@@ -77,15 +78,6 @@ public class LineValidatorTests extends AbstractTestValidation {
 			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
 					OBJECT_STATE.WARNING, warningCount);
 
-			// -- Error test : no route for line
-			tc.getReferential().getRoutes().clear();
-			ValidationException e = null;
-			try {
-				tc.runValidation();
-			} catch (ValidationException exp) {
-				e = exp;
-			}
-			Assert.assertNotNull(e, "ValidationException should have been thrown, but nothing...");
 		} finally {
 			utx.rollback();
 		}
@@ -95,9 +87,9 @@ public class LineValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "line" }, description = L3_Route_4 + " : error routes with same ordered stops", priority = 31)
+	@Test(groups = { "line" }, description = CheckPointConstant.L3_Route_4 + " : error routes with same ordered stops", priority = 122)
 	public void verifyTest_3_Line_1_ErrorRoutesWithSameOrderedStops() throws Exception {
-		log.info(Color.CYAN + " check " + L3_Route_4 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_4 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -105,7 +97,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			TestContext tc = new TestContext(context, L3_Route_4);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_Route_4);
 			LineLite line = tc.getObjectForTest();
 			Collection<Route> routes = tc.getReferential().getRoutes().values();
 
@@ -138,10 +130,10 @@ public class LineValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "line" }, description = L3_JourneyPattern_1
-			+ " : error 2 journeypatterns must have different different stops order ", priority = 32)
+	@Test(groups = { "line" }, description = CheckPointConstant.L3_JourneyPattern_1
+			+ " : error 2 journeypatterns must have different different stops order ", priority = 123)
 	public void verifyTest_3_Line_1_ErrorJourneyPatternWithSameOrderedStops() throws Exception {
-		log.info(Color.CYAN + " check " + L3_JourneyPattern_1 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_JourneyPattern_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -149,7 +141,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			TestContext tc = new TestContext(context, L3_JourneyPattern_1);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_JourneyPattern_1);
 			LineLite line = tc.getObjectForTest();
 			List<JourneyPattern> journeypatterns = new ArrayList<JourneyPattern>();
 
@@ -204,7 +196,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 
 		public TestContext(Context context, String checkPointName) {
 			this.context = context;
-			referential = (Referential) context.get(REFERENTIAL);
+			referential = (Referential) context.get(Constant.REFERENTIAL);
 			this.checkPointName = checkPointName;
 			// -- Object to TestprepareNewTest()
 			long id = 5L;
@@ -223,7 +215,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 					null);
 			//
 			validator = new LineValidator();
-			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
 			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, 0L, false, firstParam, secondParam, null);
 			checkPoints.add(checkPoint);

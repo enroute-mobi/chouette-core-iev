@@ -25,17 +25,14 @@ import mobi.chouette.exchange.DaoProgressionCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
-import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.model.LineLite;
-import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
 @Stateless(name = ValidatorCommand.COMMAND)
-public class ValidatorCommand implements Command, Constant {
+public class ValidatorCommand implements Command {
 
 	public static final String COMMAND = "ValidatorCommand";
 
@@ -44,10 +41,10 @@ public class ValidatorCommand implements Command, Constant {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		// initialize reporting and progression
@@ -56,19 +53,19 @@ public class ValidatorCommand implements Command, Constant {
 		try {
 
 			// read parameters
-			Object configuration = context.get(CONFIGURATION);
+			Object configuration = context.get(Constant.CONFIGURATION);
 			if (!(configuration instanceof ValidateParameters)) {
 				// fatal wrong parameters
 				log.error("invalid parameters for validation " + configuration.getClass().getName());
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.INVALID_PARAMETERS, 
 						"invalid parameters for validation " + configuration.getClass().getName());
-				return ERROR;
+				return Constant.ERROR;
 			}
 
 			ValidateParameters parameters = (ValidateParameters) configuration;
 			progression.initialize(context, 1);
-			context.put(VALIDATION_DATA, new ValidationData());
-			context.put(REFERENTIAL, new Referential());
+			context.put(Constant.VALIDATION_DATA, new ValidationData());
+			context.put(Constant.REFERENTIAL, new Referential());
 
 			String type = parameters.getReferencesType();
 			// set default type
@@ -101,8 +98,8 @@ public class ValidatorCommand implements Command, Constant {
 	private boolean process(Context context, ProcessingCommands commands, ProgressionCommand progression,
 			boolean continueLineProcesingOnError) throws Exception {
 
-		boolean result = ERROR;
-		ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+		boolean result = Constant.ERROR;
+		ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		// initialisation
@@ -113,7 +110,7 @@ public class ValidatorCommand implements Command, Constant {
 			if (!result) {
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND,"no data selected");
 				progression.execute(context);
-				return ERROR;		
+				return Constant.ERROR;		
 			}
 			progression.execute(context);
 		}
@@ -128,15 +125,15 @@ public class ValidatorCommand implements Command, Constant {
 		}
 		type=type.toLowerCase();
 
-		List<Long> ids = null;
+		List<Long> ids = new ArrayList<>();
 		if (parameters.getIds() != null) {
-			ids = new ArrayList<Long>(parameters.getIds());
+			ids = new ArrayList<>(parameters.getIds());
 		}
 
-		Referential r = (Referential) context.get(REFERENTIAL);
+		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 		if (r.getSharedReadOnlyLines().isEmpty()) {
 			reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND,"no data selected");
-			return ERROR;
+			return Constant.ERROR;
 
 		}
 		progression.execute(context);
@@ -145,20 +142,18 @@ public class ValidatorCommand implements Command, Constant {
 		int lineCount = 0;
 		// validate each line
 		for (Long lineId : ids) {
-			context.put(LINE_ID, lineId);
+			context.put(Constant.LINE_ID, lineId);
 			boolean validateFailed = false;
 			List<? extends Command> lineProcessingCommands = commands.getLineProcessingCommands(context, true);
 			for (Command command : lineProcessingCommands) {
 				result = command.execute(context);
 				if (!result) {
 					validateFailed = true;
-					break;
 				}
 			}
 			progression.execute(context);
 			// TODO a mettre dans une commande dédiée
 			LineLite line = r.getCurrentLine();
-			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, r.getJourneyPatterns().size());
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE, r.getRoutes().size());
@@ -171,7 +166,7 @@ public class ValidatorCommand implements Command, Constant {
 			else if (!continueLineProcesingOnError)
 			{
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.INVALID_DATA,"unable to validate data");
-				return ERROR;
+				return Constant.ERROR;
 			}
 		}
 		// post processing
@@ -181,7 +176,7 @@ public class ValidatorCommand implements Command, Constant {
 			progression.terminate(context, 1);
 			reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED,"no data validated");
 			progression.execute(context);
-			return ERROR;		
+			return Constant.ERROR;		
 		}
 		
 		List<? extends Command> postProcessingCommands = commands.getPostProcessingCommands(context, true);
@@ -191,7 +186,7 @@ public class ValidatorCommand implements Command, Constant {
 			if (!result) {
 				if (!reporter.hasActionError(context))
 				   reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED,"no data exported");
-				return ERROR;
+				return Constant.ERROR;
 			}
 			progression.execute(context);
 		}	
@@ -220,6 +215,6 @@ public class ValidatorCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(ValidatorCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(ValidatorCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

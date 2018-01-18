@@ -7,9 +7,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.importer.ParserUtils;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.parameters.AbstractImportParameter;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.LineLite;
@@ -20,7 +20,9 @@ import mobi.chouette.model.type.PTDirectionEnum;
 import mobi.chouette.model.util.ChouetteModelUtil;
 
 @Log4j
-public class NetexStifUtils extends ParserUtils implements Constant {
+public class NetexStifUtils extends ParserUtils {
+
+	public static final String ID_SEPARATOR = ":";
 
 	public static String fromPTDirectionType(PTDirectionEnum type) {
 		if (type == null)
@@ -58,18 +60,20 @@ public class NetexStifUtils extends ParserUtils implements Constant {
 	public static ConnectionLinkTypeEnum toConnectionLinkType(String value) {
 		if (value == null)
 			return null;
-		if (value.equals("indoors"))
+		switch (value) {
+		case "indoors":
 			return ConnectionLinkTypeEnum.Underground;
-		else if (value.equals("outdoors"))
+		case "outdoors":
 			return ConnectionLinkTypeEnum.Overground;
-		else if (value.equals("mixed"))
+		case "mixed":
 			return ConnectionLinkTypeEnum.Mixed;
-		else
+		default:
 			return null;
+		}
 	}
 
 	public static List<DayTypeEnum> getDayTypes(List<String> values) {
-		List<DayTypeEnum> result = new ArrayList<DayTypeEnum>();
+		List<DayTypeEnum> result = new ArrayList<>();
 		for (String dayType : values) {
 			try {
 				result.add(DayTypeEnum.valueOf(dayType));
@@ -82,7 +86,7 @@ public class NetexStifUtils extends ParserUtils implements Constant {
 	}
 
 	public static List<Date> getCalendarDays(List<String> values) {
-		List<Date> result = new ArrayList<Date>();
+		List<Date> result = new ArrayList<>();
 		for (String value : values) {
 			try {
 				result.add(NetexStifUtils.getSQLDate(value));
@@ -93,42 +97,17 @@ public class NetexStifUtils extends ParserUtils implements Constant {
 		return result;
 	}
 
-	public static Long getTrainNumber(String value) {
-		try {
-			String number = value.replaceFirst("Local:TrainNumber:", "");
-			return Long.parseLong(number);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	public final static String ID_SEPARATOR = ":";
-
 	public static String genStopPointId(String id, String order, Route route) {
-		String suffix =  id.split(ID_SEPARATOR)[2];
-		String routeSuffix = route.objectIdSuffix();
-		// if (!suffix.startsWith(routeSuffix) ) {
-			suffix = routeSuffix+"-"+suffix;
-		// }
-		suffix += "-"+order;
-		
-		return ChouetteModelUtil.changeSuffix(id,suffix);
-	}
-	
-	public static String genRoutingConstrainId(String id, Route route) {
-		String suffix =  id.split(ID_SEPARATOR)[2];
-		String routeSuffix = route.objectIdSuffix();
-		// if (!suffix.startsWith(routeSuffix) ) {
-			suffix = routeSuffix+"-"+suffix;
-		// }
-		
-		return ChouetteModelUtil.changeSuffix(id,suffix);
+		String suffix = route.objectIdSuffix() + "-" + id.split(ID_SEPARATOR)[2]+ "-" + order;
+
+		return ChouetteModelUtil.changeSuffix(id, suffix);
 	}
 
-//	public static String genStopPointId(StopPoint stopPoint) {
-//		return genStopPointId(stopPoint.getObjectId(), stopPoint.getPosition().toString(), stopPoint.getRoute());
-//
-//	}
+	public static String genRoutingConstrainId(String id, Route route) {
+		String suffix = route.objectIdSuffix() + "-" + id.split(ID_SEPARATOR)[2];
+
+		return ChouetteModelUtil.changeSuffix(id, suffix);
+	}
 
 	public static void uniqueObjectIdOnLine(Context context, ChouetteIdentifiedObject object, LineLite line) {
 		String suffix = object.objectIdSuffix();
@@ -139,24 +118,13 @@ public class NetexStifUtils extends ParserUtils implements Constant {
 		object.setObjectId(objectId);
 		uniqueObjectId(context, object);
 	}
-	
+
 	public static void uniqueObjectId(Context context, ChouetteIdentifiedObject object) {
 		String suffix = object.objectIdSuffix();
-		AbstractImportParameter parameters = (AbstractImportParameter) context.get(CONFIGURATION);
+		AbstractImportParameter parameters = (AbstractImportParameter) context.get(Constant.CONFIGURATION);
 		Long refId = parameters.getReferentialId();
 		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(), refId.toString() + "-" + suffix);
 		object.setObjectId(objectId);
 	}
-	
-//	public static void stopPointObjectId(ChouetteIdentifiedObject object, Route route, String order) {
-//		String suffix = object.objectIdSuffix();
-//		String routeSuffix = route.objectIdSuffix();
-//		if (suffix.startsWith(routeSuffix) && !suffix.equals(routeSuffix)) {
-//			return;
-//		}
-//		String objectId = ChouetteModelUtil.changeSuffix(object.getObjectId(),
-//				routeSuffix + "-" + suffix + "-" + order);
-//		object.setObjectId(objectId);
-//	}
 
 }

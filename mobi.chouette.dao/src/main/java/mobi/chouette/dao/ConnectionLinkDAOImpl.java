@@ -33,7 +33,7 @@ public class ConnectionLinkDAOImpl extends GenericDAOImpl<ConnectionLink> implem
 		CriteriaDelete<ConnectionLink> delete = builder
 				.createCriteriaDelete(ConnectionLink.class);
 		Root<ConnectionLink> root = delete.from(ConnectionLink.class);
-		List<Predicate> predicates = new ArrayList<Predicate>();
+		List<Predicate> predicates = new ArrayList<>();
 		predicates.add(builder.isNull(root.get(ConnectionLink_.startOfLink)));
 		predicates.add(builder.isNull(root.get(ConnectionLink_.endOfLink)));
 		delete.where(builder.or(predicates.toArray(new Predicate[] {})));

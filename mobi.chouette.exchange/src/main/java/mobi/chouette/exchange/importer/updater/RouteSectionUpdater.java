@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.model.RouteSection;
@@ -27,7 +28,7 @@ public class RouteSectionUpdater implements Updater<RouteSection> {
 		}
 		newValue.setSaved(true);
         Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 
 		if (newValue.getObjectId() != null
 				&& !newValue.getObjectId().equals(oldValue.getObjectId())) {
@@ -43,10 +44,6 @@ public class RouteSectionUpdater implements Updater<RouteSection> {
 				&& !newValue.getCreationTime().equals(
 						oldValue.getCreationTime())) {
 			oldValue.setCreationTime(newValue.getCreationTime());
-		}
-		if (newValue.getCreatorId() != null
-				&& !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-			oldValue.setCreatorId(newValue.getCreatorId());
 		}
 		if (newValue.getDistance() != null
 				&& !newValue.getDistance().equals(oldValue.getDistance())) {

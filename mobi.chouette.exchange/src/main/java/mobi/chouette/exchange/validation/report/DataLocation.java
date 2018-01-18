@@ -113,7 +113,7 @@ public class DataLocation {
 			if (chouetteObject instanceof VehicleJourney) {
 				VehicleJourney object = (VehicleJourney) chouetteObject;
 				if (object.getJourneyPattern() != null) {
-					path.add(new Path(object.getJourneyPattern()));
+					// path.add(new Path(object.getJourneyPattern()));
 					if (object.getJourneyPattern().getRoute() != null) {
 						path.add(new Path(object.getJourneyPattern().getRoute()));
 						if (object.getJourneyPattern().getRoute().getLine() != null) {
@@ -215,6 +215,9 @@ public class DataLocation {
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof Timetable) {
 			Timetable object = (Timetable) chouetteObject;
+			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof RoutingConstraint) {
+			RoutingConstraint object = (RoutingConstraint) chouetteObject;
 			return NamingUtil.getName(object);
 		}
 		return "unnammed";

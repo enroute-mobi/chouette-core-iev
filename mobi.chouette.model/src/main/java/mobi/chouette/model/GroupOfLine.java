@@ -127,7 +127,7 @@ public class GroupOfLine extends ChouetteIdentifiedObject {
 		if (!getLines().contains(line)) {
 			getLines().add(line);
 		}
-		if (!line.getGroupOfLines().contains(line)) {
+		if (!line.getGroupOfLines().contains(this)) {
 			line.getGroupOfLines().add(this);
 		}
 	}

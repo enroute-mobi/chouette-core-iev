@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import mobi.chouette.common.CollectionUtil;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.Pair;
 import mobi.chouette.dao.CompanyDAO;
@@ -30,6 +31,7 @@ import mobi.chouette.model.Timeband;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -66,12 +68,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			return result;
 		}
 	};
-
-	@EJB(beanName = CompanyUpdater.BEAN_NAME)
-	private Updater<Company> companyUpdater;
-
-	@EJB
-	private CompanyDAO companyDAO;
 
 	@EJB
 	private RouteDAO routeDAO;
@@ -112,15 +108,15 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		newValue.setSaved(true);
 
 //		Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 		cache.getVehicleJourneys().put(oldValue.getObjectId(), oldValue);
 
-		boolean optimized = (Boolean) context.get(OPTIMIZED);
+		boolean optimized = (Boolean) context.get(Constant.OPTIMIZED);
 		
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context, DATABASE_VEHICLE_JOURNEY_2, "W");
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_VEHICLE_JOURNEY_2, "W");
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 				
 				
 		if (oldValue.isDetached()) {
@@ -128,7 +124,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			oldValue.setObjectId(newValue.getObjectId());
 			oldValue.setObjectVersion(newValue.getObjectVersion());
 			oldValue.setCreationTime(newValue.getCreationTime());
-			oldValue.setCreatorId(newValue.getCreatorId());
 			oldValue.setComment(newValue.getComment());
 			oldValue.setTransportMode(newValue.getTransportMode());
 			oldValue.setPublishedJourneyName(newValue.getPublishedJourneyName());
@@ -139,6 +134,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			oldValue.setMobilityRestrictedSuitability(newValue.getMobilityRestrictedSuitability());
 			oldValue.setFlexibleService(newValue.getFlexibleService());
 			oldValue.setJourneyCategory(newValue.getJourneyCategory());
+			oldValue.setCompanyId(newValue.getCompanyId());
 			oldValue.setDetached(false);
 		} else {
 			twoDatabaseVehicleJourneyTwoTest(validationReporter, context, oldValue.getCompany(), newValue.getCompany(), data);
@@ -150,9 +146,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			}
 			if (newValue.getCreationTime() != null && !newValue.getCreationTime().equals(oldValue.getCreationTime())) {
 				oldValue.setCreationTime(newValue.getCreationTime());
-			}
-			if (newValue.getCreatorId() != null && !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-				oldValue.setCreatorId(newValue.getCreatorId());
 			}
 			if (newValue.getComment() != null && !newValue.getComment().equals(oldValue.getComment())) {
 				oldValue.setComment(newValue.getComment());
@@ -193,25 +186,6 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			}
 		}
 
-		// Company
-		if (newValue.getCompany() == null) {
-			oldValue.setCompany(null);
-		} else {
-			String objectId = newValue.getCompany().getObjectId();
-			Company company = cache.getCompanies().get(objectId);
-			if (company == null) {
-				company = companyDAO.findByObjectId(objectId);
-				if (company != null) {
-					cache.getCompanies().put(objectId, company);
-				}
-			}
-
-			if (company == null) {
-				company = ObjectFactory.getCompany(cache, objectId);
-			}
-			oldValue.setCompany(company);
-			companyUpdater.update(context, oldValue.getCompany(), newValue.getCompany());
-		}
 
 		// Route
 		if (oldValue.getRoute() == null || !oldValue.getRoute().equals(newValue.getRoute())) {
@@ -231,6 +205,11 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		}
 
 		// VehicleJourneyAtStop
+		// compute VJAS checkSums
+		for (VehicleJourneyAtStop vjas : newValue.getVehicleJourneyAtStops())
+		{
+			ChecksumUtil.checksum(context, vjas); 
+		}
 		if (!optimized) {
 
 			Collection<VehicleJourneyAtStop> addedVehicleJourneyAtStop = CollectionUtil.substract(
@@ -386,11 +365,14 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		}
 		
 		for(Footnote f : footnotes) {
-			Line line = cache.getLines().get(f.getLine().getObjectId());
-			f.setLine(line);
+			ChecksumUtil.checksum(context, f);
 		}
 		
 		oldValue.setFootnotes(footnotes);
+		
+		ChecksumUtil.checksum(context, newValue);
+		oldValue.setChecksum(newValue.getChecksum());
+		oldValue.setChecksumSource(newValue.getChecksumSource());
 //		monitor.stop();
 	}
 	
@@ -405,8 +387,8 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 	 */
 	private void twoDatabaseVehicleJourneyTwoTest(ValidationReporter validationReporter, Context context, Company oldCompany,  Company newCompany, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldCompany, newCompany))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_VEHICLE_JOURNEY_2, data.getDataLocations().get(newCompany.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_VEHICLE_JOURNEY_2, data.getDataLocations().get(newCompany.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_VEHICLE_JOURNEY_2);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_VEHICLE_JOURNEY_2);
 	}
 }

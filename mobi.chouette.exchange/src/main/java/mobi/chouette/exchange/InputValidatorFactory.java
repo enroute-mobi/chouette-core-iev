@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class InputValidatorFactory {
 
-	   public static Map<String, InputValidatorFactory> factories = new HashMap<String, InputValidatorFactory>();
+	   public static final Map<String, InputValidatorFactory> factories = new HashMap<>();
 
 	   protected abstract InputValidator create() throws IOException;
 
@@ -18,10 +18,9 @@ public abstract class InputValidatorFactory {
 	      if (!factories.containsKey(name))
 	      {
 	         Class.forName(name);
-			 // log.info("[DSU] create : " + name);
 	         if (!factories.containsKey(name))
 	            throw new ClassNotFoundException(name);
 	      }
-	      return ((InputValidatorFactory) factories.get(name)).create();
+	      return factories.get(name).create();
 	   }
 }

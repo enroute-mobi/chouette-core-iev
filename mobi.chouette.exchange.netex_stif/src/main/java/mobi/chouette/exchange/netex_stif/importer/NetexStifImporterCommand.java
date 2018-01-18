@@ -10,6 +10,7 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -19,27 +20,27 @@ import mobi.chouette.exchange.DaoProgressionCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.importer.AbstractImporterCommand;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class NetexStifImporterCommand extends AbstractImporterCommand implements Command, Constant {
+public class NetexStifImporterCommand extends AbstractImporterCommand implements Command {
 
 	public static final String COMMAND = "NetexStifImporterCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
-		boolean result = SUCCESS;
+		boolean result = Constant.SUCCESS;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		Date date = new Date();
 		long version = date.getTime();
-		context.put(VERSION, version);
-		context.put(REFERENTIAL, new Referential());
+		context.put(NetexStifConstant.VERSION, version);
+		context.put(Constant.REFERENTIAL, new Referential());
 
 		// initialize reporting and progression
 		ProgressionCommand progression = (ProgressionCommand) CommandFactory.create(initialContext,
@@ -47,7 +48,7 @@ public class NetexStifImporterCommand extends AbstractImporterCommand implements
 
 		try {
 
-		Object configuration = context.get(CONFIGURATION);
+		Object configuration = context.get(Constant.CONFIGURATION);
 		if (!(configuration instanceof NetexStifImportParameters)) {
 			// fatal wrong parameters
 			log.error("invalid parameters for netex import " + configuration.getClass().getName());
@@ -83,6 +84,6 @@ public class NetexStifImporterCommand extends AbstractImporterCommand implements
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifImporterCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifImporterCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

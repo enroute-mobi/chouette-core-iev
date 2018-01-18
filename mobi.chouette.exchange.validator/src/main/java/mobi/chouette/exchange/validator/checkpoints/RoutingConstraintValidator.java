@@ -8,10 +8,10 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.model.Route;
@@ -20,10 +20,14 @@ import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
-public class RoutingConstraintValidator extends GenericValidator<RoutingConstraint> implements CheckPointConstant {
 
-	private static final String[] codes = { L3_ITL_1, L3_ITL_2, L3_ITL_3 };
+public class RoutingConstraintValidator extends GenericValidator<RoutingConstraint> {
+
+	private static final String ROUTING_CONSTRAINT_ID = "RoutingConstraint id = ";
+	private static final String[] codes = { 
+			CheckPointConstant.L3_RoutingConstraint_1, 
+			CheckPointConstant.L3_RoutingConstraint_2, 
+			CheckPointConstant.L3_RoutingConstraint_3 };
 
 	@Override
 	public void validate(Context context, RoutingConstraint object, ValidateParameters parameters,
@@ -36,7 +40,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2109">Cartes #2109</a>
 	 * <p>
-	 * <b>Code</b> :3-ITL-1
+	 * <b>Code</b> :3-RoutingConstraint-1
 	 * <p>
 	 * <b>Variables</b> : néant
 	 * <p>
@@ -57,14 +61,14 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3ITL1(Context context, RoutingConstraint object, CheckpointParameters parameters) {
+	protected void check3RoutingConstraint1(Context context, RoutingConstraint object, CheckpointParameters parameters) {
 		Long[] spIds = object.getStopPointIds();
-		Referential ref = (Referential) context.get(REFERENTIAL);
+		Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 
 		Route route = object.getRoute();
 		if (route == null) {
 			// -- RoutingConstraint has no Route !
-			throw new ValidationException("RoutingConstraint id = " + object.getId() + " : has no Route !");
+			throw new ValidationException(ROUTING_CONSTRAINT_ID + object.getId() + " : has no Route !");
 		}
 
 		List<StopPoint> spList = route.getStopPoints();
@@ -73,18 +77,17 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 			StopPoint p = spMap.get(id);
 			if (p == null) {
 				// -- RoutingConstraint references a point not present in Route !
-				throw new ValidationException("RoutingConstraint id = " + object.getId() + " : stop ID = " + id
+				throw new ValidationException(ROUTING_CONSTRAINT_ID + object.getId() + " : stop ID = " + id
 						+ " not found in Route  id = " + object.getRoute().getId());
 
 			}
 			StopAreaLite sa = ref.findStopArea(p.getStopAreaId());
 			if (sa.isDesactivated()) {
 				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-				validationReporter.prepareCheckPointReport(context, L3_ITL_1);
-				// log.error("ITL " + object.getObjectId() + " contains disabled stop " + sa.getObjectId());
+				validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_RoutingConstraint_1);
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(sa);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_ITL_1, source, null, null, target);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_RoutingConstraint_1, source, null, null, target);
 			}
 
 		}
@@ -95,7 +98,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2510">Cartes #2510</a>
 	 * <p>
-	 * <b>Code</b> :3-ITL-2
+	 * <b>Code</b> :3-RoutingConstraint-2
 	 * <p>
 	 * <b>Variables</b> : néant
 	 * <p>
@@ -116,7 +119,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3ITL2(Context context, RoutingConstraint object, CheckpointParameters parameters) {
+	protected void check3RoutingConstraint2(Context context, RoutingConstraint object, CheckpointParameters parameters) {
 		Long[] spIds = object.getStopPointIds();
 		boolean result = true;
 
@@ -134,10 +137,10 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.prepareCheckPointReport(context, L3_ITL_2);
-			log.error("ITL " + object.getObjectId() + " contains all route stops");
+			validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_RoutingConstraint_2);
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_ITL_2, source);
+			DataLocation target = new DataLocation(route);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_RoutingConstraint_2, source,null,null,target);
 		}
 	}
 
@@ -146,7 +149,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * <p>
 	 * <b>Référence Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2511">Cartes #2511</a>
 	 * <p>
-	 * <b>Code</b> :3-ITL-3
+	 * <b>Code</b> :3-RoutingConstraint-3
 	 * <p>
 	 * <b>Variables</b> : néant
 	 * <p>
@@ -167,14 +170,14 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 	 * @param parameters
 	 *            paramètres du point de contrôle
 	 */
-	protected void check3ITL3(Context context, RoutingConstraint object, CheckpointParameters parameters) {
+	protected void check3RoutingConstraint3(Context context, RoutingConstraint object, CheckpointParameters parameters) {
 		Long[] spIds = object.getStopPointIds();
 		boolean result = true;
 		if (spIds == null) {
 			// -- RoutingConstaint has no StopPoint
 			result = false;
 		} else {
-			Set<Long> mySet = new HashSet<Long>(Arrays.asList(spIds));
+			Set<Long> mySet = new HashSet<>(Arrays.asList(spIds));
 			if (mySet.size() < 2) {
 				// -- RoutingConstaint has less than 2 StopPoints
 				result = false;
@@ -182,7 +185,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 				Route route = object.getRoute();
 				if (route == null) {
 					// -- RoutingConstraint has no Route !
-					throw new ValidationException("RoutingConstraint id = " + object.getId() + " : has no Route !");
+					throw new ValidationException(ROUTING_CONSTRAINT_ID + object.getId() + " : has no Route !");
 				}
 
 				List<StopPoint> spList = route.getStopPoints();
@@ -192,7 +195,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 					StopPoint p = spMap.get(id);
 					if (p == null) {
 						// -- RoutingConstraint references a point not present in Route !
-						throw new ValidationException("RoutingConstraint id = " + object.getId() + " : stop ID = " + id
+						throw new ValidationException(ROUTING_CONSTRAINT_ID + object.getId() + " : stop ID = " + id
 								+ " not found in Route  id = " + object.getRoute().getId());
 
 					}
@@ -202,10 +205,9 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-			validationReporter.prepareCheckPointReport(context, L3_ITL_3);
-			log.error("ITL " + object.getObjectId() + " has not enough stops");
+			validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_RoutingConstraint_3);
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), L3_ITL_3, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_RoutingConstraint_3, source);
 		}
 	}
 

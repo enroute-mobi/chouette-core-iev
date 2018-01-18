@@ -11,10 +11,11 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
-import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifImportParameters;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.report.ActionReport;
@@ -56,25 +57,25 @@ public class AbstractValidatorTests extends AbstractTest {
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
-		context.put(REFERENTIAL, new Referential());
-		context.put(NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
+		context.put(Constant.CONFIGURATION, configuration);
+		context.put(Constant.REFERENTIAL, new Referential());
+		context.put(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
-		JobDataTest test = new JobDataTest();
-		context.put(JOB_DATA, test);
+		JobDataImpl test = new JobDataImpl();
+		context.put(Constant.JOB_DATA, test);
 
 		test.setAction(JobData.ACTION.importer);
 		test.setType("netex_stif");
-		context.put(TESTNG, "true");
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true");
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 	}
 
@@ -87,7 +88,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		// AbstractParsingValidator
 		int lineNumber = 0;
 		int columnNumber = 0;
-		ValidationReport report = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport report = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		boolean result = validator.checkNetexId(context, type, id, lineNumber, columnNumber);
 		log.info(report.getCheckPointErrors());
 
@@ -98,9 +99,9 @@ public class AbstractValidatorTests extends AbstractTest {
 
 	protected void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
 			String value) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
 		Assert.assertEquals(report.getResult(), "OK", "result");
@@ -176,7 +177,7 @@ public class AbstractValidatorTests extends AbstractTest {
 
 	@Test(groups = { "Nominal" }, description = "ObjectId correct ", priority = 505)
 	public void verifyRef() throws Exception {
-		String type = LINE_REF;
+		String type = NetexStifConstant.LINE_REF;
 		String ref = "STIF:CODIFLIGNE:Line:1234"; // old fashion line ref
 
 		boolean result = validateRef(ref, type, true);
@@ -186,7 +187,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "new fashion line ref ok");
 
-		type = OPERATOR_REF;
+		type = NetexStifConstant.OPERATOR_REF;
 		ref = "STIF:CODIFLIGNE:Operator:1234"; // old fashion operator ref
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "old fashion operator ref ok");
@@ -195,12 +196,12 @@ public class AbstractValidatorTests extends AbstractTest {
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "new fashion operator ref ok");
 
-		type = QUAY_REF;
+		type = NetexStifConstant.QUAY_REF;
 		ref = "FR:14526:ZDE:1234:STIF"; // quay ref
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "old fashion operator ref ok");
 
-		type = ROUTE_REF;
+		type = NetexStifConstant.ROUTE_REF;
 		ref = "CITYWAY:Route:1245:LOC"; // quay ref
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "internal ref");
@@ -210,7 +211,7 @@ public class AbstractValidatorTests extends AbstractTest {
 	
 	@Test(groups = { "Cas d'erreur de ref" }, description = "ObjectId incorrect ", priority = 506)
 	public void verifyBadRef() throws Exception {
-		String type = LINE_REF;
+		String type = NetexStifConstant.LINE_REF;
 		String ref = "STIF:CODIFIGNE:Line:1234"; // old fashion line ref
 
 		boolean result = validateRef(ref, type, false);
@@ -220,7 +221,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "new fashion line ref");
 
-		type = OPERATOR_REF;
+		type = NetexStifConstant.OPERATOR_REF;
 		ref = "STIF-CODIFLIGNE:Operator:1234"; // old fashion operator ref
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "old fashion operator ref");
@@ -229,12 +230,12 @@ public class AbstractValidatorTests extends AbstractTest {
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "new fashion operator ref");
 
-		type = QUAY_REF;
+		type = NetexStifConstant.QUAY_REF;
 		ref = "FR:14526:ZDEs:1234:STIF"; // quay ref
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "stop ref");
 
-		type = ROUTE_REF;
+		type = NetexStifConstant.ROUTE_REF;
 		ref = "CITYWAY:Route:1245:STIF"; // quay ref
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "internal ref");

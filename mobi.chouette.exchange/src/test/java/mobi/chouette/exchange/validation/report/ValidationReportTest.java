@@ -13,12 +13,12 @@ import org.codehaus.jettison.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ValidationReportTest implements Constant{
+public class ValidationReportTest {
 	@Test(groups = { "JsonGeneration" }, description = "Json generated", priority = 104)
 	public void verifyJsonGeneration() throws Exception {
 		Context context = new Context();
-		context.put(VALIDATION_REPORT, new ValidationReport());
-		context.put(REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.REPORT, new ActionReport());
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		
@@ -26,7 +26,7 @@ public class ValidationReportTest implements Constant{
 		// location.setFilename("filename");
 		// location.setObjectId("1234");
 		// location.setLineNumber(3);
-		ValidationReport validationReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport validationReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 
 //		String result = "{\"validation_report\":{\"result\":\"VALIDATION_PROCEDEED\",\"check_points\":" +
 //				"[{\"test_id\":\"Neptune-Checkpoint-1\",\"level\":\"Neptune\",\"type\":\"Checkpoint\"," +

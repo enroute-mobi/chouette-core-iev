@@ -15,6 +15,12 @@ public class FootnoteUpdater implements Updater<Footnote> {
 	@Override
 	public void update(Context context, Footnote oldValue, Footnote newValue) {
 
+		
+		if (newValue.getLineId() != null
+				&& !newValue.getLineId().equals(oldValue.getLineId())) {
+			oldValue.setLineId(newValue.getLineId());
+		}
+		
 		if (newValue.getCode() != null
 				&& !newValue.getCode().equals(oldValue.getCode())) {
 			oldValue.setCode(newValue.getCode());

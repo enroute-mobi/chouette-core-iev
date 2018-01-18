@@ -5,18 +5,18 @@ import java.io.File;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.testng.annotations.Test;
+
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifParserCommand;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.util.Referential;
 
-import org.testng.annotations.Test;
-
-public class NetexStifParserTest  implements mobi.chouette.common.Constant{
+public class NetexStifParserTest {
 
 	private InitialContext initialContext ;
 
@@ -37,11 +37,11 @@ public class NetexStifParserTest  implements mobi.chouette.common.Constant{
 	public void valid() throws Exception {
 		init();
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
 		NetexStifParserCommand command = (NetexStifParserCommand) CommandFactory.create(initialContext, NetexStifParserCommand.class.getName());
 		File f = new File("src/test/data/valid/line_test.xml");
-		JobDataTest job = new JobDataTest();
-		context.put(JOB_DATA, job);
+		JobDataImpl job = new JobDataImpl();
+		context.put(Constant.JOB_DATA, job);
 		job.setAction(JobData.ACTION.importer);
 		job.setType("netex");
 		job.setPathName("target/referential/test");
@@ -51,7 +51,7 @@ public class NetexStifParserTest  implements mobi.chouette.common.Constant{
 		ValidationReport validationReport = new ValidationReport();
 		command.setFileURL("file://"+f.getAbsolutePath());
 		context.put(Constant.REPORT, report);
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		context.put(Constant.VALIDATION_REPORT, validationReport);
 		command.execute(context);
 	}

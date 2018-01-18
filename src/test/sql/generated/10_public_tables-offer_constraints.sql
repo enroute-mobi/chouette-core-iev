@@ -2,14 +2,10 @@ ALTER TABLE ONLY access_links    ADD CONSTRAINT aclk_acpt_fkey FOREIGN KEY (acce
 ALTER TABLE ONLY stop_areas    ADD CONSTRAINT area_parent_fkey FOREIGN KEY (parent_id) REFERENCES stop_areas(id) ON DELETE SET NULL;
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT arrival_point_fkey FOREIGN KEY (arrival_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT departure_point_fkey FOREIGN KEY (departure_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
-ALTER TABLE ONLY journey_pattern_sections    ADD CONSTRAINT fk_rails_0dbc726f14 FOREIGN KEY (route_section_id) REFERENCES route_sections(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_frequencies    ADD CONSTRAINT fk_rails_60bb6f7bd3 FOREIGN KEY (timeband_id) REFERENCES timebands(id) ON DELETE SET NULL;
 ALTER TABLE ONLY referentials    ADD CONSTRAINT fk_rails_65d1354ca5 FOREIGN KEY (referential_suite_id) REFERENCES referential_suites(id);
-ALTER TABLE ONLY journey_pattern_sections    ADD CONSTRAINT fk_rails_73ae46b20f FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
 ALTER TABLE ONLY api_keys    ADD CONSTRAINT fk_rails_7561c6e512 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
-ALTER TABLE ONLY route_sections    ADD CONSTRAINT fk_rails_97b8dcfe1a FOREIGN KEY (departure_id) REFERENCES stop_areas(id);
 ALTER TABLE ONLY journey_frequencies    ADD CONSTRAINT fk_rails_d322c5d659 FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE SET NULL;
-ALTER TABLE ONLY route_sections    ADD CONSTRAINT fk_rails_df1612606f FOREIGN KEY (arrival_id) REFERENCES stop_areas(id);
 ALTER TABLE ONLY group_of_lines_lines    ADD CONSTRAINT groupofline_group_fkey FOREIGN KEY (group_of_line_id) REFERENCES group_of_lines(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT jp_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_patterns_stop_points    ADD CONSTRAINT jpsp_jp_fkey FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;

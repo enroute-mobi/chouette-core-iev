@@ -59,7 +59,7 @@ public class ActionDaoTest extends Arquillian {
 				.withTransitivity().asFile();
 
 		result = ShrinkWrap.create(WebArchive.class, "test.war").addAsWebInfResource("postgres-ds.xml")
-				.addClass(TestJobData.class)
+				.addClass(JobDataImpl.class)
 				.addAsLibraries(files).addAsResource(EmptyAsset.INSTANCE, "beans.xml");
 		return result;
 
@@ -104,7 +104,7 @@ public class ActionDaoTest extends Arquillian {
 			try {
 				utx.begin();
 				em.joinTransaction();
-				JobData job = new TestJobData(taskId,JobData.ACTION.importer);
+				JobData job = new JobDataImpl(taskId,JobData.ACTION.importer);
 				
 				ActionTask ac = actionDao.getTask(job);
 				Assert.assertNotNull(ac.getId(), "Action id");

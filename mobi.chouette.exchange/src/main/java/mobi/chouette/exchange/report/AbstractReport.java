@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public abstract class AbstractReport {
-	public static final int maxErrors = 15;
+	public static final int MAX_ERRORS = 15;
 
 	public abstract void print(PrintStream out, StringBuilder ret, int level, boolean first);
 	
@@ -44,9 +44,6 @@ public abstract class AbstractReport {
 		}
 		
 		return ret.append('"');
-//		return ret
-//				.append(value.replaceAll("[\\\\]", "\\\\\\\\").replaceAll("[\\/]", "\\\\/")
-//						.replaceAll("[\"]", "\\\\\"")).append('"');
 	}
 	
 
@@ -116,8 +113,8 @@ public abstract class AbstractReport {
 		ret.setLength(0);
 		out.print(addLevel(ret, level).append('{'));
 		first = true;
-		for (Object key : mappedValues.keySet()) {
-			out.print(toJsonString(ret, level+1, key.toString().toLowerCase(), mappedValues.get(key), first));
+		for (Map.Entry<? extends Object, ? extends Object> entry : mappedValues.entrySet()) {
+			out.print(toJsonString(ret, level+1, entry.getKey().toString().toLowerCase(), entry.getValue(), first));
             first = false;
 		}
 		ret.setLength(0);

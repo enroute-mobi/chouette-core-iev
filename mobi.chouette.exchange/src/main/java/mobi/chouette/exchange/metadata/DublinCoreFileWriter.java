@@ -6,21 +6,13 @@ import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-
 
 public class DublinCoreFileWriter extends TemplateFileWriter
 {
 
 
-   public DublinCoreFileWriter()
-   {
-   }
-
-
    public ZipEntry writeZipEntry(Metadata data,
-         ZipOutputStream zipFile) throws IOException,
-         DatatypeConfigurationException
+         ZipOutputStream zipFile) throws IOException
    {
       // Prepare the model for velocity
       getModel().put("data",data);
@@ -29,8 +21,7 @@ public class DublinCoreFileWriter extends TemplateFileWriter
       return writeZipEntry("metadata_chouette_dc.xml","templates/metadata_dc.vm", zipFile);
    }
 
-   public File writePlainFile(Metadata data, Path target) throws IOException,
-         DatatypeConfigurationException
+   public File writePlainFile(Metadata data, Path target) throws IOException
    {
 
       // Prepare the model for velocity

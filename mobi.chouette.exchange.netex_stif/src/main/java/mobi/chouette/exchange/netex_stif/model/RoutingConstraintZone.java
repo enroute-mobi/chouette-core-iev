@@ -24,7 +24,7 @@ public class RoutingConstraintZone extends ChouetteIdentifiedObject {
 	private String zoneUse;
 	
 	@Getter @Setter 
-	Set<String> stopPointsRef = new HashSet<>();
+    private Set<String> stopPointsRef = new HashSet<>();
 	
 	public void clear()
 	{

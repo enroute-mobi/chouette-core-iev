@@ -23,7 +23,7 @@ import mobi.chouette.service.JobServiceManager;
 
 @Log4j
 @Stateless(name = MainCommand.COMMAND)
-public class MainCommand implements Command, Constant {
+public class MainCommand implements Command {
 
 	public static final String COMMAND = "MainCommand";
 
@@ -37,24 +37,24 @@ public class MainCommand implements Command, Constant {
 
 		// Long id = (Long) context.get(JOB_ID);
 		// JobService jobService = jobManager.getJobService(id);
-		JobService jobService = (JobService) context.get(JOB_DATA);
+		JobService jobService = (JobService) context.get(Constant.JOB_DATA);
 		try {
 			// set job status to started
 			// jobManager.start(jobService);
-			context.put(CONFIGURATION, jobService.getActionParameter());
+			context.put(Constant.CONFIGURATION, jobService.getActionParameter());
 //			ValidationParameters validationParameters = jobService.getValidationParameter();
 //			if (validationParameters != null)
 //			   context.put(VALIDATION, validationParameters);
-			context.put(REPORT, new ActionReport());
-			context.put(VALIDATION_REPORT, new ValidationReport());
+			context.put(Constant.REPORT, new ActionReport());
+			context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 
 			String name = jobService.getCommandName();
 
-			InitialContext ctx = (InitialContext) context.get(INITIAL_CONTEXT);
+			InitialContext ctx = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 			Command command = CommandFactory.create(ctx, name);
 			result = command.execute(context);
 
-			ActionReport report = (ActionReport) context.get(REPORT);
+			ActionReport report = (ActionReport) context.get(Constant.REPORT);
 			log.info(report);
 			if (report.getResult().equals(ReportConstant.STATUS_ERROR)
 					&& report.getFailure().getCode().equals(ActionReporter.ERROR_CODE.INTERNAL_ERROR))
@@ -77,7 +77,7 @@ public class MainCommand implements Command, Constant {
 		} catch (javax.ejb.EJBTransactionRolledbackException ex) {
 			log.warn("exception bypassed " + ex);
 			// just ignore this exception
-			ActionReport report = (ActionReport) context.get(REPORT);
+			ActionReport report = (ActionReport) context.get(Constant.REPORT);
 			if (report.getResult().equals(ReportConstant.STATUS_ERROR)
 					&& report.getFailure().getCode().equals(ActionReporter.ERROR_CODE.INTERNAL_ERROR))
 				jobManager.abort(jobService);
@@ -95,7 +95,7 @@ public class MainCommand implements Command, Constant {
 			}
 
 		} catch (Exception ex) {
-			if (!COMMAND_CANCELLED.equals(ex.getMessage())) {
+			if (!Constant.COMMAND_CANCELLED.equals(ex.getMessage())) {
 				log.error(ex,ex);
 				jobManager.abort(jobService);
 			}
@@ -128,6 +128,6 @@ public class MainCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(MainCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(MainCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

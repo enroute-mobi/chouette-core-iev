@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 9.4.14
--- Dumped by pg_dump version 9.6.5
+-- Dumped by pg_dump version 9.6.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -30,7 +30,6 @@ CREATE TABLE access_links (
     stop_area_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     link_distance numeric(19,2),
@@ -80,7 +79,6 @@ CREATE TABLE access_points (
     id bigint NOT NULL,
     objectid character varying,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     longitude numeric(19,16),
@@ -138,7 +136,7 @@ CREATE TABLE api_keys (
     name character varying,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    organisation_id integer
+    organisation_id bigint
 );
 
 
@@ -291,7 +289,6 @@ CREATE TABLE companies (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     short_name character varying,
     organizational_unit character varying,
@@ -343,7 +340,6 @@ CREATE TABLE connection_links (
     arrival_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     link_distance numeric(19,2),
@@ -437,7 +433,6 @@ CREATE TABLE facilities (
     objectid character varying NOT NULL,
     object_version bigint,
     creation_time timestamp without time zone,
-    creator_id character varying,
     name character varying,
     comment character varying,
     description character varying,
@@ -549,7 +544,6 @@ CREATE TABLE group_of_lines (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     registration_number character varying,
@@ -636,43 +630,6 @@ ALTER SEQUENCE journey_frequencies_id_seq OWNED BY journey_frequencies.id;
 
 
 --
--- Name: journey_pattern_sections; Type: TABLE; Schema: public; Owner: chouette
---
-
-CREATE TABLE journey_pattern_sections (
-    id bigint NOT NULL,
-    journey_pattern_id bigint NOT NULL,
-    route_section_id bigint NOT NULL,
-    rank integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
-ALTER TABLE journey_pattern_sections OWNER TO chouette;
-
---
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
---
-
-CREATE SEQUENCE journey_pattern_sections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE journey_pattern_sections_id_seq OWNER TO chouette;
-
---
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
---
-
-ALTER SEQUENCE journey_pattern_sections_id_seq OWNED BY journey_pattern_sections.id;
-
-
---
 -- Name: journey_patterns; Type: TABLE; Schema: public; Owner: chouette
 --
 
@@ -681,7 +638,6 @@ CREATE TABLE journey_patterns (
     route_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     registration_number character varying,
@@ -852,7 +808,8 @@ CREATE TABLE line_referentials (
     name character varying,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    sync_interval integer DEFAULT 1
+    sync_interval integer DEFAULT 1,
+    objectid_format character varying
 );
 
 
@@ -889,7 +846,6 @@ CREATE TABLE lines (
     company_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     number character varying,
     published_name character varying,
@@ -945,7 +901,6 @@ CREATE TABLE networks (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     version_date date,
     description character varying,
     name character varying,
@@ -996,7 +951,8 @@ CREATE TABLE organisations (
     data_format character varying DEFAULT 'neptune'::character varying,
     code character varying,
     synced_at timestamp without time zone,
-    sso_attributes shared_extensions.hstore
+    sso_attributes shared_extensions.hstore,
+    custom_view character varying
 );
 
 
@@ -1034,7 +990,6 @@ CREATE TABLE pt_links (
     route_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     link_distance numeric(19,2),
@@ -1204,7 +1159,8 @@ CREATE TABLE referentials (
     archived_at timestamp without time zone,
     created_from_id bigint,
     ready boolean DEFAULT false,
-    referential_suite_id bigint
+    referential_suite_id bigint,
+    objectid_format character varying
 );
 
 
@@ -1232,49 +1188,6 @@ ALTER SEQUENCE referentials_id_seq OWNED BY referentials.id;
 
 
 --
--- Name: route_sections; Type: TABLE; Schema: public; Owner: chouette
---
-
-CREATE TABLE route_sections (
-    id bigint NOT NULL,
-    departure_id bigint,
-    arrival_id bigint,
-    input_geometry shared_extensions.geometry(LineString,4326),
-    processed_geometry shared_extensions.geometry(LineString,4326),
-    objectid character varying NOT NULL,
-    object_version bigint,
-    creator_id character varying,
-    distance double precision,
-    no_processing boolean,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
-ALTER TABLE route_sections OWNER TO chouette;
-
---
--- Name: route_sections_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
---
-
-CREATE SEQUENCE route_sections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE route_sections_id_seq OWNER TO chouette;
-
---
--- Name: route_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
---
-
-ALTER SEQUENCE route_sections_id_seq OWNED BY route_sections.id;
-
-
---
 -- Name: routes; Type: TABLE; Schema: public; Owner: chouette
 --
 
@@ -1283,7 +1196,6 @@ CREATE TABLE routes (
     line_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     opposite_route_id bigint,
@@ -1333,7 +1245,6 @@ CREATE TABLE routing_constraint_zones (
     updated_at timestamp without time zone,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     route_id bigint,
     stop_point_ids bigint[],
     checksum character varying,
@@ -1376,43 +1287,6 @@ CREATE TABLE routing_constraints_lines (
 
 
 ALTER TABLE routing_constraints_lines OWNER TO chouette;
-
---
--- Name: rule_parameter_sets; Type: TABLE; Schema: public; Owner: chouette
---
-
-CREATE TABLE rule_parameter_sets (
-    id bigint NOT NULL,
-    parameters text,
-    name character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    organisation_id bigint
-);
-
-
-ALTER TABLE rule_parameter_sets OWNER TO chouette;
-
---
--- Name: rule_parameter_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
---
-
-CREATE SEQUENCE rule_parameter_sets_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE rule_parameter_sets_id_seq OWNER TO chouette;
-
---
--- Name: rule_parameter_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
---
-
-ALTER SEQUENCE rule_parameter_sets_id_seq OWNED BY rule_parameter_sets.id;
-
 
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: chouette
@@ -1544,7 +1418,8 @@ CREATE TABLE stop_area_referentials (
     id bigint NOT NULL,
     name character varying,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    objectid_format character varying
 );
 
 
@@ -1580,7 +1455,6 @@ CREATE TABLE stop_areas (
     parent_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     comment character varying,
     area_type character varying,
@@ -1655,7 +1529,6 @@ CREATE TABLE stop_points (
     stop_area_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     "position" integer,
     for_boarding character varying,
     for_alighting character varying,
@@ -1844,7 +1717,6 @@ CREATE TABLE time_tables (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint DEFAULT 1,
-    creator_id character varying,
     version character varying,
     comment character varying,
     int_day_types integer DEFAULT 0,
@@ -1854,7 +1726,7 @@ CREATE TABLE time_tables (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     color character varying,
-    created_from_id integer,
+    created_from_id bigint,
     checksum character varying,
     checksum_source text,
     data_source_ref character varying
@@ -1904,7 +1776,6 @@ CREATE TABLE timebands (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     name character varying,
     start_time time without time zone NOT NULL,
     end_time time without time zone NOT NULL,
@@ -2055,7 +1926,6 @@ CREATE TABLE vehicle_journeys (
     company_id bigint,
     objectid character varying NOT NULL,
     object_version bigint,
-    creator_id character varying,
     comment character varying,
     status_value character varying,
     transport_mode character varying,
@@ -2110,7 +1980,8 @@ CREATE TABLE workbenches (
     updated_at timestamp without time zone,
     line_referential_id bigint,
     stop_area_referential_id bigint,
-    output_id bigint
+    output_id bigint,
+    objectid_format character varying
 );
 
 
@@ -2229,13 +2100,6 @@ ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journe
 
 
 --
--- Name: journey_pattern_sections id; Type: DEFAULT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
-
-
---
 -- Name: journey_patterns id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
@@ -2327,13 +2191,6 @@ ALTER TABLE ONLY referentials ALTER COLUMN id SET DEFAULT nextval('referentials_
 
 
 --
--- Name: route_sections id; Type: DEFAULT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY route_sections ALTER COLUMN id SET DEFAULT nextval('route_sections_id_seq'::regclass);
-
-
---
 -- Name: routes id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
@@ -2345,13 +2202,6 @@ ALTER TABLE ONLY routes ALTER COLUMN id SET DEFAULT nextval('routes_id_seq'::reg
 --
 
 ALTER TABLE ONLY routing_constraint_zones ALTER COLUMN id SET DEFAULT nextval('routing_constraint_zones_id_seq'::regclass);
-
-
---
--- Name: rule_parameter_sets id; Type: DEFAULT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY rule_parameter_sets ALTER COLUMN id SET DEFAULT nextval('rule_parameter_sets_id_seq'::regclass);
 
 
 --
@@ -2571,14 +2421,6 @@ ALTER TABLE ONLY journey_frequencies
 
 
 --
--- Name: journey_pattern_sections journey_pattern_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT journey_pattern_sections_pkey PRIMARY KEY (id);
-
-
---
 -- Name: journey_patterns journey_patterns_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -2683,14 +2525,6 @@ ALTER TABLE ONLY referentials
 
 
 --
--- Name: route_sections route_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY route_sections
-    ADD CONSTRAINT route_sections_pkey PRIMARY KEY (id);
-
-
---
 -- Name: routes routes_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -2704,14 +2538,6 @@ ALTER TABLE ONLY routes
 
 ALTER TABLE ONLY routing_constraint_zones
     ADD CONSTRAINT routing_constraint_zones_pkey PRIMARY KEY (id);
-
-
---
--- Name: rule_parameter_sets rule_parameter_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY rule_parameter_sets
-    ADD CONSTRAINT rule_parameter_sets_pkey PRIMARY KEY (id);
 
 
 --
@@ -2966,27 +2792,6 @@ CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequenc
 --
 
 CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey_patterns_stop_points USING btree (journey_pattern_id);
-
-
---
--- Name: index_journey_pattern_sections_on_journey_pattern_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_journey_pattern_sections_on_journey_pattern_id ON journey_pattern_sections USING btree (journey_pattern_id);
-
-
---
--- Name: index_journey_pattern_sections_on_route_section_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_journey_pattern_sections_on_route_section_id ON journey_pattern_sections USING btree (route_section_id);
-
-
---
--- Name: index_jps_on_journey_pattern_id_and_route_section_id_and_rank; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE UNIQUE INDEX index_jps_on_journey_pattern_id_and_route_section_id_and_rank ON journey_pattern_sections USING btree (journey_pattern_id, route_section_id, rank);
 
 
 --
@@ -3379,14 +3184,6 @@ ALTER TABLE ONLY journey_patterns
 
 
 --
--- Name: journey_pattern_sections fk_rails_0dbc726f14; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT fk_rails_0dbc726f14 FOREIGN KEY (route_section_id) REFERENCES route_sections(id) ON DELETE CASCADE;
-
-
---
 -- Name: journey_frequencies fk_rails_60bb6f7bd3; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -3403,14 +3200,6 @@ ALTER TABLE ONLY referentials
 
 
 --
--- Name: journey_pattern_sections fk_rails_73ae46b20f; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT fk_rails_73ae46b20f FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
-
-
---
 -- Name: api_keys fk_rails_7561c6e512; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -3419,27 +3208,11 @@ ALTER TABLE ONLY api_keys
 
 
 --
--- Name: route_sections fk_rails_97b8dcfe1a; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY route_sections
-    ADD CONSTRAINT fk_rails_97b8dcfe1a FOREIGN KEY (departure_id) REFERENCES stop_areas(id);
-
-
---
 -- Name: journey_frequencies fk_rails_d322c5d659; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_frequencies
     ADD CONSTRAINT fk_rails_d322c5d659 FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE SET NULL;
-
-
---
--- Name: route_sections fk_rails_df1612606f; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY route_sections
-    ADD CONSTRAINT fk_rails_df1612606f FOREIGN KEY (arrival_id) REFERENCES stop_areas(id);
 
 
 --

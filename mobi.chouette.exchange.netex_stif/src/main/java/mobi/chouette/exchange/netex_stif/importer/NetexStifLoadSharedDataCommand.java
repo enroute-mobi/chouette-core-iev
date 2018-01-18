@@ -16,13 +16,13 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.CompanyLiteDAO;
 import mobi.chouette.dao.LineLiteDAO;
 import mobi.chouette.dao.StopAreaLiteDAO;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.LineLite;
@@ -31,7 +31,7 @@ import mobi.chouette.model.util.Referential;
 
 @Log4j
 @Stateless(name = NetexStifLoadSharedDataCommand.COMMAND)
-public class NetexStifLoadSharedDataCommand implements Command, Constant {
+public class NetexStifLoadSharedDataCommand implements Command {
 
 	public static final String COMMAND = "NetexStifLoadSharedDataCommand";
 
@@ -46,13 +46,13 @@ public class NetexStifLoadSharedDataCommand implements Command, Constant {
 
 	@Override
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
-			Referential referential = (Referential) context.get(REFERENTIAL);
-			AbstractParameter parameters = (AbstractParameter) context.get(CONFIGURATION);
+			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+			AbstractParameter parameters = (AbstractParameter) context.get(Constant.CONFIGURATION);
 			List<Long> ids = parameters.getIds();
 			Set<Long> companyIds = new HashSet<>();
 			for (LineLite line : lineDAO.findAll(parameters.getLineReferentialId(), ids)) {
@@ -73,7 +73,7 @@ public class NetexStifLoadSharedDataCommand implements Command, Constant {
 				stopAreaDAO.detach(stopArea);
 			}
 
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 
 		} catch (Exception e) {
 			log.error(e, e);
@@ -107,7 +107,7 @@ public class NetexStifLoadSharedDataCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifLoadSharedDataCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifLoadSharedDataCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

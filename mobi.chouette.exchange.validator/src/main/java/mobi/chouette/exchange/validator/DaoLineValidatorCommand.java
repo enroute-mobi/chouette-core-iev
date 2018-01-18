@@ -25,12 +25,18 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.RouteDAO;
+import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
 /**
@@ -38,7 +44,7 @@ import mobi.chouette.model.util.Referential;
  */
 @Log4j 
 @Stateless(name = DaoLineValidatorCommand.COMMAND)
-public class DaoLineValidatorCommand implements Command, Constant {
+public class DaoLineValidatorCommand implements Command {
 	public static final String COMMAND = "DaoLineValidatorCommand";
 
 	@Resource
@@ -50,23 +56,25 @@ public class DaoLineValidatorCommand implements Command, Constant {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
-		if (!context.containsKey(SOURCE))
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+		if (!context.containsKey(Constant.SOURCE))
 		{
-			context.put(SOURCE, SOURCE_DATABASE);
+			context.put(Constant.SOURCE, Constant.SOURCE_DATABASE);
 		}
+		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
 			Command lineValidatorCommand = CommandFactory.create(initialContext,
 					LineValidatorCommand.class.getName());
 
-			Long lineId = (Long) context.get(LINE_ID);
-			Referential r = (Referential) context.get(REFERENTIAL);
+			Long lineId = (Long) context.get(Constant.LINE_ID);
+			Referential r = (Referential) context.get(Constant.REFERENTIAL);
             r.clear(false);
 			LineLite line = r.findLine(lineId);
 			r.setCurrentLine(line);
+			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
 			List<Route> routes = routeDAO.findByLineId(lineId);
 			routes.forEach(route -> {
 				route.setLineLite(line);
@@ -110,7 +118,7 @@ public class DaoLineValidatorCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(DaoLineValidatorCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(DaoLineValidatorCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

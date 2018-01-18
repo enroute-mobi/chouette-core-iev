@@ -20,12 +20,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.importer.Parser;
 import mobi.chouette.exchange.importer.ParserFactory;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.parser.PublicationDeliveryParser;
 import mobi.chouette.exchange.report.ActionReporter;
@@ -38,7 +39,7 @@ import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
-public class NetexStifParserCommand implements Command, Constant {
+public class NetexStifParserCommand implements Command {
 
 	public static final String COMMAND = "NetexStifParserCommand";
 
@@ -48,65 +49,66 @@ public class NetexStifParserCommand implements Command, Constant {
 
 	@Override
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		context.put(FILE_URL, fileURL);
+		context.put(Constant.FILE_URL, fileURL);
 
 		// report service
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		String fileName = new File(new URL(fileURL).toURI()).getName();
 		reporter.addFileReport(context, fileName, IO_TYPE.INPUT);
-		context.put(FILE_NAME, fileName);
+		context.put(Constant.FILE_NAME, fileName);
 
 		try {
 
 			URL url = new URL(fileURL);
 			log.info("parsing file : " + url);
 
-			Referential referential = (Referential) context.get(REFERENTIAL);
-			if (referential != null) {
-				referential.clear(true);
-			}
+			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+
+			referential.clear(true);
+
 			if (fileName.startsWith("offre_")) {
 				// create line report entry
 				String id = fileName.split("_")[1];
 				String lid = "STIF:CODIFLIGNE:Line:" + id;
 				LineLite line = referential.getSharedReadOnlyLines().get(lid);
-				if (line == null)
-				{
-					lid = "STIF-LIGNE:Line:" + id+ ":STIF";
+				if (line == null) {
+					lid = "STIF-LIGNE:Line:" + id + ":STIF";
 					line = referential.getSharedReadOnlyLines().get(lid);
 				}
 				referential.setCurrentLine(line); // for reporting
 				if (line != null) {
-					reporter.addObjectReport(context, id, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,
+					reporter.addObjectReport(context, lid, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,
 							IO_TYPE.INPUT);
+					context.put(Constant.LINE, line);
 				} else {
 					// TODO : manage invalid line for referential
 				}
 			}
 
-			InputStream input = new BOMInputStream(url.openStream());
-			BufferedReader in = new BufferedReader(new InputStreamReader(input), 8192 * 10);
-			XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
-			xmlPullParserFactory.setNamespaceAware(true);
-			XmlPullParser xpp = xmlPullParserFactory.newPullParser();
-			xpp.setInput(in);
-			context.put(PARSER, xpp);
+			try (InputStream input = new BOMInputStream(url.openStream());
+					BufferedReader in = new BufferedReader(new InputStreamReader(input), 8192 * 10);) {
+				XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
+				xmlPullParserFactory.setNamespaceAware(true);
+				XmlPullParser xpp = xmlPullParserFactory.newPullParser();
+				xpp.setInput(in);
+				context.put(Constant.PARSER, xpp);
 
-			NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NETEX_STIF_OBJECT_FACTORY);
-			if (factory == null) {
-				factory = new NetexStifObjectFactory();
-				context.put(NETEX_STIF_OBJECT_FACTORY, factory);
-			} else {
-				factory.clear();
+				NetexStifObjectFactory factory = (NetexStifObjectFactory) context
+						.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
+				if (factory == null) {
+					factory = new NetexStifObjectFactory();
+					context.put(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY, factory);
+				} else {
+					factory.clear();
+				}
+
+				Parser parser = ParserFactory.create(PublicationDeliveryParser.class.getName());
+				parser.parse(context);
 			}
-
-			Parser parser = ParserFactory.create(PublicationDeliveryParser.class.getName());
-			parser.parse(context);
-			
-			result = SUCCESS;
+			result = Constant.SUCCESS;
 			// log.info("Referential.routes : " + referential.getRoutes());
 		} catch (Exception e) {
 			// report service
@@ -119,7 +121,6 @@ public class NetexStifParserCommand implements Command, Constant {
 		return result;
 	}
 
-
 	public static class DefaultCommandFactory extends CommandFactory {
 
 		@Override
@@ -130,6 +131,6 @@ public class NetexStifParserCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifParserCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifParserCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

@@ -11,7 +11,7 @@ package mobi.chouette.core;
 @SuppressWarnings("serial")
 public class CoreException extends ChouetteException {
 	private static final String PREFIX = "COR";
-	private CoreExceptionCode code;
+	private final CoreExceptionCode code;
 
 	public CoreException(CoreExceptionCode code, String message) {
 		super(message);

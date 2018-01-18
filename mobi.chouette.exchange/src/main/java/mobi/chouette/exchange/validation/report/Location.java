@@ -26,6 +26,7 @@ import mobi.chouette.model.Line;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.Timetable;
@@ -38,6 +39,8 @@ import mobi.chouette.model.util.NamingUtil;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "file", "objectId", "name", "objectRefs", "attribute" })
 public class Location extends AbstractReport {
+
+	private static final char PATH_SEP = '/';
 
 	@XmlElement(name = "file")
 	private FileLocation file;
@@ -112,13 +115,40 @@ public class Location extends AbstractReport {
 		init(chouetteObject);
 	}
 
+	public String getGuiPath(Long referentialId) {
+		StringBuilder b = new StringBuilder();
+		if (!objectRefs.isEmpty()) {
+			if (referentialId != null) {
+				b.append(PATH_SEP);
+				b.append(ObjectReference.TYPE.REFERENTIAL.getGuiValue());
+				b.append(PATH_SEP);
+				b.append(referentialId);
+			}
+			for (int i = objectRefs.size() - 1; i >= 0; i--) {
+				ObjectReference ref = objectRefs.get(i);
+				if (!ref.getType().getGuiValue().isEmpty()) {
+					b.append(PATH_SEP);
+					b.append(ref.getType().getGuiValue());
+					b.append(PATH_SEP);
+					b.append(ref.getId());
+				}
+				else if (ref.getType().equals(ObjectReference.TYPE.JOURNEY_PATTERN) || ref.getType().equals(ObjectReference.TYPE.VEHICLE_JOURNEY))
+				{
+					b.append(PATH_SEP);
+					b.append(ref.getType().getGuiShortCut());
+				}
+			}
+		}
+		return b.toString();
+	}
+
 	private void init(ChouetteIdentifiedObject chouetteObject) {
 		this.objectId = chouetteObject.getObjectId();
 		this.name = buildName(chouetteObject);
 		if (chouetteObject instanceof VehicleJourney) {
 			VehicleJourney object = (VehicleJourney) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
-			objectRefs.add(new ObjectReference(object.getJourneyPattern()));
+			// objectRefs.add(new ObjectReference(object.getJourneyPattern()));
 			objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute()));
 			if (object.getJourneyPattern().getRoute().getLine() != null)
 				objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute().getLine()));
@@ -139,6 +169,14 @@ public class Location extends AbstractReport {
 				objectRefs.add(new ObjectReference(object.getLine()));
 			if (object.getLineLite() != null)
 				objectRefs.add(new ObjectReference(object.getLineLite()));
+		} else if (chouetteObject instanceof RoutingConstraint) {
+			RoutingConstraint object = (RoutingConstraint) chouetteObject;
+			objectRefs.add(new ObjectReference(object));
+			// SKIP route in path for gui
+			if (object.getRoute().getLine() != null)
+				objectRefs.add(new ObjectReference(object.getRoute().getLine()));
+			if (object.getRoute().getLineLite() != null)
+				objectRefs.add(new ObjectReference(object.getRoute().getLineLite()));
 		} else if (chouetteObject instanceof Line) {
 			Line object = (Line) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
@@ -272,10 +310,10 @@ public class Location extends AbstractReport {
 	// }
 
 	@Override
-	public void print(PrintStream out, StringBuilder ret, int level, boolean first) {
+	public void print(PrintStream out, StringBuilder ret, int level, boolean initFirst) {
 		ret.setLength(0);
 		out.print(addLevel(ret, level).append('{'));
-		first = true;
+		boolean first = true;
 		if (file != null) {
 			printObject(out, ret, level + 1, "file", file, first);
 			first = false;

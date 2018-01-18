@@ -19,7 +19,7 @@ import mobi.chouette.service.JobService;
 
 @Log4j
 @ToString(of = { "job" })
-public class Task implements Callable<JobService.STATUS>, ManagedTask, Constant {
+public class Task implements Callable<JobService.STATUS>, ManagedTask {
 
 	@Getter
 	private JobService job;
@@ -35,8 +35,8 @@ public class Task implements Callable<JobService.STATUS>, ManagedTask, Constant 
 		this.job = job;
 		this.properties = properties;
 		this.listener = listener;
-		context.put(JOB_ID, job.getId());
-		context.put(JOB_DATA, job);
+		context.put(Constant.JOB_ID, job.getId());
+		context.put(Constant.JOB_DATA, job);
 		
 	}
 
@@ -44,11 +44,11 @@ public class Task implements Callable<JobService.STATUS>, ManagedTask, Constant 
 	public JobService.STATUS call() throws Exception {
 
 		JobService.STATUS result = JobService.STATUS.SUCCESSFUL;
-		if (context.containsKey(CANCEL_ASKED)) return JobService.STATUS.CANCELLED;
+		if (context.containsKey(Constant.CANCEL_ASKED)) return JobService.STATUS.CANCELLED;
 		ContextHolder.setContext(job.getReferential());
 		try {
 			InitialContext initialContext = new InitialContext();
-			context.put(INITIAL_CONTEXT, initialContext);
+			context.put(Constant.INITIAL_CONTEXT, initialContext);
 			// Thread.sleep(100);
 			Command command = CommandFactory.create(initialContext,
 					MainCommand.class.getName());
@@ -66,7 +66,7 @@ public class Task implements Callable<JobService.STATUS>, ManagedTask, Constant 
 	
 	public void cancel()
 	{
-		context.put(CANCEL_ASKED, Boolean.TRUE);
+		context.put(Constant.CANCEL_ASKED, Boolean.TRUE);
 	}
 
 	@Override

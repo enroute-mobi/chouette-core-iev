@@ -34,7 +34,6 @@ import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.type.TransportModeNameEnum;
 import mobi.chouette.model.type.UserNeedEnum;
-import mobi.chouette.model.util.ObjectIdTypes;
 
 /**
  * Chouette Line : a group of Routes which is generally known to the public by a
@@ -47,7 +46,7 @@ import mobi.chouette.model.util.ObjectIdTypes;
 @Table(name = "lines",schema="public")
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "routingConstraints" })
-public class Line extends ChouetteIdentifiedObject implements ObjectIdTypes {
+public class Line extends ChouetteIdentifiedObject {
 	private static final long serialVersionUID = -8086291270595894778L;
 
 	@Getter

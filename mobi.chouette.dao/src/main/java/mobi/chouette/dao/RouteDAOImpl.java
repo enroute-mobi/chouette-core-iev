@@ -27,7 +27,6 @@ public class RouteDAOImpl extends GenericDAOImpl<Route> implements RouteDAO {
 	}
 
 	public List<Route> findByLineId(final long lineId) {
-		// System.out.println("GenericDAOImpl.findByObjectId() : " + objectIds);
 		List<Route> result = null;
 
 		CriteriaBuilder builder = em.getCriteriaBuilder();

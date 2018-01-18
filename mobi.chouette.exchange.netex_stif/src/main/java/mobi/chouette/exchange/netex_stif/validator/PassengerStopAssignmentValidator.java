@@ -2,6 +2,7 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.PassengerStopAssignment;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
@@ -9,7 +10,7 @@ import mobi.chouette.model.LineLite;
 
 public class PassengerStopAssignmentValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = PASSENGER_STOP_ASSIGNMENT;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.PASSENGER_STOP_ASSIGNMENT;
 	
 	protected String getLocalContext()
 	{
@@ -22,12 +23,12 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_PassengerStopAssignment_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_PassengerStopAssignment_1);
 	}
 
 	public boolean validate(Context context, PassengerStopAssignment stopAssignment, int lineNumber, int columnNumber)
 	{
-		boolean result = checkModification(context, PASSENGER_STOP_ASSIGNMENT, stopAssignment, lineNumber, columnNumber);
+		boolean result = checkModification(context, NetexStifConstant.PASSENGER_STOP_ASSIGNMENT, stopAssignment, lineNumber, columnNumber);
 		return check2NeTExSTIFPassengerStopAssignment1(context, stopAssignment, lineNumber, columnNumber) && result;
 	}
  	/** 
@@ -59,18 +60,18 @@ public class PassengerStopAssignmentValidator extends AbstractValidator {
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, stopAssignment);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_PassengerStopAssignment_1, location, "ScheduledStopPointRef");
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassengerStopAssignment_1, location, "ScheduledStopPointRef");
 
  		}
  		if (!result2)
  		{
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
+			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, stopAssignment);
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_PassengerStopAssignment_1, location, "QuayRef");
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassengerStopAssignment_1, location, "QuayRef");
 
  		}
 

@@ -11,7 +11,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 CREATE TABLE import_messages (
     id bigint NOT NULL,
-    criticity integer,
+    criticity character varying,
     message_key character varying,
     message_attributes shared_extensions.hstore,
     import_id bigint,

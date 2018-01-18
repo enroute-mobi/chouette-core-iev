@@ -3,8 +3,8 @@ package mobi.chouette.exchange.netex_stif.validator;
 import org.testng.Assert;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.FileReport;
@@ -13,7 +13,7 @@ import mobi.chouette.exchange.validation.report.ValidationReport;
 
 @Log4j
 
-public abstract class AbstractTest implements Constant {
+public abstract class AbstractTest {
 
 	protected void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
 			String value, FILE_STATE fileState) {
@@ -22,9 +22,9 @@ public abstract class AbstractTest implements Constant {
 
 	protected void checkReports(Context context, String fileName, String checkPointCode, String messageCode,
 			String value, FILE_STATE fileState, int errorCount) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
 		Assert.assertEquals(report.getResult(), "OK", "result");
@@ -56,9 +56,9 @@ public abstract class AbstractTest implements Constant {
 	}
 
 	protected final void checkNoReports(Context context, String fileName) {
-		ActionReport report = (ActionReport) context.get(REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
 
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
 		Assert.assertEquals(report.getResult(), "OK", "result");

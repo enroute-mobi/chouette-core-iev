@@ -72,7 +72,6 @@ CREATE TABLE compliance_check_sets (
     referential_id bigint,
     compliance_control_set_id bigint,
     workbench_id bigint,
-    creator character varying,
     status character varying,
     parent_id bigint,
     parent_type character varying,
@@ -82,7 +81,8 @@ CREATE TABLE compliance_check_sets (
     current_step_progress double precision,
     name character varying,
     started_at timestamp without time zone,
-    ended_at timestamp without time zone
+    ended_at timestamp without time zone,
+    notified_parent_at timestamp without time zone
 );
 ALTER TABLE compliance_check_sets OWNER TO chouette;
 CREATE SEQUENCE compliance_check_sets_id_seq
@@ -98,7 +98,7 @@ CREATE TABLE compliance_checks (
     compliance_check_set_id bigint,
     compliance_check_block_id bigint,
     type character varying,
-    control_attributes shared_extensions.hstore,
+    control_attributes json,
     name character varying,
     code character varying,
     criticity character varying,
@@ -153,7 +153,7 @@ CREATE TABLE compliance_controls (
     id bigint NOT NULL,
     compliance_control_set_id bigint,
     type character varying,
-    control_attributes shared_extensions.hstore,
+    control_attributes json,
     name character varying,
     code character varying,
     criticity character varying,

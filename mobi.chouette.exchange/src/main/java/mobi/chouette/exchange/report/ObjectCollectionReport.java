@@ -31,10 +31,10 @@ public class ObjectCollectionReport  extends AbstractReport {
 	private ActionReporter.OBJECT_TYPE objectType;
 
 	@XmlElement(name = "object_reports")
-	private List<ObjectReport> objectReports = new ArrayList<ObjectReport>();
+	private List<ObjectReport> objectReports = new ArrayList<>();
 
 	@XmlElement(name = "stats")
-	private Map<ActionReporter.OBJECT_TYPE, Integer> stats = new HashMap<ActionReporter.OBJECT_TYPE, Integer>();
+	private Map<ActionReporter.OBJECT_TYPE, Integer> stats = new HashMap<>();
 
 	/**
 	 * 
@@ -52,9 +52,9 @@ public class ObjectCollectionReport  extends AbstractReport {
 	 */
 	protected void addStatTypeToObject(ActionReporter.OBJECT_TYPE type, int count) {
 		if (stats.containsKey(type)) {
-			stats.put(type, new Integer(stats.get(type).intValue() + count));
+			stats.put(type, Integer.valueOf(stats.get(type).intValue() + count));
 		} else {
-			stats.put(type, new Integer(count));
+			stats.put(type, Integer.valueOf(count));
 		}
 	}
 

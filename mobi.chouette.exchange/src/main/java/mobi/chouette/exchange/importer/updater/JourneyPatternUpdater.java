@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import mobi.chouette.common.CollectionUtil;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.Pair;
 import mobi.chouette.dao.RouteSectionDAO;
@@ -18,6 +19,7 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.RouteSection;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.VehicleJourney;
+import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -33,14 +35,8 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 	@EJB
 	private VehicleJourneyDAO vehicleJourneyDAO;
 
-	@EJB
-	private RouteSectionDAO routeSectionDAO;
-
 	@EJB(beanName = VehicleJourneyUpdater.BEAN_NAME)
 	private Updater<VehicleJourney> vehicleJourneyUpdater;
-
-	@EJB(beanName = RouteSectionUpdater.BEAN_NAME)
-	private Updater<RouteSection> routeSectionUpdater;
 
 	@Override
 	public void update(Context context, JourneyPattern oldValue, JourneyPattern newValue) throws Exception {
@@ -51,20 +47,19 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 		newValue.setSaved(true);
 
 //		Monitor monitor = MonitorFactory.start(BEAN_NAME);
-		Referential cache = (Referential) context.get(CACHE);
+		Referential cache = (Referential) context.get(Constant.CACHE);
 		
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.addItemToValidationReport(context, DATABASE_JOURNEY_PATTERN_1, "E");
-		validationReporter.addItemToValidationReport(context, DATABASE_VEHICLE_JOURNEY_1, "E");
-		ValidationData data = (ValidationData) context.get(VALIDATION_DATA);
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_JOURNEY_PATTERN_1, "E");
+		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_VEHICLE_JOURNEY_1, "E");
+		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
 		
 		if (oldValue.isDetached()) {
 			// object does not exist in database
 			oldValue.setObjectId(newValue.getObjectId());
 			oldValue.setObjectVersion(newValue.getObjectVersion());
 			oldValue.setCreationTime(newValue.getCreationTime());
-			oldValue.setCreatorId(newValue.getCreatorId());
 			oldValue.setName(newValue.getName());
 			oldValue.setComment(newValue.getComment());
 			oldValue.setRegistrationNumber(newValue.getRegistrationNumber());
@@ -80,9 +75,6 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 			}
 			if (newValue.getCreationTime() != null && !newValue.getCreationTime().equals(oldValue.getCreationTime())) {
 				oldValue.setCreationTime(newValue.getCreationTime());
-			}
-			if (newValue.getCreatorId() != null && !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-				oldValue.setCreatorId(newValue.getCreatorId());
 			}
 			if (newValue.getName() != null && !newValue.getName().equals(oldValue.getName())) {
 				oldValue.setName(newValue.getName());
@@ -104,27 +96,6 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 		}
 		
 		
-		// RouteSections
-		if (!newValue.getRouteSections().equals(oldValue.getRouteSections())) {
-			// List<RouteSection> sections =
-			// routeSectionDAO.findByObjectId(UpdaterUtils.getObjectIds(newValue.getRouteSections()));
-			// for (RouteSection object : sections) {
-			// cache.getRouteSections().put(object.getObjectId(), object);
-			// }
-			oldValue.getRouteSections().clear();
-			for (RouteSection item : newValue.getRouteSections()) {
-				RouteSection section = cache.getRouteSections().get(item.getObjectId());
-				if (section == null) {
-					section = ObjectFactory.getRouteSection(cache, item.getObjectId());
-				}
-				oldValue.getRouteSections().add(section);
-			}
-		}
-		Collection<Pair<RouteSection, RouteSection>> modifiedRouteSection = CollectionUtil.intersection(
-				oldValue.getRouteSections(), newValue.getRouteSections(), NeptuneIdentifiedObjectComparator.INSTANCE);
-		for (Pair<RouteSection, RouteSection> pair : modifiedRouteSection) {
-			routeSectionUpdater.update(context, pair.getLeft(), pair.getRight());
-		}
 
 		// StopPoint
 		Collection<StopPoint> addedStopPoint = CollectionUtil.substract(newValue.getStopPoints(),
@@ -228,7 +199,7 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 			vehicleJourneyUpdater.update(context, pair.getLeft(), pair.getRight());
 		}
 
-
+        ChecksumUtil.checksum(context, oldValue);
 //		monitor.stop();
 	}
 	
@@ -242,9 +213,9 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 	 */
 	private void twoDatabaseVehicleJourneyOneTest(ValidationReporter validationReporter, Context context, VehicleJourney oldVj, VehicleJourney newVj, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldVj.getJourneyPattern(), newVj.getJourneyPattern()))
-			validationReporter.addCheckPointReportError(context, null, DATABASE_VEHICLE_JOURNEY_1, data.getDataLocations().get(newVj.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_VEHICLE_JOURNEY_1, data.getDataLocations().get(newVj.getObjectId()));
 		else
-			validationReporter.reportSuccess(context, DATABASE_VEHICLE_JOURNEY_1);
+			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_VEHICLE_JOURNEY_1);
 	}
 	
 }

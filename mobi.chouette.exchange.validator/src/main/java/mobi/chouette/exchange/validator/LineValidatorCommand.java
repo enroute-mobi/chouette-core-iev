@@ -20,6 +20,8 @@ import mobi.chouette.common.Color;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validator.checkpoints.JourneyPatternValidator;
 import mobi.chouette.exchange.validator.checkpoints.LineValidator;
@@ -33,7 +35,7 @@ import mobi.chouette.model.util.Referential;
  *
  */
 @Log4j
-public class LineValidatorCommand implements Command, Constant {
+public class LineValidatorCommand implements Command {
 	public static final String COMMAND = "LineValidatorCommand";
 
 	private LineValidator lineCheckPoints = new LineValidator();
@@ -44,14 +46,15 @@ public class LineValidatorCommand implements Command, Constant {
 
 	@Override
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
+		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
-		ValidationReport report = (ValidationReport) context.get(VALIDATION_REPORT);
-		Referential r = (Referential) context.get(REFERENTIAL);
-		ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+		ValidationReport report = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
+		Referential r = (Referential) context.get(Constant.REFERENTIAL);
+		ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 		if (report == null) {
-			context.put(VALIDATION_REPORT, new ValidationReport());
+			context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		}
 		try {
 			LineLite line = r.getCurrentLine();
@@ -66,12 +69,17 @@ public class LineValidatorCommand implements Command, Constant {
 			r.getVehicleJourneys().values().stream().forEach(
 					vehicleJourney-> vehicleJourneyCheckPoints.validate(context, vehicleJourney,parameters,transportMode));
 
-			result = SUCCESS;
+			if (reporter.hasLineValidationErrors(context,line))
+			{
+				reporter.setActionError(context, ERROR_CODE.INVALID_DATA, "Line error for " + line.getPublishedName());			
+			}
+			result = Constant.SUCCESS;
+			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		} finally {
-			context.remove(ATTRIBUTE_CONTEXT);
-			context.remove(DISTANCE_CONTEXT);
+			context.remove(Constant.ATTRIBUTE_CONTEXT);
+			context.remove(Constant.DISTANCE_CONTEXT);
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
 
@@ -88,7 +96,7 @@ public class LineValidatorCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(LineValidatorCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(LineValidatorCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

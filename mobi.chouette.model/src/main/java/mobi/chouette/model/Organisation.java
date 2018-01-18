@@ -22,7 +22,9 @@ import mobi.chouette.model.converter.HstoreConverter;
 @Table(name = "organisations")
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Organisation {
+public class Organisation extends ChouetteObject {
+	private static final long serialVersionUID = 4952690444017749057L;
+
 	@Getter
 	@Setter
 	@SequenceGenerator(name="organisations_id_seq", sequenceName="organisations_id_seq", allocationSize=1)

@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 9.4.14
--- Dumped by pg_dump version 9.6.5
+-- Dumped by pg_dump version 9.6.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -146,8 +146,7 @@ CREATE TABLE compliance_check_sets (
     id bigint NOT NULL,
     referential_id bigint,
     compliance_control_set_id bigint,
-    workbench_id integer,
-    creator character varying,
+    workbench_id bigint,
     status character varying,
     parent_id bigint,
     parent_type character varying,
@@ -157,7 +156,8 @@ CREATE TABLE compliance_check_sets (
     current_step_progress double precision,
     name character varying,
     started_at timestamp without time zone,
-    ended_at timestamp without time zone
+    ended_at timestamp without time zone,
+    notified_parent_at timestamp without time zone
 );
 
 
@@ -193,7 +193,7 @@ CREATE TABLE compliance_checks (
     compliance_check_set_id bigint,
     compliance_check_block_id bigint,
     type character varying,
-    control_attributes shared_extensions.hstore,
+    control_attributes json,
     name character varying,
     code character varying,
     criticity character varying,
@@ -306,9 +306,9 @@ ALTER SEQUENCE compliance_control_sets_id_seq OWNED BY compliance_control_sets.i
 
 CREATE TABLE compliance_controls (
     id bigint NOT NULL,
-    compliance_control_set_id integer,
+    compliance_control_set_id bigint,
     type character varying,
-    control_attributes shared_extensions.hstore,
+    control_attributes json,
     name character varying,
     code character varying,
     criticity character varying,
@@ -316,7 +316,7 @@ CREATE TABLE compliance_controls (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     origin_code character varying,
-    compliance_control_block_id integer
+    compliance_control_block_id bigint
 );
 
 
@@ -600,14 +600,6 @@ ALTER TABLE ONLY compliance_checks
 
 
 --
--- Name: compliance_check_sets fk_rails_4145f3761b; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_check_sets
-    ADD CONSTRAINT fk_rails_4145f3761b FOREIGN KEY (referential_id) REFERENCES referentials(id);
-
-
---
 -- Name: compliance_check_resources fk_rails_45cd323eca; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -645,14 +637,6 @@ ALTER TABLE ONLY compliance_control_sets
 
 ALTER TABLE ONLY compliance_controls
     ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
-
-
---
--- Name: compliance_check_sets fk_rails_d227ba43d7; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_check_sets
-    ADD CONSTRAINT fk_rails_d227ba43d7 FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 
 
 --

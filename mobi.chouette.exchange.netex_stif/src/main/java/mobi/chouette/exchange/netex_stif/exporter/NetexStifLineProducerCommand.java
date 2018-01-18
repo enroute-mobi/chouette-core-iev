@@ -5,13 +5,16 @@ import java.sql.Date;
 
 import javax.naming.InitialContext;
 
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.exporter.SharedDataKeys;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
@@ -19,41 +22,39 @@ import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.util.NamingUtil;
 
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
-
 @Log4j
-public class NetexStifLineProducerCommand implements Command, Constant {
+public class NetexStifLineProducerCommand implements Command {
+	private static final String MERGED = "merged";
 	public static final String COMMAND = "NetexStifLineProducerCommand";
 
 	@Override
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
 
-			Line line = (Line) context.get(LINE);
+			Line line = (Line) context.get(Constant.LINE);
 			log.info("procesing line " + NamingUtil.getName(line));
-			NetexStifExportParameters configuration = (NetexStifExportParameters) context.get(CONFIGURATION);
+			NetexStifExportParameters configuration = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 
-			ExportableData collection = (ExportableData) context.get(EXPORTABLE_DATA);
+			ExportableData collection = (ExportableData) context.get(Constant.EXPORTABLE_DATA);
 			if (collection == null)
 			{
 				collection = new  ExportableData();
-				context.put(EXPORTABLE_DATA, collection);
+				context.put(Constant.EXPORTABLE_DATA, collection);
 			}
 			else
 			{
 				collection.clear();
 			}
 
-			SharedDataKeys sharedData = (SharedDataKeys) context.get(SHARED_DATA_KEYS);
+			SharedDataKeys sharedData = (SharedDataKeys) context.get(Constant.SHARED_DATA_KEYS);
 			if (sharedData == null) {
 				sharedData = new SharedDataKeys();
-				context.put(SHARED_DATA_KEYS, sharedData);
+				context.put(Constant.SHARED_DATA_KEYS, sharedData);
 			}
 
 			Date startDate = null;
@@ -85,22 +86,22 @@ public class NetexStifLineProducerCommand implements Command, Constant {
 				reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
 				// merge refresh shared data
 				
-				reporter.addObjectReport(context, "merged", OBJECT_TYPE.NETWORK, "networks", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.NETWORK, OBJECT_TYPE.NETWORK, sharedData.getNetworkIds().size());
-				reporter.addObjectReport(context, "merged", OBJECT_TYPE.COMPANY, "companies", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.COMPANY, OBJECT_TYPE.COMPANY, sharedData.getCompanyIds().size());
-				reporter.addObjectReport(context, "merged", OBJECT_TYPE.CONNECTION_LINK, "connection links", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.CONNECTION_LINK, OBJECT_TYPE.CONNECTION_LINK, sharedData.getConnectionLinkIds().size());
-				reporter.addObjectReport(context, "merged", OBJECT_TYPE.ACCESS_POINT, "access points", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.ACCESS_POINT, OBJECT_TYPE.ACCESS_POINT, sharedData.getAccessPointIds().size());
-				reporter.addObjectReport(context, "merged", OBJECT_TYPE.STOP_AREA, "stop areas", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.STOP_AREA, OBJECT_TYPE.STOP_AREA, sharedData.getStopAreaIds().size());
-				reporter.addObjectReport(context, "merged", OBJECT_TYPE.TIMETABLE, "calendars", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, "merged", OBJECT_TYPE.TIMETABLE, OBJECT_TYPE.TIMETABLE, sharedData.getTimetableIds().size());
-				result = SUCCESS;
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.NETWORK, "networks", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.NETWORK, OBJECT_TYPE.NETWORK, sharedData.getNetworkIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.COMPANY, "companies", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.COMPANY, OBJECT_TYPE.COMPANY, sharedData.getCompanyIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.CONNECTION_LINK, "connection links", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.CONNECTION_LINK, OBJECT_TYPE.CONNECTION_LINK, sharedData.getConnectionLinkIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.ACCESS_POINT, "access points", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.ACCESS_POINT, OBJECT_TYPE.ACCESS_POINT, sharedData.getAccessPointIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.STOP_AREA, "stop areas", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.STOP_AREA, OBJECT_TYPE.STOP_AREA, sharedData.getStopAreaIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.TIMETABLE, "calendars", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.TIMETABLE, OBJECT_TYPE.TIMETABLE, sharedData.getTimetableIds().size());
+				result = Constant.SUCCESS;
 			} else {
 				reporter.addErrorToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, ActionReporter.ERROR_CODE.NO_DATA_ON_PERIOD, "no data on period");
-				result = ERROR;
+				result = Constant.ERROR;
 			}
 
 		} catch (Exception e) {
@@ -121,7 +122,7 @@ public class NetexStifLineProducerCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifLineProducerCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifLineProducerCommand.class.getName(), new DefaultCommandFactory());
 	}
 
 }

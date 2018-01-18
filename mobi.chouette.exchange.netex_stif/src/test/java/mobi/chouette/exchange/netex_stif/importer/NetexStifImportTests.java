@@ -37,6 +37,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
@@ -47,12 +48,10 @@ import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.dao.StopPointDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
-import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.FileReport;
-import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.CheckPointErrorReport;
 import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.model.Footnote;
@@ -64,7 +63,7 @@ import mobi.chouette.model.util.Referential;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class NetexStifImportTests extends Arquillian implements Constant, ReportConstant {
+public class NetexStifImportTests extends Arquillian  {
 
 	@EJB
 	LineDAO lineDao;
@@ -130,7 +129,7 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(NetexStifImportTests.class)
-				.addClass(JobDataTest.class);
+				.addClass(JobDataImpl.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -167,11 +166,11 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
+		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
@@ -183,8 +182,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L });
 		configuration.setIds(ids);
-		JobDataTest jobData = new JobDataTest();
-		context.put(JOB_DATA, jobData);
+		JobDataImpl jobData = new JobDataImpl();
+		context.put(Constant.JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
@@ -197,8 +196,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		jobData.setReferential("chouette_gui");
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType("netex_stif");
-		context.put(TESTNG, "true"); // mode test
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.TESTNG, "true"); // mode test
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
@@ -210,13 +209,13 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 
 	public void verifyImportLine(String zipFile) throws Exception {
 		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
 		copyFile(zipFile);
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		JobDataImpl jobData = (JobDataImpl) context.get(Constant.JOB_DATA);
 		jobData.setInputFilename(zipFile);
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
 		try {
@@ -226,8 +225,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 			throw ex;
 		}
 
-        ActionReport report = (ActionReport) context.get(REPORT);
-        ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+        ActionReport report = (ActionReport) context.get(Constant.REPORT);
+        ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
 		// line should be saved
@@ -254,13 +253,13 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 	public void verifyImportBadZip() throws Exception {
 		String zipFile = "badformated.zip";
 		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
 		copyFile(zipFile);
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		JobDataImpl jobData = (JobDataImpl) context.get(Constant.JOB_DATA);
 		jobData.setInputFilename(zipFile);
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
 		try {
@@ -271,8 +270,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		}
 
 		// check error report
-		ActionReport report = (ActionReport) context.get(REPORT);
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "NOK", "result");
@@ -290,13 +289,13 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 	public void verifyImportNoCalendarZip() throws Exception {
 		String zipFile = "nocalendar.zip";
 		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
 		copyFile(zipFile);
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		JobDataImpl jobData = (JobDataImpl) context.get(Constant.JOB_DATA);
 		jobData.setInputFilename(zipFile);
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
 		try {
@@ -307,8 +306,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		}
 
 		// check error report
-		ActionReport report = (ActionReport) context.get(REPORT);
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "NOK", "result");
@@ -329,13 +328,13 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 	public void verifyImportNoOfferZip() throws Exception {
 		String zipFile = "nooffer.zip";
 		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
 		copyFile(zipFile);
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		JobDataImpl jobData = (JobDataImpl) context.get(Constant.JOB_DATA);
 		jobData.setInputFilename(zipFile);
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
 		try {
@@ -346,8 +345,8 @@ public class NetexStifImportTests extends Arquillian implements Constant, Report
 		}
 
 		// check error report
-		ActionReport report = (ActionReport) context.get(REPORT);
-		ValidationReport valReport = (ValidationReport) context.get(VALIDATION_REPORT);
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		log.info(report);
 		log.info(valReport);
 		Assert.assertEquals(report.getResult(), "NOK", "result");

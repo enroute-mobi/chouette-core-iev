@@ -13,6 +13,7 @@ import com.jamonapi.MonitorFactory;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
@@ -22,24 +23,22 @@ import mobi.chouette.exchange.DaoProgressionCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.exporter.AbstractExporterCommand;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
-import mobi.chouette.exchange.report.ReportConstant;
 
 @Log4j
 @Stateless(name = NetexStifExporterCommand.COMMAND)
-public class NetexStifExporterCommand extends AbstractExporterCommand implements Command, Constant, ReportConstant {
+public class NetexStifExporterCommand extends AbstractExporterCommand implements Command {
 
 	public static final String COMMAND = "NetexStifExporterCommand";
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public boolean execute(Context context) throws Exception {
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
-		InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		// initialize reporting and progression
@@ -49,19 +48,19 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 		try {
 
 			// read parameters
-			Object configuration = context.get(CONFIGURATION);
+			Object configuration = context.get(Constant.CONFIGURATION);
 			if (!(configuration instanceof NetexStifExportParameters)) {
 				// fatal wrong parameters
 				log.error("invalid parameters for netex export " + configuration.getClass().getName());
 				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS,"invalid parameters for netex export " + configuration.getClass().getName());
-				return ERROR;
+				return Constant.ERROR;
 			}
 
 			NetexStifExportParameters parameters = (NetexStifExportParameters) configuration;
 			if (parameters.getStartDate() != null && parameters.getEndDate() != null) {
 				if (parameters.getStartDate().after(parameters.getEndDate())) {
 					reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS,"end date before start date");
-					return ERROR;
+					return Constant.ERROR;
 
 				}
 			}
@@ -77,7 +76,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			reporter.setActionError(context, ERROR_CODE.INTERNAL_ERROR, "Command cancelled");
 			log.error(e.getMessage());
 		} catch (Exception e) {
-			if (!COMMAND_CANCELLED.equals(e.getMessage())) {
+			if (!Constant.COMMAND_CANCELLED.equals(e.getMessage())) {
 				reporter.setActionError(context, ERROR_CODE.INTERNAL_ERROR,"Fatal :" + e);
 				log.error(e.getMessage(), e);
 			}
@@ -111,6 +110,6 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 	}
 
 	static {
-		CommandFactory.factories.put(NetexStifExporterCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(NetexStifExporterCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

@@ -36,10 +36,6 @@ public class CompanyUpdater implements Updater<Company> {
 						oldValue.getCreationTime())) {
 			oldValue.setCreationTime(newValue.getCreationTime());
 		}
-		if (newValue.getCreatorId() != null
-				&& !newValue.getCreatorId().equals(oldValue.getCreatorId())) {
-			oldValue.setCreatorId(newValue.getCreatorId());
-		}
 		if (newValue.getName() != null
 				&& !newValue.getName().equals(oldValue.getName())) {
 			oldValue.setName(newValue.getName());

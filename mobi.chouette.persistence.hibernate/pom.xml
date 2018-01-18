@@ -11,6 +11,11 @@
 	<properties>
 		<project.rootDir>${project.basedir}/..</project.rootDir>
 		<skipInitDb>true</skipInitDb>
+		<!-- Sonar exclusions -->
+      <sonar.issue.ignore.multicriteria>e1</sonar.issue.ignore.multicriteria>
+      <!-- SQL binding mechanisms should be used -->
+      <sonar.issue.ignore.multicriteria.e1.ruleKey>squid:S2077</sonar.issue.ignore.multicriteria.e1.ruleKey>
+      <sonar.issue.ignore.multicriteria.e1.resourceKey>**/mobi/chouette/persistence/hibernate/DefaultConnectionProvider.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
 	</properties>
 	<dependencies>
 

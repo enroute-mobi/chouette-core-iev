@@ -1,7 +1,8 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.LineLite;
@@ -9,14 +10,14 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 
 public class PassingTimeValidator extends AbstractValidator {
 
-
+	@Override
 	public void init(Context context) {
 		super.init(context);
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_PassingTime_1);
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_PassingTime_2);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_PassingTime_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_PassingTime_2);
 	}
 
 	/**
@@ -37,23 +38,28 @@ public class PassingTimeValidator extends AbstractValidator {
 	}
 
 	/**
- 	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : complétude
- 	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2325">Cartes #2325</a>
- 	 * <p>
- 	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-1
- 	 * <p>
- 	 * <b>Variables</b> :  néant
- 	 * <p>
- 	 * <b>Prérequis</b> :  néant
- 	 * <p>
- 	 * <b>Prédicat</b> :  L'attribut DepartureTime de l'objet PassingTime doit être renseigné.
- 	 * <p>
- 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} , objet ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang} ne dispose pas de DepartureTime
- 	 * <p>
- 	 * <b>Criticité</b> :  error
- 	 * <p>
- 	 * 
+	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : complétude
+	 * <p>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2325">Cartes
+	 * #2325</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-1
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : néant
+	 * <p>
+	 * <b>Prédicat</b> : L'attribut DepartureTime de l'objet PassingTime doit
+	 * être renseigné.
+	 * <p>
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
+	 * ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang}
+	 * ne dispose pas de DepartureTime
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
+	 * 
 	 * @param context
 	 * @param passingTime
 	 * @param lineNumber
@@ -68,34 +74,40 @@ public class PassingTimeValidator extends AbstractValidator {
 			result = false;
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
-			LineLite line = (LineLite) context.get(LINE);
-			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, 
+			LineLite line = (LineLite) context.get(Constant.LINE);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line,
 					passingTime.getVehicleJourney());
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_PassingTime_1, location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassingTime_1, location,
 					Integer.toString(rank));
 
 		}
 		return result;
 	}
 
- 	/** 
- 	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : chronologie
- 	 * <p>
- 	 * <b>R&eacute;ference Redmine</b> : <a target="_blank" href="https://projects.af83.io/issues/2326">Cartes #2326</a>
- 	 * <p>
- 	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-2
- 	 * <p>
- 	 * <b>Variables</b> :  néant
- 	 * <p>
- 	 * <b>Prérequis</b> :  Atrribut ArrivalTime renseigné
- 	 * <p>
- 	 * <b>Prédicat</b> :  l'Attribut DepartureTime de l'objet PassingTime doit être supérieur ou égal à l'attribut ArrivalTIme
- 	 * <p>
- 	 * <b>Message</b> :  {fichier}-Ligne {ligne}-Colonne {Colonne} , objet ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang} fournit un ArrivalTime {arrival} supérieur à son DepartureTime {departure}
- 	 * <p>
- 	 * <b>Criticité</b> :  error
- 	 * <p>
- 	 * 
+	/**
+	 * <b>Titre</b> :[Netex] Contrôle de l'objet PassingTime : chronologie
+	 * <p>
+	 * <b>R&eacute;ference Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/2326">Cartes
+	 * #2326</a>
+	 * <p>
+	 * <b>Code</b> : 2-NeTExSTIF-PassingTime-2
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : Atrribut ArrivalTime renseigné
+	 * <p>
+	 * <b>Prédicat</b> : l'Attribut DepartureTime de l'objet PassingTime doit
+	 * être supérieur ou égal à l'attribut ArrivalTIme
+	 * <p>
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} , objet
+	 * ServiceJourney d'identifiant {objectId} : le passingTime de rang {rang}
+	 * fournit un ArrivalTime {arrival} supérieur à son DepartureTime
+	 * {departure}
+	 * <p>
+	 * <b>Criticité</b> : error
+	 * <p>
+	 * 
 	 * @param context
 	 * @param passingTime
 	 * @param lineNumber
@@ -117,10 +129,10 @@ public class PassingTimeValidator extends AbstractValidator {
 			if (!result) {
 				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 				String fileName = (String) context.get(Constant.FILE_NAME);
-				LineLite line = (LineLite) context.get(LINE);
-				DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, 
+				LineLite line = (LineLite) context.get(Constant.LINE);
+				DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line,
 						passingTime.getVehicleJourney());
-				validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_PassingTime_2, location,
+				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassingTime_2, location,
 						Integer.toString(rank));
 			}
 
@@ -130,7 +142,7 @@ public class PassingTimeValidator extends AbstractValidator {
 
 	@Override
 	protected String getLocalContext() {
-		return TIMETABLED_PASSING_TIME;
+		return NetexStifConstant.TIMETABLED_PASSING_TIME;
 	}
 
 }

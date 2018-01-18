@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -16,12 +16,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.JourneyPatternDAO;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.validator.ValidateParameters;
+import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.JourneyPatternValidator;
 import mobi.chouette.model.JourneyPattern;
@@ -46,9 +48,9 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "journey-pattern" }, description = "3_JourneyPattern_2", priority = 41)
+	@Test(groups = { "journey-pattern" }, description = "3_JourneyPattern_2", priority = 111)
 	public void verifyTest_3_JourneyPattern_1() throws Exception {
-		log.info(Color.CYAN + " check " + L3_JourneyPattern_2 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_JourneyPattern_2 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -56,7 +58,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			TestContext tc = new TestContext(context, L3_JourneyPattern_2);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_JourneyPattern_2);
 			JourneyPattern jp = tc.getObjectForTest();
 
 			// -- Nominal
@@ -77,9 +79,9 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "journey-pattern" }, description = "3_Vehicle_Journey_3", priority = 42)
+	@Test(groups = { "journey-pattern" }, description = "3_Vehicle_Journey_3", priority = 113)
 	public void verifyTest_3_VehicleJourney_3() throws Exception {
-		log.info(Color.CYAN + " check " + L3_VehicleJourney_3 + Color.NORMAL);
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_VehicleJourney_3 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
 		loadSharedData(context);
@@ -89,7 +91,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 
 			Long threshold = 2 * 60L;
 
-			TestContext tc = new TestContext(context, L3_VehicleJourney_3);
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_VehicleJourney_3);
 			JourneyPattern jp = tc.getObjectForTest();
 
 			// -- Nominal
@@ -106,7 +108,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			tc.setMaximumParam(Long.toString(threshold));
 			tc.runValidation();
 			checkReports(context, tc.getLine().getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(),
-					null, OBJECT_STATE.WARNING);
+					"160", OBJECT_STATE.WARNING);
 
 		} finally {
 			utx.rollback();
@@ -135,7 +137,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 
 		public TestContext(Context context, String checkPointName) {
 			this.context = context;
-			referential = (Referential) context.get(REFERENTIAL);
+			referential = (Referential) context.get(Constant.REFERENTIAL);
 			this.checkPointName = checkPointName;
 			// -- Object to TestprepareNewTest()
 			long jpId = 2;
@@ -154,7 +156,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 					null);
 			//
 			validator = new JourneyPatternValidator();
-			ValidateParameters parameters = (ValidateParameters) context.get(CONFIGURATION);
+			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
 			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, 0L, false, minimumParam, maximumParam,null);
 			checkPoints.add(checkPoint);

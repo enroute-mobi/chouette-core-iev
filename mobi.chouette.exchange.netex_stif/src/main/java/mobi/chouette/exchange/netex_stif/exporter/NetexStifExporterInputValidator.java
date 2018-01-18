@@ -21,6 +21,7 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 		try {
 			return JSONUtil.fromJSON(abstractParameter, NetexStifExportParameters.class);
 		} catch (Exception e) {
+			log.error("Cannot parse parameter "+e.getMessage());
 			return null;
 		}
 	}
@@ -84,8 +85,7 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 
 		@Override
 		protected InputValidator create() throws IOException {
-			InputValidator result = new NetexStifExporterInputValidator();
-			return result;
+			return new NetexStifExporterInputValidator();
 		}
 	}
 
@@ -93,11 +93,6 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 		InputValidatorFactory.factories.put(NetexStifExporterInputValidator.class.getName(), new DefaultFactory());
 	}
 
-//	@Override
-//	public List<TestDescription> getTestList() {
-//		List<TestDescription> emptyList = new ArrayList<TestDescription>();
-//		return emptyList;
-//	}
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
 		// TODO Auto-generated method stub

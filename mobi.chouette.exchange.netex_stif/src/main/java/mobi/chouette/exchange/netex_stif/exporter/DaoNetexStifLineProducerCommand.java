@@ -11,21 +11,21 @@ import javax.ejb.TransactionAttributeType;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
+
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.LineDAO;
-import mobi.chouette.exchange.netex_stif.Constant;
 import mobi.chouette.model.Line;
-
-import com.jamonapi.Monitor;
-import com.jamonapi.MonitorFactory;
 
 @Log4j
 @Stateless(name = DaoNetexStifLineProducerCommand.COMMAND)
-public class DaoNetexStifLineProducerCommand implements Command, Constant {
+public class DaoNetexStifLineProducerCommand implements Command {
 
 	public static final String COMMAND = "DaoNetexStifLineProducerCommand";
 	
@@ -39,19 +39,19 @@ public class DaoNetexStifLineProducerCommand implements Command, Constant {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
 
-		boolean result = ERROR;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
 
-			Long lineId = (Long) context.get(LINE_ID);
+			Long lineId = (Long) context.get(Constant.LINE_ID);
 			Line line = lineDAO.find(lineId);
 			
-			InitialContext initialContext = (InitialContext) context.get(INITIAL_CONTEXT);
+			InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 			
 			Command export = CommandFactory.create(initialContext, NetexStifLineProducerCommand.class.getName());
 			
-			context.put(LINE, line);
+			context.put(Constant.LINE, line);
 			result = export.execute(context);
 			//daoContext.setRollbackOnly();
 			
@@ -86,6 +86,6 @@ public class DaoNetexStifLineProducerCommand implements Command, Constant {
 	}
 
 	static {
-		CommandFactory.factories.put(DaoNetexStifLineProducerCommand.class.getName(), new DefaultCommandFactory());
+		CommandFactory.register(DaoNetexStifLineProducerCommand.class.getName(), new DefaultCommandFactory());
 	}
 }

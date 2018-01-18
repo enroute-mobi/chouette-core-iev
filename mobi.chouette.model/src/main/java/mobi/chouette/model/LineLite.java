@@ -19,21 +19,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.util.ObjectIdTypes;
 
 /**
- * Chouette Line readonly lite version: a group of Routes which is generally known to the public by a
- * similar name or number
+ * Chouette Line readonly lite version: a group of Routes which is generally
+ * known to the public by a similar name or number
  * <p>
  * Neptune mapping : Line <br>
  * Gtfs mapping : Line <br>
  */
 @Entity
-@Table(name = "lines",schema="public")
+@Table(name = "lines", schema = "public")
 @Immutable
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes {
+public class LineLite extends ChouetteIdentifiedObject {
+	private static final String OLD_FASHION_PREFIX = "STIF:CODIFLIGNE";
+
 	private static final long serialVersionUID = 8809993452599427585L;
 
 	@Getter
@@ -43,9 +44,9 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 	protected Long id;
 
 	@Getter
-	@Column(name="deactivated")
+	@Column(name = "deactivated")
 	protected boolean deactivated;
-	
+
 	/**
 	 * name
 	 * 
@@ -54,7 +55,6 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 	@Getter
 	@Column(name = "name")
 	protected String name;
-
 
 	/**
 	 * number or short name
@@ -73,7 +73,6 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 	@Getter
 	@Column(name = "published_name")
 	protected String publishedName;
-
 
 	/**
 	 * Transport mode (default value = Bus)
@@ -96,7 +95,6 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 	@Getter
 	@Column(name = "transport_submode")
 	protected String transportSubModeName;
-
 
 	/**
 	 * line referential reference
@@ -122,29 +120,27 @@ public class LineLite extends ChouetteIdentifiedObject implements ObjectIdTypes 
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "secondary_company_ids",columnDefinition="bigint[]")
+	@Column(name = "secondary_company_ids", columnDefinition = "bigint[]")
 	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
 	private Long[] secondaryCompanyIds = new Long[0];
 
 	@Override
 	public String objectIdPrefix() {
-		if (objectId.startsWith("STIF:CODIFLIGNE")) return "STIF:CODIFLIGNE";
+		if (objectId.startsWith(OLD_FASHION_PREFIX))
+			return OLD_FASHION_PREFIX;
 		return super.objectIdPrefix();
 	}
 
 	@Override
 	public String objectIdSuffix() {
-		if (objectId.startsWith("STIF:CODIFLIGNE") )
-		{
+		if (objectId.startsWith(OLD_FASHION_PREFIX)) {
 			String[] tokens = objectIdArray();
 			if (tokens.length > 3)
 				return tokens[3].trim();
 			else
-				return ""; 
+				return "";
 		}
 		return super.objectIdSuffix();
 	}
-	
-	
 
 }

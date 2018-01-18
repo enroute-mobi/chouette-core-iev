@@ -37,6 +37,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.chain.CommandFactory;
@@ -44,21 +45,20 @@ import mobi.chouette.dao.ImportMessageDAO;
 import mobi.chouette.dao.ImportResourceDAO;
 import mobi.chouette.dao.ImportTaskDAO;
 import mobi.chouette.dao.ReferentialDAO;
-import mobi.chouette.exchange.netex_stif.Constant;
-import mobi.chouette.exchange.netex_stif.JobDataTest;
+import mobi.chouette.exchange.netex_stif.JobDataImpl;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ReportConstant;
 import mobi.chouette.exchange.validation.report.ValidationReport;
-import mobi.chouette.model.importer.ImportMessage_;
-import mobi.chouette.model.importer.ImportResource_;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.importer.ImportMessage;
+import mobi.chouette.model.importer.ImportMessage_;
 import mobi.chouette.model.importer.ImportResource;
+import mobi.chouette.model.importer.ImportResource_;
 import mobi.chouette.model.importer.ImportTask;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 
 @Log4j
-public class AbstractNetexStifImportFileSetTests extends Arquillian implements Constant, ReportConstant {
+public class AbstractNetexStifImportFileSetTests extends Arquillian {
 
 	protected static InitialContext initialContext;
 
@@ -118,7 +118,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		}
 		final WebArchive testWar = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsWebInfResource("postgres-ds.xml").addClass(AbstractNetexStifImportFileSetTests.class)
-				.addClass(testClass).addClass(YmlMessages.class).addClass(JobDataTest.class);
+				.addClass(testClass).addClass(YmlMessages.class).addClass(JobDataImpl.class);
 
 		result = ShrinkWrap.create(EnterpriseArchive.class, "test.ear").addAsLibraries(jars.toArray(new File[0]))
 				.addAsModules(modules.toArray(new JavaArchive[0])).addAsModule(testWar)
@@ -151,14 +151,14 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 
 		Context context = new Context();
-		context.put(INITIAL_CONTEXT, initialContext);
-		context.put(REPORT, new ActionReport());
-		context.put(VALIDATION_REPORT, new ValidationReport());
+		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(Constant.REPORT, new ActionReport());
+		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
-		context.put(CONFIGURATION, configuration);
+		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
 		configuration.setUserName("userName");
-		configuration.setNoSave(true);
+		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
 		configuration.setOrganisationName("organisation");
 		configuration.setReferentialName("test");
@@ -167,7 +167,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L });
 		configuration.setIds(ids);
-		JobDataTest jobData = new JobDataTest();
+		JobDataImpl jobData = new JobDataImpl();
 		utx.begin();
 		em.joinTransaction();
 		mobi.chouette.model.Referential ref = referentialDAO.find(Long.valueOf(1L));
@@ -178,7 +178,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		log.info("task id = " + task.getId());
 		jobData.setId(task.getId());
 		utx.commit();
-		context.put(JOB_DATA, jobData);
+		context.put(Constant.JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
 		File f = new File("target/referential/test");
 		if (f.exists())
@@ -192,23 +192,23 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 		jobData.setAction(JobData.ACTION.importer);
 		jobData.setType("netex_stif");
 		// context.put(TESTNG, "true"); // mode test
-		context.put(OPTIMIZED, Boolean.FALSE);
+		context.put(Constant.OPTIMIZED, Boolean.FALSE);
 		return context;
 
 	}
 
-	protected void doImport(String zipFile, String expectedActionReportResult, String... expectedData)
+	protected void doImport(String zipFile, String expectedActionReportResult, int zipCount, int fileCount, int lineCount, String... expectedData)
 			throws Exception {
 
 		log.info("########## Import " + zipFile + " ##########");
 		Context context = initImportContext();
-		context.put(REFERENTIAL, new Referential());
+		context.put(Constant.REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
 				NetexStifImporterCommand.class.getName());
 		copyFile(zipFile);
-		JobDataTest jobData = (JobDataTest) context.get(JOB_DATA);
+		JobDataImpl jobData = (JobDataImpl) context.get(Constant.JOB_DATA);
 		jobData.setInputFilename(zipFile);
-		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(CONFIGURATION);
+		NetexStifImportParameters configuration = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
 		configuration.setNoSave(false);
 		configuration.setCleanRepository(true);
 		try {
@@ -218,7 +218,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			throw ex;
 		}
 
-		ActionReport actionReport = (ActionReport) context.get(REPORT);
+		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
 
 		utx.begin();
 		em.joinTransaction();
@@ -227,10 +227,18 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 
 		List<ImportResource> resources = getRessources(task);
 		Map<Long, ImportResource> mapImportResources = new HashMap<Long, ImportResource>();
-		resources.stream().forEach(x -> {
+		int zips = 0;
+		int files = 0;
+		int lines = 0;
+		for (ImportResource x : resources) {
 			mapImportResources.put(x.getId(), x);
-			log.info(x.toString());
-		});
+			if (x.getType().equals("zip")) zips++;
+			else if (x.getType().equals("file")) files++;
+			else if (x.getType().equals("line")) lines++;
+		}
+		Assert.assertEquals(zips, zipCount, "unexpected zip count");
+		Assert.assertEquals(files, fileCount, "unexpected file count");
+		Assert.assertEquals(lines, lineCount, "unexpected line count");
 
 		Set<String> actualErrors = new TreeSet<String>();
 		List<ImportMessage> messages = getMessages(task);
@@ -247,12 +255,11 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			sb.append(x.getMessageKey());
 
 			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
-			log.info("message(" + x.getMessageKey() + ")=" + message);
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
 			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
 					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
 
-			log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";MSG=" + message);
+//			log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";MSG=" + message);
 
 			actualErrors.add(sb.toString());
 		});
@@ -283,8 +290,11 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian implements C
 			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
 		}
 
-		log.info(actionReport);
 		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
+		if (actionReport.getResult().equals(ReportConstant.STATUS_ERROR))
+		{
+			log.info("ActionError = "+actionReport.getFailure());
+		}
 
 		Assert.assertTrue(expectedNotDetected.isEmpty(),
 				expectedNotDetected.size() + " Error(s) not detected (but expected) : "

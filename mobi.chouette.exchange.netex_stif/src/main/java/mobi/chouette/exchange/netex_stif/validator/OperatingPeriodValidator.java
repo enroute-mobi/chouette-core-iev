@@ -2,15 +2,16 @@ package mobi.chouette.exchange.netex_stif.validator;
 
 import java.text.SimpleDateFormat;
 
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.netex_stif.Constant;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.OperatingPeriod;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 
 public class OperatingPeriodValidator extends AbstractValidator {
 
-	public static final String LOCAL_CONTEXT = OPERATING_PERIOD;
+	public static final String LOCAL_CONTEXT = NetexStifConstant.OPERATING_PERIOD;
 
 	protected String getLocalContext() {
 		return LOCAL_CONTEXT;
@@ -22,11 +23,11 @@ public class OperatingPeriodValidator extends AbstractValidator {
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		// -- preset checkpoints to OK if uncheck
-		validationReporter.prepareCheckPointReport(context, L2_NeTExSTIF_OperatingPeriod_1);
+		validationReporter.prepareCheckPointReport(context, NetexCheckPoints.L2_NeTExSTIF_OperatingPeriod_1);
 	}
 
 	public boolean validate(Context context, OperatingPeriod period, int lineNumber, int columnNumber) {
-		boolean result1 = checkNetexId(context, OPERATING_PERIOD, period.getObjectId(), lineNumber, columnNumber);
+		boolean result1 = checkNetexId(context, NetexStifConstant.OPERATING_PERIOD, period.getObjectId(), lineNumber, columnNumber);
 		boolean result2 = check2NeTExSTIFOperatingPeriod1(context, period, lineNumber, columnNumber);
 		return result1 && result2;
 	}
@@ -66,7 +67,7 @@ public class OperatingPeriodValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, period);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			validationReporter.addCheckPointReportError(context, null, L2_NeTExSTIF_OperatingPeriod_1, location,sdf.format(period.getPeriod().getEndDate()),sdf.format(period.getPeriod().getStartDate()));
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_OperatingPeriod_1, location,sdf.format(period.getPeriod().getEndDate()),sdf.format(period.getPeriod().getStartDate()));
 		}
 		return result;
 	}

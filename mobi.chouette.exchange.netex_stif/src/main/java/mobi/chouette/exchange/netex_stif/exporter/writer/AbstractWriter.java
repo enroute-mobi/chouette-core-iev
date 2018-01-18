@@ -33,7 +33,7 @@ public class AbstractWriter {
 	
 	public static boolean nonEmpty(Collection<?> list)
 	{
-		return list != null && list.size()>0;
+		return list != null && !list.isEmpty();
 	}
 
 	protected static String buildChildSequenceId(ChouetteIdentifiedObject object, String type, String childType,

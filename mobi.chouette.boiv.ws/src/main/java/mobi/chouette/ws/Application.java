@@ -21,33 +21,32 @@ public class Application extends javax.ws.rs.core.Application implements
 	
 	@Override
 	public Set<Class<?>> getClasses() {
-		Set<Class<?>> result = new HashSet<Class<?>>();
+		Set<Class<?>> result = new HashSet<>();
 		result.add(RestService.class);
 		return result;
 	}
 
 	@Override
 	public Set<Object> getSingletons() {
-		Set<Object> result = new HashSet<Object>();
+		Set<Object> result = new HashSet<>();
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getProperties() {
-		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<>();
 		return result;
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		Logger log = Logger.getLogger("org.jboss.resteasy.core.ExceptionHandler");
-		log.setLevel(Level.ERROR);
+		Logger elog = Logger.getLogger("org.jboss.resteasy.core.ExceptionHandler");
+		elog.setLevel(Level.ERROR);
 
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-
 	}
 
 }

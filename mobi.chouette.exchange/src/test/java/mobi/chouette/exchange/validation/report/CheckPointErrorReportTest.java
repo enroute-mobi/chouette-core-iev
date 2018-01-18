@@ -2,15 +2,13 @@ package mobi.chouette.exchange.validation.report;
 
 import java.io.PrintStream;
 
-import mobi.chouette.common.Constant;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class CheckPointErrorReportTest implements Constant{
+public class CheckPointErrorReportTest {
 	@Test(groups = { "JsonGeneration" }, description = "Json generated", priority = 104)
 	public void verifyJsonGeneration() throws Exception {
 		
