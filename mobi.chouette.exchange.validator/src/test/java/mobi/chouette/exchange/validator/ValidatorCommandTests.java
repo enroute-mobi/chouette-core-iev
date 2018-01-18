@@ -316,7 +316,7 @@ public class ValidatorCommandTests extends Arquillian {
 	private void addCheckToTask(ComplianceCheckTask task) {
 		for (String checkData : checksForAll) {
 			String[] data = checkData.split("/");
-			log.info("checkData = " + checkData + " , size = " + data.length);
+			// log.info("checkData = " + checkData + " , size = " + data.length);
 			ComplianceCheck check = new ComplianceCheck();
 			check.setCode(data[0]);
 			check.setComment(checkData);
@@ -342,7 +342,7 @@ public class ValidatorCommandTests extends Arquillian {
 	private void addChecksToBlock(ComplianceCheckTask task, ComplianceCheckBlock block, String[] checksForBlock) {
 		for (String checkData : checksForBlock) {
 			String[] data = checkData.split("/");
-			log.info("checkData = " + checkData + " , size = " + data.length);
+			// log.info("checkData = " + checkData + " , size = " + data.length);
 			ComplianceCheck check = new ComplianceCheck();
 			check.setCode(data[0]);
 			check.setComment(checkData);
@@ -490,8 +490,8 @@ public class ValidatorCommandTests extends Arquillian {
 				Assert.assertTrue(x.getResourceAttributs().containsKey("object_path"),
 						"resource should contains object_path");
 
-//				log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";PATH="
-//						+ x.getResourceAttributs().get("object_path") + ";MSG=" + message);
+				log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";PATH="
+						+ x.getResourceAttributs().get("object_path") + ";MSG=" + message);
 
 				actualErrors.add(sb.toString());
 			});
@@ -549,7 +549,7 @@ public class ValidatorCommandTests extends Arquillian {
 
 	}
 
-	@Test(groups = { "Level3" }, testName = "nominal", description = "no error", priority = 1)
+	//@Test(groups = { "Level3" }, testName = "nominal", description = "no error", priority = 1)
 	public void verifyNominal() throws Exception {
 		doValidate("OFFRE_SNTYO_Nominal.zip", "NOK", 8, "01:ERROR:3-Generic-1:3_generic_1",
 "01:ERROR:3-VehicleJourney-2:3_vehiclejourney_2_1", 
