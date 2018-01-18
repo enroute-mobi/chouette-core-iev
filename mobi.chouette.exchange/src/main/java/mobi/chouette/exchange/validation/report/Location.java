@@ -115,16 +115,27 @@ public class Location extends AbstractReport {
 		init(chouetteObject);
 	}
 
-	public String getGuiPath() {
+	public String getGuiPath(Long referentialId) {
 		StringBuilder b = new StringBuilder();
 		if (!objectRefs.isEmpty()) {
+			if (referentialId != null) {
+				b.append(PATH_SEP);
+				b.append(ObjectReference.TYPE.REFERENTIAL.getGuiValue());
+				b.append(PATH_SEP);
+				b.append(referentialId);
+			}
 			for (int i = objectRefs.size() - 1; i >= 0; i--) {
 				ObjectReference ref = objectRefs.get(i);
-				if (ref.getType().getGuiValue() != null) {
+				if (!ref.getType().getGuiValue().isEmpty()) {
 					b.append(PATH_SEP);
 					b.append(ref.getType().getGuiValue());
 					b.append(PATH_SEP);
 					b.append(ref.getId());
+				}
+				else if (ref.getType().equals(ObjectReference.TYPE.JOURNEY_PATTERN) || ref.getType().equals(ObjectReference.TYPE.VEHICLE_JOURNEY))
+				{
+					b.append(PATH_SEP);
+					b.append(ref.getType().getGuiShortCut());
 				}
 			}
 		}
@@ -137,7 +148,7 @@ public class Location extends AbstractReport {
 		if (chouetteObject instanceof VehicleJourney) {
 			VehicleJourney object = (VehicleJourney) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
-			objectRefs.add(new ObjectReference(object.getJourneyPattern()));
+			// objectRefs.add(new ObjectReference(object.getJourneyPattern()));
 			objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute()));
 			if (object.getJourneyPattern().getRoute().getLine() != null)
 				objectRefs.add(new ObjectReference(object.getJourneyPattern().getRoute().getLine()));

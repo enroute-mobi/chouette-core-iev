@@ -3,6 +3,7 @@ package mobi.chouette.exchange.report;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.CheckPointReport.SEVERITY;
+import mobi.chouette.model.LineLite;
 
 public class ActionReporterImpl implements ActionReporter {
 
@@ -252,5 +253,16 @@ public class ActionReporterImpl implements ActionReporter {
 			return false;
 
 		return fileReport.getCheckPointErrorCount() > 0;
+	}
+	@Override
+	public boolean hasLineValidationErrors(Context context, LineLite line) {
+		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
+		if (actionReport == null)
+			return false;
+		ObjectReport objectReport = actionReport.findObjectReport(line.getObjectId(), OBJECT_TYPE.LINE);
+		if (objectReport == null)
+			return false;
+
+		return objectReport.getCheckPointErrorCount() > 0;
 	}
 }

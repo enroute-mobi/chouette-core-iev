@@ -39,6 +39,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.PropertyNames;
 import mobi.chouette.dao.ActionDAO;
+import mobi.chouette.dao.DaoException;
 import mobi.chouette.dao.ReferentialDAO;
 import mobi.chouette.model.ActionTask;
 import mobi.chouette.model.importer.ImportTask;
@@ -136,6 +137,9 @@ public class JobServiceManager {
 	}
 
 	private JobService createImportJob(Long id) throws ServiceException {
+		if (id == 0L)
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "invalid import id " + id);
+
 		ImportTask importTask = null;
 		try {
 			// Instancier le modèle du service 'upload'
@@ -219,7 +223,7 @@ public class JobServiceManager {
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 		File dest = new File(jobService.getPathName(), jobService.getInputFilename());
 		try (CloseableHttpClient httpclient = HttpClients.createDefault();
-			 BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
+				BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
 			Thread.sleep(1000L);
 			HttpGet httpget = new HttpGet(urlName);
 			httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
@@ -243,6 +247,8 @@ public class JobServiceManager {
 	}
 
 	private JobService createValidatorJob(Long id) throws ServiceException {
+		if (id == 0L)
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "invalid validator id " + id);
 		ActionTask task = null;
 		try {
 			// Instancier le modèle du service 'upload'
@@ -288,10 +294,16 @@ public class JobServiceManager {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public JobService getNextJob() {
-
-		List<ActionTask> pendingTasks = actionDAO.getTasks(JobService.STATUS.PENDING.name().toLowerCase());
-		List<ActionTask> startedTasks = actionDAO.getTasks(JobService.STATUS.RUNNING.name().toLowerCase());
+	public JobService getNextJob() throws ServiceException {
+		List<ActionTask> pendingTasks = null;
+		List<ActionTask> startedTasks = null;
+		try {
+			pendingTasks = actionDAO.getTasks(JobService.STATUS.PENDING.name().toLowerCase());
+			startedTasks = actionDAO.getTasks(JobService.STATUS.RUNNING.name().toLowerCase());
+		} catch (DaoException ex) {
+			log.fatal("unable to get jobs " + ex.getMessage());
+			throw new ServiceException(ServiceExceptionCode.DATABASE_CORRUPTED, ex.getMessage());
+		}
 
 		Set<Long> refIds = new HashSet<>();
 		for (ActionTask task : startedTasks) {
@@ -396,20 +408,25 @@ public class JobServiceManager {
 			switch (jobService.getAction()) {
 			case importer:
 				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent";
-                method="GET";
+				method = "GET";
 				break;
 			case validator:
 				urlName = guiBaseUrl + "/api/v1/internals/compliance_check_sets/" + jobService.getId()
 						+ "/notify_parent";
-                method="GET";
+				method = "GET";
 				break;
 			case exporter:
-				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO add file name ?
-                method="POST";
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO
+																													// add
+																													// file
+																													// name
+																													// ?
+				method = "PUT";
 				break;
 			default:
 				log.warn("no notify URL for job type " + jobService.getAction());
 				urlName = "";
+				method = "";
 			}
 
 			if (!urlName.isEmpty()) {
@@ -492,9 +509,21 @@ public class JobServiceManager {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public List<JobService> findAll(STATUS status) {
+	public List<JobService> findAll(STATUS status) throws ServiceException {
+		// catch exception and detect if a PersistenceException is found ;
+		// if such case, return empty list and log FATAL error database
+		// corrupted !
+
 		List<JobService> jobs = new ArrayList<>();
-		List<ActionTask> actionTasks = actionDAO.getTasks(status.name().toLowerCase());
+		List<ActionTask> actionTasks = new ArrayList<>();
+
+		try {
+			actionTasks = actionDAO.getTasks(status.name().toLowerCase());
+		} catch (DaoException ex) {
+			log.fatal("Cannot process jobs : " + ex.getCode() + " : " + ex.getMessage());
+			log.fatal("contact DBA to correct problem");
+			throw new ServiceException(ServiceExceptionCode.DATABASE_CORRUPTED, ex.getMessage());
+		}
 		for (ActionTask actionTask : actionTasks) {
 
 			try {

@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_1", priority = 11)
+	@Test(groups = { "route" }, description = "3_Route_1", priority = 131)
 	public void verifyTest_3_Route_1() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_1 + Color.NORMAL);
 		initSchema();
@@ -88,7 +88,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_2", priority = 12)
+	@Test(groups = { "route" }, description = "3_Route_2", priority = 132)
 	public void verifyTest_3_Route_2() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_2 + Color.NORMAL);
 		initSchema();
@@ -144,7 +144,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_3", priority = 13)
+	@Test(groups = { "route" }, description = "3_Route_3", priority = 133)
 	public void verifyTest_3_Route_3() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_3 + Color.NORMAL);
 		initSchema();
@@ -183,7 +183,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_5", priority = 14)
+	@Test(groups = { "route" }, description = "3_Route_5", priority = 134)
 	public void verifyTest_3_Route_5() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_5 + Color.NORMAL);
 		initSchema();
@@ -222,7 +222,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_6", priority = 15)
+	@Test(groups = { "route" }, description = "3_Route_6", priority = 135)
 	public void verifyTest_3_Route_6() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_6 + Color.NORMAL);
 		initSchema();
@@ -263,7 +263,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_8", priority = 16)
+	@Test(groups = { "route" }, description = "3_Route_8", priority = 136)
 	public void verifyTest_3_Route_8() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_8 + Color.NORMAL);
 		initSchema();
@@ -309,7 +309,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_9", priority = 17)
+	@Test(groups = { "route" }, description = "3_Route_9", priority = 137)
 	public void verifyTest_3_Route_9() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_9 + Color.NORMAL);
 		initSchema();
@@ -355,7 +355,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_10", priority = 18)
+	@Test(groups = { "route" }, description = "3_Route_10", priority = 138)
 	public void verifyTest_3_Route_10() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_10 + Color.NORMAL);
 		initSchema();

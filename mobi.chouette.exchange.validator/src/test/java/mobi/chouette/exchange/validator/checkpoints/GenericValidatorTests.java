@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +49,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Generic_1", priority = 1)
+	@Test(groups = { "route" }, description = "3_Generic_1", priority = 101)
 	public void verifyTest_3_Generic_1() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Generic_1 + Color.NORMAL);
 		initSchema();
@@ -88,7 +88,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Generic_2", priority = 2)
+	@Test(groups = { "route" }, description = "3_Generic_2", priority = 102)
 	public void verifyTest_3_Generic_2() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Generic_2 + Color.NORMAL);
 		initSchema();
@@ -141,7 +141,7 @@ public class GenericValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	@Test(groups = { "route" }, description = "3_Generic_3", priority = 3)
+	@Test(groups = { "route" }, description = "3_Generic_3", priority = 103)
 	public void verifyTest_3_Generic_3() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Generic_3 + Color.NORMAL);
 		initSchema();

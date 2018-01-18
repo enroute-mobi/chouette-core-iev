@@ -8,5 +8,5 @@
 package mobi.chouette.dao;
 
 public enum DaoExceptionCode {
-	TENANT_ATTRIBUTE
+	TENANT_ATTRIBUTE,MISSING_FOREIGN_KEY
 }

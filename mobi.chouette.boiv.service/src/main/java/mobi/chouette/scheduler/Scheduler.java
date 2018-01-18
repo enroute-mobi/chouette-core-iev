@@ -20,9 +20,11 @@ import javax.naming.InitialContext;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Color;
 import mobi.chouette.common.PropertyNames;
+import mobi.chouette.core.ChouetteException;
 import mobi.chouette.persistence.hibernate.ContextHolder;
 import mobi.chouette.service.JobService;
 import mobi.chouette.service.JobServiceManager;
+import mobi.chouette.service.ServiceException;
 
 /**
  * @author michel
@@ -48,7 +50,7 @@ public class Scheduler {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public boolean schedule() {
+	public boolean schedule() throws ServiceException{
 		String context = "boiv";
 		String maxJobStr = System.getProperty(context + PropertyNames.MAX_STARTED_JOBS);
 
@@ -99,8 +101,11 @@ public class Scheduler {
 				log.info("schedule pending tasks");
 			}
 		} catch (RuntimeException ex) {
-			log.fatal("cannot start scheduler", ex);
-			throw ex;
+			log.fatal("cannot start scheduler "+ex.getClass().getName(), ex);
+			// throw ex;
+		} catch (ChouetteException e) {
+			// redmine #5531 : IEV should run even if database is corrupted
+			log.fatal("scheduler may not run :"+e.getMessage());
 		}
 	}
 

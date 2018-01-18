@@ -5,5 +5,5 @@ import java.util.List;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
 
 public interface ComplianceCheckTaskDAO extends GenericDAO<ComplianceCheckTask> {
-	public List<ComplianceCheckTask> getTasks(String status);
+	public List<ComplianceCheckTask> getTasks(String status) throws DaoException;
 }

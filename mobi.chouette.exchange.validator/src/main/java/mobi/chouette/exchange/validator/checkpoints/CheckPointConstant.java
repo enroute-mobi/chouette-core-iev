@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.validator.checkpoints;
 
+import java.util.Arrays;
+
 public class CheckPointConstant {
 
 	// Check [Ligne] Appariement des itinéraires
@@ -24,8 +26,6 @@ public class CheckPointConstant {
 	// Check [Itinéraire] Un itinéraire doit contenir au moins 2 arrêts
 	public static final String L3_Route_6 = "3-Route-6";
 
-	// Check [Itinéraire] Un itinéraire doit contenir au moins 1 mission
-	public static final String L3_Route_7 = "3-Route-7";
 
 	// Check [Itinéraire] Utilisation des arrêts par les missions
 	public static final String L3_Route_8 = "3-Route-8";
@@ -64,13 +64,13 @@ public class CheckPointConstant {
 	public static final String L3_VehicleJourney_5 = "3-VehicleJourney-5";
 
 	// Check [ITL] ITL & arret désactivé
-	public static final String L3_ITL_1 = "3-RoutingConstraint-1";
+	public static final String L3_RoutingConstraint_1 = "3-RoutingConstraint-1";
 
 	// Check [ITL] Couverture de l'itinéraire
-	public static final String L3_ITL_2 = "3-RoutingConstraint-2";
+	public static final String L3_RoutingConstraint_2 = "3-RoutingConstraint-2";
 
 	// Check [ITL] Définition minimale d'une ITL
-	public static final String L3_ITL_3 = "3-RoutingConstraint-3";
+	public static final String L3_RoutingConstraint_3 = "3-RoutingConstraint-3";
 
 	// Check [Tracé] Proximité d'un tracé avec l'itinéraire associé
 	public static final String L3_Shape_1 = "3-Shape-1";
@@ -91,6 +91,12 @@ public class CheckPointConstant {
 	public static final String L3_Generic_3 = "3-Generic-3";
 
 	private CheckPointConstant() {
+	}
+	
+	public static final boolean exists(String code)
+	{
+		String constant = "L"+code.replaceAll("-", "_");
+		return Arrays.stream(CheckPointConstant.class.getDeclaredFields()).anyMatch(f -> f.getName().equals(constant));
 	}
 
 }

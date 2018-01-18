@@ -31,28 +31,32 @@ import mobi.chouette.model.VehicleJourney;
 public class ObjectReference extends AbstractReport {
 
 	public enum TYPE {
-		NETWORK("Network","networks"), 
-		COMPANY("Company","companies"), 
-		GROUP_OF_LINE("GroupOfLine","groups_of_lines"), 
-		STOP_AREA("StopArea","stop_areas"), 
-		STOP_POINT("StopPoint","stop_points"), 
-		CONNECTION_LINK("ConnectionLink","connection_links"), 
-		ACCESS_POINT("AccessPoint","access_points"),
-		ACCESS_LINK("AccessLink","access_links"), 
-		TIME_TABLE("Timetable","time_tables"), 
-		LINE("Line","lines"), 
-		ROUTE("Route","routes"), 
-		JOURNEY_PATTERN("JourneyPattern",""), 
-		VEHICLE_JOURNEY("VehicleJourney",""),
-		ROUTING_CONSTRAINT("RoutingConstraint","routing_constraint_zones");
+		REFERENTIAL("Referential","referentials",""), 
+		NETWORK("Network","networks",""), 
+		COMPANY("Company","companies",""), 
+		GROUP_OF_LINE("GroupOfLine","groups_of_lines",""), 
+		STOP_AREA("StopArea","stop_areas",""), 
+		STOP_POINT("StopPoint","stop_points",""), 
+		CONNECTION_LINK("ConnectionLink","connection_links",""), 
+		ACCESS_POINT("AccessPoint","access_points",""),
+		ACCESS_LINK("AccessLink","access_links",""), 
+		TIME_TABLE("Timetable","time_tables",""), 
+		LINE("Line","lines",""), 
+		ROUTE("Route","routes",""), 
+		JOURNEY_PATTERN("JourneyPattern","","journey_patterns_collection"), 
+		VEHICLE_JOURNEY("VehicleJourney","","vehicle_journeys"),
+		ROUTING_CONSTRAINT("RoutingConstraint","routing_constraint_zones","");
 
 		private java.lang.String value;
 		@Getter
 		private java.lang.String guiValue;
+		@Getter
+		private java.lang.String guiShortCut;
 
-		private TYPE(final java.lang.String value,String guiValue) {
+		private TYPE(final java.lang.String value,String guiValue,String guiShortCut) {
 			this.value = value;
 			this.guiValue = guiValue;
+			this.guiShortCut = guiShortCut;
 		}
 
 		public static TYPE fromValue(final java.lang.String value) {

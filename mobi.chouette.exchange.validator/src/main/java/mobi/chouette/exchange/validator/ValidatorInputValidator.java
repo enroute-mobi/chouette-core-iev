@@ -18,6 +18,7 @@ import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
+import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
 import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
 import mobi.chouette.exchange.validator.checkpoints.ControlParameters;
 import mobi.chouette.exchange.validator.checkpoints.GenericCheckpointParameters;
@@ -106,19 +107,29 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		if (task instanceof ComplianceCheckTask) {
 			ComplianceCheckTask checkTask = (ComplianceCheckTask) task;
 			Referential referential = checkTask.getReferential();
+			if (referential == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			Organisation organisation = referential.getOrganisation();
+			if (organisation == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential organisation_id is null");
 			ValidateParameters parameter = new ValidateParameters();
-
+			if (referential.getLineReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential line_referential_id is null");
 			parameter.setLineReferentialId(referential.getLineReferentialId());
+			if (referential.getStopAreaReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential stop_area_referential_id is null");
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
 			if (referential.getId() == null)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
-						"referential id " + referential.getId() + " metadata is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential metadata is null");
 			if (referential.getMetadatas().get(0).getLineIds() == null)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
+			if (referential.getMetadatas().get(0).getLineIds().length == 0)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
 			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
@@ -132,7 +143,8 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 				try {
 					cp = buildCheckpoint(check);
 				} catch (Exception e) {
-					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, e, "cannot parse ComplianceCheck Attributes for "+check.getCode());
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, e,
+							"cannot parse ComplianceCheck Attributes for " + check.getCode());
 				}
 				ComplianceCheckBlock block = check.getBlock();
 				if (block != null) {
@@ -189,13 +201,28 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			String[] keys = key.split("#");
 			generic.setAttributeName(keys[1]);
 			generic.setClassName(toCamelCase(keys[0]));
+			// TODO check valid class and attribute
+			try {
+				Class<?> clazz = Class.forName("mobi.chouette.model." + generic.getClassName());
+				String methodName = "get" + toCamelCase(generic.getAttributeName());
+				if (!Arrays.stream(clazz.getMethods()).anyMatch(m -> m.getName().equalsIgnoreCase(methodName)))
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "unknown check point attribute "
+							+ generic.getClassName() + " for class " + generic.getClassName());
+			} catch (ClassNotFoundException e) {
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"unknown check point class " + generic.getClassName());
+			}
 		} else {
 			result = new CheckpointParameters();
 		}
 		result.setCheckId(check.getId());
-		result.setMinimumValue(check.getControlAttributes().optString(MINIMUM_VALUE_KEY,null));
-		result.setMaximumValue(check.getControlAttributes().optString(MAXIMUM_VALUE_KEY,null));
-		result.setPatternValue(check.getControlAttributes().optString(PATTERN_VALUE_KEY,null));
+		result.setMinimumValue(check.getControlAttributes().optString(MINIMUM_VALUE_KEY, null));
+		result.setMaximumValue(check.getControlAttributes().optString(MAXIMUM_VALUE_KEY, null));
+		result.setPatternValue(check.getControlAttributes().optString(PATTERN_VALUE_KEY, null));
+		// check existing code
+		if (!CheckPointConstant.exists(check.getCode()))
+			throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+					"unknown check point code " + check.getCode());
 		result.setCode(check.getCode());
 		result.setErrorType(check.getCriticity().equals(CRITICITY.error));
 		return result;

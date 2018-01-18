@@ -356,7 +356,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 	 * @param underscore
 	 * @return
 	 */
-	protected static String toCamelCase(String underscore) {
+	public static String toCamelCase(String underscore) {
 		StringBuilder b = new StringBuilder();
 		boolean underChar = false;
 		for (char c : underscore.toCharArray()) {

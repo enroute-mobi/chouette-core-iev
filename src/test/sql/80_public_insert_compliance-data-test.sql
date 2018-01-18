@@ -15,17 +15,19 @@ SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
---
--- Data for Name: compliance_control_sets; Type: TABLE DATA; Schema: public; Owner: chouette
---
-
-
 
 --
 -- Data for Name: compliance_check_sets; Type: TABLE DATA; Schema: public; Owner: chouette
 --
 
 INSERT INTO compliance_check_sets (id, referential_id, compliance_control_set_id, workbench_id, status, parent_id, parent_type, created_at, updated_at, current_step_id, current_step_progress, name, started_at, ended_at) VALUES (1, 1, NULL, 1, 'OKAY', NULL, NULL, '2017-09-29 00:00:00', '2017-09-29 00:00:00', '8', 52, 'name0', '2017-09-29 00:00:00', '2017-09-29 00:00:01');
+
+--
+-- Name: compliance_check_sets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chouette
+--
+
+SELECT pg_catalog.setval('compliance_check_sets_id_seq', 2, false);
+
 
 
 --
@@ -39,40 +41,8 @@ INSERT INTO compliance_check_blocks (id, name, condition_attributes, compliance_
 -- Name: compliance_check_blocks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chouette
 --
 
-SELECT pg_catalog.setval('compliance_check_blocks_id_seq', 1, false);
+SELECT pg_catalog.setval('compliance_check_blocks_id_seq', 2, false);
 
-
---
--- Data for Name: compliance_check_resources; Type: TABLE DATA; Schema: public; Owner: chouette
---
-
-
-
---
--- Name: compliance_check_resources_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chouette
---
-
-SELECT pg_catalog.setval('compliance_check_resources_id_seq', 1, false);
-
-
---
--- Data for Name: compliance_check_results; Type: TABLE DATA; Schema: public; Owner: chouette
---
-
-
-
---
--- Name: compliance_check_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chouette
---
-
--- SELECT pg_catalog.setval('compliance_check_results_id_seq', 1, false);
-
-
---
--- Name: compliance_check_sets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chouette
---
-
-SELECT pg_catalog.setval('compliance_check_sets_id_seq', 1, false);
 
 
 --
@@ -86,7 +56,7 @@ INSERT INTO compliance_checks (id, compliance_check_set_id, compliance_check_blo
 -- Name: compliance_checks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chouette
 --
 
-SELECT pg_catalog.setval('compliance_checks_id_seq', 1, false);
+SELECT pg_catalog.setval('compliance_checks_id_seq', 2, false);
 
 
 --

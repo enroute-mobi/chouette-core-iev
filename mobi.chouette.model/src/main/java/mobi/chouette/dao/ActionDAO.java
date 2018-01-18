@@ -11,5 +11,5 @@ public interface ActionDAO  {
 	ActionTask find(JobData.ACTION actionType, Long id);
 	void saveTask(ActionTask task);
 	void update(ActionTask task);
-	List<ActionTask> getTasks(String status);
+	List<ActionTask> getTasks(String status) throws DaoException;
 }

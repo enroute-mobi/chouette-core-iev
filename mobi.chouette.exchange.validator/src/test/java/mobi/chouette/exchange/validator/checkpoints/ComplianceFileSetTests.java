@@ -4,7 +4,7 @@
  *  Created by create_ComplianceFileSetTests.py
  */
 
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;

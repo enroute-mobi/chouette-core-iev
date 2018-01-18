@@ -149,7 +149,6 @@ public class ValidatorCommand implements Command {
 				result = command.execute(context);
 				if (!result) {
 					validateFailed = true;
-					break;
 				}
 			}
 			progression.execute(context);

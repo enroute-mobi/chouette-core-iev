@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.validation.checkpoints;
+package mobi.chouette.exchange.validator.checkpoints;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "journey-pattern" }, description = "3_JourneyPattern_2", priority = 41)
+	@Test(groups = { "journey-pattern" }, description = "3_JourneyPattern_2", priority = 111)
 	public void verifyTest_3_JourneyPattern_1() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_JourneyPattern_2 + Color.NORMAL);
 		initSchema();
@@ -79,7 +79,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "journey-pattern" }, description = "3_Vehicle_Journey_3", priority = 42)
+	@Test(groups = { "journey-pattern" }, description = "3_Vehicle_Journey_3", priority = 113)
 	public void verifyTest_3_VehicleJourney_3() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_VehicleJourney_3 + Color.NORMAL);
 		initSchema();
