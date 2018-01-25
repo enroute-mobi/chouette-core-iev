@@ -128,12 +128,54 @@ public class JobServiceManager {
 		// Instancier le modèle du service 'upload'
 		if (action.equals(JobData.ACTION.importer.name())) {
 			return createImportJob(id);
+		} else if (action.equals(JobData.ACTION.exporter.name())) {
+			return createExportJob(id);
 		} else if (action.equals(JobData.ACTION.validator.name())) {
 			return createValidatorJob(id);
 		} else {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION, action);
 		}
 
+	}
+
+	private JobService createExportJob(Long id) throws ServiceException {
+		if (id == 0L)
+			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "invalid export id " + id);
+		ActionTask task = null;
+		try {
+			// Instancier le modèle du service 'upload'
+			task = actionDAO.find(JobData.ACTION.exporter, id);
+			if (task == null) {
+				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown export id " + id);
+			}
+			if (!task.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
+				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
+			}
+			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, task);
+
+			log.info("job " + jobService.getId() + " found for export ");
+			// mkdir
+			deleteDirectory(jobService);
+			Files.createDirectories(jobService.getPath());
+
+			jobService.setStatus(JobService.STATUS.PENDING);
+			task.setStatus(jobService.getStatus().name().toLowerCase());
+			actionDAO.update(task);
+			return jobService;
+
+		} catch (RequestServiceException ex) {
+			log.info("fail to create export job " + ex.getMessage());
+			abortTask(task);
+			throw ex;
+		} catch (ServiceException ex) {
+			log.info("invalid export job data" + ex.getMessage());
+			abortTask(task);
+			throw ex;
+		} catch (Exception ex) {
+			log.info("fail to create export job " + id + " " + ex.getMessage() + " " + ex.getClass().getName(), ex);
+			abortTask(task);
+			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, ex);
+		}
 	}
 
 	private JobService createImportJob(Long id) throws ServiceException {
@@ -416,8 +458,8 @@ public class JobServiceManager {
 				method = "GET";
 				break;
 			case exporter:
-				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO
-																													// add
+				// urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO
+		        urlName="";																								// add
 																													// file
 																													// name
 																													// ?

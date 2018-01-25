@@ -18,22 +18,21 @@ import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
+import mobi.chouette.model.util.NamingUtil;
 
 public class NetexOffreLigneWriter extends AbstractWriter {
 
 	public static void write(Writer writer, ExportableData data) throws IOException {
 		LineLite line = data.getLineLite();
 
-		// TODO : manage frames ID and versions, RouteLinks and RoutePoints
-		writer.write(
-				"        <netex:CompositeFrame id=\"CITYWAY:CompositeFrame:NETEX_OFFRE_LIGNE-1:LOC\" version=\"any\">\n");
-		writer.write("            <netex:Name>" + toXml(line.getName()) + "</netex:Name>\n");
-		writer.write("            <netex:TypeOfFrameRef ref=\"NETEX_OFFRE_LIGNE\"/>\n");
-		writer.write("            <netex:frames>\n");
-		writer.write(
-				"                <netex:GeneralFrame id=\"CITYWAY:GeneralFrame:NETEX_STRUCTURE-20170214090012:LOC\" version=\"any\">\n");
-		writer.write("                   <netex:TypeOfFrameRef ref=\"NETEX_STRUCTURE\"/>\n");
-		writer.write("                   <netex:members>\n");
+		String participantRef = OFFRE_PARTICIPANT_REF;
+		String prefix = FRAME_REF_PREFIX;
+		String lineName = NamingUtil.getName(line);
+
+		// TODO : manage versions, RouteLinks and RoutePoints
+		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName);
+		openCompositeFrame(writer, prefix, "NETEX_OFFRE_LIGNE", lineName);
+		openGeneralFrame(writer, prefix, "NETEX_STRUCTURE", null, true);
 		writeRoutes(writer, data);
 		// writeRoutePoints(writer, data);
 		// writeRouteLinks(writer, data);
@@ -43,17 +42,12 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		writeScheduledStopPoints(writer, data);
 		writePassengerStopAssignments(writer, data);
 		writeRoutingConstraints(writer, data);
-		writer.write("                   </netex:members>\n");
-		writer.write("                </netex:GeneralFrame>\n");
-		writer.write(
-				"                <netex:GeneralFrame id=\"CITYWAY:GeneralFrame:NETEX_HORAIRE-20170214090012:LOC\" version=\"any\">\n");
-		writer.write("                   <netex:TypeOfFrameRef ref=\"NETEX_HORAIRE\"/>\n");
-		writer.write("                   <netex:members>\n");
+		closeGeneralFrame(writer, true);
+		openGeneralFrame(writer, prefix, "NETEX_HORAIRE", null, true);
 		writeServiceJourneys(writer, data);
-		writer.write("                   </netex:members>\n");
-		writer.write("                </netex:GeneralFrame>\n");
-		writer.write("            </netex:frames>\n");
-		writer.write("        </netex:CompositeFrame>\n");
+		closeGeneralFrame(writer, true);
+		closeCompositeFrame(writer);
+		closePublicationDelivery(writer);
 
 	}
 
@@ -68,10 +62,10 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 			writer.write(
 					"                      <netex:DirectionType>" + object.getDirection() + "</netex:DirectionType>\n");
 			writer.write("                      <netex:DirectionRef ref=\""
-					+ object.getObjectId().replace(":Route:", ":Direction:") + "\" version=\"any\"/>");
+					+ object.getObjectId().replace(":Route:", ":Direction:") + "\" version=\"any\"/>\n");
 			if (object.getOppositeRoute() != null)
 				writer.write("                      <netex:InverseRouteRef ref=\""
-						+ object.getOppositeRoute().getObjectId() + "\" version=\"any\"/>");
+						+ object.getOppositeRoute().getObjectId() + "\" version=\"any\"/>\n");
 			writer.write("                   </netex:Route>\n");
 		}
 	}
@@ -94,11 +88,13 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 					+ "\" version=\"any\">\n");
 			writer.write("                      <netex:Name>" + toXml(object.getName()) + "</netex:Name>\n");
 			writer.write("                      <netex:RouteRef ref=\"" + object.getRoute().getObjectId()
-					+ "\" version=\"any\"/>");
-			writer.write("                      <netex:DestinationDisplayRef ref=\""
-					+ object.getObjectId().replace(":ServiceJourneyPattern:", ":DestinationDisplay:")
-					+ "\" version=\"any\"/>");
-			writer.write("                      <netex:pointsInSequence\n");
+					+ "\" version=\"any\"/>\n");
+			if (object.getPublishedName() != null || object.getRegistrationNumber() != null) {
+				writer.write("                      <netex:DestinationDisplayRef ref=\""
+						+ object.getObjectId().replace(":ServiceJourneyPattern:", ":DestinationDisplay:")
+						+ "\" version=\"any\"/>\n");
+			}
+			writer.write("                      <netex:pointsInSequence>\n");
 			int rank = 1;
 			for (StopPoint child : object.getStopPoints()) {
 				writer.write("                         <netex:StopPointInJourneyPattern id=\""
@@ -121,17 +117,20 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 
 	private static void writDestinationDisplays(Writer writer, ExportableData data) throws IOException {
 		// TODO Manage version and check existence of destination display
+
 		for (JourneyPattern object : data.getJourneyPatterns()) {
-			writer.write("                   <netex:DestinationDisplay id=\""
-					+ object.getObjectId().replace(":ServiceJourneyPattern:", ":DestinationDisplay:")
-					+ "\" version=\"any\">\n");
-			if (object.getPublishedName() != null)
-				writer.write(
-						"                      <netex:FrontText>" + toXml(object.getPublishedName()) + "</netex:FrontText>\n");
-			if (object.getRegistrationNumber() != null)
-				writer.write("                      <netex:PublicCode>" + object.getRegistrationNumber()
-						+ "</netex:PublicCode>\n");
-			writer.write("                   </netex:DestinationDisplay>\n");
+			if (object.getPublishedName() != null || object.getRegistrationNumber() != null) {
+				writer.write("                   <netex:DestinationDisplay id=\""
+						+ object.getObjectId().replace(":ServiceJourneyPattern:", ":DestinationDisplay:")
+						+ "\" version=\"any\">\n");
+				if (object.getPublishedName() != null)
+					writer.write("                      <netex:FrontText>" + toXml(object.getPublishedName())
+							+ "</netex:FrontText>\n");
+				if (object.getRegistrationNumber() != null)
+					writer.write("                      <netex:PublicCode>" + object.getRegistrationNumber()
+							+ "</netex:PublicCode>\n");
+				writer.write("                   </netex:DestinationDisplay>\n");
+			}
 		}
 
 	}
@@ -168,7 +167,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		// TODO manage versions
 		for (RoutingConstraint object : data.getRoutingConstraints()) {
 			writer.write("                   <netex:RoutingConstraintZone id=\""
-					+ object.getObjectId().replace(":ServiceJourneyPattern:", ":DestinationDisplay:")
+					+ object.getObjectId()
 					+ "\" version=\"any\">\n");
 			writer.write("                      <netex:Name>" + toXml(object.getName()) + "</netex:Name>\n");
 			writer.write("                      <netex:members>\n");
@@ -188,7 +187,8 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		for (VehicleJourney object : data.getVehicleJourneys()) {
 			writer.write(
 					"                   <netex:ServiceJourney id=\"" + object.getObjectId() + "\" version=\"any\">\n");
-			writer.write("                      <netex:Name>" + toXml(object.getPublishedJourneyName()) + "</netex:Name>\n");
+			writer.write(
+					"                      <netex:Name>" + toXml(object.getPublishedJourneyName()) + "</netex:Name>\n");
 			if (!object.getFootnotes().isEmpty()) {
 				writer.write("                      <netex:noticeAssignments\n");
 				int rank = 1;
@@ -241,6 +241,14 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 			writer.write("                   </netex:ServiceJourney>\n");
 		}
 	}
+	private static String buildScheduledStopPointId(StopPoint stopPoint) {
+		return stopPoint.getRoute().getObjectId().replace(":Route:", ":ScheduledStopPoint:").replace(LOC,
+				stopPoint.getPosition() + LOC);
+	}
 
+	private static String buildPassengerStopAssignmentId(StopPoint stopPoint) {
+		return stopPoint.getRoute().getObjectId().replace(":Route:", ":PassengerStopAssignment:").replace(LOC,
+				stopPoint.getPosition() + LOC);
+	}
 
 }

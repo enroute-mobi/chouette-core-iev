@@ -13,22 +13,24 @@
 		<class>mobi.chouette.model.AccessLink</class>
 		<class>mobi.chouette.model.AccessPoint</class>
 		<class>mobi.chouette.model.Company</class>
+		<class>mobi.chouette.model.CompanyLite</class>
 		<class>mobi.chouette.model.compliance.ComplianceCheck</class>
 		<class>mobi.chouette.model.compliance.ComplianceCheckBlock</class>
 		<class>mobi.chouette.model.compliance.ComplianceCheckMessage</class>
 		<class>mobi.chouette.model.compliance.ComplianceCheckResource</class>
 		<class>mobi.chouette.model.compliance.ComplianceCheckTask</class>
 		<class>mobi.chouette.model.ConnectionLink</class>
+		<class>mobi.chouette.model.exporter.ExportResource</class>
+		<class>mobi.chouette.model.exporter.ExportMessage</class>
+		<class>mobi.chouette.model.exporter.ExportTask</class>
 		<class>mobi.chouette.model.GroupOfLine</class>
 		<class>mobi.chouette.model.importer.ImportResource</class>
 		<class>mobi.chouette.model.importer.ImportMessage</class>
 		<class>mobi.chouette.model.importer.ImportTask</class>
 		<class>mobi.chouette.model.Line</class>
+		<class>mobi.chouette.model.LineLite</class>
 		<class>mobi.chouette.model.Network</class>
 		<class>mobi.chouette.model.StopArea</class>
-		<!--		<class>mobi.chouette.model.RouteSection</class> -->
-		<class>mobi.chouette.model.CompanyLite</class>
-		<class>mobi.chouette.model.LineLite</class>
 		<class>mobi.chouette.model.StopAreaLite</class>
 		<class>mobi.chouette.model.converter.HstoreConverter</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

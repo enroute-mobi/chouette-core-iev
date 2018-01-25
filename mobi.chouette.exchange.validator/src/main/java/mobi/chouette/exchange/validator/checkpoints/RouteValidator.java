@@ -6,12 +6,11 @@ import java.util.Set;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
-import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.exchange.validator.Constant;
 import mobi.chouette.exchange.validator.ValidateParameters;
-import mobi.chouette.model.LineLite;
+import mobi.chouette.exchange.validator.ValidationException;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;

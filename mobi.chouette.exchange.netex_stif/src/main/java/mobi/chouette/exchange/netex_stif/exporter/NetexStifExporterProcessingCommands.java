@@ -75,11 +75,8 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 	@Override
 	public List<Command> getPostProcessingCommands(Context context,boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
-		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 		List<Command> commands = new ArrayList<>();
 		try {
-			if (parameters.isAddMetadata())
-				commands.add(CommandFactory.create(initialContext, SaveMetadataCommand.class.getName()));
 			commands.add(CommandFactory.create(initialContext, CompressCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);

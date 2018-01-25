@@ -20,7 +20,9 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.NamingUtil;
+import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class NetexStifLineProducerCommand implements Command {
@@ -36,7 +38,11 @@ public class NetexStifLineProducerCommand implements Command {
 
 		try {
 
-			Line line = (Line) context.get(Constant.LINE);
+			Long lineId = (Long) context.get(Constant.LINE_ID);
+			Referential r = (Referential) context.get(Constant.REFERENTIAL);
+            r.clear(false);
+			LineLite line = r.findLine(lineId);
+			r.setCurrentLine(line);
 			log.info("procesing line " + NamingUtil.getName(line));
 			NetexStifExportParameters configuration = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 
@@ -68,7 +74,7 @@ public class NetexStifLineProducerCommand implements Command {
 			}
 
 			NetexStifDataCollector collector = new NetexStifDataCollector();
-			boolean cont = (collector.collect(collection, line, startDate, endDate));
+			boolean cont = collector.collect(collection, r, startDate, endDate);
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 0);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, collection.getJourneyPatterns().size());
@@ -76,8 +82,6 @@ public class NetexStifLineProducerCommand implements Command {
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY, collection.getVehicleJourneys().size());
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.CONNECTION_LINK, collection.getConnectionLinks().size());
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.TIMETABLE, collection.getTimetables().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ACCESS_POINT, collection.getAccessPoints().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.STOP_AREA, collection.getStopAreas().size());
 			if (cont) {
 
 				NetexStifLineProducer producer = new NetexStifLineProducer();

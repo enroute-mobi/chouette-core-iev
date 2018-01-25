@@ -6,10 +6,15 @@ import java.util.Arrays;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.JSONUtil;
+import mobi.chouette.core.CoreExceptionCode;
+import mobi.chouette.core.CoreRuntimeException;
 import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.parameters.AbstractParameter;
+import mobi.chouette.model.Organisation;
+import mobi.chouette.model.Referential;
+import mobi.chouette.model.exporter.ExportTask;
 
 @Log4j
 public class NetexStifExporterInputValidator extends AbstractInputValidator {
@@ -95,7 +100,42 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
-		// TODO Auto-generated method stub
+		if (task instanceof ExportTask) {
+			ExportTask exportTask = (ExportTask) task;
+			if (!"netex_stif".equals(exportTask.getFormat()))
+				return null;
+			Referential referential = exportTask.getReferential();
+			if (referential == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
+			Organisation organisation = referential.getOrganisation();
+			if (organisation == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential organisation_id is null");
+			NetexStifExportParameters parameter = new NetexStifExportParameters();
+			parameter.setExportId(exportTask.getId());
+			if (referential.getLineReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential line_referential_id is null");
+			parameter.setLineReferentialId(referential.getLineReferentialId());
+			if (referential.getStopAreaReferentialId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential stop_area_referential_id is null");
+			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
+			parameter.setReferencesType("lines");
+			if (referential.getId() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
+			if (referential.getMetadatas().isEmpty())
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential metadata is null");
+			if (referential.getMetadatas().get(0).getLineIds() == null)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
+			if (referential.getMetadatas().get(0).getLineIds().length == 0)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
+			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
+			parameter.setValidityPeriods(Arrays.asList(referential.getMetadatas().get(0).getPeriods()));
+			parameter.setReferentialId(referential.getId());
+			parameter.setReferentialName(referential.getName());
+			parameter.setOrganisationName(organisation.getName());
+			parameter.setOrganisationCode(organisation.getCode());
+
+			return parameter;
+		}
 		return null;
 	}
 

@@ -4,34 +4,28 @@ import java.io.IOException;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 
+import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Timetable;
-import mobi.chouette.model.type.DateRange;
 import mobi.chouette.model.type.DayTypeEnum;
 
 public class NetexCalendrierWriter extends AbstractWriter {
 
-	public static void write(Writer writer, ExportableData data) throws IOException {
-		// TODO : manage frames ID and versions
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddT00:00:00");
-		writer.write(
-				"        <netex:GeneralFrame id=\"CITYWAY:GeneralFrame:NETEX_CALENDRIER-20170214090012:LOC\" version=\"any\">\n");
-		// valid between :
-		for (DateRange period : data.getPeriods()) {
-			writer.write("            <netex:ValidBetween>\n");
-			writer.write("                <netex:FromDate>" + format.format(period.getFirst()) + "</netex:FromDate>\n");
-			writer.write("                <netex:ToDate>" + format.format(period.getLast()) + "</netex:ToDate>\n");
-			writer.write("            </netex:ValidBetween>\n");
-		}
-		writer.write("            <netex:TypeOfFrameRef ref=\"NETEX_CALENDRIER\"/>\n");
-		writer.write("            <netex:members>\n");
+
+	public static void write(Context context, Writer writer, ExportableData data) throws IOException {
+		String participantRef = OFFRE_PARTICIPANT_REF;
+		String prefix = FRAME_REF_PREFIX;
+		String lineName = ""; // TODO 
+
+		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName);
+		openGeneralFrame(writer, prefix, "NETEX_CALENDRIER", data.getValidityPeriods(), false);
 		writeDayTypes(writer, data);
 		writeDayTypeAssignments(writer, data);
 		writeOperatingPeriods(writer, data);
-		writer.write("            </netex:members>\n");
-		writer.write("        </netex:GeneralFrame>\n");
+		closeGeneralFrame(writer, false);
+		closePublicationDelivery(writer);
 
 	}
 
@@ -44,7 +38,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 				for (DayTypeEnum child : object.getDayTypes()) {
 					writer.write("                         <netex:PropertyOfDay>\n");
 					writer.write("                            <netex:DaysOfWeek>" + child.toString()
-							+ "</netex:PropertyOfDay>\n");
+							+ "</netex:DaysOfWeek>\n");
 					writer.write("                         </netex:PropertyOfDay>\n");
 
 				}
@@ -54,21 +48,20 @@ public class NetexCalendrierWriter extends AbstractWriter {
 		}
 	}
 
-	@SuppressWarnings("unused")
+	//@SuppressWarnings("unused")
 	private static void writeDayTypeAssignments(Writer writer, ExportableData data) throws IOException {
 		int rank = 1;
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddT00:00:00");
+		SimpleDateFormat format = new SimpleDateFormat(DATE_00);
 		for (Timetable object : data.getTimetables()) {
 			String prefix = object.objectIdPrefix();
-			int periodRank = 1;
-			for (Period child : object.getPeriods()) {
+			for (int periodRank = 1; periodRank <= object.getPeriods().size(); periodRank++) {
 				writer.write("                   <netex:DayTypeAssignment id=\"" + prefix + ":DayTypeAssignment:" + rank
 						+ ":LOC\" version=\"any\" order=\"0\" >\n");
 				writer.write("                      <netex:OperatingPeriodRef ref=\""
 						+ buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)
-						+ "\" version=\"any\">\n");
+						+ "\" version=\"any\"/>\n");
 				writer.write("                      <netex:DayTypeRef ref=\"" + object.getObjectId()
-						+ "\" version=\"any\">\n");
+						+ "\" version=\"any\"/>\n");
 				writer.write("                   </netex:DayTypeAssignment>\n");
 				periodRank++;
 				rank++;
@@ -78,7 +71,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 						+ ":LOC\" version=\"any\" order=\"0\" >\n");
 				writer.write("                      <netex:Date>" + format.format(child.getDate()) + "</netex:Date\n");
 				writer.write("                      <netex:DayTypeRef ref=\"" + object.getObjectId()
-						+ "\" version=\"any\">\n");
+						+ "\" version=\"any\"/>\n");
 				writer.write(
 						"                      <netex:isAvailable>" + child.getIncluded() + "</netex:isAvailable\n");
 				writer.write("                   </netex:DayTypeAssignment>\n");
@@ -89,7 +82,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 	}
 
 	private static void writeOperatingPeriods(Writer writer, ExportableData data) throws IOException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddT00:00:00");
+		SimpleDateFormat format = new SimpleDateFormat(DATE_00);
 		for (Timetable object : data.getTimetables()) {
 			int periodRank = 1;
 			for (Period child : object.getPeriods()) {

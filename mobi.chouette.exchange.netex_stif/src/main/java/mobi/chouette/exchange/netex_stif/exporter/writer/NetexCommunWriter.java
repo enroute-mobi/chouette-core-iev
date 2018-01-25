@@ -3,22 +3,23 @@ package mobi.chouette.exchange.netex_stif.exporter.writer;
 import java.io.IOException;
 import java.io.Writer;
 
+import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 import mobi.chouette.model.Footnote;
-import mobi.chouette.model.Route;
 
 public class NetexCommunWriter extends AbstractWriter {
 
-	public static void write(Writer writer, ExportableData data) throws IOException {
-		// TODO check frame id and version
-		writer.write(
-				"          <netex:GeneralFrame id=\"CITYWAY:GeneralFrame:NETEX_COMMUN-20170214090012:LOC\" version=\"any\">\n");
-		writer.write("             <netex:TypeOfFrameRef ref=\"NETEX_COMMUN\"/>\n");
-		writer.write("             <netex:members>\n");
+	public static void write(Context context, Writer writer, ExportableData data) throws IOException {
+		String participantRef = OFFRE_PARTICIPANT_REF;
+		String prefix = FRAME_REF_PREFIX;
+		String lineName = ""; // TODO
+		
+		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName);
+		openGeneralFrame(writer, prefix, "NETEX_COMMUN", null, false);
 		writeNotices(writer, data);
 		writeOrganisationalUnits(writer, data);
-		writer.write("             </netex:members>\n");
-		writer.write("          </netex:GeneralFrame>\n");
+		closeGeneralFrame(writer, false);
+		closePublicationDelivery(writer);
 		
 	}
 
@@ -37,8 +38,7 @@ public class NetexCommunWriter extends AbstractWriter {
 	}
 
 	private static void writeOrganisationalUnits(Writer writer, ExportableData data)  throws IOException {
-		// TODO Auto-generated method stub
-		
+		// TODO à ajouter selon NT60 V1.9
 	}
 
 }

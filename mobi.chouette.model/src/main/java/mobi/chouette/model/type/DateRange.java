@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.model.Timetable;
 
 /**
  * Java model for Postgresql DateRange object
@@ -67,6 +68,12 @@ public class DateRange implements Serializable {
 			}
 		}
 	}
+	/**
+	 * create an empty DateRange
+	 */
+	public DateRange() {}
+	
+	
 
 	/**
 	 * convert to Postgresql object for saving
@@ -83,6 +90,30 @@ public class DateRange implements Serializable {
 		return obj;
 	}
 
+	/**
+	 * Include DateRange into another
+	 * 
+	 * @param limit
+	 */
+	public void extendTo(DateRange limit)
+	{
+		if (first == null || first.after(limit.getFirst())) first = new Date(limit.getFirst().getTime());
+		if (last == null || last.before(limit.getLast())) last = new Date(limit.getLast().getTime());
+	}
+	/**
+	 * Include Timetable limit into DateRange
+	 * @param limit
+	 */
+	public void extendTo(Timetable limit)
+	{
+		if (limit.getStartOfPeriod() == null || limit.getEndOfPeriod() == null) return;
+		if (first == null || first.after(limit.getStartOfPeriod())) first = new Date(limit.getStartOfPeriod().getTime());
+		if (last == null || last.before(limit.getEndOfPeriod())) last = new Date(limit.getEndOfPeriod().getTime());
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
 		return "DateRange [" + format.format(first) + "," + format.format(last) + "]";

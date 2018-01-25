@@ -22,17 +22,6 @@ public class NetexStifLineProducer {
 		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 		String rootDirectory = jobData.getPathName();
 
-		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
-		String projectionType = parameters.getProjectionType();
-		if (projectionType != null && !projectionType.isEmpty()) {
-			if (!projectionType.toUpperCase().startsWith("EPSG:"))
-				projectionType = "EPSG:" + projectionType;
-		}
-		for (StopArea stopArea : collection.getStopAreas()) {
-			stopArea.toProjection(projectionType);
-		}
-		Metadata metadata = (Metadata) context.get(Constant.METADATA);
-
 		Path dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		String fileName = collection.getLine().getId() + ".xml";
 		File file = new File(dir.toFile(), fileName);
@@ -41,12 +30,6 @@ public class NetexStifLineProducer {
 		writer.writeXmlFile(collection, file);
 
 		reporter.addFileReport(context, fileName, IO_TYPE.OUTPUT);
-
-		if (metadata != null) {
-			metadata.getResources().add(
-					metadata.new Resource(fileName, NeptuneObjectPresenter.getName(collection.getLine().getNetwork()),
-							NeptuneObjectPresenter.getName(collection.getLine())));
-		}
 
 	}
 
