@@ -157,4 +157,10 @@ public class FileReport extends AbstractReport implements CheckedReport {
 		out.print(addLevel(ret.append('\n'), level).append('}'));
 	}
 
+	public void clear() {
+		errors.clear();
+		checkPointErrorKeys.clear();
+		checkPointWarningKeys.clear();
+	}
+
 }

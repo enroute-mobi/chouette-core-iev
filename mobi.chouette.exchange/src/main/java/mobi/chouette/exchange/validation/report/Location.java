@@ -328,4 +328,8 @@ public class Location extends AbstractReport {
 
 	}
 
+	public void clear() {
+		objectRefs.clear();
+	}
+
 }

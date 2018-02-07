@@ -34,6 +34,8 @@ public class NetexStifDisposeImportCommand extends AbstractDisposeImportCommand 
 
 		try {
 			super.execute(context);
+			context.remove(Constant.LINE);
+			context.remove(Constant.SCHEMA);
 			JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 			File target = new File(jobData.getPathName());
 			if (target.exists()) {

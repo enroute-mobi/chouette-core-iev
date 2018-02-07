@@ -101,6 +101,10 @@ public class MainCommand implements Command {
 			}
 
 		}
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+		if (report != null) report.clear();
+		ValidationReport vreport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
+		if (vreport != null) vreport.clear();
 		return result;
 	}
 
