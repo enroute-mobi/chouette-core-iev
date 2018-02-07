@@ -86,4 +86,8 @@ public class CheckPointReport extends AbstractReport {
 
 	}
 
+	public void clear() {
+		checkPointErrorKeys.clear();
+	}
+
 }

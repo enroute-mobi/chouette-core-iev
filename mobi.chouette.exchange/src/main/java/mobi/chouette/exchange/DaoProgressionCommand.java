@@ -147,7 +147,6 @@ public class DaoProgressionCommand implements ProgressionCommand {
 			actionResourceDAO.saveResource(actionResource);
 			addMessages(context, zipReport, actionResource,parameters.getReferentialId());
 		}
-		report.getZips().clear();
 		for (FileReport fileReport : report.getFiles()) {
 			ActionResource actionResource = actionResourceDAO.createResource(job);
 			actionResource.setType("file");
@@ -164,9 +163,6 @@ public class DaoProgressionCommand implements ProgressionCommand {
 
 			addMessages(context, fileReport, actionResource,parameters.getReferentialId());
 		}
-		report.getFiles().clear();
-
-		report.getObjects().clear();
 
 		for (ObjectCollectionReport collection : report.getCollections().values()) {
 			for (ObjectReport objectReport : collection.getObjectReports()) {
@@ -190,10 +186,10 @@ public class DaoProgressionCommand implements ProgressionCommand {
 					addMessages(context, objectReport, actionResource,parameters.getReferentialId());
 			}
 		}
-		report.getCollections().clear();
+		
+		report.clear();
 		if (valReport != null) {
-			valReport.getCheckPoints().clear();
-			valReport.getCheckPointErrors().clear();
+			valReport.clear();
 			context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 		}
 	}

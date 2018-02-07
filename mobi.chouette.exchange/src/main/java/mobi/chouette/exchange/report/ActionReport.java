@@ -266,5 +266,16 @@ public class ActionReport extends AbstractReport implements ProgressionReport, R
 		print(stream, new StringBuilder() , 1, true);
 
 	}
+
+	public void clear() {
+		zips.forEach(z -> z.clear());
+		zips.clear();	
+		files.forEach(f -> f.clear());
+		files.clear();
+		objects.values().forEach(o -> o.clear());
+		objects.clear();
+		collections.values().forEach(c -> c.clear());
+		collections.clear();
+	}
 	
 }

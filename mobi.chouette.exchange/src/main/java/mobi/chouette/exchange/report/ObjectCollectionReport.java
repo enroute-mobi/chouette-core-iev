@@ -103,4 +103,9 @@ public class ObjectCollectionReport  extends AbstractReport {
 		out.print(addLevel(ret.append('\n'), level).append('}'));
 	
 	}
+
+	public void clear() {
+		objectReports.forEach(o -> o.clear());
+		objectReports.clear();
+	}
 }
