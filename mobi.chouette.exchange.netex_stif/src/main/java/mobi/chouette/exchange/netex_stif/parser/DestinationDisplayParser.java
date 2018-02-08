@@ -11,6 +11,9 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.validator.DestinationDisplayValidator;
+import mobi.chouette.exchange.netex_stif.validator.DirectionValidator;
+import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 
 @Log4j
 public class DestinationDisplayParser implements Parser {
@@ -19,10 +22,21 @@ public class DestinationDisplayParser implements Parser {
 	public void parse(Context context) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(Constant.PARSER);
 		xpp.require(XmlPullParser.START_TAG, null, NetexStifConstant.DESTINATION_DISPLAY);
+		int columnNumber = xpp.getColumnNumber();
+		int lineNumber = xpp.getLineNumber();
 		String id = xpp.getAttributeValue(null, NetexStifConstant.ID);
-		// to be checked?
+		
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
 		DestinationDisplay destinationDisplay = factory.getDestinationDisplay(id);
+		DestinationDisplayValidator validator = (DestinationDisplayValidator) ValidatorFactory.getValidator(context,
+				DestinationDisplayValidator.class);
+		String changed = xpp.getAttributeValue(null, NetexStifConstant.CHANGED);
+		if (changed != null) {
+			destinationDisplay.setCreationTime(NetexStifUtils.getDate(changed));
+		}
+		String modification = xpp.getAttributeValue(null, NetexStifConstant.MODIFICATION);
+		validator.addModification(context, id, modification);
+		validator.checkNetexId(context, NetexStifConstant.DESTINATION_DISPLAY, id, lineNumber, columnNumber);
 		Long version = (Long)context.get(NetexStifConstant.VERSION);
 		destinationDisplay.setObjectVersion(version);
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -35,6 +49,7 @@ public class DestinationDisplayParser implements Parser {
 			}
 		}
 		destinationDisplay.setFilled(true);
+		validator.validate(context, destinationDisplay, lineNumber, columnNumber);
 		
 	}
 	

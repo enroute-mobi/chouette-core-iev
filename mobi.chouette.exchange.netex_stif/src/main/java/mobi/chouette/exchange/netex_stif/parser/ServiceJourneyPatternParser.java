@@ -55,7 +55,7 @@ public class ServiceJourneyPatternParser implements Parser {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
 				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
-				// check external reference
+				// check internal reference
 				boolean checked = validator.checkNetexRef(context, journeyPattern, NetexStifConstant.DESTINATION_DISPLAY_REF, ref,
 						lineNumber, columnNumber);
 				if (checked)

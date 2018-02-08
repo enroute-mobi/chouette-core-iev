@@ -151,7 +151,8 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	 * <b>Criticité</b> : error
 	 * <p>
 	 * 
-	 * à redéfinir : controler la présence de &lt;pointsInSequence&gt;
+	 * note, la xsd surveille que pointsInJourneyPattern contient au moins 2 items, mais ceux-ci peuvent être de différente nature : 
+	 * TimingPoint par exemple
 	 *
 	 * @param context
 	 * @return
@@ -159,7 +160,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	public boolean check2NeTExSTIFServiceJourneyPattern2(Context context, JourneyPattern journeyPattern, int lineNumber,
 			int columnNumber) {
 		boolean result = true;
-		result = journeyPattern.getStopPoints() != null && !journeyPattern.getStopPoints().isEmpty();
+		result = journeyPattern.getStopPoints() != null && journeyPattern.getStopPoints().size() > 1;
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);

@@ -29,6 +29,7 @@ public class DayTypeParser implements Parser {
 		DayTypeValidator validator = (DayTypeValidator) ValidatorFactory.getValidator(context, DayTypeValidator.class);
 		String id = xpp.getAttributeValue(null, NetexStifConstant.ID);
 		Timetable timeTable = ObjectFactory.getTimetable(referential, id);
+		validator.checkNetexId(context, NetexStifConstant.DAY_TYPE, id, lineNumber, columnNumber);
 		Long version = (Long) context.get(NetexStifConstant.VERSION);
 		timeTable.setObjectVersion(version);
 		String changed = xpp.getAttributeValue(null, NetexStifConstant.CHANGED);
