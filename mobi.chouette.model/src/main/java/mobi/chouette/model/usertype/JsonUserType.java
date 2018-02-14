@@ -69,7 +69,7 @@ public class JsonUserType implements UserType {
 				}
 			}
 		}
-		return null;
+		return new JSONObject();
 	}
 
 	@Override
