@@ -153,26 +153,11 @@ public abstract class AbstractValidator {
 
 	protected static Context getObjectContext(Context context, String localContextName, String objectId) {
 		Context validationContext = (Context) context.computeIfAbsent(Constant.VALIDATION_CONTEXT, k -> new Context());
-		// if (validationContext == null) {
-		// validationContext = new Context();
-		// context.put(Constant.VALIDATION_CONTEXT, validationContext);
-		// }
 
 		Context localContext = (Context) validationContext.computeIfAbsent(localContextName, k -> new Context());
-		// Context localContext = (Context)
-		// validationContext.get(localContextName);
-		// if (localContext == null) {
-		// localContext = new Context();
-		// validationContext.put(localContextName, localContext);
-		// }
 
 		Context objectContext = (Context) localContext.computeIfAbsent(objectId, k -> new Context());
-		// Context objectContext = (Context) localContext.get(objectId);
-		//
-		// if (objectContext == null) {
-		// objectContext = new Context();
-		// localContext.put(objectId, objectContext);
-		// }
+
 		return objectContext;
 
 	}
@@ -185,18 +170,6 @@ public abstract class AbstractValidator {
 
 	}
 
-	// public void addXmlId(Context context, String objectId, String xmlId) {
-	// Context objectContext = getObjectContext(context, getLocalContext(),
-	// objectId);
-	// objectContext.put(ID, xmlId);
-	// }
-	//
-	// protected String getXmlId(Context context, String objectId) {
-	// Context objectContext = getObjectContext(context, getLocalContext(),
-	// objectId);
-	// return (String) objectContext.get(ID);
-	// }
-	//
 	/**
 	 * <b>Titre</b> :[Netex] Contrôle de la syntaxe des identifiants
 	 * <p>

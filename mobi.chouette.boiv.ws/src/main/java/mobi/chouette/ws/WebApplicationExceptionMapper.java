@@ -7,12 +7,11 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
-import mobi.chouette.service.RequestExceptionCode;
-import mobi.chouette.service.ServiceExceptionCode;
-
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import mobi.chouette.service.RequestExceptionCode;
+import mobi.chouette.service.ServiceExceptionCode;
 
 public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplicationException> {
 

@@ -72,7 +72,7 @@
 
 	@Test(groups = { "2293" }, testName = "2293-00", description = "[Netex] Contrôle de la syntaxe des identifiants", priority=12)
  		public void verifyCard2293_00() throws Exception {
-  			doImport("OFFRE_SNTYO_2293-00.zip","NOK",1,8,6 ,"offre_C00163_01.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4","offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7");
+  			doImport("OFFRE_SNTYO_2293-00.zip","NOK",1,8,6 ,"calendriers.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4","offre_C00163_01.xml:ERROR:2-NeTExSTIF-4:2_netexstif_4","offre_C00163_01.xml:ERROR:2-NeTExSTIF-7:2_netexstif_7");
 		}
 
 	@Test(groups = { "2294" }, testName = "2294-00", description = "[Netex] Contrôle de l'attribut 'changed'", priority=13)

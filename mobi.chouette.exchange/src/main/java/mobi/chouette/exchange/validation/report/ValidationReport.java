@@ -146,4 +146,11 @@ public class ValidationReport extends AbstractReport implements Report {
 			}
 		});
 	}
+
+	public void clear() {
+		checkPoints.forEach(c -> c.clear());
+		checkPoints.clear();
+		checkPointErrors.forEach(c -> c.clear());
+		checkPointErrors.clear();
+	}
 }

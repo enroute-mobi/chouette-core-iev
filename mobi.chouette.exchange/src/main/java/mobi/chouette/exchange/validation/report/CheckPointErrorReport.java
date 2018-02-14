@@ -103,4 +103,10 @@ public class CheckPointErrorReport extends AbstractReport {
 		out.print(addLevel(ret.append('\n'), level).append('}'));
 
 	}
+
+	public void clear() {
+		targets.forEach(l -> l.clear());
+		targets.clear();
+		if (source != null) source.clear();
+	}
 }

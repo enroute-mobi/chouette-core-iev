@@ -77,6 +77,13 @@ public class NetexStifValidationCommand implements Command {
 			log.error("Netex Stif validation failed ", e);
 			throw e;
 		} finally {
+			// clear validation context
+			Context validation = (Context) context.get(Constant.VALIDATION_CONTEXT);
+			if (validation != null)
+			{
+				validation.values().stream().filter(o -> o instanceof Context).forEach(o -> ((Context) o).clear());
+				validation.clear();
+			}
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
 		if (result == Constant.ERROR) {
