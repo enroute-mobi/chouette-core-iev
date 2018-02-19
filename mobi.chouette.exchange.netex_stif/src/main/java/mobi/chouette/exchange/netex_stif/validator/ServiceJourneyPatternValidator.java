@@ -1,5 +1,6 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,10 +8,10 @@ import java.util.Map;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
+import mobi.chouette.exchange.netex_stif.model.StopPointInJourneyPattern;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.JourneyPattern;
-import mobi.chouette.model.StopPoint;
 
 public class ServiceJourneyPatternValidator extends AbstractValidator {
 
@@ -33,10 +34,11 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	}
 
 	public boolean validate(Context context, JourneyPattern journeyPattern, int lineNumber, int columnNumber) {
-		boolean result1 = checkNetexId(context, NetexStifConstant.SERVICE_JOURNEY_PATTERN, journeyPattern.getObjectId(), lineNumber,
-				columnNumber);
+		boolean result1 = checkNetexId(context, NetexStifConstant.SERVICE_JOURNEY_PATTERN, journeyPattern.getObjectId(),
+				lineNumber, columnNumber);
 		checkChanged(context, NetexStifConstant.SERVICE_JOURNEY_PATTERN, journeyPattern, lineNumber, columnNumber);
-		boolean result2 = checkModification(context, NetexStifConstant.SERVICE_JOURNEY_PATTERN, journeyPattern, lineNumber, columnNumber);
+		boolean result2 = checkModification(context, NetexStifConstant.SERVICE_JOURNEY_PATTERN, journeyPattern,
+				lineNumber, columnNumber);
 		boolean result3 = check2NeTExSTIFServiceJourneyPattern1(context, journeyPattern, lineNumber, columnNumber);
 		result3 &= check2NeTExSTIFServiceJourneyPattern2(context, journeyPattern, lineNumber, columnNumber);
 		result3 &= check2NeTExSTIFServiceJourneyPattern3(context, journeyPattern, lineNumber, columnNumber);
@@ -50,36 +52,51 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 
 	}
 
+	/**
+	 * preserve StopPointInJourneyPattern data for test
+	 * 2-NeTExSTIF-ServiceJourneyPattern-4
+	 * 
+	 * @param context
+	 * @param objectId
+	 * @param spijp
+	 */
+	@SuppressWarnings("unchecked")
+	public void addStopPointInJourneyPattern(Context context, String objectId, StopPointInJourneyPattern spijp) {
+		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
+		List<StopPointInJourneyPattern> list = (List<StopPointInJourneyPattern>) objectContext.computeIfAbsent(
+				NetexStifConstant.STOP_POINT_IN_JOURNEY_PATTERN, l -> new ArrayList<StopPointInJourneyPattern>());
+		list.add(spijp);
+	}
+
+	/**
+	 * preserve StopPoint order for test 2-NeTExSTIF-Route-3
+	 * 
+	 * @param context
+	 * @param objectId
+	 * @param order
+	 * @param spId
+	 */
 	@SuppressWarnings("unchecked")
 	public void addStopPointOrder(Context context, String objectId, Integer order, String spId) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		Map<Integer, String> map = (Map<Integer, String>) objectContext.get(NetexStifConstant.ORDER);
-		if (map == null) {
-			map = new HashMap<Integer, String>();
-			objectContext.put(NetexStifConstant.ORDER, map);
-		}
-		map.put( order,spId);
+		Map<Integer, String> map = (Map<Integer, String>) objectContext.computeIfAbsent(NetexStifConstant.ORDER,
+				m -> new HashMap<Integer, String>());
+		map.put(order, spId);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void addStopPointAlighting(Context context, String objectId, Integer position, Boolean alighting) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		Map<Integer, Boolean> map = (Map<Integer, Boolean>) objectContext.get(NetexStifConstant.FOR_ALIGHTING);
-		if (map == null) {
-			map = new HashMap<Integer, Boolean>();
-			objectContext.put(NetexStifConstant.FOR_ALIGHTING, map);
-		}
+		Map<Integer, Boolean> map = (Map<Integer, Boolean>) objectContext
+				.computeIfAbsent(NetexStifConstant.FOR_ALIGHTING, m -> new HashMap<Integer, Boolean>());
 		map.put(position, alighting);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void addStopPointBoarding(Context context, String objectId, Integer position, Boolean boarding) {
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, objectId);
-		Map<Integer, Boolean> map = (Map<Integer, Boolean>) objectContext.get(NetexStifConstant.FOR_BOARDING);
-		if (map == null) {
-			map = new HashMap<Integer, Boolean>();
-			objectContext.put(NetexStifConstant.FOR_BOARDING, map);
-		}
+		Map<Integer, Boolean> map = (Map<Integer, Boolean>) objectContext
+				.computeIfAbsent(NetexStifConstant.FOR_BOARDING, m -> new HashMap<Integer, Boolean>());
 		map.put(position, boarding);
 	}
 
@@ -112,8 +129,6 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	 */
 	public boolean check2NeTExSTIFServiceJourneyPattern1(Context context, JourneyPattern journeyPattern, int lineNumber,
 			int columnNumber) {
-		// 2-NeTExSTIF-ServiceJourneyPattern-1 : [Netex] Contrôle de l'objet
-		// ServiceJourneyPattern : RouteRef
 		boolean result = true;
 		result = journeyPattern.getRoute() != null;
 		if (!result) {
@@ -121,7 +136,8 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(journeyPattern.getObjectId());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_1, location);
+			validationReporter.addCheckPointReportError(context, null,
+					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_1, location);
 		}
 
 		return result;
@@ -151,8 +167,9 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	 * <b>Criticité</b> : error
 	 * <p>
 	 * 
-	 * note, la xsd surveille que pointsInJourneyPattern contient au moins 2 items, mais ceux-ci peuvent être de différente nature : 
-	 * TimingPoint par exemple
+	 * note, la xsd surveille que pointsInJourneyPattern contient au moins 2
+	 * items, mais ceux-ci peuvent être de différente nature : TimingPoint par
+	 * exemple
 	 *
 	 * @param context
 	 * @return
@@ -166,7 +183,8 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(journeyPattern.getObjectId());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_2, location);
+			validationReporter.addCheckPointReportError(context, null,
+					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_2, location);
 		}
 		return result;
 	}
@@ -185,16 +203,14 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
-	 * <b>Prédicat</b> : L'objet ServiceJourneyPattern doit avoir son attribut 
-	 *                ServiceJourneyPatternType renseigné et à la valeur passenger.
+	 * <b>Prédicat</b> : L'objet ServiceJourneyPattern doit avoir son attribut
+	 * ServiceJourneyPatternType renseigné et à la valeur passenger.
 	 * <p>
-	 * <b>Message</b> : 
-	 * {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
+	 * <b>Message</b> : {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet
 	 * ServiceJourneyPattern d'identifiant {objectId} n'a pas de valeur pour
-	 * l'attribut ServiceJourneyPatternType
-	 * <br>
-	 * {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet ServiceJourneyPattern 
-	 * d'identifiant {objectId} a une valeur interdite {valeur} pour l'attribut 
+	 * l'attribut ServiceJourneyPatternType <br>
+	 * {fichier}-Ligne {ligne}-Colonne {Colonne} : l'objet ServiceJourneyPattern
+	 * d'identifiant {objectId} a une valeur interdite {valeur} pour l'attribut
 	 * ServiceJourneyPatternType; différente de 'passenger'
 	 * <p>
 	 * <b>Criticité</b> : error
@@ -217,10 +233,12 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(journeyPattern.getObjectId());
 			if (patternType == null || patternType.isEmpty())
-			    validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "1", location);
+				validationReporter.addCheckPointReportError(context, null,
+						NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "1", location);
 			else
-				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "2", location, patternType);
-		
+				validationReporter.addCheckPointReportError(context, null,
+						NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "2", location, patternType);
+
 		}
 		return result;
 	}
@@ -253,24 +271,41 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 	 * @param context
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean check2NeTExSTIFServiceJourneyPattern4(Context context, JourneyPattern journeyPattern, int lineNumber,
 			int columnNumber) {
 		boolean result = true;
 		int lastOrder = -1;
-		List<StopPoint> stopPoints = journeyPattern.getStopPoints();
-		for (StopPoint stopPoint : stopPoints) {
-			if (stopPoint.getPosition() <= lastOrder) {
-				result = false;
-				break;
+
+		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, journeyPattern.getObjectId());
+		List<StopPointInJourneyPattern> list = (List<StopPointInJourneyPattern>) objectContext
+				.get(NetexStifConstant.STOP_POINT_IN_JOURNEY_PATTERN);
+
+		if (list != null) {
+			for (StopPointInJourneyPattern stopPoint : list) {
+				if (stopPoint.getOrder() <= lastOrder) {
+					result = false;
+					break;
+				}
+				lastOrder = stopPoint.getOrder();
 			}
-			lastOrder = stopPoint.getPosition();
 		}
+		// List<StopPoint> stopPoints = journeyPattern.getStopPoints();
+		// for (StopPoint stopPoint : stopPoints) {
+		// if (stopPoint.getPosition() <= lastOrder) {
+		// result = false;
+		// break;
+		// }
+		// lastOrder = stopPoint.getPosition();
+		// }
+
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(journeyPattern.getObjectId());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4, location);
+			validationReporter.addCheckPointReportError(context, null,
+					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4, location);
 		}
 		return result;
 	}

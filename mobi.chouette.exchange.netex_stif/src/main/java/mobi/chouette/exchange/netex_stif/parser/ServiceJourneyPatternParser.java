@@ -11,6 +11,7 @@ import mobi.chouette.exchange.importer.ParserFactory;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.model.StopPointInJourneyPattern;
 import mobi.chouette.exchange.netex_stif.validator.ServiceJourneyPatternValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.JourneyPattern;
@@ -104,6 +105,13 @@ public class ServiceJourneyPatternParser implements Parser {
 		}
 	}
 
+	/**
+	 * parse a StopPointInJourneyPattern block
+	 * 
+	 * @param context
+	 * @param journeyPattern
+	 * @throws Exception
+	 */
 	public void parseStopPointInJourneyPattern(Context context, JourneyPattern journeyPattern) throws Exception {
 		XmlPullParser xpp = (XmlPullParser) context.get(Constant.PARSER);
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
@@ -114,7 +122,10 @@ public class ServiceJourneyPatternParser implements Parser {
 		int lineNumber = xpp.getLineNumber();
 		Long version = (Long) context.get(NetexStifConstant.VERSION);
 		String scheduledStopPointId = null;
+		String id = xpp.getAttributeValue(null,NetexStifConstant.ID);
 		String order = xpp.getAttributeValue(null, NetexStifConstant.ORDER);
+		StopPointInJourneyPattern spijp = new StopPointInJourneyPattern(id, Integer.valueOf(order));
+		validator.addStopPointInJourneyPattern(context, journeyPattern.getObjectId(), spijp);
 		Boolean forAlighting = null;
 		Boolean forBoarding = null;
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
