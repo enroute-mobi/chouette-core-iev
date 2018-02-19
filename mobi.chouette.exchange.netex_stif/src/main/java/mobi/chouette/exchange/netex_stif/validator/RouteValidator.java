@@ -57,12 +57,6 @@ public class RouteValidator extends AbstractValidator {
 			check2NeTExSTIFRoute2_1(context, route, lineNumber, columnNumber);
 		if (result3)
 			check2NeTExSTIFRoute2_2(context, route, lineNumber, columnNumber);
-		// must be done after ServiceJourneyPatterns loaded
-		// if (result3)
-		// result3 = check2NeTExSTIFRoute3(context, route, lineNumber,
-		// columnNumber);
-		// if (result3)
-		// check2NeTExSTIFRoute4(context, route, lineNumber, columnNumber);
 		return result2 && result3;
 
 	}

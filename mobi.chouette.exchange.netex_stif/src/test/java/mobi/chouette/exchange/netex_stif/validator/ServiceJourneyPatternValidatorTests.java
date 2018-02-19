@@ -1,5 +1,7 @@
 package mobi.chouette.exchange.netex_stif.validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.naming.InitialContext;
@@ -17,6 +19,7 @@ import mobi.chouette.exchange.netex_stif.JobDataImpl;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.importer.NetexStifImportParameters;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
+import mobi.chouette.exchange.netex_stif.model.StopPointInJourneyPattern;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
@@ -140,15 +143,19 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 				ServiceJourneyPatternValidator.class);
 		JourneyPattern jp = new JourneyPattern();
 		jp.setObjectId("CITYWAY:ServiceJourneyPattern:1234:LOC");
+		List<StopPointInJourneyPattern> spjps = new ArrayList<>();
 		for (int i = 0; i < 100; ++i){
 			StopPoint p = new StopPoint();
 			p.setObjectId("CITYWAY:StopPoint:"+i+":LOC");
 			p.setPosition(i);
 			jp.addStopPoint(p);
+			StopPointInJourneyPattern spjp = new StopPointInJourneyPattern("CITYWAY:StopPointInJourneyPattern:"+i+":LOC", Integer.valueOf(i));
+			validator.addStopPointInJourneyPattern(context, jp.getObjectId(), spjp);
+			spjps.add(spjp);
 		}
 		boolean res = validator.check2NeTExSTIFServiceJourneyPattern4(context, jp, 1, 2);
 		Assert.assertTrue(res, "validation should be ok");
-		jp.getStopPoints().get(50).setPosition(3);
+		spjps.get(50).setOrder(3);
 		res = validator.check2NeTExSTIFServiceJourneyPattern4(context, jp, 1, 2);
 		Assert.assertFalse(res, "validation should be nok");
 		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4,
@@ -157,16 +164,25 @@ public class ServiceJourneyPatternValidatorTests extends AbstractTest {
 	    validator = (ServiceJourneyPatternValidator) ValidatorFactory.getValidator(context,
 				ServiceJourneyPatternValidator.class);
 		jp = new JourneyPattern();
+		spjps.clear();
 		jp.setObjectId("CITYWAY:ServiceJourneyPattern:1234:LOC");
 		for (int i = 0; i < 100; ++i){
 			StopPoint p = new StopPoint();
 			p.setObjectId("CITYWAY:StopPoint:"+i+":LOC");
 			p.setPosition(i);
-			i++;
 			jp.addStopPoint(p);
+			StopPointInJourneyPattern spjp = new StopPointInJourneyPattern("CITYWAY:StopPointInJourneyPattern:"+i+":LOC", Integer.valueOf(i));
+			validator.addStopPointInJourneyPattern(context, jp.getObjectId(), spjp);
+			spjps.add(spjp);
+			i++;
 		}
 		res = validator.check2NeTExSTIFServiceJourneyPattern4(context, jp, 1, 2);
 		Assert.assertTrue(res, "validation should be ok");
+		spjps.get(2).setOrder(2);
+		res = validator.check2NeTExSTIFServiceJourneyPattern4(context, jp, 1, 2);
+		Assert.assertFalse(res, "validation should be nok");
+		checkReports(context, "offre_xxx.xml", NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4,
+				"2_netexstif_servicejourneypattern_4", null, FILE_STATE.ERROR);
 	}
 		
 		
