@@ -49,7 +49,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@Test(groups = { "journey-pattern" }, description = "3_JourneyPattern_2", priority = 111)
-	public void verifyTest_3_JourneyPattern_1() throws Exception {
+	public void verifyTest_3_JourneyPattern_2() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_JourneyPattern_2 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();

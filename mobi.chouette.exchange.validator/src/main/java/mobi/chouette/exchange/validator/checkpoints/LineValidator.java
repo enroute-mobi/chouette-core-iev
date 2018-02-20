@@ -124,7 +124,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 						b.append(",");
 					}
 					b.append("[");
-					b.append(sp.getObjectId());
+					b.append(sp.getStopAreaId());
 					b.append("/fa:");
 					b.append(sp.getForAlighting());
 					b.append("/fb:");
