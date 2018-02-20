@@ -23,12 +23,10 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.validator.ValidateParameters;
-import mobi.chouette.exchange.validator.checkpoints.CheckPointConstant;
-import mobi.chouette.exchange.validator.checkpoints.CheckpointParameters;
-import mobi.chouette.exchange.validator.checkpoints.LineValidator;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
 
 @Log4j
@@ -125,6 +123,22 @@ public class LineValidatorTests extends AbstractTestValidation {
 			utx.rollback();
 		}
 
+	}
+	
+	private List<StopPoint> cloneList(List<StopPoint> source)
+	{
+		List<StopPoint> result= new ArrayList<>();
+		
+		for (StopPoint stop : source) {
+			StopPoint copy = new StopPoint();
+			copy.setObjectId(stop.getObjectId()+"COP");
+			copy.setForAlighting(stop.getForAlighting());
+			copy.setForBoarding(stop.getForBoarding());
+			copy.setStopAreaId(stop.getStopAreaId());
+			result.add(copy);
+		}
+		
+		return result;
 	}
 
 	/**
