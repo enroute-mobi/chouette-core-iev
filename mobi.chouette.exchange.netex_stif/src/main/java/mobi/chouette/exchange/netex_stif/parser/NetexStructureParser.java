@@ -1,11 +1,8 @@
 package mobi.chouette.exchange.netex_stif.parser;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.hsqldb.jdbc.jdbcBlob;
 import org.xmlpull.v1.XmlPullParser;
 
 import lombok.extern.log4j.Log4j;
@@ -20,7 +17,6 @@ import mobi.chouette.exchange.netex_stif.model.Direction;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Route;
-import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
@@ -56,12 +52,6 @@ public class NetexStructureParser implements Parser {
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		for (Route r : referential.getRoutes().values()) {
 			r.getStopPoints().sort((o1,o2) -> o1.getPosition() - o2.getPosition());
-//			Collections.sort(r.getStopPoints(), new Comparator<StopPoint>() {
-//				@Override
-//				public int compare(StopPoint o1, StopPoint o2) {
-//					return o1.getPosition() - o2.getPosition();
-//				}
-//			});
 			for (JourneyPattern jp : r.getJourneyPatterns())
 			{
 				ChouetteModelUtil.refreshDepartureArrivals(jp);

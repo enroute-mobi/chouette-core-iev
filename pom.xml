@@ -285,6 +285,7 @@
 				<version>0.7.9</version>
 				<configuration>
 					<append>true</append>
+					<skip>${skipTests}</skip>
 				</configuration>
 				<executions>
 					<execution>

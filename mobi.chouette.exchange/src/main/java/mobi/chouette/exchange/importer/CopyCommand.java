@@ -44,6 +44,11 @@ public class CopyCommand implements Command {
 	@Override
 	public boolean execute(Context context) throws Exception {
 
+		if (!context.containsKey(Constant.BUFFER))
+		{
+			log.info("no data to save");
+			return Constant.SUCCESS;
+		}
 		int maxCopy = 1;
 
 		boolean result = Constant.ERROR;
