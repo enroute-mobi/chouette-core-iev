@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.netex_stif.importer;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import javax.transaction.UserTransaction;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -202,12 +204,17 @@ public class NetexStifImportTests extends Arquillian  {
 
 	}
 
-	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file", priority = 101)
+	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file", priority = 100)
 	public void verifyImportLine() throws Exception {
-		verifyImportLine("OFFRE_TRANSDEV_20170301122517.zip");
+		verifyImportLine("OFFRE_TRANSDEV_20170301122517.zip",4);
 	}
 
-	public void verifyImportLine(String zipFile) throws Exception {
+	@Test(groups = { "ImportLine" }, description = "Import Plugin should import file with empty line", priority = 101)
+	public void verifyImportLineEmpty() throws Exception {
+		verifyImportLine("OFFRE_TRANSDEV_20170301122517_empty.zip",2);
+	}
+
+	public void verifyImportLine(String zipFile, int routeCount) throws Exception {
 		Context context = initImportContext();
 		context.put(Constant.REFERENTIAL, new Referential());
 		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
@@ -235,7 +242,8 @@ public class NetexStifImportTests extends Arquillian  {
 		// Line line = lineDao.findByObjectId("");
 
 		List<Route> routes = routeDao.findAll();
-		Assert.assertEquals(routes.size(), 4, "Routes");
+		Assert.assertEquals(routes.size(), routeCount, "Routes");
+		deleteJson();
 		buidAndSaveJson();
 		verifyFromJson();
 		// JSONWriter writer = new JSONWriter(w);
@@ -247,6 +255,17 @@ public class NetexStifImportTests extends Arquillian  {
 
 		utx.rollback();
 
+	}
+
+	private void deleteJson() {
+		File dir = new File("/tmp");
+		FileFilter fileFilter = new WildcardFileFilter("offer*.json");
+		
+		for (File file : dir.listFiles(fileFilter)) {
+			if (file.exists()) file.delete();
+		}
+		count = 0;
+		
 	}
 
 	@Test(groups = { "ImportBadFiles" }, description = "Import invalid Zip format", priority = 102)
@@ -324,7 +343,7 @@ public class NetexStifImportTests extends Arquillian  {
 
 	}
 
-	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without offer", priority = 105)
+	@Test(groups = { "ImportBadFiles" }, description = "Import Zip without offer", priority = 104)
 	public void verifyImportNoOfferZip() throws Exception {
 		String zipFile = "nooffer.zip";
 		Context context = initImportContext();
@@ -448,7 +467,7 @@ public class NetexStifImportTests extends Arquillian  {
 		Assert.assertEquals(sp.getRoute().getObjectId(), jsp.getString("routeId"));
 	}
 
-	static int count = 0;
+	private int count = 0;
 
 	private void buidAndSaveJson() throws JSONException, FileNotFoundException {
 		JSONObject jsonObject = new JSONObject();

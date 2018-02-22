@@ -57,85 +57,32 @@ public class RouteRegisterCommand implements Command {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
-        // save has been abandoned
+		// save has been abandoned
 		AbstractImportParameter parameters = (AbstractImportParameter) context.get(Constant.CONFIGURATION);
-		if (parameters.isNoSave()) return false;
+		if (parameters.isNoSave())
+			return false;
 
 		if (!context.containsKey(Constant.OPTIMIZED)) {
 			context.put(Constant.OPTIMIZED, Boolean.TRUE);
 		}
+		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+
+		if (referential.getRoutes().isEmpty()) {
+			log.info("no data to save");
+			return Constant.SUCCESS;
+		}
 		Referential cache = new Referential();
 		context.put(Constant.CACHE, cache);
 
-		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		boolean optimized = (Boolean) context.get(Constant.OPTIMIZED);
 		optimiser.initialize(cache, referential);
-		
-		for (Route newValue : referential.getRoutes().values())
-		{
+
+		for (Route newValue : referential.getRoutes().values()) {
 			Route oldValue = cache.getRoutes().get(newValue.getObjectId());
-		    routeUpdater.update(context, oldValue, newValue);
-		    routeDAO.create(oldValue);
+			routeUpdater.update(context, oldValue, newValue);
+			routeDAO.create(oldValue);
 		}
 
-//		List<VjasLite> vjasForCopy = new ArrayList<>();
-//		
-//		Map<String, Timetable> timetables = referential.getTimetables();
-//		for (Timetable timetable : timetables.values()) {
-//			// if (timetable.getId() != null) {
-//				Timetable saved = timetableDAO.findByObjectId(timetable.getObjectId());
-//				if (saved != null) {
-//					// log.info("timetable " + timetable.getObjectId() + " already saved ");
-//					for (VehicleJourney vj : timetable.getVehicleJourneys()) {
-//						vj.getTimetables().remove(timetable);
-//						vj.getTimetables().add(saved);
-//					}
-//				// }
-//			} else {
-//				ChecksumUtil.checksum(context, timetable);
-//			}
-//		}
-//		Map<String, Route> routes = referential.getRoutes();
-//		Iterator<Route> iterator = routes.values().iterator();
-//		while (iterator.hasNext()) {
-//			Route route = iterator.next();
-//			for (JourneyPattern jp : route.getJourneyPatterns()) {
-//				if (jp.getStopPoints().size() > 0) {
-//					jp.setDepartureStopPoint(jp.getStopPoints().get(0));
-//					jp.setArrivalStopPoint(jp.getStopPoints().get(jp.getStopPoints().size() - 1));
-//				}
-//				for (VehicleJourney vj : jp.getVehicleJourneys()) {
-//					for (VehicleJourneyAtStop vjas : vj.getVehicleJourneyAtStops()) {
-//						ChecksumUtil.checksum(context, vjas);
-//					}
-//					for (Footnote note : vj.getFootnotes()) {
-//						if (note.getChecksum() == null)
-//							ChecksumUtil.checksum(context, note);
-//					}
-//					ChecksumUtil.checksum(context, vj);
-//					if (optimized)
-//					{
-//						List<VehicleJourneyAtStop> vjass = new ArrayList<>(vj.getVehicleJourneyAtStops());
-//						for (VehicleJourneyAtStop vjas: vjass) {
-//							vjasForCopy.add(new VjasLite(vjas));
-//							// detach passing time from saved model
-//							vjas.setVehicleJourney(null);
-//							vjas.setStopPoint(null);
-//						}
-//						vjass.clear();
-//					}
-//				}
-//				ChecksumUtil.checksum(context, jp);
-//			}
-//			for (RoutingConstraint rc : route.getRoutingConstraints()) {
-//				if (rc.getChecksum() == null)
-//					ChecksumUtil.checksum(context, rc);
-//			}
-//			ChecksumUtil.checksum(context, route);
-//			
-//			routeDAO.create(cloneRoute(cache,route));
-//			routeDAO.flush();
-//		}
 		Map<String, RoutingConstraint> routingConstraints = referential.getRoutingConstraints();
 		Iterator<RoutingConstraint> iterator2 = routingConstraints.values().iterator();
 		while (iterator2.hasNext()) {
@@ -152,25 +99,21 @@ public class RouteRegisterCommand implements Command {
 			routingConstraintDAO.update(routingConstraint);
 			routingConstraintDAO.flush();
 		}
-		
-		if (optimized)
-		{
+
+		if (optimized) {
 			// prepare copy for saved vjas
 			StringBuilder buffer = new StringBuilder(1024);
-			// final List<String> list = new ArrayList<>(referential.getVehicleJourneys().keySet());
 			for (VehicleJourney item : referential.getVehicleJourneys().values()) {
 				VehicleJourney vehicleJourney = cache.getVehicleJourneys().get(item.getObjectId());
 
 				List<VehicleJourneyAtStop> vehicleJourneyAtStops = item.getVehicleJourneyAtStops();
 				for (VehicleJourneyAtStop vehicleJourneyAtStop : vehicleJourneyAtStops) {
 
-					StopPoint stopPoint = cache.getStopPoints().get(
-							vehicleJourneyAtStop.getStopPoint().getObjectId());
+					StopPoint stopPoint = cache.getStopPoints().get(vehicleJourneyAtStop.getStopPoint().getObjectId());
 
 					write(buffer, vehicleJourney, stopPoint, vehicleJourneyAtStop);
 				}
 			}
-			// vehicleJourneyDAO.deleteChildren(list);
 			context.put(Constant.BUFFER, buffer.toString());
 			// log.warn(context.get(Constant.BUFFER));
 		}
@@ -178,9 +121,9 @@ public class RouteRegisterCommand implements Command {
 		return true;
 	}
 
-	protected void write(StringBuilder buffer,VehicleJourney vehicleJourney,StopPoint stopPoint,
+	protected void write(StringBuilder buffer, VehicleJourney vehicleJourney, StopPoint stopPoint,
 			VehicleJourneyAtStop vehicleJourneyAtStop) throws IOException {
-		
+
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		buffer.append(vehicleJourney.getId().toString());
 		buffer.append(Constant.COPY_SEP);
@@ -207,7 +150,6 @@ public class RouteRegisterCommand implements Command {
 		buffer.append('\n');
 
 	}
-	
 
 	public static class DefaultCommandFactory extends CommandFactory {
 

@@ -35,16 +35,9 @@ public class MainCommand implements Command {
 	public boolean execute(Context context) throws Exception {
 		boolean result = false;
 
-		// Long id = (Long) context.get(JOB_ID);
-		// JobService jobService = jobManager.getJobService(id);
 		JobService jobService = (JobService) context.get(Constant.JOB_DATA);
 		try {
-			// set job status to started
-			// jobManager.start(jobService);
 			context.put(Constant.CONFIGURATION, jobService.getActionParameter());
-//			ValidationParameters validationParameters = jobService.getValidationParameter();
-//			if (validationParameters != null)
-//			   context.put(VALIDATION, validationParameters);
 			context.put(Constant.REPORT, new ActionReport());
 			context.put(Constant.VALIDATION_REPORT, new ValidationReport());
 

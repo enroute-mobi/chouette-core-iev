@@ -375,7 +375,7 @@ public class JobServiceManager {
 		task.setStatus(jobService.getStatus().name().toLowerCase());
 		task.setUpdatedAt(new Timestamp(jobService.getUpdatedAt().getTime()));
 		task.setStartedAt(new Timestamp(jobService.getStartedAt().getTime()));
-		task.setCurrentStepId("Initialization");
+		task.setCurrentStepId("INITIALISATION");
 		task.setCurrentStepProgress(0.);
 		actionDAO.update(task);
 	}
@@ -459,7 +459,7 @@ public class JobServiceManager {
 				break;
 			case exporter:
 				// urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO
-		        urlName="";																								// add
+		      urlName="";																								// add
 																													// file
 																													// name
 																													// ?

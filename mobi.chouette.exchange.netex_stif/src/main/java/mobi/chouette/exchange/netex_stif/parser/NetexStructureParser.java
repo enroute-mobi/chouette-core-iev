@@ -52,12 +52,6 @@ public class NetexStructureParser implements Parser {
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		for (Route r : referential.getRoutes().values()) {
 			r.getStopPoints().sort((o1,o2) -> o1.getPosition() - o2.getPosition());
-//			Collections.sort(r.getStopPoints(), new Comparator<StopPoint>() {
-//				@Override
-//				public int compare(StopPoint o1, StopPoint o2) {
-//					return o1.getPosition() - o2.getPosition();
-//				}
-//			});
 			for (JourneyPattern jp : r.getJourneyPatterns())
 			{
 				ChouetteModelUtil.refreshDepartureArrivals(jp);
