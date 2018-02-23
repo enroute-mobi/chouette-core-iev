@@ -112,7 +112,7 @@ public class RouteValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_1, location, "" + wayback);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_1, NetexCheckPoints.L2_NeTExSTIF_Route_1,location, "" + wayback);
 		}
 		return result;
 	}
@@ -176,7 +176,7 @@ public class RouteValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_2, "1", location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_2,NetexCheckPoints.L2_NeTExSTIF_Route_2, "1", location,
 					route.getOppositeRoute().getObjectId());
 		}
 
@@ -208,7 +208,7 @@ public class RouteValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2", location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_2,NetexCheckPoints.L2_NeTExSTIF_Route_2, "2", location,
 					route.getOppositeRoute().getObjectId());
 		}
 
@@ -281,7 +281,7 @@ public class RouteValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_3, location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_3,NetexCheckPoints.L2_NeTExSTIF_Route_3, location,
 					stopPointOnError.getPosition().toString());
 		}
 
@@ -403,7 +403,7 @@ public class RouteValidator extends AbstractValidator {
 				refId = stopArea.getObjectId();
 			}
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_4, location, refId);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Route_4,NetexCheckPoints.L2_NeTExSTIF_Route_4, location, refId);
 
 			// clean boarding and alighting data
 			for (StopPoint sp : route.getStopPoints()) {

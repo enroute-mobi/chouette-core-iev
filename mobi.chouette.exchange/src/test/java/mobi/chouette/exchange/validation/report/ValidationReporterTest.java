@@ -51,7 +51,7 @@ public class ValidationReporterTest {
 		// location.setObjectId("1234");
 		// location.setLineNumber(3);
 		ValidationReport validationReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
-		validationReporter.addCheckPointReportError(context, null, "Neptune-Checkpoint-1", location, "test");
+		validationReporter.addCheckPointReportError(context, null, "Neptune-Checkpoint-1","Neptune-Checkpoint-1", location, "test");
 		Assert.assertNotNull(validationReport.findCheckPointReportByName("Neptune-Checkpoint-1"),
 				"checkpoint must exist in validation report");
 		Assert.assertEquals(validationReport.findCheckPointReportByName("Neptune-Checkpoint-1")

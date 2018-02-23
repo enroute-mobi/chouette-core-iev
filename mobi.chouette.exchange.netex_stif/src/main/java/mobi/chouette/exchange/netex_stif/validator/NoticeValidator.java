@@ -86,7 +86,7 @@ public class NoticeValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(footnote.getObjectId());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Notice_1, location);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Notice_1,NetexCheckPoints.L2_NeTExSTIF_Notice_1, location);
 		}
 		return result;
 	}
@@ -133,7 +133,7 @@ public class NoticeValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(footnote.getObjectId());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Notice_2, location, "" + type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_Notice_2, NetexCheckPoints.L2_NeTExSTIF_Notice_2,location, "" + type);
 		}
 
 		return result;
@@ -150,7 +150,7 @@ public class NoticeValidator extends AbstractValidator {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object.getObjectId());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_5, location, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_5,NetexCheckPoints.L2_NeTExSTIF_5, location, type);
 			// reset creation time to now
 			object.setCreationTime(Calendar.getInstance().getTime());
 		}
@@ -171,7 +171,7 @@ public class NoticeValidator extends AbstractValidator {
 		if (!result) {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, object.getObjectId());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_6, location, type);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_6,NetexCheckPoints.L2_NeTExSTIF_6, location, type);
 		}
 		return result;
 

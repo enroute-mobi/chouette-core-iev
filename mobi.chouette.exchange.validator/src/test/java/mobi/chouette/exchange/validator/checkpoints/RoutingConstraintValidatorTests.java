@@ -204,7 +204,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 			validator = new RoutingConstraintValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, 0L, false, null, null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName,checkPointName,checkPointName, 0L, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
 			String transportMode = line.getTransportModeName();

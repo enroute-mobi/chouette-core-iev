@@ -41,7 +41,7 @@ public interface ValidationReporter {
 	 * @param checkPointName
 	 * @param location
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, DataLocation location);
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, DataLocation location);
 
 	/**
 	 * Bind error and location to checkpoint in validation report
@@ -50,7 +50,7 @@ public interface ValidationReporter {
 	 * @param checkPointName
 	 * @param location
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String detail,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, String detail,
 			DataLocation location);
 
 	/**
@@ -61,7 +61,7 @@ public interface ValidationReporter {
 	 * @param location
 	 * @param value
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, DataLocation location,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode , DataLocation location,
 			String value);
 
 	/**
@@ -73,7 +73,7 @@ public interface ValidationReporter {
 	 * @param location
 	 * @param value
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String detail,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, String detail,
 			DataLocation location, String value);
 
 	/**
@@ -85,7 +85,7 @@ public interface ValidationReporter {
 	 * @param value
 	 * @param refValue
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, DataLocation location,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, DataLocation location,
 			String value, String refValue);
 
 	/**
@@ -97,7 +97,7 @@ public interface ValidationReporter {
 	 * @param value
 	 * @param refValue
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String detail,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, String detail,
 			DataLocation location, String value, String refValue);
 
 	/**
@@ -110,7 +110,7 @@ public interface ValidationReporter {
 	 * @param refValue
 	 * @param targetLocations
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode,
 			DataLocation sourceLocation, String value, String refValue, DataLocation... targetLocations);
 
 	/**
@@ -123,7 +123,7 @@ public interface ValidationReporter {
 	 * @param refValue
 	 * @param targetLocations
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String detail,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, String detail,
 			DataLocation sourceLocation, String value, String refValue, DataLocation... targetLocations);
 
 	/**
@@ -134,7 +134,7 @@ public interface ValidationReporter {
 	 * @param locations
 	 * @param value
 	 */
-	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, DataLocation[] locations,
+	void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, DataLocation[] locations,
 			String value);
 
 	/**

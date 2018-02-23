@@ -56,7 +56,7 @@ public class NetexStifUncompressCommand implements Command {
 			// add validation message to report
 			JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 			String fileName = jobData.getInputFilename();
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_1, "1", new DataLocation(fileName));
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_1, NetexCheckPoints.L1_NetexStif_1,"1", new DataLocation(fileName));
 		} else {
 			JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 			String zipName = jobData.getInputFilename();
@@ -68,7 +68,7 @@ public class NetexStifUncompressCommand implements Command {
                 log.error("missing file "+NetexStifConstant.CALENDRIER_FILE_NAME);
 				ActionReporter reporter = ActionReporter.Factory.getInstance();
 				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no "+NetexStifConstant.CALENDRIER_FILE_NAME+" file");
-				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_1, "2",
+				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_1, NetexCheckPoints.L1_NetexStif_1,"2",
 						new DataLocation(zipName), NetexStifConstant.CALENDRIER_FILE_NAME);
 				result = Constant.ERROR;
 			}
@@ -78,7 +78,7 @@ public class NetexStifUncompressCommand implements Command {
                 log.error("missing files : no offer file found");
 				ActionReporter reporter = ActionReporter.Factory.getInstance();
 				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "no offer data");
-				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_1, "3",
+				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_1,NetexCheckPoints.L1_NetexStif_1, "3",
 						new DataLocation(zipName));
 				result = Constant.ERROR;
 			}

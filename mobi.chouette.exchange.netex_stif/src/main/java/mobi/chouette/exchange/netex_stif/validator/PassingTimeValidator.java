@@ -77,7 +77,7 @@ public class PassingTimeValidator extends AbstractValidator {
 			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line,
 					passingTime.getVehicleJourney());
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassingTime_1, location,
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassingTime_1,NetexCheckPoints.L2_NeTExSTIF_PassingTime_1, location,
 					Integer.toString(rank));
 
 		}
@@ -132,7 +132,7 @@ public class PassingTimeValidator extends AbstractValidator {
 				LineLite line = (LineLite) context.get(Constant.LINE);
 				DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line,
 						passingTime.getVehicleJourney());
-				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassingTime_2, location,
+				validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_PassingTime_2,NetexCheckPoints.L2_NeTExSTIF_PassingTime_2, location,
 						Integer.toString(rank));
 			}
 

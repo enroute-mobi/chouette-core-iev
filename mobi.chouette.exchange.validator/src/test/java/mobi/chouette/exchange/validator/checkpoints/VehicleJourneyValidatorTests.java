@@ -67,7 +67,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_1, 0L, false, null, "2", null);
+			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_1,CheckPointConstant.L3_VehicleJourney_1,CheckPointConstant.L3_VehicleJourney_1, 0L, false, null, "2", null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_VehicleJourney_1, checkPoints);
 			String transportMode = line.getTransportModeName();
@@ -108,7 +108,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_2, 0L, false, "11", "74", null);
+			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_2, CheckPointConstant.L3_VehicleJourney_2, CheckPointConstant.L3_VehicleJourney_2, 0L, false, "11", "74", null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_VehicleJourney_2, checkPoints);
 			// nominal
@@ -118,7 +118,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			
 			// speed error (in mode)
 			Collection<CheckpointParameters> modeCheckPoints = new ArrayList<>();
-			CheckpointParameters modeCheckPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_2, 0L, false, "11", "72", null);
+			CheckpointParameters modeCheckPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_2,CheckPointConstant.L3_VehicleJourney_2,CheckPointConstant.L3_VehicleJourney_2, 0L, false, "11", "72", null);
 			modeCheckPoints.add(modeCheckPoint);
 			parameters.getControlParameters().getTransportModeCheckpoints().put(transportMode, new HashMap<>());
 			parameters.getControlParameters().getTransportModeCheckpoints().get(transportMode).put(CheckPointConstant.L3_VehicleJourney_2, modeCheckPoints);
@@ -166,7 +166,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_4, 0L, false, null,null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_4,CheckPointConstant.L3_VehicleJourney_4,CheckPointConstant.L3_VehicleJourney_4, 0L, false, null,null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_VehicleJourney_4, checkPoints);
 			// nominal
@@ -210,7 +210,7 @@ public class VehicleJourneyValidatorTests extends AbstractTestValidation {
 			VehicleJourneyValidator validator = new VehicleJourneyValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_5, 0L, false, null,null, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_VehicleJourney_5,CheckPointConstant.L3_VehicleJourney_5,CheckPointConstant.L3_VehicleJourney_5, 0L, false, null,null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_VehicleJourney_5, checkPoints);
 			// nominal

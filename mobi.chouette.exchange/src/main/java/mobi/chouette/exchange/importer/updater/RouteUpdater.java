@@ -222,7 +222,7 @@ public class RouteUpdater implements Updater<Route> {
 	 */
 	private void twoDatabaseJourneyPatternOneTest(ValidationReporter validationReporter, Context context, JourneyPattern oldValue, JourneyPattern newValue, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldValue.getRoute(), newValue.getRoute()))
-			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_JOURNEY_PATTERN_1, data.getDataLocations().get(newValue.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_JOURNEY_PATTERN_1,ValidationConstant.DATABASE_JOURNEY_PATTERN_1, data.getDataLocations().get(newValue.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_JOURNEY_PATTERN_1);
 	}
@@ -236,7 +236,7 @@ public class RouteUpdater implements Updater<Route> {
 	 */
 	private void twoDatabaseStopPointOneTest(ValidationReporter validationReporter, Context context, StopPoint oldSp, StopPoint newSp, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldSp.getRoute(), newSp.getRoute()))
-			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_1, data.getDataLocations().get(newSp.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_1,ValidationConstant.DATABASE_STOP_POINT_1, data.getDataLocations().get(newSp.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_POINT_1);
 	}

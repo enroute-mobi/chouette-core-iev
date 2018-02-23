@@ -11,13 +11,14 @@ import javax.xml.bind.annotation.XmlType;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validator.checkpoints.ControlParameters;
 
 @XmlRootElement(name = "validate")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "referencesType", "ids", "controlParameters" })
-
+@ToString
 public class ValidateParameters extends AbstractParameter {
 
 	@XmlElement(name = "references_type")

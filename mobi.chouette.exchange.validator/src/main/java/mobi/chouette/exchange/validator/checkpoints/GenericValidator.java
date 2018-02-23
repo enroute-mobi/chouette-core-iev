@@ -76,21 +76,21 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 					if (checkParam instanceof GenericCheckpointParameters) {
 						GenericCheckpointParameters param = (GenericCheckpointParameters) checkParam;
 						if (param.getClassName().equals(className)) {
-							Method method = findCheckMethod(this.getClass(), param.getCode());
+							Method method = findCheckMethod(this.getClass(), param.getOriginCode());
 							if (method != null) {
 								try {
-									validationReporter.addItemToValidationReport(context, code,
+									validationReporter.addItemToValidationReport(context, checkParam.getSpecificCode(),
 											checkParam.isErrorType() ? "E" : "W");
 									method.invoke(this, context, object, param);
 								} catch (ValidationException ve) {
 									throw ve;
 								} catch (IllegalAccessException | IllegalArgumentException e) {
-									log.error(METHOD_FOR + checkParam.getCode() + NOT_ACCESSIBLE, e);
+									log.error(METHOD_FOR + checkParam.getOriginCode() + NOT_ACCESSIBLE, e);
 								} catch (InvocationTargetException e) {
-									log.error(METHOD_FOR + checkParam.getCode() + FAILED, e);
+									log.error(METHOD_FOR + checkParam.getOriginCode() + FAILED, e);
 								}
 							} else {
-								log.error(METHOD_FOR + checkParam.getCode() + NOT_FOUND);
+								log.error(METHOD_FOR + checkParam.getOriginCode() + NOT_FOUND);
 							}
 						}
 					}
@@ -116,26 +116,26 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 			if (!isEmpty(checkParams)) {
 				checkParams.stream().forEach(checkParam -> {
 
-					Method method = findCheckMethod(this.getClass(), checkParam.getCode());
+					Method method = findCheckMethod(this.getClass(), checkParam.getOriginCode());
 					if (method != null) {
 						try {
-							validationReporter.addItemToValidationReport(context, code,
+							validationReporter.addItemToValidationReport(context,  checkParam.getSpecificCode(),
 									checkParam.isErrorType() ? "E" : "W");
 							method.invoke(this, context, object, checkParam);
 						} catch (ValidationException ve) {
 							throw ve;
 						} catch (IllegalAccessException | IllegalArgumentException e) {
-							log.error(METHOD_FOR + checkParam.getCode() + NOT_ACCESSIBLE, e);
+							log.error(METHOD_FOR + checkParam.getOriginCode() + NOT_ACCESSIBLE, e);
 						} catch (InvocationTargetException e) {
 							log.error("target exception :" + e.getTargetException());
 							if (e.getTargetException() instanceof mobi.chouette.exchange.validator.ValidationException) {
 								throw (mobi.chouette.exchange.validator.ValidationException) e.getTargetException();
 							} else {
-								log.error(METHOD_FOR + checkParam.getCode() + FAILED, e);
+								log.error(METHOD_FOR + checkParam.getOriginCode() + FAILED, e);
 							}
 						}
 					} else {
-						log.error(METHOD_FOR + checkParam.getCode() + NOT_FOUND);
+						log.error(METHOD_FOR + checkParam.getOriginCode() + NOT_FOUND);
 					}
 				});
 			}
@@ -181,7 +181,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 			return;
 		}
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_Generic_1);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
@@ -190,7 +190,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 				if (!Pattern.matches(regex, value)) {
 					// pattern don't matches
 					DataLocation source = new DataLocation(object, parameters.getAttributeName());
-					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
 							CheckPointConstant.L3_Generic_1, source, value, regex);
 				}
 			}
@@ -249,7 +249,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 			return;
 		}
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_Generic_2);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
@@ -258,7 +258,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 					long minVal = Long.parseLong(parameters.getMinimumValue());
 					if (value < minVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
 								CheckPointConstant.L3_Generic_2, "2", source, objVal.toString(),
 								parameters.getMinimumValue());
 					}
@@ -267,7 +267,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 					long maxVal = Long.parseLong(parameters.getMaximumValue());
 					if (value > maxVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
 								CheckPointConstant.L3_Generic_2, "1", source, objVal.toString(),
 								parameters.getMaximumValue());
 					}
@@ -329,7 +329,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 		Map<String, DataLocation> attributeContext = generic3Context.computeIfAbsent(attributeKey,
 				k -> new HashMap<>());
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_Generic_3);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		try {
 			Object objVal = getter.invoke(object);
 			if (objVal != null) {
@@ -338,7 +338,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 				if (attributeContext.containsKey(value)) {
 					// duplicate value
 					DataLocation target = attributeContext.get(value);
-					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
 							CheckPointConstant.L3_Generic_3, source, value, null, target);
 				} else {
 					attributeContext.put(value, source);
