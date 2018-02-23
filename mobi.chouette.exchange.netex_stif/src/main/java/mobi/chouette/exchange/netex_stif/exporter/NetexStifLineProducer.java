@@ -7,11 +7,9 @@ import java.nio.file.Paths;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
-import mobi.chouette.exchange.metadata.Metadata;
-import mobi.chouette.exchange.metadata.NeptuneObjectPresenter;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.model.StopArea;
+import mobi.chouette.model.LineLite;
 
 public class NetexStifLineProducer {
 
@@ -23,7 +21,8 @@ public class NetexStifLineProducer {
 		String rootDirectory = jobData.getPathName();
 
 		Path dir = Paths.get(rootDirectory, Constant.OUTPUT);
-		String fileName = collection.getLine().getId() + ".xml";
+		LineLite line = collection.getLineLite();
+		String fileName = "offre_"+line.objectIdSuffix() + "_"+ line.getNumber() + ".xml";
 		File file = new File(dir.toFile(), fileName);
 
 		NetexStifFileWriter writer = new NetexStifFileWriter();

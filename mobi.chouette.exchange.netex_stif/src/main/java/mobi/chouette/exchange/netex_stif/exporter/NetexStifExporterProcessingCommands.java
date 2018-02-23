@@ -77,6 +77,7 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
+			// add ICAR and ILIGO export commands
 			commands.add(CommandFactory.create(initialContext, CompressCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
