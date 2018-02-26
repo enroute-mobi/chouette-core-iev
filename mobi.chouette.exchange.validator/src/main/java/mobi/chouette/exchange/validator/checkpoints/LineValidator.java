@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.validation.report.DataLocation;
@@ -17,11 +16,8 @@ import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
 
-@Log4j
 public class LineValidator extends GenericValidator<LineLite> {
 
-	private static final String HAS_NO_ROUTE = " has no route !";
-	private static final String LINE_ID = "Line ID = ";
 	private static final String[] codes = { CheckPointConstant.L3_Line_1, CheckPointConstant.L3_Route_4,
 			CheckPointConstant.L3_JourneyPattern_1 };
 
@@ -34,8 +30,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 	 * <b>Titre</b> :[Ligne] Appariement des itinéraires
 	 * <p>
 	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2121">Cartes
-	 * #2121</a>
+	 * <a target="_blank" href="https://projects.af83.io/issues/2121">Carte #2121</a>
 	 * <p>
 	 * <b>Code</b> :3-Line-1
 	 * <p>
@@ -66,21 +61,22 @@ public class LineValidator extends GenericValidator<LineLite> {
 		Collection<Route> routes = ref.getRoutes().values();
 		if (routes.size() > 1) { // -- Prérequis : Ligne disposant de plusieurs
 									// itinéraires
-
+            boolean result = true; // indicateur erreur possible
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 			for (Route r : routes) {
 				Route opposite = r.getOppositeRoute();
-				if (opposite == null) {
-					DataLocation source = new DataLocation(object);
-					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
-							parameters.getSpecificCode(), CheckPointConstant.L3_Line_1, source);
+				if (opposite != null) 
+				{
+					result = false; // il existe une route avec route inverse : pas d'erreur
+					break;
 				}
 			}
-		} else {
-			log.error(LINE_ID + object.getId() + HAS_NO_ROUTE);
-			// throw new ValidationException(LINE_ID + object.getId() +
-			// HAS_NO_ROUTE);
+			if (result) {
+				DataLocation source = new DataLocation(object);
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+						parameters.getSpecificCode(), CheckPointConstant.L3_Line_1, source);
+			}
 		}
 	}
 
@@ -88,8 +84,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 	 * <b>Titre</b> :[Itinéraire] Détection de double définition d'itinéraire
 	 * <p>
 	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2095">Cartes
-	 * #2095</a>
+	 * <a target="_blank" href="https://projects.af83.io/issues/2095">Carte #2095</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-4
 	 * <p>
@@ -125,20 +120,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 			Map<String, Route> map = new HashMap<>();
 			for (Route r : routes) {
 				List<StopPoint> stoppoints = r.getStopPoints();
-				StringBuilder b = new StringBuilder();
-				for (StopPoint sp : stoppoints) {
-					if (b.length() > 0) {
-						b.append(",");
-					}
-					b.append("[");
-					b.append(sp.getStopAreaId());
-					b.append("/fa:");
-					b.append(sp.getForAlighting());
-					b.append("/fb:");
-					b.append(sp.getForBoarding());
-					b.append("]");
-				}
-				String key = b.toString();
+				String key = buildStopPointListKey(stoppoints);
 				Route sameExist = map.get(key);
 				if (sameExist != null) {
 					DataLocation source = new DataLocation(object);
@@ -149,20 +131,39 @@ public class LineValidator extends GenericValidator<LineLite> {
 					map.put(key, r);
 				}
 			}
-		} else {
-			log.error(LINE_ID + object.getId() + HAS_NO_ROUTE);
-			// throw new ValidationException(LINE_ID + object.getId() +
-			// HAS_NO_ROUTE);
 		}
 
+	}
+
+	/**
+	 * build a string Key to compare 2 identical list of stopPoints
+	 * 
+	 * @param stoppoints
+	 * @return a string which characterize a list of stop points
+	 */
+	private String buildStopPointListKey(List<StopPoint> stoppoints) {
+		StringBuilder b = new StringBuilder();
+		for (StopPoint sp : stoppoints) {
+			if (b.length() > 0) {
+				b.append(",");
+			}
+			b.append("[");
+			b.append(sp.getStopAreaId());
+			b.append("/fa:");
+			b.append(sp.getForAlighting());
+			b.append("/fb:");
+			b.append(sp.getForBoarding());
+			b.append("]");
+		}
+		String key = b.toString();
+		return key;
 	}
 
 	/**
 	 * <b>Titre</b> :[Mission] Doublon de missions dans une ligne
 	 * <p>
 	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2102">Cartes
-	 * #2102</a>
+	 * <a target="_blank" href="https://projects.af83.io/issues/2102">Carte #2102</a>
 	 * <p>
 	 * <b>Code</b> :3-JourneyPattern-1
 	 * <p>
@@ -196,20 +197,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		journeyPatterns.stream().forEach(jp -> {
 			List<StopPoint> stoppoints = jp.getStopPoints();
-			StringBuilder b = new StringBuilder();
-			for (StopPoint sp : stoppoints) {
-				if (b.length() > 0) {
-					b.append(",");
-				}
-				b.append("[");
-				b.append(sp.getObjectId());
-				b.append("/fa:");
-				b.append(sp.getForAlighting());
-				b.append("/fb:");
-				b.append(sp.getForBoarding());
-				b.append("]");
-			}
-			String key = b.toString();
+			String key = buildStopPointListKey(stoppoints);
 			JourneyPattern sameExist = map.get(key);
 			if (sameExist != null) {
 				DataLocation source = new DataLocation(object);

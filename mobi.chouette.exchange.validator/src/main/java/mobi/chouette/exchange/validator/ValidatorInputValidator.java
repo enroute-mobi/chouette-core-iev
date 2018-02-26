@@ -156,7 +156,6 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 					addToGlobalCheckPoints(controlParameters, cp);
 				}
 			});
-log.info(parameter.toString());
 			return parameter;
 		}
 
