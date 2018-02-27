@@ -7,7 +7,7 @@ import mobi.chouette.model.LineLite;
 public interface ActionReporter {
 
 	public enum OBJECT_TYPE {
-		NETWORK, COMPANY, STOP_AREA, CONNECTION_LINK, ACCESS_POINT, TIMETABLE, LINE, ROUTE, JOURNEY_PATTERN, VEHICLE_JOURNEY
+		NETWORK, COMPANY, STOP_AREA, CONNECTION_LINK, ACCESS_POINT, TIME_TABLE, LINE, ROUTE, JOURNEY_PATTERN, VEHICLE_JOURNEY, FOOTNOTE
 	}
 
 	public enum FILE_STATE {
@@ -206,8 +206,20 @@ public interface ActionReporter {
 	 */
 	boolean hasFileValidationErrors(Context context, String filename);
 
+	/**
+	 * @param context
+	 * @param line
+	 * @return
+	 */
 	boolean hasLineValidationErrors(Context context, LineLite line);
 
+	/**
+	 * @param context
+	 * @param type
+	 * @return
+	 */
+	boolean hasObjectValidationErrors(Context context, OBJECT_TYPE type);
+	
 	/**
 	 * @param context
 	 * @param objectId
@@ -236,6 +248,7 @@ public interface ActionReporter {
 			return actionReporter;
 		}
 	}
+
 
 
 }

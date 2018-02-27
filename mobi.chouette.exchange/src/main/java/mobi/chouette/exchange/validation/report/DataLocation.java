@@ -11,6 +11,7 @@ import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.ConnectionLink;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
@@ -154,6 +155,14 @@ public class DataLocation {
 					path.add(new Path(object.getLineLite()));
 					this.line = object.getLineLite();
 				}
+			} else if (chouetteObject instanceof Footnote) {
+				Footnote object = (Footnote) chouetteObject;
+				if (object.getLine() != null) {
+					path.add(new Path(object.getLine()));
+				} else if (object.getLineLite() != null) {
+					path.add(new Path(object.getLineLite()));
+					this.line = object.getLineLite();
+				}
 			} else if (chouetteObject instanceof AccessLink) {
 				AccessLink object = (AccessLink) chouetteObject;
 				if (object.getAccessPoint() != null) {
@@ -169,7 +178,6 @@ public class DataLocation {
 				}
 			}
 		}
-		// addLineLocation(this, chouetteObject);
 
 	}
 
@@ -218,6 +226,9 @@ public class DataLocation {
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof RoutingConstraint) {
 			RoutingConstraint object = (RoutingConstraint) chouetteObject;
+			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof Footnote) {
+			Footnote object = (Footnote) chouetteObject;
 			return NamingUtil.getName(object);
 		}
 		return "unnammed";

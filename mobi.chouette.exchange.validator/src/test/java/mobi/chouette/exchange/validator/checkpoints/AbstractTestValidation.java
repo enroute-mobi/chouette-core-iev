@@ -415,5 +415,95 @@ public abstract class AbstractTestValidation extends Arquillian {
 		Assert.assertEquals(lineReport.getCheckPointWarningCount(), 0, "no line warning reported");
 
 	}
+	
+	protected void checkReports(Context context, OBJECT_TYPE type, String checkPointCode, String messageCode, String value,
+			OBJECT_STATE state, int reportCount) {
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
+		log.info(report);
+		log.info(valReport);
+		Assert.assertEquals(report.getResult(), "OK", "result");
+		Assert.assertEquals(report.getFiles().size(), 0, "no file reported ");
+		CheckPointErrorReport error = null;
+		Assert.assertEquals(report.getResult(), "OK", "result");
+		ObjectReport objectReport = report.getObjects().get(type);
+		Assert.assertNotNull(objectReport, " type reported");
+
+		if (state.equals(OBJECT_STATE.ERROR)) {
+			Assert.assertEquals(objectReport.getStatus(), OBJECT_STATE.ERROR, "type status reported");
+			Assert.assertEquals(objectReport.getCheckPointErrorCount(), reportCount, "type error reported");
+			error = valReport.getCheckPointErrors().get(objectReport.getCheckPointErrorKeys().get(0).intValue());
+		} else {
+			Assert.assertEquals(objectReport.getStatus(), state, "type status reported");
+			Assert.assertEquals(objectReport.getCheckPointWarningCount(), reportCount, "type warning reported");
+			error = valReport.getCheckPointErrors().get(objectReport.getCheckPointWarningKeys().get(0).intValue());
+		}
+		Assert.assertEquals(error.getTestId(), checkPointCode, "checkpoint code");
+		Assert.assertEquals(error.getKey(), messageCode, "message code");
+		if (value == null)
+			Assert.assertNull(error.getValue(), "value");
+		else
+			Assert.assertEquals(error.getValue(), value, "value");
+		Assert.assertFalse(error.getSource().getObjectRefs().isEmpty(), "source path");
+		Assert.assertNull(error.getSource().getFile(), "no source filename");
+
+		List<String> keys = YmlMessages.getMessageKeys(error.getKey());
+		Assert.assertFalse(keys.isEmpty(),"message "+error.getKey()+ " should have populate tags");
+		final CheckPointErrorReport ferror = error;
+		keys.forEach(k -> {
+			switch (k) {
+			case "reference_value":
+				Assert.assertNotNull(ferror.getReferenceValue(), k);
+				break;
+			case "source_objectid":
+				Assert.assertNotNull(ferror.getSource().getObjectId(),  k);
+				break;
+			case "source_label":
+				Assert.assertNotNull(ferror.getSource().getName(),  k);
+				break;
+			case "source_attribute":
+				Assert.assertNotNull(ferror.getSource().getAttribute(),  k);
+				break;
+			case "target_0_objectid":
+				Assert.assertTrue(ferror.getTargets().size() > 0, "target 0");
+				Assert.assertNotNull(ferror.getTargets().get(0).getObjectId(),  k);
+				break;
+			case "target_0_label":
+				Assert.assertTrue(ferror.getTargets().size() > 0, "target 0");
+				Assert.assertNotNull(ferror.getTargets().get(0).getName(),  k);
+				break;
+			case "target_1_objectid":
+				Assert.assertTrue(ferror.getTargets().size() > 1, "target 1");
+				Assert.assertNotNull(ferror.getTargets().get(1).getObjectId(),  k);
+				break;
+			case "target_1_label":
+				Assert.assertTrue(ferror.getTargets().size() > 1, "target 1");
+				Assert.assertNotNull(ferror.getTargets().get(1).getName(),  k);
+				break;
+			case "error_value":
+				Assert.assertNotNull(ferror.getValue(), k);
+				break;
+			default:
+				Assert.assertNull(k, "unknown key "+k);
+				break;
+			}
+		});
+
+	}
+	protected final void checkNoReports(Context context, OBJECT_TYPE type) {
+		ActionReport report = (ActionReport) context.get(Constant.REPORT);
+
+		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
+		log.info(report);
+		log.info(valReport);
+		Assert.assertEquals(report.getResult(), "OK", "result");
+		ObjectReport objectReport = report.getObjects().get(type);
+		Assert.assertNotNull(objectReport, " type reported");
+		Assert.assertEquals(objectReport.getStatus(), OBJECT_STATE.OK, "type status reported");
+		Assert.assertEquals(objectReport.getCheckPointErrorCount(), 0, "no type error reported");
+		Assert.assertEquals(objectReport.getCheckPointWarningCount(), 0, "no type warning reported");
+
+	}
 
 }

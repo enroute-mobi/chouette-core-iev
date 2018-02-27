@@ -17,6 +17,14 @@ public class RoutingConstraintZone extends ChouetteIdentifiedObject {
 	@Setter
 	private Long id;
 
+	@Getter
+	@Setter 
+	private String objectId;
+	
+	@Getter 
+	@Setter
+	private Long objectVersion;
+
 	@Getter @Setter
 	private String name;
 	

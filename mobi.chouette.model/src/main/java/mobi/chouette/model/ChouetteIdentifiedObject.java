@@ -9,14 +9,9 @@ package mobi.chouette.model;
 
 import java.util.regex.Pattern;
 
-import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.NaturalId;
-
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,43 +22,15 @@ import lombok.ToString;
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
-@EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @ToString(callSuper = true)
 public abstract class ChouetteIdentifiedObject extends ChouetteDatedObject {
 
-	/**
-	 * Neptune object id <br>
-	 * composed of 3 items separated by a colon
-	 * <ol>
-	 * <li>prefix : an alphanumerical value (underscore accepted)</li>
-	 * <li>type : a camelcase name describing object type</li>
-	 * <li>technical id: an alphanumerical value (underscore and minus accepted)
-	 * </li>
-	 * </ol>
-	 * This data must be unique in dataset
-	 * 
-	 * @return The actual value
-	 */
-	@Getter
-	@NaturalId(mutable=true)
-	@Column(name = "objectid", nullable = false, unique = true)
-	protected String objectId;
+	public abstract String getObjectId();
+	public abstract void setObjectId(String objectId);
 
-	public void setObjectId(String value) {
-		objectId = StringUtils.abbreviate(value, 255);
-	}
+	public abstract Long getObjectVersion();
+	public abstract void setObjectVersion(Long objectVersion);
 
-	/**
-	 * object version
-	 * 
-	 * @param objectVersion
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "object_version")
-	protected Long objectVersion = 1L;
  
 	@Getter
 	@Setter
@@ -100,7 +67,7 @@ public abstract class ChouetteIdentifiedObject extends ChouetteDatedObject {
 	}
 
 	protected String[] objectIdArray() {
-		return objectId.split(":");
+		return getObjectId().split(":");
 	}
 
 	/**

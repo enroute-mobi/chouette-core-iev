@@ -265,4 +265,16 @@ public class ActionReporterImpl implements ActionReporter {
 
 		return objectReport.getCheckPointErrorCount() > 0;
 	}
+	
+	@Override
+	public boolean hasObjectValidationErrors(Context context, OBJECT_TYPE type) {
+		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
+		if (actionReport == null)
+			return false;
+		ObjectReport objectReport = actionReport.findObjectReport(null,  type);
+		if (objectReport == null)
+			return false;
+
+		return objectReport.getCheckPointErrorCount() > 0;
+	}
 }

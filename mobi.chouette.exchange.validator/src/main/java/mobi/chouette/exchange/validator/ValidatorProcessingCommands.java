@@ -30,17 +30,16 @@ public class ValidatorProcessingCommands implements ProcessingCommands {
 	}
 
 	static {
-		ProcessingCommandsFactory.register(ValidatorProcessingCommands.class.getName(),
-				new DefaultFactory());
+		ProcessingCommandsFactory.register(ValidatorProcessingCommands.class.getName(), new DefaultFactory());
 	}
 
 	@Override
 	public List<Command> getPreProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
-		
+
 		try {
-			commands.add( CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
+			commands.add(CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
 			throw new RuntimeException("unable to call factories");
@@ -56,7 +55,7 @@ public class ValidatorProcessingCommands implements ProcessingCommands {
 			if (withDao)
 				commands.add(CommandFactory.create(initialContext, DaoLineValidatorCommand.class.getName()));
 			else
-				throw new IllegalArgumentException("withDao must be false");
+				throw new IllegalArgumentException("withDao must be true");
 		} catch (Exception e) {
 			log.error(e, e);
 			throw new RuntimeException("unable to call factories");
@@ -68,14 +67,17 @@ public class ValidatorProcessingCommands implements ProcessingCommands {
 
 	@Override
 	public List<Command> getPostProcessingCommands(Context context, boolean withDao) {
-//		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
-//		try {
-//			// commands.add(CommandFactory.create(initialContext, SharedDataValidatorCommand.class.getName()));
-//		} catch (Exception e) {
-//			log.error(e, e);
-//			throw new RuntimeException("unable to call factories");
-//		}
+		try {
+			if (withDao)
+				commands.add(CommandFactory.create(initialContext, DaoSharedDataValidatorCommand.class.getName()));
+			else
+				throw new IllegalArgumentException("withDao must be true");
+		} catch (Exception e) {
+			log.error(e, e);
+			throw new RuntimeException("unable to call factories");
+		}
 		return commands;
 	}
 
@@ -83,6 +85,7 @@ public class ValidatorProcessingCommands implements ProcessingCommands {
 	public List<Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
 		return new ArrayList<>();
 	}
+
 	@Override
 	public List<Command> getDisposeCommands(Context context, boolean withDao) {
 		List<Command> commands = new ArrayList<>();

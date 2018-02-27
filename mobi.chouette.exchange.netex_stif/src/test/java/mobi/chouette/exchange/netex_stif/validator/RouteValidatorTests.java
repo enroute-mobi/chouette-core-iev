@@ -85,7 +85,7 @@ public class RouteValidatorTests extends AbstractTest {
 		int lineNumber = 1;
 		int columnNumber = 2;
 
-		tc.getFakeRoute().setWayBack(directionType);
+		tc.getFakeRoute().setWayback(directionType);
 
 		RouteValidator validator = tc.getRouteValidator();
 
@@ -217,7 +217,7 @@ public class RouteValidatorTests extends AbstractTest {
 		tc.getFakeRoute().setId(System.currentTimeMillis());
 
 		tc.getFakeRoute().setOppositeRoute(oppositeRoute);
-		tc.getFakeRoute().setWayBack(wayback);
+		tc.getFakeRoute().setWayback(wayback);
 
 		RouteValidator validator = tc.getRouteValidator();
 
@@ -238,7 +238,7 @@ public class RouteValidatorTests extends AbstractTest {
 		// -- error : 'inbound' twice
 		Route oppositeRoute = new Route();
 		oppositeRoute.setObjectId("Codespace:type:identifierAABB:LOC");
-		oppositeRoute.setWayBack(NetexStifConstant.DIRECTION_INBOUND);
+		oppositeRoute.setWayback(NetexStifConstant.DIRECTION_INBOUND);
 		oppositeRoute.setFilled(true);
 		TestContext tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_INBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'inbound' twice");
@@ -246,7 +246,7 @@ public class RouteValidatorTests extends AbstractTest {
 				oppositeRoute.getObjectId(), FILE_STATE.WARNING);
 		//
 		// -- error : 'outbound' twice
-		oppositeRoute.setWayBack(NetexStifConstant.DIRECTION_OUTBOUND);
+		oppositeRoute.setWayback(NetexStifConstant.DIRECTION_OUTBOUND);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_OUTBOUND);
 		Assert.assertFalse(tc.isResult(), "error : 'outbound' twice");
 		checkReports(tc.getContext(), TEST_FILENAME, NetexCheckPoints.L2_NeTExSTIF_Route_2, "2_netexstif_route_2_2",
@@ -254,7 +254,7 @@ public class RouteValidatorTests extends AbstractTest {
 		//
 		// -- error : 'outbound' twice, default value for route wayback (null)
 		// is 'outbound'
-		oppositeRoute.setWayBack(null);
+		oppositeRoute.setWayback(null);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, null);
 		Assert.assertFalse(tc.isResult(),
 				"error : 'outbound' twice, default value for route wayback (null) is 'outbound'");
@@ -266,21 +266,21 @@ public class RouteValidatorTests extends AbstractTest {
 	public void verifyInverseWaybackValueOK() throws Exception {
 		Route oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
-		oppositeRoute.setWayBack(NetexStifConstant.DIRECTION_INBOUND);
+		oppositeRoute.setWayback(NetexStifConstant.DIRECTION_INBOUND);
 		TestContext tc = validateOppositeRouteWaybackValue(oppositeRoute, null);
 		Assert.assertTrue(tc.isResult());
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 		//
 		oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
-		oppositeRoute.setWayBack(null);
+		oppositeRoute.setWayback(null);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_INBOUND);
 		Assert.assertTrue(tc.isResult());
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 		//
 		oppositeRoute = new Route();
 		oppositeRoute.setId(System.currentTimeMillis());
-		oppositeRoute.setWayBack(null);
+		oppositeRoute.setWayback(null);
 		tc = validateOppositeRouteWaybackValue(oppositeRoute, NetexStifConstant.DIRECTION_INBOUND);
 		Assert.assertTrue(tc.isResult());
 		checkNoReports(tc.getContext(), TEST_FILENAME);

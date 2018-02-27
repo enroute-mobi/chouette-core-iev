@@ -12,7 +12,6 @@ import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.DestinationDisplay;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.validator.DestinationDisplayValidator;
-import mobi.chouette.exchange.netex_stif.validator.DirectionValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 
 @Log4j

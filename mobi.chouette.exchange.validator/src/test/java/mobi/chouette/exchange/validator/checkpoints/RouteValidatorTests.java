@@ -131,7 +131,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
 					null);
 			route.forceOppositeRoute(getRoute(routes, 7L));
-			route.setWayBack(route.getOppositeRoute().getWayBack());
+			route.setWayback(route.getOppositeRoute().getWayback());
 			validator.validate(context, route, parameters, transportMode);
 			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Route_2, "3_route_2", null, OBJECT_STATE.WARNING);
 

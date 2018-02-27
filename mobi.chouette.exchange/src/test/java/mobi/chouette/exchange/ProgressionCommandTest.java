@@ -98,7 +98,7 @@ public class ProgressionCommandTest {
         ActionReporter reporter = ActionReporter.Factory.getInstance();
         reporter.addZipReport(context, "toto.zip", IO_TYPE.INPUT);
         reporter.addFileReport(context, "toto.xml", IO_TYPE.INPUT);
-		reporter.addObjectReport(context, "TEST:Timetable:12", OBJECT_TYPE.TIMETABLE, "Test Timetable", OBJECT_STATE.OK, IO_TYPE.INPUT);
+		reporter.addObjectReport(context, "TEST:Timetable:12", OBJECT_TYPE.TIME_TABLE, "Test Timetable", OBJECT_STATE.OK, IO_TYPE.INPUT);
 		reporter.addObjectReport(context, "TEST:Line:12", OBJECT_TYPE.LINE, "Test Line", OBJECT_STATE.OK, IO_TYPE.INPUT);
 		resourceDao.getSaved().clear();
 		progression.execute(context);
@@ -115,7 +115,7 @@ public class ProgressionCommandTest {
 		Assert.assertEquals(taskDao.getSaved().getCurrentStepProgress(), 0.5 ,"task progression should be 0.5");
 		Assert.assertNotNull(taskDao.getSaved().getUpdatedAt(), "task should has updated time updated");
 
-		Assert.assertEquals(resourceDao.getSaved().size(),3, "resources should be saved");
+		Assert.assertEquals(resourceDao.getSaved().size(),4, "resources should be saved");
 
 		// ValidationReport validation = new ValidationReport();
 		// context.put(Constant.VALIDATION_REPORT, validation);

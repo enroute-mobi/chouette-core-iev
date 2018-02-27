@@ -1,7 +1,5 @@
 package mobi.chouette.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,9 +11,11 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mobi.chouette.model.util.NamingUtil;
 
 /**
  * Chouette Footnote : a note for vehicle journeys
@@ -29,8 +29,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "footnotes")
+@EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @NoArgsConstructor
-public class Footnote extends ChouetteObject implements SignedChouetteObject {
+public class Footnote extends ChouetteIdentifiedObject implements SignedChouetteObject  {
 	/**
     * 
     */
@@ -57,39 +58,26 @@ public class Footnote extends ChouetteObject implements SignedChouetteObject {
 	private String checksumSource;
 
 
-	@Getter 
+//	@Getter 
 	@Setter 
 	@Transient 
 	private String objectId;
+	
+	public String getObjectId()
+	{
+		if (objectId == null && lineLite != null)
+		{
+			objectId = lineLite.objectIdPrefix()+":Notice:"+lineLite.objectIdSuffix()+"_"+NamingUtil.getName(this)+":LOC";
+		}
+		return objectId;
+	}
+	
 	
 	@Getter 
 	@Setter 
 	@Transient 
 	private Long objectVersion;
 
-	/**
-	 * creation time
-	 * 
-	 * @param creationTime
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "created_at")
-	protected Date creationTime = new Date();
-
-	/**
-	 * update time
-	 * 
-	 * @param updateTime
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "updated_at")
-	protected Date updatedTime = new Date();
 
 	/**
 	 * referenced line
@@ -105,6 +93,16 @@ public class Footnote extends ChouetteObject implements SignedChouetteObject {
 //	@JoinColumn(name = "line_id")
 	private Line line;
 	
+	/**
+	 * line reverse reference
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Transient
+	private LineLite lineLite;
+
 	@Getter
 	@Setter
 	@Column(name = "line_id")

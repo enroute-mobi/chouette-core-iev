@@ -158,9 +158,9 @@ public class RouteValidator extends GenericValidator<Route>  {
 			DataLocation target = new DataLocation(opposite);
 			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_Route_2, source, null,
 					null, target);
-		} else if (opposite.getWayBack() == null || object.getWayBack() == null) {
+		} else if (opposite.getWayback() == null || object.getWayback() == null) {
 			log.error("wayback is null for route");
-		} else if (opposite.getWayBack().equals(object.getWayBack())) {
+		} else if (opposite.getWayback().equals(object.getWayback())) {
 			// routes direction are same
 			DataLocation source = new DataLocation(object);
 			DataLocation target = new DataLocation(opposite);

@@ -102,7 +102,7 @@ public class RouteValidator extends AbstractValidator {
 	 */
 	public boolean check2NeTExSTIFRoute1(Context context, Route route, int lineNumber, int columnNumber) {
 		boolean result = true;
-		String wayback = route.getWayBack();
+		String wayback = route.getWayback();
 		if (wayback == null || (!wayback.equals(NetexStifConstant.DIRECTION_OUTBOUND) && !wayback.equals(NetexStifConstant.DIRECTION_INBOUND))) {
 			result = false;
 		}
@@ -191,11 +191,11 @@ public class RouteValidator extends AbstractValidator {
 		String wayback = "null";
 		String oppositeWayback = "null";
 
-		if (route.getWayBack() != null) {
-			wayback = route.getWayBack();
+		if (route.getWayback() != null) {
+			wayback = route.getWayback();
 		}
-		if (route.getOppositeRoute().getWayBack() != null) {
-			oppositeWayback = route.getOppositeRoute().getWayBack();
+		if (route.getOppositeRoute().getWayback() != null) {
+			oppositeWayback = route.getOppositeRoute().getWayback();
 		}
 		// log.warn("wayback = " + wayback + "; oppositeWayback = " +
 		// oppositeWayback);

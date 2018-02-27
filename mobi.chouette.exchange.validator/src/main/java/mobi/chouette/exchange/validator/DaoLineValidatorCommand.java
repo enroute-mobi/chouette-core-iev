@@ -29,11 +29,13 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.dao.FootnoteDAO;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.exchange.report.ActionReporter;
-import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.util.NamingUtil;
@@ -52,6 +54,9 @@ public class DaoLineValidatorCommand implements Command {
 	
 	@EJB 
 	private RouteDAO routeDAO;
+
+	@EJB 
+	private FootnoteDAO footnoteDAO;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -85,7 +90,12 @@ public class DaoLineValidatorCommand implements Command {
 					jp.getVehicleJourneys().forEach(vj -> r.getVehicleJourneys().put(vj.getObjectId(), vj));
 				});
 			});
-
+            List<Footnote> notes = footnoteDAO.findByLineId(lineId);
+            notes.forEach(note -> {
+            	note.setLineLite(line);
+            	r.getFootnotes().put(note.getObjectId(),note);
+            });
+			
 			result = lineValidatorCommand.execute(context);
 			daoContext.setRollbackOnly();
 			

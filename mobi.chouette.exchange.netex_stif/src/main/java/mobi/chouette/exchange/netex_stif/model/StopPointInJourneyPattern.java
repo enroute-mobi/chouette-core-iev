@@ -12,6 +12,14 @@ public class StopPointInJourneyPattern extends ChouetteIdentifiedObject {
 	@Setter
 	private Long id;
 
+	@Getter
+	@Setter 
+	private String objectId;
+	
+	@Getter 
+	@Setter
+	private Long objectVersion;
+
 	@Getter 
 	@Setter
 	private Integer order;

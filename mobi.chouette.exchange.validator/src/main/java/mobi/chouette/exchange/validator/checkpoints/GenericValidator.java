@@ -61,10 +61,12 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 			// find checkpoint for code
 			Collection<CheckpointParameters> checkParams = null;
 			// in transportModes
-			Map<String, Collection<CheckpointParameters>> modeParameters = controlParameters
-					.getTransportModeCheckpoints().get(transportMode);
-			if (modeParameters != null) {
-				checkParams = modeParameters.get(code);
+			if (transportMode != null) {
+				Map<String, Collection<CheckpointParameters>> modeParameters = controlParameters
+						.getTransportModeCheckpoints().get(transportMode);
+				if (modeParameters != null) {
+					checkParams = modeParameters.get(code);
+				}
 			}
 			// else in global
 			if (isEmpty(checkParams)) {
@@ -119,7 +121,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 					Method method = findCheckMethod(this.getClass(), checkParam.getOriginCode());
 					if (method != null) {
 						try {
-							validationReporter.addItemToValidationReport(context,  checkParam.getSpecificCode(),
+							validationReporter.addItemToValidationReport(context, checkParam.getSpecificCode(),
 									checkParam.isErrorType() ? "E" : "W");
 							method.invoke(this, context, object, checkParam);
 						} catch (ValidationException ve) {
@@ -190,8 +192,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 				if (!Pattern.matches(regex, value)) {
 					// pattern don't matches
 					DataLocation source = new DataLocation(object, parameters.getAttributeName());
-					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
-							CheckPointConstant.L3_Generic_1, source, value, regex);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+							parameters.getSpecificCode(), CheckPointConstant.L3_Generic_1, source, value, regex);
 				}
 			}
 		} catch (IllegalAccessException | IllegalArgumentException e) {
@@ -258,18 +260,18 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 					long minVal = Long.parseLong(parameters.getMinimumValue());
 					if (value < minVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
-								CheckPointConstant.L3_Generic_2, "2", source, objVal.toString(),
-								parameters.getMinimumValue());
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+								parameters.getSpecificCode(), CheckPointConstant.L3_Generic_2, "2", source,
+								objVal.toString(), parameters.getMinimumValue());
 					}
 				}
 				if (parameters.getMaximumValue() != null) {
 					long maxVal = Long.parseLong(parameters.getMaximumValue());
 					if (value > maxVal) {
 						DataLocation source = new DataLocation(object, parameters.getAttributeName());
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
-								CheckPointConstant.L3_Generic_2, "1", source, objVal.toString(),
-								parameters.getMaximumValue());
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+								parameters.getSpecificCode(), CheckPointConstant.L3_Generic_2, "1", source,
+								objVal.toString(), parameters.getMaximumValue());
 					}
 				}
 			}
@@ -338,8 +340,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 				if (attributeContext.containsKey(value)) {
 					// duplicate value
 					DataLocation target = attributeContext.get(value);
-					validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
-							CheckPointConstant.L3_Generic_3, source, value, null, target);
+					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+							parameters.getSpecificCode(), CheckPointConstant.L3_Generic_3, source, value, null, target);
 				} else {
 					attributeContext.put(value, source);
 				}
@@ -412,7 +414,8 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 	}
 
 	protected static final double R = 6371008.8; // Earth radius
-	protected static final double TO_RAD = 0.017453292519943; // degree/rad ratio
+	protected static final double TO_RAD = 0.017453292519943; // degree/rad
+																// ratio
 
 	/**
 	 * calculate distance on spheroid

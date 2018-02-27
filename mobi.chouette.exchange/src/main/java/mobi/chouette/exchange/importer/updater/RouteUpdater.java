@@ -72,7 +72,7 @@ public class RouteUpdater implements Updater<Route> {
 			oldValue.setPublishedName(newValue.getPublishedName());
 			oldValue.setNumber(newValue.getNumber());
 			oldValue.setDirection(newValue.getDirection());
-			oldValue.setWayBack(newValue.getWayBack());
+			oldValue.setWayback(newValue.getWayback());
 			oldValue.setLineId(newValue.getLineId());
 			oldValue.setLineLite(newValue.getLineLite());
 			oldValue.setDetached(false);
@@ -102,8 +102,8 @@ public class RouteUpdater implements Updater<Route> {
 			if (newValue.getDirection() != null && !newValue.getDirection().equals(oldValue.getDirection())) {
 				oldValue.setDirection(newValue.getDirection());
 			}
-			if (newValue.getWayBack() != null && !newValue.getWayBack().equals(oldValue.getWayBack())) {
-				oldValue.setWayBack(newValue.getWayBack());
+			if (newValue.getWayback() != null && !newValue.getWayback().equals(oldValue.getWayback())) {
+				oldValue.setWayback(newValue.getWayback());
 			}
 		}
 

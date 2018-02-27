@@ -34,7 +34,8 @@
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.language>java</sonar.language>
-		
+		<skipWildfly>true</skipWildfly>
+		<skipSonar>true</skipSonar>
 	</properties>
 	<repositories>
 		<repository>
@@ -285,7 +286,7 @@
 				<version>0.7.9</version>
 				<configuration>
 					<append>true</append>
-					<skip>${skipTests}</skip>
+					<skip>${skipSonar}</skip>
 				</configuration>
 				<executions>
 					<execution>

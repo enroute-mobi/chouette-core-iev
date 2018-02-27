@@ -106,7 +106,7 @@ public class ValidationReporterImpl implements ValidationReporter {
 		boolean reportAdded = addReferencesToActionReport(context, location, index, checkPoint.getSeverity());
 
 		if (checkPointAdded || reportAdded)
-			validationReport.addCheckPointErrorReport(newCheckPointError);
+			validationReport.addCheckPointErrorReport(checkPoint,newCheckPointError);
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class ValidationReporterImpl implements ValidationReporter {
 		boolean reportAdded = addReferencesToActionReport(context, location, index, checkPoint.getSeverity());
 
 		if (checkPointAdded || reportAdded)
-			validationReport.addCheckPointErrorReport(newCheckPointError);
+			validationReport.addCheckPointErrorReport(checkPoint,newCheckPointError);
 	}
 
 	private boolean addReferencesToActionReport(Context context, DataLocation location, int code, SEVERITY severity) {
@@ -186,6 +186,7 @@ public class ValidationReporterImpl implements ValidationReporter {
 
 	private OBJECT_TYPE getType(Path object) {
 		String name = object.getObjectClass().replaceAll("(.)(\\p{Upper})", "$1_$2").toUpperCase();
+		if (name.equals("TIMETABLE")) name = "TIME_TABLE"; // workaround for timetable
 		try {
 			return OBJECT_TYPE.valueOf(name);
 		} catch (Exception ex) {
@@ -231,7 +232,7 @@ public class ValidationReporterImpl implements ValidationReporter {
 			boolean reportAdded = addReferencesToActionReport(context, location, index, checkPoint.getSeverity());
 
 			if (checkPointAdded || reportAdded)
-				validationReport.addCheckPointErrorReport(newCheckPointError);
+				validationReport.addCheckPointErrorReport(checkPoint,newCheckPointError);
 		}
 
 	}
