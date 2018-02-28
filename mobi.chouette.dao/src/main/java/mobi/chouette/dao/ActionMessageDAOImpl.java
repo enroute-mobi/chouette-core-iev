@@ -18,8 +18,9 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 	@EJB
 	ComplianceCheckMessageDAO complianceCheckMessageDAO;
 
-	@EJB
-	ExportMessageDAO exportMessageDAO;
+	// TODO : à décommenter quand les tables de publication seront créées
+//	@EJB
+//	ExportMessageDAO exportMessageDAO;
 
 	@Override
 	public ActionMessage createMessage(ActionResource resource) {
@@ -28,9 +29,10 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 		case importer:
 			message = new ImportMessage(resource.getTaskId(),resource.getId());
 			break;
-		case exporter:
-			message = new ExportMessage(resource.getTaskId(),resource.getId());
-			break;
+			// TODO : à décommenter quand les tables de publication seront créées
+//		case exporter:
+//			message = new ExportMessage(resource.getTaskId(),resource.getId());
+//			break;
 		case validator:
 			message  = new ComplianceCheckMessage(resource.getTaskId(),resource.getId());
 			break;
@@ -46,10 +48,11 @@ public class ActionMessageDAOImpl implements ActionMessageDAO {
 			ImportMessage importMessage = (ImportMessage) message;
 			importMessageDAO.create(importMessage);
 			break;
-		case exporter:
-			ExportMessage exportMessage = (ExportMessage) message;
-			exportMessageDAO.create(exportMessage);
-			break;
+			// TODO : à décommenter quand les tables de publication seront créées
+//		case exporter:
+//			ExportMessage exportMessage = (ExportMessage) message;
+//			exportMessageDAO.create(exportMessage);
+//			break;
 		case validator:
 			ComplianceCheckMessage checkMessage = (ComplianceCheckMessage) message;
 			complianceCheckMessageDAO.create(checkMessage);

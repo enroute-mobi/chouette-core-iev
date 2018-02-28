@@ -286,55 +286,6 @@ public class RouteValidatorTests extends AbstractTest {
 		checkNoReports(tc.getContext(), TEST_FILENAME);
 	}
 
-	// TODO : reprendre le test en mettant 2 missions qui se contredisent !
-	/*
-	 * StopPoint Order
-	 */
-
-//	private TestContext validateRouteStopPointOrder(List<StopPoint> list) {
-//		int lineNumber = 0;
-//		int columnNumber = 0;
-//		TestContext tc = new TestContext();
-//		tc.getFakeRoute().setStopPoints(list);
-//		RouteValidator validator = tc.getRouteValidator();
-//		boolean result = validator.check2NeTExSTIFRoute3(tc.getContext(), tc.getFakeRoute(), lineNumber, columnNumber);
-//		log.info("Validation Report ===>" + tc.getValidationReport().toString());
-//		log.info("Validation Report Result = " + tc.getValidationReport().getResult());
-//		log.info("Action Report ===>" + tc.getActionReport().toString());
-//		log.info("Action Report Result = " + tc.getActionReport().getResult());
-//		tc.setResult(result);
-//		return tc;
-//	}
-
-//	@Test(groups = { "Route",
-//			"StopPointOrder" }, description = "Error 1 : StopPoint Order in Route is incorrect  ", priority = 1)
-//	public void verifyRouteStopPointOrderIncorrect() throws Exception {
-//
-//		List<StopPoint> list = new ArrayList<StopPoint>(
-//				Arrays.asList(StopPointBuilder.newInstance().id(0L).position(10).build(),
-//						StopPointBuilder.newInstance().id(1L).position(20).build(),
-//						StopPointBuilder.newInstance().id(2L).position(30).build(),
-//						StopPointBuilder.newInstance().id(3L).position(60).build(), // --incorrect
-//																					// position
-//						StopPointBuilder.newInstance().id(4L).position(50).build()));
-//		TestContext tc = validateRouteStopPointOrder(list);
-//		Assert.assertFalse(tc.isResult());
-//	}
-//
-//	@Test(groups = { "Route",
-//			"StopPointOrder" }, description = "Nominal 1 : StopPoint Order in Route is correct ", priority = 1)
-//	public void verifyRouteStopPointOrderOK() throws Exception {
-//		List<StopPoint> list = new ArrayList<StopPoint>(
-//				Arrays.asList(StopPointBuilder.newInstance().id(0L).position(10).build(),
-//						StopPointBuilder.newInstance().id(1L).position(20).build(),
-//						StopPointBuilder.newInstance().id(2L).position(30).build(),
-//						StopPointBuilder.newInstance().id(3L).position(50).build(),
-//						StopPointBuilder.newInstance().id(4L).position(60).build()));
-//
-//		TestContext tc = validateRouteStopPointOrder(list);
-//		Assert.assertTrue(tc.isResult());
-//
-//	}
 
 	static class StopPointBuilder {
 		protected Long id;
@@ -465,59 +416,5 @@ public class RouteValidatorTests extends AbstractTest {
 				"CSP:TYP:40:LOC", FILE_STATE.WARNING);
 	}
 
-//	@Test(groups = { "Route",
-//			"AlightingBoarding" }, description = "Nominal 1 : AlightingBoarding in Route vs JourneyPattern correct  ", priority = 1)
-	public void verifyRouteStopPointAlightingBoardingcorrect() throws Exception {
-
-		List<StopPoint> list = new ArrayList<StopPoint>(Arrays.asList(
-				StopPointBuilder.newInstance().id(0L).comment("p10").position(10).forAlighting(false).forBoarding(true)
-						.build(),
-				StopPointBuilder.newInstance().id(1L).comment("p20").position(20).forAlighting(false).forBoarding(true)
-						.build(),
-				StopPointBuilder.newInstance().id(2L).comment("p30").position(30).forAlighting(false).forBoarding(true)
-						.build(),
-				StopPointBuilder.newInstance().id(3L).comment("p40").position(40).forAlighting(false).forBoarding(true)
-						.build(),
-				StopPointBuilder.newInstance().id(4L).comment("p50").position(50).forAlighting(false).forBoarding(true)
-						.build()));
-		TestContext tc = new TestContext();
-
-		JourneyPattern jp1 = new JourneyPattern();
-		jp1.setObjectId("Cityway:journeypattern:JP1_AABBCC:LOC");
-		String obj = jp1.getObjectId();
-		tc.addStopPointAlighting(obj, 10, false);
-		tc.addStopPointAlighting(obj, 20, false);
-		tc.addStopPointAlighting(obj, 30, false);
-		tc.addStopPointAlighting(obj, 40, false);
-		tc.addStopPointAlighting(obj, 50, false);
-		//
-		tc.addStopPointBoarding(obj, 10, true);
-		tc.addStopPointBoarding(obj, 20, true);
-		tc.addStopPointBoarding(obj, 30, true);
-		tc.addStopPointBoarding(obj, 40, true);
-		tc.addStopPointBoarding(obj, 50, true);
-
-		JourneyPattern jp2 = new JourneyPattern();
-		jp2.setObjectId("Cityway:journeypattern:JP2_AABBCC:LOC");
-		obj = jp2.getObjectId();
-		tc.addStopPointAlighting(obj, 10, false);
-		tc.addStopPointAlighting(obj, 20, false);
-		tc.addStopPointAlighting(obj, 30, false);
-		tc.addStopPointAlighting(obj, 40, false);
-		tc.addStopPointAlighting(obj, 50, false);
-		//
-		tc.addStopPointBoarding(obj, 10, true);
-		tc.addStopPointBoarding(obj, 20, true);
-		tc.addStopPointBoarding(obj, 30, true);
-		tc.addStopPointBoarding(obj, 40, true);
-		tc.addStopPointBoarding(obj, 50, true);
-
-		tc.getFakeRoute().getJourneyPatterns().add(jp1);
-		tc.getFakeRoute().getJourneyPatterns().add(jp2);
-
-		validateRouteStopPointAlightingBoarding(tc, list);
-		Assert.assertTrue(tc.isResult());
-		checkNoReports(tc.getContext(), TEST_FILENAME);
-	}
 
 }

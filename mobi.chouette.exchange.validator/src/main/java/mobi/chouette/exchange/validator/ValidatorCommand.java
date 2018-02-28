@@ -152,7 +152,6 @@ public class ValidatorCommand implements Command {
 				}
 			}
 			progression.execute(context);
-			// TODO a mettre dans une commande dédiée
 			LineLite line = r.getCurrentLine();
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, r.getJourneyPatterns().size());

@@ -18,8 +18,9 @@ public class ActionResourceDAOImpl implements ActionResourceDAO {
 	@EJB
 	ComplianceCheckResourceDAO complianceCheckResourceDAO;
 	
-	@EJB
-	ExportResourceDAO exportResourceDAO;
+	// TODO : à décommenter quand les tables de publication seront créées
+//	@EJB
+//	ExportResourceDAO exportResourceDAO;
 	
 	@Override
 	public ActionResource createResource(JobData job) {
@@ -28,9 +29,10 @@ public class ActionResourceDAOImpl implements ActionResourceDAO {
 		case importer:
 			resource = new ImportResource(job.getId());
 			break;
-		case exporter:
-			resource = new ExportResource(job.getId());
-			break;
+			// TODO : à décommenter quand les tables de publication seront créées
+//		case exporter:
+//			resource = new ExportResource(job.getId());
+//			break;
 		case validator:
 			resource = new ComplianceCheckResource(job.getId());
 			break;
@@ -46,10 +48,11 @@ public class ActionResourceDAOImpl implements ActionResourceDAO {
 			ImportResource importResource = (ImportResource) resource;
 			importResourceDAO.create(importResource);
 			break;
-		case exporter:
-			ExportResource exportResource = (ExportResource) resource;
-			exportResourceDAO.create(exportResource);
-			break;
+			// TODO : à décommenter quand les tables de publication seront créées
+//		case exporter:
+//			ExportResource exportResource = (ExportResource) resource;
+//			exportResourceDAO.create(exportResource);
+//			break;
 		case validator:
 			ComplianceCheckResource checkResource = (ComplianceCheckResource) resource;
 			complianceCheckResourceDAO.create(checkResource);

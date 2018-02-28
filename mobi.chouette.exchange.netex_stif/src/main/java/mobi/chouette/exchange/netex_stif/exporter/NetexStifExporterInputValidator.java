@@ -127,6 +127,7 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
 			if (referential.getMetadatas().get(0).getLineIds().length == 0)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
+			// TODO : fix where export tells which line is to be exported (one line or all)
 			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setValidityPeriods(Arrays.asList(referential.getMetadatas().get(0).getPeriods()));
 			parameter.setReferentialId(referential.getId());

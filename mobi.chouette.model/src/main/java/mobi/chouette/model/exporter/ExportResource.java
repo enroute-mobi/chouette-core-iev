@@ -18,6 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionResource;
+//TODO : vérifier l'adéquation avec la table créée par RAILS
 
 @Entity
 @Table(name = "test_export_resources")

@@ -84,7 +84,8 @@ public class NetexStifParserCommand implements Command {
 							IO_TYPE.INPUT);
 					context.put(Constant.LINE, line);
 				} else {
-					// TODO : manage invalid line for referential
+					// manage invalid line for referential
+					// must not occur because check is done by Rails
 				}
 			}
 

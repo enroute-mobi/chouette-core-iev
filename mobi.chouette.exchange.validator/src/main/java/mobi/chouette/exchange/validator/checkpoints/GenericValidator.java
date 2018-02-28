@@ -324,7 +324,6 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 		}
 
 		// save data for iterative check
-		// TODO : reset ATTRIBUTE_CONTEXT after validation completed
 		Map<String, Map<String, DataLocation>> generic3Context = (Map<String, Map<String, DataLocation>>) context
 				.computeIfAbsent(Constant.ATTRIBUTE_CONTEXT, k -> new HashMap<>());
 		String attributeKey = parameters.getClassName() + ":" + parameters.getAttributeName();
@@ -509,7 +508,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 	 */
 	protected long diffTime(Time first, Time last) {
 		if (first == null || last == null)
-			return Long.MIN_VALUE; // TODO diffTime => action when first & last
+			return Long.MIN_VALUE; // diffTime => action when first & last
 									// time are null
 
 		long lastTime = (last.getTime() / 1000L);

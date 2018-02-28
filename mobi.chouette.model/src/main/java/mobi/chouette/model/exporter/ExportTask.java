@@ -16,6 +16,8 @@ import lombok.ToString;
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionTask;
 
+//TODO : vérifier l'adéquation avec la table créée par RAILS
+
 @Entity
 @Table(name = "test_export")
 @NoArgsConstructor
@@ -32,6 +34,7 @@ public class ExportTask extends ActionTask {
 	protected Long id;
 	
 	// used by service module 
+	// TODO : should be persistent to call any export format (gtfs, neptune, netex_france,...)
 	@Getter
 	@Setter
 	@Transient

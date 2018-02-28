@@ -150,7 +150,6 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 
 	public boolean isDesactivated()
 	{
-		// TODO conditions à définir
 		return deletedTime != null;
 	}
 

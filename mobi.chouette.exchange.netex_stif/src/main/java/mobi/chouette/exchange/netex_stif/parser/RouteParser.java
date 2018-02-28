@@ -72,7 +72,6 @@ public class RouteParser implements Parser {
 				if (checked)
 					validator.checkExistsRef(context, route, NetexStifConstant.LINE_REF, ref, attrVersion,
 							content, lineNumber, columnNumber);
-				// TODO : check version with line of file
 			} else if (xpp.getName().equals(NetexStifConstant.DIRECTION_TYPE)) {
 
 				String tmpDirType = xpp.nextText();

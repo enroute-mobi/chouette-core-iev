@@ -21,7 +21,7 @@ import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionMessage;
-
+// TODO : vérifier l'adéquation avec la table créée par RAILS
 @Entity
 @Table(name = "test_export_messages")
 @NoArgsConstructor

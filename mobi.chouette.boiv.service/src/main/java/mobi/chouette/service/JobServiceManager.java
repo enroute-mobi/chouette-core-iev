@@ -458,11 +458,9 @@ public class JobServiceManager {
 				method = "GET";
 				break;
 			case exporter:
-				// urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; // TODO
-		      urlName="";																								// add
-																													// file
-																													// name
-																													// ?
+				// urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; 
+				// TODO manage url
+		        urlName="";																								
 				method = "PUT";
 				break;
 			default:

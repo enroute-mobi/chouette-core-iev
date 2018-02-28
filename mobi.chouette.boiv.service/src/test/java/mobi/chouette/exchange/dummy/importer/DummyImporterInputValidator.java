@@ -61,7 +61,6 @@ public class DummyImporterInputValidator extends AbstractInputValidator {
 
 	@Override
 	public boolean checkParameters(AbstractParameter abstractParameter) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
