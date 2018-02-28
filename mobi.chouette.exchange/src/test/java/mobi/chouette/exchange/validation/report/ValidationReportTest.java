@@ -51,7 +51,7 @@ public class ValidationReportTest {
 		}
 		validationReporter.addItemToValidationReport(context, "Neptune-", "Checkpoint", 1, "W");
 		DataLocation location = new DataLocation("filename", 3, 1, "1234");
-		validationReporter.addCheckPointReportError(context, null, "Neptune-Checkpoint-1", location, "test");
+		validationReporter.addCheckPointReportError(context, null, "Neptune-Checkpoint-1","Neptune-Checkpoint-1", location, "test");
 		{
 		ByteArrayOutputStream oStream = new ByteArrayOutputStream();
 		PrintStream stream = new PrintStream(oStream);

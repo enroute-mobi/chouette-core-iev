@@ -72,9 +72,8 @@ public class LineValidatorTests extends AbstractTestValidation {
 				tc.getReferential().getRoutes().put(r.getObjectId(), r);
 			});
 			tc.runValidation();
-			int warningCount = routes.size();
 			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
-					OBJECT_STATE.WARNING, warningCount);
+					OBJECT_STATE.WARNING, 1);
 
 		} finally {
 			utx.rollback();
@@ -86,7 +85,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@Test(groups = { "line" }, description = CheckPointConstant.L3_Route_4 + " : error routes with same ordered stops", priority = 122)
-	public void verifyTest_3_Line_1_ErrorRoutesWithSameOrderedStops() throws Exception {
+	public void verifyTest_3_Route_4() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_4 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
@@ -110,7 +109,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 				if (orig == null) {
 					orig = r;
 				} else {
-					r.setStopPoints(orig.getStopPoints());
+					r.setStopPoints(cloneList(orig.getStopPoints()));
 					warningCount++;
 					orig = null; // -- to have 2 successive routes with same stoppoints
 				}
@@ -125,6 +124,12 @@ public class LineValidatorTests extends AbstractTestValidation {
 
 	}
 	
+	/**
+	 * create a clone of a list of stopPoints 
+	 * 
+	 * @param source a list of stopPoints
+	 * @return a list of stopPoints with same attributes as the source
+	 */
 	private List<StopPoint> cloneList(List<StopPoint> source)
 	{
 		List<StopPoint> result= new ArrayList<>();
@@ -146,7 +151,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	 */
 	@Test(groups = { "line" }, description = CheckPointConstant.L3_JourneyPattern_1
 			+ " : error 2 journeypatterns must have different different stops order ", priority = 123)
-	public void verifyTest_3_Line_1_ErrorJourneyPatternWithSameOrderedStops() throws Exception {
+	public void verifyTest_3_JourneyPattern_1() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_JourneyPattern_1 + Color.NORMAL);
 		initSchema();
 		Context context = initValidatorContext();
@@ -231,7 +236,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 			validator = new LineValidator();
 			ValidateParameters parameters = (ValidateParameters) context.get(Constant.CONFIGURATION);
 			Collection<CheckpointParameters> checkPoints = new ArrayList<>();
-			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName, 0L, false, firstParam, secondParam, null);
+			CheckpointParameters checkPoint = new CheckpointParameters(checkPointName,checkPointName,checkPointName, 0L, false, firstParam, secondParam, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(checkPointName, checkPoints);
 			String transportMode = line.getTransportModeName();

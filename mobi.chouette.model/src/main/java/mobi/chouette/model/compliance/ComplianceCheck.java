@@ -78,12 +78,8 @@ public class ComplianceCheck extends ChouetteDatedObject {
 
 	@Getter
 	@Setter
-//  @Column(name = "control_attributes")
 	@Column(name = "control_attributes",columnDefinition="json")
 	@Type(type = "mobi.chouette.model.usertype.JsonUserType")
-//	@CollectionType(type = "java.util.HashMap")
-//	@Convert(converter = HstoreConverter.class)
-//	private Map<String, String> controlAttributes = new HashMap<>();
 	private JSONObject controlAttributes = new JSONObject();
 
 	@Getter
@@ -93,8 +89,13 @@ public class ComplianceCheck extends ChouetteDatedObject {
 
 	@Getter
 	@Setter
+	@Column(name = "code", nullable = false)
+	protected String specificCode;
+
+	@Getter
+	@Setter
 	@Column(name = "origin_code", nullable = false)
-	protected String code;
+	protected String originCode;
 
 	@Getter
 	@Setter

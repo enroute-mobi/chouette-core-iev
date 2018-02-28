@@ -59,10 +59,10 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 	protected void check3JourneyPattern2(Context context, JourneyPattern object, CheckpointParameters parameters) {
 		List<VehicleJourney> vjs = object.getVehicleJourneys();
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_JourneyPattern_2);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		if (vjs == null || vjs.size() < 1) {
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_JourneyPattern_2, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_JourneyPattern_2, source);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 		List<VehicleJourney> vj = object.getVehicleJourneys();
 		Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_3);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		Map<String, List<TravelTime>> travelTimeMap = new HashMap<String, List<TravelTime>>();
 
 		vj.stream().forEach(v -> {
@@ -129,7 +129,7 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 				long delta = Math.abs(tt.getDelta() - average);
 				DataLocation target1 = new DataLocation(sa1);
 				DataLocation target2 = new DataLocation(sa2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_3, source, Long.toString(delta), null, target1,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_3, source, Long.toString(delta), null, target1,
 						target2);
 			});
 		});

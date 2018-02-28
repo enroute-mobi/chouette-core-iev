@@ -274,4 +274,38 @@ public abstract class ChouetteModelUtil {
 
 	}
 
+	public static final String classNameforRubyName(String rubyName)
+	{
+		switch (rubyName)
+		{
+		case "routing_constraint_zone" : return "RoutingConstraint";
+		case "time_table" : return "Timetable";
+		default : return toCamelCase(rubyName);
+		}
+	}
+	/**
+	 * @param underscore
+	 * @return
+	 */
+	public static String toCamelCase(String underscore) {
+		StringBuilder b = new StringBuilder();
+		boolean underChar = false;
+		boolean first = true;
+		for (char c : underscore.toCharArray()) {
+			if (first) {
+				b.append(Character.toUpperCase(c));
+				first = false;
+			} else if (c == '_') {
+				underChar = true;
+			} else {
+				if (underChar) {
+					b.append(Character.toUpperCase(c));
+					underChar = false;
+				} else
+					b.append(c);
+			}
+		}
+		return b.toString();
+	}
+
 }

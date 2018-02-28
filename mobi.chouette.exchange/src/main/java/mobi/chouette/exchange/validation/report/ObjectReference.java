@@ -12,6 +12,7 @@ import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
@@ -42,6 +43,7 @@ public class ObjectReference extends AbstractReport {
 		ACCESS_LINK("AccessLink","access_links",""), 
 		TIME_TABLE("Timetable","time_tables",""), 
 		LINE("Line","lines",""), 
+		FOOTNOTE("Footnote","footnotes",""), 
 		ROUTE("Route","routes",""), 
 		JOURNEY_PATTERN("JourneyPattern","","journey_patterns_collection"), 
 		VEHICLE_JOURNEY("VehicleJourney","","vehicle_journeys"),
@@ -162,6 +164,13 @@ public class ObjectReference extends AbstractReport {
 
 	public ObjectReference(Route object) {
 		this.type = TYPE.ROUTE;
+		this.id = object.getId();
+		if (id == null)
+			this.objectId = object.getObjectId();
+	}
+
+	public ObjectReference(Footnote object) {
+		this.type = TYPE.FOOTNOTE;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();

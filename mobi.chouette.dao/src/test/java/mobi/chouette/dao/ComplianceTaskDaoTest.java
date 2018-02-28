@@ -79,7 +79,7 @@ public class ComplianceTaskDaoTest extends Arquillian {
 
 			ComplianceCheck cc = cct.getComplianceChecks().get(0);
 
-			Assert.assertEquals("3-NETEX-8", cc.getCode());
+			Assert.assertEquals("3-NETEX-8", cc.getOriginCode());
 
 			Assert.assertEquals(CRITICITY.error, cc.getCriticity());
 

@@ -137,7 +137,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(journeyPattern.getObjectId());
 			validationReporter.addCheckPointReportError(context, null,
-					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_1, location);
+					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_1,NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_1, location);
 		}
 
 		return result;
@@ -184,7 +184,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(journeyPattern.getObjectId());
 			validationReporter.addCheckPointReportError(context, null,
-					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_2, location);
+					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_2,NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_2, location);
 		}
 		return result;
 	}
@@ -234,10 +234,10 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 			location.setObjectId(journeyPattern.getObjectId());
 			if (patternType == null || patternType.isEmpty())
 				validationReporter.addCheckPointReportError(context, null,
-						NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "1", location);
+						NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3,NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "1", location);
 			else
 				validationReporter.addCheckPointReportError(context, null,
-						NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "2", location, patternType);
+						NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3,NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_3, "2", location, patternType);
 
 		}
 		return result;
@@ -305,7 +305,7 @@ public class ServiceJourneyPatternValidator extends AbstractValidator {
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber);
 			location.setObjectId(journeyPattern.getObjectId());
 			validationReporter.addCheckPointReportError(context, null,
-					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4, location);
+					NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4,NetexCheckPoints.L2_NeTExSTIF_ServiceJourneyPattern_4, location);
 		}
 		return result;
 	}

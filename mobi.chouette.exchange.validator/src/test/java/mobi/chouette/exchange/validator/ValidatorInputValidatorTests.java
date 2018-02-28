@@ -91,7 +91,8 @@ public class ValidatorInputValidatorTests {
 			log.info("checkData = "+checkData+" , size = "+data.length);
 			ComplianceCheck check = new ComplianceCheck();
 			check.setId(nextId++);
-			check.setCode(data[0]);
+			check.setOriginCode(data[0]);
+			check.setSpecificCode(data[0]);
 			check.setCriticity(CRITICITY.valueOf(data[1]));
 			if (data[2].length() > 0) {
 				String[] attributes = data[2].split(",");
@@ -118,7 +119,8 @@ public class ValidatorInputValidatorTests {
 			log.info("checkData = "+checkData+" , size = "+data.length);
 			ComplianceCheck check = new ComplianceCheck();
 			check.setId(nextId++);
-			check.setCode(data[0]);
+			check.setOriginCode(data[0]);
+			check.setSpecificCode(data[0]);
 			check.setCriticity(CRITICITY.valueOf(data[1]));
 			if (data[2].length() > 0) {
 				String[] attributes = data[2].split(",");

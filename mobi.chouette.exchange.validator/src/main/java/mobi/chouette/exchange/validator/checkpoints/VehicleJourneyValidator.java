@@ -22,10 +22,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 	private static final String MISSING_STOP_AREA_REFERENCE = " : missing StopArea reference";
 	private static final String VEHICLE_JOURNEY = "VehicleJourney ";
 	private static final String PASSING_TIME_FOR_MISSING_STOP_AREA = "passingTime for missing stop area ";
-	private static final String[] codes = { 
-			CheckPointConstant.L3_VehicleJourney_1, 
-			CheckPointConstant.L3_VehicleJourney_2, 
-			CheckPointConstant.L3_VehicleJourney_4,
+	private static final String[] codes = { CheckPointConstant.L3_VehicleJourney_1,
+			CheckPointConstant.L3_VehicleJourney_2, CheckPointConstant.L3_VehicleJourney_4,
 			CheckPointConstant.L3_VehicleJourney_5 };
 
 	@Override
@@ -73,7 +71,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 			return;
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_1);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 
 		long deltaMax = Long.parseLong(parameters.getMaximumValue()) * 60L;
@@ -92,7 +90,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 						}
 						DataLocation source = new DataLocation(object);
 						DataLocation target = new DataLocation(zdep);
-						validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_1, source,
+						validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+								parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_1, source,
 								Long.toString(delta / 60L), parameters.getMaximumValue(), target);
 
 					}
@@ -143,7 +142,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 			return;
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_2);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 
 		long speedMax = Long.parseLong(parameters.getMaximumValue());
@@ -161,7 +160,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_2, "1", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+						parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_2, "1", source,
 						Long.toString(speed), parameters.getMaximumValue(), target1, target2);
 
 			}
@@ -172,7 +172,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_2, "2", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+						parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_2, "2", source,
 						Long.toString(speed), parameters.getMinimumValue(), target1, target2);
 			}
 		}
@@ -212,11 +213,12 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 		// prerequisites
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_4);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 
 		if (object.getTimetables().isEmpty()) {
 			DataLocation source = new DataLocation(object);
-			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_4, source);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
+					CheckPointConstant.L3_VehicleJourney_4, source);
 
 		}
 	}
@@ -262,7 +264,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 			return;
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
-		validationReporter.prepareCheckPointReport(context, CheckPointConstant.L3_VehicleJourney_5);
+		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 		DateFormat format = new SimpleDateFormat("HH:mm");
 		// check first passingTime
@@ -276,7 +278,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 				}
 				DataLocation source = new DataLocation(object);
 				DataLocation target = new DataLocation(zdep);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_5, "1", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+						parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_5, "1", source,
 						format.format(passingTime.getArrivalTime()), format.format(passingTime.getDepartureTime()),
 						target);
 			}
@@ -298,7 +301,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
 				DataLocation target2 = new DataLocation(zdep2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), CheckPointConstant.L3_VehicleJourney_5, "2", source,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
+						parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_5, "2", source,
 						format.format(passingTime1.getDepartureTime()), format.format(getArrivalTime(passingTime2)),
 						target1, target2);
 

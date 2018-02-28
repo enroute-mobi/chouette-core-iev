@@ -88,7 +88,7 @@ public class ChecksumUtil {
 		cs.append(SEP);
 		cs.append(getValue(route.getPublishedName()));
 		cs.append(SEP);
-		cs.append(getValue(route.getWayBack()));
+		cs.append(getValue(route.getWayback()));
 		cs.append(SEP);
 
 		if (route.getStopPoints().isEmpty()) {

@@ -76,10 +76,10 @@ public class ValidationReport extends AbstractReport implements Report {
 			result = VALIDATION_RESULT.OK;
 	}
 
-	protected void addCheckPointErrorReport(CheckPointErrorReport checkPointError) {
+	protected void addCheckPointErrorReport(CheckPointReport checkPoint, CheckPointErrorReport checkPointError) {
 		checkPointErrors.add(checkPointError);
 		if (result != VALIDATION_RESULT.ERROR) {
-			CheckPointReport checkPoint = findCheckPointReportByName(checkPointError.getTestId());
+			// CheckPointReport checkPoint = findCheckPointReportByName(checkPointError.getTestId());
 			if (checkPoint.getSeverity().equals(SEVERITY.WARNING)) {
 				if (result.ordinal() < VALIDATION_RESULT.WARNING.ordinal())
 					result = VALIDATION_RESULT.WARNING;

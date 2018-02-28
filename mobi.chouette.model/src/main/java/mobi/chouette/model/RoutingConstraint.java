@@ -15,15 +15,18 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "routing_constraint_zones")
+@EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @NoArgsConstructor
 public class RoutingConstraint extends ChouetteIdentifiedObject implements SignedChouetteObject {
 
@@ -39,6 +42,40 @@ public class RoutingConstraint extends ChouetteIdentifiedObject implements Signe
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
+
+	/**
+	 * Neptune object id <br>
+	 * composed of 3 items separated by a colon
+	 * <ol>
+	 * <li>prefix : an alphanumerical value (underscore accepted)</li>
+	 * <li>type : a camelcase name describing object type</li>
+	 * <li>technical id: an alphanumerical value (underscore and minus accepted)
+	 * </li>
+	 * </ol>
+	 * This data must be unique in dataset
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@NaturalId(mutable=true)
+	@Column(name = "objectid", nullable = false, unique = true)
+	protected String objectId;
+
+	public void setObjectId(String value) {
+		objectId = StringUtils.abbreviate(value, 255);
+	}
+
+	/**
+	 * object version
+	 * 
+	 * @param objectVersion
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "object_version")
+	protected Long objectVersion = 1L;
 
 	@Getter
 	@Setter

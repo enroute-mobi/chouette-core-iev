@@ -318,7 +318,8 @@ public class ValidatorCommandTests extends Arquillian {
 			String[] data = checkData.split("/");
 			// log.info("checkData = " + checkData + " , size = " + data.length);
 			ComplianceCheck check = new ComplianceCheck();
-			check.setCode(data[0]);
+			check.setOriginCode(data[0]);
+			check.setSpecificCode(data[0]);
 			check.setComment(checkData);
 			check.setCriticity(CRITICITY.valueOf(data[1]));
 			if (data[2].length() > 0) {
@@ -344,7 +345,8 @@ public class ValidatorCommandTests extends Arquillian {
 			String[] data = checkData.split("/");
 			// log.info("checkData = " + checkData + " , size = " + data.length);
 			ComplianceCheck check = new ComplianceCheck();
-			check.setCode(data[0]);
+			check.setOriginCode(data[0]);
+			check.setSpecificCode(data[0]);
 			check.setComment(checkData);
 			check.setCriticity(CRITICITY.valueOf(data[1]));
 			if (data[2].length() > 0) {

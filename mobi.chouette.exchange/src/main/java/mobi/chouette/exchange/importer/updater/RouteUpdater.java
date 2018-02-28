@@ -72,7 +72,7 @@ public class RouteUpdater implements Updater<Route> {
 			oldValue.setPublishedName(newValue.getPublishedName());
 			oldValue.setNumber(newValue.getNumber());
 			oldValue.setDirection(newValue.getDirection());
-			oldValue.setWayBack(newValue.getWayBack());
+			oldValue.setWayback(newValue.getWayback());
 			oldValue.setLineId(newValue.getLineId());
 			oldValue.setLineLite(newValue.getLineLite());
 			oldValue.setDetached(false);
@@ -102,8 +102,8 @@ public class RouteUpdater implements Updater<Route> {
 			if (newValue.getDirection() != null && !newValue.getDirection().equals(oldValue.getDirection())) {
 				oldValue.setDirection(newValue.getDirection());
 			}
-			if (newValue.getWayBack() != null && !newValue.getWayBack().equals(oldValue.getWayBack())) {
-				oldValue.setWayBack(newValue.getWayBack());
+			if (newValue.getWayback() != null && !newValue.getWayback().equals(oldValue.getWayback())) {
+				oldValue.setWayback(newValue.getWayback());
 			}
 		}
 
@@ -222,7 +222,7 @@ public class RouteUpdater implements Updater<Route> {
 	 */
 	private void twoDatabaseJourneyPatternOneTest(ValidationReporter validationReporter, Context context, JourneyPattern oldValue, JourneyPattern newValue, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldValue.getRoute(), newValue.getRoute()))
-			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_JOURNEY_PATTERN_1, data.getDataLocations().get(newValue.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_JOURNEY_PATTERN_1,ValidationConstant.DATABASE_JOURNEY_PATTERN_1, data.getDataLocations().get(newValue.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_JOURNEY_PATTERN_1);
 	}
@@ -236,7 +236,7 @@ public class RouteUpdater implements Updater<Route> {
 	 */
 	private void twoDatabaseStopPointOneTest(ValidationReporter validationReporter, Context context, StopPoint oldSp, StopPoint newSp, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldSp.getRoute(), newSp.getRoute()))
-			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_1, data.getDataLocations().get(newSp.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_1,ValidationConstant.DATABASE_STOP_POINT_1, data.getDataLocations().get(newSp.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_POINT_1);
 	}

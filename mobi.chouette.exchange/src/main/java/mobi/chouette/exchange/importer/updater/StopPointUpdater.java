@@ -111,7 +111,7 @@ public class StopPointUpdater implements Updater<StopPoint> {
 		if(oldSp !=null && newSp != null) {
 			if(oldSp.getPosition() != null && newSp.getPosition() != null) {
 				if(!oldSp.getPosition().equals(newSp.getPosition()))
-					validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_2, data.getDataLocations().get(newSp.getObjectId()));
+					validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_2,ValidationConstant.DATABASE_STOP_POINT_2, data.getDataLocations().get(newSp.getObjectId()));
 				else
 					validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_POINT_2);
 			}
@@ -128,7 +128,7 @@ public class StopPointUpdater implements Updater<StopPoint> {
 	 */
 	private void twoDatabaseStopPointThreeTest(ValidationReporter validationReporter, Context context, StopArea oldSA, StopArea newSA, ValidationData data) {
 		if(!ChouetteModelUtil.sameValue(oldSA, newSA))
-			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_3, data.getDataLocations().get(newSA.getObjectId()));
+			validationReporter.addCheckPointReportError(context, null, ValidationConstant.DATABASE_STOP_POINT_3,ValidationConstant.DATABASE_STOP_POINT_3, data.getDataLocations().get(newSA.getObjectId()));
 		else
 			validationReporter.reportSuccess(context, ValidationConstant.DATABASE_STOP_POINT_3);
 	}

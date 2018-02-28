@@ -145,7 +145,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 			actionResource.setName(zipReport.getName());
 			actionResource.setStatus(zipReport.getStatus().name());
 			actionResourceDAO.saveResource(actionResource);
-			addMessages(context, zipReport, actionResource,parameters.getReferentialId());
+			addMessages(context, zipReport, actionResource, parameters.getReferentialId());
 		}
 		for (FileReport fileReport : report.getFiles()) {
 			ActionResource actionResource = actionResourceDAO.createResource(job);
@@ -161,7 +161,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 			}
 			actionResourceDAO.saveResource(actionResource);
 
-			addMessages(context, fileReport, actionResource,parameters.getReferentialId());
+			addMessages(context, fileReport, actionResource, parameters.getReferentialId());
 		}
 
 		for (ObjectCollectionReport collection : report.getCollections().values()) {
@@ -183,10 +183,31 @@ public class DaoProgressionCommand implements ProgressionCommand {
 				}
 				actionResourceDAO.saveResource(actionResource);
 				if (actionResource.getAction().equals(ACTION.validator))
-					addMessages(context, objectReport, actionResource,parameters.getReferentialId());
+					addMessages(context, objectReport, actionResource, parameters.getReferentialId());
 			}
 		}
-		
+		for (ObjectReport objectReport : report.getObjects().values()) {
+			ActionResource actionResource = actionResourceDAO.createResource(job);
+			actionResource.setType(objectReport.getType().name().toLowerCase());
+			actionResource.setName(objectReport.getDescription());
+			actionResource.setStatus(objectReport.getStatus().name());
+			actionResource.setReference(objectReport.getObjectId());
+			for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
+				actionResource.getMetrics().put(entry.getKey().name().toLowerCase(), entry.getValue().toString());
+			}
+			if (valReport != null) {
+				// just set warning and error messages count !
+				actionResource.getMetrics().put("ok_count", "-1");
+				actionResource.getMetrics().put("warning_count", Integer.toString(valReport.getWarningCount()));
+				actionResource.getMetrics().put("error_count", Integer.toString(valReport.getErrorCount()));
+				actionResource.getMetrics().put("uncheck_count", "-1");
+			}
+			actionResourceDAO.saveResource(actionResource);
+			if (actionResource.getAction().equals(ACTION.validator))
+				addMessages(context, objectReport, actionResource, parameters.getReferentialId());
+
+		}
+
 		report.clear();
 		if (valReport != null) {
 			valReport.clear();
@@ -194,7 +215,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 		}
 	}
 
-	private void addMessages(Context context, CheckedReport report, ActionResource actionResource,Long referentialId) {
+	private void addMessages(Context context, CheckedReport report, ActionResource actionResource, Long referentialId) {
 		ValidationReport valReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		if (valReport == null)
 			return;
@@ -203,7 +224,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
 				ActionMessage message = actionMessageDAO.createMessage(actionResource);
 				message.setCriticity(ActionMessage.CRITICITY.error);
-				populateMessage(message, error,referentialId);
+				populateMessage(message, error, referentialId);
 				actionMessageDAO.saveMessage(message);
 			}
 		}
@@ -212,20 +233,20 @@ public class DaoProgressionCommand implements ProgressionCommand {
 				CheckPointErrorReport error = valReport.getCheckPointErrors().get(key.intValue());
 				ActionMessage message = actionMessageDAO.createMessage(actionResource);
 				message.setCriticity(ActionMessage.CRITICITY.warning);
-				populateMessage(message, error,referentialId);
+				populateMessage(message, error, referentialId);
 				actionMessageDAO.saveMessage(message);
 			}
 		}
 	}
 
-	private void populateMessage(ActionMessage message, CheckPointErrorReport error,Long referentialId) {
+	private void populateMessage(ActionMessage message, CheckPointErrorReport error, Long referentialId) {
 		message.setMessageKey(error.getKey());
 		message.setCheckPointId(error.getCheckPointDefId());
 		Map<String, String> map = message.getMessageAttributs();
 		Map<String, String> mapResource = message.getResourceAttributs();
 		map.put("test_id", error.getTestId());
-		addLocation(map, "source", error.getSource(),referentialId);
-		addLocation(mapResource, "", error.getSource(),referentialId);
+		addLocation(map, "source", error.getSource(), referentialId);
+		addLocation(mapResource, "", error.getSource(), referentialId);
 		for (int i = 0; i < error.getTargets().size(); i++) {
 			addLocation(map, "target_" + i, error.getTargets().get(i), referentialId);
 		}
@@ -233,7 +254,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 		map.put("reference_value", asString(error.getReferenceValue()));
 	}
 
-	private void addLocation(Map<String, String> map, String prefix, Location location,Long referentialId) {
+	private void addLocation(Map<String, String> map, String prefix, Location location, Long referentialId) {
 		if (!prefix.isEmpty())
 			prefix = prefix + "_";
 		if (location.getFile() != null) {

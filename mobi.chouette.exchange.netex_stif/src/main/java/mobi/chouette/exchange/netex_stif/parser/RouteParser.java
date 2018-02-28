@@ -76,7 +76,7 @@ public class RouteParser implements Parser {
 			} else if (xpp.getName().equals(NetexStifConstant.DIRECTION_TYPE)) {
 
 				String tmpDirType = xpp.nextText();
-				route.setWayBack(tmpDirType);
+				route.setWayback(tmpDirType);
 				// log.warn("Route "+ id+ " : DirectionType = "+ tmpDirType);
 				if (tmpDirType.equals(NetexStifConstant.DIRECTION_INBOUND)) {
 					route.setDirection(PTDirectionEnum.R);

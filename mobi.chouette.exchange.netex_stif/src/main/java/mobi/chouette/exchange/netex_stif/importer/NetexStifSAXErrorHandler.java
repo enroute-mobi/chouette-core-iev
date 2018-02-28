@@ -61,7 +61,7 @@ public class NetexStifSAXErrorHandler implements ErrorHandler {
 			DataLocation location = new DataLocation(fileName, error.getLineNumber(), error.getColumnNumber());
 
 			validationReporter.updateCheckPointReportSeverity(context, NetexCheckPoints.L1_NetexStif_2, severity);
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_2, location, error.getMessage());
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_2,NetexCheckPoints.L1_NetexStif_2, location, error.getMessage());
 		}
 
 		return;

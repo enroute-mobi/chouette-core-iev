@@ -14,6 +14,14 @@ public class OperatingPeriod extends ChouetteIdentifiedObject {
 	@Setter
 	private Long id;
 
+	@Getter
+	@Setter 
+	private String objectId;
+	
+	@Getter 
+	@Setter
+	private Long objectVersion;
+
 	@Getter @Setter
 	private Period period = new Period();
 	

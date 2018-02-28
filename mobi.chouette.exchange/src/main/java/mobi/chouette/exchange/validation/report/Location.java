@@ -20,6 +20,7 @@ import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
@@ -169,6 +170,13 @@ public class Location extends AbstractReport {
 				objectRefs.add(new ObjectReference(object.getLine()));
 			if (object.getLineLite() != null)
 				objectRefs.add(new ObjectReference(object.getLineLite()));
+		} else if (chouetteObject instanceof Footnote) {
+			Footnote object = (Footnote) chouetteObject;
+			objectRefs.add(new ObjectReference(object));
+			if (object.getLine() != null)
+				objectRefs.add(new ObjectReference(object.getLine()));
+			if (object.getLineLite() != null)
+				objectRefs.add(new ObjectReference(object.getLineLite()));
 		} else if (chouetteObject instanceof RoutingConstraint) {
 			RoutingConstraint object = (RoutingConstraint) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
@@ -216,19 +224,6 @@ public class Location extends AbstractReport {
 		}
 
 	}
-
-	// public Location(FileLocation sourceLocation, String objectId) {
-	// this.file = sourceLocation;
-	// this.objectId = objectId;
-	// }
-
-	// public Location(FileLocation sourceLocation, NeptuneIdentifiedObject
-	// chouetteObject) {
-	// this.file = sourceLocation;
-	// this.objectId = chouetteObject.getObjectId();
-	// this.name = buildName(chouetteObject);
-	// // addLineLocation(this, chouetteObject);
-	// }
 
 	public static String buildName(ChouetteIdentifiedObject chouetteObject) {
 		if (chouetteObject instanceof VehicleJourney) {

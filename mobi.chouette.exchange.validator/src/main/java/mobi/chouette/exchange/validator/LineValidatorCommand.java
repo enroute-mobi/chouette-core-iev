@@ -23,6 +23,7 @@ import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
 import mobi.chouette.exchange.validation.report.ValidationReport;
+import mobi.chouette.exchange.validator.checkpoints.FootnoteValidator;
 import mobi.chouette.exchange.validator.checkpoints.JourneyPatternValidator;
 import mobi.chouette.exchange.validator.checkpoints.LineValidator;
 import mobi.chouette.exchange.validator.checkpoints.RouteValidator;
@@ -43,6 +44,7 @@ public class LineValidatorCommand implements Command {
 	private RoutingConstraintValidator routingConstraintCheckPoints = new RoutingConstraintValidator();
 	private JourneyPatternValidator journeyPatternCheckPoints = new JourneyPatternValidator();
 	private VehicleJourneyValidator vehicleJourneyCheckPoints = new VehicleJourneyValidator();
+	private FootnoteValidator footnoteCheckPoints = new FootnoteValidator();
 
 	@Override
 	public boolean execute(Context context) throws Exception {
@@ -68,6 +70,8 @@ public class LineValidatorCommand implements Command {
 					journeyPattern-> journeyPatternCheckPoints.validate(context, journeyPattern,parameters,transportMode));
 			r.getVehicleJourneys().values().stream().forEach(
 					vehicleJourney-> vehicleJourneyCheckPoints.validate(context, vehicleJourney,parameters,transportMode));
+			r.getFootnotes().values().stream().forEach(
+					note-> footnoteCheckPoints.validate(context, note,parameters,transportMode));
 
 			if (reporter.hasLineValidationErrors(context,line))
 			{

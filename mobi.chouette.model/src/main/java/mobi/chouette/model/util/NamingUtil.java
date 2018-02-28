@@ -9,6 +9,7 @@ import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
@@ -128,6 +129,18 @@ public abstract class NamingUtil {
 		if (object.getNumber() != null)
 			return object.getNumber().toString();
 		return object.getObjectId();
+	}
+	
+	public static String getName(Footnote object) {
+		String name ="("+object.getCode()+") ";
+		if (object.getLabel() != null)
+		{
+			if (object.getLabel().length() > 10)
+			   name += object.getLabel().substring(0, 7)+ "...";
+			else
+				name += object.getLabel();
+		}
+		return name;
 	}
 
 	public static boolean isFilled(String data) {

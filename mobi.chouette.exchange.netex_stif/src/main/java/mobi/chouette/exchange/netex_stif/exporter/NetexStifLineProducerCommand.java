@@ -68,22 +68,32 @@ public class NetexStifLineProducerCommand implements Command {
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
 					OBJECT_STATE.OK, IO_TYPE.INPUT);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 0);
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
-					collection.getJourneyPatterns().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE,
-					collection.getRoutes().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY,
-					collection.getVehicleJourneys().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.TIMETABLE,
-					collection.getTimetables().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, collection.getJourneyPatterns().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE, collection.getRoutes().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY, collection.getVehicleJourneys().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.CONNECTION_LINK, collection.getConnectionLinks().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.TIME_TABLE, collection.getTimetables().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ACCESS_POINT, collection.getAccessPoints().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.STOP_AREA, collection.getStopAreas().size());
 			if (cont) {
 
 				NetexStifLineProducer producer = new NetexStifLineProducer();
 				producer.produce(context);
 
 				reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
-				// merge refresh shared data
-
+				// merge refresh shared data				
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.NETWORK, "networks", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.NETWORK, OBJECT_TYPE.NETWORK, sharedData.getNetworkIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.COMPANY, "companies", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.COMPANY, OBJECT_TYPE.COMPANY, sharedData.getCompanyIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.CONNECTION_LINK, "connection links", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.CONNECTION_LINK, OBJECT_TYPE.CONNECTION_LINK, sharedData.getConnectionLinkIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.ACCESS_POINT, "access points", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.ACCESS_POINT, OBJECT_TYPE.ACCESS_POINT, sharedData.getAccessPointIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.STOP_AREA, "stop areas", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.STOP_AREA, OBJECT_TYPE.STOP_AREA, sharedData.getStopAreaIds().size());
+				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.TIME_TABLE, "calendars", OBJECT_STATE.OK, IO_TYPE.INPUT);
+				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.TIME_TABLE, OBJECT_TYPE.TIME_TABLE, sharedData.getTimetableIds().size());
 				result = Constant.SUCCESS;
 			} else {
 				reporter.addErrorToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE,

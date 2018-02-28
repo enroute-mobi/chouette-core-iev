@@ -28,6 +28,7 @@ import mobi.chouette.model.compliance.ComplianceCheck;
 import mobi.chouette.model.compliance.ComplianceCheck.CRITICITY;
 import mobi.chouette.model.compliance.ComplianceCheckBlock;
 import mobi.chouette.model.compliance.ComplianceCheckTask;
+import mobi.chouette.model.util.ChouetteModelUtil;
 
 @Log4j
 public class ValidatorInputValidator extends AbstractInputValidator {
@@ -144,7 +145,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 					cp = buildCheckpoint(check);
 				} catch (Exception e) {
 					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, e,
-							"cannot parse ComplianceCheck Attributes for " + check.getCode());
+							"cannot parse ComplianceCheck Attributes for " + check.getSpecificCode());
 				}
 				ComplianceCheckBlock block = check.getBlock();
 				if (block != null) {
@@ -156,7 +157,6 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 					addToGlobalCheckPoints(controlParameters, cp);
 				}
 			});
-
 			return parameter;
 		}
 
@@ -164,11 +164,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	}
 
 	private void addToGlobalCheckPoints(ControlParameters controlParameters, CheckpointParameters cp) {
-		Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().get(cp.getCode());
-		if (list == null) {
-			list = new ArrayList<>();
-			controlParameters.getGlobalCheckPoints().put(cp.getCode(), list);
-		}
+		Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().computeIfAbsent(cp.getOriginCode(),l -> new ArrayList<>());
 		list.add(cp);
 	}
 
@@ -179,16 +175,8 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		if (block.getConditionAttributes().containsKey(TRANSPORT_SUBMODE_KEY)) {
 			key += "/" + block.getConditionAttributes().get(TRANSPORT_SUBMODE_KEY);
 		}
-		Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints().get(key);
-		if (map == null) {
-			map = new HashMap<>();
-			controlParameters.getTransportModeCheckpoints().put(key, map);
-		}
-		Collection<CheckpointParameters> list = map.get(cp.getCode());
-		if (list == null) {
-			list = new ArrayList<>();
-			map.put(cp.getCode(), list);
-		}
+		Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints().computeIfAbsent(key,l -> new HashMap<>());
+		Collection<CheckpointParameters> list = map.computeIfAbsent(cp.getOriginCode(),l -> new ArrayList<>());
 		list.add(cp);
 	}
 
@@ -200,11 +188,12 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 			String key = check.getControlAttributes().getString(ATTRIBUTE_NAME_KEY);
 			String[] keys = key.split("#");
 			generic.setAttributeName(keys[1]);
-			generic.setClassName(toCamelCase(keys[0]));
-			// TODO check valid class and attribute
+			generic.setClassName(ChouetteModelUtil.classNameforRubyName(keys[0]));
+
+			// check valid class and attribute
 			try {
 				Class<?> clazz = Class.forName("mobi.chouette.model." + generic.getClassName());
-				String methodName = "get" + toCamelCase(generic.getAttributeName());
+				String methodName = "get" + ChouetteModelUtil.toCamelCase(generic.getAttributeName());
 				if (!Arrays.stream(clazz.getMethods()).anyMatch(m -> m.getName().equalsIgnoreCase(methodName)))
 					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "unknown check point attribute "
 							+ generic.getClassName() + " for class " + generic.getClassName());
@@ -220,37 +209,14 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		result.setMaximumValue(check.getControlAttributes().optString(MAXIMUM_VALUE_KEY, null));
 		result.setPatternValue(check.getControlAttributes().optString(PATTERN_VALUE_KEY, null));
 		// check existing code
-		if (!CheckPointConstant.exists(check.getCode()))
+		if (!CheckPointConstant.exists(check.getOriginCode()))
 			throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
-					"unknown check point code " + check.getCode());
-		result.setCode(check.getCode());
+					"unknown check point code " + check.getOriginCode());
+		result.setOriginCode(check.getOriginCode());
+		result.setSpecificCode(check.getSpecificCode());
+		result.setName(check.getName());
 		result.setErrorType(check.getCriticity().equals(CRITICITY.error));
 		return result;
-	}
-
-	/**
-	 * @param underscore
-	 * @return
-	 */
-	protected static String toCamelCase(String underscore) {
-		StringBuilder b = new StringBuilder();
-		boolean underChar = false;
-		boolean first = true;
-		for (char c : underscore.toCharArray()) {
-			if (first) {
-				b.append(Character.toUpperCase(c));
-				first = false;
-			} else if (c == '_') {
-				underChar = true;
-			} else {
-				if (underChar) {
-					b.append(Character.toUpperCase(c));
-					underChar = false;
-				} else
-					b.append(c);
-			}
-		}
-		return b.toString();
 	}
 
 	public static class DefaultFactory extends InputValidatorFactory {
