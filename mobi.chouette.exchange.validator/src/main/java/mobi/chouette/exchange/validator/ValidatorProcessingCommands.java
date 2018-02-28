@@ -67,17 +67,19 @@ public class ValidatorProcessingCommands implements ProcessingCommands {
 
 	@Override
 	public List<Command> getPostProcessingCommands(Context context, boolean withDao) {
-		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
-		try {
-			if (withDao)
-				commands.add(CommandFactory.create(initialContext, DaoSharedDataValidatorCommand.class.getName()));
-			else
-				throw new IllegalArgumentException("withDao must be true");
-		} catch (Exception e) {
-			log.error(e, e);
-			throw new RuntimeException("unable to call factories");
-		}
+		// TODO to be activated if compliance controls are added to Timetables
+		
+//		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+//		try {
+//			if (withDao)
+//				commands.add(CommandFactory.create(initialContext, DaoSharedDataValidatorCommand.class.getName()));
+//			else
+//				throw new IllegalArgumentException("withDao must be true");
+//		} catch (Exception e) {
+//			log.error(e, e);
+//			throw new RuntimeException("unable to call factories");
+//		}
 		return commands;
 	}
 
