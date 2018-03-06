@@ -5,12 +5,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import mobi.chouette.model.Company;
+import mobi.chouette.model.Company_;
 
 @Stateless
-public class CompanyDAOImpl extends GenericDAOImpl<Company> implements CompanyDAO{
+public class CompanyDAOImpl extends GenericTenantDAOImpl<Company> implements CompanyDAO{
 
 	public CompanyDAOImpl() {
-		super(Company.class);
+		super(Company_.lineReferentialId,Company.class);
 	}
 
 	@PersistenceContext(unitName = "public")

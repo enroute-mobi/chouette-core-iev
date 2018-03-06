@@ -20,7 +20,6 @@ import mobi.chouette.model.Line;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
-import mobi.chouette.model.RouteSection;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopAreaLite;
@@ -154,9 +153,6 @@ public class Referential implements java.io.Serializable {
 	@Setter
 	private Map<String, Timeband> timebands = new HashMap<>();
 
-	@Getter
-	@Setter
-	private Map<String, RouteSection> routeSections = new HashMap<>();
 
 	@Getter
 	@Setter
@@ -189,7 +185,6 @@ public class Referential implements java.io.Serializable {
 			lines.values().stream().forEach(line -> {
 				line.getRoutes().clear();
 				line.getFootnotes().clear();
-				line.getRoutingConstraints().clear();
 				line.getGroupOfLines().clear();
 			});
 			routes.values().stream().forEach(route -> {
@@ -199,7 +194,6 @@ public class Referential implements java.io.Serializable {
 			journeyPatterns.values().stream().forEach(jp -> {
 				jp.getStopPoints().clear();
 				jp.getVehicleJourneys().clear();
-				jp.getRouteSections().clear();
 			});
 			vehicleJourneys.values().stream().forEach(vj -> {
 				vj.getVehicleJourneyAtStops().clear();
@@ -222,9 +216,6 @@ public class Referential implements java.io.Serializable {
 			sharedGroupOfLines.values().stream().forEach(group -> {
 				group.getLines().clear();
 			});
-			sharedStopAreas.values().stream().forEach(area -> {
-				area.getContainedStopPoints().clear();
-			});
 
 		}
 		accessLinks.clear();
@@ -242,7 +233,6 @@ public class Referential implements java.io.Serializable {
 		timebands.clear();
 		timetables.clear();
 		vehicleJourneys.clear();
-		routeSections.clear();
 		routingConstraints.clear();
 		currentLine = null;
 	}

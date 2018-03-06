@@ -41,7 +41,7 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 	protected Long id;
 	
 	/**
-	 * line referential reference
+	 * StopArea referential reference
 	 * 
 	 * @return The actual value
 	 */

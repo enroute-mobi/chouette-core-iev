@@ -230,7 +230,7 @@ INSERT INTO networks VALUES (1, 'STIF:CODIFLIGNE:PTNetwork:117', 2, NULL, NULL, 
 SELECT pg_catalog.setval('networks_id_seq', 1, true);
 
 INSERT INTO organisations VALUES (1, 'STIF', '2017-02-10 09:37:12.285489', '2017-02-10 09:44:28.887246', 'neptune', 'STIF', '2017-02-10 09:44:28.720673', '"functional_scope"=>"[]"');
-INSERT INTO organisations VALUES (2, 'Cityway', '2017-02-10 10:05:53.212327', '2017-02-10 10:05:53.212327', 'neptune', 'CITYWAY', '2017-02-10 10:05:53.21035', '"functional_scope"=>"[\"STIF:CODIFLIGNE:Line:C00108\"]"');
+INSERT INTO organisations VALUES (2, 'Cityway', '2017-02-10 10:05:53.212327', '2017-02-10 10:05:53.212327', 'neptune', 'CITYWAY', '2017-02-10 10:05:53.21035', '"functional_scope"=>"[\"STIF:CODIFLIGNE:Line:C00108\",\"STIF:CODIFLIGNE:Line:C00109\",\"STIF:CODIFLIGNE:Line:C00163\",\"STIF:CODIFLIGNE:Line:C00164\",\"STIF:CODIFLIGNE:Line:C00165\",\"STIF:CODIFLIGNE:Line:C00166\",\"STIF:CODIFLIGNE:Line:C00168\",\"STIF:CODIFLIGNE:Line:C00171\"]"');
 
 SELECT pg_catalog.setval('organisations_id_seq', 2, true);
 

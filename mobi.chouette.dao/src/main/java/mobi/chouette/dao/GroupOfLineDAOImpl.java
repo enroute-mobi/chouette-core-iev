@@ -5,12 +5,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import mobi.chouette.model.GroupOfLine;
+import mobi.chouette.model.GroupOfLine_;
 
 @Stateless
-public class GroupOfLineDAOImpl extends GenericDAOImpl<GroupOfLine> implements GroupOfLineDAO{
+public class GroupOfLineDAOImpl extends GenericTenantDAOImpl<GroupOfLine> implements GroupOfLineDAO{
 
 	public GroupOfLineDAOImpl() {
-		super(GroupOfLine.class);
+		super(GroupOfLine_.lineReferentialId, GroupOfLine.class);
 	}
 
 	@PersistenceContext(unitName = "public")

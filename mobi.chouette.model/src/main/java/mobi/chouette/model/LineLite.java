@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Immutable;
@@ -144,6 +145,15 @@ public class LineLite extends ChouetteIdentifiedObject {
 	protected Long lineReferentialId;
 
 	/**
+	 * network reference
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "network_id")
+	protected Long networkId;
+	
+	/**
 	 * primary company reference
 	 * 
 	 * @return The actual value
@@ -151,6 +161,18 @@ public class LineLite extends ChouetteIdentifiedObject {
 	@Getter
 	@Column(name = "company_id")
 	protected Long companyId;
+	
+	/**
+	 * organization 
+	 * 
+	 * should be filled manualy
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Transient
+	protected Organisation organisation;
 
 	/**
 	 * secondary companies references

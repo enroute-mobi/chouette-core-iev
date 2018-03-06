@@ -90,7 +90,7 @@ public class LineRegisterCommand implements Command {
 					+ referential.getVehicleJourneys().size());
 			try {
 	
-				optimiser.initialize(cache, referential);
+				optimiser.initialize(importParameter,cache, referential);
 	
 				Line oldValue = cache.getLines().get(newValue.getObjectId());
 				lineUpdater.update(context, oldValue, newValue);

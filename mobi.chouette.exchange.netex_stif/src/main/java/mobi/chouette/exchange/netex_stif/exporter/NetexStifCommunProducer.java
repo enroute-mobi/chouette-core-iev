@@ -10,9 +10,8 @@ import mobi.chouette.common.JobData;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.model.LineLite;
 
-public class NetexStifLineProducer {
+public class NetexStifCommunProducer {
 
 	public void produce(Context context) throws Exception {
 
@@ -21,7 +20,6 @@ public class NetexStifLineProducer {
 		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
 		String rootDirectory = jobData.getPathName();
 
-		
 		Path dir = null;
 		if (context.containsKey(NetexStifConstant.OUTPUT_SUB_PATH)) {
 			String sub = (String) context.get(NetexStifConstant.OUTPUT_SUB_PATH);
@@ -29,13 +27,11 @@ public class NetexStifLineProducer {
 		} else {
 			dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		}
-		LineLite line = collection.getLineLite();
-		String fileName = NetexStifConstant.OFFRE_FILE_PREFIX + "_" + line.objectIdSuffix() + "_" + line.getNumber()
-				+ ".xml";
+		String fileName = NetexStifConstant.COMMUN_FILE_NAME;
 		File file = new File(dir.toFile(), fileName);
 
 		NetexStifFileWriter writer = new NetexStifFileWriter();
-		writer.writeOffreFile(collection, file);
+		writer.writeCommunFile(collection, file);
 
 		reporter.addFileReport(context, fileName, IO_TYPE.OUTPUT);
 

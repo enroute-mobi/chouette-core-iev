@@ -116,7 +116,9 @@ public class DateRange implements Serializable {
 	 */
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
-		return "DateRange [" + format.format(first) + "," + format.format(last) + "]";
+		String firstDate= (first == null  ? "unset" : format.format(first));
+		String lastDate= (last == null  ? "unset" : format.format(last));
+		return "DateRange [" + firstDate + "," + lastDate + "]";
 	}
 
 }

@@ -19,18 +19,21 @@ public class AbstractWriter {
 	public static final String COLUMN = ":";
 	public static final String UTC = "UTC";
 	public static final String LOC = ":LOC";
-	public static final String DATE_TIME_UTC = "yyyyMMddTHHmmssZ";
-	public static final String DATE_00 = "yyyy-MM-ddT00:00:00";
+	public static final String ID_DATE_TIME_UTC = "yyyyMMdd'T'HHmmss'Z'";
+	public static final String ID_DATE = "yyyyMMdd";
+	public static final String XSD_DATE_TIME_UTC = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	public static final String XSD_DATE_00 = "yyyy-MM-dd'T'00:00:00";
+	public static final String XSD_DATE_ONLY = "yyyy-MM-dd";
 	public static final String INDENT = "    ";
 	public static final String VERSION_NETEX = "1.04:FR100-NETEX-1.6-1.8";
 	public static final String VERSION_PUBLICATION = "1.8";
-	public static final String OFFRE_PARTICIPANT_REF = "FR1_OFFRE";
+	public static final String OFFRE_PARTICIPANT_REF = "FR100_OFFRE";
 	public static final String FRAME_REF_PREFIX = "FR100:TypeOfFrame:";
 	public static final String FRAME_DATASOURCE = "FR100-OFFRE_AUTO";
 
 	public static void openPublicationDelivery(Writer writer, String participantRef, DateRange validityPeriod,
 			String lineName) throws IOException {
-		SimpleDateFormat utcDateFormat = new SimpleDateFormat(DATE_TIME_UTC);
+		SimpleDateFormat utcDateFormat = new SimpleDateFormat(XSD_DATE_TIME_UTC);
 		utcDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
 		SimpleDateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy");
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -42,7 +45,7 @@ public class AbstractWriter {
 		writer.write("                           xmlns:gml=\"http://www.opengis.net/gml/3.2\"\n");
 		writer.write("                           xmlns:core=\"http://www.govtalk.gov.uk/core\"\n");
 		writer.write("                           xmlns:siri=\"http://www.siri.org.uk/siri\"\n");
-		writer.write("                           version=\"" + VERSION_NETEX + "\"\n");
+		writer.write("                           version=\"" + VERSION_NETEX + "\">\n");
 		writer.write("    <netex:PublicationTimestamp>" + utcDateFormat.format(new Date())
 				+ "</netex:PublicationTimestamp>\n");
 		writer.write("    <netex:ParticipantRef>" + participantRef + "</netex:ParticipantRef>\n");
@@ -60,17 +63,17 @@ public class AbstractWriter {
 	}
 
 	public static void openGeneralFrame(Writer writer, String prefix, String frameType, List<DateRange> validityPeriods,
-			boolean indent) throws IOException {
-		SimpleDateFormat format = new SimpleDateFormat(DATE_00);
-		SimpleDateFormat utcDateFormat = new SimpleDateFormat(DATE_TIME_UTC);
-		utcDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
+			boolean indent, boolean empty) throws IOException {
+		SimpleDateFormat format = new SimpleDateFormat(XSD_DATE_00);
+		SimpleDateFormat idDateFormat = new SimpleDateFormat(ID_DATE_TIME_UTC);
+		idDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
 		String whiteSpaces = INDENT + INDENT;
 		if (indent)
 			whiteSpaces += INDENT;
 
 		writer.write(whiteSpaces + "<netex:GeneralFrame id=\"" + prefix + ":GeneralFrame:" + frameType + "-"
-				+ utcDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
-				+ FRAME_DATASOURCE + "\">\n");
+				+ idDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
+				+ FRAME_DATASOURCE + (empty? " modification=\"delete\" " : "") +"\">\n");
 		if (validityPeriods != null) {
 			// NOTICE : don't use lambda because of exception management
 			for (DateRange validityPeriod : validityPeriods) {
@@ -83,36 +86,44 @@ public class AbstractWriter {
 			}
 		}
 		writer.write(whiteSpaces + "    <netex:TypeOfFrameRef ref=\"" + FRAME_REF_PREFIX + frameType + ":\"/>\n");
-		writer.write(whiteSpaces + "    <netex:members>\n");
+		if (!empty) {
+			writer.write(whiteSpaces + "    <netex:members>\n");
+		}
 
 	}
 
-	public static void closeGeneralFrame(Writer writer, boolean indent) throws IOException {
+	public static void closeGeneralFrame(Writer writer, boolean indent, boolean empty) throws IOException {
 		String whiteSpaces = INDENT + INDENT;
 		if (indent)
 			whiteSpaces += INDENT;
+		if (!empty) {
 		writer.write(whiteSpaces + "    </netex:members>\n");
+		}
 		writer.write(whiteSpaces + "</netex:GeneralFrame>\n");
 	}
 
-	public static void openCompositeFrame(Writer writer, String prefix, String frameType, String name)
+	public static void openCompositeFrame(Writer writer, String prefix, String frameType, String name, boolean empty)
 			throws IOException {
-		SimpleDateFormat utcDateFormat = new SimpleDateFormat(DATE_TIME_UTC);
-		utcDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
+		SimpleDateFormat idDateFormat = new SimpleDateFormat(ID_DATE_TIME_UTC);
+		idDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
 		String whiteSpaces = INDENT + INDENT;
 
 		writer.write(whiteSpaces + "<netex:CompositeFrame id=\"" + prefix + ":CompositeFrame:" + frameType + "-"
-				+ utcDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
+				+ idDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
 				+ FRAME_DATASOURCE + "\">\n");
 		writer.write(whiteSpaces + "    <netex:Name>" + toXml(name) + "</netex:Name>\n");
 		writer.write(whiteSpaces + "    <netex:TypeOfFrameRef ref=\"" + FRAME_REF_PREFIX + frameType + ":\"/>\n");
-		writer.write(whiteSpaces + "    <netex:frames>\n");
+		if (!empty) {
+			writer.write(whiteSpaces + "    <netex:frames>\n");
+		}
 
 	}
 
-	public static void closeCompositeFrame(Writer writer) throws IOException {
+	public static void closeCompositeFrame(Writer writer, boolean empty) throws IOException {
 		String whiteSpaces = INDENT + INDENT;
-		writer.write(whiteSpaces + "    </netex:frames>\n");
+		if (!empty) {
+			writer.write(whiteSpaces + "    </netex:frames>\n");
+		}
 		writer.write(whiteSpaces + "</netex:CompositeFrame>\n");
 	}
 

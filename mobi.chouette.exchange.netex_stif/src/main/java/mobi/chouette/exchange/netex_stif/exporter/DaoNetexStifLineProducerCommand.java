@@ -1,7 +1,10 @@
 package mobi.chouette.exchange.netex_stif.exporter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -21,13 +24,16 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.dao.FootnoteDAO;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.model.Footnote;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
@@ -36,12 +42,14 @@ import mobi.chouette.model.util.Referential;
 public class DaoNetexStifLineProducerCommand implements Command {
 
 	public static final String COMMAND = "DaoNetexStifLineProducerCommand";
-	
-	@Resource 
+
+	@Resource
 	private SessionContext daoContext;
-	
-	@EJB 
+
+	@EJB
 	private RouteDAO routeDAO;
+	@EJB
+	private FootnoteDAO footnoteDAO;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -59,25 +67,45 @@ public class DaoNetexStifLineProducerCommand implements Command {
 
 			Long lineId = (Long) context.get(Constant.LINE_ID);
 			Referential r = (Referential) context.get(Constant.REFERENTIAL);
-            r.clear(false);
+			r.clear(false);
 			LineLite line = r.findLine(lineId);
 			r.setCurrentLine(line);
-			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
+			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
+					OBJECT_STATE.OK, IO_TYPE.INPUT);
 			List<Route> routes = routeDAO.findByLineId(lineId);
 			routes.forEach(route -> {
+				Map<Long, StopPoint> mappedStops = new HashMap<>();
 				route.setLineLite(line);
 				r.getRoutes().put(route.getObjectId(), route);
-				route.getRoutingConstraints().forEach(rc -> r.getRoutingConstraints().put(rc.getObjectId(), rc));
+				route.getStopPoints().forEach(sp -> mappedStops.put(sp.getId(), sp));
+				route.getRoutingConstraints().forEach(rc -> {
+					rc.getStopPoints().clear();
+					r.getRoutingConstraints().put(rc.getObjectId(), rc);
+					Arrays.stream(rc.getStopPointIds()).forEach(id -> {
+						StopPoint sp = mappedStops.get(id);
+						rc.getStopPoints().add(sp);
+					});
+				});
 				route.getJourneyPatterns().forEach(jp -> {
 					r.getJourneyPatterns().put(jp.getObjectId(), jp);
 					jp.getVehicleJourneys().forEach(vj -> r.getVehicleJourneys().put(vj.getObjectId(), vj));
 				});
 			});
+			List<Footnote> notes = footnoteDAO.findByLineId(lineId);
+			notes.forEach(note -> {
+				note.setLineLite(line);
+				r.getFootnotes().put(note.getObjectId(), note);
+			});
+			log.info("Routes count = " + r.getRoutes().size());
+			log.info("RoutingConstraints count = " + r.getRoutingConstraints().size());
+			log.info("JourneyPatterns count = " + r.getJourneyPatterns().size());
+			log.info("VehicleJourneys count = " + r.getVehicleJourneys().size());
+			log.info("Footnotes count = " + r.getFootnotes().size());
 			result = lineProducerCommand.execute(context);
 			daoContext.setRollbackOnly();
-			
+
 		} catch (Exception e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}

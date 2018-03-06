@@ -19,7 +19,6 @@ import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
-import mobi.chouette.model.Line;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
@@ -40,15 +39,13 @@ public class NetexStifLineProducerCommand implements Command {
 
 			Long lineId = (Long) context.get(Constant.LINE_ID);
 			Referential r = (Referential) context.get(Constant.REFERENTIAL);
-			r.clear(false);
 			LineLite line = r.findLine(lineId);
 			r.setCurrentLine(line);
 			log.info("procesing line " + NamingUtil.getName(line));
 			NetexStifExportParameters configuration = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 
-			ExportableData collection = (ExportableData) context.computeIfAbsent(Constant.EXPORTABLE_DATA,
-					c -> new ExportableData());
-			collection.clear();
+			ExportableData collection = (ExportableData) context.get(Constant.EXPORTABLE_DATA);
+			collection.clearLine();
 
 			SharedDataKeys sharedData = (SharedDataKeys) context.computeIfAbsent(Constant.SHARED_DATA_KEYS,
 					c -> new SharedDataKeys());
@@ -63,43 +60,27 @@ public class NetexStifLineProducerCommand implements Command {
 				endDate = new Date(configuration.getEndDate().getTime());
 			}
 
+			log.info("global validity period before collect" + collection.getGlobalValidityPeriod());
+
 			NetexStifDataCollector collector = new NetexStifDataCollector();
-			boolean cont = collector.collect(collection, r, startDate, endDate);
+			boolean cont = collector.collect(context, collection, r, startDate, endDate);
+			log.info("global validity period after collect" + collection.getGlobalValidityPeriod());
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
 					OBJECT_STATE.OK, IO_TYPE.INPUT);
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 0);
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, collection.getJourneyPatterns().size());
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE, collection.getRoutes().size());
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY, collection.getVehicleJourneys().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.CONNECTION_LINK, collection.getConnectionLinks().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.TIME_TABLE, collection.getTimetables().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ACCESS_POINT, collection.getAccessPoints().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.STOP_AREA, collection.getStopAreas().size());
-			if (cont) {
+			// if (cont) {
 
 				NetexStifLineProducer producer = new NetexStifLineProducer();
 				producer.produce(context);
 
-				reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.LINE, 1);
-				// merge refresh shared data				
-				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.NETWORK, "networks", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.NETWORK, OBJECT_TYPE.NETWORK, sharedData.getNetworkIds().size());
-				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.COMPANY, "companies", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.COMPANY, OBJECT_TYPE.COMPANY, sharedData.getCompanyIds().size());
-				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.CONNECTION_LINK, "connection links", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.CONNECTION_LINK, OBJECT_TYPE.CONNECTION_LINK, sharedData.getConnectionLinkIds().size());
-				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.ACCESS_POINT, "access points", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.ACCESS_POINT, OBJECT_TYPE.ACCESS_POINT, sharedData.getAccessPointIds().size());
-				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.STOP_AREA, "stop areas", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.STOP_AREA, OBJECT_TYPE.STOP_AREA, sharedData.getStopAreaIds().size());
-				reporter.addObjectReport(context, MERGED, OBJECT_TYPE.TIME_TABLE, "calendars", OBJECT_STATE.OK, IO_TYPE.INPUT);
-				reporter.setStatToObjectReport(context, MERGED, OBJECT_TYPE.TIME_TABLE, OBJECT_TYPE.TIME_TABLE, sharedData.getTimetableIds().size());
 				result = Constant.SUCCESS;
-			} else {
-				reporter.addErrorToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE,
-						ActionReporter.ERROR_CODE.NO_DATA_ON_PERIOD, "no data on period");
-				result = Constant.ERROR;
-			}
+//			} else {
+//				reporter.addErrorToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE,
+//						ActionReporter.ERROR_CODE.NO_DATA_ON_PERIOD, "no data on period");
+//				result = Constant.ERROR;
+//			}
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

@@ -15,7 +15,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mobi.chouette.model.util.NamingUtil;
 
 /**
  * Chouette Footnote : a note for vehicle journeys
@@ -65,9 +64,9 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	
 	public String getObjectId()
 	{
-		if (objectId == null && lineLite != null)
+		if (objectId == null && lineLite != null && lineLite.getOrganisation() != null && id != null)
 		{
-			objectId = lineLite.objectIdPrefix()+":Notice:"+lineLite.objectIdSuffix()+"_"+NamingUtil.getName(this)+":LOC";
+			objectId = lineLite.getOrganisation().getCode()+":Notice:"+lineLite.objectIdSuffix()+"_"+id+":LOC";
 		}
 		return objectId;
 	}

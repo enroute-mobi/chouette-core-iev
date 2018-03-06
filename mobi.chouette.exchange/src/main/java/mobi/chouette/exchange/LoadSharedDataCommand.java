@@ -11,6 +11,8 @@ import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.codehaus.jettison.json.JSONArray;
+
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
@@ -22,10 +24,12 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.CompanyLiteDAO;
 import mobi.chouette.dao.LineLiteDAO;
+import mobi.chouette.dao.OrganisationDAO;
 import mobi.chouette.dao.StopAreaLiteDAO;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.Organisation;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.util.Referential;
 
@@ -43,6 +47,9 @@ public class LoadSharedDataCommand implements Command {
 
 	@EJB
 	private StopAreaLiteDAO stopAreaDAO;
+
+	@EJB
+	private OrganisationDAO organisationDAO;
 
 	@Override
 	public boolean execute(Context context) throws Exception {
@@ -76,6 +83,25 @@ public class LoadSharedDataCommand implements Command {
 				referential.getSharedReadOnlyStopAreas().put(stopArea.getObjectId(), stopArea);
 				stopAreaDAO.detach(stopArea);
 			}
+
+			for (Organisation organisation : organisationDAO.findAll()) {
+				if (organisation.getCode().equals("STIF") || organisation.getCode().equals("FR100")|| organisation.getCode().equals("FR1"))
+				{
+					// SKIP Stif organisation
+					continue;
+				}
+				String functionalScope = organisation.getSsoAttributes().get("functional_scope");
+				JSONArray array = new JSONArray(functionalScope);
+				for (int i = 0; i < array.length(); i++) {
+					LineLite line = referential.getSharedReadOnlyLines().get(array.getString(i));
+					if (line != null) {
+						line.setOrganisation(organisation);
+					}
+				}
+			}
+			referential.getSharedReadOnlyLines().values().stream()
+			        .filter(l -> l.getOrganisation() == null)
+					.forEach(l -> log.error("line " + l.getObjectId() + " has no organisation"));
 
 			result = Constant.SUCCESS;
 

@@ -14,10 +14,10 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.core.CoreExceptionCode;
 import mobi.chouette.core.CoreRuntimeException;
+import mobi.chouette.exchange.LoadSharedDataCommand;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.exporter.CompressCommand;
-import mobi.chouette.exchange.exporter.SaveMetadataCommand;
 
 @Data
 @Log4j
@@ -42,10 +42,11 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 
 	@Override
 	public List<Command> getPreProcessingCommands(Context context,boolean withDao) {
-		InitialContext initCtx = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
-			commands.add(CommandFactory.create(initCtx, NetexStifInitExportCommand.class.getName()));
+			commands.add(CommandFactory.create(initialContext, NetexStifInitExportCommand.class.getName()));
+			commands.add(CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
 			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
@@ -72,12 +73,25 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 		
 	}
 
+	public List<Command> getPostLineProcessingCommands(Context context,boolean withDao) {
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+		List<Command> commands = new ArrayList<>();
+		try {
+			commands.add(CommandFactory.create(initialContext, NetexStifSharedOperatorDataProducerCommand.class.getName()));
+		} catch (Exception e) {
+			log.error(e, e);
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
+		}
+		return commands;
+	}
+
 	@Override
 	public List<Command> getPostProcessingCommands(Context context,boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
-			// add ICAR and ILIGO export commands
+			// add ICAR and ILIGO export commands if necessary
+			commands.add(CommandFactory.create(initialContext, DaoNetexStifSharedDataProducerCommand.class.getName()));
 			commands.add(CommandFactory.create(initialContext, CompressCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);

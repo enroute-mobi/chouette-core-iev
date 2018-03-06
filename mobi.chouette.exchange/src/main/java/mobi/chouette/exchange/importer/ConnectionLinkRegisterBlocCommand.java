@@ -22,6 +22,7 @@ import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.exchange.importer.updater.ConnectionLinkUpdater;
 import mobi.chouette.exchange.importer.updater.Updater;
 import mobi.chouette.exchange.importer.updater.UpdaterUtils;
+import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.util.ObjectFactory;
@@ -49,6 +50,7 @@ public class ConnectionLinkRegisterBlocCommand implements Command {
 
 		boolean result = Constant.ERROR;
 		// Monitor monitor = MonitorFactory.start(COMMAND);
+		AbstractParameter params = (AbstractParameter) context.get(Constant.CONFIGURATION);
 
 		try {
 			Boolean optimized = Boolean.TRUE;
@@ -58,7 +60,7 @@ public class ConnectionLinkRegisterBlocCommand implements Command {
 			Collection<ConnectionLink> connectionLinks = (Collection<ConnectionLink>) context.get(Constant.CONNECTION_LINK_BLOC);
 			Referential cache = new Referential();
 			context.put(Constant.CACHE, cache);
-			initializeStopArea(cache, connectionLinks);
+			initializeStopArea(params.getStopAreaReferentialId(),cache, connectionLinks);
 			initializeConnectionLink(cache, connectionLinks);
 			// log.info(Color.CYAN + monitorInit.stop() + Color.NORMAL);
 			// Monitor monitorUpdate = MonitorFactory.start(COMMAND+".update");
@@ -83,13 +85,13 @@ public class ConnectionLinkRegisterBlocCommand implements Command {
 
 	}
 
-	private void initializeStopArea(Referential cache, Collection<ConnectionLink> list) {
+	private void initializeStopArea(long stopAreaReferentialId, Referential cache, Collection<ConnectionLink> list) {
 		Collection<String> objectIds = new HashSet<>();
 		for (ConnectionLink connectionLink : list) {
 			objectIds.add(connectionLink.getStartOfLink().getObjectId());
 			objectIds.add(connectionLink.getEndOfLink().getObjectId());
 		}
-		List<StopArea> objects = stopAreaDAO.findByObjectId(objectIds);
+		List<StopArea> objects = stopAreaDAO.findByObjectId(stopAreaReferentialId,objectIds);
 		for (StopArea object : objects) {
 			cache.getStopAreas().put(object.getObjectId(), object);
 		}

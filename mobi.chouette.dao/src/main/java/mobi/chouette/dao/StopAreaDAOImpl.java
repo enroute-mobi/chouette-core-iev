@@ -5,11 +5,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopArea_;
 
 @Stateless
-public class StopAreaDAOImpl extends GenericDAOImpl<StopArea> implements StopAreaDAO{
+public class StopAreaDAOImpl extends GenericTenantDAOImpl<StopArea> implements StopAreaDAO{
 	public StopAreaDAOImpl() {
-		super(StopArea.class);
+		super(StopArea_.stopAreaReferentialId,StopArea.class);
 	}
 
 	@PersistenceContext(unitName = "public")

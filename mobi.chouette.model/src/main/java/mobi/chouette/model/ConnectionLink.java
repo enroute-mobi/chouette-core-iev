@@ -325,13 +325,13 @@ public class ConnectionLink extends ChouetteIdentifiedObject {
 	 * @param stopArea
 	 */
 	public void setStartOfLink(StopArea stopArea) {
-		if (this.startOfLink != null) {
-			this.startOfLink.getConnectionStartLinks().remove(this);
-		}
+//		if (this.startOfLink != null) {
+//			this.startOfLink.getConnectionStartLinks().remove(this);
+//		}
 		this.startOfLink = stopArea;
-		if (stopArea != null) {
-			stopArea.getConnectionStartLinks().add(this);
-		}
+//		if (stopArea != null) {
+//			stopArea.getConnectionStartLinks().add(this);
+//		}
 	}
 	/**
 	 * set stopArea without updating stopArea collection
@@ -358,13 +358,13 @@ public class ConnectionLink extends ChouetteIdentifiedObject {
 	 * @param stopArea
 	 */
 	public void setEndOfLink(StopArea stopArea) {
-		if (this.endOfLink != null) {
-			this.endOfLink.getConnectionEndLinks().remove(this);
-		}
+//		if (this.endOfLink != null) {
+//			this.endOfLink.getConnectionEndLinks().remove(this);
+//		}
 		this.endOfLink = stopArea;
-		if (stopArea != null) {
-			stopArea.getConnectionEndLinks().add(this);
-		}
+//		if (stopArea != null) {
+//			stopArea.getConnectionEndLinks().add(this);
+//		}
 	}
 	
 	/**

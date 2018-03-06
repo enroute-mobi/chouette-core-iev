@@ -4,10 +4,12 @@ import java.sql.Date;
 import java.util.Collection;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Context;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
@@ -16,32 +18,52 @@ import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class NetexStifDataCollector {
-	public boolean collect(ExportableData collection, Referential referential, Date startDate, Date endDate) {
-       boolean res = false;
+	public boolean collect(Context context, ExportableData collection, Referential referential, Date startDate,
+			Date endDate) {
+		boolean res = false;
 		Collection<Route> routes = referential.getRoutes().values();
 		LineLite line = referential.getCurrentLine();
-		// check for each route if vehiclejourney is in DateRange scope  
+		// check for each route if vehiclejourney is in DateRange scope
 		boolean validLine = false;
-		collection.setLineLite(null);
+		boolean validStops = true;
+		collection.setLineLite(line);
+		collection.getMappedLines().put(line.getId(), line);
 		collection.getRoutes().clear();
 		collection.getJourneyPatterns().clear();
 		collection.getStopPoints().clear();
 		collection.getVehicleJourneys().clear();
-		
-		
+		if (routes.isEmpty()) {
+			log.error("no route for line" + line.getObjectId());
+		}
 		for (Route route : routes) {
 			boolean validRoute = false;
-			if (route.getStopPoints().size() < 2)
+			if (route.getStopPoints().size() < 2) {
+				log.error("no stops for route " + route.getObjectId());
 				continue;
+			}
+			for (StopPoint sp : route.getStopPoints()) {
+				if (collection.getMappedStopAreas().containsKey(sp.getStopAreaId()))
+					continue;
+				StopAreaLite stopArea = referential.findStopArea(sp.getStopAreaId());
+				if (stopArea == null) {
+					log.error("stoparea id =" + sp.getStopAreaId() + "not found");
+					validStops= false;
+				} else {
+					collection.getMappedStopAreas().put(sp.getStopAreaId(), stopArea);
+				}
+			}
 			for (JourneyPattern jp : route.getJourneyPatterns()) {
 				boolean validJourneyPattern = false;
-				if (jp.getStopPoints().size() < 2)
+				if (jp.getStopPoints().size() < 2) {
+					log.error("no stops for journeyPattern " + jp.getObjectId());
 					continue; // no stops
+				}
 				if (jp.getDepartureStopPoint() == null || jp.getArrivalStopPoint() == null) {
 					ChouetteModelUtil.refreshDepartureArrivals(jp);
 				}
 				for (VehicleJourney vehicleJourney : jp.getVehicleJourneys()) {
 					if (vehicleJourney.getVehicleJourneyAtStops().isEmpty()) {
+						log.error("no passing times for journey " + vehicleJourney.getObjectId());
 						continue;
 					}
 					if (startDate == null && endDate == null) {
@@ -79,10 +101,13 @@ public class NetexStifDataCollector {
 									isValid = timetable.isActiveAfter(startDate);
 								else
 									isValid = timetable.isActiveOnPeriod(startDate, endDate);
-								if (isValid)
+								if (isValid) {
+									log.error("timetable accepted " + timetable.getObjectId());
 									collection.getTimetables().add(timetable);
-								else
+								} else {
+									log.error("timetable excluded " + timetable.getObjectId());
 									collection.getExcludedTimetables().add(timetable);
+								}
 							}
 						}
 						if (isValid) {
@@ -97,6 +122,8 @@ public class NetexStifDataCollector {
 								if (!collection.getNotices().contains(note))
 									collection.getNotices().add(note);
 							}
+						} else {
+							log.error("no valid timetable for journey " + vehicleJourney.getObjectId());
 						}
 					}
 				} // end vehiclejourney loop
@@ -105,6 +132,7 @@ public class NetexStifDataCollector {
 			} // end journeyPattern loop
 			if (validRoute) {
 				collection.getRoutes().add(route);
+			    collection.getRoutingConstraints().addAll(route.getRoutingConstraints());
 				route.getOppositeRoute(); // to avoid lazy loading afterward
 				for (StopPoint stopPoint : route.getStopPoints()) {
 					if (stopPoint == null)
@@ -113,11 +141,10 @@ public class NetexStifDataCollector {
 				}
 			}
 		} // end route loop
-		if (validLine) {
-			collection.setLineLite(line);
+		if (validLine && validStops) {
+			res = true;
 		}
 		return res;
 	}
-
 
 }

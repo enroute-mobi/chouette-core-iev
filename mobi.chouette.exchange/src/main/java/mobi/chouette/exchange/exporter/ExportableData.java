@@ -19,6 +19,7 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
+import mobi.chouette.model.NetworkLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
@@ -28,7 +29,7 @@ import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 
 public class ExportableData {
-	
+
 	@Getter
 	@Setter
 	private Set<Network> networks = new HashSet<>();
@@ -100,23 +101,42 @@ public class ExportableData {
 	@Getter
 	@Setter
 	private Set<StopArea> sharedStops = new HashSet<>();
-	
-	@Getter @Setter 
-	private Map<Long,StopAreaLite> mappedStopAreas = new HashMap<>();
 
-	@Getter @Setter 
-	private Map<Long,CompanyLite> mappedCompanies = new HashMap<>();
+	@Getter
+	@Setter
+	private Map<Long, LineLite> mappedLines = new HashMap<>();
 
-//	public Timetable findTimetable(String objectId) {
-//		for (Timetable tm : timetables) {
-//			if (tm.getObjectId().equals(objectId))
-//				return tm;
-//		}
-//		return null;
-//	}
-	
-	public void clear()
-	{
+	@Getter
+	@Setter
+	private Map<Long, StopAreaLite> mappedStopAreas = new HashMap<>();
+
+	@Getter
+	@Setter
+	private Map<Long, CompanyLite> mappedCompanies = new HashMap<>();
+
+	@Getter
+	@Setter
+	private Map<Long, NetworkLite> mappedNetworks = new HashMap<>();
+
+	// public Timetable findTimetable(String objectId) {
+	// for (Timetable tm : timetables) {
+	// if (tm.getObjectId().equals(objectId))
+	// return tm;
+	// }
+	// return null;
+	// }
+
+	public void clear() {
+		clearLine();
+		timetables.clear();
+		excludedTimetables.clear();
+		mappedStopAreas.clear();
+		mappedCompanies.clear();
+		mappedLines.clear();
+		mappedNetworks.clear();
+	}
+
+	public void clearLine() {
 		networks.clear();
 		line = null;
 		lineLite = null;
@@ -131,8 +151,6 @@ public class ExportableData {
 		connectionLinks.clear();
 		accessLinks.clear();
 		accessPoints.clear();
-		timetables.clear();
-		excludedTimetables.clear();
 		routingConstraints.clear();
 		timetableMap.clear();
 		vehicleJourneys.clear();
@@ -140,7 +158,5 @@ public class ExportableData {
 		routes.clear();
 		stopPoints.clear();
 		sharedStops.clear();
-		mappedStopAreas.clear();
-		mappedCompanies.clear();
 	}
 }

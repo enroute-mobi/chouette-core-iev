@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
@@ -276,22 +275,6 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	private List<VehicleJourney> vehicleJourneys = new ArrayList<VehicleJourney>(
 			0);
 
-	/**
-	 * route sections
-	 * 
-	 * @param routeSections
-	 *            New value
-	 * @return The actual value
-	 * @since 3.2.0
-	 * 
-	 */
-	@Getter
-	@Setter
-	@Transient
-//	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
-//	@OrderColumn(name="rank")
-//	@JoinTable(name = "journey_pattern_sections", joinColumns = { @JoinColumn(name = "journey_pattern_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "route_section_id", nullable = false, updatable = false) })
-	private List<RouteSection> routeSections = new ArrayList<RouteSection>(0);
 	
 	/**
 	 * add a stop point if not already present

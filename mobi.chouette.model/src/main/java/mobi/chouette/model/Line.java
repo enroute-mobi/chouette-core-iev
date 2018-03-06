@@ -13,8 +13,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +32,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.type.TransportModeNameEnum;
 import mobi.chouette.model.type.UserNeedEnum;
 
 /**
@@ -48,7 +45,7 @@ import mobi.chouette.model.type.UserNeedEnum;
 @Table(name = "lines",schema="public")
 @NoArgsConstructor
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
-@ToString(callSuper = true, exclude = { "routingConstraints" })
+@ToString(callSuper = true)
 public class Line extends ChouetteIdentifiedObject {
 	private static final long serialVersionUID = -8086291270595894778L;
 
@@ -215,10 +212,20 @@ public class Line extends ChouetteIdentifiedObject {
 	 */
 	@Getter
 	@Setter
-	@Enumerated(EnumType.STRING)
 	@Column(name = "transport_mode")
-	private TransportModeNameEnum transportModeName = TransportModeNameEnum.Bus;
+	private String transportModeName;
 
+	/**
+	 * Transport sub mode (default value = Bus)
+	 * 
+	 * @param transportSubModeName
+	 *            New value
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "transport_submode")
+	protected String transportSubModeName;
 	/**
 	 * mobility restriction indicator (such as wheel chairs) <br>
 	 * 
@@ -383,6 +390,31 @@ public class Line extends ChouetteIdentifiedObject {
 		}
 	}
 
+	@Getter
+	@Setter
+	@Column(name = "deactivated")
+	protected boolean deactivated;
+
+
+	/**
+	 * xml data
+	 */
+	@Getter
+	@Setter
+	@Column(name="import_xml",columnDefinition = "text")
+	private String importXml;
+	
+	
+	/**
+	 * line referential reference
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "line_referential_id")
+	protected Long lineReferentialId;
+
 	/**
 	 * company reference
 	 * 
@@ -449,44 +481,6 @@ public class Line extends ChouetteIdentifiedObject {
 	@JoinTable(name = "group_of_lines_lines", joinColumns = { @JoinColumn(name = "line_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "group_of_line_id", nullable = false, updatable = false) })
 	private List<GroupOfLine> groupOfLines = new ArrayList<GroupOfLine>(0);
 
-	/**
-	 * routing constraints associations
-	 * 
-	 * @param routingConstraints
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@ManyToMany(mappedBy = "routingConstraintLines", cascade = { CascadeType.PERSIST })
-	private List<StopArea> routingConstraints = new ArrayList<StopArea>(0);
 
-	/* -------------------------------------- */
-
-	/**
-	 * add a routing constraint
-	 * 
-	 * @param routingConstraint
-	 */
-	public void addRoutingConstraint(StopArea routingConstraint) {
-		if (routingConstraint != null && !routingConstraints.contains(routingConstraint)) {
-			routingConstraints.add(routingConstraint);
-			routingConstraint.getRoutingConstraintLines().add(this);
-		}
-
-	}
-
-	/**
-	 * remove a routing constraint
-	 * 
-	 * @param routingConstraint
-	 */
-	public void removeRoutingConstraint(StopArea routingConstraint) {
-		if (routingConstraint != null && routingConstraints.contains(routingConstraint)) {
-			routingConstraints.remove(routingConstraint);
-			routingConstraint.getRoutingConstraintLines().remove(this);
-		}
-
-	}
 
 }

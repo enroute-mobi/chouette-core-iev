@@ -110,6 +110,12 @@ public class NetexStifConstant {
 	public static final String CALENDRIER_FILE_NAME = "calendriers.xml";
 	public static final String COMMUN_FILE_NAME = "commun.xml";
 	public static final String OFFRE_FILE_PREFIX = "offre";
+	public static final String LIGNES_FILE_NAME = "lignes.xml";
+	public static final String LIGNE_FILE_NAME = "ligne.xml";
+	public static final String ARRETS_FILE_NAME = "arrets.xml";
+	
+	// context constants 
+	public static final String OUTPUT_SUB_PATH = "output_sub_path";
 
 	private NetexStifConstant() {
 	}

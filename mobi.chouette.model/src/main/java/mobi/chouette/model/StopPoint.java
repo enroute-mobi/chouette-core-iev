@@ -145,13 +145,7 @@ public class StopPoint extends ChouetteIdentifiedObject {
 	 * @param stopArea
 	 */
 	public void setContainedInStopArea(StopArea stopArea) {
-		if (this.containedInStopArea != null) {
-			this.containedInStopArea.getContainedStopPoints().remove(this);
-		}
 		this.containedInStopArea = stopArea;
-		if (stopArea != null) {
-			stopArea.getContainedStopPoints().add(this);
-		}
 	}
 
 	/**
