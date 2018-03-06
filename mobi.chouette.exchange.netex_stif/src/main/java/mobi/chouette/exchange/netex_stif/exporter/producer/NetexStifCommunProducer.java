@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.netex_stif.exporter;
+package mobi.chouette.exchange.netex_stif.exporter.producer;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -8,10 +8,12 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
+import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
+import mobi.chouette.exchange.netex_stif.exporter.writer.NetexStifFileWriter;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.IO_TYPE;
 
-public class NetexStifCalendriersProducer {
+public class NetexStifCommunProducer {
 
 	public void produce(Context context) throws Exception {
 
@@ -27,11 +29,11 @@ public class NetexStifCalendriersProducer {
 		} else {
 			dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		}
-		String fileName = NetexStifConstant.CALENDRIER_FILE_NAME;
+		String fileName = NetexStifConstant.COMMUN_FILE_NAME;
 		File file = new File(dir.toFile(), fileName);
 
 		NetexStifFileWriter writer = new NetexStifFileWriter();
-		writer.writeCalendriersFile(collection, file);
+		writer.writeCommunFile(collection, file);
 
 		reporter.addFileReport(context, fileName, IO_TYPE.OUTPUT);
 

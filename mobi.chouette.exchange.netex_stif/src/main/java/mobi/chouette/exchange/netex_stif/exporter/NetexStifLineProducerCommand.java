@@ -14,7 +14,7 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
-import mobi.chouette.exchange.exporter.SharedDataKeys;
+import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifOffreProducer;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
@@ -25,7 +25,6 @@ import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class NetexStifLineProducerCommand implements Command {
-	private static final String MERGED = "merged";
 	public static final String COMMAND = "NetexStifLineProducerCommand";
 
 	@Override
@@ -46,9 +45,6 @@ public class NetexStifLineProducerCommand implements Command {
 
 			ExportableData collection = (ExportableData) context.get(Constant.EXPORTABLE_DATA);
 			collection.clearLine();
-
-			SharedDataKeys sharedData = (SharedDataKeys) context.computeIfAbsent(Constant.SHARED_DATA_KEYS,
-					c -> new SharedDataKeys());
 
 			Date startDate = null;
 			if (configuration.getStartDate() != null) {
@@ -72,7 +68,7 @@ public class NetexStifLineProducerCommand implements Command {
 			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY, collection.getVehicleJourneys().size());
 			// if (cont) {
 
-				NetexStifLineProducer producer = new NetexStifLineProducer();
+				NetexStifOffreProducer producer = new NetexStifOffreProducer();
 				producer.produce(context);
 
 				result = Constant.SUCCESS;

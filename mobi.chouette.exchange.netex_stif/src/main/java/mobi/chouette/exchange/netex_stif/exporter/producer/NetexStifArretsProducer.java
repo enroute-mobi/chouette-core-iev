@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.netex_stif.exporter;
+package mobi.chouette.exchange.netex_stif.exporter.producer;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -8,13 +8,14 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
+import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
+import mobi.chouette.exchange.netex_stif.exporter.writer.NetexStifFileWriter;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.IO_TYPE;
 
-public class NetexStifCommunProducer {
+public class NetexStifArretsProducer {
 
 	public void produce(Context context) throws Exception {
-
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		ExportableData collection = (ExportableData) context.get(Constant.EXPORTABLE_DATA);
 		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
@@ -27,14 +28,14 @@ public class NetexStifCommunProducer {
 		} else {
 			dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		}
-		String fileName = NetexStifConstant.COMMUN_FILE_NAME;
+		String fileName = NetexStifConstant.ARRETS_FILE_NAME;
 		File file = new File(dir.toFile(), fileName);
 
 		NetexStifFileWriter writer = new NetexStifFileWriter();
-		writer.writeCommunFile(collection, file);
+		writer.writeArretsFile(collection, file);
 
 		reporter.addFileReport(context, fileName, IO_TYPE.OUTPUT);
-
+		
 	}
 
 }

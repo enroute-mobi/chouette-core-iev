@@ -35,17 +35,13 @@ public class ExportableData extends mobi.chouette.exchange.exporter.ExportableDa
 	}
 
 	@Override
-	public void clear() {
-		super.clear();
+	public void clearCompany() {
+		super.clearCompany();
 		notices.clear();
 		globalValidityPeriod = new DateRange();
 		validityPeriods= new ArrayList<>();
 	}
 
-	@Override
-	public void clearLine() {
-		super.clearLine();
-	}
 
 
 }

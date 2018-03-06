@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.netex_stif.exporter;
+package mobi.chouette.exchange.netex_stif.exporter.producer;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -8,12 +8,15 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.JobData;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
+import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
+import mobi.chouette.exchange.netex_stif.exporter.writer.NetexStifFileWriter;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.IO_TYPE;
 
-public class NetexStifLignesProducer {
+public class NetexStifCalendriersProducer {
 
 	public void produce(Context context) throws Exception {
+
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		ExportableData collection = (ExportableData) context.get(Constant.EXPORTABLE_DATA);
 		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
@@ -26,14 +29,14 @@ public class NetexStifLignesProducer {
 		} else {
 			dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		}
-		String fileName = (collection.getMappedLines().size() == 1 ? NetexStifConstant.LIGNE_FILE_NAME : NetexStifConstant.LIGNES_FILE_NAME);
+		String fileName = NetexStifConstant.CALENDRIER_FILE_NAME;
 		File file = new File(dir.toFile(), fileName);
 
 		NetexStifFileWriter writer = new NetexStifFileWriter();
-		writer.writeLignesFile(collection, file);
+		writer.writeCalendriersFile(collection, file);
 
 		reporter.addFileReport(context, fileName, IO_TYPE.OUTPUT);
-		
+
 	}
 
 }

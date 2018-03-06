@@ -30,7 +30,8 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		String lineName = NamingUtil.getName(line);
 
 		// TODO : manage versions, RouteLinks and RoutePoints
-		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName);
+		FILE_TYPE type = (lineName == null ? FILE_TYPE.FULL : FILE_TYPE.LINE);
+		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName, type);
 		openCompositeFrame(writer, prefix, "NETEX_OFFRE_LIGNE", lineName,data.getRoutes().isEmpty());
 		if (!data.getRoutes().isEmpty()) {
 			openGeneralFrame(writer, prefix, "NETEX_STRUCTURE", null, true, false);

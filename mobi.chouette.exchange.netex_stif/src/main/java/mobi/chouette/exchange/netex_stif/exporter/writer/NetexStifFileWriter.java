@@ -1,4 +1,4 @@
-package mobi.chouette.exchange.netex_stif.exporter;
+package mobi.chouette.exchange.netex_stif.exporter.writer;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,9 +9,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 
 import lombok.extern.log4j.Log4j;
-import mobi.chouette.exchange.netex_stif.exporter.writer.NetexCalendrierWriter;
-import mobi.chouette.exchange.netex_stif.exporter.writer.NetexCommunWriter;
-import mobi.chouette.exchange.netex_stif.exporter.writer.NetexOffreLigneWriter;
+import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 
 @Log4j
 public class NetexStifFileWriter {
@@ -63,7 +61,7 @@ public class NetexStifFileWriter {
 	public File writeLignesFile(ExportableData collection, File file) throws IOException, DatatypeConfigurationException {
 		Writer output = new FileWriterWithEncoding(file, "UTF-8");
 		
-		// NetexLignesWriter.write(output, collection);
+		NetexLignesWriter.write(output, collection);
 		
 		output.close();
 
@@ -76,7 +74,7 @@ public class NetexStifFileWriter {
 	public File writeArretsFile(ExportableData collection, File file) throws IOException, DatatypeConfigurationException {
 		Writer output = new FileWriterWithEncoding(file, "UTF-8");
 		
-		//NetexArretsWriter.write(output, collection);
+		NetexArretsWriter.write(output, collection);
 		
 		output.close();
 

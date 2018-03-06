@@ -13,7 +13,7 @@ public class NetexCommunWriter extends AbstractWriter {
 		String prefix = FRAME_REF_PREFIX;
 		String lineName = ""; // TODO
 		
-		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName);
+		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName, FILE_TYPE.COMMUN);
 		openGeneralFrame(writer, prefix, "NETEX_COMMUN", null, false, false);
 		writeNotices(writer, data);
 		writeOrganisationalUnits(writer, data);

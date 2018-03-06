@@ -13,6 +13,8 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifCalendriersProducer;
+import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifCommunProducer;
 import mobi.chouette.exchange.report.ActionReporter;
 
 @Log4j
@@ -40,7 +42,7 @@ public class NetexStifSharedOperatorDataProducerCommand implements Command {
 				producer2.produce(context);
 			}
 
-			collection.clear();
+			collection.clearCompany();
 			result = Constant.SUCCESS;
 
 		} catch (Exception e) {

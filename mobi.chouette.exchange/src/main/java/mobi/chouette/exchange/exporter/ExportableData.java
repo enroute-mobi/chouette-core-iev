@@ -44,6 +44,9 @@ public class ExportableData {
 	private Set<Company> companies = new HashSet<>();
 	@Getter
 	@Setter
+	private Set<Line> lines = new HashSet<>();
+	@Getter
+	@Setter
 	private Set<GroupOfLine> groupOfLines = new HashSet<>();
 	@Getter
 	@Setter
@@ -114,10 +117,6 @@ public class ExportableData {
 	@Setter
 	private Map<Long, CompanyLite> mappedCompanies = new HashMap<>();
 
-	@Getter
-	@Setter
-	private Map<Long, NetworkLite> mappedNetworks = new HashMap<>();
-
 	// public Timetable findTimetable(String objectId) {
 	// for (Timetable tm : timetables) {
 	// if (tm.getObjectId().equals(objectId))
@@ -125,32 +124,38 @@ public class ExportableData {
 	// }
 	// return null;
 	// }
-
-	public void clear() {
-		clearLine();
-		timetables.clear();
-		excludedTimetables.clear();
+    public void clearAll()
+    {
+    	clearCompany();
+    	clearLineReferential();
+    	clearStopAreaReferential();
 		mappedStopAreas.clear();
 		mappedCompanies.clear();
 		mappedLines.clear();
-		mappedNetworks.clear();
+    }
+	
+	public void clearCompany() {
+		clearLine();
+		timetables.clear();
+		excludedTimetables.clear();
+	}
+	
+	public void clearLineReferential()
+	{
+		networks.clear();
+		companies.clear();
+		groupOfLines.clear();
+		lines.clear();
+	}
+	
+	public void clearStopAreaReferential()
+	{
+		stopAreas.clear();
 	}
 
 	public void clearLine() {
-		networks.clear();
 		line = null;
 		lineLite = null;
-		companies.clear();
-		groupOfLines.clear();
-		stopAreas.clear();
-		quays.clear();
-		boardingPositions.clear();
-		physicalStops.clear();
-		commercialStops.clear();
-		stopPlaces.clear();
-		connectionLinks.clear();
-		accessLinks.clear();
-		accessPoints.clear();
 		routingConstraints.clear();
 		timetableMap.clear();
 		vehicleJourneys.clear();

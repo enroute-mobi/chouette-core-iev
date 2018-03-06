@@ -18,7 +18,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 		String prefix = FRAME_REF_PREFIX;
 		String lineName = ""; // TODO 
 
-		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName);
+		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName, FILE_TYPE.CALENDRIERS);
 		openGeneralFrame(writer, prefix, "NETEX_CALENDRIER", data.getValidityPeriods(), false, data.getTimetables().isEmpty());
 		writeDayTypes(writer, data);
 		writeDayTypeAssignments(writer, data);

@@ -30,9 +30,11 @@ public class AbstractWriter {
 	public static final String OFFRE_PARTICIPANT_REF = "FR100_OFFRE";
 	public static final String FRAME_REF_PREFIX = "FR100:TypeOfFrame:";
 	public static final String FRAME_DATASOURCE = "FR100-OFFRE_AUTO";
+	
+	public enum FILE_TYPE {FULL,LINE,CALENDRIERS,COMMUN,CODIFLIGNE,REFLEX} 
 
 	public static void openPublicationDelivery(Writer writer, String participantRef, DateRange validityPeriod,
-			String lineName) throws IOException {
+			String lineName, FILE_TYPE fileType) throws IOException {
 		SimpleDateFormat utcDateFormat = new SimpleDateFormat(XSD_DATE_TIME_UTC);
 		utcDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
 		SimpleDateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,13 +53,18 @@ public class AbstractWriter {
 		writer.write("    <netex:ParticipantRef>" + participantRef + "</netex:ParticipantRef>\n");
 		String startDate = dayFormat.format(validityPeriod.getFirst());
 		String endDate = dayFormat.format(validityPeriod.getLast());
-		if (lineName == null) {
+		switch (fileType)
+		{
+		case FULL :
 			writer.write("    <netex:PublicationRefreshInterval>P1D</netex:PublicationRefreshInterval>\n");
 			writer.write("    <netex:Description>Offre complète IDF sur la période du " + startDate + " au " + endDate
 					+ "</netex:Description>\n");
-		} else {
+			break;
+		case LINE : 
 			writer.write("    <netex:Description>Offre pour la ligne " + toXml(lineName) + " sur la période du "
 					+ startDate + " au " + endDate + "</netex:Description>\n");
+			break;
+		default :
 		}
 		writer.write("    <netex:dataObjects>\n");
 	}
