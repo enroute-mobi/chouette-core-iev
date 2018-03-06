@@ -127,11 +127,17 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential metadata is null");
-			if (referential.getMetadatas().get(0).getLineIds() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
-			if (referential.getMetadatas().get(0).getLineIds().length == 0)
+			// loop to collect all lines (#6136)
+			referential.getMetadatas().forEach(m -> {
+				if (m.getLineIds() != null) {
+					if (m.getLineIds().length > 0) {
+						parameter.getIds().addAll(Arrays.asList(m.getLineIds()));
+					}
+				}
+			});
+			if (parameter.getIds().isEmpty())
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
-			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
+			
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
@@ -164,7 +170,8 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	}
 
 	private void addToGlobalCheckPoints(ControlParameters controlParameters, CheckpointParameters cp) {
-		Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints().computeIfAbsent(cp.getOriginCode(),l -> new ArrayList<>());
+		Collection<CheckpointParameters> list = controlParameters.getGlobalCheckPoints()
+				.computeIfAbsent(cp.getOriginCode(), l -> new ArrayList<>());
 		list.add(cp);
 	}
 
@@ -175,8 +182,9 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 		if (block.getConditionAttributes().containsKey(TRANSPORT_SUBMODE_KEY)) {
 			key += "/" + block.getConditionAttributes().get(TRANSPORT_SUBMODE_KEY);
 		}
-		Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints().computeIfAbsent(key,l -> new HashMap<>());
-		Collection<CheckpointParameters> list = map.computeIfAbsent(cp.getOriginCode(),l -> new ArrayList<>());
+		Map<String, Collection<CheckpointParameters>> map = controlParameters.getTransportModeCheckpoints()
+				.computeIfAbsent(key, l -> new HashMap<>());
+		Collection<CheckpointParameters> list = map.computeIfAbsent(cp.getOriginCode(), l -> new ArrayList<>());
 		list.add(cp);
 	}
 
