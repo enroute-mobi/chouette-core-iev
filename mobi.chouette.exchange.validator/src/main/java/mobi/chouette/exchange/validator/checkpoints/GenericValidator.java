@@ -189,7 +189,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 			if (objVal != null) {
 				String value = objVal.toString();
 				String regex = parameters.getPatternValue();
-				if (!Pattern.matches(regex, value)) {
+				if (!Pattern.compile(regex).matcher(value).find()) {
 					// pattern don't matches
 					DataLocation source = new DataLocation(object, parameters.getAttributeName());
 					validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
