@@ -19,7 +19,6 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
-import mobi.chouette.model.NetworkLite;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
