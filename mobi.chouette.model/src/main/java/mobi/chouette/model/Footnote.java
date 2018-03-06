@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mobi.chouette.model.util.NamingUtil;
+import lombok.ToString;
 
 /**
  * Chouette Footnote : a note for vehicle journeys
@@ -30,6 +30,7 @@ import mobi.chouette.model.util.NamingUtil;
 @Entity
 @Table(name = "footnotes")
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
+@ToString(callSuper=true)
 @NoArgsConstructor
 public class Footnote extends ChouetteIdentifiedObject implements SignedChouetteObject  {
 	/**
@@ -65,9 +66,9 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	
 	public String getObjectId()
 	{
-		if (objectId == null && lineLite != null)
+		if (objectId == null && lineLite != null && id != null)
 		{
-			objectId = lineLite.objectIdPrefix()+":Notice:"+lineLite.objectIdSuffix()+"_"+NamingUtil.getName(this)+":LOC";
+			objectId = lineLite.objectIdPrefix()+":Notice:"+lineLite.objectIdSuffix()+"_"+id+":LOC";
 		}
 		return objectId;
 	}

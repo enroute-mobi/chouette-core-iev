@@ -5,9 +5,11 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @XmlType(propOrder = { "originCode","specificCode", "name", "checkId", "errorType", "minimumValue", "maximumValue", "patternValue" ,"className", "attributeName" })
 @NoArgsConstructor
+@ToString(callSuper=true)
 public class GenericCheckpointParameters extends CheckpointParameters {
 	@Getter
 	@Setter
