@@ -492,7 +492,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 		double dlat = (lat2 - lat1) * A;
 		double ret = Math.sqrt(dlon * dlon + dlat * dlat);
 		if (ret > 2000.)
-			return computeHaversineFormula(long1, lat1, long1, lat1);
+			return computeHaversineFormula(long1, lat1, long2, lat2);
 		return ret;
 
 	}
