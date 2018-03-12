@@ -89,7 +89,7 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 		try {
 			em.joinTransaction();
 
-			Long threshold = 2 * 60L;
+			Long threshold = 2L;
 
 			TestContext tc = new TestContext(context, CheckPointConstant.L3_VehicleJourney_3);
 			JourneyPattern jp = tc.getObjectForTest();
@@ -103,12 +103,12 @@ public class JourneyPatternValidatorTests extends AbstractTestValidation {
 			List<VehicleJourney> vj = jp.getVehicleJourneys();
 			VehicleJourneyAtStop vjs = vj.get(0).getVehicleJourneyAtStops().get(1);
 			Time at = vjs.getArrivalTime();
-			vjs.setArrivalTime(new Time(at.getTime() + (2 *threshold )  * 1000));
+			vjs.setArrivalTime(new Time(at.getTime() + (2 *threshold) * 60000L));
 
 			tc.setMaximumParam(Long.toString(threshold));
 			tc.runValidation();
 			checkReports(context, tc.getLine().getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(),
-					"160", OBJECT_STATE.WARNING);
+					"2", OBJECT_STATE.WARNING);
 
 		} finally {
 			utx.rollback();

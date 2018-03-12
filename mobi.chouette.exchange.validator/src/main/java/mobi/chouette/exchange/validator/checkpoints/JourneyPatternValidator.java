@@ -108,17 +108,19 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 			List<VehicleJourneyAtStop> list = v.getVehicleJourneyAtStops();
 			for (VehicleJourneyAtStop vjs : list) {
 				if (previous != null) {
-					updateSpeed(v, previous, vjs, travelTimeMap);
+					updateDuration(v, previous, vjs, travelTimeMap);
 				}
 				previous = vjs;
 			}
 		});
 		String tmp = parameters.getMaximumValue();
-		Long threshold = Long.parseLong(tmp);
+		// paramètre en minutes
+		Long threshold = Long.parseLong(tmp) * 60L;
 
 		travelTimeMap.keySet().stream().forEach(s -> {
 			final Long average = (long) travelTimeMap.get(s).stream().mapToLong(t -> t.getDelta()).average()
 					.getAsDouble();
+			
 			List<TravelTime> list = travelTimeMap.get(s).stream()
 					.filter(tt -> (tt.getDelta() > (average + threshold)) || (tt.getDelta() < (average - threshold)))
 					.collect(Collectors.toList());
@@ -129,29 +131,25 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 				long delta = Math.abs(tt.getDelta() - average);
 				DataLocation target1 = new DataLocation(sa1);
 				DataLocation target2 = new DataLocation(sa2);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_3, source, Long.toString(delta), null, target1,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_VehicleJourney_3, source, Long.toString(delta / 60L), null, target1,
 						target2);
 			});
 		});
 	}
 
-	private void updateSpeed(VehicleJourney vj, VehicleJourneyAtStop vjs1, VehicleJourneyAtStop vjs2,
+	private void updateDuration(VehicleJourney vj, VehicleJourneyAtStop vjs1, VehicleJourneyAtStop vjs2,
 			Map<String, List<TravelTime>> travelTimeMap) {
 
 		TravelTime tt = new TravelTime();
 		tt.setVehicleJourney(vj);
 		String key = new StringBuilder().append("(").append(vjs1.getStopPoint().getObjectId()).append("->")
-				.append(vjs1.getStopPoint().getObjectId()).append(")").toString();
-		Long delta = diffTime(vjs1.getDepartureTime(), vjs2.getArrivalTime());
+				.append(vjs2.getStopPoint().getObjectId()).append(")").toString();
+		Long delta = diffTime(vjs1.getDepartureTime(), getArrivalTime(vjs2));
 		tt.setVehicleJourneyAtStop1(vjs1);
 		tt.setVehicleJourneyAtStop2(vjs2);
 		tt.setDelta(delta);
 
-		List<TravelTime> ttList = travelTimeMap.get(key);
-		if (ttList == null) {
-			ttList = new ArrayList<TravelTime>();
-			travelTimeMap.put(key, ttList);
-		}
+		List<TravelTime> ttList = travelTimeMap.computeIfAbsent(key, o ->  new ArrayList<>());
 		ttList.add(tt);
 
 	}

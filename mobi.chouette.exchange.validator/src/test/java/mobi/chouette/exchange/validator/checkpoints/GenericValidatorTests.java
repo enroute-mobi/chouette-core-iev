@@ -353,4 +353,18 @@ public class GenericValidatorTests extends AbstractTestValidation {
 
 	}
 
+//	@Test(groups = { "tools" }, description = "quickDistanceFromCoordinates", priority = 107)
+//	public void verifyTest_quickDistanceFromCoordinates() throws Exception {
+//		log.info(Color.CYAN + " check quickDistanceFromCoordinates " + Color.NORMAL);
+//		
+//		double lat1 = 49.04854359315094 ;
+//		double long1 = 2.012291499430454;
+//		double lat2 = 49.014622656688 ;
+//		double long2 = 2.0795434259068;
+//		
+//		double dist = GenericValidator.quickDistanceFromCoordinates( lat1,  lat2,  long1, long2 );
+//		
+//		log.info("distance = "+Double.toString(dist));
+//	}
+
 }

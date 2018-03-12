@@ -15,6 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Chouette Footnote : a note for vehicle journeys
@@ -29,6 +30,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "footnotes")
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
+@ToString(callSuper=true)
 @NoArgsConstructor
 public class Footnote extends ChouetteIdentifiedObject implements SignedChouetteObject  {
 	/**
