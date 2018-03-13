@@ -105,7 +105,8 @@ CREATE TABLE compliance_checks (
     comment text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    origin_code character varying
+    origin_code character varying,
+    compliance_control_name character varying
 );
 ALTER TABLE compliance_checks OWNER TO chouette;
 CREATE SEQUENCE compliance_checks_id_seq

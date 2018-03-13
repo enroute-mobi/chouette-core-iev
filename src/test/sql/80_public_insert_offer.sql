@@ -7861,7 +7861,7 @@ INSERT INTO stop_areas VALUES (98357, 142981, 'FR:78486:ZDE:50015940:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:51:51.23602', '2017-03-23 13:29:17.539805', 'LOCAL_OBJECT');
       -- 136607
-INSERT INTO stop_areas VALUES (136607, NULL, 'FR:78030:ZDE:50015569:STIF', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8681967809156600, 48.6933423252341000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792079" created="2015-05-19T05:05:59.0Z" changed="2016-08-23T10:08:14.0Z" id="FR:78030:ZDE:50015569:STIF">
+INSERT INTO stop_areas VALUES (82960, NULL, 'FR:78030:ZDE:50015569:STIF', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8681967809156600, 48.6933423252341000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792079" created="2015-05-19T05:05:59.0Z" changed="2016-08-23T10:08:14.0Z" id="FR:78030:ZDE:50015569:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8161,7 +8161,7 @@ INSERT INTO stop_areas VALUES (114297, 149176, 'FR:78030:ZDE:50015576:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:25.602019', '2017-03-23 13:36:58.485207', 'LOCAL_OBJECT');
       -- 136607
-INSERT INTO stop_areas VALUES (82959, 136607, 'FR:78030:ZDE:50015568:STIF', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8680868765064500, 48.6933941123016000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792078" created="2015-05-19T05:05:57.0Z" changed="2016-08-23T10:08:13.0Z" id="FR:78030:ZDE:50015568:STIF">
+INSERT INTO stop_areas VALUES (82959, NULL, 'FR:78030:ZDE:50015568:STIF', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8680868765064500, 48.6933941123016000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792078" created="2015-05-19T05:05:57.0Z" changed="2016-08-23T10:08:13.0Z" id="FR:78030:ZDE:50015568:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>

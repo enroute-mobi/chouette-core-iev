@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.4.14
--- Dumped by pg_dump version 9.6.6
+-- Dumped from database version 9.4.15
+-- Dumped by pg_dump version 9.6.7
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -200,7 +200,8 @@ CREATE TABLE compliance_checks (
     comment text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    origin_code character varying
+    origin_code character varying,
+    compliance_control_name character varying
 );
 
 

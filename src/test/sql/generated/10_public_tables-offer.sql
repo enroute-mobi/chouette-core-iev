@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.4.14
--- Dumped by pg_dump version 9.6.6
+-- Dumped from database version 9.4.15
+-- Dumped by pg_dump version 9.6.7
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -176,7 +176,10 @@ CREATE TABLE calendars (
     shared boolean DEFAULT false,
     organisation_id bigint,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    int_day_types integer,
+    excluded_dates date[],
+    workgroup_id bigint
 );
 
 
@@ -331,6 +334,122 @@ ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
 
 
 --
+-- Name: compliance_control_blocks; Type: TABLE; Schema: public; Owner: chouette
+--
+
+CREATE TABLE compliance_control_blocks (
+    id bigint NOT NULL,
+    name character varying,
+    condition_attributes shared_extensions.hstore,
+    compliance_control_set_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_control_blocks OWNER TO chouette;
+
+--
+-- Name: compliance_control_blocks_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
+--
+
+CREATE SEQUENCE compliance_control_blocks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_control_blocks_id_seq OWNER TO chouette;
+
+--
+-- Name: compliance_control_blocks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
+--
+
+ALTER SEQUENCE compliance_control_blocks_id_seq OWNED BY compliance_control_blocks.id;
+
+
+--
+-- Name: compliance_control_sets; Type: TABLE; Schema: public; Owner: chouette
+--
+
+CREATE TABLE compliance_control_sets (
+    id bigint NOT NULL,
+    name character varying,
+    organisation_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE compliance_control_sets OWNER TO chouette;
+
+--
+-- Name: compliance_control_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
+--
+
+CREATE SEQUENCE compliance_control_sets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_control_sets_id_seq OWNER TO chouette;
+
+--
+-- Name: compliance_control_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
+--
+
+ALTER SEQUENCE compliance_control_sets_id_seq OWNED BY compliance_control_sets.id;
+
+
+--
+-- Name: compliance_controls; Type: TABLE; Schema: public; Owner: chouette
+--
+
+CREATE TABLE compliance_controls (
+    id bigint NOT NULL,
+    compliance_control_set_id bigint,
+    type character varying,
+    control_attributes json,
+    name character varying,
+    code character varying,
+    criticity character varying,
+    comment text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    origin_code character varying,
+    compliance_control_block_id bigint
+);
+
+
+ALTER TABLE compliance_controls OWNER TO chouette;
+
+--
+-- Name: compliance_controls_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
+--
+
+CREATE SEQUENCE compliance_controls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compliance_controls_id_seq OWNER TO chouette;
+
+--
+-- Name: compliance_controls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
+--
+
+ALTER SEQUENCE compliance_controls_id_seq OWNED BY compliance_controls.id;
+
+
+--
 -- Name: connection_links; Type: TABLE; Schema: public; Owner: chouette
 --
 
@@ -381,29 +500,29 @@ ALTER SEQUENCE connection_links_id_seq OWNED BY connection_links.id;
 
 
 --
--- Name: exports; Type: TABLE; Schema: public; Owner: chouette
+-- Name: custom_fields; Type: TABLE; Schema: public; Owner: chouette
 --
 
-CREATE TABLE exports (
+CREATE TABLE custom_fields (
     id bigint NOT NULL,
-    referential_id bigint,
-    status character varying,
-    type character varying,
-    options character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    references_type character varying,
-    reference_ids character varying
+    code character varying,
+    resource_type character varying,
+    name character varying,
+    field_type character varying,
+    options json,
+    workgroup_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
-ALTER TABLE exports OWNER TO chouette;
+ALTER TABLE custom_fields OWNER TO chouette;
 
 --
--- Name: exports_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
+-- Name: custom_fields_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
 --
 
-CREATE SEQUENCE exports_id_seq
+CREATE SEQUENCE custom_fields_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -411,13 +530,13 @@ CREATE SEQUENCE exports_id_seq
     CACHE 1;
 
 
-ALTER TABLE exports_id_seq OWNER TO chouette;
+ALTER TABLE custom_fields_id_seq OWNER TO chouette;
 
 --
--- Name: exports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
+-- Name: custom_fields_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
 --
 
-ALTER SEQUENCE exports_id_seq OWNED BY exports.id;
+ALTER SEQUENCE custom_fields_id_seq OWNED BY custom_fields.id;
 
 
 --
@@ -649,7 +768,8 @@ CREATE TABLE journey_patterns (
     updated_at timestamp without time zone,
     checksum character varying,
     checksum_source text,
-    data_source_ref character varying
+    data_source_ref character varying,
+    costs json
 );
 
 
@@ -894,6 +1014,46 @@ ALTER SEQUENCE lines_id_seq OWNED BY lines.id;
 
 
 --
+-- Name: merges; Type: TABLE; Schema: public; Owner: chouette
+--
+
+CREATE TABLE merges (
+    id bigint NOT NULL,
+    workbench_id bigint,
+    referential_ids bigint[],
+    creator character varying,
+    status character varying,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE merges OWNER TO chouette;
+
+--
+-- Name: merges_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
+--
+
+CREATE SEQUENCE merges_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE merges_id_seq OWNER TO chouette;
+
+--
+-- Name: merges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
+--
+
+ALTER SEQUENCE merges_id_seq OWNED BY merges.id;
+
+
+--
 -- Name: networks; Type: TABLE; Schema: public; Owner: chouette
 --
 
@@ -952,7 +1112,8 @@ CREATE TABLE organisations (
     code character varying,
     synced_at timestamp without time zone,
     sso_attributes shared_extensions.hstore,
-    custom_view character varying
+    custom_view character varying,
+    features character varying[] DEFAULT '{}'::character varying[]
 );
 
 
@@ -1160,7 +1321,8 @@ CREATE TABLE referentials (
     created_from_id bigint,
     ready boolean DEFAULT false,
     referential_suite_id bigint,
-    objectid_format character varying
+    objectid_format character varying,
+    merged_at timestamp without time zone
 );
 
 
@@ -1480,7 +1642,10 @@ CREATE TABLE stop_areas (
     deleted_at timestamp without time zone,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    stif_type character varying
+    stif_type character varying,
+    waiting_time integer,
+    kind character varying,
+    localized_names jsonb
 );
 
 
@@ -1941,7 +2106,8 @@ CREATE TABLE vehicle_journeys (
     updated_at timestamp without time zone,
     checksum character varying,
     checksum_source text,
-    data_source_ref character varying
+    data_source_ref character varying,
+    custom_field_values jsonb DEFAULT '{}'::jsonb
 );
 
 
@@ -1969,6 +2135,44 @@ ALTER SEQUENCE vehicle_journeys_id_seq OWNED BY vehicle_journeys.id;
 
 
 --
+-- Name: versions; Type: TABLE; Schema: public; Owner: chouette
+--
+
+CREATE TABLE versions (
+    id bigint NOT NULL,
+    item_type character varying NOT NULL,
+    item_id bigint NOT NULL,
+    event character varying NOT NULL,
+    whodunnit character varying,
+    object text,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE versions OWNER TO chouette;
+
+--
+-- Name: versions_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
+--
+
+CREATE SEQUENCE versions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE versions_id_seq OWNER TO chouette;
+
+--
+-- Name: versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
+--
+
+ALTER SEQUENCE versions_id_seq OWNED BY versions.id;
+
+
+--
 -- Name: workbenches; Type: TABLE; Schema: public; Owner: chouette
 --
 
@@ -1981,7 +2185,10 @@ CREATE TABLE workbenches (
     line_referential_id bigint,
     stop_area_referential_id bigint,
     output_id bigint,
-    objectid_format character varying
+    objectid_format character varying,
+    workgroup_id bigint,
+    import_compliance_control_set_id bigint,
+    merge_compliance_control_set_id bigint
 );
 
 
@@ -2006,6 +2213,43 @@ ALTER TABLE workbenches_id_seq OWNER TO chouette;
 --
 
 ALTER SEQUENCE workbenches_id_seq OWNED BY workbenches.id;
+
+
+--
+-- Name: workgroups; Type: TABLE; Schema: public; Owner: chouette
+--
+
+CREATE TABLE workgroups (
+    id bigint NOT NULL,
+    name character varying,
+    line_referential_id bigint,
+    stop_area_referential_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE workgroups OWNER TO chouette;
+
+--
+-- Name: workgroups_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
+--
+
+CREATE SEQUENCE workgroups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE workgroups_id_seq OWNER TO chouette;
+
+--
+-- Name: workgroups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
+--
+
+ALTER SEQUENCE workgroups_id_seq OWNED BY workgroups.id;
 
 
 --
@@ -2058,6 +2302,27 @@ ALTER TABLE ONLY companies ALTER COLUMN id SET DEFAULT nextval('companies_id_seq
 
 
 --
+-- Name: compliance_control_blocks id; Type: DEFAULT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_control_blocks ALTER COLUMN id SET DEFAULT nextval('compliance_control_blocks_id_seq'::regclass);
+
+
+--
+-- Name: compliance_control_sets id; Type: DEFAULT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_control_sets ALTER COLUMN id SET DEFAULT nextval('compliance_control_sets_id_seq'::regclass);
+
+
+--
+-- Name: compliance_controls id; Type: DEFAULT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_controls ALTER COLUMN id SET DEFAULT nextval('compliance_controls_id_seq'::regclass);
+
+
+--
 -- Name: connection_links id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
@@ -2065,10 +2330,10 @@ ALTER TABLE ONLY connection_links ALTER COLUMN id SET DEFAULT nextval('connectio
 
 
 --
--- Name: exports id; Type: DEFAULT; Schema: public; Owner: chouette
+-- Name: custom_fields id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
-ALTER TABLE ONLY exports ALTER COLUMN id SET DEFAULT nextval('exports_id_seq'::regclass);
+ALTER TABLE ONLY custom_fields ALTER COLUMN id SET DEFAULT nextval('custom_fields_id_seq'::regclass);
 
 
 --
@@ -2139,6 +2404,13 @@ ALTER TABLE ONLY line_referentials ALTER COLUMN id SET DEFAULT nextval('line_ref
 --
 
 ALTER TABLE ONLY lines ALTER COLUMN id SET DEFAULT nextval('lines_id_seq'::regclass);
+
+
+--
+-- Name: merges id; Type: DEFAULT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY merges ALTER COLUMN id SET DEFAULT nextval('merges_id_seq'::regclass);
 
 
 --
@@ -2310,10 +2582,24 @@ ALTER TABLE ONLY vehicle_journeys ALTER COLUMN id SET DEFAULT nextval('vehicle_j
 
 
 --
+-- Name: versions id; Type: DEFAULT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY versions ALTER COLUMN id SET DEFAULT nextval('versions_id_seq'::regclass);
+
+
+--
 -- Name: workbenches id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY workbenches ALTER COLUMN id SET DEFAULT nextval('workbenches_id_seq'::regclass);
+
+
+--
+-- Name: workgroups id; Type: DEFAULT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY workgroups ALTER COLUMN id SET DEFAULT nextval('workgroups_id_seq'::regclass);
 
 
 --
@@ -2373,6 +2659,30 @@ ALTER TABLE ONLY companies
 
 
 --
+-- Name: compliance_control_blocks compliance_control_blocks_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_control_blocks
+    ADD CONSTRAINT compliance_control_blocks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: compliance_control_sets compliance_control_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_control_sets
+    ADD CONSTRAINT compliance_control_sets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: compliance_controls compliance_controls_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT compliance_controls_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: connection_links connection_links_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -2381,11 +2691,11 @@ ALTER TABLE ONLY connection_links
 
 
 --
--- Name: exports exports_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+-- Name: custom_fields custom_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
-ALTER TABLE ONLY exports
-    ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY custom_fields
+    ADD CONSTRAINT custom_fields_pkey PRIMARY KEY (id);
 
 
 --
@@ -2466,6 +2776,14 @@ ALTER TABLE ONLY line_referentials
 
 ALTER TABLE ONLY lines
     ADD CONSTRAINT lines_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: merges merges_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY merges
+    ADD CONSTRAINT merges_pkey PRIMARY KEY (id);
 
 
 --
@@ -2661,11 +2979,27 @@ ALTER TABLE ONLY vehicle_journeys
 
 
 --
+-- Name: versions versions_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY versions
+    ADD CONSTRAINT versions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: workbenches workbenches_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY workbenches
     ADD CONSTRAINT workbenches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: workgroups workgroups_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY workgroups
+    ADD CONSTRAINT workgroups_pkey PRIMARY KEY (id);
 
 
 --
@@ -2739,6 +3073,13 @@ CREATE UNIQUE INDEX index_calendars_on_short_name ON calendars USING btree (shor
 
 
 --
+-- Name: index_calendars_on_workgroup_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_calendars_on_workgroup_id ON calendars USING btree (workgroup_id);
+
+
+--
 -- Name: index_clean_up_results_on_clean_up_id; Type: INDEX; Schema: public; Owner: chouette
 --
 
@@ -2760,10 +3101,45 @@ CREATE INDEX index_companies_on_line_referential_id ON companies USING btree (li
 
 
 --
--- Name: index_exports_on_referential_id; Type: INDEX; Schema: public; Owner: chouette
+-- Name: index_compliance_control_blocks_on_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
 --
 
-CREATE INDEX index_exports_on_referential_id ON exports USING btree (referential_id);
+CREATE INDEX index_compliance_control_blocks_on_compliance_control_set_id ON compliance_control_blocks USING btree (compliance_control_set_id);
+
+
+--
+-- Name: index_compliance_control_sets_on_organisation_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_compliance_control_sets_on_organisation_id ON compliance_control_sets USING btree (organisation_id);
+
+
+--
+-- Name: index_compliance_controls_on_code_and_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE UNIQUE INDEX index_compliance_controls_on_code_and_compliance_control_set_id ON compliance_controls USING btree (code, compliance_control_set_id);
+
+
+--
+-- Name: index_compliance_controls_on_compliance_control_block_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_compliance_controls_on_compliance_control_block_id ON compliance_controls USING btree (compliance_control_block_id);
+
+
+--
+-- Name: index_compliance_controls_on_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_compliance_controls_on_compliance_control_set_id ON compliance_controls USING btree (compliance_control_set_id);
+
+
+--
+-- Name: index_custom_fields_on_resource_type; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_custom_fields_on_resource_type ON custom_fields USING btree (resource_type);
 
 
 --
@@ -2813,6 +3189,13 @@ CREATE INDEX index_lines_on_line_referential_id ON lines USING btree (line_refer
 --
 
 CREATE INDEX index_lines_on_secondary_company_ids ON lines USING gin (secondary_company_ids);
+
+
+--
+-- Name: index_merges_on_workbench_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_merges_on_workbench_id ON merges USING btree (workbench_id);
 
 
 --
@@ -3026,10 +3409,31 @@ CREATE INDEX index_vehicle_journeys_on_route_id ON vehicle_journeys USING btree 
 
 
 --
+-- Name: index_versions_on_item_type_and_item_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_versions_on_item_type_and_item_id ON versions USING btree (item_type, item_id);
+
+
+--
+-- Name: index_workbenches_on_import_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_workbenches_on_import_compliance_control_set_id ON workbenches USING btree (import_compliance_control_set_id);
+
+
+--
 -- Name: index_workbenches_on_line_referential_id; Type: INDEX; Schema: public; Owner: chouette
 --
 
 CREATE INDEX index_workbenches_on_line_referential_id ON workbenches USING btree (line_referential_id);
+
+
+--
+-- Name: index_workbenches_on_merge_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_workbenches_on_merge_compliance_control_set_id ON workbenches USING btree (merge_compliance_control_set_id);
 
 
 --
@@ -3044,6 +3448,13 @@ CREATE INDEX index_workbenches_on_organisation_id ON workbenches USING btree (or
 --
 
 CREATE INDEX index_workbenches_on_stop_area_referential_id ON workbenches USING btree (stop_area_referential_id);
+
+
+--
+-- Name: index_workbenches_on_workgroup_id; Type: INDEX; Schema: public; Owner: chouette
+--
+
+CREATE INDEX index_workbenches_on_workgroup_id ON workbenches USING btree (workgroup_id);
 
 
 --
@@ -3184,6 +3595,14 @@ ALTER TABLE ONLY journey_patterns
 
 
 --
+-- Name: compliance_control_blocks fk_rails_0f26e226bd; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_control_blocks
+    ADD CONSTRAINT fk_rails_0f26e226bd FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
+
+
+--
 -- Name: journey_frequencies fk_rails_60bb6f7bd3; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -3208,11 +3627,35 @@ ALTER TABLE ONLY api_keys
 
 
 --
+-- Name: compliance_control_sets fk_rails_aa1e909966; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_control_sets
+    ADD CONSTRAINT fk_rails_aa1e909966 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
+
+
+--
+-- Name: compliance_controls fk_rails_c613154a10; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
+
+
+--
 -- Name: journey_frequencies fk_rails_d322c5d659; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
 ALTER TABLE ONLY journey_frequencies
     ADD CONSTRAINT fk_rails_d322c5d659 FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE SET NULL;
+
+
+--
+-- Name: compliance_controls fk_rails_f402e905ef; Type: FK CONSTRAINT; Schema: public; Owner: chouette
+--
+
+ALTER TABLE ONLY compliance_controls
+    ADD CONSTRAINT fk_rails_f402e905ef FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 
 
 --
