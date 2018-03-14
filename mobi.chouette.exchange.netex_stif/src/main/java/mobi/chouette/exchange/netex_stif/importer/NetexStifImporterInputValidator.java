@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import lombok.extern.log4j.Log4j;
-import mobi.chouette.common.JSONUtil;
 import mobi.chouette.core.CoreExceptionCode;
 import mobi.chouette.core.CoreRuntimeException;
 import mobi.chouette.exchange.AbstractInputValidator;
@@ -16,71 +14,31 @@ import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.importer.ImportTask;
 
-@Log4j
 public class NetexStifImporterInputValidator extends AbstractInputValidator {
 
 	@Override
 	public AbstractParameter toActionParameter(String abstractParameter) {
-		try {
-			return JSONUtil.fromJSON(abstractParameter, NetexStifImportParameters.class);
-		} catch (Exception e) {
-			log.error("Cannot parse parameter " + e.getMessage());
-			return null;
-		}
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
 	public boolean checkParameters(String abstractParameterString) {
-
-		try {
-			NetexStifImportParameters parameters = JSONUtil.fromJSON(abstractParameterString,
-					NetexStifImportParameters.class);
-			return checkParameters(parameters);
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			return false;
-		}
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
 	public boolean checkParameters(AbstractParameter abstractParameter) {
-		if (!(abstractParameter instanceof NetexStifImportParameters)) {
-			log.error("invalid parameters for Netex import " + abstractParameter.getClass().getName());
-			return false;
-		}
-		return true;
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
 	public boolean checkFilename(String fileName) {
-		if (fileName == null || fileName.isEmpty()) {
-			log.error("input data expected");
-			return false;
-		}
-
-		if (!fileName.endsWith(".zip") && !fileName.endsWith(".xml")) {
-			log.error("xml or Zip archive input data expected");
-			return false;
-		}
-
-		return true;
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
 	public boolean checkFile(String fileName, Path filePath, AbstractParameter abstractParameter) {
-		return checkFileExistenceInZip(fileName, filePath, "xml");
-	}
-
-	public static class DefaultFactory extends InputValidatorFactory {
-
-		@Override
-		protected InputValidator create() throws IOException {
-			return new NetexStifImporterInputValidator();
-		}
-	}
-
-	static {
-		InputValidatorFactory.factories.put(NetexStifImporterInputValidator.class.getName(), new DefaultFactory());
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
@@ -98,16 +56,18 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 			NetexStifImportParameters parameter = new NetexStifImportParameters();
 			parameter.setImportId(importTask.getId());
 			if (referential.getLineReferentialId() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential line_referential_id is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential line_referential_id is null");
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			if (referential.getStopAreaReferentialId() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential stop_area_referential_id is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential stop_area_referential_id is null");
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
 			if (referential.getId() == null)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential metadata is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential metadata is null");
 			if (referential.getMetadatas().get(0).getLineIds() == null)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
 			if (referential.getMetadatas().get(0).getLineIds().length == 0)
@@ -119,11 +79,24 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 			parameter.setOrganisationCode(organisation.getCode());
 
 			// for debug only
-			parameter.setCleanRepository("true".equalsIgnoreCase(System.getProperty("boiv.clean.repository.on.import")));
+			parameter
+					.setCleanRepository("true".equalsIgnoreCase(System.getProperty("boiv.clean.repository.on.import")));
 
 			return parameter;
 		}
 		return null;
+	}
+
+	public static class DefaultFactory extends InputValidatorFactory {
+
+		@Override
+		protected InputValidator create() throws IOException {
+			return new NetexStifImporterInputValidator();
+		}
+	}
+
+	static {
+		InputValidatorFactory.factories.put(NetexStifImporterInputValidator.class.getName(), new DefaultFactory());
 	}
 
 }

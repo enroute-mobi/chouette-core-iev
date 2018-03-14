@@ -5,10 +5,13 @@ import java.nio.file.Path;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 
 public interface InputValidator {
-	AbstractParameter toActionParameter(String abstractParameter);
 	
+	// BOIV service interface
 	AbstractParameter toActionParameter(Object task);
 
+	// Chouette service interface
+	AbstractParameter toActionParameter(String abstractParameter);
+	
 	boolean checkParameters(String abstractParameter);
 
 	boolean checkFilename(String fileName);

@@ -23,7 +23,6 @@ import mobi.chouette.exchange.exporter.CompressCommand;
 @Log4j
 public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 
-	
 	private static final String NO_FACTORIES = "unable to call factories";
 
 	public static class DefaultFactory extends ProcessingCommandsFactory {
@@ -36,12 +35,11 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 	}
 
 	static {
-		ProcessingCommandsFactory.register(NetexStifExporterProcessingCommands.class.getName(),
-				new DefaultFactory());
+		ProcessingCommandsFactory.register(NetexStifExporterProcessingCommands.class.getName(), new DefaultFactory());
 	}
 
 	@Override
-	public List<Command> getPreProcessingCommands(Context context,boolean withDao) {
+	public List<Command> getPreProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
@@ -49,14 +47,14 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 			commands.add(CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY, NO_FACTORIES);
 		}
-		
+
 		return commands;
 	}
 
 	@Override
-	public List<Command> getLineProcessingCommands(Context context,boolean withDao) {
+	public List<Command> getLineProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
@@ -66,27 +64,28 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 				commands.add(CommandFactory.create(initialContext, NetexStifLineProducerCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY, NO_FACTORIES);
 		}
-		
+
 		return commands;
-		
+
 	}
 
-	public List<Command> getPostLineProcessingCommands(Context context,boolean withDao) {
+	public List<Command> getPostLineProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
-			commands.add(CommandFactory.create(initialContext, NetexStifSharedOperatorDataProducerCommand.class.getName()));
+			commands.add(
+					CommandFactory.create(initialContext, NetexStifSharedOperatorDataProducerCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY, NO_FACTORIES);
 		}
 		return commands;
 	}
 
 	@Override
-	public List<Command> getPostProcessingCommands(Context context,boolean withDao) {
+	public List<Command> getPostProcessingCommands(Context context, boolean withDao) {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		List<Command> commands = new ArrayList<>();
 		try {
@@ -95,7 +94,7 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 			commands.add(CommandFactory.create(initialContext, CompressCommand.class.getName()));
 		} catch (Exception e) {
 			log.error(e, e);
-			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY,NO_FACTORIES);
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY, NO_FACTORIES);
 		}
 		return commands;
 	}
@@ -104,10 +103,19 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 	public List<Command> getStopAreaProcessingCommands(Context context, boolean withDao) {
 		return new ArrayList<>();
 	}
-	
+
 	@Override
 	public List<Command> getDisposeCommands(Context context, boolean withDao) {
-		return new ArrayList<>();
+		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
+		List<Command> commands = new ArrayList<>();
+		try {
+			if (withDao)
+				commands.add(CommandFactory.create(initialContext, DaoNetexStifDisposeCommand.class.getName()));
+		} catch (Exception e) {
+			log.error(e, e);
+			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY, NO_FACTORIES);
+		}
+		return commands;
 	}
 
 }

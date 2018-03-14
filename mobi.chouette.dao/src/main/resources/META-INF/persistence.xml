@@ -20,11 +20,9 @@
 		<class>mobi.chouette.model.compliance.ComplianceCheckResource</class>
 		<class>mobi.chouette.model.compliance.ComplianceCheckTask</class>
 		<class>mobi.chouette.model.ConnectionLink</class>
-		<!-- à mettre en place lorsque les tables seront créées
 		<class>mobi.chouette.model.exporter.ExportResource</class>
 		<class>mobi.chouette.model.exporter.ExportMessage</class>
 		<class>mobi.chouette.model.exporter.ExportTask</class>
-		 -->
 		<class>mobi.chouette.model.GroupOfLine</class>
 		<class>mobi.chouette.model.importer.ImportResource</class>
 		<class>mobi.chouette.model.importer.ImportMessage</class>

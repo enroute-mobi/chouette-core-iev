@@ -21,9 +21,8 @@ import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.common.JobData;
 import mobi.chouette.model.ActionMessage;
-// TODO : vérifier l'adéquation avec la table créée par RAILS
 @Entity
-@Table(name = "test_export_messages")
+@Table(name = "export_messages")
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class ExportMessage extends ActionMessage {
@@ -35,10 +34,10 @@ public class ExportMessage extends ActionMessage {
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "test_export_messages_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "public.test_export_messages_id_seq"),
+	@GenericGenerator(name = "export_messages_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouettePublicIdentifierGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "public.export_messages_id_seq"),
 			@Parameter(name = "increment_size", value = "100") })
-	@GeneratedValue(generator = "test_export_messages_id_seq")
+	@GeneratedValue(generator = "export_messages_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;

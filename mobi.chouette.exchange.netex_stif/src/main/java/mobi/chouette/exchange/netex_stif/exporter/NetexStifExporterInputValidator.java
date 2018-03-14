@@ -2,10 +2,10 @@ package mobi.chouette.exchange.netex_stif.exporter;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
-import lombok.extern.log4j.Log4j;
-import mobi.chouette.common.JSONUtil;
 import mobi.chouette.core.CoreExceptionCode;
 import mobi.chouette.core.CoreRuntimeException;
 import mobi.chouette.exchange.AbstractInputValidator;
@@ -16,86 +16,31 @@ import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.exporter.ExportTask;
 
-@Log4j
 public class NetexStifExporterInputValidator extends AbstractInputValidator {
-
-	private static String[] allowedTypes = { "line", "network", "company", "group_of_line" };
 
 	@Override
 	public AbstractParameter toActionParameter(String abstractParameter) {
-		try {
-			return JSONUtil.fromJSON(abstractParameter, NetexStifExportParameters.class);
-		} catch (Exception e) {
-			log.error("Cannot parse parameter "+e.getMessage());
-			return null;
-		}
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
+
 	@Override
 	public boolean checkParameters(String abstractParameterString) {
-
-		try {
-			NetexStifExportParameters parameters = JSONUtil.fromJSON(abstractParameterString, NetexStifExportParameters.class);
-
-			return checkParameters(parameters);
-		} catch (Exception ex) {
-			log.error(ex.getMessage());
-			return false;
-		}
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
+
 	@Override
 	public boolean checkParameters(AbstractParameter abstractParameter) {
-		if (!(abstractParameter instanceof NetexStifExportParameters)) {
-			log.error("invalid parameters for netex export " + abstractParameter.getClass().getName());
-			return false;
-		}
-
-		NetexStifExportParameters parameters = (NetexStifExportParameters) abstractParameter;
-		if (parameters.getStartDate() != null && parameters.getEndDate() != null) {
-			if (parameters.getStartDate().after(parameters.getEndDate())) {
-				log.error("end date before start date ");
-				return false;
-			}
-		}
-
-		String type = parameters.getReferencesType();
-		if (type != null && !type.isEmpty()) {
-			if (!Arrays.asList(allowedTypes).contains(type.toLowerCase())) {
-				log.error("invalid type " + type);
-				return false;
-			}
-		}
-
-		return true;
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
 	public boolean checkFilename(String fileName) {
-		if (fileName != null) {
-			log.error("input data not expected");
-			return false;
-		}
-		return true;
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
-	
+
 	@Override
 	public boolean checkFile(String fileName, Path filePath, AbstractParameter abstractParameter) {
-		if (fileName != null) {
-			log.error("input data not expected");
-			return false;
-		}
-		return true;
-	}
-
-	public static class DefaultFactory extends InputValidatorFactory {
-
-		@Override
-		protected InputValidator create() throws IOException {
-			return new NetexStifExporterInputValidator();
-		}
-	}
-
-	static {
-		InputValidatorFactory.factories.put(NetexStifExporterInputValidator.class.getName(), new DefaultFactory());
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
@@ -113,31 +58,71 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 			NetexStifExportParameters parameter = new NetexStifExportParameters();
 			parameter.setExportId(exportTask.getId());
 			if (referential.getLineReferentialId() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential line_referential_id is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential line_referential_id is null");
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			if (referential.getStopAreaReferentialId() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential stop_area_referential_id is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential stop_area_referential_id is null");
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
-			parameter.setReferencesType("lines");
 			if (referential.getId() == null)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential metadata is null");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential metadata is null");
 			if (referential.getMetadatas().get(0).getLineIds() == null)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
 			if (referential.getMetadatas().get(0).getLineIds().length == 0)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
-			// TODO : fix where export tells which line is to be exported (one line or all)
-			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
-			parameter.setValidityPeriods(Arrays.asList(referential.getMetadatas().get(0).getPeriods()));
+			if (referential.getMetadatas().get(0).getPeriods().length == 0)
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata periods ids empty");
+			if (!exportTask.getOptions().containsKey("export_type"))
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "export_type option missing");
+			if (!exportTask.getOptions().containsKey("duration"))
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "duration option missing");
+
+			if (exportTask.getOptions().get("export_type").equals("line")) {
+				// manage one line export
+				if (!exportTask.getOptions().containsKey("line_id"))
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "line_id option missing");
+				parameter.setIds(new ArrayList<>());
+				parameter.getIds().add(Long.valueOf(exportTask.getOptions().get("duration")));
+
+			} else if (exportTask.getOptions().get("export_type").equals("full")) {
+				// manage full export : nothing specific to add
+
+			} else {
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"export_type : unknown option" + exportTask.getOptions().get("export_type"));
+			}
+			referential.getMetadatas()
+					.forEach(m -> parameter.getValidityPeriods().addAll(Arrays.asList(m.getPeriods())));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
 			parameter.setOrganisationCode(organisation.getCode());
-
+			parameter.setReferencesType("line");
+			int duration = Integer.parseInt(exportTask.getOptions().get("duration")) - 1;
+			Calendar c = Calendar.getInstance();
+			parameter.setStartDate(c.getTime());
+			c.add(Calendar.DATE, duration);
+			parameter.setEndDate(c.getTime());
 			return parameter;
 		}
 		return null;
 	}
+	
+	public static class DefaultFactory extends InputValidatorFactory {
+
+		@Override
+		protected InputValidator create() throws IOException {
+			return new NetexStifExporterInputValidator();
+		}
+	}
+
+	static {
+		InputValidatorFactory.factories.put(NetexStifExporterInputValidator.class.getName(), new DefaultFactory());
+	}
+
+
 
 }

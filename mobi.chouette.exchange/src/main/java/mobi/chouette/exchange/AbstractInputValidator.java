@@ -11,6 +11,8 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 public abstract class AbstractInputValidator implements InputValidator {
+	
+	public static final String NOT_IMPLEMENTED = "Not yet implemented";
 
 	protected boolean checkFileExistenceInZip(String fileName, Path filePath, String format) {
 		boolean isZipFileValid = true;
@@ -34,4 +36,6 @@ public abstract class AbstractInputValidator implements InputValidator {
 
 		return isZipFileValid;
 	}
+	
+	
 }

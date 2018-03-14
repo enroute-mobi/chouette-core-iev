@@ -229,122 +229,6 @@ ALTER SEQUENCE compliance_checks_id_seq OWNED BY compliance_checks.id;
 
 
 --
--- Name: compliance_control_blocks; Type: TABLE; Schema: public; Owner: chouette
---
-
-CREATE TABLE compliance_control_blocks (
-    id bigint NOT NULL,
-    name character varying,
-    condition_attributes shared_extensions.hstore,
-    compliance_control_set_id bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE compliance_control_blocks OWNER TO chouette;
-
---
--- Name: compliance_control_blocks_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
---
-
-CREATE SEQUENCE compliance_control_blocks_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE compliance_control_blocks_id_seq OWNER TO chouette;
-
---
--- Name: compliance_control_blocks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
---
-
-ALTER SEQUENCE compliance_control_blocks_id_seq OWNED BY compliance_control_blocks.id;
-
-
---
--- Name: compliance_control_sets; Type: TABLE; Schema: public; Owner: chouette
---
-
-CREATE TABLE compliance_control_sets (
-    id bigint NOT NULL,
-    name character varying,
-    organisation_id bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE compliance_control_sets OWNER TO chouette;
-
---
--- Name: compliance_control_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
---
-
-CREATE SEQUENCE compliance_control_sets_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE compliance_control_sets_id_seq OWNER TO chouette;
-
---
--- Name: compliance_control_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
---
-
-ALTER SEQUENCE compliance_control_sets_id_seq OWNED BY compliance_control_sets.id;
-
-
---
--- Name: compliance_controls; Type: TABLE; Schema: public; Owner: chouette
---
-
-CREATE TABLE compliance_controls (
-    id bigint NOT NULL,
-    compliance_control_set_id bigint,
-    type character varying,
-    control_attributes json,
-    name character varying,
-    code character varying,
-    criticity character varying,
-    comment text,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    origin_code character varying,
-    compliance_control_block_id bigint
-);
-
-
-ALTER TABLE compliance_controls OWNER TO chouette;
-
---
--- Name: compliance_controls_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
---
-
-CREATE SEQUENCE compliance_controls_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE compliance_controls_id_seq OWNER TO chouette;
-
---
--- Name: compliance_controls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
---
-
-ALTER SEQUENCE compliance_controls_id_seq OWNED BY compliance_controls.id;
-
-
---
 -- Name: compliance_check_blocks id; Type: DEFAULT; Schema: public; Owner: chouette
 --
 
@@ -377,27 +261,6 @@ ALTER TABLE ONLY compliance_check_sets ALTER COLUMN id SET DEFAULT nextval('comp
 --
 
 ALTER TABLE ONLY compliance_checks ALTER COLUMN id SET DEFAULT nextval('compliance_checks_id_seq'::regclass);
-
-
---
--- Name: compliance_control_blocks id; Type: DEFAULT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_control_blocks ALTER COLUMN id SET DEFAULT nextval('compliance_control_blocks_id_seq'::regclass);
-
-
---
--- Name: compliance_control_sets id; Type: DEFAULT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_control_sets ALTER COLUMN id SET DEFAULT nextval('compliance_control_sets_id_seq'::regclass);
-
-
---
--- Name: compliance_controls id; Type: DEFAULT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_controls ALTER COLUMN id SET DEFAULT nextval('compliance_controls_id_seq'::regclass);
 
 
 --
@@ -441,30 +304,6 @@ ALTER TABLE ONLY compliance_checks
 
 
 --
--- Name: compliance_control_blocks compliance_control_blocks_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_control_blocks
-    ADD CONSTRAINT compliance_control_blocks_pkey PRIMARY KEY (id);
-
-
---
--- Name: compliance_control_sets compliance_control_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_control_sets
-    ADD CONSTRAINT compliance_control_sets_pkey PRIMARY KEY (id);
-
-
---
--- Name: compliance_controls compliance_controls_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_controls
-    ADD CONSTRAINT compliance_controls_pkey PRIMARY KEY (id);
-
-
---
 -- Name: index_compliance_check_blocks_on_compliance_check_set_id; Type: INDEX; Schema: public; Owner: chouette
 --
 
@@ -498,12 +337,6 @@ CREATE INDEX index_compliance_check_messages_on_compliance_check_set_id ON compl
 
 CREATE INDEX index_compliance_check_resources_on_compliance_check_set_id ON compliance_check_resources USING btree (compliance_check_set_id);
 
-
---
--- Name: index_compliance_check_sets_on_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_compliance_check_sets_on_compliance_control_set_id ON compliance_check_sets USING btree (compliance_control_set_id);
 
 
 --
@@ -539,49 +372,6 @@ CREATE INDEX index_compliance_checks_on_compliance_check_block_id ON compliance_
 --
 
 CREATE INDEX index_compliance_checks_on_compliance_check_set_id ON compliance_checks USING btree (compliance_check_set_id);
-
-
---
--- Name: index_compliance_control_blocks_on_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_compliance_control_blocks_on_compliance_control_set_id ON compliance_control_blocks USING btree (compliance_control_set_id);
-
-
---
--- Name: index_compliance_control_sets_on_organisation_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_compliance_control_sets_on_organisation_id ON compliance_control_sets USING btree (organisation_id);
-
-
---
--- Name: index_compliance_controls_on_code_and_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE UNIQUE INDEX index_compliance_controls_on_code_and_compliance_control_set_id ON compliance_controls USING btree (code, compliance_control_set_id);
-
-
---
--- Name: index_compliance_controls_on_compliance_control_block_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_compliance_controls_on_compliance_control_block_id ON compliance_controls USING btree (compliance_control_block_id);
-
-
---
--- Name: index_compliance_controls_on_compliance_control_set_id; Type: INDEX; Schema: public; Owner: chouette
---
-
-CREATE INDEX index_compliance_controls_on_compliance_control_set_id ON compliance_controls USING btree (compliance_control_set_id);
-
-
---
--- Name: compliance_control_blocks fk_rails_0f26e226bd; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_control_blocks
-    ADD CONSTRAINT fk_rails_0f26e226bd FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 
 
 --
@@ -625,22 +415,6 @@ ALTER TABLE ONLY compliance_check_blocks
 
 
 --
--- Name: compliance_control_sets fk_rails_aa1e909966; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_control_sets
-    ADD CONSTRAINT fk_rails_aa1e909966 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
-
-
---
--- Name: compliance_controls fk_rails_c613154a10; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_controls
-    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
-
-
---
 -- Name: compliance_check_sets fk_rails_d61509f1a9; Type: FK CONSTRAINT; Schema: public; Owner: chouette
 --
 
@@ -662,14 +436,6 @@ ALTER TABLE ONLY compliance_checks
 
 ALTER TABLE ONLY compliance_check_messages
     ADD CONSTRAINT fk_rails_e1cf9ec59a FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
-
-
---
--- Name: compliance_controls fk_rails_f402e905ef; Type: FK CONSTRAINT; Schema: public; Owner: chouette
---
-
-ALTER TABLE ONLY compliance_controls
-    ADD CONSTRAINT fk_rails_f402e905ef FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 
 
 --

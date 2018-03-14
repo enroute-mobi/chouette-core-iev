@@ -1,12 +1,8 @@
-ALTER TABLE ONLY compliance_control_blocks    ADD CONSTRAINT fk_rails_0f26e226bd FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 ALTER TABLE ONLY compliance_check_messages    ADD CONSTRAINT fk_rails_1361178dd5 FOREIGN KEY (compliance_check_id) REFERENCES compliance_checks(id);
 ALTER TABLE ONLY compliance_checks    ADD CONSTRAINT fk_rails_2cbc8a0142 FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
 ALTER TABLE ONLY compliance_check_resources    ADD CONSTRAINT fk_rails_45cd323eca FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
 ALTER TABLE ONLY compliance_check_messages    ADD CONSTRAINT fk_rails_70bd95092e FOREIGN KEY (compliance_check_resource_id) REFERENCES compliance_check_resources(id);
 ALTER TABLE ONLY compliance_check_blocks    ADD CONSTRAINT fk_rails_7d7a89703f FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
-ALTER TABLE ONLY compliance_control_sets    ADD CONSTRAINT fk_rails_aa1e909966 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
-ALTER TABLE ONLY compliance_controls    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
 ALTER TABLE ONLY compliance_check_sets    ADD CONSTRAINT fk_rails_d61509f1a9 FOREIGN KEY (workbench_id) REFERENCES workbenches(id);
 ALTER TABLE ONLY compliance_checks    ADD CONSTRAINT fk_rails_df077b5b35 FOREIGN KEY (compliance_check_block_id) REFERENCES compliance_check_blocks(id);
 ALTER TABLE ONLY compliance_check_messages    ADD CONSTRAINT fk_rails_e1cf9ec59a FOREIGN KEY (compliance_check_set_id) REFERENCES compliance_check_sets(id);
-ALTER TABLE ONLY compliance_controls    ADD CONSTRAINT fk_rails_f402e905ef FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);

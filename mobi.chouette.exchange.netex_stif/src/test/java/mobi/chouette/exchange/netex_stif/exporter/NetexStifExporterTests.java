@@ -58,7 +58,7 @@ public class NetexStifExporterTests extends Arquillian {
 
 	public static final String SCHEMA_NAME = "iev_export";
 
-	@EJB 
+	@EJB
 	ReferentialDAO referentialDAO;
 
 	@EJB
@@ -69,7 +69,6 @@ public class NetexStifExporterTests extends Arquillian {
 
 	@Inject
 	UserTransaction utx;
-
 
 	@Deployment
 	public static EnterpriseArchive createDeployment() {
@@ -116,7 +115,6 @@ public class NetexStifExporterTests extends Arquillian {
 		return result;
 	}
 
-
 	protected void init() {
 		Locale.setDefault(Locale.ENGLISH);
 		if (initialContext == null) {
@@ -129,7 +127,7 @@ public class NetexStifExporterTests extends Arquillian {
 		}
 
 	}
-	
+
 	protected Context initExporterContext(boolean all) {
 		init();
 		ContextHolder.setContext(SCHEMA_NAME); // set tenant schema
@@ -148,14 +146,18 @@ public class NetexStifExporterTests extends Arquillian {
 		configuration.setReferentialName("export");
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
-		configuration.setIds(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
-		// configuration.setIds(Arrays.asList(new Long[] { 3L, 4L }));
-		
+		if (all) {
+			configuration.setIds(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
+		} else {
+			configuration.setReferencesType("line");
+			configuration.setIds(Arrays.asList(new Long[] { 3L }));
+		}
+
 		Calendar c = Calendar.getInstance();
-		c.set(Calendar.YEAR,2017);
-		c.set(Calendar.MONTH,Calendar.JUNE);
-		c.set(Calendar.DAY_OF_MONTH,25);
-		c.set(Calendar.HOUR_OF_DAY,12);
+		c.set(Calendar.YEAR, 2017);
+		c.set(Calendar.MONTH, Calendar.JUNE);
+		c.set(Calendar.DAY_OF_MONTH, 25);
+		c.set(Calendar.HOUR_OF_DAY, 12);
 		DateRange dr = new DateRange();
 		dr.setFirst(new Date(c.getTime().getTime()));
 		configuration.setStartDate(new Date(c.getTime().getTime()));
@@ -163,11 +165,17 @@ public class NetexStifExporterTests extends Arquillian {
 		dr.setLast(new Date(c.getTime().getTime()));
 		configuration.getValidityPeriods().add(dr);
 		configuration.setEndDate(new Date(c.getTime().getTime()));
-		
+
 		JobDataImpl test = new JobDataImpl();
 		context.put(Constant.JOB_DATA, test);
-		test.setPathName("target/referential/test");
-		File f = new File("target/referential/test");
+		File f = null;
+		if (all) {
+			test.setPathName("target/referential/test_all");
+			f = new File("target/referential/test_all");
+		} else {
+			test.setPathName("target/referential/test_1");
+			f = new File("target/referential/test_1");
+		}
 		if (f.exists())
 			try {
 				FileUtils.deleteDirectory(f);
@@ -268,21 +276,36 @@ public class NetexStifExporterTests extends Arquillian {
 		return b.toString();
 	}
 
-	@Test(groups = { "export" }, description = "export all data", priority = 1)
+	@Test(groups = { "export" }, description = "export all data", priority = 3001)
 	public void verifyExportAll() throws Exception {
 		log.info(Color.CYAN + " export all data " + Color.NORMAL);
 		initSchema();
 		Context context = initExporterContext(true);
 		context.put(Constant.REFERENTIAL, new Referential());
-		Command command = CommandFactory.create(initialContext,
-				NetexStifExporterCommand.class.getName());
+		Command command = CommandFactory.create(initialContext, NetexStifExporterCommand.class.getName());
 		try {
 			command.execute(context);
 		} catch (Exception ex) {
 			log.error("test failed", ex);
 			throw ex;
 		}
-		
+
 	}
-	
+
+	@Test(groups = { "export" }, description = "export line 3", priority = 3002)
+	public void verifyExportLine() throws Exception {
+		log.info(Color.CYAN + " export line" + Color.NORMAL);
+		initSchema();
+		Context context = initExporterContext(false);
+		context.put(Constant.REFERENTIAL, new Referential());
+		Command command = CommandFactory.create(initialContext, NetexStifExporterCommand.class.getName());
+		try {
+			command.execute(context);
+		} catch (Exception ex) {
+			log.error("test failed", ex);
+			throw ex;
+		}
+
+	}
+
 }
