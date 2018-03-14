@@ -46,6 +46,7 @@ public class NetexStifConstant {
 	public static final String NETEX_HORAIRE = "NETEX_HORAIRE";
 	public static final String NETEX_OFFRE_LIGNE = "NETEX_OFFRE_LIGNE";
 	public static final String NETEX_STRUCTURE = "NETEX_STRUCTURE";
+	public static final String NETEX_ARRET_STIF = "NETEX_ARRET_STIF";
 	public static final String NOTICE = "Notice";
 	public static final String NOTICES = "notices";
 	public static final String NOTICE_ASSIGNMENT = "NoticeAssignment";

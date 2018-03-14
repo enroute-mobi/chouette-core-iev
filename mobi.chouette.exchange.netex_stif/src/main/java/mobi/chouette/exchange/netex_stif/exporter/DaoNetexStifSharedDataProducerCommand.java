@@ -24,7 +24,6 @@ import mobi.chouette.dao.LineDAO;
 import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifArretsProducer;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifLignesProducer;
-import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.StopArea;
 
@@ -45,7 +44,6 @@ public class DaoNetexStifSharedDataProducerCommand implements Command {
 
 		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
 
@@ -78,16 +76,36 @@ public class DaoNetexStifSharedDataProducerCommand implements Command {
 
 	private void collectReflexData(Context context) {
 		ExportableData collection = (ExportableData) context.get(Constant.EXPORTABLE_DATA);
-		Set<Long> stopIds = collection.getMappedStopAreas().keySet();
+		collection.getStopAreas().clear();
+		collection.getQuays().clear();
+		collection.getCommercialStops().clear();
+		collection.getStopPlaces().clear();
 		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
-		List<StopArea> stops = stopAreaDao.findAll(parameters.getStopAreaReferentialId(), stopIds);
+		List<StopArea> stops = stopAreaDao.findAll(parameters.getStopAreaReferentialId());
 		collection.getStopAreas().addAll(stops);
 		stops.forEach(l -> {
-			StopArea p = l.getParent();
-			while (p != null && !collection.getStopAreas().contains(p)) {
-				collection.getStopAreas().add(p);
-				p = p.getParent();
+			switch (l.getAreaType())
+			{
+			case "zder": 
+				collection.getZders().add(l);
+				break;
+			case "zdep":
+				collection.getZdeps().add(l);
+				break;
+			case "zdlp": 
+				collection.getZdlps().add(l);
+				break;
+			case "zdlr":
+				collection.getZdlrs().add(l);
+				break;
+			case "lda":
+				collection.getLdas().add(l);
+				break;
+			case "gdl":
+				collection.getGdls().add(l);
+				break;
 			}
+			
 		});
 	}
 

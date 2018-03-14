@@ -59,24 +59,19 @@ public class NetexStifLineProducerCommand implements Command {
 			log.info("global validity period before collect" + collection.getGlobalValidityPeriod());
 
 			NetexStifDataCollector collector = new NetexStifDataCollector();
-			boolean cont = collector.collect(context, collection, r, startDate, endDate);
+			collector.collect(context, collection, r, startDate, endDate);
 			log.info("global validity period after collect" + collection.getGlobalValidityPeriod());
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
 					OBJECT_STATE.OK, IO_TYPE.INPUT);
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN, collection.getJourneyPatterns().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE, collection.getRoutes().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY, collection.getVehicleJourneys().size());
-			// if (cont) {
-
-				NetexStifOffreProducer producer = new NetexStifOffreProducer();
-				producer.produce(context);
-
-				result = Constant.SUCCESS;
-//			} else {
-//				reporter.addErrorToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE,
-//						ActionReporter.ERROR_CODE.NO_DATA_ON_PERIOD, "no data on period");
-//				result = Constant.ERROR;
-//			}
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
+					collection.getJourneyPatterns().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE,
+					collection.getRoutes().size());
+			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY,
+					collection.getVehicleJourneys().size());
+			NetexStifOffreProducer producer = new NetexStifOffreProducer();
+			producer.produce(context);
+			result = Constant.SUCCESS;
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

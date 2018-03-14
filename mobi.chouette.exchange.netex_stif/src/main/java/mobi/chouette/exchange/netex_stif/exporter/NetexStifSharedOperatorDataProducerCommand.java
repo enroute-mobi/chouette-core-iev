@@ -15,7 +15,6 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifCalendriersProducer;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifCommunProducer;
-import mobi.chouette.exchange.report.ActionReporter;
 
 @Log4j
 public class NetexStifSharedOperatorDataProducerCommand implements Command {
@@ -26,7 +25,6 @@ public class NetexStifSharedOperatorDataProducerCommand implements Command {
 
 		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
 

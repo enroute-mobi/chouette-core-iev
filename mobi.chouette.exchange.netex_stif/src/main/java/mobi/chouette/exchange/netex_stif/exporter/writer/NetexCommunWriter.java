@@ -3,6 +3,7 @@ package mobi.chouette.exchange.netex_stif.exporter.writer;
 import java.io.IOException;
 import java.io.Writer;
 
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 import mobi.chouette.model.Footnote;
 
@@ -10,11 +11,11 @@ public class NetexCommunWriter extends AbstractWriter {
 
 	public static void write(Writer writer, ExportableData data) throws IOException {
 		String participantRef = OFFRE_PARTICIPANT_REF;
-		String prefix = FRAME_REF_PREFIX;
+		String prefix = ROOT_PREFIX;
 		String lineName = ""; // TODO
 		
 		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName, FILE_TYPE.COMMUN);
-		openGeneralFrame(writer, prefix, "NETEX_COMMUN", null, false, false);
+		openGeneralFrame(writer, prefix, NetexStifConstant.NETEX_COMMUN, null, false, false);
 		writeNotices(writer, data);
 		writeOrganisationalUnits(writer, data);
 		closeGeneralFrame(writer, false, false);
@@ -25,12 +26,12 @@ public class NetexCommunWriter extends AbstractWriter {
 	private static void writeNotices(Writer writer, ExportableData data) throws IOException {
 		// TODO check version
 		for (Footnote object : data.getNotices()) {
-			writer.write("                <netex:Notice id=\""
-					+ object.getObjectId() + "\" version=\"any\">\n");
-			writer.write("                   <netex:Text>" + toXml(object.getLabel()) + "</netex:Text>\n");
-			writer.write("                   <netex:PublicCode>" + toXml(object.getCode()) + "</netex:PublicCode>\n");
-			writer.write("                   <netex:TypeOfNoticeRef ref=\"ServiceJourneyNotice\" />\n");
-			writer.write("                </netex:Notice>\n");
+			write(writer,4,"<Notice id=\""
+					+ object.getObjectId() + "\" version=\"any\">");
+			write(writer,5,"<Text>" + toXml(object.getLabel()) + "</Text>");
+			write(writer,5,"<PublicCode>" + toXml(object.getCode()) + "</PublicCode>");
+			write(writer,5,"<TypeOfNoticeRef ref=\"ServiceJourneyNotice\" />");
+			write(writer,4,"</Notice>");
 		
 		}
 		

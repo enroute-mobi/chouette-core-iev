@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.Period;
@@ -15,11 +16,11 @@ public class NetexCalendrierWriter extends AbstractWriter {
 
 	public static void write(Writer writer, ExportableData data) throws IOException {
 		String participantRef = OFFRE_PARTICIPANT_REF;
-		String prefix = FRAME_REF_PREFIX;
+		String prefix = ROOT_PREFIX;
 		String lineName = ""; // TODO 
 
 		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName, FILE_TYPE.CALENDRIERS);
-		openGeneralFrame(writer, prefix, "NETEX_CALENDRIER", data.getValidityPeriods(), false, data.getTimetables().isEmpty());
+		openGeneralFrame(writer, prefix, NetexStifConstant.NETEX_CALENDRIER, data.getValidityPeriods(), false, data.getTimetables().isEmpty());
 		writeDayTypes(writer, data);
 		writeDayTypeAssignments(writer, data);
 		writeOperatingPeriods(writer, data);
@@ -30,20 +31,20 @@ public class NetexCalendrierWriter extends AbstractWriter {
 
 	private static void writeDayTypes(Writer writer, ExportableData data) throws IOException {
 		for (Timetable object : data.getTimetables()) {
-			writer.write("                   <netex:DayType id=\"" + object.getObjectId() + "\" version=\"any\">\n");
-			writer.write("                      <netex:Name>" + toXml(object.getComment()) + "</netex:Name>\n");
+			write(writer,4,"<DayType id=\"" + object.getObjectId() + "\" version=\"any\">");
+			write(writer,5,"<Name>" + toXml(object.getComment()) + "</Name>");
 			if (!object.getDayTypes().isEmpty()) {
-				writer.write("                      <netex:properties>\n");
+				write(writer,5,"<properties>");
 				for (DayTypeEnum child : object.getDayTypes()) {
-					writer.write("                         <netex:PropertyOfDay>\n");
-					writer.write("                            <netex:DaysOfWeek>" + child.toString()
-							+ "</netex:DaysOfWeek>\n");
-					writer.write("                         </netex:PropertyOfDay>\n");
+					write(writer,6,"<PropertyOfDay>");
+					write(writer,7,"<DaysOfWeek>" + child.toString()
+							+ "</DaysOfWeek>");
+					write(writer,6,"</PropertyOfDay>");
 
 				}
-				writer.write("                      </netex:properties>\n");
+				write(writer,5,"</properties>");
 			}
-			writer.write("                   </netex:DayType>\n");
+			write(writer,4,"</DayType>");
 		}
 	}
 
@@ -54,26 +55,25 @@ public class NetexCalendrierWriter extends AbstractWriter {
 		for (Timetable object : data.getTimetables()) {
 			String prefix = object.objectIdPrefix();
 			for (int periodRank = 1; periodRank <= object.getPeriods().size(); periodRank++) {
-				writer.write("                   <netex:DayTypeAssignment id=\"" + prefix + ":DayTypeAssignment:" + rank
-						+ ":LOC\" version=\"any\" order=\"0\" >\n");
-				writer.write("                      <netex:OperatingPeriodRef ref=\""
+				write(writer,4,"<DayTypeAssignment id=\"" + prefix + ":DayTypeAssignment:" + rank
+						+ ":LOC\" version=\"any\" order=\"0\" >");
+				write(writer,5,"<OperatingPeriodRef ref=\""
 						+ buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)
-						+ "\" version=\"any\"/>\n");
-				writer.write("                      <netex:DayTypeRef ref=\"" + object.getObjectId()
-						+ "\" version=\"any\"/>\n");
-				writer.write("                   </netex:DayTypeAssignment>\n");
+						+ "\" version=\"any\"/>");
+				write(writer,5,"<DayTypeRef ref=\"" + object.getObjectId()
+						+ "\" version=\"any\"/>");
+				write(writer,4,"</DayTypeAssignment>");
 				periodRank++;
 				rank++;
 			}
 			for (CalendarDay child : object.getCalendarDays()) {
-				writer.write("                   <netex:DayTypeAssignment id=\"" + prefix + ":DayTypeAssignment:" + rank
-						+ ":LOC\" version=\"any\" order=\"0\" >\n");
-				writer.write("                      <netex:Date>" + format.format(child.getDate()) + "</netex:Date>\n");
-				writer.write("                      <netex:DayTypeRef ref=\"" + object.getObjectId()
-						+ "\" version=\"any\"/>\n");
-				writer.write(
-						"                      <netex:isAvailable>" + child.getIncluded() + "</netex:isAvailable>\n");
-				writer.write("                   </netex:DayTypeAssignment>\n");
+				write(writer,4,"<DayTypeAssignment id=\"" + prefix + ":DayTypeAssignment:" + rank
+						+ ":LOC\" version=\"any\" order=\"0\" >");
+				write(writer,5,"<Date>" + format.format(child.getDate()) + "</Date>");
+				write(writer,5,"<DayTypeRef ref=\"" + object.getObjectId()
+						+ "\" version=\"any\"/>");
+				write(writer,5,"<isAvailable>" + child.getIncluded() + "</isAvailable>");
+				write(writer,4,"</DayTypeAssignment>");
 				rank++;
 			}
 		}
@@ -85,10 +85,10 @@ public class NetexCalendrierWriter extends AbstractWriter {
 		for (Timetable object : data.getTimetables()) {
 			int periodRank = 1;
 			for (Period child : object.getPeriods()) {
-				writer.write("                   <netex:OperatingPeriod id=\"" + buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)+"\" version=\"any\" >\n");
-				writer.write("                      <netex:FromDate>"+format.format(child.getStartDate())+"</netex:FromDate>\n");
-				writer.write("                      <netex:ToDate>"+format.format(child.getEndDate())+"</netex:ToDate>\n");
-				writer.write("                   </netex:OperatingPeriod>\n");
+				write(writer,4,"<OperatingPeriod id=\"" + buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)+"\" version=\"any\" >");
+				write(writer,5,"<FromDate>"+format.format(child.getStartDate())+"</FromDate>");
+				write(writer,5,"<ToDate>"+format.format(child.getEndDate())+"</ToDate>");
+				write(writer,4,"</OperatingPeriod>");
 				periodRank++;
 			}
 		}

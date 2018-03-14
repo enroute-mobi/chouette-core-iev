@@ -1,6 +1,5 @@
 package mobi.chouette.exchange.netex_stif.exporter;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -273,22 +272,25 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 		// process one line
 		Set<Long> lines = new HashSet<>(ids);
 
-		ExportableData collection = (ExportableData) context.computeIfAbsent(Constant.EXPORTABLE_DATA,
-				c -> new ExportableData());
-		// TODO manage validity period
-		collection.addPeriods(parameters.getValidityPeriods());
 		JobData jobData = (JobData) context.get(Constant.JOB_DATA);
-		LineLite line = collection.getLineLite();
+		Referential r = (Referential) context.get(Constant.REFERENTIAL);
+		LineLite line = r.findLine(ids.get(0));
 		String lineName = line.getName().replaceAll("[^\\w-]", "_");
 		SimpleDateFormat format = new SimpleDateFormat(AbstractWriter.ID_DATE_TIME_UTC);
 		format.setTimeZone(TimeZone.getTimeZone(AbstractWriter.UTC));
 		jobData.setOutputFilename(
 				"OFFRE_LIGNE_" + line.getNumber() + "_" + lineName + "_" + format.format(new Date()) + ".zip");
 
+		ExportableData collection = (ExportableData) context.computeIfAbsent(Constant.EXPORTABLE_DATA,
+				c -> new ExportableData());
+		// TODO manage validity period
+		collection.addPeriods(parameters.getValidityPeriods());
+
 		progression.execute(context);
 		result = processLines(context, commands, progression, continueLineProcesingOnError, lines);
 		
 		result = processPostLines(context, (NetexStifExporterProcessingCommands) commands, progression);
+
 		return result;
 	}
 
