@@ -66,7 +66,7 @@ public class AbstractParameter {
 	@Getter
 	@Setter
 	@XmlElement(name = "reference_ids")
-	private List<Long> ids;
+	private List<Long> ids = new ArrayList<>();
 	
 	@Getter@Setter
 	@XmlElement(name = "test")

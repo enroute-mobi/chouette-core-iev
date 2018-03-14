@@ -108,11 +108,16 @@ public class NetexStifImporterInputValidator extends AbstractInputValidator {
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
 			if (referential.getMetadatas().isEmpty())
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,"referential metadata is null");
-			if (referential.getMetadatas().get(0).getLineIds() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids  null");
-			if (referential.getMetadatas().get(0).getLineIds().length == 0)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
-			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
+         // loop to collect all lines (#6136)
+         referential.getMetadatas().forEach(m -> {
+            if (m.getLineIds() != null) {
+               if (m.getLineIds().length > 0) {
+                  parameter.getIds().addAll(Arrays.asList(m.getLineIds()));
+               }
+            }
+         });
+         if (parameter.getIds().isEmpty())
+            throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
