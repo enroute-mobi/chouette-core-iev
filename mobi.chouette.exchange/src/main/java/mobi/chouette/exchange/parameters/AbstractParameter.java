@@ -1,19 +1,19 @@
 package mobi.chouette.exchange.parameters;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.log4j.Logger;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import org.apache.log4j.Logger;
 
 
 @NoArgsConstructor
@@ -67,7 +67,7 @@ public class AbstractParameter {
 	@Getter
 	@Setter
 	@XmlElement(name = "reference_ids")
-	private List<Long> ids = new ArrayList<>();
+	private Set<Long> ids = new HashSet<>();
 	
 	@Getter@Setter
 	@XmlElement(name = "test")

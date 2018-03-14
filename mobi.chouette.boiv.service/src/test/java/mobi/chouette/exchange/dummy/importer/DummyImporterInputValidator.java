@@ -51,7 +51,7 @@ public class DummyImporterInputValidator extends AbstractInputValidator {
 			parameter.setLineReferentialId(referential.getLineReferentialId());
 			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
 			parameter.setReferencesType("lines");
-			parameter.setIds(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
+			parameter.getIds().addAll(Arrays.asList(referential.getMetadatas().get(0).getLineIds()));
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			return parameter;

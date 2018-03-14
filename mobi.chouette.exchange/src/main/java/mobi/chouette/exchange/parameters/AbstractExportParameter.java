@@ -2,7 +2,6 @@ package mobi.chouette.exchange.parameters;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -21,16 +20,6 @@ import lombok.ToString;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {  "startDate", "endDate", "addMetadata" ,"validateAfterExport"}, name = "actionExportParameter")
 public class AbstractExportParameter extends AbstractParameter {
-
-	@Getter
-	@Setter
-	@XmlElement(name = "references_type", required = true)
-	private String referencesType;
-
-	@Getter
-	@Setter
-	@XmlElement(name = "reference_ids")
-	private List<Long> ids;
 
 	@Getter
 	@Setter
@@ -60,9 +49,9 @@ public class AbstractExportParameter extends AbstractParameter {
 			return false;
 		}
 
-		if (referencesType != null && !referencesType.isEmpty()) {
-			if (!Arrays.asList(allowedTypes).contains(referencesType.toLowerCase())) {
-				log.error("invalid type " + referencesType);
+		if (getReferencesType() != null && !getReferencesType().isEmpty()) {
+			if (!Arrays.asList(allowedTypes).contains(getReferencesType().toLowerCase())) {
+				log.error("invalid type " + getReferencesType());
 				return false;
 			}
 		}

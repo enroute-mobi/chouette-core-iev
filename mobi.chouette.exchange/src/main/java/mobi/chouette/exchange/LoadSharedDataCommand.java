@@ -3,7 +3,6 @@ package mobi.chouette.exchange;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -53,7 +52,7 @@ public class LoadSharedDataCommand implements Command {
 		try {
 			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 			AbstractParameter parameters = (AbstractParameter) context.get(Constant.CONFIGURATION);
-			List<Long> ids = parameters.getIds();
+			Set<Long> ids = parameters.getIds();
 			Set<Long> companyIds = new HashSet<>();
 			for (LineLite line : lineDAO.findAll(parameters.getLineReferentialId(), ids)) {
 				referential.getSharedReadOnlyLines().put(line.getObjectId(), line);

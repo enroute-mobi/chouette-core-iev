@@ -122,7 +122,7 @@ public class LoadSharedDataTest extends Arquillian  {
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L });
-		configuration.setIds(ids);
+		configuration.getIds().addAll(ids);
 		TestJobData jobData = new TestJobData();
 		context.put(Constant.JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
