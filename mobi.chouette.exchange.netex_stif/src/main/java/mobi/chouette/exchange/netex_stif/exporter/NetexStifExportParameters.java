@@ -16,13 +16,13 @@ import mobi.chouette.model.type.DateRange;
 
 
 @XmlRootElement(name = "netex-export")
-@XmlType(propOrder={"validityPeriods", "projectionType"})
+@XmlType(propOrder={"validityPeriods", "mode"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NetexStifExportParameters  extends AbstractExportParameter{
 	
 	@Getter @Setter
-	@XmlElement(name = "projection_type")
-	private String projectionType;
+	@XmlElement(name = "mode")
+	private String mode;
 
     @Getter @Setter 
     @XmlElement(name = "validity_periods")

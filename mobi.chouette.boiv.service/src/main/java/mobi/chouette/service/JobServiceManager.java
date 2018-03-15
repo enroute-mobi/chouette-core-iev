@@ -1,11 +1,8 @@
 package mobi.chouette.service;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Timestamp;
@@ -24,13 +21,16 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -261,33 +261,6 @@ public class JobServiceManager {
 		}
 	}
 
-	private void uploadImportFileFromHttp(JobService jobService, String urlName) throws ServiceException {
-		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
-		File dest = new File(jobService.getPathName(), jobService.getInputFilename());
-		try (CloseableHttpClient httpclient = HttpClients.createDefault();
-				BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
-			Thread.sleep(1000L);
-			HttpGet httpget = new HttpGet(urlName);
-			httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
-
-			HttpResponse response = httpclient.execute(httpget);
-			// check response headers.
-			int statusCode = response.getStatusLine().getStatusCode();
-			if (statusCode >= 200 && statusCode < 300) {
-				HttpEntity entity = response.getEntity();
-				InputStream content = entity.getContent();
-				IOUtils.copy(content, baos);
-			} else {
-				throw new ClientProtocolException("Unexpected response status: " + statusCode);
-			}
-
-		} catch (Exception ex) {
-			log.error("fail to get file for import job " + ex.getMessage());
-			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
-		}
-
-	}
-
 	private JobService createValidatorJob(Long id) throws ServiceException {
 		if (id == 0L)
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "invalid validator id " + id);
@@ -392,7 +365,6 @@ public class JobServiceManager {
 		try {
 			ActionTask actionTask = actionDAO.find(jobAction, id);
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, actionTask);
-			// Enregistrer le jobService pour obtenir un id
 
 			log.info("job " + jobService.getId() + " found for " + action);
 			if (jobService.getStatus().equals(JobService.STATUS.PENDING)
@@ -434,78 +406,102 @@ public class JobServiceManager {
 		jobService.setEndedAt(new Date());
 		updateTask(jobService);
 
-		// delete directory
-		deleteDirectory(jobService);
 		// send termination to BOIV
 		notifyGui(jobService);
 
 	}
 
-	private void notifyGui(JobService jobService) {
+	private void notifyGui(final JobService jobService) {
 		String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+
 		if (guiBaseUrl != null && !guiBaseUrl.isEmpty() && guiToken != null && !guiToken.isEmpty()) {
-			final String urlName;
-			final String method;
-			switch (jobService.getAction()) {
-			case importer:
-				urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent";
-				method = "GET";
-				break;
-			case validator:
-				urlName = guiBaseUrl + "/api/v1/internals/compliance_check_sets/" + jobService.getId()
-						+ "/notify_parent";
-				method = "GET";
-				break;
-			case exporter:
-				// urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="; 
-				// TODO manage url
-		        urlName="";																								
+		
+        final String token = guiToken;
+		final String urlName;
+		final String method;
+		final File putFile;
+		switch (jobService.getAction()) {
+		case importer:
+			urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + jobService.getId() + "/notify_parent";
+			method = "GET";
+			putFile = null;
+			break;
+		case validator:
+			urlName = guiBaseUrl + "/api/v1/internals/compliance_check_sets/" + jobService.getId() + "/notify_parent";
+			method = "GET";
+			putFile = null;
+			break;
+		case exporter:
+			putFile = new File(jobService.getPath().toFile(), "" + jobService.getOutputFilename());
+			if (jobService.notFailed() && putFile.isFile()) {
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="
+						+ jobService.getOutputFilename();
 				method = "PUT";
-				break;
-			default:
-				log.warn("no notify URL for job type " + jobService.getAction());
-				urlName = "";
-				method = "";
+			} else {
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/notify_parent";
+				method = "GET";
 			}
+			break;
+		default:
+			log.warn("no notify URL for job type " + jobService.getAction());
+			urlName = "";
+			method = "";
+			putFile = null;
+		}
 
-			if (!urlName.isEmpty()) {
-				// send message with some delay to let transaction terminate
-				Runnable r = () -> {
+		if (!urlName.isEmpty()) {
+			// send message with some delay to let transaction terminate
+			Runnable r = () -> {
 
-					try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-						Thread.sleep(1000L);
-						log.info("Notify End of Task : " + urlName);
-						HttpGet httpget = new HttpGet(urlName);
-						httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
-						ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-							@Override
-							public String handleResponse(final HttpResponse response)
-									throws ClientProtocolException, IOException {
-								int status = response.getStatusLine().getStatusCode();
-								if (status >= 200 && status < 300) {
-									HttpEntity entity = response.getEntity();
-									return entity != null ? EntityUtils.toString(entity) : null;
-								} else {
-									throw new ClientProtocolException("Unexpected response status: " + status);
-								}
-							}
-
-						};
-						String responseBody = httpclient.execute(httpget, responseHandler);
-						log.info("End of task notified : response = " + responseBody);
-
-					} catch (Exception e) {
-						log.error("End of task not notified, cannot invoke url " + urlName + ", cause : "
-								+ e.getMessage());
+				try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+					Thread.sleep(1000L);
+					log.info("Notify End of Task : " + method + " " + urlName);
+					HttpRequestBase httpRequest = null;
+					switch (method) {
+					case "GET":
+						httpRequest = new HttpGet(urlName);
+						break;
+					case "PUT":
+						HttpPut httpput = new HttpPut(urlName);
+						httpput.setEntity(new FileEntity(putFile, ContentType.APPLICATION_OCTET_STREAM));
+						httpRequest = httpput;
+						break;
 					}
+					httpRequest.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + token);
+					ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 
-				};
-				new Thread(r).start();
-			}
+						@Override
+						public String handleResponse(final HttpResponse response)
+								throws ClientProtocolException, IOException {
+							int status = response.getStatusLine().getStatusCode();
+							if (status >= 200 && status < 300) {
+								HttpEntity entity = response.getEntity();
+								return entity != null ? EntityUtils.toString(entity) : null;
+							} else {
+								throw new ClientProtocolException("Unexpected response status: " + status);
+							}
+						}
+					};
+					String responseBody = httpclient.execute(httpRequest, responseHandler);
+					log.info("End of task notified : response = " + responseBody);
+
+				} catch (Exception e) {
+					log.error("End of task not notified, cannot invoke url " + urlName + ", cause : " + e.getMessage());
+					if (method.equals("PUT")) {
+						// abort task if file not sent
+						jobServiceManager.abort(jobService);
+					}
+				} finally {
+					deleteDirectory(jobService);
+				}
+
+			};
+			new Thread(r).start();
+		}
 		} else {
 			log.warn("no URL or no Token to notify end of job");
+			deleteDirectory(jobService);
 		}
 	}
 
@@ -541,8 +537,6 @@ public class JobServiceManager {
 		jobService.setUpdatedAt(new Date());
 		updateTask(jobService);
 
-		// delete directory
-		deleteDirectory(jobService);
 		// send termination to BOIV
 		notifyGui(jobService);
 

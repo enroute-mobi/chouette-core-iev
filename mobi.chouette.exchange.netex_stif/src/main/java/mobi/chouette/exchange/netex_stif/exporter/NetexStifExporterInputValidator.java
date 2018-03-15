@@ -2,7 +2,6 @@ package mobi.chouette.exchange.netex_stif.exporter;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -74,28 +73,35 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 			if (referential.getMetadatas().get(0).getLineIds().length == 0)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
 			if (referential.getMetadatas().get(0).getPeriods().length == 0)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata periods ids empty");
+				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+						"referential's metadata periods ids empty");
 			if (!exportTask.getOptions().containsKey("export_type"))
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "export_type option missing");
 			if (!exportTask.getOptions().containsKey("duration"))
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "duration option missing");
 
+			parameter.setMode(exportTask.getOptions().get("export_type"));
 			if (exportTask.getOptions().get("export_type").equals("line")) {
 				// manage one line export
 				if (!exportTask.getOptions().containsKey("line_id"))
 					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "line_id option missing");
-				parameter.setIds(new ArrayList<>());
-				parameter.getIds().add(Long.valueOf(exportTask.getOptions().get("duration")));
+				parameter.getIds().add(Long.valueOf(exportTask.getOptions().get("line_id")));
 
 			} else if (exportTask.getOptions().get("export_type").equals("full")) {
-				// manage full export : nothing specific to add
+				// manage full export : add all line ids
+				referential.getMetadatas().forEach(m -> {
+					if (m.getLineIds() != null && m.getLineIds().length > 0)
+						parameter.getIds().addAll(Arrays.asList(m.getLineIds()));
+				});
 
 			} else {
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
 						"export_type : unknown option" + exportTask.getOptions().get("export_type"));
 			}
-			referential.getMetadatas()
-					.forEach(m -> parameter.getValidityPeriods().addAll(Arrays.asList(m.getPeriods())));
+			referential.getMetadatas().forEach(m -> {
+				if (m.getPeriods() != null && m.getPeriods().length > 0)
+					parameter.getValidityPeriods().addAll(Arrays.asList(m.getPeriods()));
+			});
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
@@ -110,7 +116,7 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 		}
 		return null;
 	}
-	
+
 	public static class DefaultFactory extends InputValidatorFactory {
 
 		@Override
@@ -122,7 +128,5 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 	static {
 		InputValidatorFactory.factories.put(NetexStifExporterInputValidator.class.getName(), new DefaultFactory());
 	}
-
-
 
 }

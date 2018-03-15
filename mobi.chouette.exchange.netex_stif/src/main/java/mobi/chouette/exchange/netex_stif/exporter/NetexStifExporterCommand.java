@@ -83,6 +83,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 
 				}
 			}
+			log.info("parameters = "+parameters);
 
 			// no validation available for this export
 			parameters.setValidateAfterExport(false);
@@ -124,7 +125,6 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			if (type == null || type.isEmpty()) {
 				// all lines
 				type = "line";
-				parameters.setIds(null);
 			}
 			type = type.toLowerCase();
 
@@ -133,7 +133,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 				ids = new ArrayList<>(parameters.getIds());
 			}
 
-			if (ids.size() == 1) {
+			if (ids.size() == 1 && parameters.getMode().equals("line")) {
 				result = processOneLine(context, commands, progression, continueLineProcesingOnError, ids);
 			} else {
 

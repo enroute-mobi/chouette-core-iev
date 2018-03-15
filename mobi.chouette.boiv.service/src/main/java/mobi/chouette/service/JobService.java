@@ -100,7 +100,7 @@ public class JobService implements JobData {
 		try {
 			actionParameter = inputValidator.toActionParameter(actionTask);
 		} catch (Exception ex) {
-			log.error("problem while reading parameters" + ex.getMessage());
+			log.error("problem while reading parameters : " + ex.getMessage(),ex);
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS,
 					getCommandName() + " cannot read action parameters", ex);
 		}
@@ -132,7 +132,7 @@ public class JobService implements JobData {
 		if (this.type == null)
 			this.type = "netex_stif";
 
-		this.outputFilename = ACTION.exporter.name() + ".zip";
+		// this.outputFilename = ACTION.exporter.name() + ".zip";
 
 	}
 
@@ -168,6 +168,11 @@ public class JobService implements JobData {
 		String computeType = getType() == null ? "" : getType();
 		return "mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + getAction() + "."
 				+ capitalize(computeType) + StringUtils.capitalize(getAction().name()) + "Command";
+	}
+	
+	public boolean notFailed()
+	{
+		return status.equals(STATUS.SUCCESSFUL) || status.equals(STATUS.WARNING);
 	}
 
 	private static String capitalize(String text) {

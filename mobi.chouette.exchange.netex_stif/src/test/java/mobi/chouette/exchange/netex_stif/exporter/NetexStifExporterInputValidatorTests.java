@@ -86,7 +86,10 @@ public class NetexStifExporterInputValidatorTests {
         Assert.assertNotNull(params.getOrganisationName(),"OrganisationName should be set");
         Assert.assertNotNull(params.getReferencesType(),"ReferencesType should be set");
         Assert.assertEquals(params.getReferencesType(),"line","ReferencesType should be set to line");
-		Assert.assertNull(params.getIds(), "Ids should be null for full");
+		Assert.assertNotNull(params.getIds(), "Ids should be not null");
+		Assert.assertEquals(params.getIds().size(),2, "Ids should contains 2 item");
+		Assert.assertNotNull(params.getMode(), "Mode should be not null");
+		Assert.assertEquals(params.getMode(),"line", "Mode should be 'full'");
 		Assert.assertNotNull(params.getStartDate(), "StartDate should be set");
 		Assert.assertNotNull(params.getEndDate(), "EndDate should be set");
 		Assert.assertTrue(params.getEndDate().after(params.getStartDate()), "dates should be ordered");
@@ -112,8 +115,10 @@ public class NetexStifExporterInputValidatorTests {
         Assert.assertNotNull(params.getOrganisationName(),"OrganisationName should be set");
         Assert.assertNotNull(params.getReferencesType(),"ReferencesType should be set");
         Assert.assertEquals(params.getReferencesType(),"line","ReferencesType should be set to line");
-		Assert.assertNotNull(params.getIds(), "Ids should be not null for line");
+		Assert.assertNotNull(params.getIds(), "Ids should be not null");
 		Assert.assertEquals(params.getIds().size(),1, "Ids should contains 1 item");
+		Assert.assertNotNull(params.getMode(), "Mode should be not null");
+		Assert.assertEquals(params.getMode(),"line", "Mode should be 'line'");
 		Assert.assertNotNull(params.getStartDate(), "StartDate should be set");
 		Assert.assertNotNull(params.getEndDate(), "EndDate should be set");
 		Assert.assertTrue(params.getEndDate().after(params.getStartDate()), "dates should be ordered");
