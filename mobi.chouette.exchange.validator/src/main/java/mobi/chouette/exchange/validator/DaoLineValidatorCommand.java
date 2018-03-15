@@ -47,18 +47,18 @@ import mobi.chouette.model.util.Referential;
 /**
  *
  */
-@Log4j 
+@Log4j
 @Stateless(name = DaoLineValidatorCommand.COMMAND)
 public class DaoLineValidatorCommand implements Command {
 	public static final String COMMAND = "DaoLineValidatorCommand";
 
 	@Resource
 	private SessionContext daoContext;
-	
-	@EJB 
+
+	@EJB
 	private RouteDAO routeDAO;
 
-	@EJB 
+	@EJB
 	private FootnoteDAO footnoteDAO;
 
 	@Override
@@ -67,22 +67,21 @@ public class DaoLineValidatorCommand implements Command {
 		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
-		if (!context.containsKey(Constant.SOURCE))
-		{
+		if (!context.containsKey(Constant.SOURCE)) {
 			context.put(Constant.SOURCE, Constant.SOURCE_DATABASE);
 		}
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
-			Command lineValidatorCommand = CommandFactory.create(initialContext,
-					LineValidatorCommand.class.getName());
+			Command lineValidatorCommand = CommandFactory.create(initialContext, LineValidatorCommand.class.getName());
 
 			Long lineId = (Long) context.get(Constant.LINE_ID);
 			Referential r = (Referential) context.get(Constant.REFERENTIAL);
-            r.clear(false);
+			r.clear(false);
 			LineLite line = r.findLine(lineId);
 			r.setCurrentLine(line);
-			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
+			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
+					OBJECT_STATE.OK, IO_TYPE.INPUT);
 			List<Route> routes = routeDAO.findByLineId(lineId);
 			routes.forEach(route -> {
 				Map<Long,StopPoint> mappedStops = new HashMap<>();
@@ -94,18 +93,21 @@ public class DaoLineValidatorCommand implements Command {
 				});
 				route.getJourneyPatterns().forEach(jp -> {
 					r.getJourneyPatterns().put(jp.getObjectId(), jp);
-					jp.getVehicleJourneys().forEach(vj -> r.getVehicleJourneys().put(vj.getObjectId(), vj));
+					jp.getVehicleJourneys().forEach(vj -> {
+						r.getVehicleJourneys().put(vj.getObjectId(), vj);
+						vj.sortVjas();
+					});
 				});
 			});
-            List<Footnote> notes = footnoteDAO.findByLineId(lineId);
-            notes.forEach(note -> {
-            	note.setLineLite(line);
-            	r.getFootnotes().put(note.getObjectId(),note);
-            });
-			
+			List<Footnote> notes = footnoteDAO.findByLineId(lineId);
+			notes.forEach(note -> {
+				note.setLineLite(line);
+				r.getFootnotes().put(note.getObjectId(), note);
+			});
+
 			result = lineValidatorCommand.execute(context);
 			daoContext.setRollbackOnly();
-			
+
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
