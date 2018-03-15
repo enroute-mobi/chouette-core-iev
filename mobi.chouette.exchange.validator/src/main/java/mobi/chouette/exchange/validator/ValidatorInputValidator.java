@@ -105,67 +105,76 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
 
-		if (task instanceof ComplianceCheckTask) {
-			ComplianceCheckTask checkTask = (ComplianceCheckTask) task;
-			Referential referential = checkTask.getReferential();
-			if (referential == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
-			Organisation organisation = referential.getOrganisation();
-			if (organisation == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential organisation_id is null");
-			ValidateParameters parameter = new ValidateParameters();
-			if (referential.getLineReferentialId() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
-						"referential line_referential_id is null");
-			parameter.setLineReferentialId(referential.getLineReferentialId());
-			if (referential.getStopAreaReferentialId() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
-						"referential stop_area_referential_id is null");
-			parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
-			parameter.setReferencesType("lines");
-			if (referential.getId() == null)
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
-			if (referential.getMetadatas().isEmpty())
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential metadata is null");
-			// loop to collect all lines (#6136)
-			referential.getMetadatas().forEach(m -> {
-				if (m.getLineIds() != null) {
-					if (m.getLineIds().length > 0) {
-						parameter.getIds().addAll(Arrays.asList(m.getLineIds()));
+		try {
+			if (task instanceof ComplianceCheckTask) {
+				ComplianceCheckTask checkTask = (ComplianceCheckTask) task;
+				Referential referential = checkTask.getReferential();
+				if (referential == null)
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
+				Organisation organisation = referential.getOrganisation();
+				if (organisation == null)
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+							"referential organisation_id is null");
+				ValidateParameters parameter = new ValidateParameters();
+				if (referential.getLineReferentialId() == null)
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+							"referential line_referential_id is null");
+				parameter.setLineReferentialId(referential.getLineReferentialId());
+				if (referential.getStopAreaReferentialId() == null)
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+							"referential stop_area_referential_id is null");
+				parameter.setStopAreaReferentialId(referential.getStopAreaReferentialId());
+				parameter.setReferencesType("lines");
+				if (referential.getId() == null)
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential id is null");
+				if (referential.getMetadatas().isEmpty())
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential metadata is null");
+				// loop to collect all lines (#6136)
+				referential.getMetadatas().forEach(m -> {
+					if (m.getLineIds() != null) {
+						if (m.getLineIds().length > 0) {
+							parameter.getIds().addAll(Arrays.asList(m.getLineIds()));
+						}
 					}
-				}
-			});
-			if (parameter.getIds().isEmpty())
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "referential's metadata line ids empty");
-			
-			parameter.setReferentialId(referential.getId());
-			parameter.setReferentialName(referential.getName());
-			parameter.setOrganisationName(organisation.getName());
-			parameter.setOrganisationCode(organisation.getCode());
+				});
+				if (parameter.getIds().isEmpty())
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
+							"referential's metadata line ids empty");
 
-			// populate controlParameter
-			ControlParameters controlParameters = parameter.getControlParameters();
-			checkTask.getComplianceChecks().stream().forEach(check -> {
-				CheckpointParameters cp;
-				try {
-					cp = buildCheckpoint(check);
-				} catch (Exception e) {
-					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, e,
-							"cannot parse ComplianceCheck Attributes for " + check.getSpecificCode());
-				}
-				ComplianceCheckBlock block = check.getBlock();
-				if (block != null) {
-					// if check has a block, add check to
-					// transportModeCheckpoints map
-					addToTransportModeCheckPoints(controlParameters, block, cp);
-				} else {
-					// else add to globalCheckPoints map
-					addToGlobalCheckPoints(controlParameters, cp);
-				}
-			});
-			return parameter;
+				parameter.setReferentialId(referential.getId());
+				parameter.setReferentialName(referential.getName());
+				parameter.setOrganisationName(organisation.getName());
+				parameter.setOrganisationCode(organisation.getCode());
+
+				// populate controlParameter
+				ControlParameters controlParameters = parameter.getControlParameters();
+				checkTask.getComplianceChecks().stream().forEach(check -> {
+					CheckpointParameters cp;
+					try {
+						cp = buildCheckpoint(check);
+					} catch (Exception e) {
+						log.error("problem with compliance_check " + check.getSpecificCode() + " " + e.getMessage(), e);
+						throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, e,
+								"cannot parse ComplianceCheck Attributes for " + check.getSpecificCode());
+					}
+					ComplianceCheckBlock block = check.getBlock();
+					if (block != null) {
+						// if check has a block, add check to
+						// transportModeCheckpoints map
+						addToTransportModeCheckPoints(controlParameters, block, cp);
+					} else {
+						// else add to globalCheckPoints map
+						addToGlobalCheckPoints(controlParameters, cp);
+					}
+				});
+				return parameter;
+			}
+
+		} catch (CoreRuntimeException ex) {
+			// log problem before throw it
+			log.error(ex.getMessage(), ex);
+			throw ex;
 		}
-
 		return null;
 	}
 

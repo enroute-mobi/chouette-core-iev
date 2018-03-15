@@ -147,7 +147,7 @@ public abstract class AbstractTestValidation extends Arquillian {
 		configuration.setReferentialName("checkPoints");
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
-		configuration.setIds(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
+		configuration.getIds().addAll(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
 		JobDataImpl test = new JobDataImpl();
 		context.put(Constant.JOB_DATA, test);
 		test.setPathName("target/referential/test");

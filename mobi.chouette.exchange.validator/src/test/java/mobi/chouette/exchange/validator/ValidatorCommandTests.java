@@ -39,7 +39,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
@@ -190,7 +189,7 @@ public class ValidatorCommandTests extends Arquillian {
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L });
-		configuration.setIds(ids);
+		configuration.getIds().addAll(ids);
 		JobDataImpl jobData = new JobDataImpl();
 		utx.begin();
 		em.joinTransaction();

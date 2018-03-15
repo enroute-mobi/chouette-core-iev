@@ -200,21 +200,25 @@ public class JobServiceManager {
 			Files.createDirectories(jobService.getPath());
 			// copy file from Ruby server
 			String urlName = importTask.getUrl();
-			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
-			String guiToken = ""; // System.getProperty(APPLICATION_NAME +
-									// PropertyNames.GUI_URL_TOKEN);
-			if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
-				// build url with token
-				if (guiToken != null && !guiToken.isEmpty()) {
-					// new fashion url
-					urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()
-							+ "/download_file?token=" + guiToken;
-				} else {
-					// old fashion url
-					urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/"
-							+ importTask.getId() + "/download?token=" + urlName;
+			if (!urlName.startsWith("file:")) {
+				String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+				String guiToken = ""; // System.getProperty(APPLICATION_NAME +
+										// PropertyNames.GUI_URL_TOKEN);
+				if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
+					// build url with token
+					if (guiToken != null && !guiToken.isEmpty()) {
+						// new fashion url
+						urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()
+								+ "/download_file?token=" + guiToken;
+					} else {
+						// old fashion url
+						urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/"
+								+ importTask.getId() + "/download?token=" + urlName;
+					}
 				}
 			}
+			// TODO : call uploadImportFileFromHttp when guiToken will be implemented
+			//  call uploadImportFile only if urlName is "file:/// ...." 
 			uploadImportFile(jobService, urlName);
 
 			jobService.setStatus(JobService.STATUS.PENDING);
@@ -260,13 +264,40 @@ public class JobServiceManager {
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
 		}
 	}
+	
+	
+	private void uploadImportFileFromHttp(JobService jobService, String urlName) throws ServiceException {
+		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+		File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+		try (CloseableHttpClient httpclient = HttpClients.createDefault();
+				BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
+			Thread.sleep(1000L);
+			HttpGet httpget = new HttpGet(urlName);
+			httpget.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + guiToken);
+
+			HttpResponse response = httpclient.execute(httpget);
+			// check response headers.
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode >= 200 && statusCode < 300) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				IOUtils.copy(content, baos);
+			} else {
+				throw new ClientProtocolException("Unexpected response status: " + statusCode);
+			}
+
+		} catch (Exception ex) {
+			log.error("fail to get file for import job " + ex.getMessage());
+			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
+		}
+
+	}
 
 	private JobService createValidatorJob(Long id) throws ServiceException {
 		if (id == 0L)
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "invalid validator id " + id);
 		ActionTask task = null;
 		try {
-			// Instancier le modèle du service 'upload'
 			task = actionDAO.find(JobData.ACTION.validator, id);
 			if (task == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown validator id " + id);
@@ -416,8 +447,7 @@ public class JobServiceManager {
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 
 		if (guiBaseUrl != null && !guiBaseUrl.isEmpty() && guiToken != null && !guiToken.isEmpty()) {
-		
-        final String token = guiToken;
+		final String token = guiToken;
 		final String urlName;
 		final String method;
 		final File putFile;

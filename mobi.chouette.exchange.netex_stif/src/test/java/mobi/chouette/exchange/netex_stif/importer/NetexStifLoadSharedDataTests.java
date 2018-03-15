@@ -136,7 +136,7 @@ public class NetexStifLoadSharedDataTests extends Arquillian {
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		List<Long> ids = Arrays.asList(new Long[] { 1L, 2L });
-		configuration.setIds(ids);
+		configuration.getIds().addAll(ids);
 		JobDataImpl jobData = new JobDataImpl();
 		context.put(Constant.JOB_DATA, jobData);
 		jobData.setPathName("target/referential/test");
