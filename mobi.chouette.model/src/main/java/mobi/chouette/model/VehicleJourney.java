@@ -16,8 +16,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Sort;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,11 +33,6 @@ import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.type.JourneyCategoryEnum;
 import mobi.chouette.model.type.TransportModeNameEnum;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.Parameter;
 
 /**
  * Chouette VehicleJourney
@@ -394,4 +396,11 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Setter @Getter
 	@Column(name = "company_id")
 	private Long companyId;
+
+	/**
+	 *  sort passing times against stop point position
+	 */
+	public void sortVjas() {
+		getVehicleJourneyAtStops().sort((v1,v2)-> v1.getStopPoint().getPosition().compareTo(v2.getStopPoint().getPosition())) ;
+	}
 }
