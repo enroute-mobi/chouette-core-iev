@@ -19,7 +19,7 @@ public class NetexLignesWriter extends AbstractWriter {
 
 		openPublicationDelivery(writer, participantRef, null, "CODIFLIGNE",
 				FILE_TYPE.CODIFLIGNE);
-		openCompositeFrame(writer, prefix, "NETEX_IDF", "", false);
+		openCompositeFrame(writer, prefix, "NETEX_IDF", "", false, false);
 		writeNetworks(writer, data);
 		openServiceFrame(writer, "STIF:CODIFLIGNE:ServiceFrame:lineid");
 		writeLines(writer, data);

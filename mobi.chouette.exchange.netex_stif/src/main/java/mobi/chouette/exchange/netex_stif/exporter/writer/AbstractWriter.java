@@ -80,7 +80,7 @@ public class AbstractWriter {
 
 		write(writer,whiteSpaces,"<GeneralFrame id=\"" + prefix + ":GeneralFrame:" + frameType + "-"
 				+ idDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
-				+ FRAME_DATASOURCE + (empty ? " modification=\"delete\" " : "") + "\">");
+				+ FRAME_DATASOURCE +"\">");
 		if (validityPeriods != null) {
 			// NOTICE : don't use lambda because of exception management
 			for (DateRange validityPeriod : validityPeriods) {
@@ -109,14 +109,14 @@ public class AbstractWriter {
 		write(writer,whiteSpaces,"</GeneralFrame>");
 	}
 
-	public static void openCompositeFrame(Writer writer, String prefix, String frameType, String name, boolean empty)
+	public static void openCompositeFrame(Writer writer, String prefix, String frameType, String name, boolean empty, boolean delete)
 			throws IOException {
 		SimpleDateFormat idDateFormat = new SimpleDateFormat(ID_DATE_TIME_UTC);
 		idDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
 
 		write(writer,2,"<CompositeFrame id=\"" + prefix + ":CompositeFrame:" + frameType + "-"
 				+ idDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
-				+ FRAME_DATASOURCE + "\">");
+				+ FRAME_DATASOURCE + "\""+(delete?" modification=\"delete\"":"")+">");
 		if (!name.isEmpty()) {
 			write(writer,3,"<Name>" + toXml(name) + "</Name>");
 		}

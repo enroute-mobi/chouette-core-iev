@@ -15,7 +15,7 @@ public class NetexArretsWriter extends AbstractWriter {
 		String prefix = ROOT_PREFIX;
 
 		openPublicationDelivery(writer, participantRef, null, "REFLEX", FILE_TYPE.REFLEX);
-		openCompositeFrame(writer, prefix, "NETEX_IDF", "", false);
+		openCompositeFrame(writer, prefix, "NETEX_IDF", "", false, false);
 		openGeneralFrame(writer, prefix, NetexStifConstant.NETEX_COMMUN, null, true, false);
 		// Groupes de lieux
 		if (!data.getGdls().isEmpty()) {
