@@ -14,11 +14,14 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifOffreProducer;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
+import mobi.chouette.exchange.report.ObjectReport;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
@@ -61,14 +64,23 @@ public class NetexStifLineProducerCommand implements Command {
 			NetexStifDataCollector collector = new NetexStifDataCollector();
 			collector.collect(context, collection, r, startDate, endDate);
 			log.info("global validity period after collect" + collection.getGlobalValidityPeriod());
-			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, NamingUtil.getName(line),
-					OBJECT_STATE.OK, IO_TYPE.INPUT);
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.JOURNEY_PATTERN,
-					collection.getJourneyPatterns().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.ROUTE,
-					collection.getRoutes().size());
-			reporter.setStatToObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, OBJECT_TYPE.VEHICLE_JOURNEY,
-					collection.getVehicleJourneys().size());
+			if (context.containsKey(NetexStifConstant.OPERATOR_OBJECT_ID)) {
+
+				ObjectReport companyReport = (ObjectReport) context.get(NetexStifConstant.SHARED_REPORT);
+				companyReport.addStatTypeToObject(OBJECT_TYPE.LINE, 1);
+				companyReport.addStatTypeToObject(OBJECT_TYPE.ROUTE, collection.getRoutes().size());
+				companyReport.addStatTypeToObject(OBJECT_TYPE.JOURNEY_PATTERN, collection.getJourneyPatterns().size());
+				companyReport.addStatTypeToObject(OBJECT_TYPE.VEHICLE_JOURNEY, collection.getVehicleJourneys().size());
+			}
+
+			else {
+				ObjectReport lineReport = new ObjectReport(line.getObjectId(), OBJECT_TYPE.LINE,
+						NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
+				context.put(NetexStifConstant.SHARED_REPORT, lineReport);
+				lineReport.setStatTypeToObject(OBJECT_TYPE.JOURNEY_PATTERN, collection.getJourneyPatterns().size());
+				lineReport.setStatTypeToObject(OBJECT_TYPE.ROUTE, collection.getRoutes().size());
+				lineReport.setStatTypeToObject(OBJECT_TYPE.VEHICLE_JOURNEY, collection.getVehicleJourneys().size());
+			}
 			NetexStifOffreProducer producer = new NetexStifOffreProducer();
 			producer.produce(context);
 			result = Constant.SUCCESS;

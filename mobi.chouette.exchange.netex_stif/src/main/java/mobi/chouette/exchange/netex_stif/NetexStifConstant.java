@@ -117,6 +117,9 @@ public class NetexStifConstant {
 	
 	// context constants 
 	public static final String OUTPUT_SUB_PATH = "output_sub_path";
+	public static final String OPERATOR_OBJECT_ID = "operator_object_id";
+	public static final String SHARED_REPORT = "shared_report";
+	public static final String LINE_OBJECT_ID = "line_object_id";
 
 	private NetexStifConstant() {
 	}

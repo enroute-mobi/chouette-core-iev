@@ -433,6 +433,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 			log.debug("report : \n" + report);
 			log.debug("validation : \n " + valReport);
 		}
+		log.info(Color.BROWN + "Start Reporting : " + Color.NORMAL);
 
 		if (valReport != null)
 			valReport.computeStats();
@@ -466,14 +467,15 @@ public class DaoProgressionCommand implements ProgressionCommand {
 						.append(objectReport.getStatus().name()).append(", reference=")
 						.append(objectReport.getObjectId());
 				log.info(Color.BROWN + b.toString() + Color.NORMAL);
-				// for (Entry<OBJECT_TYPE, Integer> entry :
-				// objectReport.getStats().entrySet()) {
-				// actionResource.getMetrics().put(entry.getKey().name().toLowerCase(),
-				// entry.getValue().toString());
-				// }
+				b = new StringBuilder("   metrics : (");
+				for (Entry<OBJECT_TYPE, Integer> entry : objectReport.getStats().entrySet()) {
+                    b.append(entry.getKey().name().toLowerCase()).append("=>").append(entry.getValue().toString()).append(',');
+				}
+				b.append(')');
+				log.info(Color.BROWN + b.toString() + Color.NORMAL);
 				if (valReport != null) {
 					// just set warning and error messages count !
-					b = new StringBuilder("   metrics : (");
+					b = new StringBuilder("   counts : (");
 					b.append("ok_count = -1, warning_count =").append(valReport.getWarningCount())
 							.append(", error_count = ").append(valReport.getErrorCount())
 							.append(", uncheck_count = -1 )");
@@ -506,6 +508,7 @@ public class DaoProgressionCommand implements ProgressionCommand {
 
 		}
 
+		log.info(Color.BROWN + "End Reporting" + Color.NORMAL);
 		// report.clear();
 		// if (valReport != null) {
 		// valReport.clear();

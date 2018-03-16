@@ -13,8 +13,12 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifCalendriersProducer;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifCommunProducer;
+import mobi.chouette.exchange.report.ActionReporter;
+import mobi.chouette.exchange.report.ObjectReport;
+import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 
 @Log4j
 public class NetexStifSharedOperatorDataProducerCommand implements Command {
@@ -25,6 +29,7 @@ public class NetexStifSharedOperatorDataProducerCommand implements Command {
 
 		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
+		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
 
@@ -38,6 +43,12 @@ public class NetexStifSharedOperatorDataProducerCommand implements Command {
 			if (!collection.getNotices().isEmpty()) {
 				NetexStifCommunProducer producer2 = new NetexStifCommunProducer();
 				producer2.produce(context);
+			}
+			if (context.containsKey(NetexStifConstant.SHARED_REPORT)) {
+
+				ObjectReport sharedReport = (ObjectReport) context.get(NetexStifConstant.SHARED_REPORT);
+				sharedReport.addStatTypeToObject(OBJECT_TYPE.TIME_TABLE, collection.getTimetables().size());
+				sharedReport.addStatTypeToObject(OBJECT_TYPE.FOOTNOTE, collection.getNotices().size());
 			}
 
 			collection.clearCompany();

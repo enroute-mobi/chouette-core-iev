@@ -4,8 +4,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -56,6 +58,15 @@ public class ActionReport extends AbstractReport implements ProgressionReport, R
 
 	@XmlTransient
 	private Date date = new Date(0);
+	
+	@XmlTransient 
+	private Set<ActionReporter.OBJECT_TYPE> collectionTypes = new HashSet<>();
+	
+	public ActionReport()
+	{
+		// default collection reporting
+		collectionTypes.add(ActionReporter.OBJECT_TYPE.LINE);
+	}
 	
 	/**
 	 * Find file report from name

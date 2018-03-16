@@ -25,21 +25,23 @@ public class NetexStifOffreProducer {
 
 		
 		Path dir = null;
+		LineLite line = collection.getLineLite();
+		String fileName = NetexStifConstant.OFFRE_FILE_PREFIX + "_" + line.objectIdSuffix() + "_" + line.getNumber()
+				+ ".xml";
+        String fileNameForReporting = fileName;
 		if (context.containsKey(NetexStifConstant.OUTPUT_SUB_PATH)) {
 			String sub = (String) context.get(NetexStifConstant.OUTPUT_SUB_PATH);
+			fileNameForReporting = sub+"/"+fileName;
 			dir = Paths.get(rootDirectory, Constant.OUTPUT, sub);
 		} else {
 			dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		}
-		LineLite line = collection.getLineLite();
-		String fileName = NetexStifConstant.OFFRE_FILE_PREFIX + "_" + line.objectIdSuffix() + "_" + line.getNumber()
-				+ ".xml";
 		File file = new File(dir.toFile(), fileName);
 
 		NetexStifFileWriter writer = new NetexStifFileWriter();
 		writer.writeOffreFile(collection, file);
 
-		reporter.addFileReport(context, fileName, IO_TYPE.OUTPUT);
+		reporter.addFileReport(context, fileNameForReporting, IO_TYPE.OUTPUT);
 
 	}
 

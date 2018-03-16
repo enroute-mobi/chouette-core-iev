@@ -147,8 +147,11 @@ public class NetexStifExporterTests extends Arquillian {
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		if (all) {
+			configuration.setMode("full");
+			configuration.setReferencesType("line");
 			configuration.getIds().addAll(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
 		} else {
+			configuration.setMode("line");
 			configuration.setReferencesType("line");
 			configuration.getIds().addAll(Arrays.asList(new Long[] { 3L }));
 		}
@@ -185,7 +188,8 @@ public class NetexStifExporterTests extends Arquillian {
 		f.mkdirs();
 		test.setReferential(SCHEMA_NAME);
 		test.setAction(ACTION.exporter);
-		context.put("testng", "true"); // no Progression reporting
+		context.put(Constant.TESTNG, "true"); // no Progression reporting in database
+		context.put(Constant.LOG_REPORTS, "true"); // Progression reporting on log
 		context.put(Constant.SOURCE, Constant.SOURCE_DATABASE);
 		return context;
 

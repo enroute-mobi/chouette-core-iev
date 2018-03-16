@@ -93,13 +93,12 @@ public class ActionReporterImpl implements ActionReporter {
 				// if (old.getStatus().ordinal() < status.ordinal())
 				// old.setStatTus(status);
 			} else {
-				// lines are to be reported separatedly in a collection
-				switch (type) {
-				case LINE:
+				if (actionReport.getCollectionTypes().contains(type)) {
+					// type to be reported separatedly in a collection
+
 					actionReport.addObjectReportToSpecificCollection(
 							new ObjectReport(objectId, type, description, status, ioType));
-					break;
-				default:
+				} else {
 					actionReport.addObjectReport(new ObjectReport(objectId, type, description, status, ioType));
 				}
 			}
@@ -254,6 +253,7 @@ public class ActionReporterImpl implements ActionReporter {
 
 		return fileReport.getCheckPointErrorCount() > 0;
 	}
+
 	@Override
 	public boolean hasLineValidationErrors(Context context, LineLite line) {
 		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
@@ -265,13 +265,13 @@ public class ActionReporterImpl implements ActionReporter {
 
 		return objectReport.getCheckPointErrorCount() > 0;
 	}
-	
+
 	@Override
 	public boolean hasObjectValidationErrors(Context context, OBJECT_TYPE type) {
 		ActionReport actionReport = (ActionReport) context.get(Constant.REPORT);
 		if (actionReport == null)
 			return false;
-		ObjectReport objectReport = actionReport.findObjectReport(null,  type);
+		ObjectReport objectReport = actionReport.findObjectReport(null, type);
 		if (objectReport == null)
 			return false;
 

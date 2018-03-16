@@ -22,19 +22,21 @@ public class NetexStifArretsProducer {
 		String rootDirectory = jobData.getPathName();
 
 		Path dir = null;
+		String fileName = NetexStifConstant.ARRETS_FILE_NAME;
+        String fileNameForReporting = fileName;
 		if (context.containsKey(NetexStifConstant.OUTPUT_SUB_PATH)) {
 			String sub = (String) context.get(NetexStifConstant.OUTPUT_SUB_PATH);
+			fileNameForReporting = sub+"/"+fileName;
 			dir = Paths.get(rootDirectory, Constant.OUTPUT, sub);
 		} else {
 			dir = Paths.get(rootDirectory, Constant.OUTPUT);
 		}
-		String fileName = NetexStifConstant.ARRETS_FILE_NAME;
 		File file = new File(dir.toFile(), fileName);
 
 		NetexStifFileWriter writer = new NetexStifFileWriter();
 		writer.writeArretsFile(collection, file);
 
-		reporter.addFileReport(context, fileName, IO_TYPE.OUTPUT);
+		reporter.addFileReport(context, fileNameForReporting, IO_TYPE.OUTPUT);
 		
 	}
 
