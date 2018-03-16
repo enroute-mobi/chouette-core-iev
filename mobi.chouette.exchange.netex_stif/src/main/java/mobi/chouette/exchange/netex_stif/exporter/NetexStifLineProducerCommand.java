@@ -16,12 +16,10 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.exporter.producer.NetexStifOffreProducer;
-import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.exchange.report.ObjectReport;
-import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
@@ -35,7 +33,6 @@ public class NetexStifLineProducerCommand implements Command {
 
 		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
-		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
 		try {
 

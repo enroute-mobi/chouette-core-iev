@@ -29,12 +29,12 @@ public class NetexStifExporterInputValidatorTests {
 		task.setId(1L);
 		task.setReferential(referential);
 		if (full) {
-			task.getOptions().put("export_type", "full");
-			task.getOptions().put("duration", "28");
+			task.getOptions().put(NetexStifExporterInputValidator.EXPORT_TYPE, NetexStifExporterInputValidator.FULL);
+			task.getOptions().put(NetexStifExporterInputValidator.DURATION, "28");
 		} else {
-			task.getOptions().put("export_type", "line");
-			task.getOptions().put("duration", "365");
-			task.getOptions().put("line_id", "2");
+			task.getOptions().put(NetexStifExporterInputValidator.EXPORT_TYPE, NetexStifExporterInputValidator.LINE);
+			task.getOptions().put(NetexStifExporterInputValidator.DURATION, "365");
+			task.getOptions().put(NetexStifExporterInputValidator.LINE_CODE, "2");
 		}
 		return task;
 	}

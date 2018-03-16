@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +47,7 @@ import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.type.DateRange;
 import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
@@ -169,8 +170,8 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 
 					ExportableData collection = (ExportableData) context.computeIfAbsent(Constant.EXPORTABLE_DATA,
 							c -> new ExportableData());
-					// TODO manage validity period ; reset after each operator
 					collection.addPeriods(parameters.getValidityPeriods());
+					collection.setGlobalValidityPeriod(new DateRange(new Date(parameters.getStartDate().getTime()), new Date(parameters.getEndDate().getTime())));
 
 					// create Company directory
 					CompanyLite company = r.findCompany(opId);
@@ -302,12 +303,12 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 		SimpleDateFormat format = new SimpleDateFormat(AbstractWriter.ID_DATE_TIME_UTC);
 		format.setTimeZone(TimeZone.getTimeZone(AbstractWriter.UTC));
 		jobData.setOutputFilename(
-				"OFFRE_LIGNE_" + line.getNumber() + "_" + lineName + "_" + format.format(new Date()) + ".zip");
+				"OFFRE_LIGNE_" + line.getNumber() + "_" + lineName + "_" + format.format(new java.util.Date()) + ".zip");
 
 		ExportableData collection = (ExportableData) context.computeIfAbsent(Constant.EXPORTABLE_DATA,
 				c -> new ExportableData());
-		// TODO manage validity period
 		collection.addPeriods(parameters.getValidityPeriods());
+		collection.setGlobalValidityPeriod(new DateRange(new Date(parameters.getStartDate().getTime()), new Date(parameters.getEndDate().getTime())));
 
 		progression.execute(context);
 		result = processLines(context, commands, progression, continueLineProcesingOnError, lines);

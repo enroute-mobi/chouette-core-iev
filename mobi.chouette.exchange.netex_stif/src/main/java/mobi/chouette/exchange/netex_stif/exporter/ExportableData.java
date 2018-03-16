@@ -7,12 +7,10 @@ import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.type.DateRange;
 
-@Log4j
 public class ExportableData extends mobi.chouette.exchange.exporter.ExportableData {
 	@Getter
 	@Setter
@@ -53,9 +51,7 @@ public class ExportableData extends mobi.chouette.exchange.exporter.ExportableDa
 	{
 		periods.forEach(period -> {
 			validityPeriods.add(period);
-			globalValidityPeriod.extendTo(period);
 		});
-		log.info("global validity period " + globalValidityPeriod);
 	}
 
 	@Override

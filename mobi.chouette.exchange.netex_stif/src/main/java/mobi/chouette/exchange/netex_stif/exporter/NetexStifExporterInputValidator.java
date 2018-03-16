@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import mobi.chouette.core.CoreExceptionCode;
 import mobi.chouette.core.CoreRuntimeException;
@@ -14,8 +16,15 @@ import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.Organisation;
 import mobi.chouette.model.Referential;
 import mobi.chouette.model.exporter.ExportTask;
+import mobi.chouette.model.type.DateRange;
 
 public class NetexStifExporterInputValidator extends AbstractInputValidator {
+
+	public static final String LINE = "line";
+	public static final String FULL = "full";
+	public static final String DURATION = "duration";
+	public static final String LINE_CODE = "line_code";
+	public static final String EXPORT_TYPE = "export_type";
 
 	@Override
 	public AbstractParameter toActionParameter(String abstractParameter) {
@@ -75,20 +84,39 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 			if (referential.getMetadatas().get(0).getPeriods().length == 0)
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
 						"referential's metadata periods ids empty");
-			if (!exportTask.getOptions().containsKey("export_type"))
+			if (!exportTask.getOptions().containsKey(EXPORT_TYPE))
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "export_type option missing");
-			if (!exportTask.getOptions().containsKey("duration"))
+			if (!exportTask.getOptions().containsKey(DURATION))
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "duration option missing");
 
-			parameter.setMode(exportTask.getOptions().get("export_type"));
-			if (exportTask.getOptions().get("export_type").equals("line")) {
-				// manage one line export
-				if (!exportTask.getOptions().containsKey("line_id"))
-					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "line_id option missing");
-				parameter.getIds().add(Long.valueOf(exportTask.getOptions().get("line_id")));
+			int duration = Integer.parseInt(exportTask.getOptions().get(DURATION)) - 1;
+			Calendar c = Calendar.getInstance();
+			parameter.setStartDate(c.getTime());
+			c.add(Calendar.DATE, duration);
+			parameter.setEndDate(c.getTime());
+			DateRange limits = new DateRange(new java.sql.Date(parameter.getStartDate().getTime()),
+					new java.sql.Date(parameter.getEndDate().getTime()));
 
-			} else if (exportTask.getOptions().get("export_type").equals("full")) {
+			parameter.setMode(exportTask.getOptions().get(EXPORT_TYPE));
+			if (exportTask.getOptions().get(EXPORT_TYPE).equals(LINE)) {
+				// manage one line export
+				if (!exportTask.getOptions().containsKey(LINE_CODE))
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "line_code option missing");
+				Long lineId = Long.valueOf(exportTask.getOptions().get(LINE_CODE));
+				parameter.getIds().add(lineId);
+				referential.getMetadatas().forEach(m -> {
+					Set<Long> ids = new HashSet<>(Arrays.asList(m.getLineIds()));
+					if (ids.contains(lineId) && m.getPeriods() != null && m.getPeriods().length > 0) {
+						for (DateRange range : m.getPeriods()) {
+							if (range.intersects(limits))
+								parameter.getValidityPeriods().add(range.clone());
+						}
+					}
+				});
+
+			} else if (exportTask.getOptions().get(EXPORT_TYPE).equals(FULL)) {
 				// manage full export : add all line ids
+				parameter.getValidityPeriods().add(limits);
 				referential.getMetadatas().forEach(m -> {
 					if (m.getLineIds() != null && m.getLineIds().length > 0)
 						parameter.getIds().addAll(Arrays.asList(m.getLineIds()));
@@ -96,22 +124,13 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 
 			} else {
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA,
-						"export_type : unknown option" + exportTask.getOptions().get("export_type"));
+						"export_type : unknown option" + exportTask.getOptions().get(EXPORT_TYPE));
 			}
-			referential.getMetadatas().forEach(m -> {
-				if (m.getPeriods() != null && m.getPeriods().length > 0)
-					parameter.getValidityPeriods().addAll(Arrays.asList(m.getPeriods()));
-			});
 			parameter.setReferentialId(referential.getId());
 			parameter.setReferentialName(referential.getName());
 			parameter.setOrganisationName(organisation.getName());
 			parameter.setOrganisationCode(organisation.getCode());
-			parameter.setReferencesType("line");
-			int duration = Integer.parseInt(exportTask.getOptions().get("duration")) - 1;
-			Calendar c = Calendar.getInstance();
-			parameter.setStartDate(c.getTime());
-			c.add(Calendar.DATE, duration);
-			parameter.setEndDate(c.getTime());
+			parameter.setReferencesType(LINE);
 			return parameter;
 		}
 		return null;
