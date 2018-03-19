@@ -29,7 +29,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.type.SectionStatusEnum;
 
 /**
  * Chouette Journey Pattern : pattern for vehicle journeys in a route
@@ -181,21 +180,6 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	public void setPublishedName(String value) {
 		publishedName = StringUtils.abbreviate(value, 255);
 	}
-
-	
-	/**
-	 * Section status
-	 * 
-	 * @param sectionStatus
-	 *            New value
-	 * @return The actual value
-	 * @since 3.2.0
-	 */
-	@Getter
-	@Setter
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "section_status")
-	private SectionStatusEnum sectionStatus = SectionStatusEnum.Todo;
 	
 	/**
 	 * route reverse reference
