@@ -89,7 +89,7 @@ public class NetexStifExporterInputValidatorTests {
 		Assert.assertNotNull(params.getIds(), "Ids should be not null");
 		Assert.assertEquals(params.getIds().size(),2, "Ids should contains 2 item");
 		Assert.assertNotNull(params.getMode(), "Mode should be not null");
-		Assert.assertEquals(params.getMode(),"line", "Mode should be 'full'");
+		Assert.assertEquals(params.getMode(),"full", "Mode should be 'full'");
 		Assert.assertNotNull(params.getStartDate(), "StartDate should be set");
 		Assert.assertNotNull(params.getEndDate(), "EndDate should be set");
 		Assert.assertTrue(params.getEndDate().after(params.getStartDate()), "dates should be ordered");

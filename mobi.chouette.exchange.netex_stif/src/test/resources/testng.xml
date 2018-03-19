@@ -14,5 +14,11 @@
          </package>
        </packages>
    </test>
+   <test name="ExportNetexStif">
+       <packages>
+         <package name="mobi.chouette.exchange.netex_stif.exporter" >
+         </package>
+       </packages>
+   </test>
       
 </suite>
