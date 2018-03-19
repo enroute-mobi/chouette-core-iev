@@ -30,7 +30,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.type.SectionStatusEnum;
 
 /**
  * Chouette Journey Pattern : pattern for vehicle journeys in a route
