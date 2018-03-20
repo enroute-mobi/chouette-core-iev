@@ -66,9 +66,10 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	
 	public String getObjectId()
 	{
-		if (objectId == null && lineLite != null && lineLite.getOrganisation() != null && id != null)
+		if (objectId == null && lineLite != null && id != null)
 		{
-			objectId = lineLite.getOrganisation().getCode()+":Notice:"+lineLite.objectIdSuffix()+"_"+id+":LOC";
+			// TODO use internal prefix
+			objectId = lineLite.objectIdPrefix()+":Notice:"+lineLite.objectIdSuffix()+"_"+id+":LOC";
 		}
 		return objectId;
 	}
