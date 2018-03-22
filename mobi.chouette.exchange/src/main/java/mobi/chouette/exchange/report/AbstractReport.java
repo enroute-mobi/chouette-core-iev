@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.Map;
 
 public abstract class AbstractReport {
-	public static final int MAX_ERRORS = 15;
+	// augmentation de la limitation de taille des rapports
+    public static final int MAX_ERRORS = 1000;
 
 	public abstract void print(PrintStream out, StringBuilder ret, int level, boolean first);
 	
