@@ -55,7 +55,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 		for (Timetable object : data.getTimetables()) {
 			String prefix = object.objectIdPrefix();
 			for (int periodRank = 1; periodRank <= object.getPeriods().size(); periodRank++) {
-				write(writer,4,"<DayTypeAssignment "+buildDataSourceRef(null)+" id=\"" + prefix + ":DayTypeAssignment:" + rank
+				write(writer,4,"<DayTypeAssignment "+buildDataSourceRef(object)+" id=\"" + prefix + ":DayTypeAssignment:" + rank
 						+ ":LOC\" version=\"any\" order=\"0\" >");
 				write(writer,5,"<OperatingPeriodRef ref=\""
 						+ buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)
@@ -67,7 +67,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 				rank++;
 			}
 			for (CalendarDay child : object.getCalendarDays()) {
-				write(writer,4,"<DayTypeAssignment "+buildDataSourceRef(null)+" id=\"" + prefix + ":DayTypeAssignment:" + rank
+				write(writer,4,"<DayTypeAssignment "+buildDataSourceRef(object)+" id=\"" + prefix + ":DayTypeAssignment:" + rank
 						+ ":LOC\" version=\"any\" order=\"0\" >");
 				write(writer,5,"<Date>" + format.format(child.getDate()) + "</Date>");
 				write(writer,5,"<DayTypeRef ref=\"" + object.getObjectId()

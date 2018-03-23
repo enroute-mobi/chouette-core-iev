@@ -78,7 +78,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 	private static void writeDirections(Writer writer, ExportableData data) throws IOException {
 		// TODO Manage version and direction name
 		for (Route object : data.getRoutes()) {
-			write(writer,6,"<Direction "+buildDataSourceRef(null)+" id=\""
+			write(writer,6,"<Direction "+buildDataSourceRef(object)+" id=\""
 					+ object.getObjectId().replace(":Route:", ":Direction:") + "\" version=\"any\">");
 			write(writer,7,"<Name>" + toXml(object.getPublishedName()) + "</Name>");
 			write(writer,6,"</Direction>");
@@ -124,7 +124,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 
 		for (JourneyPattern object : data.getJourneyPatterns()) {
 			if (object.getPublishedName() != null || object.getRegistrationNumber() != null) {
-				write(writer,6,"<DestinationDisplay "+buildDataSourceRef(null)+" id=\""
+				write(writer,6,"<DestinationDisplay "+buildDataSourceRef(object)+" id=\""
 						+ object.getObjectId().replace(":ServiceJourneyPattern:", ":DestinationDisplay:")
 						+ "\" version=\"any\">");
 				if (object.getPublishedName() != null)
@@ -143,7 +143,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		// TODO Manage version
 		for (Route object : data.getRoutes()) {
 			for (StopPoint child : object.getStopPoints()) {
-				write(writer,6,"<ScheduledStopPoint "+buildDataSourceRef(child)+" id=\"" + buildScheduledStopPointId(child)
+				write(writer,6,"<ScheduledStopPoint "+buildDataSourceRef(object)+" id=\"" + buildScheduledStopPointId(child)
 						+ "\" version=\"any\" />");
 			}
 		}
@@ -155,7 +155,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		for (Route object : data.getRoutes()) {
 			for (StopPoint child : object.getStopPoints()) {
 				StopAreaLite quay = data.getMappedStopAreas().get(child.getStopAreaId());
-				write(writer,6,"<PassengerStopAssignment "+buildDataSourceRef(child)+" id=\""
+				write(writer,6,"<PassengerStopAssignment "+buildDataSourceRef(object)+" id=\""
 						+ buildPassengerStopAssignmentId(child) + "\" version=\"any\" order=\"0\">");
 				write(writer,7,"<ScheduledStopPointRef ref=\""
 						+ buildScheduledStopPointId(child) + "\" version=\"any\" />");
