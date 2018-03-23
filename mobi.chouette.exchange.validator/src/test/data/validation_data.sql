@@ -43,7 +43,8 @@ CREATE TABLE footnotes (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -130,46 +131,6 @@ ALTER TABLE journey_frequencies_id_seq OWNER TO chouette;
 ALTER SEQUENCE journey_frequencies_id_seq OWNED BY journey_frequencies.id;
 
 
---
--- TOC entry 236 (class 1259 OID 533268)
--- Name: journey_pattern_sections; Type: TABLE; Schema: iev_check_points; Owner: chouette; Tablespace: 
---
-
-CREATE TABLE journey_pattern_sections (
-    id bigint NOT NULL,
-    journey_pattern_id bigint NOT NULL,
-    route_section_id bigint NOT NULL,
-    rank integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
-ALTER TABLE journey_pattern_sections OWNER TO chouette;
-
---
--- TOC entry 237 (class 1259 OID 533271)
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE; Schema: iev_check_points; Owner: chouette
---
-
-CREATE SEQUENCE journey_pattern_sections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE journey_pattern_sections_id_seq OWNER TO chouette;
-
---
--- TOC entry 3778 (class 0 OID 0)
--- Dependencies: 237
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: iev_check_points; Owner: chouette
---
-
-ALTER SEQUENCE journey_pattern_sections_id_seq OWNED BY journey_pattern_sections.id;
-
 
 --
 -- TOC entry 238 (class 1259 OID 533273)
@@ -192,7 +153,8 @@ CREATE TABLE journey_patterns (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -256,7 +218,8 @@ CREATE TABLE routes (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -302,7 +265,8 @@ CREATE TABLE routing_constraint_zones (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -481,7 +445,8 @@ CREATE TABLE time_tables (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -643,7 +608,8 @@ CREATE TABLE vehicle_journeys (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -688,13 +654,6 @@ ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq
 
 ALTER TABLE ONLY journey_frequencies ALTER COLUMN id SET DEFAULT nextval('journey_frequencies_id_seq'::regclass);
 
-
---
--- TOC entry 3548 (class 2604 OID 533367)
--- Name: id; Type: DEFAULT; Schema: iev_check_points; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections ALTER COLUMN id SET DEFAULT nextval('journey_pattern_sections_id_seq'::regclass);
 
 
 --
@@ -783,14 +742,14 @@ ALTER TABLE ONLY vehicle_journeys ALTER COLUMN id SET DEFAULT nextval('vehicle_j
 -- Data for Name: footnotes; Type: TABLE DATA; Schema: iev_check_points; Owner: chouette
 --
 
-INSERT INTO footnotes VALUES (2, 5, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:20.856', '2017-08-21 10:57:20.856');
-INSERT INTO footnotes VALUES (3, 4, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19');
-INSERT INTO footnotes VALUES (4, 7, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.484', '2017-08-21 10:57:21.484');
-INSERT INTO footnotes VALUES (5, 3, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671');
-INSERT INTO footnotes VALUES (6, 6, '3', 'note numéro 3', NULL, NULL, '2017-08-21 10:57:21.815', '2017-08-21 10:57:21.815');
-INSERT INTO footnotes VALUES (7, 6, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812');
-INSERT INTO footnotes VALUES (8, 6, '2', 'note numéro 2', NULL, NULL, '2017-08-21 10:57:21.813', '2017-08-21 10:57:21.813');
-INSERT INTO footnotes VALUES (9, 8, '2', 'note numéro 2', NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968');
+INSERT INTO footnotes VALUES (2, 5, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:20.856', '2017-08-21 10:57:20.856','CITYWAY');
+INSERT INTO footnotes VALUES (3, 4, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
+INSERT INTO footnotes VALUES (4, 7, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.484', '2017-08-21 10:57:21.484','CITYWAY');
+INSERT INTO footnotes VALUES (5, 3, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
+INSERT INTO footnotes VALUES (6, 6, '3', 'note numéro 3', NULL, NULL, '2017-08-21 10:57:21.815', '2017-08-21 10:57:21.815','CITYWAY');
+INSERT INTO footnotes VALUES (7, 6, '1', 'note numéro 1', NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
+INSERT INTO footnotes VALUES (8, 6, '2', 'note numéro 2', NULL, NULL, '2017-08-21 10:57:21.813', '2017-08-21 10:57:21.813','CITYWAY');
+INSERT INTO footnotes VALUES (9, 8, '2', 'note numéro 2', NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
 
 
 --
@@ -866,22 +825,6 @@ INSERT INTO footnotes_vehicle_journeys VALUES (38, 9);
 SELECT pg_catalog.setval('journey_frequencies_id_seq', 1, true);
 
 
---
--- TOC entry 3747 (class 0 OID 533268)
--- Dependencies: 236
--- Data for Name: journey_pattern_sections; Type: TABLE DATA; Schema: iev_check_points; Owner: chouette
---
-
-
-
---
--- TOC entry 3791 (class 0 OID 0)
--- Dependencies: 237
--- Name: journey_pattern_sections_id_seq; Type: SEQUENCE SET; Schema: iev_check_points; Owner: chouette
---
-
-SELECT pg_catalog.setval('journey_pattern_sections_id_seq', 1, true);
-
 
 --
 -- TOC entry 3749 (class 0 OID 533273)
@@ -889,24 +832,24 @@ SELECT pg_catalog.setval('journey_pattern_sections_id_seq', 1, true);
 -- Data for Name: journey_patterns; Type: TABLE DATA; Schema: iev_check_points; Owner: chouette
 --
 
-INSERT INTO journey_patterns VALUES (3, 2, 'CITYWAY:ServiceJourneyPattern:C00165-2:LOC', 1503305833129, NULL, 'bullion vers rambouillet', NULL, '05021', 'Mission 2', 12, 21, 0, NULL, NULL, '2017-08-21 10:57:20.842', '2017-08-21 10:57:20.842');
-INSERT INTO journey_patterns VALUES (2, 3, 'CITYWAY:ServiceJourneyPattern:C00165-1:LOC', 1503305833129, NULL, 'rambouillet vers bullion', NULL, '05010', 'Mission 1', 2, 11, 0, NULL, NULL, '2017-08-21 10:57:20.839', '2017-08-21 10:57:20.839');
-INSERT INTO journey_patterns VALUES (6, 4, 'CITYWAY:ServiceJourneyPattern:C00164-2:LOC', 1503305833129, NULL, ' omnibus rambouillet', NULL, '03021', 'dourdan omni', 29, 35, 0, NULL, NULL, '2017-08-21 10:57:21.188', '2017-08-21 10:57:21.188');
-INSERT INTO journey_patterns VALUES (7, 4, 'CITYWAY:ServiceJourneyPattern:C00164-4:LOC', 1503305833129, NULL, ' semi direct rambouillet', NULL, '03022', 'dourdan sd', 29, 35, 0, NULL, NULL, '2017-08-21 10:57:21.188', '2017-08-21 10:57:21.188');
-INSERT INTO journey_patterns VALUES (4, 5, 'CITYWAY:ServiceJourneyPattern:C00164-1:LOC', 1503305833129, NULL, 'omnibus pontevrard', NULL, '03011', 'pontevrard omni', 22, 28, 0, NULL, NULL, '2017-08-21 10:57:21.187', '2017-08-21 10:57:21.187');
-INSERT INTO journey_patterns VALUES (5, 5, 'CITYWAY:ServiceJourneyPattern:C00164-3:LOC', 1503305833129, NULL, 'semi direct pontevrard', NULL, '03012', 'pontevrard sd', 22, 28, 0, NULL, NULL, '2017-08-21 10:57:21.188', '2017-08-21 10:57:21.188');
-INSERT INTO journey_patterns VALUES (9, 6, 'CITYWAY:ServiceJourneyPattern:C00168-3:LOC', 1503305833129, NULL, 'auffargis SNCF rambouillet sncf', NULL, '2345', 'rambouillet', 43, 49, 0, NULL, NULL, '2017-08-21 10:57:21.479', '2017-08-21 10:57:21.479');
-INSERT INTO journey_patterns VALUES (11, 8, 'CITYWAY:ServiceJourneyPattern:C00168-4:LOC', 1503305833129, NULL, 'les essarts SNCF rambouillet sncf', NULL, '2345', 'rambouillet', 58, 65, 0, NULL, NULL, '2017-08-21 10:57:21.48', '2017-08-21 10:57:21.48');
-INSERT INTO journey_patterns VALUES (10, 9, 'CITYWAY:ServiceJourneyPattern:C00168-2:LOC', 1503305833129, NULL, 'de rambouillet aux essarts via le perray', NULL, '2345', 'les essarts sncf', 50, 57, 0, NULL, NULL, '2017-08-21 10:57:21.478', '2017-08-21 10:57:21.478');
-INSERT INTO journey_patterns VALUES (8, 7, 'CITYWAY:ServiceJourneyPattern:C00168-1:LOC', 1503305833129, NULL, 'de rambouillet vers auffargis ', NULL, '1234', 'Auffargis route du perray', 36, 42, 0, NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477');
-INSERT INTO journey_patterns VALUES (13, 10, 'CITYWAY:ServiceJourneyPattern:C00163-2:LOC', 1503305833129, NULL, 'poigny vers rambouillet', NULL, '01201', 'Mission 2', 71, 75, 0, NULL, NULL, '2017-08-21 10:57:21.67', '2017-08-21 10:57:21.67');
-INSERT INTO journey_patterns VALUES (12, 11, 'CITYWAY:ServiceJourneyPattern:C00163-1:LOC', 1503305833129, NULL, 'rambouillet vers poigny', NULL, '01101', 'Mission 1', 66, 70, 0, NULL, NULL, '2017-08-21 10:57:21.669', '2017-08-21 10:57:21.669');
-INSERT INTO journey_patterns VALUES (15, 12, 'CITYWAY:ServiceJourneyPattern:C00166-2:LOC', 1503305833129, NULL, 'Par là', NULL, '05021', 'Mission 2', 81, 85, 0, NULL, NULL, '2017-08-21 10:57:21.811', '2017-08-21 10:57:21.811');
-INSERT INTO journey_patterns VALUES (14, 13, 'CITYWAY:ServiceJourneyPattern:C00166-1:LOC', 1503305833129, NULL, 'vers orphin', NULL, '05011', 'Mission 1', 76, 80, 0, NULL, NULL, '2017-08-21 10:57:21.81', '2017-08-21 10:57:21.81');
-INSERT INTO journey_patterns VALUES (18, 14, 'CITYWAY:ServiceJourneyPattern:C00171-3:LOC', 1503305833129, NULL, 'orsonville rambouillet', NULL, '11031', 'vers rambouillet', 95, 99, 0, NULL, NULL, '2017-08-21 10:57:21.966', '2017-08-21 10:57:21.966');
-INSERT INTO journey_patterns VALUES (19, 14, 'CITYWAY:ServiceJourneyPattern:C00171-4:LOC', 1503305833129, NULL, 'auneau SNCF  rambouillet', NULL, '11031', 'vers rambouillet', 93, 99, 0, NULL, NULL, '2017-08-21 10:57:21.967', '2017-08-21 10:57:21.967');
-INSERT INTO journey_patterns VALUES (16, 15, 'CITYWAY:ServiceJourneyPattern:C00171-1:LOC', 1503305833129, NULL, 'orsonville eglise ', NULL, '11011', 'Vers orsonville', 86, 90, 0, NULL, NULL, '2017-08-21 10:57:21.966', '2017-08-21 10:57:21.966');
-INSERT INTO journey_patterns VALUES (17, 15, 'CITYWAY:ServiceJourneyPattern:C00171-2:LOC', 1503305833129, NULL, 'auneau SNCF ', NULL, '11021', 'vers auneau', 86, 92, 0, NULL, NULL, '2017-08-21 10:57:21.966', '2017-08-21 10:57:21.966');
+INSERT INTO journey_patterns VALUES (3, 2, 'CITYWAY:ServiceJourneyPattern:C00165-2:LOC', 1503305833129, NULL, 'bullion vers rambouillet', NULL, '05021', 'Mission 2', 12, 21, 0, NULL, NULL, '2017-08-21 10:57:20.842', '2017-08-21 10:57:20.842','CITYWAY');
+INSERT INTO journey_patterns VALUES (2, 3, 'CITYWAY:ServiceJourneyPattern:C00165-1:LOC', 1503305833129, NULL, 'rambouillet vers bullion', NULL, '05010', 'Mission 1', 2, 11, 0, NULL, NULL, '2017-08-21 10:57:20.839', '2017-08-21 10:57:20.839','CITYWAY');
+INSERT INTO journey_patterns VALUES (6, 4, 'CITYWAY:ServiceJourneyPattern:C00164-2:LOC', 1503305833129, NULL, ' omnibus rambouillet', NULL, '03021', 'dourdan omni', 29, 35, 0, NULL, NULL, '2017-08-21 10:57:21.188', '2017-08-21 10:57:21.188','CITYWAY');
+INSERT INTO journey_patterns VALUES (7, 4, 'CITYWAY:ServiceJourneyPattern:C00164-4:LOC', 1503305833129, NULL, ' semi direct rambouillet', NULL, '03022', 'dourdan sd', 29, 35, 0, NULL, NULL, '2017-08-21 10:57:21.188', '2017-08-21 10:57:21.188','CITYWAY');
+INSERT INTO journey_patterns VALUES (4, 5, 'CITYWAY:ServiceJourneyPattern:C00164-1:LOC', 1503305833129, NULL, 'omnibus pontevrard', NULL, '03011', 'pontevrard omni', 22, 28, 0, NULL, NULL, '2017-08-21 10:57:21.187', '2017-08-21 10:57:21.187','CITYWAY');
+INSERT INTO journey_patterns VALUES (5, 5, 'CITYWAY:ServiceJourneyPattern:C00164-3:LOC', 1503305833129, NULL, 'semi direct pontevrard', NULL, '03012', 'pontevrard sd', 22, 28, 0, NULL, NULL, '2017-08-21 10:57:21.188', '2017-08-21 10:57:21.188','CITYWAY');
+INSERT INTO journey_patterns VALUES (9, 6, 'CITYWAY:ServiceJourneyPattern:C00168-3:LOC', 1503305833129, NULL, 'auffargis SNCF rambouillet sncf', NULL, '2345', 'rambouillet', 43, 49, 0, NULL, NULL, '2017-08-21 10:57:21.479', '2017-08-21 10:57:21.479','CITYWAY');
+INSERT INTO journey_patterns VALUES (11, 8, 'CITYWAY:ServiceJourneyPattern:C00168-4:LOC', 1503305833129, NULL, 'les essarts SNCF rambouillet sncf', NULL, '2345', 'rambouillet', 58, 65, 0, NULL, NULL, '2017-08-21 10:57:21.48', '2017-08-21 10:57:21.48','CITYWAY');
+INSERT INTO journey_patterns VALUES (10, 9, 'CITYWAY:ServiceJourneyPattern:C00168-2:LOC', 1503305833129, NULL, 'de rambouillet aux essarts via le perray', NULL, '2345', 'les essarts sncf', 50, 57, 0, NULL, NULL, '2017-08-21 10:57:21.478', '2017-08-21 10:57:21.478','CITYWAY');
+INSERT INTO journey_patterns VALUES (8, 7, 'CITYWAY:ServiceJourneyPattern:C00168-1:LOC', 1503305833129, NULL, 'de rambouillet vers auffargis ', NULL, '1234', 'Auffargis route du perray', 36, 42, 0, NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477','CITYWAY');
+INSERT INTO journey_patterns VALUES (13, 10, 'CITYWAY:ServiceJourneyPattern:C00163-2:LOC', 1503305833129, NULL, 'poigny vers rambouillet', NULL, '01201', 'Mission 2', 71, 75, 0, NULL, NULL, '2017-08-21 10:57:21.67', '2017-08-21 10:57:21.67','CITYWAY');
+INSERT INTO journey_patterns VALUES (12, 11, 'CITYWAY:ServiceJourneyPattern:C00163-1:LOC', 1503305833129, NULL, 'rambouillet vers poigny', NULL, '01101', 'Mission 1', 66, 70, 0, NULL, NULL, '2017-08-21 10:57:21.669', '2017-08-21 10:57:21.669','CITYWAY');
+INSERT INTO journey_patterns VALUES (15, 12, 'CITYWAY:ServiceJourneyPattern:C00166-2:LOC', 1503305833129, NULL, 'Par là', NULL, '05021', 'Mission 2', 81, 85, 0, NULL, NULL, '2017-08-21 10:57:21.811', '2017-08-21 10:57:21.811','CITYWAY');
+INSERT INTO journey_patterns VALUES (14, 13, 'CITYWAY:ServiceJourneyPattern:C00166-1:LOC', 1503305833129, NULL, 'vers orphin', NULL, '05011', 'Mission 1', 76, 80, 0, NULL, NULL, '2017-08-21 10:57:21.81', '2017-08-21 10:57:21.81','CITYWAY');
+INSERT INTO journey_patterns VALUES (18, 14, 'CITYWAY:ServiceJourneyPattern:C00171-3:LOC', 1503305833129, NULL, 'orsonville rambouillet', NULL, '11031', 'vers rambouillet', 95, 99, 0, NULL, NULL, '2017-08-21 10:57:21.966', '2017-08-21 10:57:21.966','CITYWAY');
+INSERT INTO journey_patterns VALUES (19, 14, 'CITYWAY:ServiceJourneyPattern:C00171-4:LOC', 1503305833129, NULL, 'auneau SNCF  rambouillet', NULL, '11031', 'vers rambouillet', 93, 99, 0, NULL, NULL, '2017-08-21 10:57:21.967', '2017-08-21 10:57:21.967','CITYWAY');
+INSERT INTO journey_patterns VALUES (16, 15, 'CITYWAY:ServiceJourneyPattern:C00171-1:LOC', 1503305833129, NULL, 'orsonville eglise ', NULL, '11011', 'Vers orsonville', 86, 90, 0, NULL, NULL, '2017-08-21 10:57:21.966', '2017-08-21 10:57:21.966','CITYWAY');
+INSERT INTO journey_patterns VALUES (17, 15, 'CITYWAY:ServiceJourneyPattern:C00171-2:LOC', 1503305833129, NULL, 'auneau SNCF ', NULL, '11021', 'vers auneau', 86, 92, 0, NULL, NULL, '2017-08-21 10:57:21.966', '2017-08-21 10:57:21.966','CITYWAY');
 
 
 --
@@ -1042,20 +985,20 @@ INSERT INTO journey_patterns_stop_points VALUES (19, 99);
 -- Data for Name: routes; Type: TABLE DATA; Schema: iev_check_points; Owner: chouette
 --
 
-INSERT INTO routes VALUES (2, 5, 'CITYWAY:Route:C00165-2:LOC', 1503305833129, NULL, 'route 2', NULL, 3, 'bullon vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:20.837', '2017-08-21 10:57:20.837');
-INSERT INTO routes VALUES (3, 5, 'CITYWAY:Route:C00165-1:LOC', 1503305833129, NULL, 'route 1', NULL, 2, 'rambouillet vers bullion', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:20.834', '2017-08-21 10:57:20.834');
-INSERT INTO routes VALUES (4, 4, 'CITYWAY:Route:C00164-2:LOC', 1503305833129, NULL, 'route 2', NULL, 5, ' pontevrard vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.187', '2017-08-21 10:57:21.187');
-INSERT INTO routes VALUES (5, 4, 'CITYWAY:Route:C00164-1:LOC', 1503305833129, NULL, 'route 1', NULL, 4, 'rambouillet vers pontevrard', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.187', '2017-08-21 10:57:21.187');
-INSERT INTO routes VALUES (6, 7, 'CITYWAY:Route:C00168-3:LOC', 1503305833129, NULL, 'route 3', NULL, 7, 'auffargis vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477');
-INSERT INTO routes VALUES (7, 7, 'CITYWAY:Route:C00168-1:LOC', 1503305833129, NULL, 'route 1', NULL, 6, 'rambouillet vers auffargis', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.476', '2017-08-21 10:57:21.476');
-INSERT INTO routes VALUES (8, 7, 'CITYWAY:Route:C00168-4:LOC', 1503305833129, NULL, 'route 4', NULL, 9, 'les essarts vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477');
-INSERT INTO routes VALUES (9, 7, 'CITYWAY:Route:C00168-2:LOC', 1503305833129, NULL, 'route 2', NULL, 8, 'rambouillet vers les essarts', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477');
-INSERT INTO routes VALUES (10, 3, 'CITYWAY:Route:C00163-2:LOC', 1503305833129, NULL, ' itinéraire poigny vers rambouillet', NULL, 11, 'rambouillet SNCF', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.669', '2017-08-21 10:57:21.669');
-INSERT INTO routes VALUES (11, 3, 'CITYWAY:Route:C00163-1:LOC', 1503305833129, NULL, ' itinéraire rambouillet vers poigny', NULL, 10, 'poigny feuillettes', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.668', '2017-08-21 10:57:21.668');
-INSERT INTO routes VALUES (12, 6, 'CITYWAY:Route:C00166-2:LOC', 1503305833129, NULL, 'de Orphin vers rambouillet', NULL, 13, 'vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.81', '2017-08-21 10:57:21.81');
-INSERT INTO routes VALUES (13, 6, 'CITYWAY:Route:C00166-1:LOC', 1503305833129, NULL, 'de rambouillet vers orphin', NULL, 12, 'vers orphin', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.81', '2017-08-21 10:57:21.81');
-INSERT INTO routes VALUES (14, 8, 'CITYWAY:Route:C00171-2:LOC', 1503305833129, NULL, 'route 2', NULL, 15, 'Auneau Rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.965', '2017-08-21 10:57:21.965');
-INSERT INTO routes VALUES (15, 8, 'CITYWAY:Route:C00171-1:LOC', 1503305833129, NULL, 'route 1', NULL, 14, 'Rambouillet Auneau ', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.965', '2017-08-21 10:57:21.965');
+INSERT INTO routes VALUES (2, 5, 'CITYWAY:Route:C00165-2:LOC', 1503305833129, NULL, 'route 2', NULL, 3, 'bullon vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:20.837', '2017-08-21 10:57:20.837','CITYWAY');
+INSERT INTO routes VALUES (3, 5, 'CITYWAY:Route:C00165-1:LOC', 1503305833129, NULL, 'route 1', NULL, 2, 'rambouillet vers bullion', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:20.834', '2017-08-21 10:57:20.834','CITYWAY');
+INSERT INTO routes VALUES (4, 4, 'CITYWAY:Route:C00164-2:LOC', 1503305833129, NULL, 'route 2', NULL, 5, ' pontevrard vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.187', '2017-08-21 10:57:21.187','CITYWAY');
+INSERT INTO routes VALUES (5, 4, 'CITYWAY:Route:C00164-1:LOC', 1503305833129, NULL, 'route 1', NULL, 4, 'rambouillet vers pontevrard', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.187', '2017-08-21 10:57:21.187','CITYWAY');
+INSERT INTO routes VALUES (6, 7, 'CITYWAY:Route:C00168-3:LOC', 1503305833129, NULL, 'route 3', NULL, 7, 'auffargis vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477','CITYWAY');
+INSERT INTO routes VALUES (7, 7, 'CITYWAY:Route:C00168-1:LOC', 1503305833129, NULL, 'route 1', NULL, 6, 'rambouillet vers auffargis', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.476', '2017-08-21 10:57:21.476','CITYWAY');
+INSERT INTO routes VALUES (8, 7, 'CITYWAY:Route:C00168-4:LOC', 1503305833129, NULL, 'route 4', NULL, 9, 'les essarts vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477','CITYWAY');
+INSERT INTO routes VALUES (9, 7, 'CITYWAY:Route:C00168-2:LOC', 1503305833129, NULL, 'route 2', NULL, 8, 'rambouillet vers les essarts', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.477', '2017-08-21 10:57:21.477','CITYWAY');
+INSERT INTO routes VALUES (10, 3, 'CITYWAY:Route:C00163-2:LOC', 1503305833129, NULL, ' itinéraire poigny vers rambouillet', NULL, 11, 'rambouillet SNCF', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.669', '2017-08-21 10:57:21.669','CITYWAY');
+INSERT INTO routes VALUES (11, 3, 'CITYWAY:Route:C00163-1:LOC', 1503305833129, NULL, ' itinéraire rambouillet vers poigny', NULL, 10, 'poigny feuillettes', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.668', '2017-08-21 10:57:21.668','CITYWAY');
+INSERT INTO routes VALUES (12, 6, 'CITYWAY:Route:C00166-2:LOC', 1503305833129, NULL, 'de Orphin vers rambouillet', NULL, 13, 'vers rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.81', '2017-08-21 10:57:21.81','CITYWAY');
+INSERT INTO routes VALUES (13, 6, 'CITYWAY:Route:C00166-1:LOC', 1503305833129, NULL, 'de rambouillet vers orphin', NULL, 12, 'vers orphin', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.81', '2017-08-21 10:57:21.81','CITYWAY');
+INSERT INTO routes VALUES (14, 8, 'CITYWAY:Route:C00171-2:LOC', 1503305833129, NULL, 'route 2', NULL, 15, 'Auneau Rambouillet', NULL, 'R', 'inbound', NULL, NULL, '2017-08-21 10:57:21.965', '2017-08-21 10:57:21.965','CITYWAY');
+INSERT INTO routes VALUES (15, 8, 'CITYWAY:Route:C00171-1:LOC', 1503305833129, NULL, 'route 1', NULL, 14, 'Rambouillet Auneau ', NULL, 'A', 'outbound', NULL, NULL, '2017-08-21 10:57:21.965', '2017-08-21 10:57:21.965','CITYWAY');
 
 
 --
@@ -1073,22 +1016,22 @@ SELECT pg_catalog.setval('routes_id_seq', 52, true);
 -- Data for Name: routing_constraint_zones; Type: TABLE DATA; Schema: iev_check_points; Owner: chouette
 --
 
-INSERT INTO routing_constraint_zones VALUES (12, 'ITL 1', '{67,68}', 11, 'CITYWAY:RoutingConstraintZone:C00163-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671');
-INSERT INTO routing_constraint_zones VALUES (13, 'ITL 2', '{73,74}', 10, 'CITYWAY:RoutingConstraintZone:C00163-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671');
-INSERT INTO routing_constraint_zones VALUES (2, 'ITL RBT clairefontaine ', '{2,3,4,5}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.851', '2017-08-21 10:57:20.851');
-INSERT INTO routing_constraint_zones VALUES (3, 'ITL bullion ', '{10,11}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-3:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852');
-INSERT INTO routing_constraint_zones VALUES (4, 'ITL clairefontaine RBT', '{18,19,20,21}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852');
-INSERT INTO routing_constraint_zones VALUES (5, 'ITL bullion ', '{12,13}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-3:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852');
-INSERT INTO routing_constraint_zones VALUES (14, 'ITL 1', '{76,77,78}', 13, 'CITYWAY:RoutingConstraintZone:C00166-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812');
-INSERT INTO routing_constraint_zones VALUES (15, 'ITL 2', '{83,84,85}', 12, 'CITYWAY:RoutingConstraintZone:C00166-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812');
-INSERT INTO routing_constraint_zones VALUES (6, 'ITL 1', '{23,24}', 5, 'CITYWAY:RoutingConstraintZone:C00164-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19');
-INSERT INTO routing_constraint_zones VALUES (7, 'ITL 2', '{33,34}', 4, 'CITYWAY:RoutingConstraintZone:C00164-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19');
-INSERT INTO routing_constraint_zones VALUES (16, 'ITL 1', '{86,87}', 15, 'CITYWAY:RoutingConstraintZone:C00171-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968');
-INSERT INTO routing_constraint_zones VALUES (17, 'ITL 2', '{98,99}', 14, 'CITYWAY:RoutingConstraintZone:C00171-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968');
-INSERT INTO routing_constraint_zones VALUES (8, 'ITL 1', '{38,39}', 7, 'CITYWAY:RoutingConstraintZone:C00168-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483');
-INSERT INTO routing_constraint_zones VALUES (9, 'ITL 2', '{46,47}', 6, 'CITYWAY:RoutingConstraintZone:C00168-3-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483');
-INSERT INTO routing_constraint_zones VALUES (10, 'ITL 1', '{52,53}', 9, 'CITYWAY:RoutingConstraintZone:C00168-2-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483');
-INSERT INTO routing_constraint_zones VALUES (11, 'ITL 2', '{62,63}', 8, 'CITYWAY:RoutingConstraintZone:C00168-4-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483');
+INSERT INTO routing_constraint_zones VALUES (12, 'ITL 1', '{67,68}', 11, 'CITYWAY:RoutingConstraintZone:C00163-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (13, 'ITL 2', '{73,74}', 10, 'CITYWAY:RoutingConstraintZone:C00163-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (2, 'ITL RBT clairefontaine ', '{2,3,4,5}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.851', '2017-08-21 10:57:20.851','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (3, 'ITL bullion ', '{10,11}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-3:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (4, 'ITL clairefontaine RBT', '{18,19,20,21}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (5, 'ITL bullion ', '{12,13}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-3:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (14, 'ITL 1', '{76,77,78}', 13, 'CITYWAY:RoutingConstraintZone:C00166-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (15, 'ITL 2', '{83,84,85}', 12, 'CITYWAY:RoutingConstraintZone:C00166-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (6, 'ITL 1', '{23,24}', 5, 'CITYWAY:RoutingConstraintZone:C00164-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (7, 'ITL 2', '{33,34}', 4, 'CITYWAY:RoutingConstraintZone:C00164-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (16, 'ITL 1', '{86,87}', 15, 'CITYWAY:RoutingConstraintZone:C00171-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (17, 'ITL 2', '{98,99}', 14, 'CITYWAY:RoutingConstraintZone:C00171-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (8, 'ITL 1', '{38,39}', 7, 'CITYWAY:RoutingConstraintZone:C00168-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (9, 'ITL 2', '{46,47}', 6, 'CITYWAY:RoutingConstraintZone:C00168-3-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (10, 'ITL 1', '{52,53}', 9, 'CITYWAY:RoutingConstraintZone:C00168-2-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (11, 'ITL 2', '{62,63}', 8, 'CITYWAY:RoutingConstraintZone:C00168-4-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
 
 
 --
@@ -1265,11 +1208,11 @@ SELECT pg_catalog.setval('time_table_periods_id_seq', 7, true);
 -- Data for Name: time_tables; Type: TABLE DATA; Schema: iev_check_points; Owner: chouette
 --
 
-INSERT INTO time_tables VALUES (2, 'CITYWAY:DayType:1:LOC', 1503305833129, NULL, NULL, 'Semaine', 124, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.596', '2017-08-21 10:57:20.596');
-INSERT INTO time_tables VALUES (3, 'CITYWAY:DayType:2:LOC', 1503305833129, NULL, NULL, 'Fin de semaine', 384, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.599', '2017-08-21 10:57:20.599');
-INSERT INTO time_tables VALUES (4, 'CITYWAY:DayType:3:LOC', 1503305833129, NULL, NULL, 'Semaine vacances', 124, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.6', '2017-08-21 10:57:20.6');
-INSERT INTO time_tables VALUES (5, 'CITYWAY:DayType:5:LOC', 1503305833129, NULL, NULL, 'Service spécial', 0, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.6', '2017-08-21 10:57:20.6');
-INSERT INTO time_tables VALUES (6, 'CITYWAY:DayType:3-without-6:LOC', 1503305833129, NULL, NULL, 'Semaine vacances', 124, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:21.816', '2017-08-21 10:57:21.816');
+INSERT INTO time_tables VALUES (2, 'CITYWAY:DayType:1:LOC', 1503305833129, NULL, NULL, 'Semaine', 124, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.596', '2017-08-21 10:57:20.596','CITYWAY');
+INSERT INTO time_tables VALUES (3, 'CITYWAY:DayType:2:LOC', 1503305833129, NULL, NULL, 'Fin de semaine', 384, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.599', '2017-08-21 10:57:20.599','CITYWAY');
+INSERT INTO time_tables VALUES (4, 'CITYWAY:DayType:3:LOC', 1503305833129, NULL, NULL, 'Semaine vacances', 124, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.6', '2017-08-21 10:57:20.6','CITYWAY');
+INSERT INTO time_tables VALUES (5, 'CITYWAY:DayType:5:LOC', 1503305833129, NULL, NULL, 'Service spécial', 0, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:20.6', '2017-08-21 10:57:20.6','CITYWAY');
+INSERT INTO time_tables VALUES (6, 'CITYWAY:DayType:3-without-6:LOC', 1503305833129, NULL, NULL, 'Semaine vacances', 124, NULL, NULL, NULL, NULL, NULL, '2017-08-21 10:57:21.816', '2017-08-21 10:57:21.816','CITYWAY');
 
 
 --
@@ -1598,43 +1541,43 @@ SELECT pg_catalog.setval('vehicle_journey_at_stops_id_seq', 304, true);
 -- Data for Name: vehicle_journeys; Type: TABLE DATA; Schema: iev_check_points; Owner: chouette
 --
 
-INSERT INTO vehicle_journeys VALUES (2, 3, 2, NULL, 'CITYWAY:ServiceJourney:C00165-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C1 bullion semaine', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.855', '2017-08-21 10:57:20.855');
-INSERT INTO vehicle_journeys VALUES (3, 3, 2, NULL, 'CITYWAY:ServiceJourney:C00165-1-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C bullion WE', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.86', '2017-08-21 10:57:20.86');
-INSERT INTO vehicle_journeys VALUES (4, 3, 2, NULL, 'CITYWAY:ServiceJourney:C00165-1-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C bullion WE', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.862', '2017-08-21 10:57:20.862');
-INSERT INTO vehicle_journeys VALUES (5, 2, 3, NULL, 'CITYWAY:ServiceJourney:C00165-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C rbt semaine', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.864', '2017-08-21 10:57:20.864');
-INSERT INTO vehicle_journeys VALUES (6, 2, 3, NULL, 'CITYWAY:ServiceJourney:C00165-2-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C rbt we', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.865', '2017-08-21 10:57:20.865');
-INSERT INTO vehicle_journeys VALUES (7, 2, 3, NULL, 'CITYWAY:ServiceJourney:C00165-2-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C rbt semaine et we', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.868', '2017-08-21 10:57:20.868');
-INSERT INTO vehicle_journeys VALUES (8, 5, 4, NULL, 'CITYWAY:ServiceJourney:C00164-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1  omni vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19');
-INSERT INTO vehicle_journeys VALUES (9, 5, 4, NULL, 'CITYWAY:ServiceJourney:C00164-1-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 2  omni vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.191', '2017-08-21 10:57:21.191');
-INSERT INTO vehicle_journeys VALUES (10, 5, 4, NULL, 'CITYWAY:ServiceJourney:C00164-1-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 3  omni vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.192', '2017-08-21 10:57:21.192');
-INSERT INTO vehicle_journeys VALUES (11, 5, 5, NULL, 'CITYWAY:ServiceJourney:C00164-1-4:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 4  sd vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.194', '2017-08-21 10:57:21.194');
-INSERT INTO vehicle_journeys VALUES (12, 5, 5, NULL, 'CITYWAY:ServiceJourney:C00164-1-5:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 5  sd vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.194', '2017-08-21 10:57:21.194');
-INSERT INTO vehicle_journeys VALUES (13, 5, 5, NULL, 'CITYWAY:ServiceJourney:C00164-1-6:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 6  sd vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.195', '2017-08-21 10:57:21.195');
-INSERT INTO vehicle_journeys VALUES (14, 4, 6, NULL, 'CITYWAY:ServiceJourney:C00164-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1  omni vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.196', '2017-08-21 10:57:21.196');
-INSERT INTO vehicle_journeys VALUES (15, 4, 6, NULL, 'CITYWAY:ServiceJourney:C00164-2-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 2  omni vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.197', '2017-08-21 10:57:21.197');
-INSERT INTO vehicle_journeys VALUES (16, 4, 6, NULL, 'CITYWAY:ServiceJourney:C00164-2-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 3  omni vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.198', '2017-08-21 10:57:21.198');
-INSERT INTO vehicle_journeys VALUES (17, 4, 7, NULL, 'CITYWAY:ServiceJourney:C00164-2-4:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 4  sd vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.2', '2017-08-21 10:57:21.199');
-INSERT INTO vehicle_journeys VALUES (18, 4, 7, NULL, 'CITYWAY:ServiceJourney:C00164-2-5:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 5  sd vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.2', '2017-08-21 10:57:21.2');
-INSERT INTO vehicle_journeys VALUES (19, 4, 7, NULL, 'CITYWAY:ServiceJourney:C00164-2-6:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 6  sd vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.201', '2017-08-21 10:57:21.201');
-INSERT INTO vehicle_journeys VALUES (20, 7, 8, NULL, 'CITYWAY:ServiceJourney:C00168-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction auffargis', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483');
-INSERT INTO vehicle_journeys VALUES (21, 6, 9, NULL, 'CITYWAY:ServiceJourney:C00168-3-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.487', '2017-08-21 10:57:21.487');
-INSERT INTO vehicle_journeys VALUES (22, 9, 10, NULL, 'CITYWAY:ServiceJourney:C00168-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 directionles essarts', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.485', '2017-08-21 10:57:21.485');
-INSERT INTO vehicle_journeys VALUES (23, 8, 11, NULL, 'CITYWAY:ServiceJourney:C00168-4-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 les essarts rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.489', '2017-08-21 10:57:21.489');
-INSERT INTO vehicle_journeys VALUES (24, 11, 12, NULL, 'CITYWAY:ServiceJourney:C00163-1-01:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 01 rambouillet vers poigny', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671');
-INSERT INTO vehicle_journeys VALUES (25, 11, 12, NULL, 'CITYWAY:ServiceJourney:C00163-1-02:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 02 rambouillet vers poigny', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.672', '2017-08-21 10:57:21.672');
-INSERT INTO vehicle_journeys VALUES (26, 11, 12, NULL, 'CITYWAY:ServiceJourney:C00163-1-03:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 03 rambouillet vers poigny', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.673', '2017-08-21 10:57:21.673');
-INSERT INTO vehicle_journeys VALUES (27, 10, 13, NULL, 'CITYWAY:ServiceJourney:C00163-2-01:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 01 poigny vers rambouillet', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.674', '2017-08-21 10:57:21.674');
-INSERT INTO vehicle_journeys VALUES (28, 10, 13, NULL, 'CITYWAY:ServiceJourney:C00163-2-02:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 02 poigny vers rambouillet', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.674', '2017-08-21 10:57:21.674');
-INSERT INTO vehicle_journeys VALUES (29, 10, 13, NULL, 'CITYWAY:ServiceJourney:C00163-2-03:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 03 poigny vers rambouillet', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.675', '2017-08-21 10:57:21.675');
-INSERT INTO vehicle_journeys VALUES (30, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 s note 1 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812');
-INSERT INTO vehicle_journeys VALUES (31, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 we not 2 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.813', '2017-08-21 10:57:21.813');
-INSERT INTO vehicle_journeys VALUES (32, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 exceptionnel note 1 et 2 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.814', '2017-08-21 10:57:21.814');
-INSERT INTO vehicle_journeys VALUES (33, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-4:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 semaine en vacances et exclusions  note 3 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.815', '2017-08-21 10:57:21.815');
-INSERT INTO vehicle_journeys VALUES (34, 12, 15, NULL, 'CITYWAY:ServiceJourney:C00166-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 semaine  note 3 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.816', '2017-08-21 10:57:21.816');
-INSERT INTO vehicle_journeys VALUES (35, 15, 16, NULL, 'CITYWAY:ServiceJourney:C00171-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction orsonville', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968');
-INSERT INTO vehicle_journeys VALUES (36, 15, 17, NULL, 'CITYWAY:ServiceJourney:C00171-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction Auneau sncf', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968');
-INSERT INTO vehicle_journeys VALUES (37, 14, 18, NULL, 'CITYWAY:ServiceJourney:C00171-3-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'direction rambouillet retour', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.969', '2017-08-21 10:57:21.969');
-INSERT INTO vehicle_journeys VALUES (38, 14, 19, NULL, 'CITYWAY:ServiceJourney:C00171-4-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'de auneau sncf à rambouillet ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.97', '2017-08-21 10:57:21.97');
+INSERT INTO vehicle_journeys VALUES (2, 3, 2, NULL, 'CITYWAY:ServiceJourney:C00165-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C1 bullion semaine', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.855', '2017-08-21 10:57:20.855','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (3, 3, 2, NULL, 'CITYWAY:ServiceJourney:C00165-1-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C bullion WE', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.86', '2017-08-21 10:57:20.86','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (4, 3, 2, NULL, 'CITYWAY:ServiceJourney:C00165-1-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C bullion WE', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.862', '2017-08-21 10:57:20.862','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (5, 2, 3, NULL, 'CITYWAY:ServiceJourney:C00165-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C rbt semaine', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.864', '2017-08-21 10:57:20.864','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (6, 2, 3, NULL, 'CITYWAY:ServiceJourney:C00165-2-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C rbt we', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.865', '2017-08-21 10:57:20.865','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (7, 2, 3, NULL, 'CITYWAY:ServiceJourney:C00165-2-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'C rbt semaine et we', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:20.868', '2017-08-21 10:57:20.868','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (8, 5, 4, NULL, 'CITYWAY:ServiceJourney:C00164-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1  omni vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (9, 5, 4, NULL, 'CITYWAY:ServiceJourney:C00164-1-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 2  omni vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.191', '2017-08-21 10:57:21.191','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (10, 5, 4, NULL, 'CITYWAY:ServiceJourney:C00164-1-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 3  omni vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.192', '2017-08-21 10:57:21.192','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (11, 5, 5, NULL, 'CITYWAY:ServiceJourney:C00164-1-4:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 4  sd vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.194', '2017-08-21 10:57:21.194','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (12, 5, 5, NULL, 'CITYWAY:ServiceJourney:C00164-1-5:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 5  sd vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.194', '2017-08-21 10:57:21.194','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (13, 5, 5, NULL, 'CITYWAY:ServiceJourney:C00164-1-6:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 6  sd vers pontevrard', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.195', '2017-08-21 10:57:21.195','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (14, 4, 6, NULL, 'CITYWAY:ServiceJourney:C00164-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1  omni vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.196', '2017-08-21 10:57:21.196','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (15, 4, 6, NULL, 'CITYWAY:ServiceJourney:C00164-2-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 2  omni vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.197', '2017-08-21 10:57:21.197','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (16, 4, 6, NULL, 'CITYWAY:ServiceJourney:C00164-2-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 3  omni vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.198', '2017-08-21 10:57:21.198','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (17, 4, 7, NULL, 'CITYWAY:ServiceJourney:C00164-2-4:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 4  sd vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.2', '2017-08-21 10:57:21.199','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (18, 4, 7, NULL, 'CITYWAY:ServiceJourney:C00164-2-5:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 5  sd vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.2', '2017-08-21 10:57:21.2','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (19, 4, 7, NULL, 'CITYWAY:ServiceJourney:C00164-2-6:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 6  sd vers rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.201', '2017-08-21 10:57:21.201','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (20, 7, 8, NULL, 'CITYWAY:ServiceJourney:C00168-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction auffargis', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (21, 6, 9, NULL, 'CITYWAY:ServiceJourney:C00168-3-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.487', '2017-08-21 10:57:21.487','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (22, 9, 10, NULL, 'CITYWAY:ServiceJourney:C00168-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 directionles essarts', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.485', '2017-08-21 10:57:21.485','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (23, 8, 11, NULL, 'CITYWAY:ServiceJourney:C00168-4-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 les essarts rambouillet', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.489', '2017-08-21 10:57:21.489','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (24, 11, 12, NULL, 'CITYWAY:ServiceJourney:C00163-1-01:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 01 rambouillet vers poigny', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (25, 11, 12, NULL, 'CITYWAY:ServiceJourney:C00163-1-02:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 02 rambouillet vers poigny', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.672', '2017-08-21 10:57:21.672','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (26, 11, 12, NULL, 'CITYWAY:ServiceJourney:C00163-1-03:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 03 rambouillet vers poigny', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.673', '2017-08-21 10:57:21.673','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (27, 10, 13, NULL, 'CITYWAY:ServiceJourney:C00163-2-01:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 01 poigny vers rambouillet', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.674', '2017-08-21 10:57:21.674','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (28, 10, 13, NULL, 'CITYWAY:ServiceJourney:C00163-2-02:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 02 poigny vers rambouillet', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.674', '2017-08-21 10:57:21.674','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (29, 10, 13, NULL, 'CITYWAY:ServiceJourney:C00163-2-03:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 03 poigny vers rambouillet', '01101', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.675', '2017-08-21 10:57:21.675','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (30, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 s note 1 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (31, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-2:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 we not 2 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.813', '2017-08-21 10:57:21.813','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (32, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-3:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 exceptionnel note 1 et 2 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.814', '2017-08-21 10:57:21.814','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (33, 13, 14, NULL, 'CITYWAY:ServiceJourney:C00166-1-4:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 semaine en vacances et exclusions  note 3 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.815', '2017-08-21 10:57:21.815','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (34, 12, 15, NULL, 'CITYWAY:ServiceJourney:C00166-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 semaine  note 3 ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.816', '2017-08-21 10:57:21.816','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (35, 15, 16, NULL, 'CITYWAY:ServiceJourney:C00171-1-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction orsonville', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (36, 15, 17, NULL, 'CITYWAY:ServiceJourney:C00171-2-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'Course 1 direction Auneau sncf', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (37, 14, 18, NULL, 'CITYWAY:ServiceJourney:C00171-3-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'direction rambouillet retour', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.969', '2017-08-21 10:57:21.969','CITYWAY');
+INSERT INTO vehicle_journeys VALUES (38, 14, 19, NULL, 'CITYWAY:ServiceJourney:C00171-4-1:LOC', 1503305833129, NULL, NULL, NULL, NULL, 'de auneau sncf à rambouillet ', '1234', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2017-08-21 10:57:21.97', '2017-08-21 10:57:21.97','CITYWAY');
 
 
 --
@@ -1663,14 +1606,6 @@ ALTER TABLE ONLY footnotes
 ALTER TABLE ONLY journey_frequencies
     ADD CONSTRAINT journey_frequencies_pkey PRIMARY KEY (id);
 
-
---
--- TOC entry 3575 (class 2606 OID 533383)
--- Name: journey_pattern_sections_pkey; Type: CONSTRAINT; Schema: iev_check_points; Owner: chouette; Tablespace: 
---
-
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT journey_pattern_sections_pkey PRIMARY KEY (id);
 
 
 --
@@ -1785,30 +1720,6 @@ CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequenc
 --
 
 CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey_patterns_stop_points USING btree (journey_pattern_id);
-
-
---
--- TOC entry 3571 (class 1259 OID 533407)
--- Name: index_journey_pattern_sections_on_journey_pattern_id; Type: INDEX; Schema: iev_check_points; Owner: chouette; Tablespace: 
---
-
-CREATE INDEX index_journey_pattern_sections_on_journey_pattern_id ON journey_pattern_sections USING btree (journey_pattern_id);
-
-
---
--- TOC entry 3572 (class 1259 OID 533408)
--- Name: index_journey_pattern_sections_on_route_section_id; Type: INDEX; Schema: iev_check_points; Owner: chouette; Tablespace: 
---
-
-CREATE INDEX index_journey_pattern_sections_on_route_section_id ON journey_pattern_sections USING btree (route_section_id);
-
-
---
--- TOC entry 3573 (class 1259 OID 533409)
--- Name: index_jps_on_journey_pattern_id_and_route_section_id_and_rank; Type: INDEX; Schema: iev_check_points; Owner: chouette; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_jps_on_journey_pattern_id_and_route_section_id_and_rank ON journey_pattern_sections USING btree (journey_pattern_id, route_section_id, rank);
 
 
 --
@@ -1942,14 +1853,6 @@ ALTER TABLE ONLY journey_frequencies
 ALTER TABLE ONLY journey_frequencies
     ADD CONSTRAINT journey_frequencies_vehicle_journey_id_fk FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE SET NULL;
 
-
---
--- TOC entry 3611 (class 2606 OID 533442)
--- Name: journey_pattern_sections_journey_pattern_id_fk; Type: FK CONSTRAINT; Schema: iev_check_points; Owner: chouette
---
-
-ALTER TABLE ONLY journey_pattern_sections
-    ADD CONSTRAINT journey_pattern_sections_journey_pattern_id_fk FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;
 
 
 --

@@ -28,7 +28,7 @@ import lombok.Setter;
 @Table(name = "routing_constraint_zones")
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @NoArgsConstructor
-public class RoutingConstraint extends ChouetteIdentifiedObject implements SignedChouetteObject {
+public class RoutingConstraint extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
 
 	private static final long serialVersionUID = -2247411121328805905L;
 
@@ -57,7 +57,7 @@ public class RoutingConstraint extends ChouetteIdentifiedObject implements Signe
 	 * @return The actual value
 	 */
 	@Getter
-	@NaturalId(mutable=true)
+	@NaturalId(mutable = true)
 	@Column(name = "objectid", nullable = false, unique = true)
 	protected String objectId;
 
@@ -80,15 +80,13 @@ public class RoutingConstraint extends ChouetteIdentifiedObject implements Signe
 	@Getter
 	@Setter
 	@Column(name = "checksum")
-	private String checksum ;
-	
+	private String checksum;
+
 	@Getter
-	@Setter 
+	@Setter
 	@Column(name = "checksum_source")
 	private String checksumSource;
 
-
-	
 	/**
 	 * name
 	 * 
@@ -107,6 +105,26 @@ public class RoutingConstraint extends ChouetteIdentifiedObject implements Signe
 	 */
 	public void setName(String value) {
 		name = StringUtils.abbreviate(value, 255);
+	}
+
+	/**
+	 * data source ref
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "data_source_ref")
+	private String dataSourceRef;
+
+	/**
+	 * set data source ref <br>
+	 * truncated to 255 characters if too long
+	 * 
+	 * @param value
+	 *            New value
+	 */
+	public void setDataSourceRef(String value) {
+		dataSourceRef = StringUtils.abbreviate(value, 255);
 	}
 
 	@Getter

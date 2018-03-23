@@ -58,6 +58,7 @@ public class CopyUtil {
 		Timetable tm = new Timetable();
 		tm.setObjectId(object.getObjectId());
 		tm.setObjectVersion(object.getObjectVersion());
+		tm.setDataSourceRef(object.getDataSourceRef());
 		tm.setComment(object.getComment());
 		tm.setVersion(object.getVersion());
 		tm.setIntDayTypes(object.getIntDayTypes());
@@ -97,10 +98,11 @@ public class CopyUtil {
 		throw new NotYetImplementedException(MESSAGE);
 	}
 
-	public static Footnote copy(Footnote footnote) {
+	public static Footnote copy(Footnote object) {
 		Footnote ft = new Footnote();
-		ft.setKey(footnote.getKey());
-		ft.setLabel(footnote.getLabel());
+		ft.setKey(object.getKey());
+		ft.setLabel(object.getLabel());
+		ft.setDataSourceRef(object.getDataSourceRef());
 		return ft;
 	}
 	

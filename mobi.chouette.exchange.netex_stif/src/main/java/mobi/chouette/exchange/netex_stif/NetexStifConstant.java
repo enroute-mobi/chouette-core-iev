@@ -116,6 +116,7 @@ public class NetexStifConstant {
 	public static final String ARRETS_FILE_NAME = "arrets.xml";
 	
 	// context constants 
+	public static final String IMPORT_DATA_SOURCE_REF = "import_data_source_ref";
 	public static final String OUTPUT_SUB_PATH = "output_sub_path";
 	public static final String OPERATOR_OBJECT_ID = "operator_object_id";
 	public static final String SHARED_REPORT = "shared_report";

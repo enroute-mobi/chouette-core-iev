@@ -57,6 +57,8 @@ public class ServiceJourneyParser implements Parser {
 		}
 		String modification = xpp.getAttributeValue(null, NetexStifConstant.MODIFICATION);
 		vehicleJourney.setObjectVersion(version);
+		String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
+		vehicleJourney.setDataSourceRef(dataSourceRef);
 		LineLite line = (LineLite) context.get(Constant.LINE);
 		// if (line != null)
 		// NetexStifUtils.uniqueObjectIdOnLine(context,vehicleJourney, line);

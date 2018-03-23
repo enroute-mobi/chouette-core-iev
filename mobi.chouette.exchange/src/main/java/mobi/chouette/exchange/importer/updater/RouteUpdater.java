@@ -75,6 +75,7 @@ public class RouteUpdater implements Updater<Route> {
 			oldValue.setWayback(newValue.getWayback());
 			oldValue.setLineId(newValue.getLineId());
 			oldValue.setLineLite(newValue.getLineLite());
+			oldValue.setDataSourceRef(newValue.getDataSourceRef());
 			oldValue.setDetached(false);
 		} else {
 
@@ -104,6 +105,10 @@ public class RouteUpdater implements Updater<Route> {
 			}
 			if (newValue.getWayback() != null && !newValue.getWayback().equals(oldValue.getWayback())) {
 				oldValue.setWayback(newValue.getWayback());
+			}
+			if (newValue.getDataSourceRef() != null
+					&& !newValue.getDataSourceRef().equals(oldValue.getDataSourceRef())) {
+				oldValue.setDataSourceRef(newValue.getDataSourceRef());
 			}
 		}
 

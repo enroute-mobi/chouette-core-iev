@@ -49,7 +49,7 @@ import mobi.chouette.model.type.TransportModeNameEnum;
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "journeyPattern", "route", "timetables" })
-public class VehicleJourney extends ChouetteIdentifiedObject implements SignedChouetteObject {
+public class VehicleJourney extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
 
 	private static final long serialVersionUID = 304336286208135064L;
 
@@ -77,7 +77,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	 * @return The actual value
 	 */
 	@Getter
-	@NaturalId(mutable=true)
+	@NaturalId(mutable = true)
 	@Column(name = "objectid", nullable = false, unique = true)
 	protected String objectId;
 
@@ -100,15 +100,13 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@Column(name = "checksum")
-	private String checksum ;
-	
+	private String checksum;
+
 	@Getter
-	@Setter 
+	@Setter
 	@Column(name = "checksum_source")
 	private String checksumSource;
 
-
-	
 	/**
 	 * comment
 	 * 
@@ -236,6 +234,25 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Setter
 	@Column(name = "number")
 	private Long number;
+	/**
+	 * data source ref
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "data_source_ref")
+	private String dataSourceRef;
+
+	/**
+	 * set data source ref <br>
+	 * truncated to 255 characters if too long
+	 * 
+	 * @param value
+	 *            New value
+	 */
+	public void setDataSourceRef(String value) {
+		dataSourceRef = StringUtils.abbreviate(value, 255);
+	}
 
 	/**
 	 * mobility restriction indicator (such as wheel chairs) <br>
@@ -322,8 +339,8 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@Transient
-//	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST })
-//	@JoinColumn(name = "company_id")
+	// @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST })
+	// @JoinColumn(name = "company_id")
 	private Company company;
 
 	/**
@@ -336,7 +353,9 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@ManyToMany
-	@JoinTable(name = "footnotes_vehicle_journeys", joinColumns = { @JoinColumn(name = "vehicle_journey_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "footnote_id", nullable = false, updatable = false) })
+	@JoinTable(name = "footnotes_vehicle_journeys", joinColumns = {
+			@JoinColumn(name = "vehicle_journey_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "footnote_id", nullable = false, updatable = false) })
 	private List<Footnote> footnotes = new ArrayList<>(0);
 
 	/**
@@ -349,7 +368,9 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
-	@JoinTable(name = "time_tables_vehicle_journeys", joinColumns = { @JoinColumn(name = "vehicle_journey_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "time_table_id", nullable = false, updatable = false) })
+	@JoinTable(name = "time_tables_vehicle_journeys", joinColumns = {
+			@JoinColumn(name = "vehicle_journey_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "time_table_id", nullable = false, updatable = false) })
 	private List<Timetable> timetables = new ArrayList<Timetable>(0);
 
 	/**
@@ -362,12 +383,13 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@OneToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "vehicle_journey_id", updatable = false)
 	private List<VehicleJourneyAtStop> vehicleJourneyAtStops = new ArrayList<VehicleJourneyAtStop>(0);
-	
+
 	/**
-	 * To distinguish the timesheets journeys and the frequencies ones. Defaults to Timesheet.
+	 * To distinguish the timesheets journeys and the frequencies ones. Defaults
+	 * to Timesheet.
 	 * 
 	 * @param journeyCategory
-	 *         The new vehicle journey category
+	 *            The new vehicle journey category
 	 * @return The actual vehicle journey category
 	 * @since 3.2.0
 	 */
@@ -376,12 +398,12 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "journey_category")
 	private JourneyCategoryEnum journeyCategory = JourneyCategoryEnum.Timesheet;
-	
+
 	/**
 	 * For frequencies journeys, applicable periods
 	 * 
 	 * @param journeyFrequencies
-	 *         The new vehicle journey frequencies
+	 *            The new vehicle journey frequencies
 	 * @return The actual vehicle journey category
 	 * @since 3.2.0
 	 */
@@ -391,14 +413,16 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@JoinColumn(name = "vehicle_journey_id", updatable = false)
 	private List<JourneyFrequency> journeyFrequencies = new ArrayList<JourneyFrequency>(0);
 
-	@Setter @Getter
+	@Setter
+	@Getter
 	@Column(name = "company_id")
 	private Long companyId;
 
 	/**
-	 *  sort passing times against stop point position
+	 * sort passing times against stop point position
 	 */
 	public void sortVjas() {
-		getVehicleJourneyAtStops().sort((v1,v2)-> v1.getStopPoint().getPosition().compareTo(v2.getStopPoint().getPosition())) ;
+		getVehicleJourneyAtStops()
+				.sort((v1, v2) -> v1.getStopPoint().getPosition().compareTo(v2.getStopPoint().getPosition()));
 	}
 }

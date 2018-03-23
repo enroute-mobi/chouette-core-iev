@@ -40,6 +40,8 @@ public class RouteParser implements Parser {
 		
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
+		String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
+		route.setDataSourceRef(dataSourceRef);
 		String changed = xpp.getAttributeValue(null, NetexStifConstant.CHANGED);
 		if (changed != null) {
 			route.setCreationTime(NetexStifUtils.getDate(changed));

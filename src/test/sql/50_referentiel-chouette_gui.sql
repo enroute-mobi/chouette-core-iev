@@ -37,7 +37,8 @@ CREATE TABLE footnotes (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -135,7 +136,8 @@ CREATE TABLE journey_patterns (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -193,7 +195,8 @@ CREATE TABLE routes (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -234,7 +237,8 @@ CREATE TABLE routing_constraint_zones (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -395,7 +399,8 @@ CREATE TABLE time_tables (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 
@@ -542,7 +547,8 @@ CREATE TABLE vehicle_journeys (
     checksum character varying(255),
     checksum_source text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    data_source_ref character varying
 );
 
 

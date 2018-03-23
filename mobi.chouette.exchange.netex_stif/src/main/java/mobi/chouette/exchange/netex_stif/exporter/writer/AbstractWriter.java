@@ -11,6 +11,8 @@ import java.util.TimeZone;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import mobi.chouette.model.ChouetteIdentifiedObject;
+import mobi.chouette.model.ChouetteObject;
+import mobi.chouette.model.DataSourceRefObject;
 import mobi.chouette.model.type.DateRange;
 
 public class AbstractWriter {
@@ -41,32 +43,34 @@ public class AbstractWriter {
 		SimpleDateFormat utcDateFormat = new SimpleDateFormat(XSD_DATE_TIME_UTC);
 		utcDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
 		SimpleDateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy");
-		write(writer,0,"<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		write(writer,0,"<PublicationDelivery xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-		write(writer,0,"                     xsi:schemaLocation=\"http://www.netex.org.uk/netex\"");
-		write(writer,0,"                     xmlns=\"http://www.netex.org.uk/netex\"");
-		write(writer,0,"                     xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
-		write(writer,0,"                     xmlns:ifopt=\"http://www.ifopt.org.uk/ifopt\"");
-		write(writer,0,"                     xmlns:gml=\"http://www.opengis.net/gml/3.2\"");
-		write(writer,0,"                     xmlns:core=\"http://www.govtalk.gov.uk/core\"");
-		write(writer,0,"                     xmlns:siri=\"http://www.siri.org.uk/siri\"");
-		write(writer,0,"                     version=\"" + VERSION_NETEX + "\">");
-		write(writer,1,"<PublicationTimestamp>" + utcDateFormat.format(new Date())
-				+ "</PublicationTimestamp>");
-		write(writer,1,"<ParticipantRef>" + participantRef + "</ParticipantRef>");
+		write(writer, 0, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		write(writer, 0, "<PublicationDelivery xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+		write(writer, 0, "                     xsi:schemaLocation=\"http://www.netex.org.uk/netex\"");
+		write(writer, 0, "                     xmlns=\"http://www.netex.org.uk/netex\"");
+		write(writer, 0, "                     xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+		write(writer, 0, "                     xmlns:ifopt=\"http://www.ifopt.org.uk/ifopt\"");
+		write(writer, 0, "                     xmlns:gml=\"http://www.opengis.net/gml/3.2\"");
+		write(writer, 0, "                     xmlns:core=\"http://www.govtalk.gov.uk/core\"");
+		write(writer, 0, "                     xmlns:siri=\"http://www.siri.org.uk/siri\"");
+		write(writer, 0, "                     version=\"" + VERSION_NETEX + "\">");
+		write(writer, 1, "<PublicationTimestamp>" + utcDateFormat.format(new Date()) + "</PublicationTimestamp>");
+		write(writer, 1, "<ParticipantRef>" + participantRef + "</ParticipantRef>");
 		switch (fileType) {
 		case FULL:
-			write(writer,1,"<PublicationRefreshInterval>P1D</PublicationRefreshInterval>");
-			write(writer,1,"<Description>Offre complète IDF sur la période du " + dayFormat.format(validityPeriod.getFirst()) + " au " + dayFormat.format(validityPeriod.getLast())
-					+ "</Description>");
+			write(writer, 1, "<PublicationRefreshInterval>P1D</PublicationRefreshInterval>");
+			write(writer, 1,
+					"<Description>Offre complète IDF sur la période du " + dayFormat.format(validityPeriod.getFirst())
+							+ " au " + dayFormat.format(validityPeriod.getLast()) + "</Description>");
 			break;
 		case LINE:
-			write(writer,1,"<Description>Offre pour la ligne " + toXml(lineName) + " sur la période du "
-					+ dayFormat.format(validityPeriod.getFirst()) + " au " + dayFormat.format(validityPeriod.getLast()) + "</Description>");
+			write(writer, 1,
+					"<Description>Offre pour la ligne " + toXml(lineName) + " sur la période du "
+							+ dayFormat.format(validityPeriod.getFirst()) + " au "
+							+ dayFormat.format(validityPeriod.getLast()) + "</Description>");
 			break;
 		default:
 		}
-		write(writer,1,"<dataObjects>");
+		write(writer, 1, "<dataObjects>");
 	}
 
 	public static void openGeneralFrame(Writer writer, String prefix, String frameType, List<DateRange> validityPeriods,
@@ -78,23 +82,21 @@ public class AbstractWriter {
 		if (indent)
 			whiteSpaces += 2;
 
-		write(writer,whiteSpaces,"<GeneralFrame id=\"" + prefix + ":GeneralFrame:" + frameType + "-"
-				+ idDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
-				+ FRAME_DATASOURCE +"\">");
+		write(writer, whiteSpaces,
+				"<GeneralFrame id=\"" + prefix + ":GeneralFrame:" + frameType + "-" + idDateFormat.format(new Date())
+						+ ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\"" + FRAME_DATASOURCE + "\">");
 		if (validityPeriods != null) {
 			// NOTICE : don't use lambda because of exception management
 			for (DateRange validityPeriod : validityPeriods) {
-				write(writer,whiteSpaces+1,"<ValidBetween>");
-				write(writer,whiteSpaces+2,"<FromDate>" + format.format(validityPeriod.getFirst())
-						+ "</FromDate>");
-				write(writer,whiteSpaces+2,"<ToDate>" + format.format(validityPeriod.getLast())
-						+ "</ToDate>");
-				write(writer,whiteSpaces+1,"</ValidBetween>");
+				write(writer, whiteSpaces + 1, "<ValidBetween>");
+				write(writer, whiteSpaces + 2, "<FromDate>" + format.format(validityPeriod.getFirst()) + "</FromDate>");
+				write(writer, whiteSpaces + 2, "<ToDate>" + format.format(validityPeriod.getLast()) + "</ToDate>");
+				write(writer, whiteSpaces + 1, "</ValidBetween>");
 			}
 		}
-		write(writer,whiteSpaces+1,"<TypeOfFrameRef ref=\"" + FRAME_REF_PREFIX + frameType + ":\"/>");
+		write(writer, whiteSpaces + 1, "<TypeOfFrameRef ref=\"" + FRAME_REF_PREFIX + frameType + ":\"/>");
 		if (!empty) {
-			write(writer,whiteSpaces+1,"<members>");
+			write(writer, whiteSpaces + 1, "<members>");
 		}
 
 	}
@@ -104,39 +106,39 @@ public class AbstractWriter {
 		if (indent)
 			whiteSpaces += 2;
 		if (!empty) {
-			write(writer,whiteSpaces+1,"</members>");
+			write(writer, whiteSpaces + 1, "</members>");
 		}
-		write(writer,whiteSpaces,"</GeneralFrame>");
+		write(writer, whiteSpaces, "</GeneralFrame>");
 	}
 
-	public static void openCompositeFrame(Writer writer, String prefix, String frameType, String name, boolean empty, boolean delete)
-			throws IOException {
+	public static void openCompositeFrame(Writer writer, String prefix, String frameType, String name, boolean empty,
+			boolean delete) throws IOException {
 		SimpleDateFormat idDateFormat = new SimpleDateFormat(ID_DATE_TIME_UTC);
 		idDateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
 
-		write(writer,2,"<CompositeFrame id=\"" + prefix + ":CompositeFrame:" + frameType + "-"
+		write(writer, 2, "<CompositeFrame id=\"" + prefix + ":CompositeFrame:" + frameType + "-"
 				+ idDateFormat.format(new Date()) + ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\""
-				+ FRAME_DATASOURCE + "\""+(delete?" modification=\"delete\"":"")+">");
+				+ FRAME_DATASOURCE + "\"" + (delete ? " modification=\"delete\"" : "") + ">");
 		if (!name.isEmpty()) {
-			write(writer,3,"<Name>" + toXml(name) + "</Name>");
+			write(writer, 3, "<Name>" + toXml(name) + "</Name>");
 		}
-		write(writer,3,"<TypeOfFrameRef ref=\"" + FRAME_REF_PREFIX + frameType + ":\"/>");
+		write(writer, 3, "<TypeOfFrameRef ref=\"" + FRAME_REF_PREFIX + frameType + ":\"/>");
 		if (!empty) {
-			write(writer,3,"<frames>");
+			write(writer, 3, "<frames>");
 		}
 
 	}
 
 	public static void closeCompositeFrame(Writer writer, boolean empty) throws IOException {
 		if (!empty) {
-			write(writer,3,"</frames>");
+			write(writer, 3, "</frames>");
 		}
-		write(writer,2,"</CompositeFrame>");
+		write(writer, 2, "</CompositeFrame>");
 	}
 
 	public static void closePublicationDelivery(Writer writer) throws IOException {
-		write(writer,1,"</dataObjects>");
-		write(writer,0,"</PublicationDelivery>");
+		write(writer, 1, "</dataObjects>");
+		write(writer, 0, "</PublicationDelivery>");
 
 	}
 
@@ -165,12 +167,31 @@ public class AbstractWriter {
 		return list != null && !list.isEmpty();
 	}
 
+	public static String buildDataSourceRef(ChouetteObject object) {
+
+		StringBuilder b = new StringBuilder("dataSourceRef=\"");
+		if (object != null && object instanceof DataSourceRefObject) {
+			DataSourceRefObject dsObject = (DataSourceRefObject) object;
+			if (isSet(dsObject.getDataSourceRef())) {
+				b.append(dsObject.getDataSourceRef());
+			} else {
+				b.append(FRAME_DATASOURCE);
+			}
+		}
+		else
+		{
+			b.append(FRAME_DATASOURCE);
+		}
+		b.append('"');
+		return b.toString();
+	}
+
 	public static String buildChildSequenceId(ChouetteIdentifiedObject object, String type, String childType,
 			int rank) {
 		return object.getObjectId().replace(COLUMN + type + COLUMN, COLUMN + childType + COLUMN).replace(LOC,
 				rank + LOC);
 	}
-	
+
 	public static void writeXml(Writer writer, String xml, int indent) throws IOException {
 		String[] source = xml.replaceAll("> <", ">\n<").split("\n");
 		int rank = indent;
@@ -178,30 +199,24 @@ public class AbstractWriter {
 			line = line.trim();
 			if (line.startsWith("</"))
 				rank--;
-			write(writer,rank,line);
+			write(writer, rank, line);
 			if (!line.contains("</") && !line.endsWith("/>") && !line.startsWith("<!"))
 				rank++;
 		}
 	}
 
-	private static final String[] indentation = {
-			"",
-			INDENT,
-			INDENT+INDENT,
-			INDENT+INDENT+INDENT,
-			INDENT+INDENT+INDENT+INDENT,
-			INDENT+INDENT+INDENT+INDENT+INDENT,
-			INDENT+INDENT+INDENT+INDENT+INDENT+INDENT,
-			INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT,
-			INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT,
-			INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT,
-			INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT+INDENT
-	};
-	
-	public static void write(Writer writer, int indent, String text) throws IOException
-	{
-		if (indent >= indentation.length ) indent = indentation.length -1;
-		writer.write(indentation[indent]+text+"\n");
+	private static final String[] indentation = { "", INDENT, INDENT + INDENT, INDENT + INDENT + INDENT,
+			INDENT + INDENT + INDENT + INDENT, INDENT + INDENT + INDENT + INDENT + INDENT,
+			INDENT + INDENT + INDENT + INDENT + INDENT + INDENT,
+			INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT,
+			INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT,
+			INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT,
+			INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT + INDENT };
+
+	public static void write(Writer writer, int indent, String text) throws IOException {
+		if (indent >= indentation.length)
+			indent = indentation.length - 1;
+		writer.write(indentation[indent] + text + "\n");
 	}
 
 }

@@ -51,6 +51,7 @@ import mobi.chouette.dao.RoutingConstraintDAO;
 import mobi.chouette.dao.StopPointDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
 import mobi.chouette.exchange.netex_stif.JobDataImpl;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter.FILE_STATE;
 import mobi.chouette.exchange.report.FileReport;
@@ -171,6 +172,7 @@ public class NetexStifImportTests extends Arquillian  {
 		context.put(Constant.INITIAL_CONTEXT, initialContext);
 		context.put(Constant.REPORT, new ActionReport());
 		context.put(Constant.VALIDATION_REPORT, new ValidationReport());
+		context.put(NetexStifConstant.IMPORT_DATA_SOURCE_REF, "CITYWAY");
 		NetexStifImportParameters configuration = new NetexStifImportParameters();
 		context.put(Constant.CONFIGURATION, configuration);
 		configuration.setName("name");
@@ -178,6 +180,7 @@ public class NetexStifImportTests extends Arquillian  {
 		configuration.setNoSave(true);
 		configuration.setCleanRepository(true);
 		configuration.setOrganisationName("organisation");
+		configuration.setOrganisationCode("CITYWAY");
 		configuration.setReferentialName("test");
 		configuration.setReferentialId(1L);
 		configuration.setLineReferentialId(1L);

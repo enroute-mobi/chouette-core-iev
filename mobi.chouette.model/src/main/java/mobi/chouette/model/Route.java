@@ -52,7 +52,7 @@ import mobi.chouette.model.type.PTDirectionEnum;
 @NoArgsConstructor
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @ToString(callSuper = true, exclude = { "line", "oppositeRoute" })
-public class Route extends ChouetteIdentifiedObject implements SignedChouetteObject {
+public class Route extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
 
 	private static final long serialVersionUID = -2249654966081042738L;
 
@@ -80,7 +80,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	 * @return The actual value
 	 */
 	@Getter
-	@NaturalId(mutable=true)
+	@NaturalId(mutable = true)
 	@Column(name = "objectid", nullable = false, unique = true)
 	protected String objectId;
 
@@ -103,14 +103,13 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	@Getter
 	@Setter
 	@Column(name = "checksum")
-	private String checksum ;
-	
+	private String checksum;
+
 	@Getter
-	@Setter 
+	@Setter
 	@Column(name = "checksum_source")
 	private String checksumSource;
 
-	
 	/**
 	 * name
 	 * 
@@ -152,6 +151,26 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	}
 
 	/**
+	 * data source ref
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "data_source_ref")
+	private String dataSourceRef;
+
+	/**
+	 * set data source ref <br>
+	 * truncated to 255 characters if too long
+	 * 
+	 * @param value
+	 *            New value
+	 */
+	public void setDataSourceRef(String value) {
+		dataSourceRef = StringUtils.abbreviate(value, 255);
+	}
+
+	/**
 	 * opposite route identifier <br>
 	 * an opposite route must have it's wayBack attribute on reverse value<br>
 	 * 
@@ -186,7 +205,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 			}
 		}
 	}
-	
+
 	/**
 	 * opposite route identifier <br>
 	 * for error use-cases only
@@ -200,7 +219,6 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 			this.oppositeRoute = oppositeRoute;
 		}
 	}
-
 
 	/**
 	 * published name
@@ -290,7 +308,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	// @ManyToOne(fetch = FetchType.LAZY)
 	// @JoinColumn(name = "line_id")
 	private Line line;
-	
+
 	/**
 	 * line reverse reference
 	 * 

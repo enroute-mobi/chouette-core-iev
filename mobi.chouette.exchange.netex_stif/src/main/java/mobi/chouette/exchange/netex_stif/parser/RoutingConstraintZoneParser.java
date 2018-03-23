@@ -70,6 +70,7 @@ public class RoutingConstraintZoneParser implements Parser {
 		boolean valid = validator.validate(context, zone, lineNumber, columnNumber);
 		if (name != null && id != null && valid) {
 
+			String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
 			for (Route route : stopPoints.keySet()) {
 				List<StopPoint> list = stopPoints.get(route);
 				// we need to stop points to have an itl
@@ -79,6 +80,7 @@ public class RoutingConstraintZoneParser implements Parser {
 					routingConstraint.setName(name);
 					routingConstraint.setRoute(route);
 					routingConstraint.getStopPoints().addAll(list);
+					routingConstraint.setDataSourceRef(dataSourceRef);
 				}
 			}
 
