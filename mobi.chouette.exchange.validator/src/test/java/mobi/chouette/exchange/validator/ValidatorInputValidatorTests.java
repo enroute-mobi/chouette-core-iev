@@ -1,6 +1,7 @@
 package mobi.chouette.exchange.validator;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -154,6 +155,9 @@ public class ValidatorInputValidatorTests {
 		referential.getOrganisation().setId(2L);
 		referential.getOrganisation().setName("organisation");
 		referential.getOrganisation().setCode("code_orga");
+		Map<String,String> ssoAttributes = new HashMap<>();
+		referential.getOrganisation().setSsoAttributes(ssoAttributes);
+		ssoAttributes.put(Organisation.SSO_FUNCTIONAL_SCOPE,"[\"STIF:CODIFLIGNE:Line:C00109\",\"STIF:CODIFLIGNE:Line:C00108\",\"STIF:CODIFLIGNE:Line:C00163\",\"STIF:CODIFLIGNE:Line:C00164\",\"STIF:CODIFLIGNE:Line:C00165\",\"STIF:CODIFLIGNE:Line:C00166\",\"STIF:CODIFLIGNE:Line:C00168\",\"STIF:CODIFLIGNE:Line:C00171\"]");
 		ReferentialMetadata metadata = new ReferentialMetadata();
 		referential.getMetadatas().add(metadata);
 		metadata.setLineIds(new Long[] {1l,2L});
@@ -162,6 +166,7 @@ public class ValidatorInputValidatorTests {
 		AbstractParameter parameters = validator.toActionParameter(task);
 		Assert.assertTrue(parameters instanceof ValidateParameters, " instance of ValidateParameters");
         ValidateParameters params = (ValidateParameters) parameters;
+        Assert.assertEquals(params.getLinesScope().size(), 8, "params linesScope" );
         Assert.assertNotNull(params.getControlParameters(),"parameter has controlParameters");
         ControlParameters control = params.getControlParameters();
         Assert.assertEquals(control.getGlobalCheckPoints().size(), 21, "GlobalCheckPoints count");

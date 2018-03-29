@@ -19,9 +19,11 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.JourneyPatternDAO;
 import mobi.chouette.dao.RouteDAO;
+import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
+import mobi.chouette.exchange.validation.report.ValidationReport;
 import mobi.chouette.exchange.validator.ValidateParameters;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
@@ -84,7 +86,43 @@ public class LineValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "line" }, description = CheckPointConstant.L3_Route_4 + " : error routes with same ordered stops", priority = 122)
+	@Test(groups = { "line" }, description = "3_Line_2", priority = 122)
+	public void verifyTest_3_Line_2() throws Exception {
+		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Line_2 + Color.NORMAL);
+		initSchema();
+		Context context = initValidatorContext();
+		loadSharedData(context);
+		utx.begin();
+		try {
+			em.joinTransaction();
+
+			TestContext tc = new TestContext(context, CheckPointConstant.L3_Line_2);
+			LineLite line = tc.getObjectForTest();
+			
+			// -- Nominal test
+			tc.runValidation();
+			checkNoReports(context, line.getObjectId());
+
+			// -- Error test : change line objectid
+			// reset report
+			context.put(Constant.REPORT, new ActionReport());
+			context.put(Constant.VALIDATION_REPORT, new ValidationReport());
+
+			line.setObjectId(line.getObjectId()+"23");
+			tc.runValidation();
+			checkReports(context, line.getObjectId(), tc.getCheckPointName(), tc.getFormattedCheckPointName(), null,
+					OBJECT_STATE.WARNING, 1);
+
+		} finally {
+			utx.rollback();
+		}
+
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	@Test(groups = { "line" }, description = CheckPointConstant.L3_Route_4 + " : error routes with same ordered stops", priority = 123)
 	public void verifyTest_3_Route_4() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_4 + Color.NORMAL);
 		initSchema();
@@ -150,7 +188,7 @@ public class LineValidatorTests extends AbstractTestValidation {
 	 * @throws Exception
 	 */
 	@Test(groups = { "line" }, description = CheckPointConstant.L3_JourneyPattern_1
-			+ " : error 2 journeypatterns must have different different stops order ", priority = 123)
+			+ " : error 2 journeypatterns must have different different stops order ", priority = 124)
 	public void verifyTest_3_JourneyPattern_1() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_JourneyPattern_1 + Color.NORMAL);
 		initSchema();

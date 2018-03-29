@@ -148,6 +148,11 @@ public abstract class AbstractTestValidation extends Arquillian {
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		configuration.getIds().addAll(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
+		configuration.getLinesScope().addAll(Arrays.asList(new String[] {"STIF:CODIFLIGNE:Line:C00109",
+				"STIF:CODIFLIGNE:Line:C00108","STIF:CODIFLIGNE:Line:C00163","STIF:CODIFLIGNE:Line:C00164",
+				"STIF:CODIFLIGNE:Line:C00165","STIF:CODIFLIGNE:Line:C00166","STIF:CODIFLIGNE:Line:C00168",
+				"STIF:CODIFLIGNE:Line:C00171"}));
+		
 		JobDataImpl test = new JobDataImpl();
 		context.put(Constant.JOB_DATA, test);
 		test.setPathName("target/referential/test");
