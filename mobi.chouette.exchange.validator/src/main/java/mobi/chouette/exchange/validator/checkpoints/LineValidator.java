@@ -200,7 +200,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 			String key = buildStopPointListKey(stoppoints);
 			JourneyPattern sameExist = map.get(key);
 			if (sameExist != null) {
-				DataLocation source = new DataLocation(object);
+				DataLocation source = new DataLocation(jp);
 				DataLocation target = new DataLocation(sameExist);
 				validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
 						parameters.getSpecificCode(), checkPointName, source, null, null, target);
