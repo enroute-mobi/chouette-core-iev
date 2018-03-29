@@ -145,6 +145,7 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 				parameter.setReferentialName(referential.getName());
 				parameter.setOrganisationName(organisation.getName());
 				parameter.setOrganisationCode(organisation.getCode());
+				parameter.getLinesScope().addAll(organisation.getLines());
 
 				// populate controlParameter
 				ControlParameters controlParameters = parameter.getControlParameters();

@@ -18,8 +18,8 @@ import mobi.chouette.model.util.Referential;
 
 public class LineValidator extends GenericValidator<LineLite> {
 
-	private static final String[] codes = { CheckPointConstant.L3_Line_1, CheckPointConstant.L3_Route_4,
-			CheckPointConstant.L3_JourneyPattern_1 };
+	private static final String[] codes = { CheckPointConstant.L3_Line_1, CheckPointConstant.L3_Line_2,
+			CheckPointConstant.L3_Route_4, CheckPointConstant.L3_JourneyPattern_1 };
 
 	@Override
 	public void validate(Context context, LineLite object, ValidateParameters parameters, String transportMode) {
@@ -30,7 +30,8 @@ public class LineValidator extends GenericValidator<LineLite> {
 	 * <b>Titre</b> :[Ligne] Appariement des itinéraires
 	 * <p>
 	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2121">Carte #2121</a>
+	 * <a target="_blank" href="https://projects.af83.io/issues/2121">Carte
+	 * #2121</a>
 	 * <p>
 	 * <b>Code</b> :3-Line-1
 	 * <p>
@@ -61,14 +62,14 @@ public class LineValidator extends GenericValidator<LineLite> {
 		Collection<Route> routes = ref.getRoutes().values();
 		if (routes.size() > 1) { // -- Prérequis : Ligne disposant de plusieurs
 									// itinéraires
-            boolean result = true; // indicateur erreur possible
+			boolean result = true; // indicateur erreur possible
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 			for (Route r : routes) {
 				Route opposite = r.getOppositeRoute();
-				if (opposite != null) 
-				{
-					result = false; // il existe une route avec route inverse : pas d'erreur
+				if (opposite != null) {
+					result = false; // il existe une route avec route inverse :
+									// pas d'erreur
 					break;
 				}
 			}
@@ -81,10 +82,56 @@ public class LineValidator extends GenericValidator<LineLite> {
 	}
 
 	/**
+	 * <b>Titre</b> :[Ligne] appartenance de la ligne au périmètre de
+	 * l'organisation
+	 * <p>
+	 * <b>Référence Redmine</b> :
+	 * <a target="_blank" href="https://projects.af83.io/issues/4982">Carte
+	 * #4982</a>
+	 * <p>
+	 * <b>Code</b> :3-Line-2
+	 * <p>
+	 * <b>Variables</b> : néant
+	 * <p>
+	 * <b>Prérequis</b> : néant
+	 * <p>
+	 * <b>Prédicat</b> : Un JDD ne doit pas définir d'offre pour des lignes qui
+	 * ne font pas partie du périmètre fonctionnel de l'organisation
+	 * propriétaire
+	 * <p>
+	 * <b>Message</b> : La ligne {nomLigne}({ObjectId}) ne fait pas partie du
+	 * périmètre fonctionnel de l'organisation {OrganisationName}
+	 * <p>
+	 * <b>Criticité</b> : Error
+	 * <p>
+	 * 
+	 *
+	 * @param context
+	 *            context de validation
+	 * @param object
+	 *            objet à contrôler
+	 * @param parameters
+	 *            paramètres du point de contrôle
+	 */
+	protected void check3Line2(Context context, LineLite object, CheckpointParameters parameters) {
+
+		ValidateParameters params = (ValidateParameters) context.get(Constant.CONFIGURATION);
+		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+
+		if (!params.getLinesScope().contains(object.getObjectId())) {
+			DataLocation source = new DataLocation(object);
+			validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(),
+					CheckPointConstant.L3_Line_2, source, null, params.getOrganisationName());
+		}
+
+	}
+
+	/**
 	 * <b>Titre</b> :[Itinéraire] Détection de double définition d'itinéraire
 	 * <p>
 	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2095">Carte #2095</a>
+	 * <a target="_blank" href="https://projects.af83.io/issues/2095">Carte
+	 * #2095</a>
 	 * <p>
 	 * <b>Code</b> :3-Route-4
 	 * <p>
@@ -163,7 +210,8 @@ public class LineValidator extends GenericValidator<LineLite> {
 	 * <b>Titre</b> :[Mission] Doublon de missions dans une ligne
 	 * <p>
 	 * <b>Référence Redmine</b> :
-	 * <a target="_blank" href="https://projects.af83.io/issues/2102">Carte #2102</a>
+	 * <a target="_blank" href="https://projects.af83.io/issues/2102">Carte
+	 * #2102</a>
 	 * <p>
 	 * <b>Code</b> :3-JourneyPattern-1
 	 * <p>
@@ -200,7 +248,7 @@ public class LineValidator extends GenericValidator<LineLite> {
 			String key = buildStopPointListKey(stoppoints);
 			JourneyPattern sameExist = map.get(key);
 			if (sameExist != null) {
-				DataLocation source = new DataLocation(object);
+				DataLocation source = new DataLocation(jp);
 				DataLocation target = new DataLocation(sameExist);
 				validationReporter.addCheckPointReportError(context, parameters.getCheckId(),
 						parameters.getSpecificCode(), checkPointName, source, null, null, target);

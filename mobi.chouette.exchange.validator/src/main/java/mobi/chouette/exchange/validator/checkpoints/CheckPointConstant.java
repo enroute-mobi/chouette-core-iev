@@ -7,6 +7,9 @@ public class CheckPointConstant {
 	// Check [Ligne] Appariement des itinéraires
 	public static final String L3_Line_1 = "3-Line-1";
 
+	// Check [Ligne] Appartenance à l'organisation
+	public static final String L3_Line_2 = "3-Line-2";
+
 	// Check [Itinéraire] Deux arrêts d'une même ZDL ne peuvent pas se succéder
 	// dans un itinéraire
 	public static final String L3_Route_1 = "3-Route-1";
