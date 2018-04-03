@@ -60,7 +60,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		// TODO : manage versions, points on routes
 		LineLite line = data.getLineLite();
 		for (Route object : data.getRoutes()) {
-			write(writer,6,"<Route "+buildDataSourceRef(object)+" id=\"" + object.getObjectId() + "\" version=\"any\">");
+			write(writer,6,"<Route "+buildDataSourceRef(data,object)+" id=\"" + object.getObjectId() + "\" version=\"any\">");
 			write(writer,7,"<Name>" + toXml(object.getName()) + "</Name>");
 			write(writer,7,"<LineRef ref=\"" + line.getObjectId()
 					+ "\">version=\"any\"</LineRef>");
@@ -78,7 +78,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 	private static void writeDirections(Writer writer, ExportableData data) throws IOException {
 		// TODO Manage version and direction name
 		for (Route object : data.getRoutes()) {
-			write(writer,6,"<Direction "+buildDataSourceRef(object)+" id=\""
+			write(writer,6,"<Direction "+buildDataSourceRef(data,object)+" id=\""
 					+ object.getObjectId().replace(":Route:", ":Direction:") + "\" version=\"any\">");
 			write(writer,7,"<Name>" + toXml(object.getPublishedName()) + "</Name>");
 			write(writer,6,"</Direction>");
@@ -89,7 +89,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 	private static void writeServiceJourneyPatterns(Writer writer, ExportableData data) throws IOException {
 		// TODO Manage version, check existence of name and destination display
 		for (JourneyPattern object : data.getJourneyPatterns()) {
-			write(writer,6,"<ServiceJourneyPattern "+buildDataSourceRef(object)+" id=\"" + object.getObjectId()
+			write(writer,6,"<ServiceJourneyPattern "+buildDataSourceRef(data,object)+" id=\"" + object.getObjectId()
 					+ "\" version=\"any\">");
 			write(writer,7,"<Name>" + toXml(object.getName()) + "</Name>");
 			write(writer,7,"<RouteRef ref=\"" + object.getRoute().getObjectId()
@@ -124,7 +124,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 
 		for (JourneyPattern object : data.getJourneyPatterns()) {
 			if (object.getPublishedName() != null || object.getRegistrationNumber() != null) {
-				write(writer,6,"<DestinationDisplay "+buildDataSourceRef(object)+" id=\""
+				write(writer,6,"<DestinationDisplay "+buildDataSourceRef(data,object)+" id=\""
 						+ object.getObjectId().replace(":ServiceJourneyPattern:", ":DestinationDisplay:")
 						+ "\" version=\"any\">");
 				if (object.getPublishedName() != null)
@@ -143,7 +143,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		// TODO Manage version
 		for (Route object : data.getRoutes()) {
 			for (StopPoint child : object.getStopPoints()) {
-				write(writer,6,"<ScheduledStopPoint "+buildDataSourceRef(object)+" id=\"" + buildScheduledStopPointId(child)
+				write(writer,6,"<ScheduledStopPoint "+buildDataSourceRef(data,object)+" id=\"" + buildScheduledStopPointId(child)
 						+ "\" version=\"any\" />");
 			}
 		}
@@ -155,7 +155,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		for (Route object : data.getRoutes()) {
 			for (StopPoint child : object.getStopPoints()) {
 				StopAreaLite quay = data.getMappedStopAreas().get(child.getStopAreaId());
-				write(writer,6,"<PassengerStopAssignment "+buildDataSourceRef(object)+" id=\""
+				write(writer,6,"<PassengerStopAssignment "+buildDataSourceRef(data,object)+" id=\""
 						+ buildPassengerStopAssignmentId(child) + "\" version=\"any\" order=\"0\">");
 				write(writer,7,"<ScheduledStopPointRef ref=\""
 						+ buildScheduledStopPointId(child) + "\" version=\"any\" />");
@@ -172,7 +172,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 	private static void writeRoutingConstraints(Writer writer, ExportableData data) throws IOException {
 		// TODO manage versions
 		for (RoutingConstraint object : data.getRoutingConstraints()) {
-			write(writer,6,"<RoutingConstraintZone "+buildDataSourceRef(object)+" id=\"" + object.getObjectId()
+			write(writer,6,"<RoutingConstraintZone "+buildDataSourceRef(data,object)+" id=\"" + object.getObjectId()
 					+ "\" version=\"any\">");
 			write(writer,7,"<Name>" + toXml(object.getName()) + "</Name>");
 			write(writer,7,"<members>");
@@ -189,7 +189,7 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 	private static void writeServiceJourneys(Writer writer, ExportableData data) throws IOException {
 		// TODO manage version and times
 		for (VehicleJourney object : data.getVehicleJourneys()) {
-			write(writer,6,"<ServiceJourney "+buildDataSourceRef(object)+" id=\"" + object.getObjectId() + "\" version=\"any\">");
+			write(writer,6,"<ServiceJourney "+buildDataSourceRef(data,object)+" id=\"" + object.getObjectId() + "\" version=\"any\">");
 			write(writer,7,"<Name>" + toXml(object.getPublishedJourneyName()) + "</Name>");
 			if (!object.getFootnotes().isEmpty()) {
 				write(writer,7,"<noticeAssignments>");

@@ -45,7 +45,8 @@ public class NetexStifExporterProcessingCommands implements ProcessingCommands {
 		try {
 			commands.add(CommandFactory.create(initialContext, NetexStifInitExportCommand.class.getName()));
 			commands.add(CommandFactory.create(initialContext, LoadSharedDataCommand.class.getName()));
-		} catch (Exception e) {
+			commands.add(CommandFactory.create(initialContext, DaoNetexStifLoadOrganisationsCommand.class.getName()));
+			} catch (Exception e) {
 			log.error(e, e);
 			throw new CoreRuntimeException(CoreExceptionCode.NO_FACTORY, NO_FACTORIES);
 		}

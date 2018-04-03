@@ -10,6 +10,7 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.ChouetteObject;
 import mobi.chouette.model.DataSourceRefObject;
@@ -167,19 +168,20 @@ public class AbstractWriter {
 		return list != null && !list.isEmpty();
 	}
 
-	public static String buildDataSourceRef(ChouetteObject object) {
+	public static String buildDataSourceRef(ExportableData data, ChouetteObject object) {
 
 		StringBuilder b = new StringBuilder("dataSourceRef=\"");
 		if (object != null && object instanceof DataSourceRefObject) {
 			DataSourceRefObject dsObject = (DataSourceRefObject) object;
 			if (isSet(dsObject.getDataSourceRef())) {
 				b.append(dsObject.getDataSourceRef());
+				// collect for OrganisationalUnit export
+				if (data != null)
+					data.getDataSourceRefs().add(dsObject.getDataSourceRef());
 			} else {
 				b.append(FRAME_DATASOURCE);
 			}
-		}
-		else
-		{
+		} else {
 			b.append(FRAME_DATASOURCE);
 		}
 		b.append('"');

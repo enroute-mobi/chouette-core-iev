@@ -38,7 +38,7 @@ public class NetexStifSharedOperatorDataProducerCommand implements Command {
 			NetexStifCalendriersProducer producer1 = new NetexStifCalendriersProducer();
 			producer1.produce(context);
 
-			if (!collection.getNotices().isEmpty()) {
+			if (!collection.getNotices().isEmpty() || !collection.getDataSourceRefs().isEmpty()) {
 				NetexStifCommunProducer producer2 = new NetexStifCommunProducer();
 				producer2.produce(context);
 			}
