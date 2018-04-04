@@ -1016,22 +1016,22 @@ SELECT pg_catalog.setval('routes_id_seq', 52, true);
 -- Data for Name: routing_constraint_zones; Type: TABLE DATA; Schema: iev_export; Owner: chouette
 --
 
-INSERT INTO routing_constraint_zones VALUES (12, 'ITL 1', '{67,68}', 11, 'CITYWAY:RoutingConstraintZone:C00163-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (13, 'ITL 2', '{73,74}', 10, 'CITYWAY:RoutingConstraintZone:C00163-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (2, 'ITL RBT clairefontaine ', '{2,3,4,5}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.851', '2017-08-21 10:57:20.851','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (3, 'ITL bullion ', '{10,11}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-3:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (4, 'ITL clairefontaine RBT', '{18,19,20,21}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (5, 'ITL bullion ', '{12,13}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-3:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (14, 'ITL 1', '{76,77,78}', 13, 'CITYWAY:RoutingConstraintZone:C00166-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (15, 'ITL 2', '{83,84,85}', 12, 'CITYWAY:RoutingConstraintZone:C00166-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (6, 'ITL 1', '{23,24}', 5, 'CITYWAY:RoutingConstraintZone:C00164-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (7, 'ITL 2', '{33,34}', 4, 'CITYWAY:RoutingConstraintZone:C00164-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (16, 'ITL 1', '{86,87}', 15, 'CITYWAY:RoutingConstraintZone:C00171-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (17, 'ITL 2', '{98,99}', 14, 'CITYWAY:RoutingConstraintZone:C00171-2-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (8, 'ITL 1', '{38,39}', 7, 'CITYWAY:RoutingConstraintZone:C00168-1-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (9, 'ITL 2', '{46,47}', 6, 'CITYWAY:RoutingConstraintZone:C00168-3-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (10, 'ITL 1', '{52,53}', 9, 'CITYWAY:RoutingConstraintZone:C00168-2-1:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
-INSERT INTO routing_constraint_zones VALUES (11, 'ITL 2', '{62,63}', 8, 'CITYWAY:RoutingConstraintZone:C00168-4-2:LOC', 1, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (12, 'ITL 1', '{67,68}', 11, 'CITYWAY:RoutingConstraintZone:C00163-1-1:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (13, 'ITL 2', '{73,74}', 10, 'CITYWAY:RoutingConstraintZone:C00163-2-2:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.671', '2017-08-21 10:57:21.671','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (2, 'ITL RBT clairefontaine ', '{2,3,4,5}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-1:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:20.851', '2017-08-21 10:57:20.851','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (3, 'ITL bullion ', '{10,11}', 3, 'CITYWAY:RoutingConstraintZone:C00165-1-3:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (4, 'ITL clairefontaine RBT', '{18,19,20,21}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-2:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (5, 'ITL bullion ', '{12,13}', 2, 'CITYWAY:RoutingConstraintZone:C00165-2-3:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:20.852', '2017-08-21 10:57:20.852','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (14, 'ITL 1', '{76,77,78}', 13, 'CITYWAY:RoutingConstraintZone:C00166-1-1:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (15, 'ITL 2', '{83,84,85}', 12, 'CITYWAY:RoutingConstraintZone:C00166-2-2:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.812', '2017-08-21 10:57:21.812','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (6, 'ITL 1', '{23,24}', 5, 'CITYWAY:RoutingConstraintZone:C00164-1-1:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (7, 'ITL 2', '{33,34}', 4, 'CITYWAY:RoutingConstraintZone:C00164-2-2:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.19', '2017-08-21 10:57:21.19','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (16, 'ITL 1', '{86,87}', 15, 'CITYWAY:RoutingConstraintZone:C00171-1-1:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (17, 'ITL 2', '{98,99}', 14, 'CITYWAY:RoutingConstraintZone:C00171-2-2:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.968', '2017-08-21 10:57:21.968','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (8, 'ITL 1', '{38,39}', 7, 'CITYWAY:RoutingConstraintZone:C00168-1-1:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (9, 'ITL 2', '{46,47}', 6, 'CITYWAY:RoutingConstraintZone:C00168-3-2:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (10, 'ITL 1', '{52,53}', 9, 'CITYWAY:RoutingConstraintZone:C00168-2-1:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
+INSERT INTO routing_constraint_zones VALUES (11, 'ITL 2', '{62,63}', 8, 'CITYWAY:RoutingConstraintZone:C00168-4-2:LOC', 1503305833129, NULL, NULL, NULL, '2017-08-21 10:57:21.483', '2017-08-21 10:57:21.483','CITYWAY');
 
 
 --

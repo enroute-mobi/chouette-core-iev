@@ -25,7 +25,7 @@ public class NetexCommunWriter extends AbstractWriter {
 	}
 
 	private static void writeNotices(Writer writer, ExportableData data) throws IOException {
-		// TODO check version
+		// no version in notice
 		for (Footnote object : data.getNotices()) {
 			write(writer, 4, "<Notice " + buildDataSourceRef(data, object) + " id=\"" + object.getObjectId()
 					+ "\" version=\"any\">");
