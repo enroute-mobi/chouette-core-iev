@@ -44,6 +44,7 @@ public class StopPointUpdater implements Updater<StopPoint> {
 			// object does not exist in database
 			oldValue.setObjectId(newValue.getObjectId());
 			oldValue.setObjectVersion(newValue.getObjectVersion());
+			oldValue.setPosition(newValue.getPosition());
 			oldValue.setCreationTime(newValue.getCreationTime());
 			oldValue.setForAlighting(newValue.getForAlighting());
 			oldValue.setForBoarding(newValue.getForBoarding());
@@ -69,6 +70,9 @@ public class StopPointUpdater implements Updater<StopPoint> {
 
 			if (newValue.getForBoarding() != null && !newValue.getForBoarding().equals(oldValue.getForBoarding())) {
 				oldValue.setForBoarding(newValue.getForBoarding());
+			}
+			if (newValue.getPosition() != null && !newValue.getPosition().equals(oldValue.getPosition())) {
+				oldValue.setPosition(newValue.getPosition());
 			}
 		}
 

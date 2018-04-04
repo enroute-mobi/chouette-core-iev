@@ -44,7 +44,7 @@ public class StopAreaLiteDaoTest extends Arquillian
 
 	}
 	
-	@Test
+	@Test (priority=91)
 	public void checkReadStopAreas()
 	{
 		List<StopAreaLite> stopAreas = stopAreaLiteDao.findByType(1L,"zdep");

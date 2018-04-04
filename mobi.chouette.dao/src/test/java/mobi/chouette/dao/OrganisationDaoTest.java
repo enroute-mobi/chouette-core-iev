@@ -101,7 +101,7 @@ public class OrganisationDaoTest extends Arquillian
 
 	}
 	
-	@Test
+	@Test (priority=61)
 	public void checkSaveOrganisation()
 	{
 		ContextHolder.setContext("chouette_gui"); // set tenant schema

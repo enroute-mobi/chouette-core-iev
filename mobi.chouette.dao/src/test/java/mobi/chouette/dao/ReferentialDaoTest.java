@@ -55,7 +55,7 @@ public class ReferentialDaoTest extends Arquillian {
 
 	}
 
-	@Test
+	@Test (priority=71)
 	public void checkSaveReferential() {
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 		Long id = null;

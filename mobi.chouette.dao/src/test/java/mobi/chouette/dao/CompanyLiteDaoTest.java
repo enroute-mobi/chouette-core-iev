@@ -44,7 +44,7 @@ public class CompanyLiteDaoTest extends Arquillian
 
 	}
 	
-	@Test
+	@Test (priority=21)
 	public void checkReadCompanies()
 	{
 		List<CompanyLite> companies = companyLiteDao.findAll(1L);

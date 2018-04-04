@@ -57,7 +57,7 @@ public class ComplianceCheckDaoTest extends Arquillian {
 
 	}
 
-	@Test
+	@Test (priority=31)
 	public void checkReadComplianceCheckTask() {
 		try {
 			utx.begin();
