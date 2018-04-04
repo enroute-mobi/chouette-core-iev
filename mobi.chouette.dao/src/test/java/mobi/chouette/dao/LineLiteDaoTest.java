@@ -44,7 +44,7 @@ public class LineLiteDaoTest extends Arquillian
 
 	}
 	
-	@Test
+	@Test (priority=51)
 	public void checkReadLines()
 	{
 		List<LineLite> lines = lineLiteDao.findAll(1L);

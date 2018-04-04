@@ -55,7 +55,7 @@ public class ActionResourceDaoTest extends Arquillian {
 
 	}
 
-	@Test
+	@Test (priority=11)
 	public void checkSaveImportResource() {
 		ContextHolder.setContext("chouette_gui"); // set tenant schema
 		Long resId = null;

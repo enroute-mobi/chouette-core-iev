@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -344,7 +345,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "route", cascade = { CascadeType.PERSIST })
-	private List<JourneyPattern> journeyPatterns = new ArrayList<JourneyPattern>(0);
+	private List<JourneyPattern> journeyPatterns = new ArrayList<>(0);
 
 	/**
 	 * routingConstraints
@@ -357,7 +358,7 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "route", cascade = { CascadeType.PERSIST })
-	private List<RoutingConstraint> routingConstraints = new ArrayList<RoutingConstraint>(0);
+	private List<RoutingConstraint> routingConstraints = new ArrayList<>(0);
 
 	/**
 	 * stopPoints
@@ -369,8 +370,8 @@ public class Route extends ChouetteIdentifiedObject implements SignedChouetteObj
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "route", cascade = { CascadeType.PERSIST })
-	@OrderColumn(name = "position", nullable = false)
-	private List<StopPoint> stopPoints = new ArrayList<StopPoint>(0);
+	@OrderBy(value = "position")
+	private List<StopPoint> stopPoints = new ArrayList<>(0);
 
 	@Setter
 	@Getter
