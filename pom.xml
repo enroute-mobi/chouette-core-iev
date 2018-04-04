@@ -119,7 +119,8 @@
 								<srcFile>${project.rootDir}/src/test/sql/generated/00_drop_all_tables.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_without-constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_without-constraints.sql</srcFile>
-								<srcFile>${project.rootDir}/src/test/sql/generated/30_public_tables-imports_without-constraints.sql</srcFile>
+                        <srcFile>${project.rootDir}/src/test/sql/generated/30_public_tables-imports_without-constraints.sql</srcFile>
+                        <srcFile>${project.rootDir}/src/test/sql/generated/40_public_tables-exports_without-constraints.sql</srcFile>
 
 								<srcFile>${project.rootDir}/src/test/sql/FIX_DATABASE_MISTAKES.sql</srcFile>
 
@@ -130,6 +131,7 @@
 								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/30_public_tables-imports_constraints.sql</srcFile>
+                        <srcFile>${project.rootDir}/src/test/sql/generated/40_public_tables-exports_constraints.sql</srcFile>
 							</srcFiles>
 						</configuration>
 					</execution>
@@ -533,9 +535,12 @@
 									<pluginExecutionFilter>
 										<groupId>org.codehaus.mojo</groupId>
 										<artifactId>properties-maven-plugin</artifactId>
-										<versionRange>[1.0.0,)</versionRange>
+										<versionRange>[1.0-alpha-2,)</versionRange>
 										<goals>
 											<goal>set-system-properties</goal>
+											<goal>
+												read-project-properties
+											</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

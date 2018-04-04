@@ -41,7 +41,7 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 	protected Long id;
 	
 	/**
-	 * line referential reference
+	 * StopArea referential reference
 	 * 
 	 * @return The actual value
 	 */
@@ -150,7 +150,6 @@ public class StopAreaLite extends ChouetteLocalizedObject {
 
 	public boolean isDesactivated()
 	{
-		// TODO conditions à définir
 		return deletedTime != null;
 	}
 

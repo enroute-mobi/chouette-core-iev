@@ -140,6 +140,26 @@ public class GroupOfLine extends ChouetteIdentifiedObject {
 		registrationNumber = StringUtils.abbreviate(value, 255);
 
 	}
+	
+	/**
+	 * xml data
+	 */
+	@Getter
+	@Setter
+	@Column(name="import_xml",columnDefinition = "text")
+	private String importXml;
+	
+	
+	/**
+	 * line referential reference
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Setter
+	@Column(name = "line_referential_id")
+	protected Long lineReferentialId;
+
 
 	/**
 	 * grouped Lines

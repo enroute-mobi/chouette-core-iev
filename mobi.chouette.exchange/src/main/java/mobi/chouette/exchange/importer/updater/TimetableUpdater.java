@@ -87,6 +87,10 @@ public class TimetableUpdater implements Updater<Timetable> {
 			oldValue.setEndOfPeriod(newValue.getEndOfPeriod());
 		}
 
+		if (newValue.getDataSourceRef() != null
+				&& !newValue.getDataSourceRef().equals(oldValue.getDataSourceRef())) {
+			oldValue.setDataSourceRef(newValue.getDataSourceRef());
+		}
 		// Period
 		Collection<Period> addedPeriod = CollectionUtil
 				.substract(newValue.getPeriods(), oldValue.getPeriods(),

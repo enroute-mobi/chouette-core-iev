@@ -18,6 +18,12 @@ public final class Color {
 	public static final String LIGHT_MAGENTA = (char) 27 + "[1;95m";
 	public static final String LIGHT_CYAN = (char) 27 + "[1;96m";
 	public static final String WHITE = (char) 27 + "[1;97m";
+	public static final String ORANGE = (char) 27 + "[40;38;5;208m";
+	public static final String BROWN = (char) 27 + "[40;38;5;94m";
+	public static final String LIGHT_BROWN = (char) 27 + "[40;38;5;130m";
+	public static final String DARK_RED = (char) 27 + "[40;38;5;124m";
+	public static final String DARK_GREEN = (char) 27 + "[40;38;5;22m";
+	public static final String DARK_BLUE = (char) 27 + "[40;38;5;19m";
 
 	public static final String SUCCESS = GREEN;
 	public static final String FAILURE = RED;

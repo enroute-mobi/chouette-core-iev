@@ -128,9 +128,6 @@ public class DataCollector {
 			if (line.getGroupOfLines() != null) {
 				collection.getGroupOfLines().addAll(line.getGroupOfLines());
 			}
-			if (!line.getRoutingConstraints().isEmpty()) {
-				collection.getStopAreas().addAll(line.getRoutingConstraints());
-			}
 		}
 		completeSharedData(collection);
 		return validLine;
@@ -161,22 +158,20 @@ public class DataCollector {
 		if (!skipNoCoordinate || stopArea.hasCoordinates()) {
 			collection.getStopAreas().add(stopArea);
 			switch (stopArea.getAreaType()) {
-			case BoardingPosition:
+			case "BoardingPosition":
 				collection.getBoardingPositions().add(stopArea);
 				break;
-			case Quay:
+			case "Quay":
 				collection.getQuays().add(stopArea);
 				break;
-			case CommercialStopPoint:
+			case "CommercialStopPoint":
 				collection.getCommercialStops().add(stopArea);
 				break;
-			case StopPlace:
+			case "StopPlace":
 				collection.getStopPlaces().add(stopArea);
 				break;
 			default:
 			}
-			addConnectionLinks(collection, stopArea.getConnectionStartLinks(), skipNoCoordinate, followLinks);
-			addConnectionLinks(collection, stopArea.getConnectionEndLinks(), skipNoCoordinate, followLinks);
 			addAccessPoints(collection, stopArea.getAccessPoints(), skipNoCoordinate);
 			addAccessLinks(collection, stopArea.getAccessLinks());
 			if (stopArea.getParent() != null)

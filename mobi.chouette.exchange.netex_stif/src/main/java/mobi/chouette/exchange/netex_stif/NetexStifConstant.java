@@ -46,6 +46,7 @@ public class NetexStifConstant {
 	public static final String NETEX_HORAIRE = "NETEX_HORAIRE";
 	public static final String NETEX_OFFRE_LIGNE = "NETEX_OFFRE_LIGNE";
 	public static final String NETEX_STRUCTURE = "NETEX_STRUCTURE";
+	public static final String NETEX_ARRET_STIF = "NETEX_ARRET_STIF";
 	public static final String NOTICE = "Notice";
 	public static final String NOTICES = "notices";
 	public static final String NOTICE_ASSIGNMENT = "NoticeAssignment";
@@ -110,6 +111,16 @@ public class NetexStifConstant {
 	public static final String CALENDRIER_FILE_NAME = "calendriers.xml";
 	public static final String COMMUN_FILE_NAME = "commun.xml";
 	public static final String OFFRE_FILE_PREFIX = "offre";
+	public static final String LIGNES_FILE_NAME = "lignes.xml";
+	public static final String LIGNE_FILE_NAME = "ligne.xml";
+	public static final String ARRETS_FILE_NAME = "arrets.xml";
+	
+	// context constants 
+	public static final String IMPORT_DATA_SOURCE_REF = "import_data_source_ref";
+	public static final String OUTPUT_SUB_PATH = "output_sub_path";
+	public static final String OPERATOR_OBJECT_ID = "operator_object_id";
+	public static final String SHARED_REPORT = "shared_report";
+	public static final String LINE_OBJECT_ID = "line_object_id";
 
 	private NetexStifConstant() {
 	}

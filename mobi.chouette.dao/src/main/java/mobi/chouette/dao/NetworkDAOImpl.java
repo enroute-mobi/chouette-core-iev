@@ -5,12 +5,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import mobi.chouette.model.Network;
+import mobi.chouette.model.Network_;
 
 @Stateless
-public class NetworkDAOImpl extends GenericDAOImpl<Network> implements NetworkDAO{
+public class NetworkDAOImpl extends GenericTenantDAOImpl<Network> implements NetworkDAO{
 
 	public NetworkDAOImpl() {
-		super(Network.class);
+		super(Network_.lineReferentialId,Network.class);
 	}
 
 	@PersistenceContext(unitName = "public")

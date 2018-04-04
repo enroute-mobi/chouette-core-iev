@@ -41,6 +41,8 @@ public class NetexStifImporterCommand extends AbstractImporterCommand implements
 		long version = date.getTime();
 		context.put(NetexStifConstant.VERSION, version);
 		context.put(Constant.REFERENTIAL, new Referential());
+		NetexStifImportParameters params = (NetexStifImportParameters) context.get(Constant.CONFIGURATION);
+		context.put(NetexStifConstant.IMPORT_DATA_SOURCE_REF, params.getOrganisationCode());
 
 		// initialize reporting and progression
 		ProgressionCommand progression = (ProgressionCommand) CommandFactory.create(initialContext,

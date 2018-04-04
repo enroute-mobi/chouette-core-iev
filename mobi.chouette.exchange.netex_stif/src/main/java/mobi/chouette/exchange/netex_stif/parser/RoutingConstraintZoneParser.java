@@ -36,6 +36,7 @@ public class RoutingConstraintZoneParser implements Parser {
 		int columnNumber = xpp.getColumnNumber();
 		int lineNumber = xpp.getLineNumber();
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
+		Long version = (Long) context.get(NetexStifConstant.VERSION);
 		NetexStifObjectFactory factory = (NetexStifObjectFactory) context.get(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY);
 		Map<Route, List<StopPoint>> stopPoints = new HashMap<Route, List<StopPoint>>();
 		RoutingConstraintZoneValidator validator = (RoutingConstraintZoneValidator) ValidatorFactory.getValidator(context, RoutingConstraintZoneValidator.class);
@@ -70,15 +71,18 @@ public class RoutingConstraintZoneParser implements Parser {
 		boolean valid = validator.validate(context, zone, lineNumber, columnNumber);
 		if (name != null && id != null && valid) {
 
+			String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
 			for (Route route : stopPoints.keySet()) {
 				List<StopPoint> list = stopPoints.get(route);
-				// we need to stop points to have an itl
+				// we need two stop points to have an itl
 				if (list != null && list.size() >= 2) {
 					String realId = NetexStifUtils.genRoutingConstrainId(id, route);
 					RoutingConstraint routingConstraint = ObjectFactory.getRoutingConstraint(referential, realId);
+					routingConstraint.setObjectVersion(version);
 					routingConstraint.setName(name);
 					routingConstraint.setRoute(route);
 					routingConstraint.getStopPoints().addAll(list);
+					routingConstraint.setDataSourceRef(dataSourceRef);
 				}
 			}
 

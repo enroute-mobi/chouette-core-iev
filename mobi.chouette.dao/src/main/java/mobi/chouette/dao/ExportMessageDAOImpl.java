@@ -4,13 +4,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import mobi.chouette.model.RouteSection;
+import mobi.chouette.model.exporter.ExportMessage;
 
-@Stateless
-public class RouteSectionDAOImpl extends GenericDAOImpl<RouteSection> implements RouteSectionDAO{
+@Stateless  (name="ExportMessageDAO")
+public class ExportMessageDAOImpl extends GenericDAOImpl<ExportMessage> implements ExportMessageDAO {
 
-	public RouteSectionDAOImpl() {
-		super(RouteSection.class);
+	public ExportMessageDAOImpl() {
+		super(ExportMessage.class);
 	}
 
 	@PersistenceContext(unitName = "public")

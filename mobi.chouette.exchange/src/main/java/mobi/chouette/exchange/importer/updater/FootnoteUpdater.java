@@ -35,6 +35,10 @@ public class FootnoteUpdater implements Updater<Footnote> {
 				&& !newValue.getLabel().equals(oldValue.getLabel())) {
 			oldValue.setLabel(newValue.getLabel());
 		}
+		if (newValue.getDataSourceRef() != null
+				&& !newValue.getDataSourceRef().equals(oldValue.getDataSourceRef())) {
+			oldValue.setDataSourceRef(newValue.getDataSourceRef());
+		}
 
 		// Updated now anyhow
 		oldValue.setUpdatedTime(new Date());

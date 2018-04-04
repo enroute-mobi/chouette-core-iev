@@ -22,6 +22,7 @@ import mobi.chouette.dao.StopAreaDAO;
 import mobi.chouette.exchange.importer.updater.StopAreaUpdater;
 import mobi.chouette.exchange.importer.updater.Updater;
 import mobi.chouette.exchange.importer.updater.UpdaterUtils;
+import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.StopArea;
@@ -53,6 +54,7 @@ public class StopAreaRegisterBlocCommand implements Command {
 
 		boolean result = Constant.ERROR;
 		// Monitor monitor = MonitorFactory.start(COMMAND);
+		AbstractParameter params = (AbstractParameter) context.get(Constant.CONFIGURATION);
 
 		try {
 			Boolean optimized = Boolean.TRUE;
@@ -64,7 +66,7 @@ public class StopAreaRegisterBlocCommand implements Command {
 			context.put(Constant.CACHE, cache);
 			Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 
-			initializeStopArea(cache, areas);
+			initializeStopArea(params,cache, areas);
 			initializeAccessLink(cache, referential.getAccessLinks().values());
 			initializeAccessPoint(cache, referential.getAccessPoints().values());
 			// log.info(Color.CYAN + monitorInit.stop() + Color.NORMAL);
@@ -91,8 +93,8 @@ public class StopAreaRegisterBlocCommand implements Command {
 
 	}
 
-	private void initializeStopArea(Referential cache, Collection<StopArea> list) {
-		List<StopArea> objects = stopAreaDAO.findAll();// ByObjectId(objectIds);
+	private void initializeStopArea(AbstractParameter params, Referential cache, Collection<StopArea> list) {
+		List<StopArea> objects = stopAreaDAO.findAll(params.getStopAreaReferentialId());// ByObjectId(objectIds);
 		for (StopArea object : objects) {
 			cache.getStopAreas().put(object.getObjectId(), object);
 		}

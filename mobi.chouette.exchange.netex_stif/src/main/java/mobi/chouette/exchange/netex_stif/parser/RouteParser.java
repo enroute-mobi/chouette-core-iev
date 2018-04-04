@@ -40,6 +40,8 @@ public class RouteParser implements Parser {
 		
 		Route route = ObjectFactory.getRoute(referential, id);
 		route.setObjectVersion(version);
+		String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
+		route.setDataSourceRef(dataSourceRef);
 		String changed = xpp.getAttributeValue(null, NetexStifConstant.CHANGED);
 		if (changed != null) {
 			route.setCreationTime(NetexStifUtils.getDate(changed));
@@ -72,7 +74,6 @@ public class RouteParser implements Parser {
 				if (checked)
 					validator.checkExistsRef(context, route, NetexStifConstant.LINE_REF, ref, attrVersion,
 							content, lineNumber, columnNumber);
-				// TODO : check version with line of file
 			} else if (xpp.getName().equals(NetexStifConstant.DIRECTION_TYPE)) {
 
 				String tmpDirType = xpp.nextText();

@@ -20,6 +20,7 @@ import mobi.chouette.dao.StopPointDAO;
 import mobi.chouette.dao.TimebandDAO;
 import mobi.chouette.dao.TimetableDAO;
 import mobi.chouette.dao.VehicleJourneyDAO;
+import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
@@ -82,21 +83,21 @@ public class LineOptimiser {
 	@EJB
 	private TimebandDAO timebandDAO;
 
-	public void initialize(Referential cache, Referential referential) {
+	public void initialize(AbstractParameter params,Referential cache, Referential referential) {
 
 //		Monitor monitor = MonitorFactory.start("LineOptimiser");
-		initializeStopArea(cache, referential.getStopAreas().values());
+		initializeStopArea(params,cache, referential.getStopAreas().values());
 
 		initializeConnectionLink(cache, referential.getConnectionLinks().values());
 		initializeAccessLink(cache, referential.getAccessLinks().values());
 		initializeAccessPoint(cache, referential.getAccessPoints().values());
 
 		initializeTimetable(cache, referential.getTimetables().values());
-		initializePTNetwork(cache, referential.getPtNetworks().values());
-		initializeCompany(cache, referential.getCompanies().values());
-		initializeGroupOfLine(cache, referential.getGroupOfLines().values());
+		initializePTNetwork(params,cache, referential.getPtNetworks().values());
+		initializeCompany(params,cache, referential.getCompanies().values());
+		initializeGroupOfLine(params,cache, referential.getGroupOfLines().values());
 
-		initializeLine(cache, referential.getLines().values());
+		initializeLine(params,cache, referential.getLines().values());
 		initializeRoute(cache, referential.getRoutes().values());
 		initializeStopPoint(cache, referential.getStopPoints().values());
 		initializeJourneyPattern(cache, referential.getJourneyPatterns().values());
@@ -106,10 +107,10 @@ public class LineOptimiser {
 //		monitor.stop();
 	}
 
-	private void initializeStopArea(Referential cache, Collection<StopArea> list) {
+	private void initializeStopArea(AbstractParameter params, Referential cache, Collection<StopArea> list) {
 		if (list != null && !list.isEmpty()) {
 			Collection<String> objectIds = UpdaterUtils.getObjectIds(list);
-			List<StopArea> objects = stopAreaDAO.findByObjectId(objectIds);
+			List<StopArea> objects = stopAreaDAO.findByObjectId(params.getStopAreaReferentialId(),objectIds);
 			for (StopArea object : objects) {
 				cache.getStopAreas().put(object.getObjectId(), object);
 			}
@@ -187,10 +188,10 @@ public class LineOptimiser {
 		}
 	}
 
-	private void initializePTNetwork(Referential cache, Collection<Network> list) {
+	private void initializePTNetwork(AbstractParameter params,Referential cache, Collection<Network> list) {
 		if (list != null && !list.isEmpty()) {
 			Collection<String> objectIds = UpdaterUtils.getObjectIds(list);
-			List<Network> objects = ptNetworkDAO.findByObjectId(objectIds);
+			List<Network> objects = ptNetworkDAO.findByObjectId(params.getLineReferentialId(),objectIds);
 			for (Network object : objects) {
 				cache.getPtNetworks().put(object.getObjectId(), object);
 			}
@@ -203,10 +204,10 @@ public class LineOptimiser {
 		}
 	}
 
-	private void initializeCompany(Referential cache, Collection<Company> list) {
+	private void initializeCompany(AbstractParameter params, Referential cache, Collection<Company> list) {
 		if (list != null && !list.isEmpty()) {
 			Collection<String> objectIds = UpdaterUtils.getObjectIds(list);
-			List<Company> objects = companyDAO.findByObjectId(objectIds);
+			List<Company> objects = companyDAO.findByObjectId(params.getLineReferentialId(),objectIds);
 			for (Company object : objects) {
 				cache.getCompanies().put(object.getObjectId(), object);
 			}
@@ -219,10 +220,10 @@ public class LineOptimiser {
 		}
 	}
 
-	private void initializeGroupOfLine(Referential cache, Collection<GroupOfLine> list) {
+	private void initializeGroupOfLine(AbstractParameter params,Referential cache, Collection<GroupOfLine> list) {
 		if (list != null && !list.isEmpty()) {
 			Collection<String> objectIds = UpdaterUtils.getObjectIds(list);
-			List<GroupOfLine> objects = groupOfLineDAO.findByObjectId(objectIds);
+			List<GroupOfLine> objects = groupOfLineDAO.findByObjectId(params.getLineReferentialId(),objectIds);
 			for (GroupOfLine object : objects) {
 				cache.getGroupOfLines().put(object.getObjectId(), object);
 			}
@@ -235,10 +236,10 @@ public class LineOptimiser {
 		}
 	}
 
-	private void initializeLine(Referential cache, Collection<Line> list) {
+	private void initializeLine(AbstractParameter params,Referential cache, Collection<Line> list) {
 		if (list != null && !list.isEmpty()) {
 			Collection<String> objectIds = UpdaterUtils.getObjectIds(list);
-			List<Line> objects = lineDAO.findByObjectId(objectIds);
+			List<Line> objects = lineDAO.findByObjectId(params.getLineReferentialId(),objectIds);
 			for (Line object : objects) {
 				cache.getLines().put(object.getObjectId(), object);
 			}

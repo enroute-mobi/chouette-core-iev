@@ -11,7 +11,6 @@ import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
-import mobi.chouette.model.RouteSection;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
 import mobi.chouette.model.StopPoint;
@@ -264,16 +263,5 @@ public class ObjectFactory {
 	}
 
 
-	public static RouteSection getRouteSection(Referential referential, String objectId) {
-		RouteSection result = referential.getRouteSections().get(objectId);
-		if (result == null) {
-			result = new RouteSection();
-			result.setObjectId(objectId);
-			result.setDetached(true);
-			result.setCreationTime(Calendar.getInstance().getTime());
-			referential.getRouteSections().put(objectId, result);
-		}
-		return result;
-	}
 
 }

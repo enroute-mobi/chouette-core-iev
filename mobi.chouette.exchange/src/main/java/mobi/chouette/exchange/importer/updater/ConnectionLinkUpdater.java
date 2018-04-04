@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.dao.StopAreaDAO;
+import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.ConnectionLink;
@@ -37,6 +38,8 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 
 		Monitor monitor = MonitorFactory.start(BEAN_NAME);
 		Referential cache = (Referential) context.get(Constant.CACHE);
+		AbstractParameter params = (AbstractParameter) context.get(Constant.CONFIGURATION);
+
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_CONNECTION_LINK_1, "W");
@@ -125,7 +128,7 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 			StopArea startOfLink = cache.getStopAreas().get(objectId);
 			if (startOfLink == null) {
 				log.info("search connectionLink starts in DB " + objectId);
-				startOfLink = stopAreaDAO.findByObjectId(objectId);
+				startOfLink = stopAreaDAO.findByObjectId(params.getStopAreaReferentialId(),objectId);
 				if (startOfLink != null) {
 					cache.getStopAreas().put(objectId, startOfLink);
 				}
@@ -153,7 +156,7 @@ public class ConnectionLinkUpdater implements Updater<ConnectionLink> {
 			StopArea endOfLink = cache.getStopAreas().get(objectId);
 			if (endOfLink == null) {
 				log.info("search connectionLink ends in DB " + objectId);
-				endOfLink = stopAreaDAO.findByObjectId(objectId);
+				endOfLink = stopAreaDAO.findByObjectId(params.getStopAreaReferentialId(),objectId);
 				if (endOfLink != null) {
 					cache.getStopAreas().put(objectId, endOfLink);
 				}

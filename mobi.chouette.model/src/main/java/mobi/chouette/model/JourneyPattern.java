@@ -6,8 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
@@ -42,21 +39,20 @@ import lombok.ToString;
 @Table(name = "journey_patterns")
 @NoArgsConstructor
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
-@ToString(callSuper=true, exclude = { "route" })
-public class JourneyPattern extends ChouetteIdentifiedObject implements SignedChouetteObject {
+@ToString(callSuper = true, exclude = { "route" })
+public class JourneyPattern extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
 	private static final long serialVersionUID = 7895941111990419404L;
 
 	@Getter
 	@Setter
-	@GenericGenerator(name = "journey_patterns_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", 
-		parameters = {
+	@GenericGenerator(name = "journey_patterns_id_seq", strategy = "mobi.chouette.persistence.hibernate.ChouetteTenantIdentifierGenerator", parameters = {
 			@Parameter(name = "sequence_name", value = "journey_patterns_id_seq"),
 			@Parameter(name = "increment_size", value = "20") })
 	@GeneratedValue(generator = "journey_patterns_id_seq")
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
-	
+
 	/**
 	 * Neptune object id <br>
 	 * composed of 3 items separated by a colon
@@ -71,7 +67,7 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	 * @return The actual value
 	 */
 	@Getter
-	@NaturalId(mutable=true)
+	@NaturalId(mutable = true)
 	@Column(name = "objectid", nullable = false, unique = true)
 	protected String objectId;
 
@@ -94,13 +90,12 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@Column(name = "checksum")
-	private String checksum ;
-	
+	private String checksum;
+
 	@Getter
-	@Setter 
+	@Setter
 	@Column(name = "checksum_source")
 	private String checksumSource;
-
 
 	/**
 	 * name
@@ -181,7 +176,7 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	public void setPublishedName(String value) {
 		publishedName = StringUtils.abbreviate(value, 255);
 	}
-	
+
 	/**
 	 * route reverse reference
 	 * 
@@ -205,6 +200,26 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 		if (route != null) {
 			route.getJourneyPatterns().add(this);
 		}
+	}
+
+	/**
+	 * data source ref
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "data_source_ref")
+	private String dataSourceRef;
+
+	/**
+	 * set data source ref <br>
+	 * truncated to 255 characters if too long
+	 * 
+	 * @param value
+	 *            New value
+	 */
+	public void setDataSourceRef(String value) {
+		dataSourceRef = StringUtils.abbreviate(value, 255);
 	}
 
 	/**
@@ -243,8 +258,10 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@ManyToMany
-	@OrderBy(value="position")
-	@JoinTable(name = "journey_patterns_stop_points", joinColumns = { @JoinColumn(name = "journey_pattern_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "stop_point_id", nullable = false, updatable = false) })
+	@OrderBy(value = "position")
+	@JoinTable(name = "journey_patterns_stop_points", joinColumns = {
+			@JoinColumn(name = "journey_pattern_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "stop_point_id", nullable = false, updatable = false) })
 	private List<StopPoint> stopPoints = new ArrayList<StopPoint>(0);
 
 	/**
@@ -256,27 +273,9 @@ public class JourneyPattern extends ChouetteIdentifiedObject implements SignedCh
 	 */
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "journeyPattern", cascade = { CascadeType.PERSIST})
-	private List<VehicleJourney> vehicleJourneys = new ArrayList<VehicleJourney>(
-			0);
+	@OneToMany(mappedBy = "journeyPattern", cascade = { CascadeType.PERSIST })
+	private List<VehicleJourney> vehicleJourneys = new ArrayList<VehicleJourney>(0);
 
-	/**
-	 * route sections
-	 * 
-	 * @param routeSections
-	 *            New value
-	 * @return The actual value
-	 * @since 3.2.0
-	 * 
-	 */
-	@Getter
-	@Setter
-	@Transient
-//	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
-//	@OrderColumn(name="rank")
-//	@JoinTable(name = "journey_pattern_sections", joinColumns = { @JoinColumn(name = "journey_pattern_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "route_section_id", nullable = false, updatable = false) })
-	private List<RouteSection> routeSections = new ArrayList<RouteSection>(0);
-	
 	/**
 	 * add a stop point if not already present
 	 * 

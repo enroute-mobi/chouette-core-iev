@@ -51,6 +51,8 @@ public class NoticeParser implements Parser {
 		// log.info("valid " + validType);
 		Footnote footnote = factory.getFootnote(id);
 		footnote.setObjectVersion(version);
+		String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
+		footnote.setDataSourceRef(dataSourceRef);
 		if (changed != null) {
 			footnote.setCreationTime(NetexStifUtils.getDate(changed));
 		}

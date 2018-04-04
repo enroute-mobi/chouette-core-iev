@@ -46,7 +46,7 @@ import mobi.chouette.model.type.DayTypeEnum;
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "vehicleJourneys" })
-public class Timetable extends ChouetteIdentifiedObject implements SignedChouetteObject {
+public class Timetable extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
 	private static final long serialVersionUID = -1598554061982685113L;
 	public static final long ONE_DAY = 3600000L * 24;
 
@@ -74,7 +74,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	 * @return The actual value
 	 */
 	@Getter
-	@NaturalId(mutable=true)
+	@NaturalId(mutable = true)
 	@Column(name = "objectid", nullable = false, unique = true)
 	protected String objectId;
 
@@ -97,15 +97,13 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	@Getter
 	@Setter
 	@Column(name = "checksum")
-	private String checksum ;
-	
+	private String checksum;
+
 	@Getter
-	@Setter 
+	@Setter
 	@Column(name = "checksum_source")
 	private String checksumSource;
 
-
-	
 	/**
 	 * mapping day type with enumerations
 	 */
@@ -152,6 +150,26 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	 */
 	public void setVersion(String value) {
 		version = StringUtils.abbreviate(value, 255);
+	}
+
+	/**
+	 * data source ref
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "data_source_ref")
+	private String dataSourceRef;
+
+	/**
+	 * set data source ref <br>
+	 * truncated to 255 characters if too long
+	 * 
+	 * @param value
+	 *            New value
+	 */
+	public void setDataSourceRef(String value) {
+		dataSourceRef = StringUtils.abbreviate(value, 255);
 	}
 
 	/**
@@ -392,14 +410,14 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	 */
 	public List<Date> getEffectiveDates() {
 		List<Date> ret = getPeculiarDates();
-		if (!getExcludedDates().isEmpty())
-		{
-		for (Period period : periods) {
-			List<Date> added = toDates(period);
-			for (Date date : added) {
-				if (!ret.contains(date)) ret.add(date);
+		if (!getExcludedDates().isEmpty()) {
+			for (Period period : periods) {
+				List<Date> added = toDates(period);
+				for (Date date : added) {
+					if (!ret.contains(date))
+						ret.add(date);
+				}
 			}
-		}
 		}
 		Collections.sort(ret);
 		return ret;
@@ -476,7 +494,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	}
 
 	public boolean isActiveOnPeriod(final Date start, final Date end) {
-		if(start == null || end == null) {
+		if (start == null || end == null) {
 			return false;
 		} else {
 			Date day = new Date(start.getTime());
@@ -484,7 +502,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 				if (isActiveOn(day))
 					return true;
 				day.setTime(day.getTime() + ONE_DAY);
-	
+
 			}
 			return isActiveOn(end);
 		}
@@ -591,7 +609,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 				if ((getIntDayTypes() & aDayOfWeekFlag) == aDayOfWeekFlag) {
 					Date d = new Date(c.getTime().getTime());
 					if (!excluded.contains(d))
-					   dates.add(d);
+						dates.add(d);
 				}
 				c.add(Calendar.DATE, 1);
 			}

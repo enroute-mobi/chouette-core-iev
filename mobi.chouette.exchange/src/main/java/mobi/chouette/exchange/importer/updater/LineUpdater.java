@@ -17,6 +17,7 @@ import mobi.chouette.dao.GroupOfLineDAO;
 import mobi.chouette.dao.NetworkDAO;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.dao.StopAreaDAO;
+import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.Company;
@@ -77,6 +78,7 @@ public class LineUpdater implements Updater<Line> {
 		newValue.setSaved(true);
 //		Monitor monitor = MonitorFactory.start(BEAN_NAME);
 		Referential cache = (Referential) context.get(Constant.CACHE);
+		AbstractParameter params = (AbstractParameter) context.get(Constant.CONFIGURATION);
 		
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
@@ -160,7 +162,7 @@ public class LineUpdater implements Updater<Line> {
 			String objectId = newValue.getNetwork().getObjectId();
 			Network ptNetwork = cache.getPtNetworks().get(objectId);
 			if (ptNetwork == null) {
-				ptNetwork = ptNetworkDAO.findByObjectId(objectId);
+				ptNetwork = ptNetworkDAO.findByObjectId(params.getLineReferentialId(),objectId);
 				if (ptNetwork != null) {
 					cache.getPtNetworks().put(objectId, ptNetwork);
 				}
@@ -180,7 +182,7 @@ public class LineUpdater implements Updater<Line> {
 			String objectId = newValue.getCompany().getObjectId();
 			Company company = cache.getCompanies().get(objectId);
 			if (company == null) {
-				company = companyDAO.findByObjectId(objectId);
+				company = companyDAO.findByObjectId(params.getLineReferentialId(),objectId);
 				if (company != null) {
 					cache.getCompanies().put(objectId, company);
 				}
@@ -201,7 +203,7 @@ public class LineUpdater implements Updater<Line> {
 			GroupOfLine groupOfLine = cache.getGroupOfLines().get(item.getObjectId());
 			if (groupOfLine == null) {
 				if (groupOfLines == null) {
-					groupOfLines = groupOfLineDAO.findByObjectId(UpdaterUtils.getObjectIds(addedGroupOfLine));
+					groupOfLines = groupOfLineDAO.findByObjectId(params.getLineReferentialId(),UpdaterUtils.getObjectIds(addedGroupOfLine));
 					for (GroupOfLine object : groupOfLines) {
 						cache.getGroupOfLines().put(object.getObjectId(), object);
 					}
@@ -259,39 +261,6 @@ public class LineUpdater implements Updater<Line> {
 			routeUpdater.update(context, pair.getLeft(), pair.getRight());
 		}
 
-		// stop area list (routingConstraintLines)
-		Collection<StopArea> addedRoutingConstraint = CollectionUtil.substract(newValue.getRoutingConstraints(),
-				oldValue.getRoutingConstraints(), NeptuneIdentifiedObjectComparator.INSTANCE);
-		List<StopArea> routingConstraints = null;
-		for (StopArea item : addedRoutingConstraint) {
-			StopArea routingConstraint = cache.getStopAreas().get(item.getObjectId());
-			if (routingConstraint == null) {
-				if (routingConstraints == null) {
-					routingConstraints = stopAreaDAO.findByObjectId(UpdaterUtils.getObjectIds(addedRoutingConstraint));
-					for (StopArea object : routingConstraints) {
-						cache.getStopAreas().put(object.getObjectId(), object);
-					}
-				}
-				routingConstraint = cache.getStopAreas().get(item.getObjectId());
-			}
-			if (routingConstraint == null) {
-				routingConstraint = ObjectFactory.getStopArea(cache, item.getObjectId());
-			}
-			oldValue.addRoutingConstraint(routingConstraint);
-		}
-
-		Collection<Pair<StopArea, StopArea>> modifiedRoutingConstraint = CollectionUtil.intersection(
-				oldValue.getRoutingConstraints(), newValue.getRoutingConstraints(),
-				NeptuneIdentifiedObjectComparator.INSTANCE);
-		for (Pair<StopArea, StopArea> pair : modifiedRoutingConstraint) {
-			stopAreaUpdater.update(context, pair.getLeft(), pair.getRight());
-		}
-
-		Collection<StopArea> removedRoutingConstraint = CollectionUtil.substract(oldValue.getRoutingConstraints(),
-				newValue.getRoutingConstraints(), NeptuneIdentifiedObjectComparator.INSTANCE);
-		for (StopArea stopArea : removedRoutingConstraint) {
-			oldValue.removeRoutingConstraint(stopArea);
-		}
 		// Footnotes - merge at this level 
 		// This is the new list of footnotes
 		List<Footnote> footnotes = new ArrayList<Footnote>();

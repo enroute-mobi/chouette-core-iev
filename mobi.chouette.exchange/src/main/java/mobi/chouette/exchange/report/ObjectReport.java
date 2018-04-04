@@ -68,7 +68,7 @@ public class ObjectReport extends AbstractReport implements CheckedReport {
 	@Getter
 	private String objectId;
 
-	protected ObjectReport(String objectId, OBJECT_TYPE type, String description, OBJECT_STATE status, IO_TYPE ioType) {
+	public ObjectReport(String objectId, OBJECT_TYPE type, String description, OBJECT_STATE status, IO_TYPE ioType) {
 		this.objectId = objectId;
 		this.type = type;
 		this.description = description;
@@ -127,7 +127,7 @@ public class ObjectReport extends AbstractReport implements CheckedReport {
 	 * @param type
 	 * @param count
 	 */
-	protected void addStatTypeToObject(OBJECT_TYPE type, int count) {
+	public void addStatTypeToObject(OBJECT_TYPE type, int count) {
 
 		if (stats.containsKey(type)) {
 			stats.put(type, Integer.valueOf(stats.get(type).intValue() + count));
@@ -144,7 +144,7 @@ public class ObjectReport extends AbstractReport implements CheckedReport {
 	 * @param count
 	 * @return previous value
 	 */
-	protected int setStatTypeToObject(OBJECT_TYPE type, int count) {
+	public int setStatTypeToObject(OBJECT_TYPE type, int count) {
 
 		int oldvalue = 0;
 		if (stats.containsKey(type)) {

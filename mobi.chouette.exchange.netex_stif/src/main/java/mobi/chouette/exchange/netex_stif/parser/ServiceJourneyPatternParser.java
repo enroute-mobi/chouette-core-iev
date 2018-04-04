@@ -48,6 +48,8 @@ public class ServiceJourneyPatternParser implements Parser {
 		// NetexStifUtils.uniqueObjectIdOnLine(context,journeyPattern, line);
 
 		journeyPattern.setObjectVersion(version);
+		String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
+		journeyPattern.setDataSourceRef(dataSourceRef);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
 			if (xpp.getName().equals(NetexStifConstant.NAME)) {

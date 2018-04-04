@@ -32,6 +32,7 @@ public class ImportTask extends ActionTask {
 	protected Long id;
 	
 	// used by service module 
+	// TODO : should be persistent to call any import format (gtfs, neptune, netex_france,...)
 	@Getter
 	@Setter
 	@Transient

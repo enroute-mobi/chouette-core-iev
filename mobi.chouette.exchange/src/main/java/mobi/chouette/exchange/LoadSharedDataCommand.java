@@ -76,6 +76,7 @@ public class LoadSharedDataCommand implements Command {
 				stopAreaDAO.detach(stopArea);
 			}
 
+
 			result = Constant.SUCCESS;
 
 		} catch (Exception e) {

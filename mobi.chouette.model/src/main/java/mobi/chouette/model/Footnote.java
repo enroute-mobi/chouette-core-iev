@@ -22,7 +22,7 @@ import lombok.ToString;
  * <p>
  * Neptune mapping : non (extension in comments <br>
  * Gtfs mapping : none <br>
- * Hub mapping : 
+ * Hub mapping :
  * 
  * @since 2.5.3
  */
@@ -30,12 +30,12 @@ import lombok.ToString;
 @Entity
 @Table(name = "footnotes")
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
-@ToString(callSuper=true)
+@ToString(callSuper = true)
 @NoArgsConstructor
-public class Footnote extends ChouetteIdentifiedObject implements SignedChouetteObject  {
+public class Footnote extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
 	/**
-    * 
-    */
+	* 
+	*/
 	private static final long serialVersionUID = -6223882293500225313L;
 
 	@Getter
@@ -51,34 +51,32 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	@Getter
 	@Setter
 	@Column(name = "checksum")
-	private String checksum ;
-	
+	private String checksum;
+
 	@Getter
-	@Setter 
+	@Setter
 	@Column(name = "checksum_source")
 	private String checksumSource;
 
-
-//	@Getter 
-	@Setter 
-	@Transient 
+	@Setter
+	@Transient
 	private String objectId;
-	
-	public String getObjectId()
-	{
-		if (objectId == null && lineLite != null && id != null)
-		{
-			objectId = lineLite.objectIdPrefix()+":Notice:"+lineLite.objectIdSuffix()+"_"+id+":LOC";
+
+	public String getObjectId() {
+		if (objectId == null && lineLite != null && id != null) {
+			if (dataSourceRef != null) {
+				objectId = dataSourceRef + ":Notice:" + lineLite.objectIdSuffix() + "_" + id + ":LOC";
+			} else {
+				objectId = "null:Notice:" + lineLite.objectIdSuffix() + "_" + id + ":LOC";
+			}
 		}
 		return objectId;
 	}
-	
-	
-	@Getter 
-	@Setter 
-	@Transient 
-	private Long objectVersion;
 
+	@Getter
+	@Setter
+	@Transient
+	private Long objectVersion;
 
 	/**
 	 * referenced line
@@ -90,10 +88,10 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	@Getter
 	@Setter
 	@Transient
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "line_id")
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "line_id")
 	private Line line;
-	
+
 	/**
 	 * line reverse reference
 	 * 
@@ -108,7 +106,6 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	@Setter
 	@Column(name = "line_id")
 	private Long lineId;
-	
 
 	/**
 	 * label
@@ -150,6 +147,25 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 		code = StringUtils.abbreviate(value, 255);
 	}
 
+	/**
+	 * data source ref
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "data_source_ref")
+	private String dataSourceRef;
+
+	/**
+	 * set data source ref <br>
+	 * truncated to 255 characters if too long
+	 * 
+	 * @param value
+	 *            New value
+	 */
+	public void setDataSourceRef(String value) {
+		dataSourceRef = StringUtils.abbreviate(value, 255);
+	}
 
 	/**
 	 * relative key for import/export

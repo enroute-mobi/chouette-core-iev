@@ -38,6 +38,7 @@ public class NetexStifParserTest {
 		init();
 		Context context = new Context();
 		context.put(Constant.INITIAL_CONTEXT, initialContext);
+		context.put(NetexStifConstant.IMPORT_DATA_SOURCE_REF,"CITYWAY");
 		NetexStifParserCommand command = (NetexStifParserCommand) CommandFactory.create(initialContext, NetexStifParserCommand.class.getName());
 		File f = new File("src/test/data/valid/line_test.xml");
 		JobDataImpl job = new JobDataImpl();

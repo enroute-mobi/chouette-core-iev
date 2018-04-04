@@ -9,7 +9,9 @@
 package mobi.chouette.exchange.validator;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -38,6 +40,7 @@ import mobi.chouette.exchange.report.IO_TYPE;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.NamingUtil;
 import mobi.chouette.model.util.Referential;
 
@@ -81,9 +84,13 @@ public class DaoLineValidatorCommand implements Command {
 					OBJECT_STATE.OK, IO_TYPE.INPUT);
 			List<Route> routes = routeDAO.findByLineId(lineId);
 			routes.forEach(route -> {
+				Map<Long,StopPoint> mappedStops = new HashMap<>();
 				route.setLineLite(line);
 				r.getRoutes().put(route.getObjectId(), route);
-				route.getRoutingConstraints().forEach(rc -> r.getRoutingConstraints().put(rc.getObjectId(), rc));
+				route.getStopPoints().forEach(sp -> mappedStops.put(sp.getId(), sp));
+				route.getRoutingConstraints().forEach(rc -> {
+					r.getRoutingConstraints().put(rc.getObjectId(), rc);
+				});
 				route.getJourneyPatterns().forEach(jp -> {
 					r.getJourneyPatterns().put(jp.getObjectId(), jp);
 					jp.getVehicleJourneys().forEach(vj -> {

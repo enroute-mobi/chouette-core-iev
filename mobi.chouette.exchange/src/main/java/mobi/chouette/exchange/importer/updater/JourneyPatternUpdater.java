@@ -62,6 +62,7 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 			oldValue.setComment(newValue.getComment());
 			oldValue.setRegistrationNumber(newValue.getRegistrationNumber());
 			oldValue.setPublishedName(newValue.getPublishedName());
+			oldValue.setDataSourceRef(newValue.getDataSourceRef());
 			oldValue.setDetached(false);
 		} else {
 			if (newValue.getObjectId() != null && !newValue.getObjectId().equals(oldValue.getObjectId())) {
@@ -85,6 +86,10 @@ public class JourneyPatternUpdater implements Updater<JourneyPattern> {
 			}
 			if (newValue.getPublishedName() != null && !newValue.getPublishedName().equals(oldValue.getPublishedName())) {
 				oldValue.setPublishedName(newValue.getPublishedName());
+			}
+			if (newValue.getDataSourceRef() != null
+					&& !newValue.getDataSourceRef().equals(oldValue.getDataSourceRef())) {
+				oldValue.setDataSourceRef(newValue.getDataSourceRef());
 			}
 
 		}

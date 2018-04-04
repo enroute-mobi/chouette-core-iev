@@ -27,7 +27,7 @@ public class PublicationDeliveryParser implements Parser{
 		xpp.require(XmlPullParser.START_TAG, null, NetexStifConstant.PUBLICATION_DELIVERY);
 		// Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		// String version = xpp.getAttributeValue(null, VERSION);
-		// TODO vérifier que la version soit celle du stif : test non spécifié
+		// vérifier que la version soit celle du stif : test NETEX non spécifié et donc non iplémenté
 		Collection<String> compositeFrameNames =  new ArrayList<String>();
 		Collection<String> generalFrameNames =  new ArrayList<String>();
 		context.put(NetexStifConstant.COMPOSITE_FRAMES, compositeFrameNames);

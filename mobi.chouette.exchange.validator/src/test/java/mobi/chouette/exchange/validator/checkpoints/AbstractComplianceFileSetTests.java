@@ -283,7 +283,6 @@ public class AbstractComplianceFileSetTests extends Arquillian {
 				try {
 					r.close();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if (statement != null)

@@ -65,14 +65,4 @@ public abstract class ActionMessage extends ChouetteDatedObject {
 	@Convert(converter = HstoreConverter.class)
 	private Map<String, String> resourceAttributs = new HashMap<String, String>();
 
-	// @Getter
-	// @Setter
-	// @Column(name = "created_at")
-	// private java.sql.Timestamp createdAt;
-	//
-	//// @Getter
-	//// @Setter
-	//// @Column(name = "updated_at")
-	//// private java.sql.Timestamp updatedAt;
-	//
 }

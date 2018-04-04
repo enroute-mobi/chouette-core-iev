@@ -144,6 +144,15 @@ public class LineLite extends ChouetteIdentifiedObject {
 	protected Long lineReferentialId;
 
 	/**
+	 * network reference
+	 * 
+	 * @return The actual value
+	 */
+	@Getter
+	@Column(name = "network_id")
+	protected Long networkId;
+	
+	/**
 	 * primary company reference
 	 * 
 	 * @return The actual value
@@ -151,6 +160,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 	@Getter
 	@Column(name = "company_id")
 	protected Long companyId;
+	
 
 	/**
 	 * secondary companies references

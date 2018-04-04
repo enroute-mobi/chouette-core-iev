@@ -11,14 +11,16 @@ import org.apache.commons.lang.WordUtils;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Constant;
 import mobi.chouette.common.JobData;
 import mobi.chouette.common.PropertyNames;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
-import mobi.chouette.common.Constant;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.ActionTask;
+import mobi.chouette.model.exporter.ExportTask;
 import mobi.chouette.model.importer.ImportTask;
+
 @Log4j
 @Data
 @ToString(exclude = { "inputValidator" })
@@ -66,14 +68,12 @@ public class JobService implements JobData {
 		}
 		this.referential = actionTask.getReferential().getSchemaName();
 		this.action = actionTask.getAction();
-		switch (this.action)
-		{
-		case importer : 
-		{
+		switch (this.action) {
+		case importer:
 			initImportJob(actionTask);
-            break;
-		}
+			break;
 		case exporter:
+			initExportJob(actionTask);
 			break;
 		case validator:
 			break;
@@ -95,14 +95,14 @@ public class JobService implements JobData {
 			inputValidator = getCommandInputValidator(action.name(), type);
 		} catch (ClassNotFoundException | IOException e) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION,
-					getCommandName() + " has no input validator",e);
+					getCommandName() + " has no input validator", e);
 		}
 		try {
 			actionParameter = inputValidator.toActionParameter(actionTask);
 		} catch (Exception ex) {
-			log.error("problem while reading parameters" + ex.getMessage());
+			log.error("problem while reading parameters : " + ex.getMessage(),ex);
 			throw new RequestServiceException(RequestExceptionCode.INVALID_PARAMETERS,
-					getCommandName() + " cannot read action parameters",ex);
+					getCommandName() + " cannot read action parameters", ex);
 		}
 		if (System.getProperty(application + PropertyNames.PROGRESSION_WAIT_BETWEEN_STEPS) != null) {
 			long stepWait = Long
@@ -124,6 +124,16 @@ public class JobService implements JobData {
 		} else {
 			this.inputFilename = ACTION.importer.name() + ".zip";
 		}
+	}
+
+	private void initExportJob(ActionTask actionTask) {
+		ExportTask exportTask = (ExportTask) actionTask;
+		this.type = exportTask.getFormat();
+		if (this.type == null)
+			this.type = "netex_stif";
+
+		// this.outputFilename = ACTION.exporter.name() + ".zip";
+
 	}
 
 	/**
@@ -156,8 +166,13 @@ public class JobService implements JobData {
 
 	public String getCommandName() {
 		String computeType = getType() == null ? "" : getType();
-		return "mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + getAction() + "." + capitalize(computeType)
-				+ StringUtils.capitalize(getAction().name()) + "Command";
+		return "mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + getAction() + "."
+				+ capitalize(computeType) + StringUtils.capitalize(getAction().name()) + "Command";
+	}
+	
+	public boolean notFailed()
+	{
+		return status.equals(STATUS.SUCCESSFUL) || status.equals(STATUS.WARNING);
 	}
 
 	private static String capitalize(String text) {
@@ -167,8 +182,7 @@ public class JobService implements JobData {
 	public static InputValidator getCommandInputValidator(String actionParam, String typeParam)
 			throws ClassNotFoundException, IOException {
 		String computeType = typeParam == null ? "" : typeParam;
-		return InputValidatorFactory
-				.create("mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".") + actionParam + "."
-						+ capitalize(computeType) + StringUtils.capitalize(actionParam) + "InputValidator");
+		return InputValidatorFactory.create("mobi.chouette.exchange." + (computeType.isEmpty() ? "" : computeType + ".")
+				+ actionParam + "." + capitalize(computeType) + StringUtils.capitalize(actionParam) + "InputValidator");
 	}
 }

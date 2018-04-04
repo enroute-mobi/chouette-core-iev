@@ -2,10 +2,14 @@ ALTER TABLE ONLY access_links    ADD CONSTRAINT aclk_acpt_fkey FOREIGN KEY (acce
 ALTER TABLE ONLY stop_areas    ADD CONSTRAINT area_parent_fkey FOREIGN KEY (parent_id) REFERENCES stop_areas(id) ON DELETE SET NULL;
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT arrival_point_fkey FOREIGN KEY (arrival_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT departure_point_fkey FOREIGN KEY (departure_stop_point_id) REFERENCES stop_points(id) ON DELETE SET NULL;
+ALTER TABLE ONLY compliance_control_blocks    ADD CONSTRAINT fk_rails_0f26e226bd FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 ALTER TABLE ONLY journey_frequencies    ADD CONSTRAINT fk_rails_60bb6f7bd3 FOREIGN KEY (timeband_id) REFERENCES timebands(id) ON DELETE SET NULL;
 ALTER TABLE ONLY referentials    ADD CONSTRAINT fk_rails_65d1354ca5 FOREIGN KEY (referential_suite_id) REFERENCES referential_suites(id);
 ALTER TABLE ONLY api_keys    ADD CONSTRAINT fk_rails_7561c6e512 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
+ALTER TABLE ONLY compliance_control_sets    ADD CONSTRAINT fk_rails_aa1e909966 FOREIGN KEY (organisation_id) REFERENCES organisations(id);
+ALTER TABLE ONLY compliance_controls    ADD CONSTRAINT fk_rails_c613154a10 FOREIGN KEY (compliance_control_block_id) REFERENCES compliance_control_blocks(id);
 ALTER TABLE ONLY journey_frequencies    ADD CONSTRAINT fk_rails_d322c5d659 FOREIGN KEY (vehicle_journey_id) REFERENCES vehicle_journeys(id) ON DELETE SET NULL;
+ALTER TABLE ONLY compliance_controls    ADD CONSTRAINT fk_rails_f402e905ef FOREIGN KEY (compliance_control_set_id) REFERENCES compliance_control_sets(id);
 ALTER TABLE ONLY group_of_lines_lines    ADD CONSTRAINT groupofline_group_fkey FOREIGN KEY (group_of_line_id) REFERENCES group_of_lines(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_patterns    ADD CONSTRAINT jp_route_fkey FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE;
 ALTER TABLE ONLY journey_patterns_stop_points    ADD CONSTRAINT jpsp_jp_fkey FOREIGN KEY (journey_pattern_id) REFERENCES journey_patterns(id) ON DELETE CASCADE;

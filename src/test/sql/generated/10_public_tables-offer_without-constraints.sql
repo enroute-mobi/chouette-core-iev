@@ -101,7 +101,10 @@ CREATE TABLE calendars (
     shared boolean DEFAULT false,
     organisation_id bigint,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    int_day_types integer,
+    excluded_dates date[],
+    workgroup_id bigint
 );
 ALTER TABLE calendars OWNER TO chouette;
 CREATE SEQUENCE calendars_id_seq
@@ -179,6 +182,62 @@ CREATE SEQUENCE companies_id_seq
     CACHE 1;
 ALTER TABLE companies_id_seq OWNER TO chouette;
 ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
+CREATE TABLE compliance_control_blocks (
+    id bigint NOT NULL,
+    name character varying,
+    condition_attributes shared_extensions.hstore,
+    compliance_control_set_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+ALTER TABLE compliance_control_blocks OWNER TO chouette;
+CREATE SEQUENCE compliance_control_blocks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE compliance_control_blocks_id_seq OWNER TO chouette;
+ALTER SEQUENCE compliance_control_blocks_id_seq OWNED BY compliance_control_blocks.id;
+CREATE TABLE compliance_control_sets (
+    id bigint NOT NULL,
+    name character varying,
+    organisation_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+ALTER TABLE compliance_control_sets OWNER TO chouette;
+CREATE SEQUENCE compliance_control_sets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE compliance_control_sets_id_seq OWNER TO chouette;
+ALTER SEQUENCE compliance_control_sets_id_seq OWNED BY compliance_control_sets.id;
+CREATE TABLE compliance_controls (
+    id bigint NOT NULL,
+    compliance_control_set_id bigint,
+    type character varying,
+    control_attributes json,
+    name character varying,
+    code character varying,
+    criticity character varying,
+    comment text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    origin_code character varying,
+    compliance_control_block_id bigint
+);
+ALTER TABLE compliance_controls OWNER TO chouette;
+CREATE SEQUENCE compliance_controls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE compliance_controls_id_seq OWNER TO chouette;
+ALTER SEQUENCE compliance_controls_id_seq OWNED BY compliance_controls.id;
 CREATE TABLE connection_links (
     id bigint NOT NULL,
     departure_id bigint,
@@ -209,26 +268,26 @@ CREATE SEQUENCE connection_links_id_seq
     CACHE 1;
 ALTER TABLE connection_links_id_seq OWNER TO chouette;
 ALTER SEQUENCE connection_links_id_seq OWNED BY connection_links.id;
-CREATE TABLE exports (
+CREATE TABLE custom_fields (
     id bigint NOT NULL,
-    referential_id bigint,
-    status character varying,
-    type character varying,
-    options character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    references_type character varying,
-    reference_ids character varying
+    code character varying,
+    resource_type character varying,
+    name character varying,
+    field_type character varying,
+    options json,
+    workgroup_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
-ALTER TABLE exports OWNER TO chouette;
-CREATE SEQUENCE exports_id_seq
+ALTER TABLE custom_fields OWNER TO chouette;
+CREATE SEQUENCE custom_fields_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE exports_id_seq OWNER TO chouette;
-ALTER SEQUENCE exports_id_seq OWNED BY exports.id;
+ALTER TABLE custom_fields_id_seq OWNER TO chouette;
+ALTER SEQUENCE custom_fields_id_seq OWNED BY custom_fields.id;
 CREATE TABLE facilities (
     id bigint NOT NULL,
     stop_area_id bigint,
@@ -353,7 +412,8 @@ CREATE TABLE journey_patterns (
     updated_at timestamp without time zone,
     checksum character varying,
     checksum_source text,
-    data_source_ref character varying
+    data_source_ref character varying,
+    costs json
 );
 ALTER TABLE journey_patterns OWNER TO chouette;
 CREATE SEQUENCE journey_patterns_id_seq
@@ -474,6 +534,26 @@ CREATE SEQUENCE lines_id_seq
     CACHE 1;
 ALTER TABLE lines_id_seq OWNER TO chouette;
 ALTER SEQUENCE lines_id_seq OWNED BY lines.id;
+CREATE TABLE merges (
+    id bigint NOT NULL,
+    workbench_id bigint,
+    referential_ids bigint[],
+    creator character varying,
+    status character varying,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+ALTER TABLE merges OWNER TO chouette;
+CREATE SEQUENCE merges_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE merges_id_seq OWNER TO chouette;
+ALTER SEQUENCE merges_id_seq OWNED BY merges.id;
 CREATE TABLE networks (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
@@ -509,7 +589,8 @@ CREATE TABLE organisations (
     code character varying,
     synced_at timestamp without time zone,
     sso_attributes shared_extensions.hstore,
-    custom_view character varying
+    custom_view character varying,
+    features character varying[] DEFAULT '{}'::character varying[]
 );
 ALTER TABLE organisations OWNER TO chouette;
 CREATE SEQUENCE organisations_id_seq
@@ -617,7 +698,8 @@ CREATE TABLE referentials (
     created_from_id bigint,
     ready boolean DEFAULT false,
     referential_suite_id bigint,
-    objectid_format character varying
+    objectid_format character varying,
+    merged_at timestamp without time zone
 );
 ALTER TABLE referentials OWNER TO chouette;
 CREATE SEQUENCE referentials_id_seq
@@ -783,7 +865,10 @@ CREATE TABLE stop_areas (
     deleted_at timestamp without time zone,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    stif_type character varying
+    stif_type character varying,
+    waiting_time integer,
+    kind character varying,
+    localized_names jsonb
 );
 ALTER TABLE stop_areas OWNER TO chouette;
 CREATE SEQUENCE stop_areas_id_seq
@@ -1030,7 +1115,8 @@ CREATE TABLE vehicle_journeys (
     updated_at timestamp without time zone,
     checksum character varying,
     checksum_source text,
-    data_source_ref character varying
+    data_source_ref character varying,
+    custom_field_values jsonb DEFAULT '{}'::jsonb
 );
 ALTER TABLE vehicle_journeys OWNER TO chouette;
 CREATE SEQUENCE vehicle_journeys_id_seq
@@ -1041,6 +1127,24 @@ CREATE SEQUENCE vehicle_journeys_id_seq
     CACHE 1;
 ALTER TABLE vehicle_journeys_id_seq OWNER TO chouette;
 ALTER SEQUENCE vehicle_journeys_id_seq OWNED BY vehicle_journeys.id;
+CREATE TABLE versions (
+    id bigint NOT NULL,
+    item_type character varying NOT NULL,
+    item_id bigint NOT NULL,
+    event character varying NOT NULL,
+    whodunnit character varying,
+    object text,
+    created_at timestamp without time zone
+);
+ALTER TABLE versions OWNER TO chouette;
+CREATE SEQUENCE versions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE versions_id_seq OWNER TO chouette;
+ALTER SEQUENCE versions_id_seq OWNED BY versions.id;
 CREATE TABLE workbenches (
     id bigint NOT NULL,
     name character varying,
@@ -1050,7 +1154,10 @@ CREATE TABLE workbenches (
     line_referential_id bigint,
     stop_area_referential_id bigint,
     output_id bigint,
-    objectid_format character varying
+    objectid_format character varying,
+    workgroup_id bigint,
+    import_compliance_control_set_id bigint,
+    merge_compliance_control_set_id bigint
 );
 ALTER TABLE workbenches OWNER TO chouette;
 CREATE SEQUENCE workbenches_id_seq
@@ -1061,6 +1168,23 @@ CREATE SEQUENCE workbenches_id_seq
     CACHE 1;
 ALTER TABLE workbenches_id_seq OWNER TO chouette;
 ALTER SEQUENCE workbenches_id_seq OWNED BY workbenches.id;
+CREATE TABLE workgroups (
+    id bigint NOT NULL,
+    name character varying,
+    line_referential_id bigint,
+    stop_area_referential_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+ALTER TABLE workgroups OWNER TO chouette;
+CREATE SEQUENCE workgroups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE workgroups_id_seq OWNER TO chouette;
+ALTER SEQUENCE workgroups_id_seq OWNED BY workgroups.id;
 ALTER TABLE ONLY access_links ALTER COLUMN id SET DEFAULT nextval('access_links_id_seq'::regclass);
 ALTER TABLE ONLY access_points ALTER COLUMN id SET DEFAULT nextval('access_points_id_seq'::regclass);
 ALTER TABLE ONLY api_keys ALTER COLUMN id SET DEFAULT nextval('api_keys_id_seq'::regclass);
@@ -1068,8 +1192,11 @@ ALTER TABLE ONLY calendars ALTER COLUMN id SET DEFAULT nextval('calendars_id_seq
 ALTER TABLE ONLY clean_up_results ALTER COLUMN id SET DEFAULT nextval('clean_up_results_id_seq'::regclass);
 ALTER TABLE ONLY clean_ups ALTER COLUMN id SET DEFAULT nextval('clean_ups_id_seq'::regclass);
 ALTER TABLE ONLY companies ALTER COLUMN id SET DEFAULT nextval('companies_id_seq'::regclass);
+ALTER TABLE ONLY compliance_control_blocks ALTER COLUMN id SET DEFAULT nextval('compliance_control_blocks_id_seq'::regclass);
+ALTER TABLE ONLY compliance_control_sets ALTER COLUMN id SET DEFAULT nextval('compliance_control_sets_id_seq'::regclass);
+ALTER TABLE ONLY compliance_controls ALTER COLUMN id SET DEFAULT nextval('compliance_controls_id_seq'::regclass);
 ALTER TABLE ONLY connection_links ALTER COLUMN id SET DEFAULT nextval('connection_links_id_seq'::regclass);
-ALTER TABLE ONLY exports ALTER COLUMN id SET DEFAULT nextval('exports_id_seq'::regclass);
+ALTER TABLE ONLY custom_fields ALTER COLUMN id SET DEFAULT nextval('custom_fields_id_seq'::regclass);
 ALTER TABLE ONLY facilities ALTER COLUMN id SET DEFAULT nextval('facilities_id_seq'::regclass);
 ALTER TABLE ONLY footnotes ALTER COLUMN id SET DEFAULT nextval('footnotes_id_seq'::regclass);
 ALTER TABLE ONLY group_of_lines ALTER COLUMN id SET DEFAULT nextval('group_of_lines_id_seq'::regclass);
@@ -1080,6 +1207,7 @@ ALTER TABLE ONLY line_referential_sync_messages ALTER COLUMN id SET DEFAULT next
 ALTER TABLE ONLY line_referential_syncs ALTER COLUMN id SET DEFAULT nextval('line_referential_syncs_id_seq'::regclass);
 ALTER TABLE ONLY line_referentials ALTER COLUMN id SET DEFAULT nextval('line_referentials_id_seq'::regclass);
 ALTER TABLE ONLY lines ALTER COLUMN id SET DEFAULT nextval('lines_id_seq'::regclass);
+ALTER TABLE ONLY merges ALTER COLUMN id SET DEFAULT nextval('merges_id_seq'::regclass);
 ALTER TABLE ONLY networks ALTER COLUMN id SET DEFAULT nextval('networks_id_seq'::regclass);
 ALTER TABLE ONLY organisations ALTER COLUMN id SET DEFAULT nextval('organisations_id_seq'::regclass);
 ALTER TABLE ONLY pt_links ALTER COLUMN id SET DEFAULT nextval('pt_links_id_seq'::regclass);
@@ -1104,7 +1232,9 @@ ALTER TABLE ONLY timebands ALTER COLUMN id SET DEFAULT nextval('timebands_id_seq
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 ALTER TABLE ONLY vehicle_journey_at_stops ALTER COLUMN id SET DEFAULT nextval('vehicle_journey_at_stops_id_seq'::regclass);
 ALTER TABLE ONLY vehicle_journeys ALTER COLUMN id SET DEFAULT nextval('vehicle_journeys_id_seq'::regclass);
+ALTER TABLE ONLY versions ALTER COLUMN id SET DEFAULT nextval('versions_id_seq'::regclass);
 ALTER TABLE ONLY workbenches ALTER COLUMN id SET DEFAULT nextval('workbenches_id_seq'::regclass);
+ALTER TABLE ONLY workgroups ALTER COLUMN id SET DEFAULT nextval('workgroups_id_seq'::regclass);
 ALTER TABLE ONLY access_links    ADD CONSTRAINT access_links_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY access_points    ADD CONSTRAINT access_points_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY api_keys    ADD CONSTRAINT api_keys_pkey PRIMARY KEY (id);
@@ -1112,8 +1242,11 @@ ALTER TABLE ONLY calendars    ADD CONSTRAINT calendars_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY clean_up_results    ADD CONSTRAINT clean_up_results_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY clean_ups    ADD CONSTRAINT clean_ups_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY companies    ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_control_blocks    ADD CONSTRAINT compliance_control_blocks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_control_sets    ADD CONSTRAINT compliance_control_sets_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY compliance_controls    ADD CONSTRAINT compliance_controls_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY connection_links    ADD CONSTRAINT connection_links_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY exports    ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY custom_fields    ADD CONSTRAINT custom_fields_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY facilities    ADD CONSTRAINT facilities_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY footnotes    ADD CONSTRAINT footnotes_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY group_of_lines    ADD CONSTRAINT group_of_lines_pkey PRIMARY KEY (id);
@@ -1124,6 +1257,7 @@ ALTER TABLE ONLY line_referential_sync_messages    ADD CONSTRAINT line_referenti
 ALTER TABLE ONLY line_referential_syncs    ADD CONSTRAINT line_referential_syncs_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY line_referentials    ADD CONSTRAINT line_referentials_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY lines    ADD CONSTRAINT lines_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY merges    ADD CONSTRAINT merges_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY networks    ADD CONSTRAINT networks_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY organisations    ADD CONSTRAINT organisations_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY pt_links    ADD CONSTRAINT pt_links_pkey PRIMARY KEY (id);
@@ -1148,7 +1282,9 @@ ALTER TABLE ONLY timebands    ADD CONSTRAINT timebands_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY users    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY vehicle_journey_at_stops    ADD CONSTRAINT vehicle_journey_at_stops_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY vehicle_journeys    ADD CONSTRAINT vehicle_journeys_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY versions    ADD CONSTRAINT versions_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY workbenches    ADD CONSTRAINT workbenches_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY workgroups    ADD CONSTRAINT workgroups_pkey PRIMARY KEY (id);
 CREATE UNIQUE INDEX access_links_objectid_key ON access_links USING btree (objectid);
 CREATE UNIQUE INDEX access_points_objectid_key ON access_points USING btree (objectid);
 CREATE UNIQUE INDEX companies_objectid_key ON companies USING btree (objectid);
@@ -1159,10 +1295,16 @@ CREATE UNIQUE INDEX group_of_lines_objectid_key ON group_of_lines USING btree (o
 CREATE INDEX index_api_keys_on_organisation_id ON api_keys USING btree (organisation_id);
 CREATE INDEX index_calendars_on_organisation_id ON calendars USING btree (organisation_id);
 CREATE UNIQUE INDEX index_calendars_on_short_name ON calendars USING btree (short_name);
+CREATE INDEX index_calendars_on_workgroup_id ON calendars USING btree (workgroup_id);
 CREATE INDEX index_clean_up_results_on_clean_up_id ON clean_up_results USING btree (clean_up_id);
 CREATE INDEX index_clean_ups_on_referential_id ON clean_ups USING btree (referential_id);
 CREATE INDEX index_companies_on_line_referential_id ON companies USING btree (line_referential_id);
-CREATE INDEX index_exports_on_referential_id ON exports USING btree (referential_id);
+CREATE INDEX index_compliance_control_blocks_on_compliance_control_set_id ON compliance_control_blocks USING btree (compliance_control_set_id);
+CREATE INDEX index_compliance_control_sets_on_organisation_id ON compliance_control_sets USING btree (organisation_id);
+CREATE UNIQUE INDEX index_compliance_controls_on_code_and_compliance_control_set_id ON compliance_controls USING btree (code, compliance_control_set_id);
+CREATE INDEX index_compliance_controls_on_compliance_control_block_id ON compliance_controls USING btree (compliance_control_block_id);
+CREATE INDEX index_compliance_controls_on_compliance_control_set_id ON compliance_controls USING btree (compliance_control_set_id);
+CREATE INDEX index_custom_fields_on_resource_type ON custom_fields USING btree (resource_type);
 CREATE INDEX index_group_of_lines_on_line_referential_id ON group_of_lines USING btree (line_referential_id);
 CREATE INDEX index_journey_frequencies_on_timeband_id ON journey_frequencies USING btree (timeband_id);
 CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequencies USING btree (vehicle_journey_id);
@@ -1170,6 +1312,7 @@ CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey
 CREATE INDEX index_line_referential_syncs_on_line_referential_id ON line_referential_syncs USING btree (line_referential_id);
 CREATE INDEX index_lines_on_line_referential_id ON lines USING btree (line_referential_id);
 CREATE INDEX index_lines_on_secondary_company_ids ON lines USING gin (secondary_company_ids);
+CREATE INDEX index_merges_on_workbench_id ON merges USING btree (workbench_id);
 CREATE INDEX index_networks_on_line_referential_id ON networks USING btree (line_referential_id);
 CREATE UNIQUE INDEX index_organisations_on_code ON organisations USING btree (code);
 CREATE INDEX index_referential_clonings_on_source_referential_id ON referential_clonings USING btree (source_referential_id);
@@ -1200,9 +1343,13 @@ CREATE UNIQUE INDEX index_users_on_username ON users USING btree (username);
 CREATE INDEX index_vehicle_journey_at_stops_on_stop_pointid ON vehicle_journey_at_stops USING btree (stop_point_id);
 CREATE INDEX index_vehicle_journey_at_stops_on_vehicle_journey_id ON vehicle_journey_at_stops USING btree (vehicle_journey_id);
 CREATE INDEX index_vehicle_journeys_on_route_id ON vehicle_journeys USING btree (route_id);
+CREATE INDEX index_versions_on_item_type_and_item_id ON versions USING btree (item_type, item_id);
+CREATE INDEX index_workbenches_on_import_compliance_control_set_id ON workbenches USING btree (import_compliance_control_set_id);
 CREATE INDEX index_workbenches_on_line_referential_id ON workbenches USING btree (line_referential_id);
+CREATE INDEX index_workbenches_on_merge_compliance_control_set_id ON workbenches USING btree (merge_compliance_control_set_id);
 CREATE INDEX index_workbenches_on_organisation_id ON workbenches USING btree (organisation_id);
 CREATE INDEX index_workbenches_on_stop_area_referential_id ON workbenches USING btree (stop_area_referential_id);
+CREATE INDEX index_workbenches_on_workgroup_id ON workbenches USING btree (workgroup_id);
 CREATE UNIQUE INDEX journey_patterns_objectid_key ON journey_patterns USING btree (objectid);
 CREATE INDEX line_referential_sync_id ON line_referential_sync_messages USING btree (line_referential_sync_id);
 CREATE UNIQUE INDEX lines_objectid_key ON lines USING btree (objectid);

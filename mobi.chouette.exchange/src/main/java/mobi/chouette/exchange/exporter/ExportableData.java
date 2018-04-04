@@ -12,19 +12,23 @@ import lombok.Setter;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineLite;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
+import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopArea;
+import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.Timetable;
 import mobi.chouette.model.VehicleJourney;
 
 public class ExportableData {
-	
+
 	@Getter
 	@Setter
 	private Set<Network> networks = new HashSet<>();
@@ -33,7 +37,13 @@ public class ExportableData {
 	private Line line;
 	@Getter
 	@Setter
+	private LineLite lineLite;
+	@Getter
+	@Setter
 	private Set<Company> companies = new HashSet<>();
+	@Getter
+	@Setter
+	private Set<Line> lines = new HashSet<>();
 	@Getter
 	@Setter
 	private Set<GroupOfLine> groupOfLines = new HashSet<>();
@@ -72,7 +82,7 @@ public class ExportableData {
 	private Set<Timetable> excludedTimetables = new HashSet<>();
 	@Getter
 	@Setter
-	private Set<StopArea> restrictionConstraints = new HashSet<>();
+	private Set<RoutingConstraint> routingConstraints = new HashSet<>();
 	@Getter
 	@Setter
 	private Map<String, List<Timetable>> timetableMap = new HashMap<>();
@@ -93,25 +103,59 @@ public class ExportableData {
 	@Getter
 	@Setter
 	private Set<StopArea> sharedStops = new HashSet<>();
+
+	@Getter
+	@Setter
+	private Map<Long, LineLite> mappedLines = new HashMap<>();
+
+	@Getter
+	@Setter
+	private Map<Long, StopAreaLite> mappedStopAreas = new HashMap<>();
+
+	@Getter
+	@Setter
+	private Map<Long, CompanyLite> mappedCompanies = new HashMap<>();
+
+	// public Timetable findTimetable(String objectId) {
+	// for (Timetable tm : timetables) {
+	// if (tm.getObjectId().equals(objectId))
+	// return tm;
+	// }
+	// return null;
+	// }
+    public void clearAll()
+    {
+    	clearCompany();
+    	clearLineReferential();
+    	clearStopAreaReferential();
+		mappedStopAreas.clear();
+		mappedCompanies.clear();
+		mappedLines.clear();
+    }
 	
-	public void clear()
-	{
-		networks.clear();
-		line = null;
-		companies.clear();
-		groupOfLines.clear();
-		stopAreas.clear();
-		quays.clear();
-		boardingPositions.clear();
-		physicalStops.clear();
-		commercialStops.clear();
-		stopPlaces.clear();
-		connectionLinks.clear();
-		accessLinks.clear();
-		accessPoints.clear();
+	public void clearCompany() {
+		clearLine();
 		timetables.clear();
 		excludedTimetables.clear();
-		restrictionConstraints.clear();
+	}
+	
+	public void clearLineReferential()
+	{
+		networks.clear();
+		companies.clear();
+		groupOfLines.clear();
+		lines.clear();
+	}
+	
+	public void clearStopAreaReferential()
+	{
+		stopAreas.clear();
+	}
+
+	public void clearLine() {
+		line = null;
+		lineLite = null;
+		routingConstraints.clear();
 		timetableMap.clear();
 		vehicleJourneys.clear();
 		journeyPatterns.clear();

@@ -8,15 +8,11 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -31,7 +27,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import mobi.chouette.model.type.ChouetteAreaEnum;
 import mobi.chouette.model.type.UserNeedEnum;
 
 /**
@@ -43,15 +38,12 @@ import mobi.chouette.model.type.UserNeedEnum;
  * <li>QUAY for physical stops on rails</li>
  * <li>COMMERCIALSTOPPOINT to group physical stops</li>
  * <li>STOPPLACE to group commercials stops and stop places in bigger ones</li>
- * <li>ITL to group any other type for routing constraint purpose</li>
  * </ul>
  * theses objects have internal dependency rules :
  * <ol>
- * <li>only boarding positions and quays can have {@link StopPoint} children</li>
  * <li>boarding positions and quays cannot have {@link StopArea} children</li>
  * <li>commercial stop points can have only boarding position and quay children</li>
  * <li>stop places can have only stop place and commercial stop point children</li>
- * <li>routing constraint stops can't have routing constraint stops children</li>
  * </ol>
  * <p>
  * Neptune mapping : ChouetteStopArea, AreaCentroid <br>
@@ -65,8 +57,8 @@ import mobi.chouette.model.type.UserNeedEnum;
 @EqualsAndHashCode(of = { "objectId" }, callSuper = false)
 @NoArgsConstructor
 @ToString(callSuper = true, exclude = { "accessLinks", "accessPoints",
-		"connectionEndLinks", "connectionStartLinks", "containedStopAreas",
-		"containedStopPoints", "routingConstraintAreas", "routingConstraintLines" })
+		"containedStopAreas",
+		 })
 public class StopArea extends ChouetteLocalizedObject {
 	private static final long serialVersionUID = 4548672479038099240L;
 
@@ -161,9 +153,8 @@ public class StopArea extends ChouetteLocalizedObject {
 	 */
 	@Getter
 	@Setter
-	@Enumerated(EnumType.STRING)
 	@Column(name = "area_type", nullable = false)
-	private ChouetteAreaEnum areaType;
+	protected String areaType;
 
 	/**
 	 * registration number
@@ -363,19 +354,6 @@ public class StopArea extends ChouetteLocalizedObject {
 		this.intUserNeeds = value;
 	}
 
-	/**
-	 * delete time
-	 * 
-	 * @param deletedTime
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Column(name = "deleted_at")
-	protected Date deletedTime;
-
-	
 	
 	/**
 	 * stop area parent<br>
@@ -408,33 +386,60 @@ public class StopArea extends ChouetteLocalizedObject {
 	}
 
 	/**
-	 * lines concerned by routing constraints <br>
-	 * only for areaType = ITL
+	 * xml data
+	 */
+	@Getter
+	@Setter
+	@Column(name="import_xml",columnDefinition = "text")
+	private String importXml;
+	
+	
+	/**
+	 * StopArea referential reference
 	 * 
-	 * @param routingConstraintLines
-	 *            New value
 	 * @return The actual value
 	 */
 	@Getter
 	@Setter
-	@ManyToMany
-	@JoinTable(name = "routing_constraints_lines", joinColumns = { @JoinColumn(name = "stop_area_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "line_id", nullable = false, updatable = false) })
-	private List<Line> routingConstraintLines = new ArrayList<Line>(0);
+	@Column(name = "stop_area_referential_id")
+	protected Long stopAreaReferentialId;
 
 	/**
-	 * stops grouped in a routing constraints <br>
-	 * only for areaType = ITL<br>
-	 * stops in this list can't be of ITL type
+	 * delete time
 	 * 
-	 * @param routingConstraintAreas
+	 * @param deletedTime
 	 *            New value
 	 * @return The actual value
 	 */
 	@Getter
 	@Setter
-	@ManyToMany(cascade = { CascadeType.PERSIST})
-	@JoinTable(name = "stop_areas_stop_areas", joinColumns = { @JoinColumn(name = "parent_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "child_id", nullable = false, updatable = false) })
-	private List<StopArea> routingConstraintAreas = new ArrayList<StopArea>(0);
+	@Column(name = "deleted_at")
+	protected Date deletedTime;
+
+
+	@Override
+	public String objectIdPrefix() {
+		if (objectId.startsWith("FR:")) return "FR";
+		return super.objectIdPrefix();
+	}
+
+	@Override
+	public String objectIdSuffix() {
+		if (objectId.startsWith("FR:") )
+		{
+			String[] tokens = objectIdArray();
+			if (tokens.length > 3)
+				return tokens[3].trim();
+			else
+				return ""; 
+		}
+		return super.objectIdSuffix();
+	}
+
+	public boolean isDesactivated()
+	{
+		return deletedTime != null;
+	}
 
 	/**
 	 * stop area children<br>
@@ -450,20 +455,6 @@ public class StopArea extends ChouetteLocalizedObject {
 	private List<StopArea> containedStopAreas = new ArrayList<StopArea>(0);
 
 	/**
-	 * stop points children<br>
-	 * only for areaType = BoardingPosition and Quay
-	 * 
-	 * @param containedStopPoints
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@Transient
-//	@OneToMany(mappedBy = "containedInStopArea")
-	private List<StopPoint> containedStopPoints = new ArrayList<StopPoint>(0);
-
-	/**
 	 * access links<br>
 	 * only for areaType != ITL
 	 * 
@@ -473,73 +464,11 @@ public class StopArea extends ChouetteLocalizedObject {
 	 */
 	@Getter
 	@Setter
-	@OneToMany(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "stop_area_id", updatable = false)
+	@Transient
+//	@OneToMany(cascade = { CascadeType.PERSIST })
+//	@JoinColumn(name = "stop_area_id", updatable = false)
 	private List<AccessLink> accessLinks = new ArrayList<AccessLink>(0);
 
-	/**
-	 * routeSections where this stop is at start position<br>
-	 * only for areaType == BoardingPosition or Quay
-	 * 
-	 * @param routeSectionDepartures
-	 *            New value
-	 * @return The actual value
-	 * @since 3.2.0
-	 */
-	@Getter
-	@Setter
-	@Transient
-//	@OneToMany(cascade = { CascadeType.PERSIST })
-//	@JoinColumn(name = "departure_id") //, updatable = false)
-	private List<RouteSection> routeSectionDepartures = new ArrayList<RouteSection>(
-			0);
-
-	/**
-	 * routeSections where this stop is at end position<br>
-	 * only for areaType == BoardingPosition or Quay
-	 * 
-	 * @param routeSectionArrivals
-	 *            New value
-	 * @return The actual value
-	 * @since 3.2.0
-	 */
-	@Getter
-	@Setter
-	@Transient
-//	@OneToMany(cascade = { CascadeType.PERSIST })
-//	@JoinColumn(name = "arrival_id") //, updatable = false)
-	private List<RouteSection> routeSectionArrivals = new ArrayList<RouteSection>(
-			0);
-
-	/**
-	 * connection links where this stop is at start position<br>
-	 * only for areaType != ITL
-	 * 
-	 * @param connectionStartLinks
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@OneToMany(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "departure_id") //, updatable = false)
-	private List<ConnectionLink> connectionStartLinks = new ArrayList<ConnectionLink>(
-			0);
-
-	/**
-	 * connection links where this stop is at end position<br>
-	 * only for areaType != ITL
-	 * 
-	 * @param connectionEndLinks
-	 *            New value
-	 * @return The actual value
-	 */
-	@Getter
-	@Setter
-	@OneToMany(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "arrival_id") //, updatable = false)
-	private List<ConnectionLink> connectionEndLinks = new ArrayList<ConnectionLink>(
-			0);
 
 	/**
 	 * access points<br>
@@ -551,191 +480,9 @@ public class StopArea extends ChouetteLocalizedObject {
 	 */
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "containedIn", cascade = { CascadeType.PERSIST })
+	@Transient
+	// @OneToMany(mappedBy = "containedIn", cascade = { CascadeType.PERSIST })
 	private List<AccessPoint> accessPoints = new ArrayList<AccessPoint>(0);
 
-	// /**
-	// * add a child StopArea if not already present
-	// *
-	// * @param containedStopArea
-	// */
-	// public void addContainedStopArea(StopArea containedStopArea) {
-	// if (containedStopAreas == null)
-	// containedStopAreas = new ArrayList<StopArea>();
-	// if (areaType.equals(ChouetteAreaEnum.BoardingPosition)
-	// || areaType.equals(ChouetteAreaEnum.Quay)) {
-	// // boarding positions or quays can't contains stop areas
-	// throw new CoreRuntimeException(CoreExceptionCode.UNVALID_TYPE,
-	// areaType.toString(), STOPAREA_KEY, "containedStopAreas");
-	// }
-	// if (areaType.equals(ChouetteAreaEnum.CommercialStopPoint)) {
-	// // commercial stops can contains only boarding positions or quays
-	// if (!containedStopArea.getAreaType().equals(
-	// ChouetteAreaEnum.BoardingPosition)
-	// && !containedStopArea.getAreaType().equals(
-	// ChouetteAreaEnum.Quay)) {
-	// throw new CoreRuntimeException(CoreExceptionCode.UNVALID_TYPE,
-	// areaType.toString(), containedStopArea.getAreaType()
-	// .toString(), "containedStopAreas");
-	// }
-	// } else if (areaType.equals(ChouetteAreaEnum.StopPlace)) {
-	// // stop places can contains only stop places or commercial stops
-	// if (!containedStopArea.getAreaType().equals(
-	// ChouetteAreaEnum.StopPlace)
-	// && !containedStopArea.getAreaType().equals(
-	// ChouetteAreaEnum.CommercialStopPoint)) {
-	// throw new CoreRuntimeException(CoreExceptionCode.UNVALID_TYPE,
-	// areaType.toString(), containedStopArea.getAreaType()
-	// .toString(), "containedStopAreas");
-	// }
-	// } else if (areaType.equals(ChouetteAreaEnum.ITL)) {
-	// // restriction constraints can't contains restriction constraints
-	// if (containedStopArea.getAreaType().equals(ChouetteAreaEnum.ITL)) {
-	// throw new CoreRuntimeException(CoreExceptionCode.UNVALID_TYPE,
-	// areaType.toString(), containedStopArea.getAreaType()
-	// .toString(), "containedStopAreas");
-	// }
-	// // ITL relationship are stored in routingConstraintAreas
-	// if (!routingConstraintAreas.contains(containedStopArea))
-	// routingConstraintAreas.add(containedStopArea);
-	// return;
-	// }
-	// if (!containedStopAreas.contains(containedStopArea)) {
-	// containedStopAreas.add(containedStopArea);
-	// containedStopArea.setParent(this);
-	// }
-	// }
-
-	// /**
-	// * remove a child StopArea
-	// *
-	// * @param containedStopArea
-	// */
-	// public void removeContainedStopArea(StopArea containedStopArea) {
-	// if (areaType.equals(ChouetteAreaEnum.ITL)) {
-	// if (routingConstraintAreas == null)
-	// routingConstraintAreas = new ArrayList<StopArea>();
-	// if (routingConstraintAreas.contains(containedStopArea))
-	// routingConstraintAreas.remove(containedStopArea);
-	//
-	// } else {
-	// if (containedStopAreas == null)
-	// containedStopAreas = new ArrayList<StopArea>();
-	// if (containedStopAreas.contains(containedStopArea)) {
-	// containedStopAreas.remove(containedStopArea);
-	// containedStopArea.setParent(null);
-	// }
-	// }
-	// }
-
-	// /**
-	// * add a child StopPoint if not already present
-	// *
-	// * @param containedStopPoint
-	// */
-	// public void addContainedStopPoint(StopPoint containedStopPoint) {
-	// if (containedStopPoints == null)
-	// containedStopPoints = new ArrayList<StopPoint>();
-	// if (!areaType.equals(ChouetteAreaEnum.BoardingPosition)
-	// && !areaType.equals(ChouetteAreaEnum.Quay)) {
-	// // only boarding positions and quays can contains stop points
-	// throw new CoreRuntimeException(CoreExceptionCode.UNVALID_TYPE,
-	// areaType.toString(), STOPPOINT_KEY, "containedStopPoints");
-	// }
-	// if (containedStopPoint == null
-	// || containedStopPoints.contains(containedStopPoint))
-	// return;
-	// containedStopPoints.add(containedStopPoint);
-	// containedStopPoint.setContainedInStopArea(this);
-	// }
-
-	// /**
-	// * remove a child StopPoint
-	// *
-	// * @param containedStopPoint
-	// */
-	// public void removeContainedStopPoint(StopPoint containedStopPoint) {
-	// if (containedStopPoints == null)
-	// containedStopPoints = new ArrayList<StopPoint>();
-	// if (containedStopPoints.contains(containedStopPoint))
-	// containedStopPoints.remove(containedStopPoint);
-	// }
-
-	// /**
-	// * add an accessLink if not already present
-	// * <p>
-	// * WARNING : no check on accessLink stopAreaLink validity
-	// *
-	// * @param accessLink
-	// */
-	// public void addAccessLink(AccessLink accessLink) {
-	// if (accessLinks == null)
-	// accessLinks = new ArrayList<AccessLink>();
-	// if (accessLink != null && !accessLinks.contains(accessLink)) {
-	// accessLinks.add(accessLink);
-	// accessLink.setStopArea(this);
-	// }
-	// }
-	//
-	// /**
-	// * remove an accessLink
-	// *
-	// * @param accessLink
-	// */
-	// public void removeAccessLink(AccessLink accessLink) {
-	// if (accessLinks == null)
-	// accessLinks = new ArrayList<AccessLink>();
-	// if (accessLinks.contains(accessLink))
-	// accessLinks.remove(accessLink);
-	// }
-	//
-	// /**
-	// * add an accessPoint if not already present
-	// * <p>
-	// *
-	// * @param accessPoint
-	// */
-	// public void addAccessPoint(AccessPoint accessPoint) {
-	// if (accessPoints == null)
-	// accessPoints = new ArrayList<AccessPoint>();
-	// if (accessPoint != null && !accessPoints.contains(accessPoint)) {
-	// accessPoints.add(accessPoint);
-	// }
-	// }
-	//
-	// /**
-	// * remove an accessPoint
-	// *
-	// * @param accessPoint
-	// */
-	// public void removeAccessPoint(AccessPoint accessPoint) {
-	// if (accessPoints == null)
-	// accessPoints = new ArrayList<AccessPoint>();
-	// if (accessPoints.contains(accessPoint))
-	// accessPoints.remove(accessPoint);
-	// }
-
-
-	/**
-	 * add a line if not already present
-	 * <p>
-	 * stop
-	 * 
-	 * @param area
-	 */
-	public void addRoutingConstraintStopArea(StopArea area) {
-		if (!routingConstraintAreas.contains(area))
-			routingConstraintAreas.add(area);
-	}
-
-	/**
-	 * remove a line
-	 * 
-	 * @param area
-	 */
-	public void removeRoutingConstraintArea(StopArea area) {
-		if (routingConstraintAreas.contains(area))
-			routingConstraintAreas.remove(area);
-	}
 
 }

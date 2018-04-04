@@ -75,10 +75,12 @@ public class NetexStifParserCommandTests  {
 		context.put(Constant.CONFIGURATION, configuration);
 		context.put(Constant.REFERENTIAL, new Referential());
 		context.put(NetexStifConstant.NETEX_STIF_OBJECT_FACTORY, new NetexStifObjectFactory());
+		context.put(NetexStifConstant.IMPORT_DATA_SOURCE_REF, "CITYWAY");
 		configuration.setName("name");
 		configuration.setUserName("userName");
 		configuration.setNoSave(true);
 		configuration.setOrganisationName("organisation");
+		configuration.setOrganisationCode("CITYWAY");
 		configuration.setReferentialName("test");
 		configuration.setReferentialId(1L);
 		JobDataImpl test = new JobDataImpl();
