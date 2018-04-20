@@ -56,7 +56,9 @@ public class LoadSharedDataCommand implements Command {
 			Set<Long> companyIds = new HashSet<>();
 			for (LineLite line : lineDAO.findAll(parameters.getLineReferentialId(), ids)) {
 				referential.getSharedReadOnlyLines().put(line.getObjectId(), line);
-				companyIds.add(line.getCompanyId());
+				// #6631 : line may have no company
+				if (line.getCompanyId() != null)
+					companyIds.add(line.getCompanyId());
 				if (line.getSecondaryCompanyIds() != null && line.getSecondaryCompanyIds().length > 0)
 					companyIds.addAll(Arrays.asList(line.getSecondaryCompanyIds()));
 				lineDAO.detach(line);
@@ -75,7 +77,6 @@ public class LoadSharedDataCommand implements Command {
 				referential.getSharedReadOnlyStopAreas().put(stopArea.getObjectId(), stopArea);
 				stopAreaDAO.detach(stopArea);
 			}
-
 
 			result = Constant.SUCCESS;
 
