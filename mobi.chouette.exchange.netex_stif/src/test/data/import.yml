@@ -32,7 +32,7 @@ fr:
       2_netexstif_notice_1: "L'objet Notice d'identifiant %{source_objectid} doit définir un texte"
       2_netexstif_notice_2: "L'objet Notice d'identifiant %{source_objectid} de type %{error_value} est ignoré"
       2_netexstif_operatingperiod_1: "L'objet OperatingPeriod d'identifiant %{source_objectid} a une date de fin %{error_value} inférieure ou égale à la date de début %{reference_value}"
-      2_netexstif_passengerstopassignment_1: "L'attribut %{source_label} de l'objet PassengerStopAssignment %{source_objectid} doit être renseigné"
+      2_netexstif_passengerstopassignment_1: "L'attribut %{error_value} de l'objet PassengerStopAssignment %{source_objectid} doit être renseigné"
       2_netexstif_passengerstopassignment_2: "L'arrêt %{source_objectid} ne fait pas partie des arrêts disponibles pour votre organisation."
       2_netexstif_passingtime_1: "Objet ServiceJourney d'identifiant %{source_objectid} : le passingTime de rang %{error_value} ne dispose pas de DepartureTime"
       2_netexstif_passingtime_2: "Objet ServiceJourney d'identifiant %{source_objectid} : le passingTime de rang %{error_value} fournit un ArrivalTime supérieur à son DepartureTime"
