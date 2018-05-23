@@ -45,6 +45,12 @@ public class ExportTask extends ActionTask {
 	@Transient
 	private String format = "netex_stif";
 	
+	
+	@Getter
+	@Setter
+	@Column(name="type")
+	private String type;
+	
 	@Getter
 	@Setter
 	@Column(name="file")
