@@ -7,6 +7,7 @@ database=chouette2
 user=chouette
 host=localhost
 port=5432
+password=chouette
 
 
 function usage(){
@@ -26,13 +27,13 @@ do
    ;;
   u)
    user=$OPTARG
-   ;; 
+   ;;
   h)
    host=$OPTARG
-   ;; 
+   ;;
   ?)
   usage
-   ;; 
+   ;;
  esac
 done
 
@@ -45,11 +46,11 @@ while read line; do
 		file=${line%% *}
 		flist="${flist} ${file}"
 		tables=${line#* }
-		${WORK_DIR}/extract-sql-from-db.sh -t "${tables}" -o ${outdir}/${file} -p ${port} -d ${database} -u ${user} -h ${host}
-	fi 
+		${WORK_DIR}/extract-sql-from-db.sh -t "${tables}" -o ${outdir}/${file} -p ${port} -d ${database} -u ${user} -h ${host} -w ${password}
+	fi
 done < tables-file.txt
 
-	
+
 for i in ${flist}; do
 	cat ${outdir}/$i |grep "CREATE TABLE"| sed "s/CREATE TABLE /DROP TABLE IF EXISTS /g" | sed "s/ (/ CASCADE;/g"
 done > ${outdir}/00_drop_all_tables.sql
@@ -59,17 +60,8 @@ current=$(pwd)
 cd $outdir
 for sqlfile in ${flist}; do
 	${WORK_DIR}/split-constraints.sh "$sqlfile"
-done 
+done
 
 cd $current
 
 ${WORK_DIR}/remove-row-security.sh ${outdir}
-
-
-
-
-
-
-
-
-

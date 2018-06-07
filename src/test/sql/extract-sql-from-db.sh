@@ -8,6 +8,7 @@ user=chouette
 host=localhost
 port=5432
 datatype="--schema-only"
+password=chouette
 
 
 
@@ -27,7 +28,7 @@ do
    ;;
   u)
    user=$OPTARG
-   ;; 
+   ;;
   t)
    tables=$OPTARG
    ;;
@@ -36,18 +37,18 @@ do
    ;;
   h)
    host=$OPTARG
-   ;; 
+   ;;
   s)
    if [ "$OPTARG" == "data" ]; then
 	datatype="--data-only --column-inserts"
    fi
-   ;; 
+   ;;
  esac
 done
 
 if [ "${output}" == "" ] || [ "${tables}" == "" ]; then
 	usage
-	
+
 else
 	opt_tables="";
 	for i in ${tables}; do
@@ -55,17 +56,5 @@ else
 	done
 	CMD="pg_dump ${datatype} --format=plain --file=${output} ${opt_tables} --username=${user} --host=${host} --port=${port} ${database}"
 	echo "cmd=$CMD"
-	$CMD
+	PGPASSWORD="chouette" $CMD 
 fi
-
-	
-
-
-
-
-
-
-
-
-
-
