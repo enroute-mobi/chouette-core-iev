@@ -81,6 +81,10 @@ Hibernate driver installation :
 	rm /opt/wildfly/modules/system/layers/base/org/hibernate/main/hibernate*4.3.10.Final.jar
 	cp hibernate/* /opt/wildfly/modules/system/layers/base/org/hibernate/main
 
+JVM memory increase : 
+
+	sed -i 's/-Xmx256m/-Xmx2048m/' /opt/wildfly/bin/standalone.conf
+
 Start Wildfly :
 	```/opt/wildfly/bin/standalone.sh -c standalone-full.xml```
 
