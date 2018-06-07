@@ -107,5 +107,10 @@ public class ComplianceCheck extends ChouetteDatedObject {
 	@Setter
 	@Column(name = "comment", nullable = false)
 	protected String comment;
+	
+	@Getter
+	@Setter
+	@Column(name = "iev_enabled_check", nullable = false)
+	protected Boolean ievEnabledCheck;
 
 }
