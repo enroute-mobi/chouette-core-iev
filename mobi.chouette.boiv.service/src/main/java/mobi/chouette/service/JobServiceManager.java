@@ -196,31 +196,35 @@ public class JobServiceManager {
 			if (!importTask.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
 				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
 			}
+			log.info("Log importTask : "+importTask.toString() );
+			
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
-
+			
 			log.info("job " + jobService.getId() + " found for import ");
 			// mkdir
 			deleteDirectory(jobService);
 			Files.createDirectories(jobService.getPath());
 			// copy file from Ruby server
 			String urlName = importTask.getUrl();
+			log.info("createImportJob 1 - urlname = "+urlName);
 			if (!urlName.startsWith("file:")) {
 				String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+				log.info("createImportJob 2 - guiBaseUrl = "+guiBaseUrl);
 				String guiToken = ""; // System.getProperty(APPLICATION_NAME +
 										// PropertyNames.GUI_URL_TOKEN);
 				if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
 					// build url with token
 					if (guiToken != null && !guiToken.isEmpty()) {
 						// new fashion url
-						urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()
-								+ "/download_file?token=" + guiToken;
-					} else {
-						// old fashion url
-						urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/"
-								+ importTask.getId() + "/download?token=" + urlName;
+						urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()+ "/download_file?token=" + guiToken;
+					} else {						
+						urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/" + importTask.getId() + "/download?token=" + urlName;
+						log.info("createImportJob 3 - urlName = "+urlName);
 					}
 				}
 			}
+			log.info("createImportJob 4 - pre uploadImportFile : "+urlName);
+
 			// TODO : call uploadImportFileFromHttp when guiToken will be implemented
 			//  call uploadImportFile only if urlName is "file:/// ...." 
 			uploadImportFile(jobService, urlName);
@@ -259,20 +263,29 @@ public class JobServiceManager {
 	}
 
 	private void uploadImportFile(JobService jobService, String urlName) throws ServiceException {
+		log.info("testlog uploadImportFile");
+
 		try {
 			URL url = new URL(urlName);
+			log.info("Import URL : " + urlName);
+			log.info("Full URL : "+url.toString());
 			File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+			log.info("Import destination file  : "+jobService.getPathName()+" : "+jobService.getInputFilename());
 			FileUtils.copyURLToFile(url, dest);
 		} catch (Exception ex) {
-			log.error("fail to get file for import job " + ex.getMessage());
+			log.error("test 3 : fail to get file for import job " + ex.getMessage());
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
 		}
 	}
 	
 	
 	private void uploadImportFileFromHttp(JobService jobService, String urlName) throws ServiceException {
+		log.info("2 Import URL : " + urlName);
+
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 		File dest = new File(jobService.getPathName(), jobService.getInputFilename());
+		log.info("2 Import destination file  : "+jobService.getPathName()+" : "+jobService.getInputFilename());
+
 		try (CloseableHttpClient httpclient = HttpClients.createDefault();
 				BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
 			Thread.sleep(1000L);
@@ -291,7 +304,7 @@ public class JobServiceManager {
 			}
 
 		} catch (Exception ex) {
-			log.error("fail to get file for import job " + ex.getMessage());
+			log.error("test 2 :  fail to get file for import job " + ex.getMessage());
 			throw new ServiceException(ServiceExceptionCode.INTERNAL_ERROR, "cannot manage URL " + urlName);
 		}
 
@@ -447,6 +460,8 @@ public class JobServiceManager {
 	}
 
 	private void notifyGui(final JobService jobService) {
+		log.info("JobServiceManager notifyGIU ");
+
 		String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 
@@ -467,6 +482,7 @@ public class JobServiceManager {
 			putFile = null;
 			break;
 		case exporter:
+			log.info("JobServiceManager : export output file : "+jobService.getPath().toFile() + jobService.getOutputFilename());
 			putFile = new File(jobService.getPath().toFile(), "" + jobService.getOutputFilename());
 			if (jobService.notFailed() && putFile.isFile()) {
 				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="
@@ -502,6 +518,8 @@ public class JobServiceManager {
 						httpRequest = httpput;
 						break;
 					}
+					log.info("JobServiceManager notifyGIU : step 1) httpRequest");
+
 					httpRequest.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + token);
 					ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 
@@ -517,7 +535,10 @@ public class JobServiceManager {
 							}
 						}
 					};
+					log.info("JobServiceManager notifyGIU : step 2)before httpclient.execute");
+
 					String responseBody = httpclient.execute(httpRequest, responseHandler);
+					
 					log.info("End of task notified : response = " + responseBody);
 
 				} catch (Exception e) {
@@ -527,6 +548,7 @@ public class JobServiceManager {
 						jobServiceManager.abort(jobService);
 					}
 				} finally {
+					/* Note af : to test the file output, we temporary remove the file deletion */
 					deleteDirectory(jobService);
 				}
 
@@ -535,6 +557,7 @@ public class JobServiceManager {
 		}
 		} else {
 			log.warn("no URL or no Token to notify end of job");
+			/* Note af : to test the file output, we temporary remove the file deletion */
 			deleteDirectory(jobService);
 		}
 	}
@@ -582,6 +605,11 @@ public class JobServiceManager {
 		// if such case, return empty list and log FATAL error database
 		// corrupted !
 
+		/* debuglog */
+		log.info("jobServiceManager : findAll start");
+		log.info("status name : "+status.name());
+		/* debuglog end */
+
 		List<JobService> jobs = new ArrayList<>();
 		List<ActionTask> actionTasks = new ArrayList<>();
 
@@ -590,8 +618,19 @@ public class JobServiceManager {
 		} catch (DaoException ex) {
 			log.fatal("Cannot process jobs : " + ex.getCode() + " : " + ex.getMessage());
 			log.fatal("contact DBA to correct problem");
+			/* debuglog */
+			log.info("problems  actionDAO");
+			/* debuglog end*/
 			throw new ServiceException(ServiceExceptionCode.DATABASE_CORRUPTED, ex.getMessage());
 		}
+		/* debuglog */
+		log.info("actionTasks : "+actionTasks.size());
+		for (ActionTask at : actionTasks) {
+			log.info("at : "+at.toString());
+		}
+		/* debuglog end*/
+
+
 		for (ActionTask actionTask : actionTasks) {
 
 			try {

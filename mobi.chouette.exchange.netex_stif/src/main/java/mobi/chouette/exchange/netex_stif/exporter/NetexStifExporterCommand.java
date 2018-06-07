@@ -120,11 +120,13 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 
 	@Override
 	public boolean process(Context context, ProcessingCommands commands, ProgressionCommand progression,
-			boolean continueLineProcesingOnError, Mode mode) throws Exception {
+		boolean continueLineProcesingOnError, Mode mode) throws Exception {
 		boolean result = Constant.ERROR;
+		boolean disposeResult = Constant.SUCCESS;
+
 		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
-
+		try {
 		result = processInit(context, commands, progression, mode);
 
 		if (mode.equals(Mode.line)) {
@@ -232,6 +234,22 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 		}
 		// post processing
 		result = processTermination(context, commands, progression);
+		} finally {
+			// call dispose commmands
+			try {
+				List<? extends Command> disposeCommands = commands.getDisposeCommands(context, true);
+				log.info("Call dispose command exporter");
+				for (Command command : disposeCommands) {
+					disposeResult = command.execute(context);
+					if (!disposeResult) {
+						break;
+					}
+				}
+			} catch (Exception e) {
+				log.warn("problem on dispose commands " + e.getMessage());
+			}
+			context.remove(Constant.CACHE);
+		}
 		return result;
 	}
 

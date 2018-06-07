@@ -13,7 +13,7 @@
 	<properties>
 		<project.rootDir>${project.basedir}/..</project.rootDir>
 		<skipInitDb>true</skipInitDb>
-		<earName>boiv</earName>
+		<earName>chouette_iev</earName>
 	</properties>
 	<build>
 		<resources>

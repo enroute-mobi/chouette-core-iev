@@ -61,6 +61,7 @@ public class JobService implements JobData {
 	 * 
 	 */
 	public JobService(String application, String rootDirectory, ActionTask actionTask) throws ServiceException {
+		log.info("new JobService");
 		this.rootDirectory = rootDirectory;
 		this.id = actionTask.getId();
 		if (actionTask.getReferential() == null) {
@@ -96,6 +97,7 @@ public class JobService implements JobData {
 		} catch (ClassNotFoundException | IOException e) {
 			throw new RequestServiceException(RequestExceptionCode.UNKNOWN_ACTION,
 					getCommandName() + " has no input validator", e);
+			
 		}
 		try {
 			actionParameter = inputValidator.toActionParameter(actionTask);
