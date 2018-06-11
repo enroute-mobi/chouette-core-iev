@@ -37,7 +37,7 @@ public class ExportTaskDAOImpl extends GenericDAOImpl<ExportTask> implements Exp
 			Root<ExportTask> root = criteria.from(type);
 			Predicate predicate = builder.and(builder.isNotNull(root.get(ExportTask_.referential)),
 					builder.equal(root.get(ExportTask_.status), status), 
-					builder.notEqual(root.get(ExportTask_.type), "Export::Sqills"));
+					builder.equal(root.get(ExportTask_.type), "Export::Netex"));
 			criteria.where(predicate);
 			criteria.orderBy(builder.asc(root.get(ExportTask_.createdAt)));
 			TypedQuery<ExportTask> query = em.createQuery(criteria);
