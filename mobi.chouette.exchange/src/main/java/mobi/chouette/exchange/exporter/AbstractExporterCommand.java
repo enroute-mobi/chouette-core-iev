@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Color;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
@@ -56,6 +57,7 @@ public class AbstractExporterCommand {
 
 			Set<Long> lines = reader.loadLines(parameters,type, ids);
 			if (lines.isEmpty()) {
+				log.info(Color.ORANGE +"AbstractExporterCommand : process -> No lines fetched."+ Color.NORMAL);
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
 				return Constant.ERROR;
 
@@ -158,9 +160,16 @@ public class AbstractExporterCommand {
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 		List<? extends Command> preProcessingCommands = commands.getPreProcessingCommands(context, true);
 		progression.initialize(context, preProcessingCommands.size() + (mode.equals(Mode.line) ? 1 : 0));
+		
+		log.info(Color.ORANGE +"AbstractExporterCommand : preProcessingCommands size -> "+preProcessingCommands.size()+"."+ Color.NORMAL);
+		
 		for (Command exportCommand : preProcessingCommands) {
+			
+			log.info(Color.ORANGE +"AbstractExporterCommand : exportCommand -> "+exportCommand.toString()+"."+ Color.NORMAL);
+			
 			result = exportCommand.execute(context);
 			if (!result) {
+				log.info(Color.ORANGE +"AbstractExporterCommand : processInit -> No results."+ Color.NORMAL);
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
 				progression.execute(context);
 				break;
