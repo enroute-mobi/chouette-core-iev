@@ -360,10 +360,12 @@ public class RouteValidator extends GenericValidator<Route>  {
 	 */
 	protected void check3Route8(Context context, Route object, CheckpointParameters parameters) {
 		// prerequisites
-		if (object.getJourneyPatterns().isEmpty())
+		if (object.getStopPoints().size() < 2) {
 			return;
-		if (object.getStopPoints().size() < 2)
+		}
+		if (object.getJourneyPatterns().isEmpty()) {
 			return;
+		}
 
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
@@ -378,7 +380,7 @@ public class RouteValidator extends GenericValidator<Route>  {
 			undeservedStops.stream().forEach(stopPoint -> {
 				StopAreaLite zdep = r.findStopArea(stopPoint.getStopAreaId());
 				DataLocation target = new DataLocation(zdep);
-				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_Route_8, source, null,
+				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_Route_8,source, null,
 						null, target);
 			});
 		}
@@ -468,8 +470,6 @@ public class RouteValidator extends GenericValidator<Route>  {
 	 */
 	protected void check3Route10(Context context, Route object, CheckpointParameters parameters) {
 		// prerequisites
-		if (object.getJourneyPatterns().isEmpty())
-			return;
 		if (object.getStopPoints().isEmpty())
 			return;
 

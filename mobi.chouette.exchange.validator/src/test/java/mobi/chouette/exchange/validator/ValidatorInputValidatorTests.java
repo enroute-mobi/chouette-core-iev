@@ -92,6 +92,7 @@ public class ValidatorInputValidatorTests {
 			log.info("checkData = "+checkData+" , size = "+data.length);
 			ComplianceCheck check = new ComplianceCheck();
 			check.setId(nextId++);
+			check.setIevEnabledCheck(true);
 			check.setOriginCode(data[0]);
 			check.setSpecificCode(data[0]);
 			check.setCriticity(CRITICITY.valueOf(data[1]));
@@ -123,6 +124,7 @@ public class ValidatorInputValidatorTests {
 			check.setOriginCode(data[0]);
 			check.setSpecificCode(data[0]);
 			check.setCriticity(CRITICITY.valueOf(data[1]));
+			check.setIevEnabledCheck(true);
 			if (data[2].length() > 0) {
 				String[] attributes = data[2].split(",");
 				for (String attribute : attributes) {
@@ -162,8 +164,17 @@ public class ValidatorInputValidatorTests {
 		referential.getMetadatas().add(metadata);
 		metadata.setLineIds(new Long[] {1l,2L});
 		ComplianceCheckTask task = createTask(referential);
+		log.info("Log Task");
+		log.info(task.toString());
 		ValidatorInputValidator validator = new ValidatorInputValidator();
-		AbstractParameter parameters = validator.toActionParameter(task);
+		log.info("Log validator");
+		log.info(validator.toString());
+		AbstractParameter parameters = null;
+		try {
+			 parameters = validator.toActionParameter(task);
+		}catch (Exception e) {
+			log.warn("Exception : "+e.getMessage(), e);
+		}
 		Assert.assertTrue(parameters instanceof ValidateParameters, " instance of ValidateParameters");
         ValidateParameters params = (ValidateParameters) parameters;
         Assert.assertEquals(params.getLinesScope().size(), 8, "params linesScope" );

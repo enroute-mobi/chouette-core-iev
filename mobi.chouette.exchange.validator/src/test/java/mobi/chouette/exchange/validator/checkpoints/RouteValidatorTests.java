@@ -303,13 +303,13 @@ public class RouteValidatorTests extends AbstractTestValidation {
 		} finally {
 			utx.rollback();
 		}
-
 	}
+
 
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_9", priority = 137)
+	@Test(groups = { "route" }, description = "3_Route_9", priority = 138)
 	public void verifyTest_3_Route_9() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_9 + Color.NORMAL);
 		initSchema();
@@ -355,7 +355,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 	/**
 	 * @throws Exception
 	 */
-	@Test(groups = { "route" }, description = "3_Route_10", priority = 138)
+	@Test(groups = { "route" }, description = "3_Route_10", priority = 139)
 	public void verifyTest_3_Route_10() throws Exception {
 		log.info(Color.CYAN + " check " + CheckPointConstant.L3_Route_10 + Color.NORMAL);
 		initSchema();
@@ -364,11 +364,16 @@ public class RouteValidatorTests extends AbstractTestValidation {
 		utx.begin();
 		try {
 			em.joinTransaction();
+			
 			Referential ref = (Referential) context.get(Constant.REFERENTIAL);
 			Route route = dao.find(Long.valueOf(2));
 			Assert.assertNotNull(route, "route id 2 not found");
+			
+			/* Instanciation */
 			LineLite line = ref.findLine(route.getLineId());
 			route.setLineLite(line);
+			
+			/* Creation JDC*/
 			ActionReporter reporter = ActionReporter.Factory.getInstance();
 			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK,
 					null);
@@ -378,14 +383,23 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			CheckpointParameters checkPoint = new CheckpointParameters(CheckPointConstant.L3_Route_10,CheckPointConstant.L3_Route_10,CheckPointConstant.L3_Route_10, 0L, false, null, null, null);
 			checkPoints.add(checkPoint);
 			parameters.getControlParameters().getGlobalCheckPoints().put(CheckPointConstant.L3_Route_10, checkPoints);
+			
 			String transportMode = line.getTransportModeName();
 			validator.validate(context, route, parameters, transportMode);
 
 			checkNoReports(context, line.getObjectId());
 			StopAreaLite stop = ref.findStopArea(route.getStopPoints().get(0).getStopAreaId());
 			stop.setDeletedTime(new Date(Calendar.getInstance().getTimeInMillis()));
-			validator.validate(context, route, parameters, transportMode);
+			validator.validate(context, route, parameters, transportMode);			
 			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Route_10, "3_route_10", null, OBJECT_STATE.WARNING);
+			
+			context.put(Constant.REPORT, new ActionReport());
+			reporter.addObjectReport(context, line.getObjectId(), OBJECT_TYPE.LINE, line.getName(), OBJECT_STATE.OK, null);
+			route.getJourneyPatterns().clear();
+			
+			validator.validate(context, route, parameters, transportMode);			
+			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Route_10, "3_route_10", null, OBJECT_STATE.WARNING);
+
 		} finally {
 			utx.rollback();
 		}

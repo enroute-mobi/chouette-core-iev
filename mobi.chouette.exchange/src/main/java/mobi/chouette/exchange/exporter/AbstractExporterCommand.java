@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.ejb.EJB;
 
 import lombok.Getter;
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
@@ -16,6 +17,7 @@ import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.parameters.AbstractExportParameter;
 import mobi.chouette.exchange.report.ActionReporter;
 
+@Log4j
 public class AbstractExporterCommand {
 
 	protected enum Mode {
@@ -27,11 +29,13 @@ public class AbstractExporterCommand {
 	DaoReader reader;
 
 	public boolean process(Context context, ProcessingCommands commands, ProgressionCommand progression,
-			boolean continueLineProcesingOnError, Mode mode) throws Exception {
+		boolean continueLineProcesingOnError, Mode mode) throws Exception {
 		boolean result = Constant.ERROR;
+		boolean disposeResult = Constant.SUCCESS;
 		AbstractExportParameter parameters = (AbstractExportParameter) context.get(Constant.CONFIGURATION);
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
 
+		try {
 		result = processInit(context, commands, progression, mode);
 
 		if (mode.equals(Mode.line)) {
@@ -75,6 +79,22 @@ public class AbstractExporterCommand {
 		}
 		// post processing
 		result = processTermination(context, commands, progression);
+		} finally {
+			// call dispose commmands
+			try {
+				log.info("dispose export command !");
+				List<? extends Command> disposeCommands = commands.getDisposeCommands(context, true);
+				for (Command command : disposeCommands) {
+					disposeResult = command.execute(context);
+					if (!disposeResult) {
+						break;
+					}
+				}
+			} catch (Exception e) {
+				log.warn("problem on dispose commands " + e.getMessage());
+			}
+			context.remove(Constant.CACHE);
+		}
 		return result;
 	}
 

@@ -123,6 +123,7 @@ public class AbstractImporterCommand {
 			// call dispose commmands
 			try {
 				List<? extends Command> disposeCommands = commands.getDisposeCommands(context, true);
+				log.info("Call dispose command exporter");
 				for (Command command : disposeCommands) {
 					disposeResult = command.execute(context);
 					if (!disposeResult) {

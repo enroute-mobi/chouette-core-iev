@@ -119,24 +119,29 @@ public class ValidationReporterImpl implements ValidationReporter {
 	@Override
 	public void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, String detail,
 			DataLocation location, String value, String refValue, DataLocation... targetLocations) {
+		
 		ValidationReport validationReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		Location detailLocation = null;
-		if (location != null)
+		if (location != null) {
 			detailLocation = new Location(location);
-
+		}
+		
 		CheckPointReport checkPoint = validationReport.findCheckPointReportByName(checkPointName);
 
-		if (checkPoint == null)
+		if (checkPoint == null) {
 			throw new NullPointerException(UNKNOWN_CHECK_POINT_NAME + checkPointName);
+		}
 		checkPoint.setState(RESULT.NOK);
 		CheckPointErrorReport newCheckPointError;
 
-		if (detail != null)
+		if (detail != null) {
 			newCheckPointError = new CheckPointErrorReport(checkPointId, checkPointCode, checkPointCode + "_" + detail,
 					detailLocation, value, refValue);
-		else
+		}
+		else {
 			newCheckPointError = new CheckPointErrorReport(checkPointId, checkPointCode, checkPointCode, detailLocation,
 					value, refValue);
+		}
 
 		if (targetLocations.length > 0) {
 			for (DataLocation dataLocation : targetLocations) {
@@ -150,8 +155,9 @@ public class ValidationReporterImpl implements ValidationReporter {
 
 		boolean reportAdded = addReferencesToActionReport(context, location, index, checkPoint.getSeverity());
 
-		if (checkPointAdded || reportAdded)
+		if (checkPointAdded || reportAdded) {
 			validationReport.addCheckPointErrorReport(checkPoint,newCheckPointError);
+		}
 	}
 
 	private boolean addReferencesToActionReport(Context context, DataLocation location, int code, SEVERITY severity) {

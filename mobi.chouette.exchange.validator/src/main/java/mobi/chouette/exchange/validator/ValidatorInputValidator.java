@@ -149,7 +149,8 @@ public class ValidatorInputValidator extends AbstractInputValidator {
 
 				// populate controlParameter
 				ControlParameters controlParameters = parameter.getControlParameters();
-				checkTask.getComplianceChecks().stream().forEach(check -> {
+				// Java IEV is told not to validate controls it doesn't implement
+				checkTask.getComplianceChecks().stream().filter(cc -> cc.getIevEnabledCheck()).forEach(check -> {
 					CheckpointParameters cp;
 					try {
 						cp = buildCheckpoint(check);
