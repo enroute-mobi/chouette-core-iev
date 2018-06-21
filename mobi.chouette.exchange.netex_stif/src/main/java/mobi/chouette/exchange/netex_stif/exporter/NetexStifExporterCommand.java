@@ -78,7 +78,8 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			Object configuration = context.get(Constant.CONFIGURATION);
 			if (!(configuration instanceof NetexStifExportParameters)) {
 				// fatal wrong parameters
-				log.error("invalid parameters for netex export " + configuration.getClass().getName());
+				log.error(Color.ORANGE +"NetexStifExporter : invalid parameters for netex export " + configuration.getClass().getName()+ Color.NORMAL);
+
 				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS,
 						"invalid parameters for netex export " + configuration.getClass().getName());
 				return Constant.ERROR;
@@ -87,6 +88,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			NetexStifExportParameters parameters = (NetexStifExportParameters) configuration;
 			if (parameters.getStartDate() != null && parameters.getEndDate() != null) {
 				if (parameters.getStartDate().after(parameters.getEndDate())) {
+					log.error(Color.ORANGE +"NetexStifExporter : end date before start date "+ Color.NORMAL);
 					reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS, "end date before start date");
 					return Constant.ERROR;
 
@@ -104,11 +106,12 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 
 		} catch (CommandCancelledException e) {
 			reporter.setActionError(context, ERROR_CODE.INTERNAL_ERROR, "Command cancelled");
-			log.error(e.getMessage());
+			log.info(Color.ORANGE +"NetexStifExporter : Command cancelled :"+ Color.NORMAL);
+			log.error(Color.ORANGE + e.getMessage()+ Color.NORMAL);
 		} catch (Exception e) {
 			if (!Constant.COMMAND_CANCELLED.equals(e.getMessage())) {
 				reporter.setActionError(context, ERROR_CODE.INTERNAL_ERROR, "Fatal :" + e);
-				log.error(e.getMessage(), e);
+				log.error(Color.ORANGE + e.getMessage() + Color.NORMAL, e);
 			}
 		} finally {
 			progression.dispose(context);
@@ -151,6 +154,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 				Map<Long, Set<Long>> linesByOp = getReader().loadLinesByCompanies(parameters.getLineReferentialId(),
 						ids);
 				if (linesByOp.isEmpty()) {
+					log.info(Color.ORANGE +"NetexStifExporter : loadLinesByCompanies -> No result fetched."+ Color.NORMAL);
 					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
 					return Constant.ERROR;
 				}
@@ -192,6 +196,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 						try {
 							Files.createDirectories(path);
 						} catch (IOException ex) {
+							log.info(Color.ORANGE +"NetexStifExporter : Cannot create working directory."+ Color.NORMAL);
 							reporter.setActionError(context, ActionReporter.ERROR_CODE.INTERNAL_ERROR,
 									"cannot create working directory");
 							return Constant.ERROR;
@@ -261,8 +266,10 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 		for (Command exportCommand : postProcessingCommands) {
 			result = exportCommand.execute(context);
 			if (!result) {
-				if (!reporter.hasActionError(context))
+				if (!reporter.hasActionError(context)) {
+					log.info(Color.ORANGE +"NetexStifExporter : No data exported."+ Color.NORMAL);
 					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED, "no data exported");
+				}
 				return Constant.ERROR;
 			}
 			progression.execute(context);
@@ -291,18 +298,11 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			if (!exportFailed) {
 				// lineCount++;
 			} else if (!continueLineProcesingOnError) {
+				log.info(Color.ORANGE +"NetexStifExporter : Unable to export data."+ Color.NORMAL);
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.INVALID_DATA, "unable to export data");
 				return Constant.ERROR;
 			}
 		}
-		// check if data where exported
-		// if (lineCount == 0) {
-		// progression.terminate(context, 1);
-		// reporter.setActionError(context,
-		// ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED, "no data exported");
-		// progression.execute(context);
-		// return Constant.ERROR;
-		// }
 		return result;
 	}
 

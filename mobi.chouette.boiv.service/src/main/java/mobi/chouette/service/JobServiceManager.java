@@ -190,12 +190,14 @@ public class JobServiceManager {
 		try {
 			// Instancier le modèle du service 'upload'
 			importTask = (ImportTask) actionDAO.find(JobData.ACTION.importer, id);
+			
 			if (importTask == null) {
 				throw new RequestServiceException(RequestExceptionCode.UNKNOWN_JOB, "unknown import id " + id);
 			}
-			if (!importTask.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
+			else if (!importTask.getStatus().equalsIgnoreCase(JobService.STATUS.NEW.name())) {
 				throw new RequestServiceException(RequestExceptionCode.SCHEDULED_JOB, "already managed job " + id);
 			}
+			
 			log.info("Log importTask : "+importTask.toString() );
 			
 			JobService jobService = new JobService(APPLICATION_NAME, rootDirectory, importTask);
@@ -205,29 +207,22 @@ public class JobServiceManager {
 			deleteDirectory(jobService);
 			Files.createDirectories(jobService.getPath());
 			// copy file from Ruby server
-			String urlName = importTask.getUrl();
-			log.info("createImportJob 1 - urlname = "+urlName);
-			if (!urlName.startsWith("file:")) {
-				String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
-				log.info("createImportJob 2 - guiBaseUrl = "+guiBaseUrl);
-				String guiToken = ""; // System.getProperty(APPLICATION_NAME +
-										// PropertyNames.GUI_URL_TOKEN);
-				if (guiBaseUrl != null && !guiBaseUrl.isEmpty()) {
-					// build url with token
-					if (guiToken != null && !guiToken.isEmpty()) {
-						// new fashion url
-						urlName = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()+ "/download_file?token=" + guiToken;
-					} else {						
-						urlName = guiBaseUrl + "/workbenches/" + importTask.getWorkbenchId() + "/imports/" + importTask.getId() + "/download?token=" + urlName;
-						log.info("createImportJob 3 - urlName = "+urlName);
-					}
-				}
-			}
-			log.info("createImportJob 4 - pre uploadImportFile : "+urlName);
 
-			// TODO : call uploadImportFileFromHttp when guiToken will be implemented
-			//  call uploadImportFile only if urlName is "file:/// ...." 
-			uploadImportFile(jobService, urlName);
+			String guiBaseUrl = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_BASENAME);
+			String guiToken =  System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
+
+			if (guiBaseUrl == null || guiBaseUrl.isEmpty()) {
+				throw new Exception("Missing gui.url.base param in conf file."); 
+			}
+			if (guiToken == null || guiToken.isEmpty()) {
+				throw new Exception("Missing gui.url.token param in conf file."); 
+			}
+		
+			String	urlPath = guiBaseUrl + "/api/v1/internals/netex_imports/" + importTask.getId()+ "/download";
+		
+			log.info("createImportJob 4 - pre uploadImportFile : "+urlPath);
+
+			uploadImportFileFromHttp(jobService, urlPath);
 
 			jobService.setStatus(JobService.STATUS.PENDING);
 			importTask.setStatus(jobService.getStatus().name().toLowerCase());
@@ -280,11 +275,12 @@ public class JobServiceManager {
 	
 	
 	private void uploadImportFileFromHttp(JobService jobService, String urlName) throws ServiceException {
-		log.info("2 Import URL : " + urlName);
+		log.info("UploadImportFileFromHttp : " + urlName);
 
 		String guiToken = System.getProperty(APPLICATION_NAME + PropertyNames.GUI_URL_TOKEN);
 		File dest = new File(jobService.getPathName(), jobService.getInputFilename());
-		log.info("2 Import destination file  : "+jobService.getPathName()+" : "+jobService.getInputFilename());
+		
+		log.info("UploadImportFileFromHttp destination file  : "+jobService.getPathName()+" : "+jobService.getInputFilename());
 
 		try (CloseableHttpClient httpclient = HttpClients.createDefault();
 				BufferedOutputStream baos = new BufferedOutputStream(new FileOutputStream(dest))) {
@@ -548,7 +544,6 @@ public class JobServiceManager {
 						jobServiceManager.abort(jobService);
 					}
 				} finally {
-					/* Note af : to test the file output, we temporary remove the file deletion */
 					deleteDirectory(jobService);
 				}
 
@@ -557,7 +552,6 @@ public class JobServiceManager {
 		}
 		} else {
 			log.warn("no URL or no Token to notify end of job");
-			/* Note af : to test the file output, we temporary remove the file deletion */
 			deleteDirectory(jobService);
 		}
 	}
