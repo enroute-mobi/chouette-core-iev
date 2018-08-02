@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Color;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.model.CalendarDay;
@@ -161,7 +163,7 @@ public class ChecksumUtil {
 				if (first) {
 					first = false;
 				} else {
-					cs.append(LIST_SEP);
+					cs.append(SEP);
 				}
 				cs.append(area.objectIdSuffix());
 			}
@@ -213,7 +215,7 @@ public class ChecksumUtil {
 				if (first) {
 					first = false;
 				} else {
-					cs.append(SEP);
+					cs.append(LIST_SEP);
 				}
 				cs.append(area.objectIdSuffix());
 			}
@@ -271,8 +273,17 @@ public class ChecksumUtil {
 			cs.append(EMPTY_LIST);
 		} else {
 			boolean first = true;
-			List<String> vjascs = collectChecksums(journey.getVehicleJourneyAtStops(), false);
-			for (String value : vjascs) {
+			List<VehicleJourneyAtStop> vjas = journey.getVehicleJourneyAtStops();
+			/* VehicleJourneyAtStop list needs to be ordered based on the stopPoint order through the journey */ 
+			Collections.sort(vjas, new Comparator<VehicleJourneyAtStop>() {
+			    @Override
+			    public int compare(VehicleJourneyAtStop o1, VehicleJourneyAtStop o2) {
+			        return o1.getStopPoint().getPosition().compareTo(o1.getStopPoint().getPosition());
+			    }
+			});
+			List<String> vjasChecksum = collectChecksums(vjas, false);
+
+			for (String value : vjasChecksum) {
 				if (first) {
 					first = false;
 				} else {
@@ -301,6 +312,7 @@ public class ChecksumUtil {
 	 */
 	public static void checksum(Context context, VehicleJourneyAtStop passingTime) {
 		StringBuilder cs = new StringBuilder();
+		SimpleDateFormat ft = new SimpleDateFormat ("HH:mm");
 		cs.append(toString(passingTime.getDepartureTime()));
 		cs.append(SEP);
 		cs.append(toString(passingTime.getArrivalTime()));
@@ -328,7 +340,7 @@ public class ChecksumUtil {
 		StringBuilder cs = new StringBuilder();
 		cs.append(toString(date.getDate()));
 		cs.append(SEP);
-		cs.append(date.getIncluded().toString().toLowerCase());
+		cs.append(booleanChecksumOutput(date.getIncluded()));
 		date.setChecksumSource(cs.toString());
 		date.setChecksum(hashString(date.getChecksumSource()));
 	}
@@ -420,7 +432,7 @@ public class ChecksumUtil {
 	 * @return formated time for checksum
 	 */
 	private static String toString(Time time) {
-		DateFormat format = new SimpleDateFormat("HH:mm:ss");
+		DateFormat format = new SimpleDateFormat("HH:mm");
 		return format.format(time);
 	}
 
@@ -487,6 +499,7 @@ public class ChecksumUtil {
 			return EMPTY_VALUE;
 		return value;
 	}
+	
 
 	/**
 	 * collect every checksums from list
@@ -507,5 +520,15 @@ public class ChecksumUtil {
 		if (!result.isEmpty() && sorted)
 			Collections.sort(result);
 		return result;
+	}
+	
+	/* Small  modification to match rails side checksum computation : if false -> '-' else 'true' */
+	private static String booleanChecksumOutput (Boolean bool) {
+		if (bool) {
+			return bool.toString().toLowerCase();
+		}
+		else {
+			return EMPTY_VALUE;
+		}
 	}
 }
