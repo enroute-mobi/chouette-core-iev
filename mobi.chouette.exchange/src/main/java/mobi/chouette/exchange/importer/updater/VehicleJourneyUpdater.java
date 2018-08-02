@@ -8,7 +8,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.CollectionUtil;
+import mobi.chouette.common.Color;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.Pair;
@@ -33,7 +35,10 @@ import mobi.chouette.model.util.ChecksumUtil;
 import mobi.chouette.model.util.ChouetteModelUtil;
 import mobi.chouette.model.util.ObjectFactory;
 import mobi.chouette.model.util.Referential;
+import lombok.extern.log4j.Log4j;
 
+
+@Log4j
 @Stateless(name = VehicleJourneyUpdater.BEAN_NAME)
 public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 
@@ -345,7 +350,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		Comparator<Footnote> footnoteCodeCompatator = new Comparator<Footnote>() {
 			@Override
 			public int compare(Footnote o1, Footnote o2) {
-				return o2.getCode().compareTo(o1.getCode());
+				return o2.getChecksum().compareTo(o1.getChecksum());
 			}
 		};
 		
@@ -356,17 +361,18 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		
 		// add all new footnotes
 		footnotes.addAll(addedFootnotes);
-		
+
 		// Find modified footnotes
 		Collection<Pair<Footnote, Footnote>> modifiedFootnotes = CollectionUtil
 				.intersection(oldValue.getFootnotes(),
 						newValue.getFootnotes(),
 						footnoteCodeCompatator);
+		
 		for (Pair<Footnote, Footnote> pair : modifiedFootnotes) {
 			footnoteUpdater.update(context, pair.getLeft(), pair.getRight());
 			footnotes.add(pair.getLeft());
 		}
-		
+
 		for(Footnote f : footnotes) {
 			ChecksumUtil.checksum(context, f);
 		}

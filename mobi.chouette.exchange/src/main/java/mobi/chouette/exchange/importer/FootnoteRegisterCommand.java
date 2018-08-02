@@ -15,10 +15,12 @@ import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.FootnoteDAO;
+import mobi.chouette.common.Color;
 import mobi.chouette.common.Constant;
 import mobi.chouette.exchange.parameters.AbstractImportParameter;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.util.Referential;
+import mobi.chouette.model.util.ChecksumUtil;
 
 @Log4j
 @Stateless(name = FootnoteRegisterCommand.COMMAND)
@@ -34,6 +36,7 @@ public class FootnoteRegisterCommand implements Command {
 	public boolean execute(mobi.chouette.common.Context context) throws Exception {
 		
         // save has been abandoned
+		
 		AbstractImportParameter parameters = (AbstractImportParameter) context.get(Constant.CONFIGURATION);
 		if (parameters.isNoSave()) return false;
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
@@ -41,6 +44,8 @@ public class FootnoteRegisterCommand implements Command {
 		Iterator<Footnote> iterator = footnotes.values().iterator();
 		while (iterator.hasNext()) {
 			Footnote footnote = iterator.next();
+			/* Generate checksum during the creation process*/
+			ChecksumUtil.checksum(context, footnote);
 			footnoteDAO.create(footnote);
 			footnoteDAO.flush();
 		}
