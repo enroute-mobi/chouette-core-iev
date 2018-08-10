@@ -34,30 +34,25 @@ public class DaoNetexStifLoadOrganisationsCommand implements Command {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean execute(Context context) throws Exception {
-
-		boolean result = Constant.SUCCESS;
+		boolean result = Constant.ERROR;
 		Monitor monitor = MonitorFactory.start(COMMAND);
 
 		try {
 			ExportableData collection = (ExportableData) context.computeIfAbsent(Constant.EXPORTABLE_DATA,
 					c -> new ExportableData());
 			List<Organisation> list = organisationDAO.findAll();
-			/* If there is no organisation fetched */
-			if (list.isEmpty()) {
-				result = Constant.ERROR;
-			}
-			
 			list.forEach(l -> {
+
 				if (l.getCode() != null)
 					collection.getOrganisations().put(l.getCode(), l);
 			});
-
+			result = Constant.SUCCESS;
 		} catch (Exception e) {
-			result = Constant.ERROR;
 			log.error(e.getMessage(), e);
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
+
 		return result;
 	}
 
