@@ -43,4 +43,18 @@ public class StopAreaLiteDAOImpl extends GenericTenantDAOImpl<StopAreaLite> impl
 		result = query.getResultList();
 		return result;
 	}
+	
+	@Override
+	public List<StopAreaLite> findNonCommercialStopAreas() {
+		
+		List<StopAreaLite> result = null;
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<StopAreaLite> criteria = builder.createQuery(type);
+		Root<StopAreaLite> root = criteria.from(type);
+		Predicate predicate = builder.not(root.get(StopAreaLite_.areaType.getName()).in("zdlp","zdep"));
+		criteria.where(predicate);
+		TypedQuery<StopAreaLite> query = em.createQuery(criteria);
+		result = query.getResultList();
+		return result;
+	}
 }

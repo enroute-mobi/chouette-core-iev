@@ -24,6 +24,7 @@ import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.util.Referential;
 
+
 /**
  * @author michel
  *
@@ -123,6 +124,7 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 						try {
 							validationReporter.addItemToValidationReport(context, checkParam.getSpecificCode(),
 									checkParam.isErrorType() ? "E" : "W");
+					
 							method.invoke(this, context, object, checkParam);
 						} catch (ValidationException ve) {
 							throw ve;
@@ -587,14 +589,15 @@ public abstract class GenericValidator<T extends ChouetteIdentifiedObject> {
 	 */
 	protected double getSpeedBetweenStops(Context context, VehicleJourneyAtStop passingTime1,
 			VehicleJourneyAtStop passingTime2) {
+	
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 		// TODO find distance with shapes if present
 
 		// else use flying distance
-		StopAreaLite stop1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
+		StopAreaLite stop1 = r.findStopAreaExtended(passingTime1.getStopPoint().getStopAreaId());
 		if (stop1 == null)
 			throw new ValidationException("unknown StopArea for id " + passingTime1.getStopPoint().getStopAreaId());
-		StopAreaLite stop2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+		StopAreaLite stop2 = r.findStopAreaExtended(passingTime2.getStopPoint().getStopAreaId());
 		if (stop2 == null)
 			throw new ValidationException("unknown StopArea for id " + passingTime2.getStopPoint().getStopAreaId());
 
