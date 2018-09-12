@@ -28,7 +28,7 @@ import mobi.chouette.model.converter.HstoreConverter;
 @Entity
 @Table(name = "organisations")
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = { "ssoAttributes", "lines" })
 @Log4j
 public class Organisation extends ChouetteObject {
 	private static final long serialVersionUID = 4952690444017749057L;
