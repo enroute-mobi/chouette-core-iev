@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
+import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
@@ -14,6 +15,7 @@ import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.util.Referential;
 
+@Log4j
 public abstract class AbstractValidator {
 
 	private static final String REGEX_ID_PREFIX = "^[\\w-]+:";
@@ -45,6 +47,7 @@ public abstract class AbstractValidator {
 	}
 
 	public void init(Context context) {
+		
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		String fileName = (String) context.get(Constant.FILE_NAME);
@@ -90,7 +93,9 @@ public abstract class AbstractValidator {
 
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_1, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2, "E");
+			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_3, "E");
 
+			
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3, "E");
