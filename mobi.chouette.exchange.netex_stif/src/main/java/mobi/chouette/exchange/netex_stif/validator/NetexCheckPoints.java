@@ -46,6 +46,9 @@ public class NetexCheckPoints {
 	public static final String L2_NeTExSTIF_RoutingConstraintZone_1 = "2-NeTExSTIF-RoutingConstraintZone-1"; // RoutingConstraintZoneValidator
 	public static final String L2_NeTExSTIF_RoutingConstraintZone_2 = "2-NeTExSTIF-RoutingConstraintZone-2"; // RoutingConstraintZoneValidator
 
+	public static final String L2_NeTExSTIF_RoutingConstraintZone_3 = "2-NeTExSTIF-RoutingConstraintZone-3"; // RoutingConstraintValidator
+
+	
 	public static final String L2_NeTExSTIF_ServiceJourney_1 = "2-NeTExSTIF-ServiceJourney-1"; // ServiceJourneyValidator
 	public static final String L2_NeTExSTIF_ServiceJourney_2 = "2-NeTExSTIF-ServiceJourney-2"; // ServiceJourneyValidator
 	public static final String L2_NeTExSTIF_ServiceJourney_3 = "2-NeTExSTIF-ServiceJourney-3"; // ServiceJourneyValidator

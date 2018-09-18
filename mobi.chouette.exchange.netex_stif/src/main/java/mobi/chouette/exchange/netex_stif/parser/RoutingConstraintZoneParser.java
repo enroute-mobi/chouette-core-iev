@@ -19,6 +19,7 @@ import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.model.NetexStifObjectFactory;
 import mobi.chouette.exchange.netex_stif.model.RoutingConstraintZone;
 import mobi.chouette.exchange.netex_stif.validator.RoutingConstraintZoneValidator;
+import mobi.chouette.exchange.netex_stif.validator.RoutingConstraintValidator;
 import mobi.chouette.exchange.netex_stif.validator.ValidatorFactory;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
@@ -83,6 +84,11 @@ public class RoutingConstraintZoneParser implements Parser {
 					routingConstraint.setRoute(route);
 					routingConstraint.getStopPoints().addAll(list);
 					routingConstraint.setDataSourceRef(dataSourceRef);
+					
+					/*Validator ici !!!*/
+					RoutingConstraintValidator constraintValidator = (RoutingConstraintValidator) ValidatorFactory.getValidator(context, RoutingConstraintValidator.class);
+					constraintValidator.validate(context, routingConstraint, lineNumber, columnNumber);
+					/**/
 				}
 			}
 
@@ -106,6 +112,7 @@ public class RoutingConstraintZoneParser implements Parser {
 							attr_version, content, lineNumber, columnNumber);
 				zone.getStopPointsRef().add(ref);
 				List<StopPoint> list = factory.getStopPoints(ref);
+				
 				if (list != null) {
 					for (StopPoint stopPoint : list) {
 						// routingList.add(stopPoint);
