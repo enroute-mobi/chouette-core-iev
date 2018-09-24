@@ -31,10 +31,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -481,9 +483,8 @@ public class JobServiceManager {
 			log.info("JobServiceManager : export output file : "+jobService.getPath().toFile() + jobService.getOutputFilename());
 			putFile = new File(jobService.getPath().toFile(), "" + jobService.getOutputFilename());
 			if (jobService.notFailed() && putFile.isFile()) {
-				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload?file="
-						+ jobService.getOutputFilename();
-				method = "PUT";
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId();
+				method = "POST";
 			} else {
 				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/notify_parent";
 				method = "GET";
@@ -508,17 +509,24 @@ public class JobServiceManager {
 					case "GET":
 						httpRequest = new HttpGet(urlName);
 						break;
-					case "PUT":
-						HttpPut httpput = new HttpPut(urlName);
-						httpput.setEntity(new FileEntity(putFile, ContentType.APPLICATION_OCTET_STREAM));
-						httpRequest = httpput;
+					case "POST":
+						HttpPost postRequest = new HttpPost(urlName);
+						MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+						builder.addBinaryBody(
+							    "exportFile",
+							    new FileInputStream(putFile),
+							    ContentType.APPLICATION_OCTET_STREAM,
+							    putFile.getName()
+							);
+						HttpEntity multipart = builder.build();
+						postRequest.setEntity(multipart);
+						httpRequest = postRequest;
 						break;
 					}
 					log.info("JobServiceManager notifyGIU : step 1) httpRequest");
 
 					httpRequest.setHeader(HttpHeaders.AUTHORIZATION, "Token token=" + token);
 					ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
 						@Override
 						public String handleResponse(final HttpResponse response)
 								throws ClientProtocolException, IOException {
@@ -531,7 +539,7 @@ public class JobServiceManager {
 							}
 						}
 					};
-					log.info("JobServiceManager notifyGIU : step 2)before httpclient.execute");
+					log.info("JobServiceManager notifyGIU : step 2) before httpclient.execute");
 
 					String responseBody = httpclient.execute(httpRequest, responseHandler);
 					
@@ -539,19 +547,18 @@ public class JobServiceManager {
 
 				} catch (Exception e) {
 					log.error("End of task not notified, cannot invoke url " + urlName + ", cause : " + e.getMessage());
-					if (method.equals("PUT")) {
+					if (method.equals("POST")) {
 						// abort task if file not sent
 						jobServiceManager.abort(jobService);
 					}
 				} finally {
 					deleteDirectory(jobService);
 				}
-
 			};
 			new Thread(r).start();
 		}
 		} else {
-			log.warn("no URL or no Token to notify end of job");
+			log.warn("No URL or no Token to notify end of job.");
 			deleteDirectory(jobService);
 		}
 	}
