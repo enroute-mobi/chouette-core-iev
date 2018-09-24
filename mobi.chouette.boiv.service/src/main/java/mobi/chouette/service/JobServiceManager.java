@@ -483,7 +483,7 @@ public class JobServiceManager {
 			log.info("JobServiceManager : export output file : "+jobService.getPath().toFile() + jobService.getOutputFilename());
 			putFile = new File(jobService.getPath().toFile(), "" + jobService.getOutputFilename());
 			if (jobService.notFailed() && putFile.isFile()) {
-				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId();
+				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/upload";
 				method = "POST";
 			} else {
 				urlName = guiBaseUrl + "/api/v1/internals/netex_exports/" + jobService.getId() + "/notify_parent";
