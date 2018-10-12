@@ -78,8 +78,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			Object configuration = context.get(Constant.CONFIGURATION);
 			if (!(configuration instanceof NetexStifExportParameters)) {
 				// fatal wrong parameters
-				log.error(Color.ORANGE +"NetexStifExporter : invalid parameters for netex export " + configuration.getClass().getName()+ Color.NORMAL);
-
+				log.error(Color.RED +"NetexStifExporter : invalid parameters for netex export " + configuration.getClass().getName()+ Color.NORMAL);
 				reporter.setActionError(context, ERROR_CODE.INVALID_PARAMETERS,
 						"invalid parameters for netex export " + configuration.getClass().getName());
 				return Constant.ERROR;
@@ -94,7 +93,6 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 
 				}
 			}
-			log.info("parameters = " + parameters);
 
 			// no validation available for this export
 			parameters.setValidateAfterExport(false);
@@ -105,9 +103,9 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			result = process(context, commands, progression, true, Mode.line);
 
 		} catch (CommandCancelledException e) {
-			reporter.setActionError(context, ERROR_CODE.INTERNAL_ERROR, "Command cancelled");
 			log.info(Color.ORANGE +"NetexStifExporter : Command cancelled :"+ Color.NORMAL);
-			log.error(Color.ORANGE + e.getMessage()+ Color.NORMAL);
+			log.error(Color.RED + e.getMessage()+ Color.NORMAL);
+			reporter.setActionError(context, ERROR_CODE.INTERNAL_ERROR, "Command cancelled");
 		} catch (Exception e) {
 			if (!Constant.COMMAND_CANCELLED.equals(e.getMessage())) {
 				reporter.setActionError(context, ERROR_CODE.INTERNAL_ERROR, "Fatal :" + e);
@@ -154,7 +152,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 				Map<Long, Set<Long>> linesByOp = getReader().loadLinesByCompanies(parameters.getLineReferentialId(),
 						ids);
 				if (linesByOp.isEmpty()) {
-					log.info(Color.ORANGE +"NetexStifExporter : loadLinesByCompanies -> No result fetched."+ Color.NORMAL);
+					log.error(Color.MAGENTA + "=== Netex Export Error => loadLinesByCompanies empty result set  ===" + Color.NORMAL);
 					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
 					return Constant.ERROR;
 				}
@@ -196,7 +194,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 						try {
 							Files.createDirectories(path);
 						} catch (IOException ex) {
-							log.info(Color.ORANGE +"NetexStifExporter : Cannot create working directory."+ Color.NORMAL);
+							log.error(Color.RED +"NetexStifExporter : Cannot create working directory."+ Color.NORMAL);
 							reporter.setActionError(context, ActionReporter.ERROR_CODE.INTERNAL_ERROR,
 									"cannot create working directory");
 							return Constant.ERROR;
@@ -267,7 +265,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			result = exportCommand.execute(context);
 			if (!result) {
 				if (!reporter.hasActionError(context)) {
-					log.info(Color.ORANGE +"NetexStifExporter : No data exported."+ Color.NORMAL);
+					log.error(Color.RED  +"NetexStifExporter -W processPostLines ->  Error processing this postProcessingCommand -> "+exportCommand.toString()+ Color.NORMAL);
 					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED, "no data exported");
 				}
 				return Constant.ERROR;
@@ -298,7 +296,7 @@ public class NetexStifExporterCommand extends AbstractExporterCommand implements
 			if (!exportFailed) {
 				// lineCount++;
 			} else if (!continueLineProcesingOnError) {
-				log.info(Color.ORANGE +"NetexStifExporter : Unable to export data."+ Color.NORMAL);
+				log.error(Color.RED +"NetexStifExporter : Unable to export data."+ Color.NORMAL);
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.INVALID_DATA, "unable to export data");
 				return Constant.ERROR;
 			}

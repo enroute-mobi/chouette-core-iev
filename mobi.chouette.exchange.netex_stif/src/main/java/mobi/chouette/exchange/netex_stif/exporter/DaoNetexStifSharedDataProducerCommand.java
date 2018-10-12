@@ -83,30 +83,30 @@ public class DaoNetexStifSharedDataProducerCommand implements Command {
 		NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
 		List<StopArea> stops = stopAreaDao.findAll(parameters.getStopAreaReferentialId());
 		collection.getStopAreas().addAll(stops);
-		stops.forEach(l -> {
-			switch (l.getAreaType())
-			{
-			case "zder": 
-				collection.getZders().add(l);
-				break;
-			case "zdep":
-				collection.getZdeps().add(l);
-				break;
-			case "zdlp": 
-				collection.getZdlps().add(l);
-				break;
-			case "zdlr":
-				collection.getZdlrs().add(l);
-				break;
-			case "lda":
-				collection.getLdas().add(l);
-				break;
-			case "gdl":
-				collection.getGdls().add(l);
-				break;
+		for (StopArea l : stops) {
+			if (l.getAreaType()!=null) {
+				switch (l.getAreaType()) {
+					case "zder": 
+						collection.getZders().add(l);
+						break;
+					case "zdep":
+						collection.getZdeps().add(l);
+						break;
+					case "zdlp": 
+						collection.getZdlps().add(l);
+						break;
+					case "zdlr":
+						collection.getZdlrs().add(l);
+						break;
+					case "lda":
+						collection.getLdas().add(l);
+						break;
+					case "gdl":
+						collection.getGdls().add(l);
+						break;
+				}
 			}
-			
-		});
+		}
 	}
 
 	private void collectCodifLigneData(Context context) {

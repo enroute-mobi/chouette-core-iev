@@ -169,10 +169,11 @@ public class ValidatorCommand implements Command {
 			}
 		}
 		// post processing
-		
+
 		// check if data where validated
 		if (lineCount == 0) {
 			progression.terminate(context, 1);
+			log.error(Color.RED +"ValidatorCommand : process -> lineCount = 0 ."+ Color.NORMAL);
 			reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED,"no data validated");
 			progression.execute(context);
 			return Constant.ERROR;		
@@ -183,6 +184,7 @@ public class ValidatorCommand implements Command {
 		for (Command command : postProcessingCommands) {
 			result = command.execute(context);
 			if (!result) {
+				log.error(Color.RED +"ValidatorCommand : process -> postProcessingCommands -> error result : "+command.toString()+"."+ Color.NORMAL);
 				if (!reporter.hasActionError(context))
 				   reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED,"no data exported");
 				return Constant.ERROR;

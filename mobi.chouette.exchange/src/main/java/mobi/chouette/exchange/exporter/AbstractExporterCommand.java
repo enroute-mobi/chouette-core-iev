@@ -57,7 +57,7 @@ public class AbstractExporterCommand {
 
 			Set<Long> lines = reader.loadLines(parameters,type, ids);
 			if (lines.isEmpty()) {
-				log.info(Color.ORANGE +"AbstractExporterCommand : process -> No lines fetched."+ Color.NORMAL);
+				log.error(Color.RED + "=== Export Error => loadLinesByCompanies empty result set  ===" + Color.NORMAL);
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
 				return Constant.ERROR;
 
@@ -108,6 +108,7 @@ public class AbstractExporterCommand {
 		for (Command exportCommand : postProcessingCommands) {
 			result = exportCommand.execute(context);
 			if (!result) {
+				log.error(Color.RED +"AbstractExporterCommand : processTermination ->  Error processing this postProcessingCommands -> "+exportCommand.toString()+"."+ Color.NORMAL);
 				if (!reporter.hasActionError(context))
 					reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED, "no data exported");
 				return Constant.ERROR;
@@ -145,6 +146,7 @@ public class AbstractExporterCommand {
 		}
 		// check if data where exported
 		if (lineCount == 0) {
+			log.error(Color.RED +"AbstractExporterCommand : processLines ->  Error no line fetched."+ Color.NORMAL);
 			progression.terminate(context, 1);
 			reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_PROCEEDED, "no data exported");
 			progression.execute(context);
@@ -161,15 +163,10 @@ public class AbstractExporterCommand {
 		List<? extends Command> preProcessingCommands = commands.getPreProcessingCommands(context, true);
 		progression.initialize(context, preProcessingCommands.size() + (mode.equals(Mode.line) ? 1 : 0));
 		
-		log.info(Color.ORANGE +"AbstractExporterCommand : preProcessingCommands size -> "+preProcessingCommands.size()+"."+ Color.NORMAL);
-		
-		for (Command exportCommand : preProcessingCommands) {
-			
-			log.info(Color.ORANGE +"AbstractExporterCommand : exportCommand -> "+exportCommand.toString()+"."+ Color.NORMAL);
-			
+		for (Command exportCommand : preProcessingCommands) {		
 			result = exportCommand.execute(context);
 			if (!result) {
-				log.info(Color.ORANGE +"AbstractExporterCommand : processInit -> No results."+ Color.NORMAL);
+				log.error(Color.RED +"AbstractExporterCommand : processInit -> No results."+ Color.NORMAL);
 				reporter.setActionError(context, ActionReporter.ERROR_CODE.NO_DATA_FOUND, "no data selected");
 				progression.execute(context);
 				break;
