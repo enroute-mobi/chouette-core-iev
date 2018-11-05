@@ -36,6 +36,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -512,12 +513,8 @@ public class JobServiceManager {
 					case "POST":
 						HttpPost postRequest = new HttpPost(urlName);
 						MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-						builder.addBinaryBody(
-							    "exportFile",
-							    new FileInputStream(putFile),
-							    ContentType.APPLICATION_OCTET_STREAM,
-							    putFile.getName()
-							);
+						builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+						builder.addBinaryBody("exportFile", putFile, ContentType.DEFAULT_BINARY, putFile.getName());
 						HttpEntity multipart = builder.build();
 						postRequest.setEntity(multipart);
 						httpRequest = postRequest;
