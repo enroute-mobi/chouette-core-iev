@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
 
+import lombok.extern.log4j.Log4j;
+import mobi.chouette.common.Color;
 import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.Network;
 
+@Log4j
 public class NetexLignesWriter extends AbstractWriter {
 
 	public static void write(Writer writer, ExportableData data) throws IOException {
@@ -17,8 +20,7 @@ public class NetexLignesWriter extends AbstractWriter {
 		String participantRef = OFFRE_PARTICIPANT_REF;
 		String prefix = ROOT_PREFIX;
 
-		openPublicationDelivery(writer, participantRef, null, "CODIFLIGNE",
-				FILE_TYPE.CODIFLIGNE);
+		openPublicationDelivery(writer, participantRef, null, "CODIFLIGNE", FILE_TYPE.CODIFLIGNE);
 		openCompositeFrame(writer, prefix, "NETEX_IDF", "", false, false);
 		writeNetworks(writer, data);
 		openServiceFrame(writer, "STIF:CODIFLIGNE:ServiceFrame:lineid");
@@ -33,7 +35,7 @@ public class NetexLignesWriter extends AbstractWriter {
 		closePublicationDelivery(writer);
 	}
 
-	private static void writeTypesOfValues(Writer writer, ExportableData data)  throws IOException {
+	private static void writeTypesOfValues(Writer writer, ExportableData data) throws IOException {
 		write(writer, 5, "<typesOfValue>");
 		write(writer, 6, "<TypeOfLine version=\"any\" id=\"STIF:CODIFLIGNE:seasonal\"/>");
 		write(writer, 5, "</typesOfValue>");
@@ -86,12 +88,15 @@ public class NetexLignesWriter extends AbstractWriter {
 
 	private static void writeNetworks(Writer writer, ExportableData data) throws IOException {
 		Set<Network> networks = data.getNetworks();
-
-		for (Network network : networks) {
-			String frameId = network.getObjectId().replace(":PTNetwork:", ":ServiceFrame:");
-			openServiceFrame(writer, frameId);
-			writeXml(writer, network.getImportXml(), 5);
-			closeServiceFrame(writer);
+		if (networks !=null) {
+			for (Network network : networks) {
+				if (network != null) {
+					String frameId = network.getObjectId().replace(":PTNetwork:", ":ServiceFrame:");
+					openServiceFrame(writer, frameId);
+					writeXml(writer, network.getImportXml(), 5);
+					closeServiceFrame(writer);
+				}
+			}
 		}
 
 	}
