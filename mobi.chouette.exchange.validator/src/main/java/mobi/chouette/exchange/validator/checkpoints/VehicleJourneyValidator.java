@@ -18,6 +18,7 @@ import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
+	
 
 	private static final String MISSING_STOP_AREA_REFERENCE = " : missing StopArea reference";
 	private static final String VEHICLE_JOURNEY = "VehicleJourney ";
@@ -154,8 +155,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 
 			long speed = (long) getSpeedBetweenStops(context, passingTime1, passingTime2);
 			if (speed > speedMax) {
-				StopAreaLite zdep1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
-				StopAreaLite zdep2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+				StopAreaLite zdep1 = r.findStopAreaExtended(passingTime1.getStopPoint().getStopAreaId());
+				StopAreaLite zdep2 = r.findStopAreaExtended(passingTime2.getStopPoint().getStopAreaId());
 
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);
@@ -166,8 +167,8 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 
 			}
 			if (speedMin > 0 && speed < speedMin) {
-				StopAreaLite zdep1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
-				StopAreaLite zdep2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+				StopAreaLite zdep1 = r.findStopAreaExtended(passingTime1.getStopPoint().getStopAreaId());
+				StopAreaLite zdep2 = r.findStopAreaExtended(passingTime2.getStopPoint().getStopAreaId());
 
 				DataLocation source = new DataLocation(object);
 				DataLocation target1 = new DataLocation(zdep1);

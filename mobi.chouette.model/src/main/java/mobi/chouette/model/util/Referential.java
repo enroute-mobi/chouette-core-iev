@@ -3,6 +3,7 @@ package mobi.chouette.model.util;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -69,6 +70,10 @@ public class Referential implements java.io.Serializable {
 	@Setter
 	private Map<String, StopAreaLite> sharedReadOnlyStopAreas = new HashMap<>();
 
+	@Getter
+	@Setter
+	private Map<String, StopAreaLite> nonCommercialStopAreas = new HashMap<>();
+	
 	@Getter
 	@Setter
 	private Map<String, GroupOfLine> sharedGroupOfLines = new HashMap<>();
@@ -173,6 +178,13 @@ public class Referential implements java.io.Serializable {
 				.filter(stop -> stop.getId().equals(id)).findFirst();
 		return result.orElse(null);
 	}
+	
+	// Find the stopArea among all the available stopAreas, independently of their area_type value
+	public StopAreaLite findStopAreaExtended(Long id) {
+		Optional<StopAreaLite> result = Stream.concat(sharedReadOnlyStopAreas.values().stream(), nonCommercialStopAreas.values().stream())
+		.filter(stop -> stop.getId().equals(id)).findFirst();
+		return result.orElse(null);
+	}
 
 	public CompanyLite findCompany(Long id) {
 		Optional<CompanyLite> result = sharedReadOnlyCompanies.values().stream()
@@ -254,6 +266,7 @@ public class Referential implements java.io.Serializable {
 		sharedReadOnlyLines.clear();
 		sharedReadOnlyCompanies.clear();
 		sharedReadOnlyStopAreas.clear();
+		nonCommercialStopAreas.clear();
 	}
 
 }

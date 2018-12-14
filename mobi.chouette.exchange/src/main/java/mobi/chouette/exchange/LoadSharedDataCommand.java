@@ -77,6 +77,11 @@ public class LoadSharedDataCommand implements Command {
 				referential.getSharedReadOnlyStopAreas().put(stopArea.getObjectId(), stopArea);
 				stopAreaDAO.detach(stopArea);
 			}
+			
+			for (StopAreaLite stopArea : stopAreaDAO.findNonCommercialStopAreas()) {
+				referential.getNonCommercialStopAreas().put(stopArea.getObjectId(), stopArea);
+				stopAreaDAO.detach(stopArea);
+			}
 
 			result = Constant.SUCCESS;
 
