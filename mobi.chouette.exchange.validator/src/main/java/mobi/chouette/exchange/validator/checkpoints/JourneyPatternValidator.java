@@ -126,8 +126,8 @@ public class JourneyPatternValidator extends GenericValidator<JourneyPattern>  {
 					.collect(Collectors.toList());
 			list.stream().forEach(tt -> {
 				DataLocation source = new DataLocation(tt.getVehicleJourney());
-				StopAreaLite sa1 = ref.findStopArea(tt.getVehicleJourneyAtStop1().getStopPoint().getStopAreaId());
-				StopAreaLite sa2 = ref.findStopArea(tt.getVehicleJourneyAtStop2().getStopPoint().getStopAreaId());
+				StopAreaLite sa1 = ref.findStopAreaExtended(tt.getVehicleJourneyAtStop1().getStopPoint().getStopAreaId());
+				StopAreaLite sa2 = ref.findStopAreaExtended(tt.getVehicleJourneyAtStop2().getStopPoint().getStopAreaId());
 				long delta = Math.abs(tt.getDelta() - average);
 				DataLocation target1 = new DataLocation(sa1);
 				DataLocation target2 = new DataLocation(sa2);

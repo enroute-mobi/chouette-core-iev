@@ -83,7 +83,7 @@ public class RoutingConstraintValidator extends GenericValidator<RoutingConstrai
 						+ " not found in Route  id = " + object.getRoute().getId());
 
 			}
-			StopAreaLite sa = ref.findStopArea(p.getStopAreaId());
+			StopAreaLite sa = ref.findStopAreaExtended(p.getStopAreaId());
 			if (sa.isDesactivated()) {
 				ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 				validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());

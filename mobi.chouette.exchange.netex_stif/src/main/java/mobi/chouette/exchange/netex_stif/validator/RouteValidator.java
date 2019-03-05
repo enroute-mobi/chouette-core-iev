@@ -399,7 +399,7 @@ public class RouteValidator extends AbstractValidator {
 			String refId = stopPointOnError.getObjectId();
 			if (referential != null && !referential.getSharedReadOnlyStopAreas().isEmpty()) {
 				// protection from testng conditions
-				StopAreaLite stopArea = referential.findStopArea(stopPointOnError.getStopAreaId());
+				StopAreaLite stopArea = referential.findStopAreaExtended(stopPointOnError.getStopAreaId());
 				refId = stopArea.getObjectId();
 			}
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, route);

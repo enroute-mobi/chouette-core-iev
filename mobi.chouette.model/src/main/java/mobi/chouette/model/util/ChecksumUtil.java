@@ -98,7 +98,7 @@ public class ChecksumUtil {
 		} else {
 			boolean first = true;
 			for (StopPoint stop : route.getStopPoints()) {
-				StopAreaLite area = r.findStopArea(stop.getStopAreaId());
+				StopAreaLite area = r.findStopAreaExtended(stop.getStopAreaId());
 				if (first) {
 					first = false;
 				} else {
@@ -159,7 +159,7 @@ public class ChecksumUtil {
 		} else {
 			boolean first = true;
 			for (StopPoint stop : journeyPattern.getStopPoints()) {
-				StopAreaLite area = r.findStopArea(stop.getStopAreaId());
+				StopAreaLite area = r.findStopAreaExtended(stop.getStopAreaId());
 				if (first) {
 					first = false;
 				} else {
@@ -211,7 +211,7 @@ public class ChecksumUtil {
 		} else {
 			boolean first = true;
 			for (StopPoint stop : routing.getStopPoints()) {
-				StopAreaLite area = r.findStopArea(stop.getStopAreaId());
+				StopAreaLite area = r.findStopAreaExtended(stop.getStopAreaId());
 				if (first) {
 					first = false;
 				} else {

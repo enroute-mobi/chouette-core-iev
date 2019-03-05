@@ -18,7 +18,7 @@ import mobi.chouette.model.util.Referential;
 
 @Log4j
 public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
-	
+
 
 	private static final String MISSING_STOP_AREA_REFERENCE = " : missing StopArea reference";
 	private static final String VEHICLE_JOURNEY = "VehicleJourney ";
@@ -43,7 +43,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 	 * <b>Code</b> :3-VehicleJourney-1
 	 * <p>
 	 * <b>Variables</b> : * durée d'attente maximale à un arrêt en minutes, <br>
-	 * 
+	 *
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
@@ -56,7 +56,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * 
+	 *
 	 *
 	 * @param context
 	 *            context de validation
@@ -83,7 +83,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 					long delta = this.diffTime(passingTime.getArrivalTime(), passingTime.getDepartureTime());
 
 					if (delta > deltaMax) {
-						StopAreaLite zdep = r.findStopArea(passingTime.getStopPoint().getStopAreaId());
+						StopAreaLite zdep = r.findStopAreaExtended(passingTime.getStopPoint().getStopAreaId());
 						if (zdep == null) {
 							log.error(PASSING_TIME_FOR_MISSING_STOP_AREA);
 							throw new ValidationException(
@@ -111,7 +111,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 	 * <p>
 	 * <b>Variables</b> : * vitesse minimale (km/h), <br>
 	 * * vitesse maximale (km/h),<br>
-	 * 
+	 *
 	 * <p>
 	 * <b>Prérequis</b> : néant
 	 * <p>
@@ -127,7 +127,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * 
+	 *
 	 *
 	 * @param context
 	 *            context de validation
@@ -201,7 +201,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 *
 	 * @param context
 	 *            context de validation
@@ -249,7 +249,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 *
 	 * @param context
 	 *            context de validation
@@ -272,7 +272,7 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 		{
 			VehicleJourneyAtStop passingTime = passingTimes.get(0);
 			if (getArrivalTime(passingTime).after(passingTime.getDepartureTime())) {
-				StopAreaLite zdep = r.findStopArea(passingTime.getStopPoint().getStopAreaId());
+				StopAreaLite zdep = r.findStopAreaExtended(passingTime.getStopPoint().getStopAreaId());
 				if (zdep == null) {
 					log.error(PASSING_TIME_FOR_MISSING_STOP_AREA);
 					throw new ValidationException(VEHICLE_JOURNEY + object.getId() + MISSING_STOP_AREA_REFERENCE);
@@ -291,9 +291,9 @@ public class VehicleJourneyValidator extends GenericValidator<VehicleJourney> {
 			VehicleJourneyAtStop passingTime2 = passingTimes.get(i);
 			if (passingTime1.getDepartureTime().after(getArrivalTime(passingTime2))
 					&& passingTime1.getDepartureDayOffset() == passingTime2.getDepartureDayOffset()) {
-				StopAreaLite zdep1 = r.findStopArea(passingTime1.getStopPoint().getStopAreaId());
+				StopAreaLite zdep1 = r.findStopAreaExtended(passingTime1.getStopPoint().getStopAreaId());
 
-				StopAreaLite zdep2 = r.findStopArea(passingTime2.getStopPoint().getStopAreaId());
+				StopAreaLite zdep2 = r.findStopAreaExtended(passingTime2.getStopPoint().getStopAreaId());
 				if (zdep2 == null) {
 					log.error(PASSING_TIME_FOR_MISSING_STOP_AREA);
 					throw new ValidationException(VEHICLE_JOURNEY + object.getId() + MISSING_STOP_AREA_REFERENCE);
