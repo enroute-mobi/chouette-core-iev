@@ -79,7 +79,7 @@ public class RouteValidator extends GenericValidator<Route>  {
 		validationReporter.prepareCheckPointReport(context, parameters.getSpecificCode());
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 		Long stopId = points.get(0).getStopAreaId();
-		StopAreaLite zdep1 = r.findStopArea(stopId);
+		StopAreaLite zdep1 = r.findStopAreaExtended(stopId);
 		if (zdep1 == null) {
 			log.error(STOP_AREA_ID + stopId + NOT_FOUND_FOR_STOP_POINT_RANK+ 0);
 			throw new ValidationException(
@@ -87,7 +87,7 @@ public class RouteValidator extends GenericValidator<Route>  {
 		}
 		for (int i = 1; i < points.size(); i++) {
 			stopId = points.get(i).getStopAreaId();
-			StopAreaLite zdep2 = r.findStopArea(stopId);
+			StopAreaLite zdep2 = r.findStopAreaExtended(stopId);
 			if (zdep2 == null) {
 				log.error(STOP_AREA_ID + stopId + NOT_FOUND_FOR_STOP_POINT_RANK + i);
 				return;
@@ -263,19 +263,19 @@ public class RouteValidator extends GenericValidator<Route>  {
 		// input
 		Long quayRef1 = points.get(0).getStopAreaId();
 		Long quayRef2 = oppositePoints.get(oppositePoints.size() - 1).getStopAreaId();
-		StopAreaLite zdep1 = r.findStopArea(quayRef1);
-		StopAreaLite zdep2 = r.findStopArea(quayRef2);
+		StopAreaLite zdep1 = r.findStopAreaExtended(quayRef1);
+		StopAreaLite zdep2 = r.findStopAreaExtended(quayRef2);
 		if (zdep1 == null || zdep2 == null) {
 			log.error("unknown stoparea for route " + object.getId());
 		} else if (!isEqual(zdep1.getParentId(), zdep2.getParentId())) {
 			// zdl mismatch
 			DataLocation source = new DataLocation(object);
-			StopAreaLite zdl1 = r.findStopArea(zdep1.getParentId());
+			StopAreaLite zdl1 = r.findStopAreaExtended(zdep1.getParentId());
 			if (zdl1 == null) {
 				zdl1 = zdep1;
 				log.error("unknown parent for zdep " + zdep1.getName() + " (" + zdep1.getObjectId() + ")");
 			}
-			StopAreaLite zdl2 = r.findStopArea(zdep2.getParentId());
+			StopAreaLite zdl2 = r.findStopAreaExtended(zdep2.getParentId());
 			if (zdl2 == null) {
 				zdl2 = zdep2;
 				log.error("unknown parent for zdep " + zdep2.getName() + " (" + zdep2.getObjectId() + ")");
@@ -378,7 +378,7 @@ public class RouteValidator extends GenericValidator<Route>  {
 			Referential r = (Referential) context.get(Constant.REFERENTIAL);
 			DataLocation source = new DataLocation(object);
 			undeservedStops.stream().forEach(stopPoint -> {
-				StopAreaLite zdep = r.findStopArea(stopPoint.getStopAreaId());
+				StopAreaLite zdep = r.findStopAreaExtended(stopPoint.getStopAreaId());
 				DataLocation target = new DataLocation(zdep);
 				validationReporter.addCheckPointReportError(context, parameters.getCheckId(), parameters.getSpecificCode(), CheckPointConstant.L3_Route_8,source, null,
 						null, target);
@@ -478,7 +478,7 @@ public class RouteValidator extends GenericValidator<Route>  {
 		Referential r = (Referential) context.get(Constant.REFERENTIAL);
 
 		object.getStopPoints().stream().forEach(stopPoint -> {
-			StopAreaLite zdep = r.findStopArea(stopPoint.getStopAreaId());
+			StopAreaLite zdep = r.findStopAreaExtended(stopPoint.getStopAreaId());
 			if (zdep != null && zdep.isDesactivated()) {
 				// deleted stopArea
 				DataLocation source = new DataLocation(object);

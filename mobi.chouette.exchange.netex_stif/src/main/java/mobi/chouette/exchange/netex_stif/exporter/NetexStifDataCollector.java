@@ -44,7 +44,7 @@ public class NetexStifDataCollector {
 			for (StopPoint sp : route.getStopPoints()) {
 				if (collection.getMappedStopAreas().containsKey(sp.getStopAreaId()))
 					continue;
-				StopAreaLite stopArea = referential.findStopArea(sp.getStopAreaId());
+				StopAreaLite stopArea = referential.findStopAreaExtended(sp.getStopAreaId());
 				if (stopArea == null) {
 					log.error("stoparea id =" + sp.getStopAreaId() + "not found");
 					validStops= false;

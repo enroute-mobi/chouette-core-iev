@@ -388,7 +388,7 @@ public class RouteValidatorTests extends AbstractTestValidation {
 			validator.validate(context, route, parameters, transportMode);
 
 			checkNoReports(context, line.getObjectId());
-			StopAreaLite stop = ref.findStopArea(route.getStopPoints().get(0).getStopAreaId());
+			StopAreaLite stop = ref.findStopAreaExtended(route.getStopPoints().get(0).getStopAreaId());
 			stop.setDeletedTime(new Date(Calendar.getInstance().getTimeInMillis()));
 			validator.validate(context, route, parameters, transportMode);			
 			checkReports(context, line.getObjectId(), CheckPointConstant.L3_Route_10, "3_route_10", null, OBJECT_STATE.WARNING);

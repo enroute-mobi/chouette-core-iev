@@ -61,7 +61,7 @@ public class AbstractWriter {
 			write(writer, 1, "<PublicationRefreshInterval>P1D</PublicationRefreshInterval>");
 			write(writer, 1,
 					"<Description>Offre complète IDF sur la période du " + dayFormat.format(validityPeriod.getFirst())
-							+ " au " + dayFormat.format(validityPeriod.getLast()) + "</Description>");
+					+ " au " + dayFormat.format(validityPeriod.getLast()) + "</Description>");
 			break;
 		case LINE:
 			write(writer, 1,
@@ -85,7 +85,7 @@ public class AbstractWriter {
 
 		write(writer, whiteSpaces,
 				"<GeneralFrame id=\"" + prefix + ":GeneralFrame:" + frameType + "-" + idDateFormat.format(new Date())
-						+ ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\"" + FRAME_DATASOURCE + "\">");
+				+ ":LOC\" version=\"" + VERSION_PUBLICATION + "\" dataSourceRef=\"" + FRAME_DATASOURCE + "\">");
 		if (validityPeriods != null) {
 			// NOTICE : don't use lambda because of exception management
 			for (DateRange validityPeriod : validityPeriods) {
@@ -195,15 +195,17 @@ public class AbstractWriter {
 	}
 
 	public static void writeXml(Writer writer, String xml, int indent) throws IOException {
-		String[] source = xml.replaceAll("> <", ">\n<").split("\n");
-		int rank = indent;
-		for (String line : source) {
-			line = line.trim();
-			if (line.startsWith("</"))
-				rank--;
-			write(writer, rank, line);
-			if (!line.contains("</") && !line.endsWith("/>") && !line.startsWith("<!"))
-				rank++;
+		if (xml!=null) {
+			String[] source = xml.replaceAll("> <", ">\n<").split("\n");
+			int rank = indent;
+			for (String line : source) {
+				line = line.trim();
+				if (line.startsWith("</"))
+					rank--;
+				write(writer, rank, line);
+				if (!line.contains("</") && !line.endsWith("/>") && !line.startsWith("<!"))
+					rank++;
+			}
 		}
 	}
 

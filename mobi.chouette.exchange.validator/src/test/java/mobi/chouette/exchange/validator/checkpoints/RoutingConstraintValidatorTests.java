@@ -78,7 +78,7 @@ public class RoutingConstraintValidatorTests extends AbstractTestValidation {
 
 					long id = spIds[i];
 					StopPoint p = spMap.get(id);
-					StopAreaLite sa = tc.getReferential().findStopArea(p.getStopAreaId());
+					StopAreaLite sa = tc.getReferential().findStopAreaExtended(p.getStopAreaId());
 					sa.setDeletedTime(new Date());// -- desactivate sa
 					warningCount++;
 				}
