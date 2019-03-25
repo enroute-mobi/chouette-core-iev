@@ -48,6 +48,8 @@ function waitWebGui {
 
 
 function setup() {
+  echo "Setup IEV in Wildfly"
+
 	sed -i "s#BOIV_GUI_URL_BASE#$BOIV_GUI_URL_BASE#g" /etc/chouette/boiv/boiv.properties
 	sed -i "s#BOIV_GUI_URL_TOKEN#$BOIV_GUI_URL_TOKEN#g" /etc/chouette/boiv/boiv.properties
 	sed -i "s#IEV_MAX_PARALLEL_JOBS#$IEV_MAX_PARALLEL_JOBS#g" /etc/chouette/boiv/boiv.properties
@@ -64,9 +66,8 @@ function setup() {
 	$WILDFLY_HOME/bin/add-user.sh  -u admin -p admin -s
 
 	# add postgres driver and chouette database
-	sh bin/jboss-cli.sh <<EOS
-	connect
-    /system-property=jboss.as.management.blocking.timeout:add(value=900)
+	sh bin/jboss-cli.sh -c <<EOS
+  /system-property=jboss.as.management.blocking.timeout:add(value=900)
 	/subsystem=datasources/jdbc-driver=postgresql:add(driver-name="postgresql",driver-module-name="org.postgres",driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
 	data-source add --jndi-name=java:jboss/datasources/chouette --name=chouette --connection-url=jdbc:postgresql_postGIS://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME} --driver-class=org.postgis.DriverWrapper --driver-name=postgresql --user-name=${POSTGRES_USER} --password=${POSTGRES_PASS} --max-pool-size=30
 	/subsystem=datasources/data-source=chouette/connection-properties=stringtype:add(value=unspecified)
@@ -74,9 +75,7 @@ function setup() {
 	/subsystem=ee/managed-executor-service=default/ :write-attribute(name=queue-length,value=20)
 EOS
 
-
-	pkill -15 java
-
+  sh bin/jboss-cli.sh -c ":shutdown"
 }
 
 
