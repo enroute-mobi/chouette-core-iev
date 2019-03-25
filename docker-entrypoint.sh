@@ -89,16 +89,6 @@ bash)
   	setup && echo $(date) > $SETUP_FILE
   fi
   mv /chouette_iev.ear $WILDFLY_HOME/standalone/deployments/
-  if [ -e  /update/chouette_iev.ear ]; then
-  	diff $WILDFLY_HOME/standalone/deployments/chouette_iev.ear /update/chouette_iev.ear || cp /update/chouette_iev.ear $WILDFLY_HOME/standalone/deployments/
-  else
-	if [ ! -e $WILDFLY_HOME/standalone/deployments/chouette_iev.ear ]; then
-		cd /tmp
-		wget -q $chouette_iev.ear_BUILD_URL
-		mv /tmp/chouette_iev.ear $WILDFLY_HOME/standalone/deployments/
-	fi
-
-  fi
   exec $WILDFLY_HOME/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
   ;;
 esac
