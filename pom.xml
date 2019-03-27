@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mobi.chouette</groupId>
 	<artifactId>mobi.chouette</artifactId>
@@ -30,6 +30,8 @@
 		<boiv.testdb.hostname>localhost</boiv.testdb.hostname>
 		<boiv.testdb.port>5432</boiv.testdb.port>
 		<boiv.testdb.name>boiv_test</boiv.testdb.name>
+		<boiv.testdb.username>chouette</boiv.testdb.username>
+		<boiv.testdb.password>chouette</boiv.testdb.password>
 
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
@@ -101,8 +103,8 @@
 				<configuration>
 					<driver>org.postgresql.Driver</driver>
 					<url>jdbc:postgresql://${boiv.testdb.hostname}:${boiv.testdb.port}/${boiv.testdb.name}</url>
-					<username>chouette</username>
-					<password>chouette</password>
+					<username>${boiv.testdb.username}</username>
+					<password>${boiv.testdb.password}</password>
 					<!--all executions are ignored if -Dmaven.test.skip=true or -DskipTests=true -->
 					<skip>${skipInitDb}</skip>
 				</configuration>
@@ -116,11 +118,12 @@
 						<configuration>
 							<autocommit>true</autocommit>
 							<srcFiles>
+                <srcFile>${project.rootDir}/src/test/sql/init-extensions.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/00_drop_all_tables.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_without-constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_without-constraints.sql</srcFile>
-                        <srcFile>${project.rootDir}/src/test/sql/generated/30_public_tables-imports_without-constraints.sql</srcFile>
-                        <srcFile>${project.rootDir}/src/test/sql/generated/40_public_tables-exports_without-constraints.sql</srcFile>
+                <srcFile>${project.rootDir}/src/test/sql/generated/30_public_tables-imports_without-constraints.sql</srcFile>
+                <srcFile>${project.rootDir}/src/test/sql/generated/40_public_tables-exports_without-constraints.sql</srcFile>
 
 								<srcFile>${project.rootDir}/src/test/sql/FIX_DATABASE_MISTAKES.sql</srcFile>
 
@@ -131,7 +134,7 @@
 								<srcFile>${project.rootDir}/src/test/sql/generated/10_public_tables-offer_constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/20_public_tables-compliances_constraints.sql</srcFile>
 								<srcFile>${project.rootDir}/src/test/sql/generated/30_public_tables-imports_constraints.sql</srcFile>
-                        <srcFile>${project.rootDir}/src/test/sql/generated/40_public_tables-exports_constraints.sql</srcFile>
+                <srcFile>${project.rootDir}/src/test/sql/generated/40_public_tables-exports_constraints.sql</srcFile>
 							</srcFiles>
 						</configuration>
 					</execution>
@@ -292,7 +295,7 @@
 				</configuration>
 				<executions>
 					<execution>
-					<phase>initialize</phase>
+					  <phase>initialize</phase>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
@@ -304,20 +307,20 @@
 							<goal>report</goal>
 						</goals>
 					</execution>
-					</executions>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19.1</version>
 				<configuration>
-					<argLine>${argLine} -Djboss.socket.binding.port-offset=300</argLine>
+					<argLine>${argLine} -Dfile.encoding=UTF-8 -Djboss.socket.binding.port-offset=300</argLine>
 					<!-- Fork every test because it will launch a separate AS instance -->
 					<forkCount>1</forkCount>
 					<systemPropertyVariables>
 						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-						<!-- the maven dependency plugin will have already downloaded the server 
-							on /target -->
+						<!-- the maven dependency plugin will have already downloaded the server
+							   on /target -->
 						<jboss.home>${project.rootDir}/target/wildfly-${wildfly.version}</jboss.home>
 						<module.path>${project.rootDir}/target/wildfly-${wildfly.version}/modules</module.path>
 					</systemPropertyVariables>
@@ -417,11 +420,11 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-      <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>3.4.0.905</version>
-      </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.4.0.905</version>
+        </plugin>
 				<plugin>
 					<groupId>org.projectlombok</groupId>
 					<artifactId>lombok-maven-plugin</artifactId>
@@ -451,8 +454,8 @@
 						</execution>
 					</executions>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
+				<!--This plugin's configuration is used to store Eclipse m2e settings
+					  only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -829,11 +832,11 @@
 				<artifactId>commons-compress</artifactId>
 				<version>1.9</version>
 			</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.3.6</version>
-		</dependency>
+		  <dependency>
+			  <groupId>org.apache.httpcomponents</groupId>
+			  <artifactId>httpclient</artifactId>
+			  <version>4.3.6</version>
+		  </dependency>
 			<dependency>
 				<groupId>xpp3</groupId>
 				<artifactId>xpp3</artifactId>

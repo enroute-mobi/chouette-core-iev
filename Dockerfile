@@ -1,7 +1,6 @@
-FROM maven:3.5.4-jdk-8 AS builder
+FROM maven:3.6.0-jdk-8 AS builder
 COPY . /usr/src/mymaven
-
-RUN cd /usr/src/mymaven && mvn -Dmaven.test.skip=true clean install
+RUN cd /usr/src/mymaven && mvn -Dmaven.test.skip=true install
 
 FROM debian:stable-slim
 
@@ -13,9 +12,9 @@ RUN echo "deb http://http.debian.net/debian stretch-backports main" > /etc/apt/s
     mkdir -p /usr/share/man/man1/ && \
     DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
-    apt-get install -y wget netcat-traditional locales && \
+    apt-get install -y --no-install-recommends wget netcat-traditional locales && \
     localedef -i en_US -c -f UTF-8 en_US.UTF-8 && \
-    apt-get install -y -t stretch-backports openjdk-8-jre-headless && rm -rf /var/lib/apt/lists/*
+    apt-get install -y -t stretch-backports --no-install-recommends openjdk-8-jre-headless && rm -rf /var/lib/apt/lists/*
 
 #--- Wildfly
 
