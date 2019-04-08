@@ -1,9 +1,9 @@
 .idea
 .settings
 out
-target/
+/target/
 .DS_Store
-bin/
+/bin/
 .project
 *.iml
 *.launch
@@ -12,3 +12,4 @@ maven-eclipse.xml
 *.versionsBackup
 .classpath
 **/test-output/*
+/cache
