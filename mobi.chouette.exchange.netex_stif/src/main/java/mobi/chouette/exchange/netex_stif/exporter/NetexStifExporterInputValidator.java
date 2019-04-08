@@ -54,6 +54,8 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 	@Override
 	public AbstractParameter toActionParameter(Object task) {
 		if (task instanceof ExportTask) {
+			int duration = 0;
+			
 			ExportTask exportTask = (ExportTask) task;
 			if (!"netex_stif".equals(exportTask.getFormat()))
 				return null;
@@ -86,10 +88,14 @@ public class NetexStifExporterInputValidator extends AbstractInputValidator {
 						"referential's metadata periods ids empty");
 			if (!exportTask.getOptions().containsKey(EXPORT_TYPE))
 				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "export_type option missing");
-			if (!exportTask.getOptions().containsKey(DURATION))
-				throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "duration option missing");
+			if (!exportTask.getOptions().containsKey(DURATION)) {
+				if (exportTask.getOptions().get(EXPORT_TYPE).equals(FULL)) {
+					throw new CoreRuntimeException(CoreExceptionCode.UNVALID_DATA, "duration option missing");
+				}
+			} else {
+				 duration = Integer.parseInt(exportTask.getOptions().get(DURATION)) - 1;
+			}
 
-			int duration = Integer.parseInt(exportTask.getOptions().get(DURATION)) - 1;
 			Calendar c = Calendar.getInstance();
 			parameter.setStartDate(c.getTime());
 			c.add(Calendar.DATE, duration);

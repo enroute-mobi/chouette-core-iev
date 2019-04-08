@@ -11,8 +11,8 @@
          <driver-class>org.postgis.DriverWrapper</driver-class>
         <driver>postgresql</driver>
       <security>
-         <user-name>chouette</user-name>
-         <password>chouette</password>         
+         <user-name>${boiv.testdb.username:chouette}</user-name>
+         <password>${boiv.testdb.password:chouette}</password>         
       </security>
         <validation>  
             <valid-connection-checker  
@@ -26,8 +26,8 @@
      <connection-url>jdbc:postgresql://${boiv.testdb.hostname:localhost}:${boiv.testdb.port:5432}/chouette_test</connection-url>
       <driver>postgresql</driver>
       <security>
-         <user-name>chouette</user-name>
-         <password>chouette</password>         
+         <user-name>${boiv.testdb.username:chouette}</user-name>
+         <password>${boiv.testdb.password:chouette}</password>         
       </security>
         <validation>  
             <valid-connection-checker  

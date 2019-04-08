@@ -1,0 +1,7 @@
+/Dockerfile
+/.dockerignore
+/target
+/.gitignore
+/README.md
+/doc
+/cache

@@ -11,8 +11,8 @@
          <driver-class>org.postgis.DriverWrapper</driver-class>
         <driver>postgresql</driver>
       <security>
-         <user-name>chouette</user-name>
-         <password>chouette</password>         
+         <user-name>${boiv.testdb.username:chouette}</user-name>
+         <password>${boiv.testdb.password:chouette}</password>         
       </security>
         <validation>  
             <valid-connection-checker  
