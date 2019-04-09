@@ -1,6 +1,6 @@
 FROM maven:3.6.0-jdk-8 AS builder
 COPY . /usr/src/mymaven
-RUN cd /usr/src/mymaven && mvn -Dmaven.test.skip=true install
+RUN cd /usr/src/mymaven && mvn -Dmaven.test.skip=true --batch-mode install
 
 FROM debian:stable-slim
 
