@@ -18,4 +18,4 @@ else
     echo "Can't find postgresql client. Skip database creation"
 fi
 
-mvn -Dboiv.testdb.hostname=$PGHOST -Dboiv.testdb.name=$PGDATABASE -Dboiv.testdb.username=$PGUSER -Dboiv.testdb.password=$PGPASSWORD -DskipWildfly install
+mvn --batch-mode -Dboiv.testdb.hostname=$PGHOST -Dboiv.testdb.name=$PGDATABASE -Dboiv.testdb.username=$PGUSER -Dboiv.testdb.password=$PGPASSWORD -DskipWildfly install
