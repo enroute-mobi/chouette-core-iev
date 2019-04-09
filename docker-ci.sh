@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh -ex
 
 # Requires these variables to work :
 
@@ -18,4 +18,7 @@ else
     echo "Can't find postgresql client. Skip database creation"
 fi
 
-mvn --batch-mode -Dboiv.testdb.hostname=$PGHOST -Dboiv.testdb.name=$PGDATABASE -Dboiv.testdb.username=$PGUSER -Dboiv.testdb.password=$PGPASSWORD -DskipWildfly install
+mvn --batch-mode -Dmaven.javadoc.skip=true -DskipWildfly \
+    -Dboiv.testdb.hostname=$PGHOST -Dboiv.testdb.name=$PGDATABASE \
+    -Dboiv.testdb.username=$PGUSER -Dboiv.testdb.password=$PGPASSWORD \
+    install
