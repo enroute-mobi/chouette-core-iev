@@ -39,6 +39,11 @@ public class NetexStifLineProducerCommand implements Command {
 			Long lineId = (Long) context.get(Constant.LINE_ID);
 			Referential r = (Referential) context.get(Constant.REFERENTIAL);
 			LineLite line = r.findLine(lineId);
+			/** If the current line is desactivated, the netex exporter should not export it**/
+			if (line.isDeactivated()) {
+				return Constant.SUCCESS;
+			}
+			
 			r.setCurrentLine(line);
 			log.info("procesing line " + NamingUtil.getName(line));
 			NetexStifExportParameters configuration = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
