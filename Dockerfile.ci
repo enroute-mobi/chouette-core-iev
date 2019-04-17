@@ -6,7 +6,7 @@
 #   docker run -v $PWD/cache/maven:/root/.m2 --add-host "db:172.17.0.1" -e PGDATABASE=$PGDATABASE -it --rm chouette-core-iev-build
 #   dropdb $PGDATABASE
 
-FROM maven:3.6.0-jdk-8 AS builder
+FROM maven:3.6.0-jdk-8
 
 ARG WEEK
 
@@ -21,4 +21,4 @@ COPY . ./
 
 ENV PGHOST="db" PGDATABASE="chouette" PGUSER="chouette" PGPASSWORD="chouette"
 ENV MAVEN_OPTS="-Dfile.encoding=UTF-8"
-ENTRYPOINT ["./docker-ci.sh"]
+# ENTRYPOINT ["./docker-ci.sh"]
