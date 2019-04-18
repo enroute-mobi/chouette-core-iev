@@ -26,7 +26,7 @@ import mobi.chouette.model.Timetable;
  */
 @AllArgsConstructor
 @Log4j
-public class DateRange implements Serializable{
+public class DateRange implements Serializable, Cloneable{
 	private static final String YYYY_MM_DD = "yyyy-MM-dd";
 	private static final long serialVersionUID = -4771648000594466515L;
 	/**
@@ -126,13 +126,32 @@ public class DateRange implements Serializable{
 		return !(this.first.after(another.last) || this.last.before(another.first));
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+	    if (this == o) return true;
+	    if (!(o instanceof DateRange))return false;
+	    DateRange otherDateRange = (DateRange) o;
+	    return ((otherDateRange.getFirst() == this.first) && (otherDateRange.getLast() == this.last));
+	}
+	
+	@Override
+	public int hashCode() {
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + first.hashCode();
+	    result = prime * result + last.hashCode();
+	    return result;
+	}
+
 	public DateRange clone()
 	{
+		DateRange dateRangeCloned = null;
 		try {
-			return (DateRange) super.clone();
+			dateRangeCloned = (DateRange) super.clone();
 		} catch (CloneNotSupportedException e) {
-			
+			log.error("Can not clone DateRange variable", e);
 		}
-		return this;
+		return dateRangeCloned;
 	}
 }

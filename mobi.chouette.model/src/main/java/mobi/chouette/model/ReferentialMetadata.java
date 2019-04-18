@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Type;
 
 import lombok.Getter;
@@ -17,6 +18,7 @@ import lombok.ToString;
 import mobi.chouette.model.type.DateRange;
 
 @Entity
+@Immutable
 @Table(name = "referential_metadata")
 @NoArgsConstructor
 @ToString(callSuper = true)
