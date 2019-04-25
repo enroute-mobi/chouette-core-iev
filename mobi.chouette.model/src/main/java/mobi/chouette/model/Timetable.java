@@ -34,6 +34,7 @@ import lombok.Setter;
 import lombok.ToString;
 import mobi.chouette.model.type.DayTypeEnum;
 
+
 /**
  * Chouette Timetable
  * <p>
@@ -70,7 +71,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	 * </li>
 	 * </ol>
 	 * This data must be unique in dataset
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -84,7 +85,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * object version
-	 * 
+	 *
 	 * @param objectVersion
 	 *            New value
 	 * @return The actual value
@@ -113,7 +114,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	/**
 	 * comment <br>
 	 * Note : should be rename as name in next release
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -123,7 +124,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	/**
 	 * set comment <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -134,7 +135,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	/**
 	 * version <br>
 	 * Note : should be rename as short name in next release
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -144,7 +145,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	/**
 	 * set version <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -154,7 +155,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * data source ref
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -164,7 +165,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	/**
 	 * set data source ref <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -174,7 +175,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * day of week as bit mask
-	 * 
+	 *
 	 * @param intDayTypes
 	 *            New value
 	 * @return The actual value
@@ -209,7 +210,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * add a dayType if not already present
-	 * 
+	 *
 	 * @param dayType
 	 */
 	public void addDayType(DayTypeEnum dayType) {
@@ -221,7 +222,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * remove a daytype
-	 * 
+	 *
 	 * @param dayType
 	 */
 	public void removeDayType(DayTypeEnum dayType) {
@@ -233,7 +234,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * first valid day in timetable
-	 * 
+	 *
 	 * @param startOfPeriod
 	 *            New value
 	 * @return The actual value
@@ -245,7 +246,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * last valid day in timetable
-	 * 
+	 *
 	 * @param endOfPeriod
 	 *            New value
 	 * @return The actual value
@@ -257,7 +258,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * list of peculiar days
-	 * 
+	 *
 	 * @param calendarDays
 	 *            New value
 	 * @return The actual value
@@ -272,7 +273,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * list of periods
-	 * 
+	 *
 	 * @param periods
 	 *            New value
 	 * @return The actual value
@@ -282,12 +283,11 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.JOIN)
 	@CollectionTable(name = "time_table_periods", joinColumns = @JoinColumn(name = "time_table_id"))
-	@OrderColumn(name = "position", nullable = false)
 	private List<Period> periods = new ArrayList<Period>(0);
 
 	/**
 	 * list of vehicleJourneys
-	 * 
+	 *
 	 * @param vehicleJourneys
 	 *            New value
 	 * @return The actual value
@@ -299,7 +299,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * add a day if not already present
-	 * 
+	 *
 	 * @param calendarDay
 	 */
 	public void addCalendarDay(CalendarDay calendarDay) {
@@ -312,7 +312,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * remove a day
-	 * 
+	 *
 	 * @param calendarDay
 	 */
 	public void removeCalendarDay(CalendarDay calendarDay) {
@@ -325,7 +325,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * add a period if not already present
-	 * 
+	 *
 	 * @param period
 	 */
 	public void addPeriod(Period period) {
@@ -339,7 +339,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * remove a period
-	 * 
+	 *
 	 * @param period
 	 */
 	public void removePeriod(Period period) {
@@ -352,7 +352,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * add a vehicle journey if not already present
-	 * 
+	 *
 	 * @param vehicleJourney
 	 */
 	public void addVehicleJourney(VehicleJourney vehicleJourney) {
@@ -366,7 +366,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * remove a vehicle journey
-	 * 
+	 *
 	 * @param vehicleJourney
 	 */
 	public void removeVehicleJourney(VehicleJourney vehicleJourney) {
@@ -376,7 +376,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * build a bitwise dayType mask for filtering
-	 * 
+	 *
 	 * @param dayTypes
 	 *            a list of included day types
 	 * @return binary mask for selected day types
@@ -393,7 +393,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * build a bitwise dayType mask for filtering
-	 * 
+	 *
 	 * @param dayType
 	 *            the dayType to filter
 	 * @return binary mask for a day type
@@ -404,7 +404,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * get peculiar dates
-	 * 
+	 *
 	 * @return a list of active dates and periods converted to dates if
 	 *         exclusion present
 	 */
@@ -425,7 +425,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * get peculiar dates
-	 * 
+	 *
 	 * @return a list of active dates
 	 */
 	public List<Date> getPeculiarDates() {
@@ -440,7 +440,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * get excluded dates
-	 * 
+	 *
 	 * @return a list of excluded dates
 	 */
 	public List<Date> getExcludedDates() {
@@ -454,19 +454,19 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * check if a Timetable is active on a given date
-	 * 
+	 *
 	 * @param aDay
 	 * @return true if timetable is active on given date
 	 */
 	public boolean isActiveOn(final Date aDay) {
-		if (getCalendarDays() != null) {
+		if (getCalendarDays() != null && !getCalendarDays().isEmpty()) {
 			CalendarDay includedDay = new CalendarDay(aDay, true);
-			if (getCalendarDays().contains(includedDay))
-				return true;
 			CalendarDay excludedDay = new CalendarDay(aDay, false);
-			if (getCalendarDays().contains(excludedDay))
-				return false;
+			if (getCalendarDays().contains(includedDay)) {
+				return true;
+			}
 		}
+
 		if (getIntDayTypes() != null && getIntDayTypes().intValue() != 0 && getPeriods() != null) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(aDay);
@@ -553,7 +553,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	/**
 	 * return periods broken on excluded dates, for exports without date
 	 * exclusion; one day periods are excluded (see getEffectiveDates
-	 * 
+	 *
 	 * @return periods
 	 */
 	public List<Period> getEffectivePeriods() {
@@ -570,7 +570,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	/**
 	 * return copy of period or empty if excluding dates exists exclusion
-	 * 
+	 *
 	 * @return periods
 	 */
 	private List<Period> getRealPeriods() {

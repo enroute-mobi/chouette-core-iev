@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
@@ -32,6 +33,8 @@ public class NetexStifDataCollector {
 		collection.getJourneyPatterns().clear();
 		collection.getStopPoints().clear();
 		collection.getVehicleJourneys().clear();
+		collection.getCompanies().clear();
+
 		if (routes.isEmpty()) {
 			log.info("no route for line" + line.getObjectId());
 		}
@@ -62,75 +65,73 @@ public class NetexStifDataCollector {
 					ChouetteModelUtil.refreshDepartureArrivals(jp);
 				}
 				for (VehicleJourney vehicleJourney : jp.getVehicleJourneys()) {
-					if (startDate == null && endDate == null) {
-						boolean isValid = false;
-						for (Timetable timetable : vehicleJourney.getTimetables()) {
+					if (vehicleJourney.getCompanyId()!=null && !collection.getMappedCompanies().containsKey(vehicleJourney.getCompanyId())) {
+						CompanyLite company = referential.findCompany(vehicleJourney.getCompanyId());
+						if (company == null) {
+							log.error("NetexStifDataCollector # Company id =" + vehicleJourney.getCompanyId() + "not found ###");
+						} else {
+							collection.getMappedCompanies().put(vehicleJourney.getCompanyId(), company);
+						}
+					}
 
+					boolean isValid = false;
+					if (startDate == null && endDate == null) {
+						for (Timetable timetable : vehicleJourney.getTimetables()) {
 							if (collection.getTimetables().contains(timetable)) {
 								isValid = true;
-							} else {
-								if (!timetable.getPeriods().isEmpty() || !timetable.getCalendarDays().isEmpty()) {
-									collection.getTimetables().add(timetable);
-									isValid = true;
-								}
+							} else if (!timetable.getPeriods().isEmpty() || !timetable.getCalendarDays().isEmpty()) {
+								collection.getTimetables().add(timetable);
+								isValid = true;
 							}
-						}
-						if (isValid) {
-							if (vehicleJourney.getVehicleJourneyAtStops().isEmpty()) {
-								log.error("no passing times for journey " + vehicleJourney.getObjectId());
-								continue;
-							}
-							vehicleJourney.sortVjas();
-							collection.getTimetables().addAll(vehicleJourney.getTimetables());
-							collection.getVehicleJourneys().add(vehicleJourney);
-							validJourneyPattern = true;
-							validRoute = true;
-							validLine = true;
 						}
 					} else {
-						boolean isValid = false;
 						for (Timetable timetable : vehicleJourney.getTimetables()) {
+							boolean matchingTimetable = false;
 							if (collection.getTimetables().contains(timetable)) {
 								isValid = true;
-							} else if (collection.getExcludedTimetables().contains(timetable)) {
-								isValid = false;
 							} else {
-
-								if (startDate == null)
-									isValid = timetable.isActiveBefore(endDate);
-								else if (endDate == null)
-									isValid = timetable.isActiveAfter(startDate);
-								else
-									isValid = timetable.isActiveOnPeriod(startDate, endDate);
-								if (isValid) {
-									log.info("timetable accepted " + timetable.getObjectId());
+								if (startDate == null) {
+									if (timetable.isActiveBefore(endDate)) {matchingTimetable=true;}
+								}
+								else if (endDate == null) {
+									if (timetable.isActiveAfter(startDate)) {matchingTimetable=true;}
+								}
+								else {
+									if (timetable.isActiveOnPeriod(startDate, endDate)) {matchingTimetable=true;}
+								}
+								if (matchingTimetable) {
+									isValid = true;
+									log.info("NetexStifDataCollector # Timetable accepted " + timetable.getId());
 									collection.getTimetables().add(timetable);
 								} else {
-									log.info("timetable excluded " + timetable.getObjectId());
+									log.info("NetexStifDataCollector # Timetable excluded " + timetable.getId());
+									log.info("StartDate : "+startDate.toString());
+									log.info("EndDate : "+startDate.toString());
+
 									collection.getExcludedTimetables().add(timetable);
 								}
 							}
 						}
-						if (isValid) {
-							if (vehicleJourney.getVehicleJourneyAtStops().isEmpty()) {
-								log.error("no passing times for journey " + vehicleJourney.getObjectId());
-								continue;
-							}							
-							vehicleJourney.sortVjas();
-							collection.getVehicleJourneys().add(vehicleJourney);
-							if (vehicleJourney.getCompany() != null) {
-								collection.getCompanies().add(vehicleJourney.getCompany());
-							}
-							validJourneyPattern = true;
-							validRoute = true;
-							validLine = true;
-							for (Footnote note : vehicleJourney.getFootnotes()) {
-								if (!collection.getNotices().contains(note))
-									collection.getNotices().add(note);
-							}
-						} else {
-							log.info("no valid timetable for journey " + vehicleJourney.getObjectId());
+					}
+					if (isValid) {
+						if (vehicleJourney.getVehicleJourneyAtStops().isEmpty()) {
+							log.error("NetexStifDataCollector # no passing times for vehicle journey " + vehicleJourney.getId());
+							continue;
 						}
+						vehicleJourney.sortVjas();
+						collection.getVehicleJourneys().add(vehicleJourney);
+						if (vehicleJourney.getCompany() != null) {
+							collection.getCompanies().add(vehicleJourney.getCompany());
+						}
+						validJourneyPattern = true;
+						validRoute = true;
+						validLine = true;
+						for (Footnote note : vehicleJourney.getFootnotes()) {
+							if (!collection.getNotices().contains(note))
+								collection.getNotices().add(note);
+						}
+					} else {
+						log.info("no valid timetable for journey " + vehicleJourney.getId());
 					}
 				} // end vehiclejourney loop
 				if (validJourneyPattern)
