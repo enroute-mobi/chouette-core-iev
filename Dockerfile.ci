@@ -21,4 +21,4 @@ COPY . ./
 
 ENV PGHOST="db" PGDATABASE="chouette" PGUSER="chouette" PGPASSWORD="chouette"
 ENV MAVEN_OPTS="-Dfile.encoding=UTF-8"
-# ENTRYPOINT ["./docker-ci.sh"]
+CMD ["sh", "./docker-ci.sh"]
