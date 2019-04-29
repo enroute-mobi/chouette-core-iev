@@ -105,9 +105,6 @@ public class NetexStifDataCollector {
 									collection.getTimetables().add(timetable);
 								} else {
 									log.info("NetexStifDataCollector # Timetable excluded " + timetable.getId());
-									log.info("StartDate : "+startDate.toString());
-									log.info("EndDate : "+startDate.toString());
-
 									collection.getExcludedTimetables().add(timetable);
 								}
 							}
@@ -134,8 +131,7 @@ public class NetexStifDataCollector {
 						log.info("no valid timetable for journey " + vehicleJourney.getId());
 					}
 				} // end vehiclejourney loop
-				if (validJourneyPattern)
-					collection.getJourneyPatterns().add(jp);
+				if (validJourneyPattern) {collection.getJourneyPatterns().add(jp);}
 			} // end journeyPattern loop
 			if (validRoute) {
 				collection.getRoutes().add(route);
