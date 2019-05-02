@@ -22,7 +22,6 @@ DROP SCHEMA IF EXISTS iev_check_points CASCADE;
 CREATE SCHEMA iev_check_points;
 
 
-ALTER SCHEMA iev_check_points OWNER TO chouette;
 
 SET search_path = iev_check_points, pg_catalog;
 
@@ -48,7 +47,6 @@ CREATE TABLE footnotes (
 );
 
 
-ALTER TABLE footnotes OWNER TO chouette;
 
 --
 -- TOC entry 232 (class 1259 OID 533257)
@@ -63,7 +61,6 @@ CREATE SEQUENCE footnotes_id_seq
     CACHE 1;
 
 
-ALTER TABLE footnotes_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3776 (class 0 OID 0)
@@ -85,7 +82,6 @@ CREATE TABLE footnotes_vehicle_journeys (
 );
 
 
-ALTER TABLE footnotes_vehicle_journeys OWNER TO chouette;
 
 --
 -- TOC entry 234 (class 1259 OID 533262)
@@ -105,7 +101,6 @@ CREATE TABLE journey_frequencies (
 );
 
 
-ALTER TABLE journey_frequencies OWNER TO chouette;
 
 --
 -- TOC entry 235 (class 1259 OID 533266)
@@ -120,7 +115,6 @@ CREATE SEQUENCE journey_frequencies_id_seq
     CACHE 1;
 
 
-ALTER TABLE journey_frequencies_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3777 (class 0 OID 0)
@@ -158,7 +152,6 @@ CREATE TABLE journey_patterns (
 );
 
 
-ALTER TABLE journey_patterns OWNER TO chouette;
 
 --
 -- TOC entry 239 (class 1259 OID 533280)
@@ -173,7 +166,6 @@ CREATE SEQUENCE journey_patterns_id_seq
     CACHE 1;
 
 
-ALTER TABLE journey_patterns_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3779 (class 0 OID 0)
@@ -195,7 +187,6 @@ CREATE TABLE journey_patterns_stop_points (
 );
 
 
-ALTER TABLE journey_patterns_stop_points OWNER TO chouette;
 
 --
 -- TOC entry 241 (class 1259 OID 533285)
@@ -223,7 +214,6 @@ CREATE TABLE routes (
 );
 
 
-ALTER TABLE routes OWNER TO chouette;
 
 --
 -- TOC entry 242 (class 1259 OID 533291)
@@ -238,7 +228,6 @@ CREATE SEQUENCE routes_id_seq
     CACHE 1;
 
 
-ALTER TABLE routes_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3780 (class 0 OID 0)
@@ -270,7 +259,6 @@ CREATE TABLE routing_constraint_zones (
 );
 
 
-ALTER TABLE routing_constraint_zones OWNER TO chouette;
 
 --
 -- TOC entry 244 (class 1259 OID 533299)
@@ -285,7 +273,6 @@ CREATE SEQUENCE routing_constraint_zones_id_seq
     CACHE 1;
 
 
-ALTER TABLE routing_constraint_zones_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3781 (class 0 OID 0)
@@ -316,7 +303,6 @@ CREATE TABLE stop_points (
 );
 
 
-ALTER TABLE stop_points OWNER TO chouette;
 
 --
 -- TOC entry 246 (class 1259 OID 533307)
@@ -331,7 +317,6 @@ CREATE SEQUENCE stop_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE stop_points_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3782 (class 0 OID 0)
@@ -358,7 +343,6 @@ CREATE TABLE time_table_dates (
 );
 
 
-ALTER TABLE time_table_dates OWNER TO chouette;
 
 --
 -- TOC entry 248 (class 1259 OID 533315)
@@ -373,7 +357,6 @@ CREATE SEQUENCE time_table_dates_id_seq
     CACHE 1;
 
 
-ALTER TABLE time_table_dates_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3783 (class 0 OID 0)
@@ -400,7 +383,6 @@ CREATE TABLE time_table_periods (
 );
 
 
-ALTER TABLE time_table_periods OWNER TO chouette;
 
 --
 -- TOC entry 250 (class 1259 OID 533323)
@@ -415,7 +397,6 @@ CREATE SEQUENCE time_table_periods_id_seq
     CACHE 1;
 
 
-ALTER TABLE time_table_periods_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3784 (class 0 OID 0)
@@ -450,7 +431,6 @@ CREATE TABLE time_tables (
 );
 
 
-ALTER TABLE time_tables OWNER TO chouette;
 
 --
 -- TOC entry 252 (class 1259 OID 533333)
@@ -465,7 +445,6 @@ CREATE SEQUENCE time_tables_id_seq
     CACHE 1;
 
 
-ALTER TABLE time_tables_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3785 (class 0 OID 0)
@@ -487,7 +466,6 @@ CREATE TABLE time_tables_vehicle_journeys (
 );
 
 
-ALTER TABLE time_tables_vehicle_journeys OWNER TO chouette;
 
 --
 -- TOC entry 254 (class 1259 OID 533338)
@@ -507,7 +485,6 @@ CREATE TABLE timebands (
 );
 
 
-ALTER TABLE timebands OWNER TO chouette;
 
 --
 -- TOC entry 255 (class 1259 OID 533344)
@@ -522,7 +499,6 @@ CREATE SEQUENCE timebands_id_seq
     CACHE 1;
 
 
-ALTER TABLE timebands_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3786 (class 0 OID 0)
@@ -555,7 +531,6 @@ CREATE TABLE vehicle_journey_at_stops (
 );
 
 
-ALTER TABLE vehicle_journey_at_stops OWNER TO chouette;
 
 --
 -- TOC entry 257 (class 1259 OID 533354)
@@ -570,7 +545,6 @@ CREATE SEQUENCE vehicle_journey_at_stops_id_seq
     CACHE 1;
 
 
-ALTER TABLE vehicle_journey_at_stops_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3787 (class 0 OID 0)
@@ -613,7 +587,6 @@ CREATE TABLE vehicle_journeys (
 );
 
 
-ALTER TABLE vehicle_journeys OWNER TO chouette;
 
 --
 -- TOC entry 259 (class 1259 OID 533363)
@@ -628,7 +601,6 @@ CREATE SEQUENCE vehicle_journeys_id_seq
     CACHE 1;
 
 
-ALTER TABLE vehicle_journeys_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 3788 (class 0 OID 0)

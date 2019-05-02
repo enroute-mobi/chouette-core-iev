@@ -48,7 +48,6 @@ CREATE TABLE public.access_links (
 );
 
 
-ALTER TABLE public.access_links OWNER TO chouette;
 
 --
 -- Name: access_links_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -62,7 +61,6 @@ CREATE SEQUENCE public.access_links_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.access_links_id_seq OWNER TO chouette;
 
 --
 -- Name: access_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -103,7 +101,6 @@ CREATE TABLE public.access_points (
 );
 
 
-ALTER TABLE public.access_points OWNER TO chouette;
 
 --
 -- Name: access_points_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -117,7 +114,6 @@ CREATE SEQUENCE public.access_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.access_points_id_seq OWNER TO chouette;
 
 --
 -- Name: access_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -142,7 +138,6 @@ CREATE TABLE public.api_keys (
 );
 
 
-ALTER TABLE public.api_keys OWNER TO chouette;
 
 --
 -- Name: api_keys_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -156,7 +151,6 @@ CREATE SEQUENCE public.api_keys_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.api_keys_id_seq OWNER TO chouette;
 
 --
 -- Name: api_keys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -185,7 +179,6 @@ CREATE TABLE public.calendars (
 );
 
 
-ALTER TABLE public.calendars OWNER TO chouette;
 
 --
 -- Name: calendars_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -199,7 +192,6 @@ CREATE SEQUENCE public.calendars_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.calendars_id_seq OWNER TO chouette;
 
 --
 -- Name: calendars_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -222,7 +214,6 @@ CREATE TABLE public.clean_up_results (
 );
 
 
-ALTER TABLE public.clean_up_results OWNER TO chouette;
 
 --
 -- Name: clean_up_results_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -236,7 +227,6 @@ CREATE SEQUENCE public.clean_up_results_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.clean_up_results_id_seq OWNER TO chouette;
 
 --
 -- Name: clean_up_results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -263,7 +253,6 @@ CREATE TABLE public.clean_ups (
 );
 
 
-ALTER TABLE public.clean_ups OWNER TO chouette;
 
 --
 -- Name: clean_ups_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -277,7 +266,6 @@ CREATE SEQUENCE public.clean_ups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.clean_ups_id_seq OWNER TO chouette;
 
 --
 -- Name: clean_ups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -314,7 +302,6 @@ CREATE TABLE public.companies (
 );
 
 
-ALTER TABLE public.companies OWNER TO chouette;
 
 --
 -- Name: companies_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -328,7 +315,6 @@ CREATE SEQUENCE public.companies_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.companies_id_seq OWNER TO chouette;
 
 --
 -- Name: companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -351,7 +337,6 @@ CREATE TABLE public.compliance_control_blocks (
 );
 
 
-ALTER TABLE public.compliance_control_blocks OWNER TO chouette;
 
 --
 -- Name: compliance_control_blocks_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -365,7 +350,6 @@ CREATE SEQUENCE public.compliance_control_blocks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_control_blocks_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_control_blocks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -388,7 +372,6 @@ CREATE TABLE public.compliance_control_sets (
 );
 
 
-ALTER TABLE public.compliance_control_sets OWNER TO chouette;
 
 --
 -- Name: compliance_control_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -402,7 +385,6 @@ CREATE SEQUENCE public.compliance_control_sets_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_control_sets_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_control_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -431,7 +413,6 @@ CREATE TABLE public.compliance_controls (
 );
 
 
-ALTER TABLE public.compliance_controls OWNER TO chouette;
 
 --
 -- Name: compliance_controls_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -445,7 +426,6 @@ CREATE SEQUENCE public.compliance_controls_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_controls_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_controls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -482,7 +462,6 @@ CREATE TABLE public.connection_links (
 );
 
 
-ALTER TABLE public.connection_links OWNER TO chouette;
 
 --
 -- Name: connection_links_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -496,7 +475,6 @@ CREATE SEQUENCE public.connection_links_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.connection_links_id_seq OWNER TO chouette;
 
 --
 -- Name: connection_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -522,7 +500,6 @@ CREATE TABLE public.custom_fields (
 );
 
 
-ALTER TABLE public.custom_fields OWNER TO chouette;
 
 --
 -- Name: custom_fields_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -536,7 +513,6 @@ CREATE SEQUENCE public.custom_fields_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.custom_fields_id_seq OWNER TO chouette;
 
 --
 -- Name: custom_fields_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -574,7 +550,6 @@ CREATE TABLE public.facilities (
 );
 
 
-ALTER TABLE public.facilities OWNER TO chouette;
 
 --
 -- Name: facilities_features; Type: TABLE; Schema: public; Owner: chouette
@@ -586,7 +561,6 @@ CREATE TABLE public.facilities_features (
 );
 
 
-ALTER TABLE public.facilities_features OWNER TO chouette;
 
 --
 -- Name: facilities_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -600,7 +574,6 @@ CREATE SEQUENCE public.facilities_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.facilities_id_seq OWNER TO chouette;
 
 --
 -- Name: facilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -626,7 +599,6 @@ CREATE TABLE public.footnotes (
 );
 
 
-ALTER TABLE public.footnotes OWNER TO chouette;
 
 --
 -- Name: footnotes_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -640,7 +612,6 @@ CREATE SEQUENCE public.footnotes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.footnotes_id_seq OWNER TO chouette;
 
 --
 -- Name: footnotes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -659,7 +630,6 @@ CREATE TABLE public.footnotes_vehicle_journeys (
 );
 
 
-ALTER TABLE public.footnotes_vehicle_journeys OWNER TO chouette;
 
 --
 -- Name: group_of_lines; Type: TABLE; Schema: public; Owner: chouette
@@ -680,7 +650,6 @@ CREATE TABLE public.group_of_lines (
 );
 
 
-ALTER TABLE public.group_of_lines OWNER TO chouette;
 
 --
 -- Name: group_of_lines_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -694,7 +663,6 @@ CREATE SEQUENCE public.group_of_lines_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.group_of_lines_id_seq OWNER TO chouette;
 
 --
 -- Name: group_of_lines_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -713,7 +681,6 @@ CREATE TABLE public.group_of_lines_lines (
 );
 
 
-ALTER TABLE public.group_of_lines_lines OWNER TO chouette;
 
 --
 -- Name: journey_frequencies; Type: TABLE; Schema: public; Owner: chouette
@@ -732,7 +699,6 @@ CREATE TABLE public.journey_frequencies (
 );
 
 
-ALTER TABLE public.journey_frequencies OWNER TO chouette;
 
 --
 -- Name: journey_frequencies_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -746,7 +712,6 @@ CREATE SEQUENCE public.journey_frequencies_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.journey_frequencies_id_seq OWNER TO chouette;
 
 --
 -- Name: journey_frequencies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -781,7 +746,6 @@ CREATE TABLE public.journey_patterns (
 );
 
 
-ALTER TABLE public.journey_patterns OWNER TO chouette;
 
 --
 -- Name: journey_patterns_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -795,7 +759,6 @@ CREATE SEQUENCE public.journey_patterns_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.journey_patterns_id_seq OWNER TO chouette;
 
 --
 -- Name: journey_patterns_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -814,7 +777,6 @@ CREATE TABLE public.journey_patterns_stop_points (
 );
 
 
-ALTER TABLE public.journey_patterns_stop_points OWNER TO chouette;
 
 --
 -- Name: line_referential_memberships; Type: TABLE; Schema: public; Owner: chouette
@@ -828,7 +790,6 @@ CREATE TABLE public.line_referential_memberships (
 );
 
 
-ALTER TABLE public.line_referential_memberships OWNER TO chouette;
 
 --
 -- Name: line_referential_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -842,7 +803,6 @@ CREATE SEQUENCE public.line_referential_memberships_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.line_referential_memberships_id_seq OWNER TO chouette;
 
 --
 -- Name: line_referential_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -866,7 +826,6 @@ CREATE TABLE public.line_referential_sync_messages (
 );
 
 
-ALTER TABLE public.line_referential_sync_messages OWNER TO chouette;
 
 --
 -- Name: line_referential_sync_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -880,7 +839,6 @@ CREATE SEQUENCE public.line_referential_sync_messages_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.line_referential_sync_messages_id_seq OWNER TO chouette;
 
 --
 -- Name: line_referential_sync_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -904,7 +862,6 @@ CREATE TABLE public.line_referential_syncs (
 );
 
 
-ALTER TABLE public.line_referential_syncs OWNER TO chouette;
 
 --
 -- Name: line_referential_syncs_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -918,7 +875,6 @@ CREATE SEQUENCE public.line_referential_syncs_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.line_referential_syncs_id_seq OWNER TO chouette;
 
 --
 -- Name: line_referential_syncs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -941,7 +897,6 @@ CREATE TABLE public.line_referentials (
 );
 
 
-ALTER TABLE public.line_referentials OWNER TO chouette;
 
 --
 -- Name: line_referentials_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -955,7 +910,6 @@ CREATE SEQUENCE public.line_referentials_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.line_referentials_id_seq OWNER TO chouette;
 
 --
 -- Name: line_referentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -999,7 +953,6 @@ CREATE TABLE public.lines (
 );
 
 
-ALTER TABLE public.lines OWNER TO chouette;
 
 --
 -- Name: lines_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1013,7 +966,6 @@ CREATE SEQUENCE public.lines_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.lines_id_seq OWNER TO chouette;
 
 --
 -- Name: lines_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1039,7 +991,6 @@ CREATE TABLE public.merges (
 );
 
 
-ALTER TABLE public.merges OWNER TO chouette;
 
 --
 -- Name: merges_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1053,7 +1004,6 @@ CREATE SEQUENCE public.merges_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.merges_id_seq OWNER TO chouette;
 
 --
 -- Name: merges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1086,7 +1036,6 @@ CREATE TABLE public.networks (
 );
 
 
-ALTER TABLE public.networks OWNER TO chouette;
 
 --
 -- Name: networks_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1100,7 +1049,6 @@ CREATE SEQUENCE public.networks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.networks_id_seq OWNER TO chouette;
 
 --
 -- Name: networks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1127,7 +1075,6 @@ CREATE TABLE public.organisations (
 );
 
 
-ALTER TABLE public.organisations OWNER TO chouette;
 
 --
 -- Name: organisations_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1141,7 +1088,6 @@ CREATE SEQUENCE public.organisations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.organisations_id_seq OWNER TO chouette;
 
 --
 -- Name: organisations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1170,7 +1116,6 @@ CREATE TABLE public.pt_links (
 );
 
 
-ALTER TABLE public.pt_links OWNER TO chouette;
 
 --
 -- Name: pt_links_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1184,7 +1129,6 @@ CREATE SEQUENCE public.pt_links_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.pt_links_id_seq OWNER TO chouette;
 
 --
 -- Name: pt_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1209,7 +1153,6 @@ CREATE TABLE public.referential_clonings (
 );
 
 
-ALTER TABLE public.referential_clonings OWNER TO chouette;
 
 --
 -- Name: referential_clonings_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1223,7 +1166,6 @@ CREATE SEQUENCE public.referential_clonings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.referential_clonings_id_seq OWNER TO chouette;
 
 --
 -- Name: referential_clonings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1247,7 +1189,6 @@ CREATE TABLE public.referential_metadata (
 );
 
 
-ALTER TABLE public.referential_metadata OWNER TO chouette;
 
 --
 -- Name: referential_metadata_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1261,7 +1202,6 @@ CREATE SEQUENCE public.referential_metadata_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.referential_metadata_id_seq OWNER TO chouette;
 
 --
 -- Name: referential_metadata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1283,7 +1223,6 @@ CREATE TABLE public.referential_suites (
 );
 
 
-ALTER TABLE public.referential_suites OWNER TO chouette;
 
 --
 -- Name: referential_suites_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1297,7 +1236,6 @@ CREATE SEQUENCE public.referential_suites_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.referential_suites_id_seq OWNER TO chouette;
 
 --
 -- Name: referential_suites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1338,7 +1276,6 @@ CREATE TABLE public.referentials (
 );
 
 
-ALTER TABLE public.referentials OWNER TO chouette;
 
 --
 -- Name: referentials_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1352,7 +1289,6 @@ CREATE SEQUENCE public.referentials_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.referentials_id_seq OWNER TO chouette;
 
 --
 -- Name: referentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1387,7 +1323,6 @@ CREATE TABLE public.routes (
 );
 
 
-ALTER TABLE public.routes OWNER TO chouette;
 
 --
 -- Name: routes_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1401,7 +1336,6 @@ CREATE SEQUENCE public.routes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.routes_id_seq OWNER TO chouette;
 
 --
 -- Name: routes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1430,7 +1364,6 @@ CREATE TABLE public.routing_constraint_zones (
 );
 
 
-ALTER TABLE public.routing_constraint_zones OWNER TO chouette;
 
 --
 -- Name: routing_constraint_zones_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1444,7 +1377,6 @@ CREATE SEQUENCE public.routing_constraint_zones_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.routing_constraint_zones_id_seq OWNER TO chouette;
 
 --
 -- Name: routing_constraint_zones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1463,7 +1395,6 @@ CREATE TABLE public.routing_constraints_lines (
 );
 
 
-ALTER TABLE public.routing_constraints_lines OWNER TO chouette;
 
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: chouette
@@ -1474,7 +1405,6 @@ CREATE TABLE public.schema_migrations (
 );
 
 
-ALTER TABLE public.schema_migrations OWNER TO chouette;
 
 --
 -- Name: stop_area_referential_memberships; Type: TABLE; Schema: public; Owner: chouette
@@ -1488,7 +1418,6 @@ CREATE TABLE public.stop_area_referential_memberships (
 );
 
 
-ALTER TABLE public.stop_area_referential_memberships OWNER TO chouette;
 
 --
 -- Name: stop_area_referential_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1502,7 +1431,6 @@ CREATE SEQUENCE public.stop_area_referential_memberships_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.stop_area_referential_memberships_id_seq OWNER TO chouette;
 
 --
 -- Name: stop_area_referential_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1526,7 +1454,6 @@ CREATE TABLE public.stop_area_referential_sync_messages (
 );
 
 
-ALTER TABLE public.stop_area_referential_sync_messages OWNER TO chouette;
 
 --
 -- Name: stop_area_referential_sync_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1540,7 +1467,6 @@ CREATE SEQUENCE public.stop_area_referential_sync_messages_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.stop_area_referential_sync_messages_id_seq OWNER TO chouette;
 
 --
 -- Name: stop_area_referential_sync_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1564,7 +1490,6 @@ CREATE TABLE public.stop_area_referential_syncs (
 );
 
 
-ALTER TABLE public.stop_area_referential_syncs OWNER TO chouette;
 
 --
 -- Name: stop_area_referential_syncs_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1578,7 +1503,6 @@ CREATE SEQUENCE public.stop_area_referential_syncs_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.stop_area_referential_syncs_id_seq OWNER TO chouette;
 
 --
 -- Name: stop_area_referential_syncs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1601,7 +1525,6 @@ CREATE TABLE public.stop_area_referentials (
 );
 
 
-ALTER TABLE public.stop_area_referentials OWNER TO chouette;
 
 --
 -- Name: stop_area_referentials_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1615,7 +1538,6 @@ CREATE SEQUENCE public.stop_area_referentials_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.stop_area_referentials_id_seq OWNER TO chouette;
 
 --
 -- Name: stop_area_referentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1668,7 +1590,6 @@ CREATE TABLE public.stop_areas (
 );
 
 
-ALTER TABLE public.stop_areas OWNER TO chouette;
 
 --
 -- Name: stop_areas_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1682,7 +1603,6 @@ CREATE SEQUENCE public.stop_areas_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.stop_areas_id_seq OWNER TO chouette;
 
 --
 -- Name: stop_areas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1701,7 +1621,6 @@ CREATE TABLE public.stop_areas_stop_areas (
 );
 
 
-ALTER TABLE public.stop_areas_stop_areas OWNER TO chouette;
 
 --
 -- Name: stop_points; Type: TABLE; Schema: public; Owner: chouette
@@ -1722,7 +1641,6 @@ CREATE TABLE public.stop_points (
 );
 
 
-ALTER TABLE public.stop_points OWNER TO chouette;
 
 --
 -- Name: stop_points_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1736,7 +1654,6 @@ CREATE SEQUENCE public.stop_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.stop_points_id_seq OWNER TO chouette;
 
 --
 -- Name: stop_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1761,7 +1678,6 @@ CREATE TABLE public.taggings (
 );
 
 
-ALTER TABLE public.taggings OWNER TO chouette;
 
 --
 -- Name: taggings_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1775,7 +1691,6 @@ CREATE SEQUENCE public.taggings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.taggings_id_seq OWNER TO chouette;
 
 --
 -- Name: taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1795,7 +1710,6 @@ CREATE TABLE public.tags (
 );
 
 
-ALTER TABLE public.tags OWNER TO chouette;
 
 --
 -- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1809,7 +1723,6 @@ CREATE SEQUENCE public.tags_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tags_id_seq OWNER TO chouette;
 
 --
 -- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1833,7 +1746,6 @@ CREATE TABLE public.time_table_dates (
 );
 
 
-ALTER TABLE public.time_table_dates OWNER TO chouette;
 
 --
 -- Name: time_table_dates_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1847,7 +1759,6 @@ CREATE SEQUENCE public.time_table_dates_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.time_table_dates_id_seq OWNER TO chouette;
 
 --
 -- Name: time_table_dates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1871,7 +1782,6 @@ CREATE TABLE public.time_table_periods (
 );
 
 
-ALTER TABLE public.time_table_periods OWNER TO chouette;
 
 --
 -- Name: time_table_periods_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1885,7 +1795,6 @@ CREATE SEQUENCE public.time_table_periods_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.time_table_periods_id_seq OWNER TO chouette;
 
 --
 -- Name: time_table_periods_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1919,7 +1828,6 @@ CREATE TABLE public.time_tables (
 );
 
 
-ALTER TABLE public.time_tables OWNER TO chouette;
 
 --
 -- Name: time_tables_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1933,7 +1841,6 @@ CREATE SEQUENCE public.time_tables_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.time_tables_id_seq OWNER TO chouette;
 
 --
 -- Name: time_tables_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -1952,7 +1859,6 @@ CREATE TABLE public.time_tables_vehicle_journeys (
 );
 
 
-ALTER TABLE public.time_tables_vehicle_journeys OWNER TO chouette;
 
 --
 -- Name: timebands; Type: TABLE; Schema: public; Owner: chouette
@@ -1971,7 +1877,6 @@ CREATE TABLE public.timebands (
 );
 
 
-ALTER TABLE public.timebands OWNER TO chouette;
 
 --
 -- Name: timebands_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -1985,7 +1890,6 @@ CREATE SEQUENCE public.timebands_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.timebands_id_seq OWNER TO chouette;
 
 --
 -- Name: timebands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -2035,7 +1939,6 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO chouette;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -2049,7 +1952,6 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO chouette;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -2079,7 +1981,6 @@ CREATE TABLE public.vehicle_journey_at_stops (
 );
 
 
-ALTER TABLE public.vehicle_journey_at_stops OWNER TO chouette;
 
 --
 -- Name: vehicle_journey_at_stops_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -2093,7 +1994,6 @@ CREATE SEQUENCE public.vehicle_journey_at_stops_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.vehicle_journey_at_stops_id_seq OWNER TO chouette;
 
 --
 -- Name: vehicle_journey_at_stops_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -2134,7 +2034,6 @@ CREATE TABLE public.vehicle_journeys (
 );
 
 
-ALTER TABLE public.vehicle_journeys OWNER TO chouette;
 
 --
 -- Name: vehicle_journeys_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -2148,7 +2047,6 @@ CREATE SEQUENCE public.vehicle_journeys_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.vehicle_journeys_id_seq OWNER TO chouette;
 
 --
 -- Name: vehicle_journeys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -2176,7 +2074,6 @@ CREATE TABLE public.workbenches (
 );
 
 
-ALTER TABLE public.workbenches OWNER TO chouette;
 
 --
 -- Name: workbenches_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -2190,7 +2087,6 @@ CREATE SEQUENCE public.workbenches_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.workbenches_id_seq OWNER TO chouette;
 
 --
 -- Name: workbenches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -2216,7 +2112,6 @@ CREATE TABLE public.workgroups (
 );
 
 
-ALTER TABLE public.workgroups OWNER TO chouette;
 
 --
 -- Name: workgroups_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -2230,7 +2125,6 @@ CREATE SEQUENCE public.workgroups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.workgroups_id_seq OWNER TO chouette;
 
 --
 -- Name: workgroups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette

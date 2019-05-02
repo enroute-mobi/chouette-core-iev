@@ -42,7 +42,6 @@ CREATE TABLE footnotes (
 );
 
 
-ALTER TABLE footnotes OWNER TO chouette;
 
 --
 -- Name: footnotes_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -56,7 +55,6 @@ CREATE SEQUENCE footnotes_id_seq
     CACHE 1;
 
 
-ALTER TABLE footnotes_id_seq OWNER TO chouette;
 
 --
 -- Name: footnotes_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -75,7 +73,6 @@ CREATE TABLE footnotes_vehicle_journeys (
 );
 
 
-ALTER TABLE footnotes_vehicle_journeys OWNER TO chouette;
 
 --
 -- Name: journey_frequencies; Type: TABLE; Schema: chouette_gui; Owner: chouette
@@ -94,7 +91,6 @@ CREATE TABLE journey_frequencies (
 );
 
 
-ALTER TABLE journey_frequencies OWNER TO chouette;
 
 --
 -- Name: journey_frequencies_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -108,7 +104,6 @@ CREATE SEQUENCE journey_frequencies_id_seq
     CACHE 1;
 
 
-ALTER TABLE journey_frequencies_id_seq OWNER TO chouette;
 
 --
 -- Name: journey_frequencies_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -141,7 +136,6 @@ CREATE TABLE journey_patterns (
 );
 
 
-ALTER TABLE journey_patterns OWNER TO chouette;
 
 --
 -- Name: journey_patterns_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -155,7 +149,6 @@ CREATE SEQUENCE journey_patterns_id_seq
     CACHE 1;
 
 
-ALTER TABLE journey_patterns_id_seq OWNER TO chouette;
 
 --
 -- Name: journey_patterns_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -174,7 +167,6 @@ CREATE TABLE journey_patterns_stop_points (
 );
 
 
-ALTER TABLE journey_patterns_stop_points OWNER TO chouette;
 
 --
 -- Name: routes; Type: TABLE; Schema: chouette_gui; Owner: chouette
@@ -200,7 +192,6 @@ CREATE TABLE routes (
 );
 
 
-ALTER TABLE routes OWNER TO chouette;
 
 --
 -- Name: routes_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -214,7 +205,6 @@ CREATE SEQUENCE routes_id_seq
     CACHE 1;
 
 
-ALTER TABLE routes_id_seq OWNER TO chouette;
 
 --
 -- Name: routes_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -242,7 +232,6 @@ CREATE TABLE routing_constraint_zones (
 );
 
 
-ALTER TABLE routing_constraint_zones OWNER TO chouette;
 
 --
 -- Name: routing_constraint_zones_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -256,7 +245,6 @@ CREATE SEQUENCE routing_constraint_zones_id_seq
     CACHE 1;
 
 
-ALTER TABLE routing_constraint_zones_id_seq OWNER TO chouette;
 
 --
 -- Name: routing_constraint_zones_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -283,7 +271,6 @@ CREATE TABLE stop_points (
 );
 
 
-ALTER TABLE stop_points OWNER TO chouette;
 
 --
 -- Name: stop_points_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -297,7 +284,6 @@ CREATE SEQUENCE stop_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE stop_points_id_seq OWNER TO chouette;
 
 --
 -- Name: stop_points_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -321,7 +307,6 @@ CREATE TABLE time_table_dates (
 );
 
 
-ALTER TABLE time_table_dates OWNER TO chouette;
 
 --
 -- Name: time_table_dates_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -335,7 +320,6 @@ CREATE SEQUENCE time_table_dates_id_seq
     CACHE 1;
 
 
-ALTER TABLE time_table_dates_id_seq OWNER TO chouette;
 
 --
 -- Name: time_table_dates_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -359,7 +343,6 @@ CREATE TABLE time_table_periods (
 );
 
 
-ALTER TABLE time_table_periods OWNER TO chouette;
 
 --
 -- Name: time_table_periods_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -373,7 +356,6 @@ CREATE SEQUENCE time_table_periods_id_seq
     CACHE 1;
 
 
-ALTER TABLE time_table_periods_id_seq OWNER TO chouette;
 
 --
 -- Name: time_table_periods_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -404,7 +386,6 @@ CREATE TABLE time_tables (
 );
 
 
-ALTER TABLE time_tables OWNER TO chouette;
 
 --
 -- Name: time_tables_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -418,7 +399,6 @@ CREATE SEQUENCE time_tables_id_seq
     CACHE 1;
 
 
-ALTER TABLE time_tables_id_seq OWNER TO chouette;
 
 --
 -- Name: time_tables_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -437,7 +417,6 @@ CREATE TABLE time_tables_vehicle_journeys (
 );
 
 
-ALTER TABLE time_tables_vehicle_journeys OWNER TO chouette;
 
 --
 -- Name: timebands; Type: TABLE; Schema: chouette_gui; Owner: chouette
@@ -455,7 +434,6 @@ CREATE TABLE timebands (
 );
 
 
-ALTER TABLE timebands OWNER TO chouette;
 
 --
 -- Name: timebands_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -469,7 +447,6 @@ CREATE SEQUENCE timebands_id_seq
     CACHE 1;
 
 
-ALTER TABLE timebands_id_seq OWNER TO chouette;
 
 --
 -- Name: timebands_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -499,7 +476,6 @@ CREATE TABLE vehicle_journey_at_stops (
 );
 
 
-ALTER TABLE vehicle_journey_at_stops OWNER TO chouette;
 
 --
 -- Name: vehicle_journey_at_stops_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -513,7 +489,6 @@ CREATE SEQUENCE vehicle_journey_at_stops_id_seq
     CACHE 1;
 
 
-ALTER TABLE vehicle_journey_at_stops_id_seq OWNER TO chouette;
 
 --
 -- Name: vehicle_journey_at_stops_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette
@@ -552,7 +527,6 @@ CREATE TABLE vehicle_journeys (
 );
 
 
-ALTER TABLE vehicle_journeys OWNER TO chouette;
 
 --
 -- Name: vehicle_journeys_id_seq; Type: SEQUENCE; Schema: chouette_gui; Owner: chouette
@@ -566,7 +540,6 @@ CREATE SEQUENCE vehicle_journeys_id_seq
     CACHE 1;
 
 
-ALTER TABLE vehicle_journeys_id_seq OWNER TO chouette;
 
 --
 -- Name: vehicle_journeys_id_seq; Type: SEQUENCE OWNED BY; Schema: chouette_gui; Owner: chouette

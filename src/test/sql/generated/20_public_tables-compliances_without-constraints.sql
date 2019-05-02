@@ -17,14 +17,12 @@ CREATE TABLE public.compliance_check_blocks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-ALTER TABLE public.compliance_check_blocks OWNER TO chouette;
 CREATE SEQUENCE public.compliance_check_blocks_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_check_blocks_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_check_blocks_id_seq OWNED BY public.compliance_check_blocks.id;
 CREATE TABLE public.compliance_check_messages (
     id bigint NOT NULL,
@@ -38,14 +36,12 @@ CREATE TABLE public.compliance_check_messages (
     status character varying,
     compliance_check_set_id bigint
 );
-ALTER TABLE public.compliance_check_messages OWNER TO chouette;
 CREATE SEQUENCE public.compliance_check_messages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_check_messages_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_check_messages_id_seq OWNED BY public.compliance_check_messages.id;
 CREATE TABLE public.compliance_check_resources (
     id bigint NOT NULL,
@@ -58,14 +54,12 @@ CREATE TABLE public.compliance_check_resources (
     updated_at timestamp without time zone NOT NULL,
     compliance_check_set_id bigint
 );
-ALTER TABLE public.compliance_check_resources OWNER TO chouette;
 CREATE SEQUENCE public.compliance_check_resources_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_check_resources_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_check_resources_id_seq OWNED BY public.compliance_check_resources.id;
 CREATE TABLE public.compliance_check_sets (
     id bigint NOT NULL,
@@ -85,14 +79,12 @@ CREATE TABLE public.compliance_check_sets (
     notified_parent_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.compliance_check_sets OWNER TO chouette;
 CREATE SEQUENCE public.compliance_check_sets_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_check_sets_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_check_sets_id_seq OWNED BY public.compliance_check_sets.id;
 CREATE TABLE public.compliance_checks (
     id bigint NOT NULL,
@@ -109,14 +101,12 @@ CREATE TABLE public.compliance_checks (
     origin_code character varying,
     compliance_control_name character varying
 );
-ALTER TABLE public.compliance_checks OWNER TO chouette;
 CREATE SEQUENCE public.compliance_checks_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_checks_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_checks_id_seq OWNED BY public.compliance_checks.id;
 ALTER TABLE ONLY public.compliance_check_blocks ALTER COLUMN id SET DEFAULT nextval('public.compliance_check_blocks_id_seq'::regclass);
 ALTER TABLE ONLY public.compliance_check_messages ALTER COLUMN id SET DEFAULT nextval('public.compliance_check_messages_id_seq'::regclass);
