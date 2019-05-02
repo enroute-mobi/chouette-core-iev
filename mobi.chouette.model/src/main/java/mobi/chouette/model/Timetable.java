@@ -283,6 +283,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.JOIN)
 	@CollectionTable(name = "time_table_periods", joinColumns = @JoinColumn(name = "time_table_id"))
+	@OrderColumn(name = "position", nullable = false)
 	private List<Period> periods = new ArrayList<Period>(0);
 
 	/**
