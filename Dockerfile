@@ -1,6 +1,47 @@
+# Usage sample :
+#
+# docker build --build-arg WEEK=`date +%Y%U` -t chouette-core-iev .
+# docker run --add-host "db:172.17.0.1" --add-host "chouette-core.test:172.17.0.1" -e BOIV_GUI_URL_BASE=http://chouette-core.test -it --rm chouette-core-iev
+
 FROM maven:3.6.0-jdk-8 AS builder
+
+ARG WEEK
+
+WORKDIR /usr/src/mymaven
+
+# Generated with : ls **/pom.xml | awk '{ printf "COPY %s ./%s\n", $0, $0 }'
+COPY pom.xml ./pom.xml
+COPY boiv_iev/pom.xml ./boiv_iev/pom.xml
+COPY chouette_iev/pom.xml ./chouette_iev/pom.xml
+COPY mobi.chouette.boiv.service/pom.xml ./mobi.chouette.boiv.service/pom.xml
+COPY mobi.chouette.boiv.ws/pom.xml ./mobi.chouette.boiv.ws/pom.xml
+COPY mobi.chouette.command/pom.xml ./mobi.chouette.command/pom.xml
+COPY mobi.chouette.common/pom.xml ./mobi.chouette.common/pom.xml
+COPY mobi.chouette.dao.iev/pom.xml ./mobi.chouette.dao.iev/pom.xml
+COPY mobi.chouette.dao/pom.xml ./mobi.chouette.dao/pom.xml
+COPY mobi.chouette.exchange.converter/pom.xml ./mobi.chouette.exchange.converter/pom.xml
+COPY mobi.chouette.exchange.geojson/pom.xml ./mobi.chouette.exchange.geojson/pom.xml
+COPY mobi.chouette.exchange.gtfs/pom.xml ./mobi.chouette.exchange.gtfs/pom.xml
+COPY mobi.chouette.exchange.hub/pom.xml ./mobi.chouette.exchange.hub/pom.xml
+COPY mobi.chouette.exchange.kml/pom.xml ./mobi.chouette.exchange.kml/pom.xml
+COPY mobi.chouette.exchange.neptune/pom.xml ./mobi.chouette.exchange.neptune/pom.xml
+COPY mobi.chouette.exchange.netex/pom.xml ./mobi.chouette.exchange.netex/pom.xml
+COPY mobi.chouette.exchange.netex_stif/pom.xml ./mobi.chouette.exchange.netex_stif/pom.xml
+COPY mobi.chouette.exchange/pom.xml ./mobi.chouette.exchange/pom.xml
+COPY mobi.chouette.exchange.sig/pom.xml ./mobi.chouette.exchange.sig/pom.xml
+COPY mobi.chouette.exchange.validator/pom.xml ./mobi.chouette.exchange.validator/pom.xml
+COPY mobi.chouette.model.iev/pom.xml ./mobi.chouette.model.iev/pom.xml
+COPY mobi.chouette.model/pom.xml ./mobi.chouette.model/pom.xml
+COPY mobi.chouette.persistence.hibernate/pom.xml ./mobi.chouette.persistence.hibernate/pom.xml
+COPY mobi.chouette.schema.checker/pom.xml ./mobi.chouette.schema.checker/pom.xml
+COPY mobi.chouette.service/pom.xml ./mobi.chouette.service/pom.xml
+COPY mobi.chouette.ws/pom.xml ./mobi.chouette.ws/pom.xml
+
+# See https://github.com/apache/maven-dependency-plugin/pull/2
+RUN mvn -T 2C --batch-mode com.offbytwo.maven.plugins:maven-dependency-plugin:3.1.1.MDEP568:go-offline -DexcludeGroupIds=mobi.chouette
+
 COPY . /usr/src/mymaven
-RUN cd /usr/src/mymaven && mvn -Dmaven.test.skip=true --batch-mode install
+RUN mvn -Dmaven.test.skip=true --batch-mode install
 
 FROM debian:stable-slim
 
@@ -48,8 +89,10 @@ COPY --from=builder /usr/src/mymaven/boiv_iev/target/chouette_iev.ear /chouette_
 
 COPY boiv.properties /etc/chouette/boiv/
 
-ENV POSTGRES_HOST="db" POSTGRES_NAME="chouette" POSTGRES_USER="chouette" WEBGUI_HOST="front" BOIV_GUI_URL_BASE="http://front:3000/"
+ENV POSTGRES_HOST="db" POSTGRES_NAME="chouette" POSTGRES_USER="chouette" BOIV_GUI_URL_BASE="http://front:3000/"
 ENV JAVA_OPTS='-Xms64m -Xmx768m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true'
+
+WORKDIR /
 
 EXPOSE 8080 9990
 COPY docker-entrypoint.sh /

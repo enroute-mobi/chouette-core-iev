@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 cmd=$1
 
 SETUP_FILE=/setup.done
