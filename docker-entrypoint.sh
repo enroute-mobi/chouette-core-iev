@@ -9,6 +9,10 @@ POSTGRES_NAME=${POSTGRES_NAME:-chouette2}
 POSTGRES_USER=${POSTGRES_USER:-chouette}
 POSTGRES_PASS=${POSTGRES_PASS:-chouette}
 
+if [ -n "$BOIV_GUI_URL_BASE" -a -z "$WEBGUI_HOST" ]; then
+    WEBGUI_HOST=`echo "$BOIV_GUI_URL_BASE" | sed 's@http://\(.*\):.*@\1@'`
+    WEBGUI_PORT=`echo "$BOIV_GUI_URL_BASE" | sed 's@http://.*:\([0-9]*\)/.*@\1@'`
+fi
 
 WEBGUI_HOST=${WEBGUI_HOST:-stif-boiv-web}
 WEBGUI_PORT=${WEBGUI_PORT:-3000}
