@@ -10,8 +10,13 @@ POSTGRES_USER=${POSTGRES_USER:-chouette}
 POSTGRES_PASS=${POSTGRES_PASS:-chouette}
 
 if [ -n "$BOIV_GUI_URL_BASE" -a -z "$WEBGUI_HOST" ]; then
-    WEBGUI_HOST=`echo "$BOIV_GUI_URL_BASE" | sed 's@http://\(.*\):.*@\1@'`
-    WEBGUI_PORT=`echo "$BOIV_GUI_URL_BASE" | sed 's@http://.*:\([0-9]*\)/.*@\1@'`
+    if echo "$BOIV_GUI_URL_BASE" | egrep 'http://.+:[0-9]+' ; then
+        WEBGUI_HOST=`echo "$BOIV_GUI_URL_BASE" | sed -n 's@http://\(.*\):.*@\1@p'`
+        WEBGUI_PORT=`echo "$BOIV_GUI_URL_BASE" | sed -n 's@http://.*:\([0-9]*\).*@\1@p'`
+    else
+        WEBGUI_HOST=`echo "$BOIV_GUI_URL_BASE" | sed -n 's@http://\(.*\)$@\1@p' | sed 's@/$@@'`
+        WEBGUI_PORT=80
+    fi
 fi
 
 WEBGUI_HOST=${WEBGUI_HOST:-stif-boiv-web}
