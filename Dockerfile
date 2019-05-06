@@ -41,7 +41,7 @@ COPY mobi.chouette.ws/pom.xml ./mobi.chouette.ws/pom.xml
 RUN mvn -T 2C --batch-mode com.offbytwo.maven.plugins:maven-dependency-plugin:3.1.1.MDEP568:go-offline -DexcludeGroupIds=mobi.chouette
 
 COPY . /usr/src/mymaven
-RUN mvn -Dmaven.test.skip=true --batch-mode install
+RUN mvn -Dmaven.test.skip=true -DskipTests=true --batch-mode install
 
 FROM debian:stable-slim
 
