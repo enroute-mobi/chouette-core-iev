@@ -213,10 +213,14 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	public void setDayTypes(List<DayTypeEnum> arrayList) {
 		int value = 0;
-		for (DayTypeEnum dayType : arrayList) {
-			int mask = 1 << dayType.ordinal();
-			value |= mask;
+		if (arrayList !=null && !arrayList.isEmpty()) {
+			for (DayMaskPair pair : weekDayIndexToMask) {
+				if (arrayList.contains(pair.getValue())) {
+					value+=pair.getKey();
+				}
+			}
 		}
+
 		this.intDayTypes = value;
 	}
 
@@ -227,8 +231,12 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	 */
 	public void addDayType(DayTypeEnum dayType) {
 		if (dayType != null) {
-			int mask = 1 << dayType.ordinal();
-			this.intDayTypes |= mask;
+			for (DayMaskPair pair : weekDayIndexToMask) {
+				if (dayType.equals(pair.getValue())){
+					this.intDayTypes+=pair.getKey();
+					return;
+				}
+			}
 		}
 	}
 
