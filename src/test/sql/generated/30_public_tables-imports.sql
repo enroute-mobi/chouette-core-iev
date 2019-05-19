@@ -36,7 +36,6 @@ CREATE TABLE public.import_messages (
 );
 
 
-ALTER TABLE public.import_messages OWNER TO chouette;
 
 --
 -- Name: import_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -50,7 +49,6 @@ CREATE SEQUENCE public.import_messages_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.import_messages_id_seq OWNER TO chouette;
 
 --
 -- Name: import_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -77,7 +75,6 @@ CREATE TABLE public.import_resources (
 );
 
 
-ALTER TABLE public.import_resources OWNER TO chouette;
 
 --
 -- Name: import_resources_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -91,7 +88,6 @@ CREATE SEQUENCE public.import_resources_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.import_resources_id_seq OWNER TO chouette;
 
 --
 -- Name: import_resources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -128,7 +124,6 @@ CREATE TABLE public.imports (
 );
 
 
-ALTER TABLE public.imports OWNER TO chouette;
 
 --
 -- Name: imports_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -142,7 +137,6 @@ CREATE SEQUENCE public.imports_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.imports_id_seq OWNER TO chouette;
 
 --
 -- Name: imports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette

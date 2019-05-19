@@ -33,7 +33,6 @@ CREATE TABLE public.compliance_check_blocks (
 );
 
 
-ALTER TABLE public.compliance_check_blocks OWNER TO chouette;
 
 --
 -- Name: compliance_check_blocks_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -47,7 +46,6 @@ CREATE SEQUENCE public.compliance_check_blocks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_check_blocks_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_check_blocks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -74,7 +72,6 @@ CREATE TABLE public.compliance_check_messages (
 );
 
 
-ALTER TABLE public.compliance_check_messages OWNER TO chouette;
 
 --
 -- Name: compliance_check_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -88,7 +85,6 @@ CREATE SEQUENCE public.compliance_check_messages_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_check_messages_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_check_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -114,7 +110,6 @@ CREATE TABLE public.compliance_check_resources (
 );
 
 
-ALTER TABLE public.compliance_check_resources OWNER TO chouette;
 
 --
 -- Name: compliance_check_resources_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -128,7 +123,6 @@ CREATE SEQUENCE public.compliance_check_resources_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_check_resources_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_check_resources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -161,7 +155,6 @@ CREATE TABLE public.compliance_check_sets (
 );
 
 
-ALTER TABLE public.compliance_check_sets OWNER TO chouette;
 
 --
 -- Name: compliance_check_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -175,7 +168,6 @@ CREATE SEQUENCE public.compliance_check_sets_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_check_sets_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_check_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette
@@ -205,7 +197,6 @@ CREATE TABLE public.compliance_checks (
 );
 
 
-ALTER TABLE public.compliance_checks OWNER TO chouette;
 
 --
 -- Name: compliance_checks_id_seq; Type: SEQUENCE; Schema: public; Owner: chouette
@@ -219,7 +210,6 @@ CREATE SEQUENCE public.compliance_checks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_checks_id_seq OWNER TO chouette;
 
 --
 -- Name: compliance_checks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chouette

@@ -32,14 +32,12 @@ CREATE TABLE public.access_links (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.access_links OWNER TO chouette;
 CREATE SEQUENCE public.access_links_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.access_links_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.access_links_id_seq OWNED BY public.access_links.id;
 CREATE TABLE public.access_points (
     id bigint NOT NULL,
@@ -67,14 +65,12 @@ CREATE TABLE public.access_points (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.access_points OWNER TO chouette;
 CREATE SEQUENCE public.access_points_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.access_points_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.access_points_id_seq OWNED BY public.access_points.id;
 CREATE TABLE public.api_keys (
     id bigint NOT NULL,
@@ -86,14 +82,12 @@ CREATE TABLE public.api_keys (
     organisation_id bigint,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.api_keys OWNER TO chouette;
 CREATE SEQUENCE public.api_keys_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.api_keys_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.api_keys_id_seq OWNED BY public.api_keys.id;
 CREATE TABLE public.calendars (
     id bigint NOT NULL,
@@ -109,14 +103,12 @@ CREATE TABLE public.calendars (
     excluded_dates date[],
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.calendars OWNER TO chouette;
 CREATE SEQUENCE public.calendars_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.calendars_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.calendars_id_seq OWNED BY public.calendars.id;
 CREATE TABLE public.clean_up_results (
     id bigint NOT NULL,
@@ -126,14 +118,12 @@ CREATE TABLE public.clean_up_results (
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
-ALTER TABLE public.clean_up_results OWNER TO chouette;
 CREATE SEQUENCE public.clean_up_results_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.clean_up_results_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.clean_up_results_id_seq OWNED BY public.clean_up_results.id;
 CREATE TABLE public.clean_ups (
     id bigint NOT NULL,
@@ -147,14 +137,12 @@ CREATE TABLE public.clean_ups (
     end_date date,
     date_type character varying
 );
-ALTER TABLE public.clean_ups OWNER TO chouette;
 CREATE SEQUENCE public.clean_ups_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.clean_ups_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.clean_ups_id_seq OWNED BY public.clean_ups.id;
 CREATE TABLE public.companies (
     id bigint NOT NULL,
@@ -178,14 +166,12 @@ CREATE TABLE public.companies (
     custom_field_values jsonb DEFAULT '{}'::jsonb,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.companies OWNER TO chouette;
 CREATE SEQUENCE public.companies_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.companies_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 CREATE TABLE public.compliance_control_blocks (
     id bigint NOT NULL,
@@ -195,14 +181,12 @@ CREATE TABLE public.compliance_control_blocks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-ALTER TABLE public.compliance_control_blocks OWNER TO chouette;
 CREATE SEQUENCE public.compliance_control_blocks_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_control_blocks_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_control_blocks_id_seq OWNED BY public.compliance_control_blocks.id;
 CREATE TABLE public.compliance_control_sets (
     id bigint NOT NULL,
@@ -212,14 +196,12 @@ CREATE TABLE public.compliance_control_sets (
     updated_at timestamp without time zone NOT NULL,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.compliance_control_sets OWNER TO chouette;
 CREATE SEQUENCE public.compliance_control_sets_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_control_sets_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_control_sets_id_seq OWNED BY public.compliance_control_sets.id;
 CREATE TABLE public.compliance_controls (
     id bigint NOT NULL,
@@ -235,14 +217,12 @@ CREATE TABLE public.compliance_controls (
     origin_code character varying,
     compliance_control_block_id bigint
 );
-ALTER TABLE public.compliance_controls OWNER TO chouette;
 CREATE SEQUENCE public.compliance_controls_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.compliance_controls_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.compliance_controls_id_seq OWNED BY public.compliance_controls.id;
 CREATE TABLE public.connection_links (
     id bigint NOT NULL,
@@ -266,14 +246,12 @@ CREATE TABLE public.connection_links (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.connection_links OWNER TO chouette;
 CREATE SEQUENCE public.connection_links_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.connection_links_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.connection_links_id_seq OWNED BY public.connection_links.id;
 CREATE TABLE public.custom_fields (
     id bigint NOT NULL,
@@ -286,14 +264,12 @@ CREATE TABLE public.custom_fields (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-ALTER TABLE public.custom_fields OWNER TO chouette;
 CREATE SEQUENCE public.custom_fields_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.custom_fields_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.custom_fields_id_seq OWNED BY public.custom_fields.id;
 CREATE TABLE public.facilities (
     id bigint NOT NULL,
@@ -318,19 +294,16 @@ CREATE TABLE public.facilities (
     street_name character varying,
     contained_in character varying
 );
-ALTER TABLE public.facilities OWNER TO chouette;
 CREATE TABLE public.facilities_features (
     facility_id bigint,
     choice_code integer
 );
-ALTER TABLE public.facilities_features OWNER TO chouette;
 CREATE SEQUENCE public.facilities_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.facilities_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.facilities_id_seq OWNED BY public.facilities.id;
 CREATE TABLE public.footnotes (
     id bigint NOT NULL,
@@ -343,20 +316,17 @@ CREATE TABLE public.footnotes (
     checksum_source text,
     data_source_ref character varying
 );
-ALTER TABLE public.footnotes OWNER TO chouette;
 CREATE SEQUENCE public.footnotes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.footnotes_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.footnotes_id_seq OWNED BY public.footnotes.id;
 CREATE TABLE public.footnotes_vehicle_journeys (
     vehicle_journey_id bigint,
     footnote_id bigint
 );
-ALTER TABLE public.footnotes_vehicle_journeys OWNER TO chouette;
 CREATE TABLE public.group_of_lines (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
@@ -370,20 +340,17 @@ CREATE TABLE public.group_of_lines (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.group_of_lines OWNER TO chouette;
 CREATE SEQUENCE public.group_of_lines_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.group_of_lines_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.group_of_lines_id_seq OWNED BY public.group_of_lines.id;
 CREATE TABLE public.group_of_lines_lines (
     group_of_line_id bigint,
     line_id bigint
 );
-ALTER TABLE public.group_of_lines_lines OWNER TO chouette;
 CREATE TABLE public.journey_frequencies (
     id bigint NOT NULL,
     vehicle_journey_id bigint,
@@ -395,14 +362,12 @@ CREATE TABLE public.journey_frequencies (
     updated_at timestamp without time zone,
     timeband_id bigint
 );
-ALTER TABLE public.journey_frequencies OWNER TO chouette;
 CREATE SEQUENCE public.journey_frequencies_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.journey_frequencies_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.journey_frequencies_id_seq OWNED BY public.journey_frequencies.id;
 CREATE TABLE public.journey_patterns (
     id bigint NOT NULL,
@@ -424,34 +389,29 @@ CREATE TABLE public.journey_patterns (
     metadata jsonb DEFAULT '{}'::jsonb,
     custom_field_values jsonb
 );
-ALTER TABLE public.journey_patterns OWNER TO chouette;
 CREATE SEQUENCE public.journey_patterns_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.journey_patterns_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.journey_patterns_id_seq OWNED BY public.journey_patterns.id;
 CREATE TABLE public.journey_patterns_stop_points (
     journey_pattern_id bigint,
     stop_point_id bigint
 );
-ALTER TABLE public.journey_patterns_stop_points OWNER TO chouette;
 CREATE TABLE public.line_referential_memberships (
     id bigint NOT NULL,
     organisation_id bigint,
     line_referential_id bigint,
     owner boolean
 );
-ALTER TABLE public.line_referential_memberships OWNER TO chouette;
 CREATE SEQUENCE public.line_referential_memberships_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.line_referential_memberships_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.line_referential_memberships_id_seq OWNED BY public.line_referential_memberships.id;
 CREATE TABLE public.line_referential_sync_messages (
     id bigint NOT NULL,
@@ -462,14 +422,12 @@ CREATE TABLE public.line_referential_sync_messages (
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
-ALTER TABLE public.line_referential_sync_messages OWNER TO chouette;
 CREATE SEQUENCE public.line_referential_sync_messages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.line_referential_sync_messages_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.line_referential_sync_messages_id_seq OWNED BY public.line_referential_sync_messages.id;
 CREATE TABLE public.line_referential_syncs (
     id bigint NOT NULL,
@@ -480,14 +438,12 @@ CREATE TABLE public.line_referential_syncs (
     ended_at timestamp without time zone,
     status character varying
 );
-ALTER TABLE public.line_referential_syncs OWNER TO chouette;
 CREATE SEQUENCE public.line_referential_syncs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.line_referential_syncs_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.line_referential_syncs_id_seq OWNED BY public.line_referential_syncs.id;
 CREATE TABLE public.line_referentials (
     id bigint NOT NULL,
@@ -497,14 +453,12 @@ CREATE TABLE public.line_referentials (
     sync_interval integer DEFAULT 1,
     objectid_format character varying
 );
-ALTER TABLE public.line_referentials OWNER TO chouette;
 CREATE SEQUENCE public.line_referentials_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.line_referentials_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.line_referentials_id_seq OWNED BY public.line_referentials.id;
 CREATE TABLE public.lines (
     id bigint NOT NULL,
@@ -535,14 +489,12 @@ CREATE TABLE public.lines (
     seasonal boolean,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.lines OWNER TO chouette;
 CREATE SEQUENCE public.lines_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.lines_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.lines_id_seq OWNED BY public.lines.id;
 CREATE TABLE public.merges (
     id bigint NOT NULL,
@@ -555,14 +507,12 @@ CREATE TABLE public.merges (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-ALTER TABLE public.merges OWNER TO chouette;
 CREATE SEQUENCE public.merges_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.merges_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.merges_id_seq OWNED BY public.merges.id;
 CREATE TABLE public.networks (
     id bigint NOT NULL,
@@ -582,14 +532,12 @@ CREATE TABLE public.networks (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.networks OWNER TO chouette;
 CREATE SEQUENCE public.networks_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.networks_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.networks_id_seq OWNED BY public.networks.id;
 CREATE TABLE public.organisations (
     id bigint NOT NULL,
@@ -603,14 +551,12 @@ CREATE TABLE public.organisations (
     custom_view character varying,
     features character varying[] DEFAULT '{}'::character varying[]
 );
-ALTER TABLE public.organisations OWNER TO chouette;
 CREATE SEQUENCE public.organisations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.organisations_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.organisations_id_seq OWNED BY public.organisations.id;
 CREATE TABLE public.pt_links (
     id bigint NOT NULL,
@@ -626,14 +572,12 @@ CREATE TABLE public.pt_links (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.pt_links OWNER TO chouette;
 CREATE SEQUENCE public.pt_links_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.pt_links_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.pt_links_id_seq OWNED BY public.pt_links.id;
 CREATE TABLE public.referential_clonings (
     id bigint NOT NULL,
@@ -645,14 +589,12 @@ CREATE TABLE public.referential_clonings (
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
-ALTER TABLE public.referential_clonings OWNER TO chouette;
 CREATE SEQUENCE public.referential_clonings_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.referential_clonings_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.referential_clonings_id_seq OWNED BY public.referential_clonings.id;
 CREATE TABLE public.referential_metadata (
     id bigint NOT NULL,
@@ -663,14 +605,12 @@ CREATE TABLE public.referential_metadata (
     updated_at timestamp without time zone,
     periodes daterange[]
 );
-ALTER TABLE public.referential_metadata OWNER TO chouette;
 CREATE SEQUENCE public.referential_metadata_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.referential_metadata_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.referential_metadata_id_seq OWNED BY public.referential_metadata.id;
 CREATE TABLE public.referential_suites (
     id bigint NOT NULL,
@@ -679,14 +619,12 @@ CREATE TABLE public.referential_suites (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-ALTER TABLE public.referential_suites OWNER TO chouette;
 CREATE SEQUENCE public.referential_suites_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.referential_suites_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.referential_suites_id_seq OWNED BY public.referential_suites.id;
 CREATE TABLE public.referentials (
     id bigint NOT NULL,
@@ -714,14 +652,12 @@ CREATE TABLE public.referentials (
     merged_at timestamp without time zone,
     failed_at timestamp without time zone
 );
-ALTER TABLE public.referentials OWNER TO chouette;
 CREATE SEQUENCE public.referentials_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.referentials_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.referentials_id_seq OWNED BY public.referentials.id;
 CREATE TABLE public.routes (
     id bigint NOT NULL,
@@ -743,14 +679,12 @@ CREATE TABLE public.routes (
     costs json,
     metadata jsonb
 );
-ALTER TABLE public.routes OWNER TO chouette;
 CREATE SEQUENCE public.routes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.routes_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.routes_id_seq OWNED BY public.routes.id;
 CREATE TABLE public.routing_constraint_zones (
     id bigint NOT NULL,
@@ -766,38 +700,32 @@ CREATE TABLE public.routing_constraint_zones (
     data_source_ref character varying,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.routing_constraint_zones OWNER TO chouette;
 CREATE SEQUENCE public.routing_constraint_zones_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.routing_constraint_zones_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.routing_constraint_zones_id_seq OWNED BY public.routing_constraint_zones.id;
 CREATE TABLE public.routing_constraints_lines (
     stop_area_id bigint,
     line_id bigint
 );
-ALTER TABLE public.routing_constraints_lines OWNER TO chouette;
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
-ALTER TABLE public.schema_migrations OWNER TO chouette;
 CREATE TABLE public.stop_area_referential_memberships (
     id bigint NOT NULL,
     organisation_id bigint,
     stop_area_referential_id bigint,
     owner boolean
 );
-ALTER TABLE public.stop_area_referential_memberships OWNER TO chouette;
 CREATE SEQUENCE public.stop_area_referential_memberships_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.stop_area_referential_memberships_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.stop_area_referential_memberships_id_seq OWNED BY public.stop_area_referential_memberships.id;
 CREATE TABLE public.stop_area_referential_sync_messages (
     id bigint NOT NULL,
@@ -808,14 +736,12 @@ CREATE TABLE public.stop_area_referential_sync_messages (
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
-ALTER TABLE public.stop_area_referential_sync_messages OWNER TO chouette;
 CREATE SEQUENCE public.stop_area_referential_sync_messages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.stop_area_referential_sync_messages_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.stop_area_referential_sync_messages_id_seq OWNED BY public.stop_area_referential_sync_messages.id;
 CREATE TABLE public.stop_area_referential_syncs (
     id bigint NOT NULL,
@@ -826,14 +752,12 @@ CREATE TABLE public.stop_area_referential_syncs (
     started_at timestamp without time zone,
     status character varying
 );
-ALTER TABLE public.stop_area_referential_syncs OWNER TO chouette;
 CREATE SEQUENCE public.stop_area_referential_syncs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.stop_area_referential_syncs_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.stop_area_referential_syncs_id_seq OWNED BY public.stop_area_referential_syncs.id;
 CREATE TABLE public.stop_area_referentials (
     id bigint NOT NULL,
@@ -843,14 +767,12 @@ CREATE TABLE public.stop_area_referentials (
     objectid_format character varying,
     registration_number_format character varying
 );
-ALTER TABLE public.stop_area_referentials OWNER TO chouette;
 CREATE SEQUENCE public.stop_area_referentials_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.stop_area_referentials_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.stop_area_referentials_id_seq OWNED BY public.stop_area_referentials.id;
 CREATE TABLE public.stop_areas (
     id bigint NOT NULL,
@@ -890,20 +812,17 @@ CREATE TABLE public.stop_areas (
     custom_field_values jsonb,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.stop_areas OWNER TO chouette;
 CREATE SEQUENCE public.stop_areas_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.stop_areas_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.stop_areas_id_seq OWNED BY public.stop_areas.id;
 CREATE TABLE public.stop_areas_stop_areas (
     child_id bigint,
     parent_id bigint
 );
-ALTER TABLE public.stop_areas_stop_areas OWNER TO chouette;
 CREATE TABLE public.stop_points (
     id bigint NOT NULL,
     route_id bigint,
@@ -917,14 +836,12 @@ CREATE TABLE public.stop_points (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.stop_points OWNER TO chouette;
 CREATE SEQUENCE public.stop_points_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.stop_points_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.stop_points_id_seq OWNED BY public.stop_points.id;
 CREATE TABLE public.taggings (
     id bigint NOT NULL,
@@ -936,28 +853,24 @@ CREATE TABLE public.taggings (
     context character varying(128),
     created_at timestamp without time zone
 );
-ALTER TABLE public.taggings OWNER TO chouette;
 CREATE SEQUENCE public.taggings_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.taggings_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.taggings_id_seq OWNED BY public.taggings.id;
 CREATE TABLE public.tags (
     id bigint NOT NULL,
     name character varying,
     taggings_count integer DEFAULT 0
 );
-ALTER TABLE public.tags OWNER TO chouette;
 CREATE SEQUENCE public.tags_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.tags_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 CREATE TABLE public.time_table_dates (
     time_table_id bigint NOT NULL,
@@ -968,14 +881,12 @@ CREATE TABLE public.time_table_dates (
     checksum character varying,
     checksum_source text
 );
-ALTER TABLE public.time_table_dates OWNER TO chouette;
 CREATE SEQUENCE public.time_table_dates_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.time_table_dates_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.time_table_dates_id_seq OWNED BY public.time_table_dates.id;
 CREATE TABLE public.time_table_periods (
     time_table_id bigint NOT NULL,
@@ -986,14 +897,12 @@ CREATE TABLE public.time_table_periods (
     checksum character varying,
     checksum_source text
 );
-ALTER TABLE public.time_table_periods OWNER TO chouette;
 CREATE SEQUENCE public.time_table_periods_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.time_table_periods_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.time_table_periods_id_seq OWNED BY public.time_table_periods.id;
 CREATE TABLE public.time_tables (
     id bigint NOT NULL,
@@ -1014,20 +923,17 @@ CREATE TABLE public.time_tables (
     data_source_ref character varying,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.time_tables OWNER TO chouette;
 CREATE SEQUENCE public.time_tables_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.time_tables_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.time_tables_id_seq OWNED BY public.time_tables.id;
 CREATE TABLE public.time_tables_vehicle_journeys (
     time_table_id bigint,
     vehicle_journey_id bigint
 );
-ALTER TABLE public.time_tables_vehicle_journeys OWNER TO chouette;
 CREATE TABLE public.timebands (
     id bigint NOT NULL,
     objectid character varying NOT NULL,
@@ -1039,14 +945,12 @@ CREATE TABLE public.timebands (
     updated_at timestamp without time zone,
     metadata jsonb DEFAULT '{}'::jsonb
 );
-ALTER TABLE public.timebands OWNER TO chouette;
 CREATE SEQUENCE public.timebands_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.timebands_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.timebands_id_seq OWNED BY public.timebands.id;
 CREATE TABLE public.users (
     id bigint NOT NULL,
@@ -1083,14 +987,12 @@ CREATE TABLE public.users (
     synced_at timestamp without time zone,
     permissions character varying[]
 );
-ALTER TABLE public.users OWNER TO chouette;
 CREATE SEQUENCE public.users_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.users_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 CREATE TABLE public.vehicle_journey_at_stops (
     id bigint NOT NULL,
@@ -1107,14 +1009,12 @@ CREATE TABLE public.vehicle_journey_at_stops (
     checksum character varying,
     checksum_source text
 );
-ALTER TABLE public.vehicle_journey_at_stops OWNER TO chouette;
 CREATE SEQUENCE public.vehicle_journey_at_stops_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.vehicle_journey_at_stops_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.vehicle_journey_at_stops_id_seq OWNED BY public.vehicle_journey_at_stops.id;
 CREATE TABLE public.vehicle_journeys (
     id bigint NOT NULL,
@@ -1142,14 +1042,12 @@ CREATE TABLE public.vehicle_journeys (
     metadata jsonb DEFAULT '{}'::jsonb,
     ignored_routing_contraint_zone_ids integer[] DEFAULT '{}'::integer[]
 );
-ALTER TABLE public.vehicle_journeys OWNER TO chouette;
 CREATE SEQUENCE public.vehicle_journeys_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.vehicle_journeys_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.vehicle_journeys_id_seq OWNED BY public.vehicle_journeys.id;
 CREATE TABLE public.workbenches (
     id bigint NOT NULL,
@@ -1164,14 +1062,12 @@ CREATE TABLE public.workbenches (
     workgroup_id bigint,
     owner_compliance_control_set_ids shared_extensions.hstore
 );
-ALTER TABLE public.workbenches OWNER TO chouette;
 CREATE SEQUENCE public.workbenches_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.workbenches_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.workbenches_id_seq OWNED BY public.workbenches.id;
 CREATE TABLE public.workgroups (
     id bigint NOT NULL,
@@ -1184,14 +1080,12 @@ CREATE TABLE public.workgroups (
     export_types character varying[] DEFAULT '{}'::character varying[],
     owner_id bigint
 );
-ALTER TABLE public.workgroups OWNER TO chouette;
 CREATE SEQUENCE public.workgroups_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.workgroups_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.workgroups_id_seq OWNED BY public.workgroups.id;
 ALTER TABLE ONLY public.access_links ALTER COLUMN id SET DEFAULT nextval('public.access_links_id_seq'::regclass);
 ALTER TABLE ONLY public.access_points ALTER COLUMN id SET DEFAULT nextval('public.access_points_id_seq'::regclass);
