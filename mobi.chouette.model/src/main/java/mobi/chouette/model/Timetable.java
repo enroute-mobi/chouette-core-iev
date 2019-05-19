@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CollectionTable;
@@ -32,7 +32,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import mobi.chouette.model.type.DayMaskPair;
 import mobi.chouette.model.type.DayTypeEnum;
+import lombok.extern.log4j.Log4j;
+import java.util.Map;
+
 
 
 /**
@@ -41,6 +45,7 @@ import mobi.chouette.model.type.DayTypeEnum;
  * Neptune mapping : Timetable <br>
  * Gtfs mapping : service in calendar and calendar_dates <br>
  */
+@Log4j
 @Entity
 @Table(name = "time_tables")
 @Cacheable
@@ -50,6 +55,20 @@ import mobi.chouette.model.type.DayTypeEnum;
 public class Timetable extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
 	private static final long serialVersionUID = -1598554061982685113L;
 	public static final long ONE_DAY = 3600000L * 24;
+
+
+	/** Week day index ranges from 0 to 6, Sunday to Saturday**/
+	public static final ArrayList<DayMaskPair> weekDayIndexToMask;
+    static {
+    	weekDayIndexToMask = new ArrayList<DayMaskPair>();
+    	weekDayIndexToMask.add(new DayMaskPair(256, DayTypeEnum.Sunday));
+    	weekDayIndexToMask.add(new DayMaskPair(4, DayTypeEnum.Monday));
+    	weekDayIndexToMask.add(new DayMaskPair(8, DayTypeEnum.Tuesday));
+        weekDayIndexToMask.add(new DayMaskPair(16, DayTypeEnum.Wednesday));
+        weekDayIndexToMask.add(new DayMaskPair(32, DayTypeEnum.Thursday));
+        weekDayIndexToMask.add(new DayMaskPair(64, DayTypeEnum.Friday));
+        weekDayIndexToMask.add(new DayMaskPair(128, DayTypeEnum.Saturday));
+    }
 
 	@Getter
 	@Setter
@@ -104,12 +123,6 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	@Setter
 	@Column(name = "checksum_source")
 	private String checksumSource;
-
-	/**
-	 * mapping day type with enumerations
-	 */
-	public static final DayTypeEnum[] dayTypeByInt = { DayTypeEnum.Sunday, DayTypeEnum.Monday, DayTypeEnum.Tuesday,
-			DayTypeEnum.Wednesday, DayTypeEnum.Thursday, DayTypeEnum.Friday, DayTypeEnum.Saturday };
 
 	/**
 	 * comment <br>
@@ -188,11 +201,10 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	public List<DayTypeEnum> getDayTypes() {
 		List<DayTypeEnum> result = new ArrayList<DayTypeEnum>();
-		if (this.intDayTypes != null) {
-			for (DayTypeEnum dayType : DayTypeEnum.values()) {
-				int mask = 1 << dayType.ordinal();
-				if ((this.intDayTypes & mask) == mask) {
-					result.add(dayType);
+		if (getIntDayTypes() != null && getIntDayTypes().intValue() != 0) {
+			for (DayMaskPair pair : weekDayIndexToMask) {
+				if ((this.intDayTypes & pair.getKey()) == pair.getKey()){
+					result.add(pair.getValue());
 				}
 			}
 		}
@@ -201,10 +213,14 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 
 	public void setDayTypes(List<DayTypeEnum> arrayList) {
 		int value = 0;
-		for (DayTypeEnum dayType : arrayList) {
-			int mask = 1 << dayType.ordinal();
-			value |= mask;
+		if (arrayList !=null && !arrayList.isEmpty()) {
+			for (DayMaskPair pair : weekDayIndexToMask) {
+				if (arrayList.contains(pair.getValue())) {
+					value+=pair.getKey();
+				}
+			}
 		}
+
 		this.intDayTypes = value;
 	}
 
@@ -215,8 +231,12 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	 */
 	public void addDayType(DayTypeEnum dayType) {
 		if (dayType != null) {
-			int mask = 1 << dayType.ordinal();
-			this.intDayTypes |= mask;
+			for (DayMaskPair pair : weekDayIndexToMask) {
+				if (dayType.equals(pair.getValue())){
+					this.intDayTypes+=pair.getKey();
+					return;
+				}
+			}
 		}
 	}
 
@@ -283,6 +303,7 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.JOIN)
 	@CollectionTable(name = "time_table_periods", joinColumns = @JoinColumn(name = "time_table_id"))
+	@OrderColumn(name = "position", nullable = false)
 	private List<Period> periods = new ArrayList<Period>(0);
 
 	/**
@@ -374,33 +395,15 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 		vehicleJourney.getTimetables().remove(this);
 	}
 
-	/**
-	 * build a bitwise dayType mask for filtering
-	 *
-	 * @param dayTypes
-	 *            a list of included day types
-	 * @return binary mask for selected day types
-	 */
-	public static int buildDayTypeMask(List<DayTypeEnum> dayTypes) {
+	public static int buildDayTypeMask(ArrayList<Integer> weekDays) {
 		int value = 0;
-		if (dayTypes == null)
-			return value;
-		for (DayTypeEnum dayType : dayTypes) {
-			value += buildDayTypeMask(dayType);
+		if (weekDays == null) { return value; }
+		for (Integer weekday : weekDays) {
+			value += weekDayIndexToMask.get(weekday).getKey();
 		}
 		return value;
 	}
 
-	/**
-	 * build a bitwise dayType mask for filtering
-	 *
-	 * @param dayType
-	 *            the dayType to filter
-	 * @return binary mask for a day type
-	 */
-	public static int buildDayTypeMask(DayTypeEnum dayType) {
-		return (int) Math.pow(2, dayType.ordinal());
-	}
 
 	/**
 	 * get peculiar dates
@@ -452,35 +455,23 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 		return ret;
 	}
 
-	/**
-	 * check if a Timetable is active on a given date
-	 *
-	 * @param aDay
-	 * @return true if timetable is active on given date
-	 */
 	public boolean isActiveOn(final Date aDay) {
 		if (getCalendarDays() != null && !getCalendarDays().isEmpty()) {
 			CalendarDay includedDay = new CalendarDay(aDay, true);
-			CalendarDay excludedDay = new CalendarDay(aDay, false);
 			if (getCalendarDays().contains(includedDay)) {
 				return true;
 			}
 		}
-
-		if (getIntDayTypes() != null && getIntDayTypes().intValue() != 0 && getPeriods() != null) {
+		if (getIntDayTypes() != null && getIntDayTypes().intValue() != 0 && getPeriods() != null && !getPeriods().isEmpty()) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(aDay);
-
-			int aDayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1; // zero on sunday
-			int aDayOfWeekFlag = buildDayTypeMask(dayTypeByInt[aDayOfWeek]);
-			if ((getIntDayTypes() & aDayOfWeekFlag) == aDayOfWeekFlag) {
-				// check if day is in a period
+			int weekDayMask = weekDayIndexToMask.get(c.get(Calendar.DAY_OF_WEEK)-1).getKey();
+			if ((getIntDayTypes() & weekDayMask) == weekDayMask) {
+				/** Checks if day is in a period **/
 				for (Period period : getPeriods()) {
-					if (period.contains(aDay))
-						return true;
+					if (period.contains(aDay)) { return true; }
 				}
 			}
-
 		}
 		return false;
 	}
@@ -502,10 +493,29 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 				if (isActiveOn(day))
 					return true;
 				day.setTime(day.getTime() + ONE_DAY);
-
 			}
 			return isActiveOn(end);
 		}
+	}
+
+	private List<Date> toDates(Period period) {
+		List<Date> dates = new ArrayList<>();
+		List<Date> excluded = getExcludedDates();
+
+		if (getIntDayTypes() != null && getIntDayTypes().intValue() != 0) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(period.getStartDate());
+
+			while (!c.getTime().after(period.getEndDate())) {
+				int weekDayMask = weekDayIndexToMask.get(c.get(Calendar.DAY_OF_WEEK)-1).getKey();
+				if ((getIntDayTypes() & weekDayMask) == weekDayMask) {
+					Date d = new Date(c.getTime().getTime());
+					if (!excluded.contains(d)) { dates.add(d);}
+				}
+				c.add(Calendar.DATE, 1);
+			}
+		}
+		return dates;
 	}
 
 	/**
@@ -547,75 +557,5 @@ public class Timetable extends ChouetteIdentifiedObject implements SignedChouett
 		}
 		setStartOfPeriod(startOfPeriod);
 		setEndOfPeriod(endOfPeriod);
-
 	}
-
-	/**
-	 * return periods broken on excluded dates, for exports without date
-	 * exclusion; one day periods are excluded (see getEffectiveDates
-	 *
-	 * @return periods
-	 */
-	public List<Period> getEffectivePeriods() {
-		List<Period> effectivePeriods = getRealPeriods();
-		for (Iterator<Period> iterator = effectivePeriods.iterator(); iterator.hasNext();) {
-			Period period = iterator.next();
-			if (dateEquals(period.getStartDate(), period.getEndDate())) {
-				// single date ; remove it
-				iterator.remove();
-			}
-		}
-		return effectivePeriods;
-	}
-
-	/**
-	 * return copy of period or empty if excluding dates exists exclusion
-	 *
-	 * @return periods
-	 */
-	private List<Period> getRealPeriods() {
-		List<Date> dates = getExcludedDates();
-		List<Period> effectivePeriods = new ArrayList<Period>();
-		if (!dates.isEmpty())
-			return effectivePeriods;
-		// copy periods
-		for (Period period : getPeriods()) {
-			if (!effectivePeriods.contains(period))
-				effectivePeriods.add(new Period(period.getStartDate(), period.getEndDate()));
-		}
-
-		Collections.sort(effectivePeriods);
-		return effectivePeriods;
-	}
-
-	private boolean dateEquals(Date first, Date second) {
-		long df = first.getTime() / 86400000;
-		long ds = second.getTime() / 86400000;
-		return df == ds;
-	}
-
-	private List<Date> toDates(Period period) {
-		List<Date> dates = new ArrayList<>();
-
-		List<Date> excluded = getExcludedDates();
-		if (getIntDayTypes() != null && getIntDayTypes().intValue() != 0) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(period.getStartDate());
-
-			while (!c.getTime().after(period.getEndDate())) {
-				int aDayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1; // zero on
-																	// sunday
-				int aDayOfWeekFlag = buildDayTypeMask(dayTypeByInt[aDayOfWeek]);
-				if ((getIntDayTypes() & aDayOfWeekFlag) == aDayOfWeekFlag) {
-					Date d = new Date(c.getTime().getTime());
-					if (!excluded.contains(d))
-						dates.add(d);
-				}
-				c.add(Calendar.DATE, 1);
-			}
-
-		}
-		return dates;
-	}
-
 }

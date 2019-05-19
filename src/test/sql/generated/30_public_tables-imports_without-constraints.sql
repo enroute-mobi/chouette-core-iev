@@ -20,14 +20,12 @@ CREATE TABLE public.import_messages (
     updated_at timestamp without time zone,
     resource_attributes shared_extensions.hstore
 );
-ALTER TABLE public.import_messages OWNER TO chouette;
 CREATE SEQUENCE public.import_messages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.import_messages_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.import_messages_id_seq OWNED BY public.import_messages.id;
 CREATE TABLE public.import_resources (
     id bigint NOT NULL,
@@ -41,14 +39,12 @@ CREATE TABLE public.import_resources (
     metrics shared_extensions.hstore,
     referential_id bigint
 );
-ALTER TABLE public.import_resources OWNER TO chouette;
 CREATE SEQUENCE public.import_resources_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.import_resources_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.import_resources_id_seq OWNED BY public.import_resources.id;
 CREATE TABLE public.imports (
     id bigint NOT NULL,
@@ -72,14 +68,12 @@ CREATE TABLE public.imports (
     total_steps integer DEFAULT 0,
     creator character varying
 );
-ALTER TABLE public.imports OWNER TO chouette;
 CREATE SEQUENCE public.imports_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.imports_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.imports_id_seq OWNED BY public.imports.id;
 ALTER TABLE ONLY public.import_messages ALTER COLUMN id SET DEFAULT nextval('public.import_messages_id_seq'::regclass);
 ALTER TABLE ONLY public.import_resources ALTER COLUMN id SET DEFAULT nextval('public.import_resources_id_seq'::regclass);

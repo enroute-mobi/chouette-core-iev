@@ -20,14 +20,12 @@ CREATE TABLE public.export_messages (
     updated_at timestamp without time zone,
     resource_attributes shared_extensions.hstore
 );
-ALTER TABLE public.export_messages OWNER TO chouette;
 CREATE SEQUENCE public.export_messages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.export_messages_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.export_messages_id_seq OWNED BY public.export_messages.id;
 CREATE TABLE public.export_resources (
     id bigint NOT NULL,
@@ -40,14 +38,12 @@ CREATE TABLE public.export_resources (
     name character varying,
     metrics shared_extensions.hstore
 );
-ALTER TABLE public.export_resources OWNER TO chouette;
 CREATE SEQUENCE public.export_resources_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.export_resources_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.export_resources_id_seq OWNED BY public.export_resources.id;
 CREATE TABLE public.exports (
     id bigint NOT NULL,
@@ -72,14 +68,12 @@ CREATE TABLE public.exports (
     creator character varying,
     options shared_extensions.hstore
 );
-ALTER TABLE public.exports OWNER TO chouette;
 CREATE SEQUENCE public.exports_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE public.exports_id_seq OWNER TO chouette;
 ALTER SEQUENCE public.exports_id_seq OWNED BY public.exports.id;
 ALTER TABLE ONLY public.export_messages ALTER COLUMN id SET DEFAULT nextval('public.export_messages_id_seq'::regclass);
 ALTER TABLE ONLY public.export_resources ALTER COLUMN id SET DEFAULT nextval('public.export_resources_id_seq'::regclass);

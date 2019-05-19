@@ -56,7 +56,6 @@ CREATE TABLE access_links (
 );
 
 
-ALTER TABLE :SCH.access_links OWNER TO chouette;
 
 --
 -- TOC entry 200 (class 1259 OID 480175)
@@ -72,7 +71,6 @@ CREATE SEQUENCE access_links_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.access_links_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2695 (class 0 OID 0)
@@ -115,7 +113,6 @@ CREATE TABLE access_points (
 );
 
 
-ALTER TABLE :SCH.access_points OWNER TO chouette;
 
 --
 -- TOC entry 198 (class 1259 OID 480163)
@@ -131,7 +128,6 @@ CREATE SEQUENCE access_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.access_points_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2696 (class 0 OID 0)
@@ -168,7 +164,6 @@ CREATE TABLE companies (
 );
 
 
-ALTER TABLE :SCH.companies OWNER TO chouette;
 
 --
 -- TOC entry 168 (class 1259 OID 479968)
@@ -184,7 +179,6 @@ CREATE SEQUENCE companies_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.companies_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2698 (class 0 OID 0)
@@ -225,7 +219,6 @@ CREATE TABLE connection_links (
 );
 
 
-ALTER TABLE :SCH.connection_links OWNER TO chouette;
 
 --
 -- TOC entry 184 (class 1259 OID 480069)
@@ -241,7 +234,6 @@ CREATE SEQUENCE connection_links_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.connection_links_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2701 (class 0 OID 0)
@@ -287,7 +279,6 @@ CREATE TABLE facilities (
 );
 
 
-ALTER TABLE :SCH.facilities OWNER TO chouette;
 
 --
 -- TOC entry 204 (class 1259 OID 480199)
@@ -301,7 +292,6 @@ CREATE TABLE facilities_features (
 );
 
 
-ALTER TABLE :SCH.facilities_features OWNER TO chouette;
 
 --
 -- TOC entry 202 (class 1259 OID 480187)
@@ -317,7 +307,6 @@ CREATE SEQUENCE facilities_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.facilities_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2705 (class 0 OID 0)
@@ -343,7 +332,6 @@ WITH (
 );
 
 ALTER TABLE footnotes
-  OWNER TO chouette;
 
 CREATE TABLE footnotes_vehicle_journeys
 (
@@ -354,7 +342,6 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE footnotes_vehicle_journeys
-  OWNER TO chouette;
 
 --
 -- TOC entry 206 (class 1259 OID 480204)
@@ -374,7 +361,6 @@ CREATE TABLE group_of_lines (
 );
 
 
-ALTER TABLE :SCH.group_of_lines OWNER TO chouette;
 
 --
 -- TOC entry 205 (class 1259 OID 480202)
@@ -390,7 +376,6 @@ CREATE SEQUENCE group_of_lines_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.group_of_lines_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2706 (class 0 OID 0)
@@ -413,7 +398,6 @@ CREATE TABLE group_of_lines_lines (
 );
 
 
-ALTER TABLE :SCH.group_of_lines_lines OWNER TO chouette;
 
 
 --
@@ -438,7 +422,6 @@ CREATE TABLE journey_patterns (
 );
 
 
-ALTER TABLE :SCH.journey_patterns OWNER TO chouette;
 
 --
 -- TOC entry 188 (class 1259 OID 480104)
@@ -454,7 +437,6 @@ CREATE SEQUENCE journey_patterns_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.journey_patterns_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2708 (class 0 OID 0)
@@ -477,7 +459,6 @@ CREATE TABLE journey_patterns_stop_points (
 );
 
 
-ALTER TABLE :SCH.journey_patterns_stop_points OWNER TO chouette;
 
 --
 -- TOC entry 167 (class 1259 OID 479957)
@@ -508,7 +489,6 @@ CREATE TABLE lines (
 );
 
 
-ALTER TABLE :SCH.lines OWNER TO chouette;
 
 --
 -- TOC entry 166 (class 1259 OID 479955)
@@ -524,7 +504,6 @@ CREATE SEQUENCE lines_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.lines_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2709 (class 0 OID 0)
@@ -558,7 +537,6 @@ CREATE TABLE networks (
 );
 
 
-ALTER TABLE :SCH.networks OWNER TO chouette;
 
 --
 -- TOC entry 170 (class 1259 OID 479981)
@@ -574,7 +552,6 @@ CREATE SEQUENCE networks_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.networks_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2710 (class 0 OID 0)
@@ -607,7 +584,6 @@ CREATE TABLE pt_links (
 );
 
 
-ALTER TABLE :SCH.pt_links OWNER TO chouette;
 
 --
 -- TOC entry 210 (class 1259 OID 480242)
@@ -623,7 +599,6 @@ CREATE SEQUENCE pt_links_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.pt_links_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2712 (class 0 OID 0)
@@ -658,7 +633,6 @@ CREATE TABLE routes (
 );
 
 
-ALTER TABLE :SCH.routes OWNER TO chouette;
 
 --
 -- TOC entry 180 (class 1259 OID 480045)
@@ -674,7 +648,6 @@ CREATE SEQUENCE routes_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.routes_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2714 (class 0 OID 0)
@@ -697,7 +670,6 @@ CREATE TABLE routing_constraints_lines (
 );
 
 
-ALTER TABLE :SCH.routing_constraints_lines OWNER TO chouette;
 
 
 --
@@ -735,7 +707,6 @@ CREATE TABLE stop_areas (
 );
 
 
-ALTER TABLE :SCH.stop_areas OWNER TO chouette;
 
 --
 -- TOC entry 174 (class 1259 OID 480010)
@@ -751,7 +722,6 @@ CREATE SEQUENCE stop_areas_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.stop_areas_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2716 (class 0 OID 0)
@@ -774,7 +744,6 @@ CREATE TABLE stop_areas_stop_areas (
 );
 
 
-ALTER TABLE :SCH.stop_areas_stop_areas OWNER TO chouette;
 
 --
 -- TOC entry 183 (class 1259 OID 480059)
@@ -796,7 +765,6 @@ CREATE TABLE stop_points (
 );
 
 
-ALTER TABLE :SCH.stop_points OWNER TO chouette;
 
 --
 -- TOC entry 182 (class 1259 OID 480057)
@@ -812,7 +780,6 @@ CREATE SEQUENCE stop_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.stop_points_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2717 (class 0 OID 0)
@@ -843,7 +810,6 @@ ALTER SEQUENCE stop_points_id_seq OWNED BY stop_points.id;
 --);
 
 
--- ALTER TABLE :SCH.time_slots OWNER TO chouette;
 
 --
 -- TOC entry 191 (class 1259 OID 480120)
@@ -859,7 +825,6 @@ ALTER SEQUENCE stop_points_id_seq OWNED BY stop_points.id;
     -- CACHE 1;
 
 
--- ALTER TABLE :SCH.time_slots_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2718 (class 0 OID 0)
@@ -885,7 +850,6 @@ CREATE TABLE time_table_dates (
 );
 
 
-ALTER TABLE :SCH.time_table_dates OWNER TO chouette;
 
 --
 -- TOC entry 218 (class 1259 OID 480337)
@@ -901,7 +865,6 @@ CREATE SEQUENCE time_table_dates_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.time_table_dates_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2719 (class 0 OID 0)
@@ -927,7 +890,6 @@ CREATE TABLE time_table_periods (
 );
 
 
-ALTER TABLE :SCH.time_table_periods OWNER TO chouette;
 
 --
 -- TOC entry 219 (class 1259 OID 480346)
@@ -943,7 +905,6 @@ CREATE SEQUENCE time_table_periods_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.time_table_periods_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2720 (class 0 OID 0)
@@ -974,7 +935,6 @@ CREATE TABLE time_tables (
 );
 
 
-ALTER TABLE :SCH.time_tables OWNER TO chouette;
 
 --
 -- TOC entry 176 (class 1259 OID 480023)
@@ -990,7 +950,6 @@ CREATE SEQUENCE time_tables_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.time_tables_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2721 (class 0 OID 0)
@@ -1013,7 +972,6 @@ CREATE TABLE time_tables_vehicle_journeys (
 );
 
 
-ALTER TABLE :SCH.time_tables_vehicle_journeys OWNER TO chouette;
 
 
 --
@@ -1038,7 +996,6 @@ CREATE TABLE vehicle_journey_at_stops (
 );
 
 
-ALTER TABLE :SCH.vehicle_journey_at_stops OWNER TO chouette;
 
 --
 -- TOC entry 195 (class 1259 OID 480145)
@@ -1054,7 +1011,6 @@ CREATE SEQUENCE vehicle_journey_at_stops_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.vehicle_journey_at_stops_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2723 (class 0 OID 0)
@@ -1095,7 +1051,6 @@ CREATE TABLE vehicle_journeys (
 );
 
 
-ALTER TABLE :SCH.vehicle_journeys OWNER TO chouette;
 
 --
 -- TOC entry 193 (class 1259 OID 480132)
@@ -1111,7 +1066,6 @@ CREATE SEQUENCE vehicle_journeys_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.vehicle_journeys_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2724 (class 0 OID 0)
@@ -2096,7 +2050,6 @@ CREATE TABLE compliance_check_results (
 );
 
 
-ALTER TABLE public.compliance_check_results OWNER TO chouette;
 
 --
 -- TOC entry 226 (class 1259 OID 515504)
@@ -2112,7 +2065,6 @@ CREATE SEQUENCE compliance_check_results_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_check_results_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2699 (class 0 OID 0)
@@ -2146,7 +2098,6 @@ CREATE TABLE compliance_check_tasks (
 );
 
 
-ALTER TABLE public.compliance_check_tasks OWNER TO chouette;
 
 --
 -- TOC entry 224 (class 1259 OID 515483)
@@ -2162,7 +2113,6 @@ CREATE SEQUENCE compliance_check_tasks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.compliance_check_tasks_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2700 (class 0 OID 0)
@@ -2191,7 +2141,6 @@ CREATE TABLE export_log_messages (
 );
 
 
-ALTER TABLE public.export_log_messages OWNER TO chouette;
 
 --
 -- TOC entry 214 (class 1259 OID 480266)
@@ -2207,7 +2156,6 @@ CREATE SEQUENCE export_log_messages_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.export_log_messages_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2703 (class 0 OID 0)
@@ -2237,7 +2185,6 @@ CREATE TABLE exports (
 );
 
 
-ALTER TABLE public.exports OWNER TO chouette;
 
 --
 -- TOC entry 212 (class 1259 OID 480254)
@@ -2253,7 +2200,6 @@ CREATE SEQUENCE exports_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.exports_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2704 (class 0 OID 0)
@@ -2284,7 +2230,6 @@ CREATE TABLE import_tasks (
 );
 
 
-ALTER TABLE public.import_tasks OWNER TO chouette;
 
 --
 -- TOC entry 222 (class 1259 OID 515467)
@@ -2300,7 +2245,6 @@ CREATE SEQUENCE import_tasks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.import_tasks_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2707 (class 0 OID 0)
@@ -2324,7 +2268,6 @@ CREATE TABLE organisations (
 );
 
 
-ALTER TABLE public.organisations OWNER TO chouette;
 
 --
 -- TOC entry 216 (class 1259 OID 480317)
@@ -2340,7 +2283,6 @@ CREATE SEQUENCE organisations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.organisations_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2711 (class 0 OID 0)
@@ -2373,7 +2315,6 @@ CREATE TABLE referentials (
 );
 
 
-ALTER TABLE public.referentials OWNER TO chouette;
 
 --
 -- TOC entry 164 (class 1259 OID 479944)
@@ -2389,7 +2330,6 @@ CREATE SEQUENCE referentials_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.referentials_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2713 (class 0 OID 0)
@@ -2415,7 +2355,6 @@ CREATE TABLE rule_parameter_sets (
 );
 
 
-ALTER TABLE public.rule_parameter_sets OWNER TO chouette;
 
 --
 -- TOC entry 228 (class 1259 OID 515520)
@@ -2431,7 +2370,6 @@ CREATE SEQUENCE rule_parameter_sets_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.rule_parameter_sets_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2715 (class 0 OID 0)
@@ -2480,7 +2418,6 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE public.users OWNER TO chouette;
 
 --
 -- TOC entry 172 (class 1259 OID 479994)
@@ -2496,7 +2433,6 @@ CREATE SEQUENCE users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 2722 (class 0 OID 0)
@@ -2755,7 +2691,6 @@ CREATE SEQUENCE :SCH.hibernate_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.hibernate_seq OWNER TO chouette;
 
 
 
@@ -2791,7 +2726,6 @@ CREATE TABLE timebands (
 );
 
 
-ALTER TABLE :SCH.timebands OWNER TO chouette;
 
 --
 -- TOC entry 571 (class 1259 OID 520884)
@@ -2806,7 +2740,6 @@ CREATE SEQUENCE timebands_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.timebands_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 4339 (class 0 OID 0)
@@ -2853,7 +2786,6 @@ CREATE TABLE journey_frequencies (
 );
 
 
-ALTER TABLE :SCH.journey_frequencies OWNER TO chouette;
 
 --
 -- TOC entry 569 (class 1259 OID 520864)
@@ -2868,7 +2800,6 @@ CREATE SEQUENCE journey_frequencies_id_seq
     CACHE 1;
 
 
-ALTER TABLE :SCH.journey_frequencies_id_seq OWNER TO chouette;
 
 --
 -- TOC entry 4322 (class 0 OID 0)
