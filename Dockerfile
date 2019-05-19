@@ -1,7 +1,7 @@
 # Usage sample :
 #
 # docker build --build-arg WEEK=`date +%Y%U` -t chouette-core-iev .
-# docker run --add-host "db:172.17.0.1" --add-host "chouette-core.test:172.17.0.1" -e BOIV_GUI_URL_BASE=http://chouette-core.test -it --rm chouette-core-iev
+# docker run -p 8080:8080 --add-host "db:172.17.0.1" --add-host "chouette-core.test:172.17.0.1" -e POSTGRES_NAME="chouette2" -e BOIV_GUI_URL_BASE=http://chouette-core.test -e BOIV_GUI_URL_TOKEN="secret" -it --rm chouette-core-iev
 
 FROM maven:3.6.0-jdk-8 AS builder
 
