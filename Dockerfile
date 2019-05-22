@@ -23,12 +23,10 @@ COPY mobi.chouette.exchange.converter/pom.xml ./mobi.chouette.exchange.converter
 COPY mobi.chouette.exchange.geojson/pom.xml ./mobi.chouette.exchange.geojson/pom.xml
 COPY mobi.chouette.exchange.gtfs/pom.xml ./mobi.chouette.exchange.gtfs/pom.xml
 COPY mobi.chouette.exchange.hub/pom.xml ./mobi.chouette.exchange.hub/pom.xml
-COPY mobi.chouette.exchange.kml/pom.xml ./mobi.chouette.exchange.kml/pom.xml
 COPY mobi.chouette.exchange.neptune/pom.xml ./mobi.chouette.exchange.neptune/pom.xml
 COPY mobi.chouette.exchange.netex/pom.xml ./mobi.chouette.exchange.netex/pom.xml
 COPY mobi.chouette.exchange.netex_stif/pom.xml ./mobi.chouette.exchange.netex_stif/pom.xml
 COPY mobi.chouette.exchange/pom.xml ./mobi.chouette.exchange/pom.xml
-COPY mobi.chouette.exchange.sig/pom.xml ./mobi.chouette.exchange.sig/pom.xml
 COPY mobi.chouette.exchange.validator/pom.xml ./mobi.chouette.exchange.validator/pom.xml
 COPY mobi.chouette.model.iev/pom.xml ./mobi.chouette.model.iev/pom.xml
 COPY mobi.chouette.model/pom.xml ./mobi.chouette.model/pom.xml

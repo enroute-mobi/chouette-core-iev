@@ -30,23 +30,7 @@ import mobi.chouette.service.ServiceException;
 @NoArgsConstructor
 @XmlRootElement(name = "job")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "referential", "action", "type", "created", "started", "updated", "status", "linkInfos",
-		"actionParameters" })
-// @XmlSeeAlso({NeptuneImportParameters.class,
-// NeptuneExportParameters.class,
-// GtfsImportParameters.class,
-// GtfsExportParameters.class,
-// NetexImportParameters.class,
-// NetexExportParameters.class,
-// HubExportParameters.class,
-// KmlExportParameters.class,
-// GeojsonExportParameters.class,
-// SigExportParameters.class,
-// ConvertParameters.class,
-// ValidateParameters.class,
-// NeptuneValidateParameters.class,
-// GtfsValidateParameters.class,
-// NetexValidateParameters.class})
+@XmlType(propOrder = { "id", "referential", "action", "type", "created", "started", "updated", "status", "linkInfos", "actionParameters" })
 public class JobInfo implements ServiceConstants {
 
 	@XmlElement(name = "id", required = true)

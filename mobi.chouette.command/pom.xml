@@ -11,7 +11,7 @@
       <project.rootDir>${project.basedir}/..</project.rootDir>
       <skipInitDb>true</skipInitDb>
    </properties>
-   
+
   <dependencies>
   	<dependency>
   		<groupId>${project.groupId}</groupId>
@@ -64,19 +64,12 @@
    </dependency>
    <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>mobi.chouette.exchange.kml</artifactId>
-      <version>${project.version}</version>
-      <type>jar</type>
-      <scope>compile</scope>
-   </dependency>
-   <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>mobi.chouette.exchange.validator</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
       <scope>compile</scope>
    </dependency>
-   
+
    <!--  external dependencies -->
          <dependency>
          <groupId>org.projectlombok</groupId>
@@ -111,8 +104,8 @@
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
          </dependency>
-   
-  	
+
+
   </dependencies>
   <build>
       <resources>
