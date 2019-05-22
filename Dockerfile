@@ -19,7 +19,6 @@ COPY mobi.chouette.command/pom.xml ./mobi.chouette.command/pom.xml
 COPY mobi.chouette.common/pom.xml ./mobi.chouette.common/pom.xml
 COPY mobi.chouette.dao.iev/pom.xml ./mobi.chouette.dao.iev/pom.xml
 COPY mobi.chouette.dao/pom.xml ./mobi.chouette.dao/pom.xml
-COPY mobi.chouette.exchange.converter/pom.xml ./mobi.chouette.exchange.converter/pom.xml
 COPY mobi.chouette.exchange.netex/pom.xml ./mobi.chouette.exchange.netex/pom.xml
 COPY mobi.chouette.exchange.netex_stif/pom.xml ./mobi.chouette.exchange.netex_stif/pom.xml
 COPY mobi.chouette.exchange/pom.xml ./mobi.chouette.exchange/pom.xml
@@ -27,7 +26,6 @@ COPY mobi.chouette.exchange.validator/pom.xml ./mobi.chouette.exchange.validator
 COPY mobi.chouette.model.iev/pom.xml ./mobi.chouette.model.iev/pom.xml
 COPY mobi.chouette.model/pom.xml ./mobi.chouette.model/pom.xml
 COPY mobi.chouette.persistence.hibernate/pom.xml ./mobi.chouette.persistence.hibernate/pom.xml
-COPY mobi.chouette.schema.checker/pom.xml ./mobi.chouette.schema.checker/pom.xml
 COPY mobi.chouette.service/pom.xml ./mobi.chouette.service/pom.xml
 COPY mobi.chouette.ws/pom.xml ./mobi.chouette.ws/pom.xml
 
