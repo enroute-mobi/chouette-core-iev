@@ -10,10 +10,6 @@ import mobi.chouette.exchange.AbstractInputValidator;
 import mobi.chouette.exchange.InputValidator;
 import mobi.chouette.exchange.InputValidatorFactory;
 import mobi.chouette.exchange.TestDescription;
-import mobi.chouette.exchange.gtfs.exporter.GtfsExportParameters;
-import mobi.chouette.exchange.gtfs.importer.GtfsImportParameters;
-import mobi.chouette.exchange.neptune.exporter.NeptuneExportParameters;
-import mobi.chouette.exchange.neptune.importer.NeptuneImportParameters;
 import mobi.chouette.exchange.netex.exporter.NetexExportParameters;
 import mobi.chouette.exchange.netex.importer.NetexImportParameters;
 import mobi.chouette.exchange.parameters.AbstractParameter;
@@ -71,11 +67,7 @@ public class ConverterInputValidator extends AbstractInputValidator {
 		InputValidator exportValidator = null;
 
 		String importFormat = "unknown";
-		if (parameters.getImportConfiguration() instanceof NeptuneImportParameters) {
-			importFormat = "neptune";
-		} else if (parameters.getImportConfiguration() instanceof GtfsImportParameters) {
-			importFormat = "gtfs";
-		} else if (parameters.getImportConfiguration() instanceof NetexImportParameters) {
+		if (parameters.getImportConfiguration() instanceof NetexImportParameters) {
 			importFormat = "netex";
 		} else {
 			log.error("unknown import format for converter " + parameters.getImportConfiguration().getClass().getName());
@@ -84,11 +76,7 @@ public class ConverterInputValidator extends AbstractInputValidator {
 		parameters.getImportConfiguration().setNoSave(true);
 
 		String exportFormat = "unknown";
-		if (parameters.getExportConfiguration() instanceof NeptuneExportParameters) {
-			exportFormat = "neptune";
-		} else if (parameters.getExportConfiguration() instanceof GtfsExportParameters) {
-			exportFormat = "gtfs";
-		} else if (parameters.getExportConfiguration() instanceof NetexExportParameters) {
+		if (parameters.getExportConfiguration() instanceof NetexExportParameters) {
 			exportFormat = "netex";
 		} else {
 			log.error("unknown export format for converter " + parameters.getExportConfiguration().getClass().getName());
@@ -133,7 +121,7 @@ public class ConverterInputValidator extends AbstractInputValidator {
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean checkFile(String fileName, Path pathFile, AbstractParameter abstractParameter) {
 		if (!(abstractParameter instanceof ConvertParameters)) {
@@ -150,15 +138,11 @@ public class ConverterInputValidator extends AbstractInputValidator {
 			log.error("missing export parameters for converter ");
 			return false;
 		}
-		
+
 		InputValidator importValidator = null;
 		String importFormat = "unknown";
 
-		if (parameters.getImportConfiguration() instanceof NeptuneImportParameters) {
-			importFormat = "neptune";
-		} else if (parameters.getImportConfiguration() instanceof GtfsImportParameters) {
-			importFormat = "gtfs";
-		} else if (parameters.getImportConfiguration() instanceof NetexImportParameters) {
+		if (parameters.getImportConfiguration() instanceof NetexImportParameters) {
 			importFormat = "netex";
 		} else {
 			log.error("unknown import format for converter " + parameters.getImportConfiguration().getClass().getName());
@@ -171,8 +155,8 @@ public class ConverterInputValidator extends AbstractInputValidator {
 			log.error("missing import module for converter " + parameters.getImportConfiguration().getClass().getName());
 			return false;
 		}
-		
-		if (!importValidator.checkFilename(fileName)) // converter CheckFile is not enough 
+
+		if (!importValidator.checkFilename(fileName)) // converter CheckFile is not enough
 			return false;
 		if (!importValidator.checkFile(fileName, pathFile, parameters.getImportConfiguration()))
 			return false;
@@ -201,9 +185,9 @@ public class ConverterInputValidator extends AbstractInputValidator {
 	public List<TestDescription> getTestList() {
 		return null;
 	}
-	
-	
-	
+
+
+
 
 
 }

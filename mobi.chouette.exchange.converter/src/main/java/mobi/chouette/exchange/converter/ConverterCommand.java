@@ -18,10 +18,6 @@ import mobi.chouette.exchange.CommandCancelledException;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
 import mobi.chouette.exchange.ProgressionCommand;
-import mobi.chouette.exchange.gtfs.exporter.GtfsExportParameters;
-import mobi.chouette.exchange.gtfs.importer.GtfsImportParameters;
-import mobi.chouette.exchange.neptune.exporter.NeptuneExportParameters;
-import mobi.chouette.exchange.neptune.importer.NeptuneImportParameters;
 import mobi.chouette.exchange.netex.exporter.NetexExportParameters;
 import mobi.chouette.exchange.netex.importer.NetexImportParameters;
 import mobi.chouette.exchange.parameters.AbstractExportParameter;
@@ -194,7 +190,7 @@ public class ConverterCommand implements Command, Constant, ReportConstant {
 
 			if (lineCount == 0) {
 				progression.terminate(context, postImportProcessingCommands.size());
-				// restore input filename for link 
+				// restore input filename for link
 				// jobData.setFilename(importData.getFilename());
 			} else {
 				progression.terminate(context,
@@ -211,7 +207,7 @@ public class ConverterCommand implements Command, Constant, ReportConstant {
 			if (lineCount == 0) {
 				reporter.setActionError(context, ERROR_CODE.NO_DATA_PROCEEDED, "no data converted");
 				progression.execute(context);
-				
+
 				return ERROR;
 			} else {
 				for (Command exportCommand : postExportProcessingCommands) {
@@ -276,15 +272,8 @@ public class ConverterCommand implements Command, Constant, ReportConstant {
 		data.setInputFilename(jobData.getInputFilename());
 		data.setPathName(jobData.getPathName());
 		data.setAction(IMPORTER);
-		if (configuration instanceof NeptuneImportParameters) {
-			data.setType("neptune");
-		} else if (configuration instanceof NetexImportParameters) {
+		if (configuration instanceof NetexImportParameters) {
 			data.setType("netex");
-		} else if (configuration instanceof GtfsImportParameters) {
-			data.setType("gtfs");
-			// force import mode to lines
-			GtfsImportParameters importConfiguration = (GtfsImportParameters) configuration;
-			importConfiguration.setReferencesType("line");
 		} else {
 			log.error("invalid input options type " + configuration.getClass().getName());
 			return null;
@@ -302,12 +291,8 @@ public class ConverterCommand implements Command, Constant, ReportConstant {
 		data.setId(jobData.getId());
 		data.setPathName(jobData.getPathName());
 		data.setAction(EXPORTER);
-		if (configuration instanceof NeptuneExportParameters) {
-			data.setType("neptune");
-		} else if (configuration instanceof NetexExportParameters) {
+		if (configuration instanceof NetexExportParameters) {
 			data.setType("netex");
-		} else if (configuration instanceof GtfsExportParameters) {
-			data.setType("gtfs");
 		} else {
 			System.err.println("invalid output options type" + configuration.getClass().getName());
 			return null;

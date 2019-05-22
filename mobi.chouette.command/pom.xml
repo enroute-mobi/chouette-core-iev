@@ -36,28 +36,7 @@
    </dependency>
    <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>mobi.chouette.exchange.neptune</artifactId>
-      <version>${project.version}</version>
-      <type>jar</type>
-      <scope>compile</scope>
-   </dependency>
-   <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>mobi.chouette.exchange.netex</artifactId>
-      <version>${project.version}</version>
-      <type>jar</type>
-      <scope>compile</scope>
-   </dependency>
-   <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>mobi.chouette.exchange.gtfs</artifactId>
-      <version>${project.version}</version>
-      <type>jar</type>
-      <scope>compile</scope>
-   </dependency>
-   <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>mobi.chouette.exchange.hub</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
       <scope>compile</scope>
