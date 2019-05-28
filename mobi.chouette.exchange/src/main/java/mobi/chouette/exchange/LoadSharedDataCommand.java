@@ -21,9 +21,11 @@ import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.CompanyLiteDAO;
 import mobi.chouette.dao.LineLiteDAO;
+import mobi.chouette.dao.LineNoticeDAO;
 import mobi.chouette.dao.StopAreaLiteDAO;
 import mobi.chouette.exchange.parameters.AbstractParameter;
 import mobi.chouette.model.CompanyLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.LineLite;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.util.Referential;
@@ -43,6 +45,9 @@ public class LoadSharedDataCommand implements Command {
 	@EJB
 	private StopAreaLiteDAO stopAreaDAO;
 
+	@EJB
+	private LineNoticeDAO lineNoticeDAO;
+
 	@Override
 	public boolean execute(Context context) throws Exception {
 		boolean result = Constant.ERROR;
@@ -54,19 +59,30 @@ public class LoadSharedDataCommand implements Command {
 			AbstractParameter parameters = (AbstractParameter) context.get(Constant.CONFIGURATION);
 			Set<Long> ids = parameters.getIds();
 			Set<Long> companyIds = new HashSet<>();
+			Set<Long> lineNoticeIds = new HashSet<>();
 			for (LineLite line : lineDAO.findAll(parameters.getLineReferentialId(), ids)) {
 				referential.getSharedReadOnlyLines().put(line.getObjectId(), line);
+				if (line.getLineNoticesIds()!=null && !line.getLineNoticesIds().isEmpty()) {
+					lineNoticeIds.addAll(line.getLineNoticesIds());
+				}
 				// #6631 : line may have no company
-				if (line.getCompanyId() != null)
+				if (line.getCompanyId() != null) {
 					companyIds.add(line.getCompanyId());
-				if (line.getSecondaryCompanyIds() != null && line.getSecondaryCompanyIds().length > 0)
+				}
+				if (line.getSecondaryCompanyIds() != null && line.getSecondaryCompanyIds().length > 0) {
 					companyIds.addAll(Arrays.asList(line.getSecondaryCompanyIds()));
+				}
 				lineDAO.detach(line);
 			}
 
 			for (CompanyLite company : companyDAO.findAll(parameters.getLineReferentialId(), companyIds)) {
 				referential.getSharedReadOnlyCompanies().put(company.getObjectId(), company);
 				companyDAO.detach(company);
+			}
+
+			for (LineNotice lineNotice : lineNoticeDAO.findAll(parameters.getLineReferentialId(), lineNoticeIds)) {
+				referential.getSharedReadOnlyLineNotices().put(lineNotice.getObjectId(), lineNotice);
+				lineNoticeDAO.detach(lineNotice);
 			}
 
 			for (StopAreaLite stopArea : stopAreaDAO.findByType(parameters.getStopAreaReferentialId(), "zdep")) {
@@ -77,7 +93,7 @@ public class LoadSharedDataCommand implements Command {
 				referential.getSharedReadOnlyStopAreas().put(stopArea.getObjectId(), stopArea);
 				stopAreaDAO.detach(stopArea);
 			}
-			
+
 			for (StopAreaLite stopArea : stopAreaDAO.findNonCommercialStopAreas()) {
 				referential.getNonCommercialStopAreas().put(stopArea.getObjectId(), stopArea);
 				stopAreaDAO.detach(stopArea);

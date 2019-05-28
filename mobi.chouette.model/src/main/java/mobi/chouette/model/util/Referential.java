@@ -13,6 +13,7 @@ import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.CompanyLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
@@ -60,6 +61,14 @@ public class Referential implements java.io.Serializable {
 
 	@Getter
 	@Setter
+	private Map<String, LineNotice> sharedLineNotices = new HashMap<>();
+
+	@Getter
+	@Setter
+	private Map<String, LineNotice> sharedReadOnlyLineNotices = new HashMap<>();
+
+	@Getter
+	@Setter
 	private Map<String, ConnectionLink> sharedConnectionLinks = new HashMap<>();
 
 	@Getter
@@ -73,7 +82,7 @@ public class Referential implements java.io.Serializable {
 	@Getter
 	@Setter
 	private Map<String, StopAreaLite> nonCommercialStopAreas = new HashMap<>();
-	
+
 	@Getter
 	@Setter
 	private Map<String, GroupOfLine> sharedGroupOfLines = new HashMap<>();
@@ -140,6 +149,10 @@ public class Referential implements java.io.Serializable {
 
 	@Getter
 	@Setter
+	private Map<String, LineNotice> lineNotices = new HashMap<>();
+
+	@Getter
+	@Setter
 	private Map<String, ConnectionLink> connectionLinks = new HashMap<>();
 
 	@Getter
@@ -178,7 +191,7 @@ public class Referential implements java.io.Serializable {
 				.filter(stop -> stop.getId().equals(id)).findFirst();
 		return result.orElse(null);
 	}
-	
+
 	// Find the stopArea among all the available stopAreas, independently of their area_type value
 	public StopAreaLite findStopAreaExtended(Long id) {
 		Optional<StopAreaLite> result = Stream.concat(sharedReadOnlyStopAreas.values().stream(), nonCommercialStopAreas.values().stream())
@@ -189,6 +202,12 @@ public class Referential implements java.io.Serializable {
 	public CompanyLite findCompany(Long id) {
 		Optional<CompanyLite> result = sharedReadOnlyCompanies.values().stream()
 				.filter(company->company.getId().equals(id)).findFirst();
+		return result.orElse(null);
+	}
+
+	public LineNotice findLineNotice(Long id) {
+		Optional<LineNotice> result = sharedReadOnlyLineNotices.values().stream()
+				.filter(lineNotice->lineNotice.getId().equals(id)).findFirst();
 		return result.orElse(null);
 	}
 
@@ -233,6 +252,7 @@ public class Referential implements java.io.Serializable {
 		accessLinks.clear();
 		accessPoints.clear();
 		companies.clear();
+		lineNotices.clear();
 		connectionLinks.clear();
 		footnotes.clear();
 		groupOfLines.clear();
@@ -254,6 +274,7 @@ public class Referential implements java.io.Serializable {
 		sharedAccessLinks.clear();
 		sharedAccessPoints.clear();
 		sharedCompanies.clear();
+		sharedLineNotices.clear();
 		sharedConnectionLinks.clear();
 		sharedFootnotes.clear();
 		sharedGroupOfLines.clear();
@@ -265,6 +286,7 @@ public class Referential implements java.io.Serializable {
 		sharedTimetableTemplates.clear();
 		sharedReadOnlyLines.clear();
 		sharedReadOnlyCompanies.clear();
+		sharedReadOnlyLineNotices.clear();
 		sharedReadOnlyStopAreas.clear();
 		nonCommercialStopAreas.clear();
 	}

@@ -10,6 +10,7 @@ import mobi.chouette.exchange.report.AbstractReport;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.Footnote;
@@ -32,20 +33,21 @@ import mobi.chouette.model.VehicleJourney;
 public class ObjectReference extends AbstractReport {
 
 	public enum TYPE {
-		REFERENTIAL("Referential","referentials",""), 
-		NETWORK("Network","networks",""), 
-		COMPANY("Company","companies",""), 
-		GROUP_OF_LINE("GroupOfLine","groups_of_lines",""), 
-		STOP_AREA("StopArea","stop_areas",""), 
-		STOP_POINT("StopPoint","stop_points",""), 
-		CONNECTION_LINK("ConnectionLink","connection_links",""), 
+		REFERENTIAL("Referential","referentials",""),
+		NETWORK("Network","networks",""),
+		COMPANY("Company","companies",""),
+		LINE_NOTICE("Line Notice","line_notices",""),
+		GROUP_OF_LINE("GroupOfLine","groups_of_lines",""),
+		STOP_AREA("StopArea","stop_areas",""),
+		STOP_POINT("StopPoint","stop_points",""),
+		CONNECTION_LINK("ConnectionLink","connection_links",""),
 		ACCESS_POINT("AccessPoint","access_points",""),
-		ACCESS_LINK("AccessLink","access_links",""), 
-		TIME_TABLE("Timetable","time_tables",""), 
-		LINE("Line","lines",""), 
-		FOOTNOTE("Footnote","footnotes",""), 
-		ROUTE("Route","routes",""), 
-		JOURNEY_PATTERN("JourneyPattern","","journey_patterns_collection"), 
+		ACCESS_LINK("AccessLink","access_links",""),
+		TIME_TABLE("Timetable","time_tables",""),
+		LINE("Line","lines",""),
+		FOOTNOTE("Footnote","footnotes",""),
+		ROUTE("Route","routes",""),
+		JOURNEY_PATTERN("JourneyPattern","","journey_patterns_collection"),
 		VEHICLE_JOURNEY("VehicleJourney","","vehicle_journeys"),
 		ROUTING_CONSTRAINT("RoutingConstraint","routing_constraint_zones","");
 
@@ -96,6 +98,13 @@ public class ObjectReference extends AbstractReport {
 	}
 	public ObjectReference(CompanyLite object) {
 		this.type = TYPE.COMPANY;
+		this.id = object.getId();
+		if (id == null)
+			this.objectId = object.getObjectId();
+	}
+
+	public ObjectReference(LineNotice object) {
+		this.type = TYPE.LINE_NOTICE;
 		this.id = object.getId();
 		if (id == null)
 			this.objectId = object.getObjectId();
@@ -189,7 +198,7 @@ public class ObjectReference extends AbstractReport {
 		if (id == null)
 			this.objectId = object.getObjectId();
 	}
-	
+
 	public ObjectReference(RoutingConstraint object) {
 		this.type = TYPE.ROUTING_CONSTRAINT;
 		this.id = object.getId();

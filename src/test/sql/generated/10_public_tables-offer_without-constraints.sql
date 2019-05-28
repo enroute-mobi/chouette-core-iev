@@ -150,14 +150,14 @@ CREATE TABLE public.companies (
     object_version bigint,
     name character varying,
     short_name character varying,
-    organizational_unit character varying,
-    operating_department_name character varying,
+    default_contact_organizational_unit character varying,
+    default_contact_operating_department_name character varying,
     code character varying,
-    phone character varying,
-    fax character varying,
-    email character varying,
+    default_contact_phone character varying,
+    default_contact_fax character varying,
+    default_contact_email character varying,
     registration_number character varying,
-    url character varying,
+    default_contact_url character varying,
     time_zone character varying,
     line_referential_id bigint,
     import_xml text,
@@ -326,6 +326,29 @@ ALTER SEQUENCE public.footnotes_id_seq OWNED BY public.footnotes.id;
 CREATE TABLE public.footnotes_vehicle_journeys (
     vehicle_journey_id bigint,
     footnote_id bigint
+);
+CREATE TABLE public.line_notices (
+    id bigint NOT NULL,
+    line_referential_id bigint,
+    title character varying,
+    content text,
+    objectid character varying NOT NULL,
+    import_xml text,
+    metadata jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    object_version integer
+);
+CREATE SEQUENCE public.line_notices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.line_notices_id_seq OWNED BY public.line_notices.id;
+CREATE TABLE public.line_notices_lines (
+    line_notice_id bigint NOT NULL,
+    line_id bigint NOT NULL
 );
 CREATE TABLE public.group_of_lines (
     id bigint NOT NULL,
@@ -1040,7 +1063,8 @@ CREATE TABLE public.vehicle_journeys (
     data_source_ref character varying,
     custom_field_values jsonb DEFAULT '{}'::jsonb,
     metadata jsonb DEFAULT '{}'::jsonb,
-    ignored_routing_contraint_zone_ids integer[] DEFAULT '{}'::integer[]
+    ignored_routing_contraint_zone_ids integer[] DEFAULT '{}'::integer[],
+    line_notice_ids bigint[]
 );
 CREATE SEQUENCE public.vehicle_journeys_id_seq
     START WITH 1
@@ -1101,6 +1125,7 @@ ALTER TABLE ONLY public.connection_links ALTER COLUMN id SET DEFAULT nextval('pu
 ALTER TABLE ONLY public.custom_fields ALTER COLUMN id SET DEFAULT nextval('public.custom_fields_id_seq'::regclass);
 ALTER TABLE ONLY public.facilities ALTER COLUMN id SET DEFAULT nextval('public.facilities_id_seq'::regclass);
 ALTER TABLE ONLY public.footnotes ALTER COLUMN id SET DEFAULT nextval('public.footnotes_id_seq'::regclass);
+ALTER TABLE ONLY public.line_notices ALTER COLUMN id SET DEFAULT nextval('public.line_notices_id_seq'::regclass);
 ALTER TABLE ONLY public.group_of_lines ALTER COLUMN id SET DEFAULT nextval('public.group_of_lines_id_seq'::regclass);
 ALTER TABLE ONLY public.journey_frequencies ALTER COLUMN id SET DEFAULT nextval('public.journey_frequencies_id_seq'::regclass);
 ALTER TABLE ONLY public.journey_patterns ALTER COLUMN id SET DEFAULT nextval('public.journey_patterns_id_seq'::regclass);
@@ -1150,6 +1175,7 @@ ALTER TABLE ONLY public.connection_links    ADD CONSTRAINT connection_links_pkey
 ALTER TABLE ONLY public.custom_fields    ADD CONSTRAINT custom_fields_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.facilities    ADD CONSTRAINT facilities_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.footnotes    ADD CONSTRAINT footnotes_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.line_notices  ADD CONSTRAINT line_notices_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.group_of_lines    ADD CONSTRAINT group_of_lines_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.journey_frequencies    ADD CONSTRAINT journey_frequencies_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.journey_patterns    ADD CONSTRAINT journey_patterns_pkey PRIMARY KEY (id);

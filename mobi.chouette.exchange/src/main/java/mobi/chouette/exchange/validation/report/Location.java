@@ -19,6 +19,7 @@ import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.CompanyLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
@@ -215,6 +216,9 @@ public class Location extends AbstractReport {
 		} else if (chouetteObject instanceof Company) {
 			Company object = (Company) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
+		} else if (chouetteObject instanceof LineNotice) {
+			LineNotice object = (LineNotice) chouetteObject;
+			objectRefs.add(new ObjectReference(object));
 		} else if (chouetteObject instanceof GroupOfLine) {
 			GroupOfLine object = (GroupOfLine) chouetteObject;
 			objectRefs.add(new ObjectReference(object));
@@ -264,6 +268,9 @@ public class Location extends AbstractReport {
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof CompanyLite) {
 			CompanyLite object = (CompanyLite) chouetteObject;
+			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof LineNotice) {
+			LineNotice object = (LineNotice) chouetteObject;
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof GroupOfLine) {
 			GroupOfLine object = (GroupOfLine) chouetteObject;

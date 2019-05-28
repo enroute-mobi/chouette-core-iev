@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 import lombok.extern.log4j.Log4j;
@@ -19,6 +20,7 @@ import mobi.chouette.model.CalendarDay;
 import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
@@ -45,12 +47,12 @@ import mobi.chouette.model.VehicleJourneyAtStop;
  * <li>Les attributs énumérés seront pris en compte avec la valeur en base qui
  * se trouve ếtre la clé</li>
  * </ul>
- * 
+ *
  * <b>Note</b> : checksum des objets REFLEX et CODIFLIGNE = partie technique des
  * identifiants
  * <p>
  * carte https://projects.af83.io/issues/3845
- * 
+ *
  * @author michel
  *
  */
@@ -78,7 +80,7 @@ public class ChecksumUtil {
 	 * <li>pour la liste des RoutingConstraintZone : checksum des
 	 * RoutingConstraintZone ordonnés alphabétiquement/li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param route
@@ -140,7 +142,7 @@ public class ChecksumUtil {
 	 * <li>registration_number</li>
 	 * <li>pour la liste des StopArea ordonnés : checksum StopArea</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param journeyPattern
@@ -178,7 +180,7 @@ public class ChecksumUtil {
 	 * <li>code</li>
 	 * <li>texte</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param note
@@ -197,7 +199,7 @@ public class ChecksumUtil {
 	 * <ul>
 	 * <li>liste des checksum des StopArea dans l'ordre de l'itinéraire</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param routing
@@ -235,7 +237,7 @@ public class ChecksumUtil {
 	 * <li>pour la liste des VehicleJourneyAtStop : checksum des
 	 * VehicleJourneyAtStop dans l'ordre des arrêts de l'itinéraire</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param journey
@@ -269,12 +271,32 @@ public class ChecksumUtil {
 			}
 		}
 		cs.append(SEP);
+		
+		/** Line Notices **/
+		if (journey.getLineNoticeIds()!= null && journey.getLineNoticeIds().length>0) {
+			LinkedList<String> lineNoticeObjectIds = new LinkedList<String>();
+			for (Long lnId : journey.getLineNoticeIds()) {
+				LineNotice ln = r.findLineNotice(journey.getCompanyId());
+				if (ln!=null) { lineNoticeObjectIds.add(ln.getObjectId()); }
+			}
+			Collections.sort(lineNoticeObjectIds);
+			boolean first = true;
+			for (String value : lineNoticeObjectIds) {
+				if (first) { first = false; } 
+				else { cs.append(LIST_SEP); }
+				cs.append(value);
+			}			
+		} else {
+			cs.append(EMPTY_VALUE);
+		}
+		cs.append(SEP);
+
 		if (journey.getVehicleJourneyAtStops().isEmpty()) {
 			cs.append(EMPTY_LIST);
 		} else {
 			boolean first = true;
 			List<VehicleJourneyAtStop> vjas = journey.getVehicleJourneyAtStops();
-			/* VehicleJourneyAtStop list needs to be ordered based on the stopPoint order through the journey */ 
+			/* VehicleJourneyAtStop list needs to be ordered based on the stopPoint order through the journey */
 			Collections.sort(vjas, new Comparator<VehicleJourneyAtStop>() {
 			    @Override
 			    public int compare(VehicleJourneyAtStop o1, VehicleJourneyAtStop o2) {
@@ -304,7 +326,7 @@ public class ChecksumUtil {
 	 * <li>departure_day_offset</li>
 	 * <li>arrival_day_offset</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param passingTime
@@ -330,7 +352,7 @@ public class ChecksumUtil {
 	 * <li>date (format date YYYY-MM-dd)</li>
 	 * <li>in_out</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param date
@@ -351,7 +373,7 @@ public class ChecksumUtil {
 	 * <li>period_start (format date YYYY-MM-dd)</li>
 	 * <li>period_end (format date YYYY-MM-dd)</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param period
@@ -375,7 +397,7 @@ public class ChecksumUtil {
 	 * <li>liste des checksum des TimeTablePeriod classés dans l'ordre
 	 * alphabétique</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param context
 	 *            context de travail
 	 * @param timetable
@@ -426,7 +448,7 @@ public class ChecksumUtil {
 
 	/**
 	 * convert time to string
-	 * 
+	 *
 	 * @param time
 	 *            time to format
 	 * @return formated time for checksum
@@ -438,7 +460,7 @@ public class ChecksumUtil {
 
 	/**
 	 * convert date o string
-	 * 
+	 *
 	 * @param date
 	 *            date to format
 	 * @return formated date for checksum
@@ -450,7 +472,7 @@ public class ChecksumUtil {
 
 	/**
 	 * compute string as checksum
-	 * 
+	 *
 	 * @param message
 	 *            string to compute
 	 * @return checksum as hex string
@@ -471,7 +493,7 @@ public class ChecksumUtil {
 
 	/**
 	 * convert byte array to hex string
-	 * 
+	 *
 	 * @param arrayBytes
 	 *            data to convert
 	 * @return string
@@ -486,7 +508,7 @@ public class ChecksumUtil {
 
 	/**
 	 * convert data as string using default value if empty or null
-	 * 
+	 *
 	 * @param o
 	 *            object to convert
 	 * @return string form
@@ -499,11 +521,11 @@ public class ChecksumUtil {
 			return EMPTY_VALUE;
 		return value;
 	}
-	
+
 
 	/**
 	 * collect every checksums from list
-	 * 
+	 *
 	 * @param objects
 	 *            collection input
 	 * @param sorted
@@ -521,7 +543,7 @@ public class ChecksumUtil {
 			Collections.sort(result);
 		return result;
 	}
-	
+
 	/* Small  modification to match rails side checksum computation : if false -> '-' else 'true' */
 	private static String booleanChecksumOutput (Boolean bool) {
 		if (bool) {

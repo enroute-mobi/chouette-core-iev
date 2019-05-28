@@ -9,6 +9,7 @@ import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
@@ -38,7 +39,7 @@ public class ObjectFactory {
 
 		return result;
 	}
-	
+
 
 	public static AccessPoint getAccessPoint(Referential referential,
 			String objectId) {
@@ -58,8 +59,7 @@ public class ObjectFactory {
 		return result;
 	}
 
-	public static Timetable getTimetable(Referential referential,
-			String objectId) {
+	public static Timetable getTimetable(Referential referential,	String objectId) {
 		Timetable result = referential.getSharedTimetables().get(objectId);
 		if (result == null) {
 			result = new Timetable();
@@ -81,8 +81,7 @@ public class ObjectFactory {
 		return result;
 	}
 
-	public static Network getPTNetwork(Referential referential,
-			String objectId) {
+	public static Network getPTNetwork(Referential referential, String objectId) {
 		Network result = referential.getSharedPTNetworks().get(objectId);
 		if (result == null) {
 			result = new Network();
@@ -116,6 +115,23 @@ public class ObjectFactory {
 		return result;
 	}
 
+	public static LineNotice getLineNotice (Referential referential, String objectId) {
+		LineNotice result = referential.getSharedLineNotices().get(objectId);
+		if (result == null) {
+			result = new LineNotice();
+			result.setObjectId(objectId);
+			result.setDetached(true);
+			result.setCreationTime(Calendar.getInstance().getTime());
+
+			referential.getSharedLineNotices().put(objectId, result);
+		}
+		if (!referential.getSharedLineNotices().containsKey(objectId)) {
+			referential.getSharedLineNotices().put(objectId, result);
+		}
+
+		return result;
+	}
+
 	public static Route getRoute(Referential referential, String objectId) {
 		Route result = referential.getRoutes().get(objectId);
 		if (result == null) {
@@ -128,7 +144,7 @@ public class ObjectFactory {
 		}
 		return result;
 	}
-	
+
 	public static RoutingConstraint getRoutingConstraint(Referential referential, String objectId) {
 		RoutingConstraint result = referential.getRoutingConstraints().get(objectId);
 		if (result == null) {
@@ -197,11 +213,11 @@ public class ObjectFactory {
 			result.setCreationTime(Calendar.getInstance().getTime());
 
 			referential.getSharedStopAreas().put(objectId, result);
-		} 
+		}
 		if (!referential.getStopAreas().containsKey(objectId)) {
 			referential.getStopAreas().put(objectId, result);
 		}
-		
+
 		return result;
 	}
 
@@ -249,7 +265,7 @@ public class ObjectFactory {
 		}
 		return result;
 	}
-	
+
 	public static Timeband getTimeband(Referential referential, String objectId) {
 		Timeband result = referential.getTimebands().get(objectId);
 		if (result == null) {

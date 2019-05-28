@@ -25,17 +25,13 @@ public class NetexCommunWriter extends AbstractWriter {
 	}
 
 	private static void writeNotices(Writer writer, ExportableData data) throws IOException {
-		// no version in notice
 		for (Footnote object : data.getNotices()) {
-			write(writer, 4, "<Notice " + buildDataSourceRef(data, object) + " id=\"" + object.getObjectId()
-					+ "\" version=\"any\">");
+			write(writer, 4, "<Notice " + buildDataSourceRef(data, object) + " id=\"" + object.getObjectId() + "\" version=\"any\">");
 			write(writer, 5, "<Text>" + toXml(object.getLabel()) + "</Text>");
 			write(writer, 5, "<PublicCode>" + toXml(object.getCode()) + "</PublicCode>");
 			write(writer, 5, "<TypeOfNoticeRef ref=\"ServiceJourneyNotice\" />");
 			write(writer, 4, "</Notice>");
-
 		}
-
 	}
 
 	private static void writeOrganisationalUnits(Writer writer, ExportableData data) throws IOException {

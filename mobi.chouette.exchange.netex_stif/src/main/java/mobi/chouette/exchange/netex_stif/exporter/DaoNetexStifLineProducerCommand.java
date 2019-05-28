@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -25,12 +26,16 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.dao.FootnoteDAO;
+import mobi.chouette.dao.LineNoticeDAO;
 import mobi.chouette.dao.RouteDAO;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopPoint;
 import mobi.chouette.model.util.Referential;
+import mobi.chouette.model.VehicleJourney;
+
 
 @Log4j
 @Stateless(name = DaoNetexStifLineProducerCommand.COMMAND)
@@ -45,6 +50,8 @@ public class DaoNetexStifLineProducerCommand implements Command {
 	private RouteDAO routeDAO;
 	@EJB
 	private FootnoteDAO footnoteDAO;
+	@EJB
+	private LineNoticeDAO lineNoticeDAO;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -56,8 +63,7 @@ public class DaoNetexStifLineProducerCommand implements Command {
 		InitialContext initialContext = (InitialContext) context.get(Constant.INITIAL_CONTEXT);
 		try {
 
-			Command lineProducerCommand = CommandFactory.create(initialContext,
-					NetexStifLineProducerCommand.class.getName());
+			Command lineProducerCommand = CommandFactory.create(initialContext,	NetexStifLineProducerCommand.class.getName());
 
 			Long lineId = (Long) context.get(Constant.LINE_ID);
 			Referential r = (Referential) context.get(Constant.REFERENTIAL);
@@ -80,7 +86,14 @@ public class DaoNetexStifLineProducerCommand implements Command {
 				});
 				route.getJourneyPatterns().forEach(jp -> {
 					r.getJourneyPatterns().put(jp.getObjectId(), jp);
-					jp.getVehicleJourneys().forEach(vj -> r.getVehicleJourneys().put(vj.getObjectId(), vj));
+					jp.getVehicleJourneys().forEach(vj -> {
+						if(vj.getLineNoticeIds()!=null && vj.getLineNoticeIds().length!=0) {
+							NetexStifExportParameters parameters = (NetexStifExportParameters) context.get(Constant.CONFIGURATION);
+							List<LineNotice> lineNotices = lineNoticeDAO.findAll(parameters.getLineReferentialId(), Arrays.asList(vj.getLineNoticeIds()));
+							vj.setLineNotices(lineNotices);
+						}
+						r.getVehicleJourneys().put(vj.getObjectId(), vj);
+					});
 				});
 			});
 			List<Footnote> notes = footnoteDAO.findByLineId(lineId);
@@ -88,11 +101,6 @@ public class DaoNetexStifLineProducerCommand implements Command {
 				note.setLineLite(line);
 				r.getFootnotes().put(note.getObjectId(), note);
 			});
-//			log.info("Routes count = " + r.getRoutes().size());
-//			log.info("RoutingConstraints count = " + r.getRoutingConstraints().size());
-//			log.info("JourneyPatterns count = " + r.getJourneyPatterns().size());
-//			log.info("VehicleJourneys count = " + r.getVehicleJourneys().size());
-//			log.info("Footnotes count = " + r.getFootnotes().size());
 			result = lineProducerCommand.execute(context);
 			daoContext.setRollbackOnly();
 
@@ -101,7 +109,6 @@ public class DaoNetexStifLineProducerCommand implements Command {
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
-
 		return result;
 	}
 
