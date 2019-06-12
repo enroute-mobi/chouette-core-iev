@@ -127,39 +127,27 @@
       </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>mobi.chouette.exchange.neptune</artifactId>
-			<type>ejb</type>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
 			<artifactId>mobi.chouette.exchange.netex_stif</artifactId>
-			<type>ejb</type>			
+			<type>ejb</type>
 			<version>${project.version}</version>
 		</dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>mobi.chouette.exchange.validator</artifactId>
-         <type>ejb</type>        
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>mobi.chouette.schema.checker</artifactId>
-         <type>ejb</type>        
+         <type>ejb</type>
          <version>${project.version}</version>
       </dependency>
 
       <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>mobi.chouette.service</artifactId>
-         <type>ejb</type>        
+         <type>ejb</type>
          <version>${project.version}</version>
       </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>mobi.chouette.ws</artifactId>
-			<type>war</type>			
+			<type>war</type>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
