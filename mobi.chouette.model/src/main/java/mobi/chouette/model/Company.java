@@ -53,7 +53,7 @@ public class Company extends ChouetteIdentifiedObject {
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
-	
+
 	/**
 	 * Neptune object id <br>
 	 * composed of 3 items separated by a colon
@@ -64,7 +64,7 @@ public class Company extends ChouetteIdentifiedObject {
 	 * </li>
 	 * </ol>
 	 * This data must be unique in dataset
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -78,7 +78,7 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * object version
-	 * 
+	 *
 	 * @param objectVersion
 	 *            New value
 	 * @return The actual value
@@ -90,7 +90,7 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -100,7 +100,7 @@ public class Company extends ChouetteIdentifiedObject {
 	/**
 	 * set name <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -110,7 +110,7 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * short name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -120,7 +120,7 @@ public class Company extends ChouetteIdentifiedObject {
 	/**
 	 * set short name <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -130,17 +130,17 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * organizational unit
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "organizational_unit")
+	@Column(name = "default_contact_organizational_unit")
 	private String organisationalUnit;
 
 	/**
 	 * set organizational unit <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -151,17 +151,17 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * operating department name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "operating_department_name")
+	@Column(name = "default_contact_operating_department_name")
 	private String operatingDepartmentName;
 
 	/**
 	 * set operating department name <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -173,7 +173,7 @@ public class Company extends ChouetteIdentifiedObject {
 	/**
 	 * organization code <br>
 	 * usually fixed by Transport Authority
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -183,7 +183,7 @@ public class Company extends ChouetteIdentifiedObject {
 	/**
 	 * set organization code <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -193,17 +193,17 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * phone number
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "phone")
+	@Column(name = "default_contact_phone")
 	private String phone;
 
 	/**
 	 * set phone number <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -213,17 +213,17 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * fax number
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "fax")
+	@Column(name = "default_contact_fax")
 	private String fax;
 
 	/**
 	 * set fax number <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -233,17 +233,17 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * email
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "email")
+	@Column(name = "default_contact_email")
 	private String email;
 
 	/**
 	 * set email <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -253,7 +253,7 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * registration number
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -263,7 +263,7 @@ public class Company extends ChouetteIdentifiedObject {
 	/**
 	 * set registration number <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -274,17 +274,17 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * web site url
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
-	@Column(name = "url")
+	@Column(name = "default_contact_url")
 	private String url;
 
 	/**
 	 * set web site url <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -294,7 +294,7 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * default timezone
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -304,7 +304,7 @@ public class Company extends ChouetteIdentifiedObject {
 	/**
 	 * set default timezone <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -319,11 +319,11 @@ public class Company extends ChouetteIdentifiedObject {
 	@Setter
 	@Column(name="import_xml",columnDefinition = "text")
 	private String importXml;
-	
-	
+
+
 	/**
 	 * line referential reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -333,7 +333,7 @@ public class Company extends ChouetteIdentifiedObject {
 
 	/**
 	 * lines
-	 * 
+	 *
 	 * @param lines
 	 *            New value
 	 * @return The actual value
