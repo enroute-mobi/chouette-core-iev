@@ -57,6 +57,7 @@ public class LineNotice extends ChouetteIdentifiedObject {
 	protected Long objectVersion = 1L;
 
 	@Getter
+	@Setter
 	@Column(name = "title")
 	private String title;
 
@@ -70,27 +71,8 @@ public class LineNotice extends ChouetteIdentifiedObject {
 	@Column(name="import_xml",columnDefinition = "text")
 	private String importXml;
 
-
-	/**
-	 * line referential reference
-	 *
-	 * @return The actual value
-	 */
 	@Getter
 	@Setter
 	@Column(name = "line_referential_id")
 	protected Long lineReferentialId;
-
-	// /**
-	//  * lines
-	//  *
-	//  * @param lines
-	//  *            New value
-	//  * @return The actual value
-	//  */
-	// @Getter
-	// @Setter
-	// @OneToMany(mappedBy = "company")
-	// private List<Line> lines = new ArrayList<>(0);
-
 }

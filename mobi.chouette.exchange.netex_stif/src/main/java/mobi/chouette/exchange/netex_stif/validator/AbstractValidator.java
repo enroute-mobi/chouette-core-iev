@@ -47,7 +47,7 @@ public abstract class AbstractValidator {
 	}
 
 	public void init(Context context) {
-		
+
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		String fileName = (String) context.get(Constant.FILE_NAME);
@@ -95,7 +95,7 @@ public abstract class AbstractValidator {
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_3, "E");
 
-			
+
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3, "E");
@@ -124,7 +124,7 @@ public abstract class AbstractValidator {
 	/**
 	 * add location for local validation (level 1 and 2) and for general
 	 * validation (level 3 and more)
-	 * 
+	 *
 	 * @param context
 	 * @param localContext
 	 * @param objectId
@@ -198,7 +198,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param type
 	 * @param id
@@ -244,7 +244,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param type
 	 * @param object
@@ -294,7 +294,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param type
 	 * @param object
@@ -347,7 +347,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param object
 	 * @param type
@@ -356,22 +356,17 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkNetexRef(Context context, ChouetteIdentifiedObject object, String typeRef, String ref,
-			int lineNumber, int columnNumber) {
-
+	public boolean checkNetexRef(Context context, ChouetteIdentifiedObject object, String typeRef, String ref, int lineNumber, int columnNumber) {
 		String type = typeRef;
-		if (type.endsWith("Ref"))
-			type = type.substring(0, type.length() - 3);
-		if (type.equals("JourneyPattern"))
-			type = "ServiceJourneyPattern";
+		if (type.endsWith("Ref")) { type = type.substring(0, type.length() - 3); }
+		if (type.equals("JourneyPattern")) { type = "ServiceJourneyPattern";}
+
 		String regex = REGEX_ID_PREFIX + type + REGEX_ID_SUFFIX;
 		if (CodifLigneTypes.contains(type)) {
 			regex = REGEX_CODIFLIGNE_PREFIX + type + REGEX_CODIFLIGNE_SUFFIX;
 		} else if (ReflexTypes.contains(type)) {
-			String code = "ZDE"; // todo manage when StopPlaceRef should be
-									// checked
+			String code = "ZDE";
 			regex = REGEX_REFLEX_PREFIX + code + REGEX_REFLEX_SUFFIX;
-
 		}
 		boolean result = ref.matches(regex);
 
@@ -425,8 +420,7 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkInternalRef(Context context, ChouetteIdentifiedObject object, String type, String id,
-			String versionAttribute, String content, int lineNumber, int columnNumber) {
+	public boolean checkInternalRef(Context context, ChouetteIdentifiedObject object, String type, String id, String versionAttribute, String content, int lineNumber, int columnNumber) {
 
 		boolean result1 = versionAttribute != null && !versionAttribute.isEmpty();
 		boolean result2 = content == null || content.trim().isEmpty();
@@ -477,7 +471,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param object
 	 * @param type
@@ -488,11 +482,10 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkExternalRef(Context context, ChouetteIdentifiedObject object, String type, String ref,
-			String versionAttribute, String content, int lineNumber, int columnNumber) {
+	public boolean checkExternalRef(Context context, ChouetteIdentifiedObject object, String type, String ref, String versionAttribute, String content, int lineNumber, int columnNumber) {
 
-		boolean result1 = versionAttribute == null || versionAttribute.isEmpty();
-		boolean result2 = content != null && content.trim().matches("^version=\".+\"$");
+		boolean result1 = (versionAttribute == null || versionAttribute.isEmpty());
+		boolean result2 = (content != null && content.trim().matches("^version=\".+\"$"));
 
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
@@ -535,7 +528,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param object
 	 * @param type
@@ -546,9 +539,7 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkExistsRef(Context context, ChouetteIdentifiedObject object, String type, String ref,
-			String versionAttribute, String content, int lineNumber, int columnNumber) {
-
+	public boolean checkExistsRef(Context context, ChouetteIdentifiedObject object, String type, String ref, String versionAttribute, String content, int lineNumber, int columnNumber) {
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		boolean result = false;
 		switch (type) {
@@ -556,7 +547,7 @@ public abstract class AbstractValidator {
 			result = referential.getSharedTimetableTemplates().containsKey(ref);
 			break;
 		case NetexStifConstant.NOTICE_REF:
-			result = referential.getSharedFootnotes().containsKey(ref);
+			result = referential.getSharedFootnotes().containsKey(ref) || referential.getSharedLineNotices().containsKey(ref);
 			break;
 		case NetexStifConstant.LINE_REF:
 			result = referential.getSharedReadOnlyLines().containsKey(ref);
