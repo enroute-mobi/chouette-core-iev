@@ -275,35 +275,6 @@ public class Location extends AbstractReport {
 		return "unnammed";
 	}
 
-	// public static void addLineLocation(Location loc, NeptuneIdentifiedObject
-	// chouetteObject) {
-	// if (loc.getLine() != null)
-	// return;
-	// Line line = null;
-	// try {
-	// if (chouetteObject instanceof VehicleJourney) {
-	// VehicleJourney object = (VehicleJourney) chouetteObject;
-	// line = object.getRoute().getLine();
-	// } else if (chouetteObject instanceof JourneyPattern) {
-	// JourneyPattern object = (JourneyPattern) chouetteObject;
-	// line = object.getRoute().getLine();
-	// } else if (chouetteObject instanceof StopPoint) {
-	// StopPoint object = (StopPoint) chouetteObject;
-	// line = object.getRoute().getLine();
-	// } else if (chouetteObject instanceof Route) {
-	// Route object = (Route) chouetteObject;
-	// line = object.getLine();
-	// } else if (chouetteObject instanceof Line) {
-	// line = (Line) chouetteObject;
-	// }
-	// } catch (NullPointerException ex) {
-	// // ignore line path
-	// }
-	// if (line != null)
-	// loc.setLine(new LineLocation(line));
-	//
-	// }
-
 	@Override
 	public void print(PrintStream out, StringBuilder ret, int level, boolean initFirst) {
 		ret.setLength(0);

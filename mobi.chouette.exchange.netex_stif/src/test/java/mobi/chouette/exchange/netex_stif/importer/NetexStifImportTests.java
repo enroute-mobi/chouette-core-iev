@@ -249,12 +249,6 @@ public class NetexStifImportTests extends Arquillian  {
 		deleteJson();
 		buidAndSaveJson();
 		verifyFromJson();
-		// JSONWriter writer = new JSONWriter(w);
-		// List<RoutingConstraint> routingConstraints = routingConstraintDao.findAll();
-//		for (RoutingConstraint routingConstraint : routingConstraints) {
-//			log.info("routing constraint" + routingConstraint.getName());
-//		}
-		// NeptuneTestsUtils.checkMinimalLine(line);
 
 		utx.rollback();
 
@@ -263,12 +257,12 @@ public class NetexStifImportTests extends Arquillian  {
 	private void deleteJson() {
 		File dir = new File("/tmp");
 		FileFilter fileFilter = new WildcardFileFilter("offer*.json");
-		
+
 		for (File file : dir.listFiles(fileFilter)) {
 			if (file.exists()) file.delete();
 		}
 		count = 0;
-		
+
 	}
 
 	@Test(groups = { "ImportBadFiles" }, description = "Import invalid Zip format", priority = 102)
@@ -342,7 +336,7 @@ public class NetexStifImportTests extends Arquillian  {
 		Assert.assertEquals(error.getKey(),"1_netexstif_1_2","message code");
 		Assert.assertEquals(error.getValue(),"calendriers.xml","value");
 		Assert.assertEquals(error.getSource().getFile().getFilename(),zipFile,"source filename");
-		
+
 
 	}
 
@@ -380,11 +374,11 @@ public class NetexStifImportTests extends Arquillian  {
 		Assert.assertEquals(error.getTestId(),"1-NeTExStif-1","checkpoint code");
 		Assert.assertEquals(error.getKey(),"1_netexstif_1_3","message code");
 		Assert.assertEquals(error.getSource().getFile().getFilename(),zipFile,"source filename");
-		
+
 
 	}
 
-	
+
 	private void verifyFromJson() throws JSONException, IOException {
 		// InputStream is =
 		// this.getClass().getResourceAsStream("/tmp/offre.json");

@@ -119,13 +119,13 @@ public class ValidationReporterImpl implements ValidationReporter {
 	@Override
 	public void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode, String detail,
 			DataLocation location, String value, String refValue, DataLocation... targetLocations) {
-		
+
 		ValidationReport validationReport = (ValidationReport) context.get(Constant.VALIDATION_REPORT);
 		Location detailLocation = null;
 		if (location != null) {
 			detailLocation = new Location(location);
 		}
-		
+
 		CheckPointReport checkPoint = validationReport.findCheckPointReportByName(checkPointName);
 
 		if (checkPoint == null) {
@@ -205,17 +205,6 @@ public class ValidationReporterImpl implements ValidationReporter {
 
 		return camelcase.replaceAll("(.)(\\p{Upper})", "$1_$2").toLowerCase();
 	}
-
-	// private OBJECT_TYPE getType(NeptuneIdentifiedObject object) {
-	// String name = object.getClass().getSimpleName();
-	// name = name.replaceAll("(.)(\\p{Upper})", "$1_$2").toUpperCase();
-	// try {
-	// return OBJECT_TYPE.valueOf(name);
-	// } catch (Exception ex) {
-	// log.error("unknown type " + object.getClass().getSimpleName());
-	// return null;
-	// }
-	// }
 
 	@Override
 	public void addCheckPointReportError(Context context, Long checkPointId, String checkPointName, String checkPointCode,

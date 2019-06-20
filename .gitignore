@@ -12,4 +12,6 @@ maven-eclipse.xml
 *.versionsBackup
 .classpath
 **/test-output/*
+*/target
+.factorypath
 /cache

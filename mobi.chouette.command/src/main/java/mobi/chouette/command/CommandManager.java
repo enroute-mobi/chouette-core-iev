@@ -10,12 +10,6 @@ import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.exchange.ProcessingCommands;
 import mobi.chouette.exchange.ProcessingCommandsFactory;
-import mobi.chouette.exchange.gtfs.exporter.GtfsExportParameters;
-import mobi.chouette.exchange.gtfs.importer.GtfsImportParameters;
-import mobi.chouette.exchange.hub.exporter.HubExportParameters;
-import mobi.chouette.exchange.kml.exporter.KmlExportParameters;
-import mobi.chouette.exchange.neptune.exporter.NeptuneExportParameters;
-import mobi.chouette.exchange.neptune.importer.NeptuneImportParameters;
 import mobi.chouette.exchange.netex.exporter.NetexExportParameters;
 import mobi.chouette.exchange.netex.importer.NetexImportParameters;
 import mobi.chouette.exchange.parameters.AbstractExportParameter;
@@ -311,7 +305,7 @@ public class CommandManager implements Constant {
 		stream.close();
 
 		ValidationReport validationReport = (ValidationReport) importContext.get(VALIDATION_REPORT);
-		
+
 		 stream = new PrintStream(Paths.get(inputData.getPathName(), VALIDATION_FILE).toFile(), "UTF-8");
 		validationReport.print(stream);
 		stream.close();
@@ -330,15 +324,8 @@ public class CommandManager implements Constant {
 			data.setPathName(workingDirectory);
 			data.setAction(IMPORTER);
 			AbstractParameter configuration = ParametersConverter.convertConfiguration(inputParametersFilename);
-			if (configuration instanceof NeptuneImportParameters) {
-				data.setType("neptune");
-			} else if (configuration instanceof NetexImportParameters) {
+			if (configuration instanceof NetexImportParameters) {
 				data.setType("netex");
-			} else if (configuration instanceof GtfsImportParameters) {
-				data.setType("gtfs");
-				// force import mode to lines
-				GtfsImportParameters importConfiguration = (GtfsImportParameters) configuration;
-				importConfiguration.setReferencesType("line");
 			} else {
 				System.err.println("invalid input options type" + inputParametersFilename);
 				return null;
@@ -361,16 +348,8 @@ public class CommandManager implements Constant {
 			data.setPathName(workingDirectory);
 			data.setAction(EXPORTER);
 			AbstractParameter configuration = ParametersConverter.convertConfiguration(outputParametersFilename);
-			if (configuration instanceof NeptuneExportParameters) {
-				data.setType("neptune");
-			} else if (configuration instanceof NetexExportParameters) {
+			if (configuration instanceof NetexExportParameters) {
 				data.setType("netex");
-			} else if (configuration instanceof GtfsExportParameters) {
-				data.setType("gtfs");
-			} else if (configuration instanceof HubExportParameters) {
-				data.setType("hub");
-			} else if (configuration instanceof KmlExportParameters) {
-				data.setType("kml");
 			} else {
 				System.err.println("invalid output options type" + outputParametersFilename);
 				return null;
@@ -378,7 +357,7 @@ public class CommandManager implements Constant {
 			// force export mode to lines
 			AbstractExportParameter exportConfiguration = (AbstractExportParameter) configuration;
 			exportConfiguration.setReferencesType("line");
-			
+
 			data.setConfiguration(configuration);
 			return data;
 
