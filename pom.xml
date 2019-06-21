@@ -58,7 +58,8 @@
 		<repository>
 			<id>hibernate-spatial-repository</id>
 			<name>hibernate-spatial Repository</name>
-			<url>https://www.hibernatespatial.org/repository/</url>
+			<!-- https://www.hibernatespatial.org isn't available -->
+			<url>http://www.hibernatespatial.org/repository/</url>
 		</repository>
 	</repositories>
 	<build>
