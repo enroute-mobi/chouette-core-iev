@@ -17,7 +17,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 	public static void write(Writer writer, ExportableData data) throws IOException {
 		String participantRef = OFFRE_PARTICIPANT_REF;
 		String prefix = ROOT_PREFIX;
-		String lineName = ""; // TODO 
+		String lineName = ""; // TODO
 
 		openPublicationDelivery(writer, participantRef, data.getGlobalValidityPeriod(), lineName, FILE_TYPE.CALENDRIERS);
 		openGeneralFrame(writer, prefix, NetexStifConstant.NETEX_CALENDRIER, data.getValidityPeriods(), false, data.getTimetables().isEmpty());
@@ -31,7 +31,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 
 	private static void writeDayTypes(Writer writer, ExportableData data) throws IOException {
 		for (Timetable object : data.getTimetables()) {
-			write(writer,4,"<DayType "+buildDataSourceRef(data,object)+" id=\"" + object.getObjectId() + "\" version=\""+object.getObjectVersion()+"\">");
+			write(writer,4,"<DayType "+buildDataSourceRef(data,object)+" id=\"" + object.getObjectId() + "\" version=\""+writeVersion(object.getObjectVersion())+"\">");
 			write(writer,5,"<Name>" + toXml(object.getComment()) + "</Name>");
 			if (!object.getDayTypes().isEmpty()) {
 				write(writer,5,"<properties>");
@@ -56,22 +56,19 @@ public class NetexCalendrierWriter extends AbstractWriter {
 			String prefix = object.objectIdPrefix();
 			for (int periodRank = 1; periodRank <= object.getPeriods().size(); periodRank++) {
 				write(writer,4,"<DayTypeAssignment "+buildDataSourceRef(data,object)+" id=\"" + prefix + ":DayTypeAssignment:" + rank
-						+ ":LOC\" version=\""+object.getObjectVersion()+"\" order=\"0\" >");
-				write(writer,5,"<OperatingPeriodRef ref=\""
-						+ buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)
-						+ "\" version=\""+object.getObjectVersion()+"\"/>");
-				write(writer,5,"<DayTypeRef ref=\"" + object.getObjectId()
-						+ "\" version=\""+object.getObjectVersion()+"\"/>");
+						+ ":LOC\" version=\""+writeVersion(object.getObjectVersion())+"\" order=\"0\" >");
+				write(writer,5,"<OperatingPeriodRef ref=\""+buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)
+						+ "\" version=\""+writeVersion(object.getObjectVersion())+"\"/>");
+				write(writer,5,"<DayTypeRef ref=\"" + object.getObjectId()+"\" version=\""+writeVersion(object.getObjectVersion())+"\"/>");
 				write(writer,4,"</DayTypeAssignment>");
 				periodRank++;
 				rank++;
 			}
 			for (CalendarDay child : object.getCalendarDays()) {
 				write(writer,4,"<DayTypeAssignment "+buildDataSourceRef(data,object)+" id=\"" + prefix + ":DayTypeAssignment:" + rank
-						+ ":LOC\" version=\""+object.getObjectVersion()+"\" order=\"0\" >");
+						+ ":LOC\" version=\""+writeVersion(object.getObjectVersion())+"\" order=\"0\" >");
 				write(writer,5,"<Date>" + format.format(child.getDate()) + "</Date>");
-				write(writer,5,"<DayTypeRef ref=\"" + object.getObjectId()
-						+ "\" version=\""+object.getObjectVersion()+"\"/>");
+				write(writer,5,"<DayTypeRef ref=\"" + object.getObjectId()+"\" version=\""+writeVersion(object.getObjectVersion())+"\"/>");
 				write(writer,5,"<isAvailable>" + child.getIncluded() + "</isAvailable>");
 				write(writer,4,"</DayTypeAssignment>");
 				rank++;
@@ -85,7 +82,7 @@ public class NetexCalendrierWriter extends AbstractWriter {
 		for (Timetable object : data.getTimetables()) {
 			int periodRank = 1;
 			for (Period child : object.getPeriods()) {
-				write(writer,4,"<OperatingPeriod "+buildDataSourceRef(data,object)+" id=\"" + buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)+"\" version=\""+object.getObjectVersion()+"\" >");
+				write(writer,4,"<OperatingPeriod "+buildDataSourceRef(data,object)+" id=\"" + buildChildSequenceId(object, "DayType", "OperatingPeriod", periodRank)+"\" version=\""+writeVersion(object.getObjectVersion())+"\" >");
 				write(writer,5,"<FromDate>"+format.format(child.getStartDate())+"</FromDate>");
 				write(writer,5,"<ToDate>"+format.format(child.getEndDate())+"</ToDate>");
 				write(writer,4,"</OperatingPeriod>");
