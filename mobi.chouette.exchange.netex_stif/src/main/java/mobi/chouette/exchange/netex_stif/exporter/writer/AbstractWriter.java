@@ -223,4 +223,8 @@ public class AbstractWriter {
 		writer.write(indentation[indent] + text + "\n");
 	}
 
+	public static String writeVersion (Long version) {
+		return version!=null ? version.toString() : "any";
+	}
+
 }
