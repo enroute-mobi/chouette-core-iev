@@ -62,8 +62,7 @@ public class ServiceJourneyParser implements Parser {
 		String dataSourceRef = (String) context.get(NetexStifConstant.IMPORT_DATA_SOURCE_REF);
 		vehicleJourney.setDataSourceRef(dataSourceRef);
 		LineLite line = (LineLite) context.get(Constant.LINE);
-		// if (line != null)
-		// NetexStifUtils.uniqueObjectIdOnLine(context,vehicleJourney, line);
+
 		JourneyPattern pattern = null;
 		Set<String> timetableRefs = new HashSet<>();
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
@@ -78,11 +77,10 @@ public class ServiceJourneyParser implements Parser {
 				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
-				boolean checked = validator.checkNetexRef(context, vehicleJourney,
-						NetexStifConstant.JOURNEY_PATTERN_REF, ref, lineNumber, columnNumber);
-				if (checked)
-					validator.checkInternalRef(context, vehicleJourney, NetexStifConstant.JOURNEY_PATTERN_REF, ref,
-							attrVersion, content, lineNumber, columnNumber);
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.JOURNEY_PATTERN_REF, ref, lineNumber, columnNumber);
+				if (checked) {
+					validator.checkInternalRef(context, vehicleJourney, NetexStifConstant.JOURNEY_PATTERN_REF, ref, attrVersion, content, lineNumber, columnNumber);
+				}
 				pattern = ObjectFactory.getJourneyPattern(referential, ref);
 				vehicleJourney.setJourneyPattern(pattern);
 				vehicleJourney.setRoute(pattern.getRoute());
@@ -91,14 +89,13 @@ public class ServiceJourneyParser implements Parser {
 				String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
-				boolean checked = validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref,
-						lineNumber, columnNumber);
-				if (checked)
-					checked = validator.checkExternalRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref,
-							attrVersion, content, lineNumber, columnNumber);
-				if (checked)
-					validator.checkExistsRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref, attrVersion,
-							content, lineNumber, columnNumber);
+				boolean checked = validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref, lineNumber, columnNumber);
+				if (checked) {
+					checked = validator.checkExternalRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref, attrVersion, content, lineNumber, columnNumber);
+				}
+				if (checked) {
+					validator.checkExistsRef(context, vehicleJourney, NetexStifConstant.OPERATOR_REF, ref, attrVersion, content, lineNumber, columnNumber);
+				}
 				CompanyLite company = referential.getSharedReadOnlyCompanies().get(ref);
 				if (company != null) {
 					vehicleJourney.setCompanyId(company.getId());
@@ -338,14 +335,14 @@ public class ServiceJourneyParser implements Parser {
 						String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
 						String attrVersion = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 						String content = xpp.nextText();
-						
+
 						// check external reference
-						boolean checked = (validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.NOTICE_REF, ref, lineNumber, columnNumber) 
+						boolean checked = (validator.checkNetexRef(context, vehicleJourney, NetexStifConstant.NOTICE_REF, ref, lineNumber, columnNumber)
 								&& validator.checkExternalRef(context, vehicleJourney, NetexStifConstant.NOTICE_REF, ref, attrVersion, content, lineNumber, columnNumber)
 								&& validator.checkExistsRef(context, vehicleJourney, NetexStifConstant.NOTICE_REF, ref, attrVersion, content, lineNumber, columnNumber));
-						
+
 						Referential referential = (Referential) context.get(Constant.REFERENTIAL);
-						
+
 						if (referential.getSharedFootnotes().containsKey(ref) || referential.getFootnotes().containsKey(ref)) {
 							Footnote footnote = referential.getFootnotes().get(ref);
 							if (footnote == null && referential.getSharedFootnotes().get(ref)!=null) {
@@ -357,19 +354,15 @@ public class ServiceJourneyParser implements Parser {
 								vehicleJourney.getFootnotes().add(footnote);
 							}
 						}
-						else if (referential.getSharedLineNotices().containsKey(ref) || referential.getLineNotices().containsKey(ref)) {
-							LineNotice lineNotice = referential.getLineNotices().get(ref);
-							if (lineNotice == null && referential.getSharedLineNotices().get(ref) != null) {
-								lineNotice = CopyUtil.copy(referential.getSharedLineNotices().get(ref));
-								referential.getLineNotices().put(ref, lineNotice);
-							}
-							if (lineNotice != null) {
-								vehicleJourney.getLineNotices().add(lineNotice);
+						else if (referential.getSharedReadOnlyLineNotices().containsKey(ref)) {
+							LineNotice lineNotice = referential.getSharedReadOnlyLineNotices().get(ref);
+							if (lineNotice != null 
+									&& validator.checkServiceJourneyLineNotice(context, vehicleJourney, lineNotice, NetexStifConstant.SERVICE_JOURNEY, ref, lineNumber, columnNumber)) {
 								Long[] lineNoticeIds = vehicleJourney.getLineNoticeIds();
 								ArrayList<Long> lineNoticeIdsList = new ArrayList<Long>(Arrays.asList(lineNoticeIds));
 								lineNoticeIdsList.add(lineNotice.getId());
 								lineNoticeIds = lineNoticeIdsList.toArray(lineNoticeIds);
-							    vehicleJourney.setLineNoticeIds(lineNoticeIds);
+								vehicleJourney.setLineNoticeIds(lineNoticeIds);
 							}
 						}
 					} else {

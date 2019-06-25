@@ -80,13 +80,9 @@ public class NetexStifParserCommand implements Command {
 				}
 				referential.setCurrentLine(line); // for reporting
 				if (line != null) {
-					reporter.addObjectReport(context, lid, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,
-							IO_TYPE.INPUT);
+					reporter.addObjectReport(context, lid, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,	IO_TYPE.INPUT);
 					context.put(Constant.LINE, line);
-				} else {
-					// manage invalid line for referential
-					// must not occur because check is done by Rails
-				}
+				} 
 			}
 
 			try (InputStream input = new BOMInputStream(url.openStream());

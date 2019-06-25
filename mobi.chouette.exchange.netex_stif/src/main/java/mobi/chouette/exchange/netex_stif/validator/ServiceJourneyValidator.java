@@ -10,13 +10,15 @@ import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.VehicleJourney;
 import mobi.chouette.model.VehicleJourneyAtStop;
+import mobi.chouette.model.util.Referential;
 
 public class ServiceJourneyValidator extends AbstractValidator {
 
 	public static final String LOCAL_CONTEXT = NetexStifConstant.SERVICE_JOURNEY;
-	
+
 	protected String getLocalContext()
 	{
 		return LOCAL_CONTEXT;
@@ -46,7 +48,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param context
 	 * @param passingTime
 	 * @param lineNumber
@@ -58,13 +60,10 @@ public class ServiceJourneyValidator extends AbstractValidator {
 		boolean result1 = checkNetexId(context, NetexStifConstant.SERVICE_JOURNEY, journey.getObjectId(), lineNumber, columnNumber);
 		checkChanged(context, NetexStifConstant.SERVICE_JOURNEY, journey, lineNumber, columnNumber);
 		boolean result2 = checkModification(context, NetexStifConstant.SERVICE_JOURNEY, journey, lineNumber, columnNumber);
-		boolean result3 = check2NeTExSTIFServiceJourney1(context, journey, lineNumber, columnNumber);
-		if (result3)
-			result3 = check2NeTExSTIFServiceJourney2(context, journey, lineNumber, columnNumber);
-		if (result3)
-			result3 = check2NeTExSTIFServiceJourney3(context, journey, lineNumber, columnNumber);
-		if (result3)
-			result3 = check2NeTExSTIFServiceJourney4(context, journey, lineNumber, columnNumber);
+		boolean result3 = check2NeTExSTIFServiceJourney1(context, journey, lineNumber, columnNumber)
+			&& check2NeTExSTIFServiceJourney2(context, journey, lineNumber, columnNumber)
+			&& check2NeTExSTIFServiceJourney3(context, journey, lineNumber, columnNumber)
+			&& check2NeTExSTIFServiceJourney4(context, journey, lineNumber, columnNumber);
 		return result1 && result2 && result3;
 	}
 
@@ -85,9 +84,9 @@ public class ServiceJourneyValidator extends AbstractValidator {
  	 * <p>
  	 * <b>Criticité</b> :  error
  	 * <p>
- 	 * 
+ 	 *
 	 * @see #addJourneyPatternRef(Context, String, String)
-	 * 
+	 *
 	 * @param context
 	 * @param journey
 	 * @param lineNumber
@@ -127,7 +126,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
  	 * <p>
  	 * <b>Criticité</b> :  error
  	 * <p>
- 	 * 
+ 	 *
 	 * @see #addTrainNumberRef(Context, String, String)
 	 * @param context
 	 * @param journey
@@ -136,8 +135,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public boolean check2NeTExSTIFServiceJourney2(Context context, VehicleJourney journey, int lineNumber,
-			int columnNumber) {
+	public boolean check2NeTExSTIFServiceJourney2(Context context, VehicleJourney journey, int lineNumber, int columnNumber) {
 		boolean result = true;
 		Context objectContext = getObjectContext(context, LOCAL_CONTEXT, journey.getObjectId());
 		List<String> list = (List<String>) objectContext.get(NetexStifConstant.TRAIN_NUMBER_REF);
@@ -169,7 +167,7 @@ public class ServiceJourneyValidator extends AbstractValidator {
  	 * <p>
  	 * <b>Criticité</b> :  error
  	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param journey
 	 * @param lineNumber
@@ -207,15 +205,14 @@ public class ServiceJourneyValidator extends AbstractValidator {
  	 * <p>
  	 * <b>Criticité</b> :  error
  	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param journey
 	 * @param lineNumber
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean check2NeTExSTIFServiceJourney4(Context context, VehicleJourney journey, int lineNumber,
-			int columnNumber) {
+	public boolean check2NeTExSTIFServiceJourney4(Context context, VehicleJourney journey, int lineNumber, int columnNumber) {
 		boolean result = true;
 		int res = 0;
 		int rank = 0;
@@ -232,7 +229,19 @@ public class ServiceJourneyValidator extends AbstractValidator {
 			String fileName = (String) context.get(Constant.FILE_NAME);
 			LineLite line = (LineLite) context.get(Constant.LINE);
 			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
-			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4,NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4, location, Integer.toString(rank));			
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4,NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_4, location, Integer.toString(rank));
+		}
+		return result;
+	}
+
+	public boolean checkServiceJourneyLineNotice(Context context, VehicleJourney journey, LineNotice lineNotice, String typeRef, String ref, int lineNumber, int columnNumber) {
+		LineLite line = (LineLite) context.get(Constant.LINE);
+		boolean result = line.getLineNoticesIds().contains(lineNotice.getId());
+		if (!result) {
+			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
+			String fileName = (String) context.get(Constant.FILE_NAME);
+			DataLocation location = new DataLocation(fileName, lineNumber, columnNumber, line, journey);
+			validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_5,NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_5, location, ref, typeRef);
 		}
 		return result;
 	}
