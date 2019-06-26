@@ -23,6 +23,7 @@ import mobi.chouette.dao.VehicleJourneyAtStopDAO;
 import mobi.chouette.exchange.validation.ValidationData;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyFrequency;
 import mobi.chouette.model.Route;
@@ -115,13 +116,13 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		cache.getVehicleJourneys().put(oldValue.getObjectId(), oldValue);
 
 		boolean optimized = (Boolean) context.get(Constant.OPTIMIZED);
-		
+
 		// Database test init
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		validationReporter.addItemToValidationReport(context, ValidationConstant.DATABASE_VEHICLE_JOURNEY_2, "W");
 		ValidationData data = (ValidationData) context.get(Constant.VALIDATION_DATA);
-				
-				
+
+
 		if (oldValue.isDetached()) {
 			// object does not exist in database
 			oldValue.setObjectId(newValue.getObjectId());
@@ -138,6 +139,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 			oldValue.setFlexibleService(newValue.getFlexibleService());
 			oldValue.setJourneyCategory(newValue.getJourneyCategory());
 			oldValue.setCompanyId(newValue.getCompanyId());
+			oldValue.setLineNoticeIds(newValue.getLineNoticeIds());
 			oldValue.setDataSourceRef(newValue.getDataSourceRef());
 			oldValue.setDetached(false);
 		} else {
@@ -216,7 +218,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		// compute VJAS checkSums
 		for (VehicleJourneyAtStop vjas : newValue.getVehicleJourneyAtStops())
 		{
-			ChecksumUtil.checksum(context, vjas); 
+			ChecksumUtil.checksum(context, vjas);
 		}
 		if (!optimized) {
 
@@ -345,7 +347,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		// Footnotes
 		// This is the new list of footnotes
 		List<Footnote> footnotes = new ArrayList<Footnote>();
-		
+
 		// Compare at 'code' attribute
 		Comparator<Footnote> footnoteCodeCompatator = new Comparator<Footnote>() {
 			@Override
@@ -353,12 +355,12 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 				return o2.getChecksum().compareTo(o1.getChecksum());
 			}
 		};
-		
+
 		// Find added footnotes
 		Collection<Footnote> addedFootnotes = CollectionUtil.substract(
 				newValue.getFootnotes(), oldValue.getFootnotes(),
 				footnoteCodeCompatator);
-		
+
 		// add all new footnotes
 		footnotes.addAll(addedFootnotes);
 
@@ -367,7 +369,7 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 				.intersection(oldValue.getFootnotes(),
 						newValue.getFootnotes(),
 						footnoteCodeCompatator);
-		
+
 		for (Pair<Footnote, Footnote> pair : modifiedFootnotes) {
 			footnoteUpdater.update(context, pair.getLeft(), pair.getRight());
 			footnotes.add(pair.getLeft());
@@ -376,17 +378,17 @@ public class VehicleJourneyUpdater implements Updater<VehicleJourney> {
 		for(Footnote f : footnotes) {
 			ChecksumUtil.checksum(context, f);
 		}
-		
+
 		oldValue.setFootnotes(footnotes);
-		
+
 		ChecksumUtil.checksum(context, newValue);
 		oldValue.setChecksum(newValue.getChecksum());
 		oldValue.setChecksumSource(newValue.getChecksumSource());
 //		monitor.stop();
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Test 2-DATABASE-VehicleJourney-2
 	 * @param validationReporter

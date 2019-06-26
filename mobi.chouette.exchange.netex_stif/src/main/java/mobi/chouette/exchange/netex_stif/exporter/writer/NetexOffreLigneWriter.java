@@ -10,6 +10,7 @@ import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.RoutingConstraint;
 import mobi.chouette.model.StopAreaLite;
@@ -20,7 +21,11 @@ import mobi.chouette.model.VehicleJourneyAtStop;
 import mobi.chouette.model.type.AlightingPossibilityEnum;
 import mobi.chouette.model.type.BoardingPossibilityEnum;
 import mobi.chouette.model.util.NamingUtil;
+import lombok.extern.log4j.Log4j;
+import java.util.Arrays;
 
+
+@Log4j
 public class NetexOffreLigneWriter extends AbstractWriter {
 
 	public static void write(Writer writer, ExportableData data) throws IOException {
@@ -165,10 +170,18 @@ public class NetexOffreLigneWriter extends AbstractWriter {
 		for (VehicleJourney object : data.getVehicleJourneys()) {
 			write(writer,6,"<ServiceJourney "+buildDataSourceRef(data,object)+" id=\"" + object.getObjectId() + "\" version=\""+writeVersion(object.getObjectVersion())+"\">");
 			write(writer,7,"<Name>" + toXml(object.getPublishedJourneyName()) + "</Name>");
-			if (!object.getFootnotes().isEmpty()) {
+
+			if (!object.getFootnotes().isEmpty() || object.getLineNoticeIds().length!=0) {
 				write(writer,7,"<noticeAssignments>");
-				int rank = 1;
+				int rank = 0;
 				for (Footnote child : object.getFootnotes()) {
+					rank++;
+					write(writer,8,"<NoticeAssignment id=\""+buildChildSequenceId(object, "VehicleJourney", "NoticeAssignment", rank)+"\" version=\""+writeVersion(object.getObjectVersion())+"\" order=\"0\">");
+					write(writer,9,"<NoticeRef ref=\"" + child.getObjectId() + "\">version=\"any\"</NoticeRef>");
+					write(writer,8,"</NoticeAssignment>");
+				}
+				for(LineNotice child : object.getLineNotices()) {
+					rank++;
 					write(writer,8,"<NoticeAssignment id=\""+ buildChildSequenceId(object, "ServiceJourney", "NoticeAssignment", rank++)+"\" version=\""+writeVersion(object.getObjectVersion())+"\" order=\"0\">");
 					write(writer,9,"<NoticeRef ref=\""+child.getObjectId()+"\">version=\"any\"</NoticeRef>");
 					write(writer,8,"</NoticeAssignment>");

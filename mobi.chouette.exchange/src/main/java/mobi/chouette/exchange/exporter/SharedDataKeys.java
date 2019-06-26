@@ -7,13 +7,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class SharedDataKeys {
-	
+
 	@Getter
 	@Setter
 	private Set<String> networkIds = new HashSet<>();
 	@Getter
 	@Setter
 	private Set<String> companyIds = new HashSet<>();
+	@Getter
+	@Setter
+	private Set<String> lineNoticeIds = new HashSet<>();
 	@Getter
 	@Setter
 	private Set<String> groupOfLineIds = new HashSet<>();
@@ -35,11 +38,12 @@ public class SharedDataKeys {
 	@Getter
 	@Setter
 	private Set<String> restrictionConstraints = new HashSet<>();
-	
+
 	public void clear()
 	{
 		networkIds.clear();
 		companyIds.clear();
+		lineNoticeIds.clear();
 		groupOfLineIds.clear();
 		stopAreaIds.clear();
 		connectionLinkIds.clear();

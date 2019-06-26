@@ -13,6 +13,7 @@ import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.CompanyLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
@@ -41,6 +42,9 @@ public class ExportableData {
 	@Getter
 	@Setter
 	private Set<Company> companies = new HashSet<>();
+	@Getter
+	@Setter
+	private Set<LineNotice> lineNotices = new HashSet<>();
 	@Getter
 	@Setter
 	private Set<Line> lines = new HashSet<>();
@@ -116,37 +120,36 @@ public class ExportableData {
 	@Setter
 	private Map<Long, CompanyLite> mappedCompanies = new HashMap<>();
 
-	// public Timetable findTimetable(String objectId) {
-	// for (Timetable tm : timetables) {
-	// if (tm.getObjectId().equals(objectId))
-	// return tm;
-	// }
-	// return null;
-	// }
-    public void clearAll()
-    {
-    	clearCompany();
-    	clearLineReferential();
-    	clearStopAreaReferential();
+	@Getter
+	@Setter
+	private Map<Long, LineNotice> mappedLineNotices = new HashMap<>();
+
+
+  public void clearAll() {
+  	clearCompany();
+  	clearLineReferential();
+  	clearStopAreaReferential();
 		mappedStopAreas.clear();
 		mappedCompanies.clear();
+		mappedLineNotices.clear();
 		mappedLines.clear();
-    }
-	
+  }
+
 	public void clearCompany() {
 		clearLine();
 		timetables.clear();
 		excludedTimetables.clear();
 	}
-	
+
 	public void clearLineReferential()
 	{
 		networks.clear();
 		companies.clear();
+		lineNotices.clear();
 		groupOfLines.clear();
 		lines.clear();
 	}
-	
+
 	public void clearStopAreaReferential()
 	{
 		stopAreas.clear();

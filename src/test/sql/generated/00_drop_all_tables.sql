@@ -25,6 +25,8 @@ DROP TABLE IF EXISTS public.facilities CASCADE;
 DROP TABLE IF EXISTS public.facilities_features CASCADE;
 DROP TABLE IF EXISTS public.footnotes CASCADE;
 DROP TABLE IF EXISTS public.footnotes_vehicle_journeys CASCADE;
+DROP TABLE IF EXISTS public.line_notices CASCADE;
+DROP TABLE IF EXISTS public.line_notices_lines CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines CASCADE;
 DROP TABLE IF EXISTS public.group_of_lines_lines CASCADE;
 DROP TABLE IF EXISTS public.journey_frequencies CASCADE;

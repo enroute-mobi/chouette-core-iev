@@ -59,7 +59,7 @@ public class NetexStifConstant {
 	public static final String OPERATOR_REF = "OperatorRef";
 	 // Attention le I est en majuscule dans la XSD
 	public static final String OPPOSITE_DIRECTION_REF = "OppositeDIrectionRef";
-	
+
 	public static final String ORDER = "order";
 	public static final String PARTICIPANT_REF = "ParticipantRef";
 	public static final String PASSENGER_STOP_ASSIGNMENT = "PassengerStopAssignment";
@@ -114,8 +114,8 @@ public class NetexStifConstant {
 	public static final String LIGNES_FILE_NAME = "lignes.xml";
 	public static final String LIGNE_FILE_NAME = "ligne.xml";
 	public static final String ARRETS_FILE_NAME = "arrets.xml";
-	
-	// context constants 
+
+	// context constants
 	public static final String IMPORT_DATA_SOURCE_REF = "import_data_source_ref";
 	public static final String OUTPUT_SUB_PATH = "output_sub_path";
 	public static final String OPERATOR_OBJECT_ID = "operator_object_id";

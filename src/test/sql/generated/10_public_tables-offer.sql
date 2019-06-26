@@ -284,14 +284,14 @@ CREATE TABLE public.companies (
     object_version bigint,
     name character varying,
     short_name character varying,
-    organizational_unit character varying,
-    operating_department_name character varying,
+    default_contact_organizational_unit character varying,
+    default_contact_operating_department_name character varying,
     code character varying,
-    phone character varying,
-    fax character varying,
-    email character varying,
+    default_contact_phone character varying,
+    default_contact_fax character varying,
+    default_contact_email character varying,
     registration_number character varying,
-    url character varying,
+    default_contact_url character varying,
     time_zone character varying,
     line_referential_id bigint,
     import_xml text,
@@ -630,7 +630,35 @@ CREATE TABLE public.footnotes_vehicle_journeys (
 );
 
 
+CREATE TABLE public.line_notices (
+    id bigint NOT NULL,
+    line_referential_id bigint,
+    title character varying,
+    content text,
+    objectid character varying NOT NULL,
+    import_xml text,
+    metadata jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    object_version integer
+);
 
+
+CREATE SEQUENCE public.line_notices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+ALTER SEQUENCE public.line_notices_id_seq OWNED BY public.line_notices.id;
+
+CREATE TABLE public.line_notices_lines (
+    line_notice_id bigint NOT NULL,
+    line_id bigint NOT NULL
+);
 --
 -- Name: group_of_lines; Type: TABLE; Schema: public; Owner: chouette
 --
@@ -2030,7 +2058,8 @@ CREATE TABLE public.vehicle_journeys (
     data_source_ref character varying,
     custom_field_values jsonb DEFAULT '{}'::jsonb,
     metadata jsonb DEFAULT '{}'::jsonb,
-    ignored_routing_contraint_zone_ids integer[] DEFAULT '{}'::integer[]
+    ignored_routing_contraint_zone_ids integer[] DEFAULT '{}'::integer[],
+    line_notice_ids bigint[]
 );
 
 
@@ -2230,6 +2259,8 @@ ALTER TABLE ONLY public.facilities ALTER COLUMN id SET DEFAULT nextval('public.f
 
 ALTER TABLE ONLY public.footnotes ALTER COLUMN id SET DEFAULT nextval('public.footnotes_id_seq'::regclass);
 
+
+ALTER TABLE ONLY public.line_notices ALTER COLUMN id SET DEFAULT nextval('public.line_notices_id_seq'::regclass);
 
 --
 -- Name: group_of_lines id; Type: DEFAULT; Schema: public; Owner: chouette
@@ -2587,6 +2618,9 @@ ALTER TABLE ONLY public.facilities
 ALTER TABLE ONLY public.footnotes
     ADD CONSTRAINT footnotes_pkey PRIMARY KEY (id);
 
+
+ALTER TABLE ONLY public.line_notices
+    ADD CONSTRAINT line_notices_pkey PRIMARY KEY (id);
 
 --
 -- Name: group_of_lines group_of_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: chouette
@@ -3640,4 +3674,3 @@ ALTER TABLE ONLY public.time_tables_vehicle_journeys
 --
 -- PostgreSQL database dump complete
 --
-

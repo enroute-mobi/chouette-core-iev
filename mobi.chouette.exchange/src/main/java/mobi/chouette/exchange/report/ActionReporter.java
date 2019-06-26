@@ -7,7 +7,7 @@ import mobi.chouette.model.LineLite;
 public interface ActionReporter {
 
 	public enum OBJECT_TYPE {
-		NETWORK, COMPANY, STOP_AREA, CONNECTION_LINK, ACCESS_POINT, TIME_TABLE, LINE, ROUTE, JOURNEY_PATTERN, VEHICLE_JOURNEY, FOOTNOTE
+		NETWORK, COMPANY, STOP_AREA, CONNECTION_LINK, ACCESS_POINT, TIME_TABLE, LINE, ROUTE, JOURNEY_PATTERN, VEHICLE_JOURNEY, FOOTNOTE, LINE_NOTICE
 	}
 
 	public enum FILE_STATE {
@@ -28,7 +28,7 @@ public interface ActionReporter {
 
 	/**
 	 * create an entry for a zip file
-	 * 
+	 *
 	 * @param context
 	 * @param fileInfoName
 	 *            zip file simple name
@@ -39,7 +39,7 @@ public interface ActionReporter {
 
 	/**
 	 * report an error on zip file
-	 * 
+	 *
 	 * @param context
 	 * @param fileInfoName
 	 *            zip file simple name
@@ -52,7 +52,7 @@ public interface ActionReporter {
 
 	/**
 	 * report an error on zip file with validation code
-	 * 
+	 *
 	 * @param context
 	 * @param fileInfoName
 	 * @param code
@@ -63,7 +63,7 @@ public interface ActionReporter {
 
 	/**
 	 * create an entry for a simple file
-	 * 
+	 *
 	 * @param context
 	 * @param fileInfoName
 	 *            simple file name
@@ -74,7 +74,7 @@ public interface ActionReporter {
 
 	/**
 	 * fix file state
-	 * 
+	 *
 	 * @param context
 	 * @param fileInfoName
 	 *            simple file name
@@ -87,7 +87,7 @@ public interface ActionReporter {
 
 	/**
 	 * add error on file
-	 * 
+	 *
 	 * @param context
 	 * @param fileInfoName
 	 *            simple file name
@@ -100,7 +100,7 @@ public interface ActionReporter {
 
 	/**
 	 * affect a validation error on a file
-	 * 
+	 *
 	 * @param context
 	 * @param fileInfoName
 	 * @param code
@@ -111,7 +111,7 @@ public interface ActionReporter {
 
 	/**
 	 * set final action error
-	 * 
+	 *
 	 * @param context
 	 * @param code
 	 * @param description
@@ -120,7 +120,7 @@ public interface ActionReporter {
 
 	/**
 	 * check if action is in error
-	 * 
+	 *
 	 * @param context
 	 * @return
 	 */
@@ -128,7 +128,7 @@ public interface ActionReporter {
 
 	/**
 	 * add object entry
-	 * 
+	 *
 	 * @param context
 	 * @param objectId
 	 *            object id
@@ -146,7 +146,7 @@ public interface ActionReporter {
 
 	/**
 	 * add error on object
-	 * 
+	 *
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -158,7 +158,7 @@ public interface ActionReporter {
 
 	/**
 	 * add validation error on object
-	 * 
+	 *
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -170,7 +170,7 @@ public interface ActionReporter {
 
 	/**
 	 * add statistics value for object
-	 * 
+	 *
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -182,7 +182,7 @@ public interface ActionReporter {
 
 	/**
 	 * set statistics value for object (force value)
-	 * 
+	 *
 	 * @param context
 	 * @param objectId
 	 * @param type
@@ -219,7 +219,7 @@ public interface ActionReporter {
 	 * @return
 	 */
 	boolean hasObjectValidationErrors(Context context, OBJECT_TYPE type);
-	
+
 	/**
 	 * @param context
 	 * @param objectId
@@ -230,7 +230,7 @@ public interface ActionReporter {
 
 	/**
 	 * Factory for using action reporter instance
-	 * 
+	 *
 	 * @author gjamot
 	 *
 	 */

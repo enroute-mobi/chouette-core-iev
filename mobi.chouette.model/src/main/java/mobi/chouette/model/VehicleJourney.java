@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -73,7 +74,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	 * </li>
 	 * </ol>
 	 * This data must be unique in dataset
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -87,7 +88,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * object version
-	 * 
+	 *
 	 * @param objectVersion
 	 *            New value
 	 * @return The actual value
@@ -109,7 +110,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * comment
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -119,7 +120,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * set comment <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -129,7 +130,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * Transport mode when different from line transport mode
-	 * 
+	 *
 	 * @param transportMode
 	 *            New value
 	 * @return The actual value
@@ -142,7 +143,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * published journey name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -152,7 +153,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * set published journey name <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -163,7 +164,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * published journey identifier
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -173,7 +174,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * set published journey identifier <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -184,7 +185,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * facility
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -194,7 +195,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * set facility <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -204,7 +205,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * vehicle type identifier
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -214,7 +215,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * set vehicle type identifier <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -225,7 +226,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * number
-	 * 
+	 *
 	 * @param number
 	 *            New value
 	 * @return The actual value
@@ -236,7 +237,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	private Long number;
 	/**
 	 * data source ref
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -246,7 +247,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * set data source ref <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -256,13 +257,13 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * mobility restriction indicator (such as wheel chairs) <br>
-	 * 
+	 *
 	 * <ul>
 	 * <li>null if unknown
 	 * <li>true if wheel chairs can use this line</li>
 	 * <li>false if wheel chairs can't use this line</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param mobilityRestrictedSuitability
 	 *            New state for mobility restriction indicator
 	 * @return The actual mobility restriction indicator
@@ -274,13 +275,13 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * flexible service <br>
-	 * 
+	 *
 	 * <ul>
 	 * <li>null if unknown or inherited from line
 	 * <li>true for flexible service</li>
 	 * <li>false for regular service</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param flexibleService
 	 *            New value
 	 * @return The actual value
@@ -292,7 +293,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * route reference
-	 * 
+	 *
 	 * @param route
 	 *            New value
 	 * @return The actual value
@@ -305,7 +306,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * journey pattern reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -315,7 +316,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * set journey pattern reference
-	 * 
+	 *
 	 * @param journeyPattern
 	 */
 	public void setJourneyPattern(JourneyPattern journeyPattern) {
@@ -331,7 +332,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * company reference<br>
 	 * if different from line company
-	 * 
+	 *
 	 * @param company
 	 *            New value
 	 * @return The actual value
@@ -339,13 +340,11 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Setter
 	@Transient
-	// @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST })
-	// @JoinColumn(name = "company_id")
 	private Company company;
 
 	/**
 	 * footnotes refs
-	 * 
+	 *
 	 * @param footnotes
 	 *            New value
 	 * @return The actual value
@@ -360,7 +359,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * timetables
-	 * 
+	 *
 	 * @param timetables
 	 *            New value
 	 * @return The actual value
@@ -375,7 +374,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * vehicle journey at stops : passing times
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -387,7 +386,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	/**
 	 * To distinguish the timesheets journeys and the frequencies ones. Defaults
 	 * to Timesheet.
-	 * 
+	 *
 	 * @param journeyCategory
 	 *            The new vehicle journey category
 	 * @return The actual vehicle journey category
@@ -401,7 +400,7 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 
 	/**
 	 * For frequencies journeys, applicable periods
-	 * 
+	 *
 	 * @param journeyFrequencies
 	 *            The new vehicle journey frequencies
 	 * @return The actual vehicle journey category
@@ -417,6 +416,17 @@ public class VehicleJourney extends ChouetteIdentifiedObject implements SignedCh
 	@Getter
 	@Column(name = "company_id")
 	private Long companyId;
+
+	@Setter
+	@Getter
+	@Column(name = "line_notice_ids", columnDefinition = "bigint[]")
+	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
+	private Long[] lineNoticeIds = new Long[0];
+
+	@Getter
+	@Setter
+	@Transient
+	private List<LineNotice> lineNotices = new ArrayList<LineNotice>();
 
 	/**
 	 * sort passing times against stop point position

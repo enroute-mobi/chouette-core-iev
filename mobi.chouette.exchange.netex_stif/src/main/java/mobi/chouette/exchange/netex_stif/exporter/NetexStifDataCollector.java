@@ -6,9 +6,11 @@ import java.util.Collection;
 import lombok.extern.log4j.Log4j;
 import mobi.chouette.common.Context;
 import mobi.chouette.model.CompanyLite;
+import mobi.chouette.model.CompanyLite;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Route;
 import mobi.chouette.model.StopAreaLite;
 import mobi.chouette.model.StopPoint;
@@ -34,6 +36,7 @@ public class NetexStifDataCollector {
 		collection.getStopPoints().clear();
 		collection.getVehicleJourneys().clear();
 		collection.getCompanies().clear();
+		collection.getLineNotices().clear();
 
 		if (routes.isEmpty()) {
 			log.info("no route for line" + line.getObjectId());
@@ -71,6 +74,19 @@ public class NetexStifDataCollector {
 							log.error("NetexStifDataCollector # Company id =" + vehicleJourney.getCompanyId() + "not found ###");
 						} else {
 							collection.getMappedCompanies().put(vehicleJourney.getCompanyId(), company);
+						}
+					}
+
+					if (vehicleJourney.getLineNoticeIds()!=null) {
+						for (Long lineNoticeId : vehicleJourney.getLineNoticeIds()) {
+							if (!collection.getMappedLineNotices().containsKey(lineNoticeId)) {
+								LineNotice lineNotice = referential.findLineNotice(lineNoticeId);
+								if (lineNotice == null) {
+									log.error("NetexStifDataCollector # LineNotice id =" + lineNoticeId + "not found ###");
+								} else {
+									collection.getMappedLineNotices().put(lineNoticeId, lineNotice);
+								}
+							}
 						}
 					}
 
@@ -119,6 +135,12 @@ public class NetexStifDataCollector {
 						collection.getVehicleJourneys().add(vehicleJourney);
 						if (vehicleJourney.getCompany() != null) {
 							collection.getCompanies().add(vehicleJourney.getCompany());
+						}
+						if (vehicleJourney.getLineNoticeIds()!=null) {
+							for (Long lineNoticeId : vehicleJourney.getLineNoticeIds()) {
+								LineNotice lineNotice = collection.getMappedLineNotices().get(lineNoticeId);
+								if (lineNotice != null) { collection.getLineNotices().add(lineNotice); }
+							}
 						}
 						validJourneyPattern = true;
 						validRoute = true;
