@@ -2,6 +2,12 @@ package mobi.chouette.exchange.netex_stif;
 
 public class NetexStifConstant {
 
+	// Object ID Formats
+	public static final String NETEX_LINE_ID_FORMAT = "FR1:Line:{ref}:";
+	public static final String NETEX_OPERATOR_ID_FORMAT = "FR1:Operator:{ref}:LOC";
+
+
+
 	// Tags NeTEx
 	public static final String ARRIVAL_DAY_OFFSET = "ArrivalDayOffset";
 	public static final String ARRIVAL_TIME = "ArrivalTime";

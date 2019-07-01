@@ -6,16 +6,16 @@ SET search_path = public, pg_catalog;
 SELECT pg_catalog.setval('access_links_id_seq', 1, false);
 SELECT pg_catalog.setval('access_points_id_seq', 1, false);
 
-INSERT INTO companies VALUES (1, 'STIF:CODIFLIGNE:Operator:011', 2, 'TRANSDEV IDF ECQUEVILLY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="STIF:CODIFLIGNE:Operator:011">
+INSERT INTO companies VALUES (1, 'FR1:Operator:011:LOC', 2, 'TRANSDEV IDF ECQUEVILLY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="FR1:Operator:011:LOC">
   <Name>TRANSDEV IDF ECQUEVILLY</Name>
 </Operator>', '2017-02-10 09:39:20.66393', NULL);
-INSERT INTO companies VALUES (2, 'STIF:CODIFLIGNE:Operator:212', 2, 'TRANSDEV IDF CONFLANS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="STIF:CODIFLIGNE:Operator:212">
+INSERT INTO companies VALUES (2, 'FR1:Operator:212:LOC', 2, 'TRANSDEV IDF CONFLANS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="FR1:Operator:212:LOC">
   <Name>TRANSDEV IDF CONFLANS</Name>
 </Operator>', '2017-02-10 09:39:38.614316', '2017-02-10 09:39:38.614316');
-INSERT INTO companies VALUES (3, 'STIF:CODIFLIGNE:Operator:005', 2, 'TRANSDEV IDF HOUDAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="STIF:CODIFLIGNE:Operator:005">
+INSERT INTO companies VALUES (3, 'FR1:Operator:005:LOC', 2, 'TRANSDEV IDF HOUDAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="FR1:Operator:005:LOC">
   <Name>TRANSDEV IDF HOUDAN</Name>
 </Operator>', '2017-02-10 09:38:48.981666', '2017-02-10 09:38:48.981666');
-INSERT INTO companies VALUES (4, 'STIF:CODIFLIGNE:Operator:013', 2, 'TRANSDEV IDF RAMBOUILLET', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="STIF:CODIFLIGNE:Operator:013">
+INSERT INTO companies VALUES (4, 'FR1:Operator:013:LOC', 2, 'TRANSDEV IDF RAMBOUILLET', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '<Operator version="any" id="FR1:Operator:013:LOC">
   <Name>TRANSDEV IDF RAMBOUILLET</Name>
 </Operator>', '2017-02-10 09:39:31.131375', '2017-02-10 09:39:31.131375');
 
@@ -31,7 +31,7 @@ INSERT INTO line_referentials VALUES (1, 'CodifLigne', '2017-02-10 09:37:12.1880
 
 SELECT pg_catalog.setval('line_referentials_id_seq', 1, true);
 
-INSERT INTO lines VALUES (1, 1, 1, 'STIF:CODIFLIGNE:Line:C00108', 5, '9', '9', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00108">
+INSERT INTO lines VALUES (1, 1, 1, 'FR1:Line:C00108:', 5, '9', '9', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00108:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -47,14 +47,14 @@ INSERT INTO lines VALUES (1, 1, 1, 'STIF:CODIFLIGNE:Line:C00108', 5, '9', '9', N
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>011011009</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:011"/>
+  <OperatorRef version="any" ref="FR1:Operator:011:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
     <infoLinks/>
   </Presentation>
 </Line>', NULL, '{2,3}', '2017-02-10 09:45:19.680043', NULL);
-INSERT INTO lines VALUES (2, 1, 1, 'STIF:CODIFLIGNE:Line:C00109', 5, '10', '10', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00109">
+INSERT INTO lines VALUES (2, 1, 1, 'FR1:Line:C00109:', 5, '10', '10', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00109:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -70,14 +70,14 @@ INSERT INTO lines VALUES (2, 1, 1, 'STIF:CODIFLIGNE:Line:C00109', 5, '10', '10',
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>011011010</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:011"/>
+  <OperatorRef version="any" ref="FR1:Operator:011:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
     <infoLinks/>
   </Presentation>
 </Line>', NULL, '{2,3}', '2017-02-10 09:45:19.683374', '2017-02-10 09:45:19.683374');
-INSERT INTO lines VALUES (3, 1, 4, 'STIF:CODIFLIGNE:Line:C00163', 5, '01', '01', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00163">
+INSERT INTO lines VALUES (3, 1, 4, 'FR1:Line:C00163:', 5, '01', '01', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00163:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -93,14 +93,14 @@ INSERT INTO lines VALUES (3, 1, 4, 'STIF:CODIFLIGNE:Line:C00163', 5, '01', '01',
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>013013001</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:013"/>
+  <OperatorRef version="any" ref="FR1:Operator:013:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
     <infoLinks/>
   </Presentation>
 </Line>', NULL, NULL, '2017-02-10 09:45:25.652603', '2017-02-10 09:45:25.652603');
-INSERT INTO lines VALUES (4, 1, 4, 'STIF:CODIFLIGNE:Line:C00164', 5, '03', '03', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00164">
+INSERT INTO lines VALUES (4, 1, 4, 'FR1:Line:C00164:', 5, '03', '03', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00164:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -116,14 +116,14 @@ INSERT INTO lines VALUES (4, 1, 4, 'STIF:CODIFLIGNE:Line:C00164', 5, '03', '03',
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>013013003</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:013"/>
+  <OperatorRef version="any" ref="FR1:Operator:013:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
     <infoLinks/>
   </Presentation>
 </Line>', NULL, NULL, '2017-02-10 09:45:25.656208', '2017-02-10 09:45:25.656208');
-INSERT INTO lines VALUES (5, 1, 4, 'STIF:CODIFLIGNE:Line:C00165', 5, '04', '04', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00165">
+INSERT INTO lines VALUES (5, 1, 4, 'FR1:Line:C00165:', 5, '04', '04', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00165:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -139,14 +139,14 @@ INSERT INTO lines VALUES (5, 1, 4, 'STIF:CODIFLIGNE:Line:C00165', 5, '04', '04',
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>013013004</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:013"/>
+  <OperatorRef version="any" ref="FR1:Operator:013:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
     <infoLinks/>
   </Presentation>
 </Line>', NULL, NULL, '2017-02-10 09:45:25.659857', '2017-02-10 09:45:25.659857');
-INSERT INTO lines VALUES (6, 1, 4, 'STIF:CODIFLIGNE:Line:C00166', 5, '05', '05', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00166">
+INSERT INTO lines VALUES (6, 1, 4, 'FR1:Line:C00166:', 5, '05', '05', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00166:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -162,14 +162,14 @@ INSERT INTO lines VALUES (6, 1, 4, 'STIF:CODIFLIGNE:Line:C00166', 5, '05', '05',
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>013013005</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:013"/>
+  <OperatorRef version="any" ref="FR1:Operator:013:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
     <infoLinks/>
   </Presentation>
 </Line>', NULL, NULL, '2017-02-10 09:45:25.663423', '2017-02-10 09:45:25.663423');
-INSERT INTO lines VALUES (7, 1, 4, 'STIF:CODIFLIGNE:Line:C00168', 5, '08', '08', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00168">
+INSERT INTO lines VALUES (7, 1, 4, 'FR1:Line:C00168:', 5, '08', '08', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00168:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -185,14 +185,14 @@ INSERT INTO lines VALUES (7, 1, 4, 'STIF:CODIFLIGNE:Line:C00168', 5, '08', '08',
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>013013008</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:013"/>
+  <OperatorRef version="any" ref="FR1:Operator:013:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
     <infoLinks/>
   </Presentation>
 </Line>', NULL, NULL, '2017-02-10 09:45:25.758591', '2017-02-10 09:45:25.758591');
-INSERT INTO lines VALUES (8, 1, 4, 'STIF:CODIFLIGNE:Line:C00171', 5, '11', '11', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="STIF:CODIFLIGNE:Line:C00171">
+INSERT INTO lines VALUES (8, 1, 4, 'FR1:Line:C00171:', 5, '11', '11', NULL, 'bus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, false, '<Line version="any" created="2014-07-16T00:00:00+02:00" changed="2014-07-16T00:00:00+02:00" status="active" id="FR1:Line:C00171:">
   <keyList>
     <KeyValue>
       <!-- Ceci est l accessibilite de la ligne : 0 si false , 1 si true -->
@@ -208,7 +208,7 @@ INSERT INTO lines VALUES (8, 1, 4, 'STIF:CODIFLIGNE:Line:C00171', 5, '11', '11',
   </TransportSubmode>
   <!-- Ceci est le code technique -->
   <PrivateCode>013013011</PrivateCode>
-  <OperatorRef version="any" ref="STIF:CODIFLIGNE:Operator:013"/>
+  <OperatorRef version="any" ref="FR1:Operator:013:LOC"/>
   <!-- Type of line null ou égal à seasonal -->
   <TypeOfLineRef version="any" ref="null"/>
   <Presentation>
@@ -219,18 +219,18 @@ INSERT INTO lines VALUES (8, 1, 4, 'STIF:CODIFLIGNE:Line:C00171', 5, '11', '11',
 
 SELECT pg_catalog.setval('lines_id_seq', 8, true);
 
-INSERT INTO networks VALUES (1, 'STIF:CODIFLIGNE:PTNetwork:117', 2, NULL, NULL, 'Veolia Ecquevilly', NULL, NULL, NULL, NULL, NULL, '<Network version="any" changed="2009-12-02T00:00:00Z" id="STIF:CODIFLIGNE:PTNetwork:117">
+INSERT INTO networks VALUES (1, 'FR1:PTNetwork:117', 2, NULL, NULL, 'Veolia Ecquevilly', NULL, NULL, NULL, NULL, NULL, '<Network version="any" changed="2009-12-02T00:00:00Z" id="FR1:PTNetwork:117">
   <Name>Veolia Ecquevilly</Name>
   <members>
-    <LineRef ref="STIF:CODIFLIGNE:Line:C00108"/>
-    <LineRef ref="STIF:CODIFLIGNE:Line:C00109"/>
+    <LineRef ref="FR1:Line:C00108:"/>
+    <LineRef ref="FR1:Line:C00109:"/>
   </members>
 </Network>', 1, '2017-02-10 09:45:19.627071', NULL);
 
 SELECT pg_catalog.setval('networks_id_seq', 1, true);
 
 INSERT INTO organisations VALUES (1, 'STIF', '2017-02-10 09:37:12.285489', '2017-02-10 09:44:28.887246', 'neptune', 'STIF', '2017-02-10 09:44:28.720673', '"functional_scope"=>"[]"');
-INSERT INTO organisations VALUES (2, 'Cityway', '2017-02-10 10:05:53.212327', '2017-02-10 10:05:53.212327', 'neptune', 'CITYWAY', '2017-02-10 10:05:53.21035', '"functional_scope"=>"[\"STIF:CODIFLIGNE:Line:C00109\",\"STIF:CODIFLIGNE:Line:C00108\",\"STIF:CODIFLIGNE:Line:C00163\",\"STIF:CODIFLIGNE:Line:C00164\",\"STIF:CODIFLIGNE:Line:C00165\",\"STIF:CODIFLIGNE:Line:C00166\",\"STIF:CODIFLIGNE:Line:C00168\",\"STIF:CODIFLIGNE:Line:C00171\"]"');
+INSERT INTO organisations VALUES (2, 'Cityway', '2017-02-10 10:05:53.212327', '2017-02-10 10:05:53.212327', 'neptune', 'CITYWAY', '2017-02-10 10:05:53.21035', '"functional_scope"=>"[\"FR1:Line:C00109:\",\"FR1:Line:C00108:\",\"FR1:Line:C00163:\",\"FR1:Line:C00164:\",\"FR1:Line:C00165:\",\"FR1:Line:C00166:\",\"FR1:Line:C00168:\",\"FR1:Line:C00171:\"]"');
 
 SELECT pg_catalog.setval('organisations_id_seq', 2, true);
 
@@ -5947,9 +5947,9 @@ INSERT INTO stop_areas VALUES (155354, NULL, 'FR:78217:ZDL:50008596:STIF', 1, 'E
         <QuayRef ref="FR:78217:ZDE:50009064:STIF" version="443297"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:16:23.084787', '2017-03-23 13:16:23.084787', 'LOCAL_OBJECT');
-      
-      
--- Rambouillet  
+
+
+-- Rambouillet
 
 -- 141019
 INSERT INTO stop_areas VALUES (141019, NULL, 'FR:78517:ZDL:50111661:STIF', 1, 'RAMBOUILLET Garr Prairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="805978" created="2016-10-11T09:10:20.0Z" changed="2016-10-11T09:10:20.0Z" id="FR:78517:ZDL:50111661:STIF">
@@ -6008,7 +6008,7 @@ INSERT INTO stop_areas VALUES (93531, 141019, 'FR:78517:ZDE:50111663:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:47:52.859668', '2017-03-23 13:26:57.652355', 'LOCAL_OBJECT');
-      
+
 --       134332
 INSERT INTO stop_areas VALUES (134332, NULL, 'FR:78497:ZDL:50015326:STIF', 1, 'Feuillettes', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682396" created="2015-05-19T05:05:54.0Z" changed="2015-05-19T05:05:54.0Z" id="FR:78497:ZDL:50015326:STIF">
        <keyList>
@@ -6243,7 +6243,7 @@ INSERT INTO stop_areas VALUES (77237, 134333, 'FR:78497:ZDE:50016142:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.203986', '2017-03-23 13:19:32.918499', 'LOCAL_OBJECT');
-      
+
 -- 134333
 INSERT INTO stop_areas VALUES (77236, 134333, 'FR:78497:ZDE:50016143:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7533033868738600, 48.6760375221217000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791828" created="2015-05-19T05:05:57.0Z" changed="2016-08-23T10:08:46.0Z" id="FR:78497:ZDE:50016143:STIF">
        <keyList>
@@ -6274,7 +6274,7 @@ INSERT INTO stop_areas VALUES (77236, 134333, 'FR:78497:ZDE:50016143:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.157822', '2017-03-23 13:19:32.944519', 'LOCAL_OBJECT');
-      
+
 --       134331
 INSERT INTO stop_areas VALUES (77233, 134331, 'FR:78497:ZDE:50016138:STIF', 1, 'Cimetière', NULL, 'zdep', NULL, NULL, NULL, 1.7573635964898200, 48.6810720307394000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791831" created="2015-05-19T05:05:04.0Z" changed="2016-08-23T10:08:49.0Z" id="FR:78497:ZDE:50016138:STIF">
        <keyList>
@@ -6305,7 +6305,7 @@ INSERT INTO stop_areas VALUES (77233, 134331, 'FR:78497:ZDE:50016138:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.013935', '2017-03-23 13:19:32.816748', 'LOCAL_OBJECT');
-      
+
 -- 134330
 INSERT INTO stop_areas VALUES (77231, 134330, 'FR:78497:ZDE:50016137:STIF', 1, 'Cerisaie', NULL, 'zdep', NULL, NULL, NULL, 1.7654056052053900, 48.6766392697890000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791830" created="2015-05-19T05:05:01.0Z" changed="2016-08-23T10:08:48.0Z" id="FR:78497:ZDE:50016137:STIF">
        <keyList>
@@ -7454,7 +7454,7 @@ INSERT INTO stop_areas VALUES (77203, 134315, 'FR:78464:ZDE:50016096:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:49.646019', '2017-03-23 13:19:31.998178', 'LOCAL_OBJECT');
-      
+
 INSERT INTO stop_areas VALUES (156198, NULL, 'FR:78470:ZDL:50015308:STIF', 1, 'Les Coudraies', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682309" created="2015-05-19T05:05:14.0Z" changed="2015-05-19T05:05:14.0Z" id="FR:78470:ZDL:50015308:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -7542,7 +7542,7 @@ INSERT INTO stop_areas VALUES (77215, 134322, 'FR:78470:ZDE:50016111:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.181802', '2017-03-23 13:19:32.349285', 'LOCAL_OBJECT');
-      -- 134322 
+      -- 134322
 INSERT INTO stop_areas VALUES (77216, 134322, 'FR:78470:ZDE:50016114:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7799520175159900, 48.5781599420635000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791799" created="2015-05-19T05:05:48.0Z" changed="2016-08-23T10:08:09.0Z" id="FR:78470:ZDE:50016114:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -7572,7 +7572,7 @@ INSERT INTO stop_areas VALUES (77216, 134322, 'FR:78470:ZDE:50016114:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.226467', '2017-03-23 13:19:32.374384', 'LOCAL_OBJECT');
-      -- 
+      --
 INSERT INTO stop_areas VALUES (131457, 156198, 'FR:78470:ZDE:50016108:STIF', 1, 'Les Coudrayes', NULL, 'zdep', NULL, NULL, NULL, 1.7848618101186100, 48.5778093828306000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791804" created="2015-05-19T05:05:13.0Z" changed="2016-08-23T10:08:16.0Z" id="FR:78470:ZDE:50016108:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -8190,7 +8190,7 @@ INSERT INTO stop_areas VALUES (82959, NULL, 'FR:78030:ZDE:50015568:STIF', 1, 'Ca
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:39:56.749483', '2017-03-23 13:22:12.926767', 'LOCAL_OBJECT');
-      -- 
+      --
 INSERT INTO stop_areas VALUES (156516, NULL, 'FR:78517:ZDL:50109943:STIF', 1, 'Collège De Vivonne', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791510" created="2016-08-23T10:08:13.0Z" changed="2016-08-23T10:08:13.0Z" id="FR:78517:ZDL:50109943:STIF">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
@@ -9655,7 +9655,7 @@ INSERT INTO stop_areas VALUES (137572, NULL, 'FR:78517:ZDL:50075977:STIF', 1, 'C
       </StopPlace>', NULL, '2017-03-23 12:31:03.387835', '2017-03-23 12:31:03.387835', 'LOCAL_OBJECT');
 
 
-      
+
 SELECT pg_catalog.setval('stop_areas_id_seq', 156879, true);
 
 
