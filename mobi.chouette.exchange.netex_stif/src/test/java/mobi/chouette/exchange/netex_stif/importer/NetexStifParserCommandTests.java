@@ -107,17 +107,14 @@ public class NetexStifParserCommandTests  {
 
 	private void initLines(Context context) {
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
-		// Line line = ObjectFactory.getLine(referential,
-		// "STIF:CODIFLIGNE:Line:12234");
-		// line.setObjectId("STIF:CODIFLIGNE:Line:12234");
 		LineLite line = new LineLite();
 		line.setId(1L);
-		line.setObjectId("STIF:CODIFLIGNE:Line:C00108");
+		line.setObjectId(NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00108"));
 		referential.getSharedReadOnlyLines().put(line.getObjectId(), line);
 		context.put(Constant.LINE, line);
 		CompanyLite company = new CompanyLite();
 		company.setId(1L);
-		company.setObjectId("STIF:CODIFLIGNE:Operator:011");
+		company.setObjectId(NetexStifConstant.NETEX_OPERATOR_ID_FORMAT.replace("{ref}", "011"));
 		referential.getSharedReadOnlyCompanies().put(company.getObjectId(), company);
 		StopAreaLite quay1 = new StopAreaLite();
 		quay1.setId(18304L);
@@ -140,10 +137,10 @@ public class NetexStifParserCommandTests  {
 	@Test(groups = { "Nominal" }, description = "offre", priority = 303)
 	public void verifyOfferParser() throws Exception{
 		verifyOfferParser("calendriers.xml", "commun.xml", "offre.xml");
-		
+
 	}
 
-	
+
 	//@Test(groups = { "Nominal" }, description = "offre", priority = 3)
 	public void verifyOfferParser(String calendrier, String commun, String offre) throws Exception {
 		Context context = initImportContext();
@@ -174,32 +171,27 @@ public class NetexStifParserCommandTests  {
 		parser.execute(context);
 		log.info(report);
 		log.info(valReport.getCheckPointErrors());
-		assertRoute(referential, "CITYWAY:Route:1:LOC", "CITYWAY:Route:1:LOC", "route 1", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.A,
-				"Par ici", "CITYWAY:Route:2:LOC");
-		assertRoute(referential, "CITYWAY:Route:2:LOC", "CITYWAY:Route:2:LOC", "route 2", "STIF:CODIFLIGNE:Line:12234", PTDirectionEnum.R,
-				"Par là", "CITYWAY:Route:1:LOC");
+		assertRoute(referential, "CITYWAY:Route:1:LOC", "CITYWAY:Route:1:LOC", "route 1",  NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "12234"), PTDirectionEnum.A, "Par ici", "CITYWAY:Route:2:LOC");
+		assertRoute(referential, "CITYWAY:Route:2:LOC", "CITYWAY:Route:2:LOC", "route 2",  NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "12234"), PTDirectionEnum.R, "Par là", "CITYWAY:Route:1:LOC");
 
-		assertJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1", "1234",
-				"CITYWAY:Route:1:LOC");
-		assertJourneyPattern(referential,  "CITYWAY:ServiceJourneyPattern:2:LOC","CITYWAY:ServiceJourneyPattern:2:LOC", "Par là", "Mission 2", "2345",
-				"CITYWAY:Route:2:LOC");
-		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC","CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici",
-				"CITYWAY:ServiceJourneyPattern:1:LOC", "STIF:CODIFLIGNE:Operator:1:LOC", "1234", 1, 1);
+		assertJourneyPattern(referential, "CITYWAY:ServiceJourneyPattern:1:LOC", "CITYWAY:ServiceJourneyPattern:1:LOC", "Par ici", "Mission 1", "1234", "CITYWAY:Route:1:LOC");
+		assertJourneyPattern(referential,  "CITYWAY:ServiceJourneyPattern:2:LOC","CITYWAY:ServiceJourneyPattern:2:LOC", "Par là", "Mission 2", "2345", "CITYWAY:Route:2:LOC");
+		assertVehicleJourney(referential, "CITYWAY:ServiceJourney:1-1:LOC","CITYWAY:ServiceJourney:1-1:LOC", "Course 1 par ici","CITYWAY:ServiceJourneyPattern:1:LOC",  NetexStifConstant.NETEX_OPERATOR_ID_FORMAT.replace("{ref}", "1"), "1234", 1, 1);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:01:00.000", 0, "01:01:00.000", 0);
 		assertVehicleJourneyAtStop(referential, "CITYWAY:ServiceJourney:1-1:LOC", "01:05:00.000", 0, "01:05:00.000", 0);
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1-1-1:LOC","", 1, 18304L, "CITYWAY:Route:1:LOC");
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:1-1-2-2:LOC","", 2, 32521L, "CITYWAY:Route:1:LOC");
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2-1-1:LOC","", 1, 32522L, "CITYWAY:Route:2:LOC");
 		assertStopPoint(referential, "CITYWAY:ScheduledStopPoint:2-2-2-2:LOC","", 2, 18305L, "CITYWAY:Route:2:LOC");
-		
+
 		assertRoutingConstraint(referential, "CITYWAY:RoutingConstraintZone:1-1:LOC", "ITL 1", "route 1","");
 	}
-	
+
 	private void assertRoutingConstraint (Referential referential, String id, String name, String routeName, String stopPointsId){
 		RoutingConstraint routingConstraint = referential.getRoutingConstraints().get(id);
 		Assert.assertEquals(routingConstraint.getName(), name);
 		Assert.assertEquals(routingConstraint.getRoute().getName(), routeName);
-		
+
 	}
 
 	private void assertStopPoint(Referential referential, String id, String objectId, int position, Long quayRef, String routeId) {
@@ -341,5 +333,5 @@ public class NetexStifParserCommandTests  {
 		Assert.assertEquals(timetable.getCalendarDays().size(), dateSize, "Timetable " + id + " CalendarDay size");
 		Assert.assertEquals(timetable.getPeriods().size(), periodSize, "Timetable " + id + " period size");
 	}
-	
+
 }

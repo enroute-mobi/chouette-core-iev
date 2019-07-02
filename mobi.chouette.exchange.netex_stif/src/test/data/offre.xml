@@ -17,14 +17,14 @@
                     <netex:members>
                         <netex:Route id="CITYWAY:Route:1:LOC" version="any">
                                 <netex:Name>route 1</netex:Name>
-										  <netex:LineRef ref="STIF:CODIFLIGNE:Line:C00108">version="any"</netex:LineRef>
+										  <netex:LineRef ref="FR1:Line:C00108:">version="any"</netex:LineRef>
                                 <netex:DirectionType>outbound</netex:DirectionType>
                                 <netex:DirectionRef ref="CITYWAY:Direction:1:LOC" version="any"/>
                                 <netex:InverseRouteRef ref="CITYWAY:Route:2:LOC" version="any"/>
                             </netex:Route>
                             <netex:Route id="CITYWAY:Route:2:LOC" version="any">
                                 <netex:Name>route 2</netex:Name>
-										  <netex:LineRef ref="STIF:CODIFLIGNE:Line:C00108">version="any"</netex:LineRef>
+										  <netex:LineRef ref="FR1:Line:C00108:">version="any"</netex:LineRef>
                                 <netex:DirectionType>inbound</netex:DirectionType>
                                 <netex:DirectionRef ref="CITYWAY:Direction:2:LOC" version="any"/>
                                 <netex:InverseRouteRef ref="CITYWAY:Route:1:LOC" version="any"/>
@@ -162,7 +162,7 @@
 										  </netex:dayTypes>
                                 <netex:JourneyPatternRef ref="CITYWAY:ServiceJourneyPattern:1:LOC"
                                     version="any"/>
-										  <netex:OperatorRef ref="STIF:CODIFLIGNE:Operator:011">
+										  <netex:OperatorRef ref="FR1:Operator:011:LOC">
                                     version="any"</netex:OperatorRef>
                                 <netex:trainNumbers>
 											 <netex:TrainNumberRef ref="CITYWAY:TrainNumber:1234:LOC">version="any"</netex:TrainNumberRef>
@@ -181,7 +181,7 @@
                                         <netex:DepartureDayOffset>0</netex:DepartureDayOffset>
                                     </netex:TimetabledPassingTime>
                                 </netex:passingTimes>
-                            </netex:ServiceJourney>                    
+                            </netex:ServiceJourney>
 	                </netex:members>
                 </netex:GeneralFrame>
             </netex:frames>
