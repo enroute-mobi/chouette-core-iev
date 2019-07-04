@@ -190,7 +190,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		Assert.assertTrue(result, "new fashion operator ref ok");
 
 		type = NetexStifConstant.QUAY_REF;
-		ref = "FR:14526:ZDE:1234:STIF"; // quay ref
+		ref = "FR::Quay:1234:FR1"; // quay ref
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "old fashion operator ref ok");
 
@@ -218,7 +218,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		Assert.assertFalse(result, "new fashion operator ref");
 
 		type = NetexStifConstant.QUAY_REF;
-		ref = "FR:14526:ZDEs:1234:STIF"; // quay ref
+		ref = "FR:Quay:1234:FR1"; // quay ref
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "stop ref");
 

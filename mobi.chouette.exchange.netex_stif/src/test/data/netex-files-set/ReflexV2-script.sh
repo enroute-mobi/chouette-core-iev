@@ -6,7 +6,7 @@ for FILE in *.zip; do
   mv $FILE "$FILE.done"
   cd tempdir
   for XML in *.xml; do
-    sed -i -E 's/FR:[0-9]\+:ZDE:(\w*?):STIF/FR::Quay:\1:FR1/' $XML
+    sed -i -re 's/FR:[0-9]+:ZDE:(\w*?):STIF/FR::Quay:\1:FR1/g' $XML
   done
   zip ../$FILE *
   cd ..
