@@ -25,8 +25,8 @@ public abstract class AbstractValidator {
 	private static final String REGEX_CODIFLIGNE_PREFIX = "^[\\w-]+:";
 	private static final String REGEX_CODIFLIGNE_SUFFIX = ":[\\w-]+(:LOC|:)$";
 
-	private static final String REGEX_REFLEX_PREFIX = "^FR:[\\d]{5}:";
-	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:STIF$";
+	private static final String REGEX_REFLEX_PREFIX = "^[A-Z_]+::";
+	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:[\\w-]+$";
 
 	private static final Collection<String> CodifLigneTypes;
 	private static final Collection<String> ReflexTypes;
@@ -373,10 +373,9 @@ public abstract class AbstractValidator {
 		if (CodifLigneTypes.contains(type)) {
 			regex = REGEX_CODIFLIGNE_PREFIX + type + REGEX_CODIFLIGNE_SUFFIX;
 		} else if (ReflexTypes.contains(type)) {
-			String code = "ZDE"; // todo manage when StopPlaceRef should be checked
-			regex = REGEX_REFLEX_PREFIX + code + REGEX_REFLEX_SUFFIX;
+			regex = REGEX_REFLEX_PREFIX + type + REGEX_REFLEX_SUFFIX;
 		}
-		
+
 		boolean result = ref.matches(regex);
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();

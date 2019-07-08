@@ -249,7 +249,7 @@ INSERT INTO stop_area_referentials VALUES (1, 'Reflex', '2017-02-10 09:37:12.116
 SELECT pg_catalog.setval('stop_area_referentials_id_seq', 1, true);
 
 
-INSERT INTO stop_areas VALUES (2825, 42239, 'FR:78402:ZDE:32798:STIF', 1, 'LISERETTES', NULL, 'zder', NULL, NULL, NULL, 1.7955805718439200, 48.9523196160323000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32798" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32798:STIF">
+INSERT INTO stop_areas VALUES (2825, 42239, 'FR::Quay:32798:FR1', 1, 'LISERETTES', NULL, 'zder', NULL, NULL, NULL, 1.7955805718439200, 48.9523196160323000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32798" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32798:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -257,7 +257,7 @@ INSERT INTO stop_areas VALUES (2825, 42239, 'FR:78402:ZDE:32798:STIF', 1, 'LISER
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009396:STIF</Value>
+         <Value>FR::Quay:50009396:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -278,7 +278,7 @@ INSERT INTO stop_areas VALUES (2825, 42239, 'FR:78402:ZDE:32798:STIF', 1, 'LISER
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.828119', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (2855, 42268, 'FR:78217:ZDE:32522:STIF', 1, 'LE CHATEAU', NULL, 'zder', NULL, NULL, NULL, 1.8126173239686100, 48.9533412676803000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32522" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32522:STIF">
+INSERT INTO stop_areas VALUES (2855, 42268, 'FR::Quay:32522:FR1', 1, 'LE CHATEAU', NULL, 'zder', NULL, NULL, NULL, 1.8126173239686100, 48.9533412676803000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32522" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32522:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -286,7 +286,7 @@ INSERT INTO stop_areas VALUES (2855, 42268, 'FR:78217:ZDE:32522:STIF', 1, 'LE CH
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009053:STIF</Value>
+         <Value>FR::Quay:50009053:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -307,7 +307,7 @@ INSERT INTO stop_areas VALUES (2855, 42268, 'FR:78217:ZDE:32522:STIF', 1, 'LE CH
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.767586', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (20009, 56991, 'FR:78217:ZDE:32526:STIF', 1, 'LE FOURNEAU', NULL, 'zder', NULL, NULL, NULL, 1.8090855692680200, 48.9424962532744000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32526" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32526:STIF">
+INSERT INTO stop_areas VALUES (20009, 56991, 'FR::Quay:32526:FR1', 1, 'LE FOURNEAU', NULL, 'zder', NULL, NULL, NULL, 1.8090855692680200, 48.9424962532744000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32526" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32526:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -315,7 +315,7 @@ INSERT INTO stop_areas VALUES (20009, 56991, 'FR:78217:ZDE:32526:STIF', 1, 'LE F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009055:STIF</Value>
+         <Value>FR::Quay:50009055:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -336,7 +336,7 @@ INSERT INTO stop_areas VALUES (20009, 56991, 'FR:78217:ZDE:32526:STIF', 1, 'LE F
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.876238', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (20019, 57001, 'FR:78217:ZDE:32783:STIF', 1, 'BOIS DE L''AULNE', NULL, 'zder', NULL, NULL, NULL, 1.7942321823644500, 48.9427262657198000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32783" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32783:STIF">
+INSERT INTO stop_areas VALUES (20019, 57001, 'FR::Quay:32783:FR1', 1, 'BOIS DE L''AULNE', NULL, 'zder', NULL, NULL, NULL, 1.7942321823644500, 48.9427262657198000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32783" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32783:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -344,7 +344,7 @@ INSERT INTO stop_areas VALUES (20019, 57001, 'FR:78217:ZDE:32783:STIF', 1, 'BOIS
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009382:STIF</Value>
+         <Value>FR::Quay:50009382:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -365,7 +365,7 @@ INSERT INTO stop_areas VALUES (20019, 57001, 'FR:78217:ZDE:32783:STIF', 1, 'BOIS
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.317781', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (20056, 57033, 'FR:78217:ZDE:32516:STIF', 1, 'ALLEE DE PINCELOUP', NULL, 'zder', NULL, NULL, NULL, 1.8084105849672000, 48.9439162501291000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32516" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32516:STIF">
+INSERT INTO stop_areas VALUES (20056, 57033, 'FR::Quay:32516:FR1', 1, 'ALLEE DE PINCELOUP', NULL, 'zder', NULL, NULL, NULL, 1.8084105849672000, 48.9439162501291000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32516" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32516:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -373,7 +373,7 @@ INSERT INTO stop_areas VALUES (20056, 57033, 'FR:78217:ZDE:32516:STIF', 1, 'ALLE
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009047:STIF</Value>
+         <Value>FR::Quay:50009047:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -408,7 +408,7 @@ INSERT INTO stop_areas VALUES (56620, NULL, 'FR:78217:LDA:64800:STIF', 1, 'Broui
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 09:59:06.133825', '2017-03-23 09:59:06.133825', NULL);
-INSERT INTO stop_areas VALUES (111188, 147677, 'FR:78217:ZDE:50009035:STIF', 1, 'BOULEVARD DE BRUXELLES', NULL, 'zdep', NULL, NULL, NULL, 1.8380508823024100, 48.9703496294287000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="445780" created="2015-02-03T07:02:47.0Z" changed="2015-02-03T07:02:47.0Z" id="FR:78217:ZDE:50009035:STIF">
+INSERT INTO stop_areas VALUES (111188, 147677, 'FR::Quay:50009035:FR1', 1, 'BOULEVARD DE BRUXELLES', NULL, 'zdep', NULL, NULL, NULL, 1.8380508823024100, 48.9703496294287000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="445780" created="2015-02-03T07:02:47.0Z" changed="2015-02-03T07:02:47.0Z" id="FR::Quay:50009035:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -416,7 +416,7 @@ INSERT INTO stop_areas VALUES (111188, 147677, 'FR:78217:ZDE:50009035:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78029:ZDE:32505:STIF</Value>
+         <Value>FR::Quay:32505:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -437,7 +437,7 @@ INSERT INTO stop_areas VALUES (111188, 147677, 'FR:78217:ZDE:50009035:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:55.792631', '2017-03-23 13:35:35.2967', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111190, 147679, 'FR:78217:ZDE:50009037:STIF', 1, 'BOULEVARD DE LA PAIX', NULL, 'zdep', NULL, NULL, NULL, 1.8359592073884300, 48.9698496280250000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="445795" created="2015-02-03T07:02:56.0Z" changed="2015-02-03T07:02:56.0Z" id="FR:78217:ZDE:50009037:STIF">
+INSERT INTO stop_areas VALUES (111190, 147679, 'FR::Quay:50009037:FR1', 1, 'BOULEVARD DE LA PAIX', NULL, 'zdep', NULL, NULL, NULL, 1.8359592073884300, 48.9698496280250000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="445795" created="2015-02-03T07:02:56.0Z" changed="2015-02-03T07:02:56.0Z" id="FR::Quay:50009037:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -445,7 +445,7 @@ INSERT INTO stop_areas VALUES (111190, 147679, 'FR:78217:ZDE:50009037:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32507:STIF</Value>
+         <Value>FR::Quay:32507:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -466,7 +466,7 @@ INSERT INTO stop_areas VALUES (111190, 147679, 'FR:78217:ZDE:50009037:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:55.883458', '2017-03-23 13:35:35.339891', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111193, 147682, 'FR:78217:ZDE:50009041:STIF', 1, 'PLACE MARECHAL JUIN', NULL, 'zdep', NULL, NULL, NULL, 1.8369392348705200, 48.9715229579612000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443423" created="2015-02-03T06:02:03.0Z" changed="2015-02-03T06:02:03.0Z" id="FR:78217:ZDE:50009041:STIF">
+INSERT INTO stop_areas VALUES (111193, 147682, 'FR::Quay:50009041:FR1', 1, 'PLACE MARECHAL JUIN', NULL, 'zdep', NULL, NULL, NULL, 1.8369392348705200, 48.9715229579612000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443423" created="2015-02-03T06:02:03.0Z" changed="2015-02-03T06:02:03.0Z" id="FR::Quay:50009041:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -474,7 +474,7 @@ INSERT INTO stop_areas VALUES (111193, 147682, 'FR:78217:ZDE:50009041:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32514:STIF</Value>
+         <Value>FR::Quay:32514:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -495,7 +495,7 @@ INSERT INTO stop_areas VALUES (111193, 147682, 'FR:78217:ZDE:50009041:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.052458', '2017-03-23 13:35:35.408496', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111195, 147684, 'FR:78217:ZDE:50009042:STIF', 1, 'LES DOLMENS', NULL, 'zdep', NULL, NULL, NULL, 1.8328142105013700, 48.9702879694420000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443388" created="2015-02-03T06:02:55.0Z" changed="2015-02-03T06:02:55.0Z" id="FR:78217:ZDE:50009042:STIF">
+INSERT INTO stop_areas VALUES (111195, 147684, 'FR::Quay:50009042:FR1', 1, 'LES DOLMENS', NULL, 'zdep', NULL, NULL, NULL, 1.8328142105013700, 48.9702879694420000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443388" created="2015-02-03T06:02:55.0Z" changed="2015-02-03T06:02:55.0Z" id="FR::Quay:50009042:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -503,7 +503,7 @@ INSERT INTO stop_areas VALUES (111195, 147684, 'FR:78217:ZDE:50009042:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32510:STIF</Value>
+         <Value>FR::Quay:32510:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -524,7 +524,7 @@ INSERT INTO stop_areas VALUES (111195, 147684, 'FR:78217:ZDE:50009042:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.1419', '2017-03-23 13:35:35.453903', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111202, 147690, 'FR:78217:ZDE:50009047:STIF', 1, 'ALLEE DE PINCELOUP', NULL, 'zdep', NULL, NULL, NULL, 1.8084105849672000, 48.9439162501291000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443367" created="2015-02-03T06:02:50.0Z" changed="2015-02-03T06:02:50.0Z" id="FR:78217:ZDE:50009047:STIF">
+INSERT INTO stop_areas VALUES (111202, 147690, 'FR::Quay:50009047:FR1', 1, 'ALLEE DE PINCELOUP', NULL, 'zdep', NULL, NULL, NULL, 1.8084105849672000, 48.9439162501291000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443367" created="2015-02-03T06:02:50.0Z" changed="2015-02-03T06:02:50.0Z" id="FR::Quay:50009047:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -532,7 +532,7 @@ INSERT INTO stop_areas VALUES (111202, 147690, 'FR:78217:ZDE:50009047:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32516:STIF</Value>
+         <Value>FR::Quay:32516:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -553,7 +553,7 @@ INSERT INTO stop_areas VALUES (111202, 147690, 'FR:78217:ZDE:50009047:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.497986', '2017-03-23 13:35:35.643903', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111204, 147691, 'FR:78217:ZDE:50009049:STIF', 1, 'AVENUE DE LA GARE', NULL, 'zdep', NULL, NULL, NULL, 1.8076239920404600, 48.9580212851215000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443374" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR:78217:ZDE:50009049:STIF">
+INSERT INTO stop_areas VALUES (111204, 147691, 'FR::Quay:50009049:FR1', 1, 'AVENUE DE LA GARE', NULL, 'zdep', NULL, NULL, NULL, 1.8076239920404600, 48.9580212851215000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443374" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR::Quay:50009049:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -561,7 +561,7 @@ INSERT INTO stop_areas VALUES (111204, 147691, 'FR:78217:ZDE:50009049:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32518:STIF</Value>
+         <Value>FR::Quay:32518:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -582,7 +582,7 @@ INSERT INTO stop_areas VALUES (111204, 147691, 'FR:78217:ZDE:50009049:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.598028', '2017-03-23 13:35:35.701831', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111205, 147692, 'FR:78217:ZDE:50009050:STIF', 1, 'CARREFOUR ST MARTIN', NULL, 'zdep', NULL, NULL, NULL, 1.8195940225965100, 48.9537812663945000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443380" created="2015-02-03T06:02:53.0Z" changed="2015-02-03T06:02:53.0Z" id="FR:78217:ZDE:50009050:STIF">
+INSERT INTO stop_areas VALUES (111205, 147692, 'FR::Quay:50009050:FR1', 1, 'CARREFOUR ST MARTIN', NULL, 'zdep', NULL, NULL, NULL, 1.8195940225965100, 48.9537812663945000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443380" created="2015-02-03T06:02:53.0Z" changed="2015-02-03T06:02:53.0Z" id="FR::Quay:50009050:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -590,7 +590,7 @@ INSERT INTO stop_areas VALUES (111205, 147692, 'FR:78217:ZDE:50009050:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32519:STIF</Value>
+         <Value>FR::Quay:32519:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -611,7 +611,7 @@ INSERT INTO stop_areas VALUES (111205, 147692, 'FR:78217:ZDE:50009050:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.653088', '2017-03-23 13:35:35.733846', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111207, 147693, 'FR:78217:ZDE:50009052:STIF', 1, 'LE CHATEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8133756580597400, 48.9533662680704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443339" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR:78217:ZDE:50009052:STIF">
+INSERT INTO stop_areas VALUES (111207, 147693, 'FR::Quay:50009052:FR1', 1, 'LE CHATEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8133756580597400, 48.9533662680704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443339" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR::Quay:50009052:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -619,7 +619,7 @@ INSERT INTO stop_areas VALUES (111207, 147693, 'FR:78217:ZDE:50009052:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32521:STIF</Value>
+         <Value>FR::Quay:32521:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -640,7 +640,7 @@ INSERT INTO stop_areas VALUES (111207, 147693, 'FR:78217:ZDE:50009052:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.753004', '2017-03-23 13:35:35.810086', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111209, 147694, 'FR:78217:ZDE:50009054:STIF', 1, 'CHEMIN NEUF', NULL, 'zdep', NULL, NULL, NULL, 1.8162940080552900, 48.9524979333468000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443347" created="2015-02-03T06:02:45.0Z" changed="2015-02-03T06:02:45.0Z" id="FR:78217:ZDE:50009054:STIF">
+INSERT INTO stop_areas VALUES (111209, 147694, 'FR::Quay:50009054:FR1', 1, 'CHEMIN NEUF', NULL, 'zdep', NULL, NULL, NULL, 1.8162940080552900, 48.9524979333468000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443347" created="2015-02-03T06:02:45.0Z" changed="2015-02-03T06:02:45.0Z" id="FR::Quay:50009054:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -648,7 +648,7 @@ INSERT INTO stop_areas VALUES (111209, 147694, 'FR:78217:ZDE:50009054:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32523:STIF</Value>
+         <Value>FR::Quay:32523:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -669,7 +669,7 @@ INSERT INTO stop_areas VALUES (111209, 147694, 'FR:78217:ZDE:50009054:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.864881', '2017-03-23 13:35:35.864709', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111211, 147696, 'FR:78217:ZDE:50009057:STIF', 1, 'LA FALAISE', NULL, 'zdep', NULL, NULL, NULL, 1.8215623766055400, 48.9563379378776000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443318" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR:78217:ZDE:50009057:STIF">
+INSERT INTO stop_areas VALUES (111211, 147696, 'FR::Quay:50009057:FR1', 1, 'LA FALAISE', NULL, 'zdep', NULL, NULL, NULL, 1.8215623766055400, 48.9563379378776000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443318" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR::Quay:50009057:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -677,7 +677,7 @@ INSERT INTO stop_areas VALUES (111211, 147696, 'FR:78217:ZDE:50009057:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32527:STIF</Value>
+         <Value>FR::Quay:32527:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -698,7 +698,7 @@ INSERT INTO stop_areas VALUES (111211, 147696, 'FR:78217:ZDE:50009057:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.964578', '2017-03-23 13:35:35.921707', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111213, 147697, 'FR:78217:ZDE:50009059:STIF', 1, 'LES BICHES', NULL, 'zdep', NULL, NULL, NULL, 1.8118139867675400, 48.9526329360882000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443313" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR:78217:ZDE:50009059:STIF">
+INSERT INTO stop_areas VALUES (111213, 147697, 'FR::Quay:50009059:FR1', 1, 'LES BICHES', NULL, 'zdep', NULL, NULL, NULL, 1.8118139867675400, 48.9526329360882000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443313" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR::Quay:50009059:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -706,7 +706,7 @@ INSERT INTO stop_areas VALUES (111213, 147697, 'FR:78217:ZDE:50009059:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32529:STIF</Value>
+         <Value>FR::Quay:32529:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -727,7 +727,7 @@ INSERT INTO stop_areas VALUES (111213, 147697, 'FR:78217:ZDE:50009059:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:57.052144', '2017-03-23 13:35:35.966082', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111216, 147699, 'FR:78217:ZDE:50009065:STIF', 1, 'POTEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8300191010731300, 48.9566546048684000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443287" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR:78217:ZDE:50009065:STIF">
+INSERT INTO stop_areas VALUES (111216, 147699, 'FR::Quay:50009065:FR1', 1, 'POTEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8300191010731300, 48.9566546048684000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443287" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR::Quay:50009065:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -735,7 +735,7 @@ INSERT INTO stop_areas VALUES (111216, 147699, 'FR:78217:ZDE:50009065:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32533:STIF</Value>
+         <Value>FR::Quay:32533:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -756,7 +756,7 @@ INSERT INTO stop_areas VALUES (111216, 147699, 'FR:78217:ZDE:50009065:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:57.229441', '2017-03-23 13:35:36.021402', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111215, 147699, 'FR:78217:ZDE:50009066:STIF', 1, 'POTEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8301257677224300, 48.9567112696982000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443289" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR:78217:ZDE:50009066:STIF">
+INSERT INTO stop_areas VALUES (111215, 147699, 'FR::Quay:50009066:FR1', 1, 'POTEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8301257677224300, 48.9567112696982000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443289" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR::Quay:50009066:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -764,7 +764,7 @@ INSERT INTO stop_areas VALUES (111215, 147699, 'FR:78217:ZDE:50009066:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32532:STIF</Value>
+         <Value>FR::Quay:32532:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -785,7 +785,7 @@ INSERT INTO stop_areas VALUES (111215, 147699, 'FR:78217:ZDE:50009066:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:57.172239', '2017-03-23 13:35:36.035501', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (26194, 62311, 'FR:78402:ZDE:32790:STIF', 1, 'CHAUFFOUR', NULL, 'zder', NULL, NULL, NULL, 1.7987106032497500, 48.9544312871310000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32790" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32790:STIF">
+INSERT INTO stop_areas VALUES (26194, 62311, 'FR::Quay:32790:FR1', 1, 'CHAUFFOUR', NULL, 'zder', NULL, NULL, NULL, 1.7987106032497500, 48.9544312871310000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32790" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32790:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -793,7 +793,7 @@ INSERT INTO stop_areas VALUES (26194, 62311, 'FR:78402:ZDE:32790:STIF', 1, 'CHAU
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009390:STIF</Value>
+         <Value>FR::Quay:50009390:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -814,7 +814,7 @@ INSERT INTO stop_areas VALUES (26194, 62311, 'FR:78402:ZDE:32790:STIF', 1, 'CHAU
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.550948', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26241, 62360, 'FR:78217:ZDE:32528:STIF', 1, 'LA FALAISE', NULL, 'zder', NULL, NULL, NULL, 1.8215273921141900, 48.9563896027813000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32528" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32528:STIF">
+INSERT INTO stop_areas VALUES (26241, 62360, 'FR::Quay:32528:FR1', 1, 'LA FALAISE', NULL, 'zder', NULL, NULL, NULL, 1.8215273921141900, 48.9563896027813000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32528" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32528:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -822,7 +822,7 @@ INSERT INTO stop_areas VALUES (26241, 62360, 'FR:78217:ZDE:32528:STIF', 1, 'LA F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009058:STIF</Value>
+         <Value>FR::Quay:50009058:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -843,7 +843,7 @@ INSERT INTO stop_areas VALUES (26241, 62360, 'FR:78217:ZDE:32528:STIF', 1, 'LA F
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.974587', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26263, 62386, 'FR:78217:ZDE:32530:STIF', 1, 'Mairie', NULL, 'zder', NULL, NULL, NULL, 1.8116042808075700, 48.9572862999147000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819294" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:55.0Z" id="FR:78217:ZDE:32530:STIF">
+INSERT INTO stop_areas VALUES (26263, 62386, 'FR::Quay:32530:FR1', 1, 'Mairie', NULL, 'zder', NULL, NULL, NULL, 1.8116042808075700, 48.9572862999147000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819294" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:55.0Z" id="FR::Quay:32530:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -851,11 +851,11 @@ INSERT INTO stop_areas VALUES (26263, 62386, 'FR:78217:ZDE:32530:STIF', 1, 'Mair
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009061:STIF</Value>
+         <Value>FR::Quay:50009061:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50000881:STIF</Value>
+         <Value>FR::Quay:50000881:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -880,7 +880,7 @@ INSERT INTO stop_areas VALUES (26263, 62386, 'FR:78217:ZDE:32530:STIF', 1, 'Mair
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:10:16.581352', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26351, 62468, 'FR:78402:ZDE:13657:STIF', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8007240306059900, 48.9596196742322000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="795044" created="2014-12-29T03:12:51.0Z" changed="2016-08-29T10:08:40.0Z" id="FR:78402:ZDE:13657:STIF">
+INSERT INTO stop_areas VALUES (26351, 62468, 'FR::Quay:13657:FR1', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8007240306059900, 48.9596196742322000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="795044" created="2014-12-29T03:12:51.0Z" changed="2016-08-29T10:08:40.0Z" id="FR::Quay:13657:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -888,11 +888,11 @@ INSERT INTO stop_areas VALUES (26351, 62468, 'FR:78402:ZDE:13657:STIF', 1, 'Lib�
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50000917:STIF</Value>
+         <Value>FR::Quay:50000917:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009229:STIF</Value>
+         <Value>FR::Quay:50009229:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -917,7 +917,7 @@ INSERT INTO stop_areas VALUES (26351, 62468, 'FR:78402:ZDE:13657:STIF', 1, 'Lib�
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:50:48.818913', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111382, 147800, 'FR:78402:ZDE:50009383:STIF', 1, 'BOIS DE L''AULNE', NULL, 'zdep', NULL, NULL, NULL, 1.7941171745678400, 48.9425629280426000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444528" created="2015-02-03T06:02:27.0Z" changed="2015-02-03T06:02:27.0Z" id="FR:78402:ZDE:50009383:STIF">
+INSERT INTO stop_areas VALUES (111382, 147800, 'FR::Quay:50009383:FR1', 1, 'BOIS DE L''AULNE', NULL, 'zdep', NULL, NULL, NULL, 1.7941171745678400, 48.9425629280426000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444528" created="2015-02-03T06:02:27.0Z" changed="2015-02-03T06:02:27.0Z" id="FR::Quay:50009383:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -925,7 +925,7 @@ INSERT INTO stop_areas VALUES (111382, 147800, 'FR:78402:ZDE:50009383:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32782:STIF</Value>
+         <Value>FR::Quay:32782:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -946,7 +946,7 @@ INSERT INTO stop_areas VALUES (111382, 147800, 'FR:78402:ZDE:50009383:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.295077', '2017-03-23 13:35:40.508681', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111384, 147801, 'FR:78217:ZDE:50009384:STIF', 1, 'BROUILLARD', NULL, 'zdep', NULL, NULL, NULL, 1.7875870622303600, 48.9263228997569000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444534" created="2015-02-03T06:02:30.0Z" changed="2015-02-03T06:02:30.0Z" id="FR:78217:ZDE:50009384:STIF">
+INSERT INTO stop_areas VALUES (111384, 147801, 'FR::Quay:50009384:FR1', 1, 'BROUILLARD', NULL, 'zdep', NULL, NULL, NULL, 1.7875870622303600, 48.9263228997569000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444534" created="2015-02-03T06:02:30.0Z" changed="2015-02-03T06:02:30.0Z" id="FR::Quay:50009384:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -954,7 +954,7 @@ INSERT INTO stop_areas VALUES (111384, 147801, 'FR:78217:ZDE:50009384:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32784:STIF</Value>
+         <Value>FR::Quay:32784:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -975,7 +975,7 @@ INSERT INTO stop_areas VALUES (111384, 147801, 'FR:78217:ZDE:50009384:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.401813', '2017-03-23 13:35:40.538829', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111386, 147802, 'FR:78402:ZDE:50009388:STIF', 1, 'PLACE CDT GRIMBLOT', NULL, 'zdep', NULL, NULL, NULL, 1.7949872805994600, 48.9607563019472000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444550" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR:78402:ZDE:50009388:STIF">
+INSERT INTO stop_areas VALUES (111386, 147802, 'FR::Quay:50009388:FR1', 1, 'PLACE CDT GRIMBLOT', NULL, 'zdep', NULL, NULL, NULL, 1.7949872805994600, 48.9607563019472000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444550" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR::Quay:50009388:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -983,7 +983,7 @@ INSERT INTO stop_areas VALUES (111386, 147802, 'FR:78402:ZDE:50009388:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32788:STIF</Value>
+         <Value>FR::Quay:32788:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1004,7 +1004,7 @@ INSERT INTO stop_areas VALUES (111386, 147802, 'FR:78402:ZDE:50009388:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.493125', '2017-03-23 13:35:40.59622', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111388, 147803, 'FR:78402:ZDE:50009390:STIF', 1, 'CHAUFFOUR', NULL, 'zdep', NULL, NULL, NULL, 1.7987106032497500, 48.9544312871310000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444557" created="2015-02-03T06:02:39.0Z" changed="2015-02-03T06:02:39.0Z" id="FR:78402:ZDE:50009390:STIF">
+INSERT INTO stop_areas VALUES (111388, 147803, 'FR::Quay:50009390:FR1', 1, 'CHAUFFOUR', NULL, 'zdep', NULL, NULL, NULL, 1.7987106032497500, 48.9544312871310000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444557" created="2015-02-03T06:02:39.0Z" changed="2015-02-03T06:02:39.0Z" id="FR::Quay:50009390:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1012,7 +1012,7 @@ INSERT INTO stop_areas VALUES (111388, 147803, 'FR:78402:ZDE:50009390:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32790:STIF</Value>
+         <Value>FR::Quay:32790:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1033,7 +1033,7 @@ INSERT INTO stop_areas VALUES (111388, 147803, 'FR:78402:ZDE:50009390:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.582791', '2017-03-23 13:35:40.687607', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111390, 147804, 'FR:78402:ZDE:50009392:STIF', 1, 'CHEMIN DE L''EPINE', NULL, 'zdep', NULL, NULL, NULL, 1.7937005476704400, 48.9498796149550000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444565" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR:78402:ZDE:50009392:STIF">
+INSERT INTO stop_areas VALUES (111390, 147804, 'FR::Quay:50009392:FR1', 1, 'CHEMIN DE L''EPINE', NULL, 'zdep', NULL, NULL, NULL, 1.7937005476704400, 48.9498796149550000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444565" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR::Quay:50009392:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1041,7 +1041,7 @@ INSERT INTO stop_areas VALUES (111390, 147804, 'FR:78402:ZDE:50009392:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32792:STIF</Value>
+         <Value>FR::Quay:32792:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1062,7 +1062,7 @@ INSERT INTO stop_areas VALUES (111390, 147804, 'FR:78402:ZDE:50009392:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.670781', '2017-03-23 13:35:40.74287', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111391, 147805, 'FR:78402:ZDE:50009393:STIF', 1, 'FONTAINE', NULL, 'zdep', NULL, NULL, NULL, 1.7892689237877700, 48.9609196302789000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444571" created="2015-02-03T06:02:45.0Z" changed="2015-02-03T06:02:45.0Z" id="FR:78402:ZDE:50009393:STIF">
+INSERT INTO stop_areas VALUES (111391, 147805, 'FR::Quay:50009393:FR1', 1, 'FONTAINE', NULL, 'zdep', NULL, NULL, NULL, 1.7892689237877700, 48.9609196302789000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444571" created="2015-02-03T06:02:45.0Z" changed="2015-02-03T06:02:45.0Z" id="FR::Quay:50009393:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1070,7 +1070,7 @@ INSERT INTO stop_areas VALUES (111391, 147805, 'FR:78402:ZDE:50009393:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32793:STIF</Value>
+         <Value>FR::Quay:32793:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1091,7 +1091,7 @@ INSERT INTO stop_areas VALUES (111391, 147805, 'FR:78402:ZDE:50009393:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.714276', '2017-03-23 13:35:40.790418', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111392, 147806, 'FR:78402:ZDE:50009394:STIF', 1, 'LA VILLENEUVE', NULL, 'zdep', NULL, NULL, NULL, 1.7938288733818300, 48.9474412752481000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444578" created="2015-02-03T06:02:48.0Z" changed="2015-02-03T06:02:48.0Z" id="FR:78402:ZDE:50009394:STIF">
+INSERT INTO stop_areas VALUES (111392, 147806, 'FR::Quay:50009394:FR1', 1, 'LA VILLENEUVE', NULL, 'zdep', NULL, NULL, NULL, 1.7938288733818300, 48.9474412752481000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444578" created="2015-02-03T06:02:48.0Z" changed="2015-02-03T06:02:48.0Z" id="FR::Quay:50009394:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1099,7 +1099,7 @@ INSERT INTO stop_areas VALUES (111392, 147806, 'FR:78402:ZDE:50009394:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32794:STIF</Value>
+         <Value>FR::Quay:32794:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1120,7 +1120,7 @@ INSERT INTO stop_areas VALUES (111392, 147806, 'FR:78402:ZDE:50009394:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.760859', '2017-03-23 13:35:40.853904', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111395, 147807, 'FR:78402:ZDE:50009397:STIF', 1, 'LISERETTES', NULL, 'zdep', NULL, NULL, NULL, 1.7955739011500000, 48.9522762814456000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444584" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR:78402:ZDE:50009397:STIF">
+INSERT INTO stop_areas VALUES (111395, 147807, 'FR::Quay:50009397:FR1', 1, 'LISERETTES', NULL, 'zdep', NULL, NULL, NULL, 1.7955739011500000, 48.9522762814456000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444584" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR::Quay:50009397:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1128,7 +1128,7 @@ INSERT INTO stop_areas VALUES (111395, 147807, 'FR:78402:ZDE:50009397:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32799:STIF</Value>
+         <Value>FR::Quay:32799:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1149,7 +1149,7 @@ INSERT INTO stop_areas VALUES (111395, 147807, 'FR:78402:ZDE:50009397:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.90421', '2017-03-23 13:35:40.906764', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (50870, 66829, 'FR:78217:ZDE:35752:STIF', 1, 'Gare d''Epône', NULL, 'zder', NULL, NULL, NULL, 1.8086383194034700, 48.9626079268849000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="806125" created="2014-12-29T12:12:00.0Z" changed="2016-10-12T10:10:03.0Z" id="FR:78217:ZDE:35752:STIF">
+INSERT INTO stop_areas VALUES (50870, 66829, 'FR::Quay:35752:FR1', 1, 'Gare d''Epône', NULL, 'zder', NULL, NULL, NULL, 1.8086383194034700, 48.9626079268849000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="806125" created="2014-12-29T12:12:00.0Z" changed="2016-10-12T10:10:03.0Z" id="FR::Quay:35752:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1157,7 +1157,7 @@ INSERT INTO stop_areas VALUES (50870, 66829, 'FR:78217:ZDE:35752:STIF', 1, 'Gare
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50010057:STIF</Value>
+         <Value>FR::Quay:50010057:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1178,7 +1178,7 @@ INSERT INTO stop_areas VALUES (50870, 66829, 'FR:78217:ZDE:35752:STIF', 1, 'Gare
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:49:03.442182', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31692, 66969, 'FR:78217:ZDE:32509:STIF', 1, 'BOUT DU MONDE', NULL, 'zder', NULL, NULL, NULL, 1.8298075100030400, 48.9683646251586000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32509" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32509:STIF">
+INSERT INTO stop_areas VALUES (31692, 66969, 'FR::Quay:32509:FR1', 1, 'BOUT DU MONDE', NULL, 'zder', NULL, NULL, NULL, 1.8298075100030400, 48.9683646251586000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32509" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32509:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1186,7 +1186,7 @@ INSERT INTO stop_areas VALUES (31692, 66969, 'FR:78217:ZDE:32509:STIF', 1, 'BOUT
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009040:STIF</Value>
+         <Value>FR::Quay:50009040:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1207,7 +1207,7 @@ INSERT INTO stop_areas VALUES (31692, 66969, 'FR:78217:ZDE:32509:STIF', 1, 'BOUT
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:55.977016', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (42267, 42266, 'FR:78217:ZDL:53998:STIF', 1, 'Les Biches', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53998" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53998:STIF">
+INSERT INTO stop_areas VALUES (42267, 42266, 'FR::Quay:53998:FR1', 1, 'Les Biches', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53998" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53998:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1215,7 +1215,7 @@ INSERT INTO stop_areas VALUES (42267, 42266, 'FR:78217:ZDL:53998:STIF', 1, 'Les 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008593:STIF</Value>
+         <Value>FR::Quay:50008593:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Les Biches</Name>
@@ -1231,10 +1231,10 @@ INSERT INTO stop_areas VALUES (42267, 42266, 'FR:78217:ZDL:53998:STIF', 1, 'Les 
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32529:STIF" version="32529"/>
+        <QuayRef ref="FR::Quay:32529:FR1" version="32529"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.986448', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (42239, 42238, 'FR:78402:ZDL:54103:STIF', 1, 'Liserettes', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54103" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:54103:STIF">
+INSERT INTO stop_areas VALUES (42239, 42238, 'FR::Quay:54103:FR1', 1, 'Liserettes', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54103" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54103:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1242,7 +1242,7 @@ INSERT INTO stop_areas VALUES (42239, 42238, 'FR:78402:ZDL:54103:STIF', 1, 'Lise
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50008794:STIF</Value>
+         <Value>FR::Quay:50008794:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Liserettes</Name>
@@ -1258,11 +1258,11 @@ INSERT INTO stop_areas VALUES (42239, 42238, 'FR:78402:ZDL:54103:STIF', 1, 'Lise
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32798:STIF" version="32798"/>
-        <QuayRef ref="FR:78402:ZDE:32799:STIF" version="32799"/>
+        <QuayRef ref="FR::Quay:32798:FR1" version="32798"/>
+        <QuayRef ref="FR::Quay:32799:FR1" version="32799"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.609905', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (42268, 42266, 'FR:78217:ZDL:53994:STIF', 1, 'Le Château', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53994" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53994:STIF">
+INSERT INTO stop_areas VALUES (42268, 42266, 'FR::Quay:53994:FR1', 1, 'Le Château', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53994" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53994:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1270,7 +1270,7 @@ INSERT INTO stop_areas VALUES (42268, 42266, 'FR:78217:ZDL:53994:STIF', 1, 'Le C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008588:STIF</Value>
+         <Value>FR::Quay:50008588:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Le Château</Name>
@@ -1286,11 +1286,11 @@ INSERT INTO stop_areas VALUES (42268, 42266, 'FR:78217:ZDL:53994:STIF', 1, 'Le C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32521:STIF" version="32521"/>
-        <QuayRef ref="FR:78217:ZDE:32522:STIF" version="32522"/>
+        <QuayRef ref="FR::Quay:32521:FR1" version="32521"/>
+        <QuayRef ref="FR::Quay:32522:FR1" version="32522"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.775742', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (62288, 62287, 'FR:78217:ZDL:53993:STIF', 1, 'Carrefour Saint Martin', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53993" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53993:STIF">
+INSERT INTO stop_areas VALUES (62288, 62287, 'FR::Quay:53993:FR1', 1, 'Carrefour Saint Martin', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53993" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53993:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1298,7 +1298,7 @@ INSERT INTO stop_areas VALUES (62288, 62287, 'FR:78217:ZDL:53993:STIF', 1, 'Carr
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008587:STIF</Value>
+         <Value>FR::Quay:50008587:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Carrefour Saint Martin</Name>
@@ -1314,11 +1314,11 @@ INSERT INTO stop_areas VALUES (62288, 62287, 'FR:78217:ZDL:53993:STIF', 1, 'Carr
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32519:STIF" version="32519"/>
-        <QuayRef ref="FR:78217:ZDE:32520:STIF" version="32520"/>
+        <QuayRef ref="FR::Quay:32519:FR1" version="32519"/>
+        <QuayRef ref="FR::Quay:32520:FR1" version="32520"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.730427', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (62366, 62365, 'FR:78217:ZDL:54000:STIF', 1, 'Poteau', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="54000" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:54000:STIF">
+INSERT INTO stop_areas VALUES (62366, 62365, 'FR::Quay:54000:FR1', 1, 'Poteau', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="54000" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54000:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1326,7 +1326,7 @@ INSERT INTO stop_areas VALUES (62366, 62365, 'FR:78217:ZDL:54000:STIF', 1, 'Pote
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008597:STIF</Value>
+         <Value>FR::Quay:50008597:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Poteau</Name>
@@ -1342,11 +1342,11 @@ INSERT INTO stop_areas VALUES (62366, 62365, 'FR:78217:ZDL:54000:STIF', 1, 'Pote
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32532:STIF" version="32532"/>
-        <QuayRef ref="FR:78217:ZDE:32533:STIF" version="32533"/>
+        <QuayRef ref="FR::Quay:32532:FR1" version="32532"/>
+        <QuayRef ref="FR::Quay:32533:FR1" version="32533"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:24.100334', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (62386, 62385, 'FR:78217:ZDL:43983:STIF', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="43983" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:43983:STIF">
+INSERT INTO stop_areas VALUES (62386, 62385, 'FR::Quay:43983:FR1', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="43983" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:43983:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1354,11 +1354,11 @@ INSERT INTO stop_areas VALUES (62386, 62385, 'FR:78217:ZDL:43983:STIF', 1, 'Mair
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50000635:STIF</Value>
+         <Value>FR::Quay:50000635:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008594:STIF</Value>
+         <Value>FR::Quay:50008594:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -1374,11 +1374,11 @@ INSERT INTO stop_areas VALUES (62386, 62385, 'FR:78217:ZDL:43983:STIF', 1, 'Mair
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:13660:STIF" version="819300"/>
-        <QuayRef ref="FR:78217:ZDE:32530:STIF" version="819294"/>
+        <QuayRef ref="FR::Quay:13660:FR1" version="819300"/>
+        <QuayRef ref="FR::Quay:32530:FR1" version="819294"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:11:32.338497', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (62495, 62494, 'FR:78402:ZDL:54098:STIF', 1, 'Place Commandant Grimblot', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54098" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:54098:STIF">
+INSERT INTO stop_areas VALUES (62495, 62494, 'FR::Quay:54098:FR1', 1, 'Place Commandant Grimblot', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54098" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54098:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1386,7 +1386,7 @@ INSERT INTO stop_areas VALUES (62495, 62494, 'FR:78402:ZDL:54098:STIF', 1, 'Plac
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50008789:STIF</Value>
+         <Value>FR::Quay:50008789:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Place Commandant Grimblot</Name>
@@ -1402,7 +1402,7 @@ INSERT INTO stop_areas VALUES (62495, 62494, 'FR:78402:ZDL:54098:STIF', 1, 'Plac
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32788:STIF" version="32788"/>
+        <QuayRef ref="FR::Quay:32788:FR1" version="32788"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.376452', 'REFERENCE_OBJECT');
 INSERT INTO stop_areas VALUES (56712, NULL, 'FR:78217:LDA:64848:STIF', 1, 'Canada', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="64848" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:64848:STIF">
@@ -1433,7 +1433,7 @@ INSERT INTO stop_areas VALUES (56990, NULL, 'FR:78217:LDA:64996:STIF', 1, 'Le Fo
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 09:59:22.072541', '2017-03-23 09:59:22.072541', NULL);
-INSERT INTO stop_areas VALUES (56991, 56990, 'FR:78217:ZDL:53996:STIF', 1, 'Le Fourneau', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53996" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53996:STIF">
+INSERT INTO stop_areas VALUES (56991, 56990, 'FR::Quay:53996:FR1', 1, 'Le Fourneau', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53996" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53996:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1441,7 +1441,7 @@ INSERT INTO stop_areas VALUES (56991, 56990, 'FR:78217:ZDL:53996:STIF', 1, 'Le F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008590:STIF</Value>
+         <Value>FR::Quay:50008590:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Le Fourneau</Name>
@@ -1457,7 +1457,7 @@ INSERT INTO stop_areas VALUES (56991, 56990, 'FR:78217:ZDL:53996:STIF', 1, 'Le F
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32526:STIF" version="32526"/>
+        <QuayRef ref="FR::Quay:32526:FR1" version="32526"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.879337', 'REFERENCE_OBJECT');
 INSERT INTO stop_areas VALUES (57000, NULL, 'FR:78217:LDA:65001:STIF', 1, 'Bois de l''Aulnz', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65001" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65001:STIF">
@@ -1488,7 +1488,7 @@ INSERT INTO stop_areas VALUES (57032, NULL, 'FR:78217:LDA:65017:STIF', 1, 'Allé
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 09:59:23.80477', '2017-03-23 09:59:23.80477', NULL);
-INSERT INTO stop_areas VALUES (57033, 57032, 'FR:78217:ZDL:53991:STIF', 1, 'Allée de Pinceloup', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53991" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53991:STIF">
+INSERT INTO stop_areas VALUES (57033, 57032, 'FR::Quay:53991:FR1', 1, 'Allée de Pinceloup', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53991" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53991:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1496,7 +1496,7 @@ INSERT INTO stop_areas VALUES (57033, 57032, 'FR:78217:ZDL:53991:STIF', 1, 'All�
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008585:STIF</Value>
+         <Value>FR::Quay:50008585:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Allée de Pinceloup</Name>
@@ -1512,10 +1512,10 @@ INSERT INTO stop_areas VALUES (57033, 57032, 'FR:78217:ZDL:53991:STIF', 1, 'All�
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32516:STIF" version="32516"/>
+        <QuayRef ref="FR::Quay:32516:FR1" version="32516"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.631311', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (71575, 71574, 'FR:78217:ZDL:420191:STIF', 1, 'Emile Sergent', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="729345" created="2015-10-07T04:10:59.0Z" changed="2015-10-07T04:10:59.0Z" id="FR:78217:ZDL:420191:STIF">
+INSERT INTO stop_areas VALUES (71575, 71574, 'FR::Quay:420191:FR1', 1, 'Emile Sergent', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="729345" created="2015-10-07T04:10:59.0Z" changed="2015-10-07T04:10:59.0Z" id="FR::Quay:420191:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1523,7 +1523,7 @@ INSERT INTO stop_areas VALUES (71575, 71574, 'FR:78217:ZDL:420191:STIF', 1, 'Emi
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008596:STIF</Value>
+         <Value>FR::Quay:50008596:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Emile Sergent</Name>
@@ -1539,11 +1539,11 @@ INSERT INTO stop_areas VALUES (71575, 71574, 'FR:78217:ZDL:420191:STIF', 1, 'Emi
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32525:STIF" version="32525"/>
-        <QuayRef ref="FR:78217:ZDE:32524:STIF" version="729344"/>
+        <QuayRef ref="FR::Quay:32525:FR1" version="32525"/>
+        <QuayRef ref="FR::Quay:32524:FR1" version="729344"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:16:23.046721', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (94846, 141689, 'FR:78217:ZDE:50010057:STIF', 1, 'Gare d''Epône', NULL, 'zdep', NULL, NULL, NULL, 1.8086385749719200, 48.9626063106196000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805429" created="2015-03-26T09:03:28.0Z" changed="2016-10-11T09:10:03.0Z" id="FR:78217:ZDE:50010057:STIF">
+INSERT INTO stop_areas VALUES (94846, 141689, 'FR::Quay:50010057:FR1', 1, 'Gare d''Epône', NULL, 'zdep', NULL, NULL, NULL, 1.8086385749719200, 48.9626063106196000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805429" created="2015-03-26T09:03:28.0Z" changed="2016-10-11T09:10:03.0Z" id="FR::Quay:50010057:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1551,7 +1551,7 @@ INSERT INTO stop_areas VALUES (94846, 141689, 'FR:78217:ZDE:50010057:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:35752:STIF</Value>
+         <Value>FR::Quay:35752:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1572,7 +1572,7 @@ INSERT INTO stop_areas VALUES (94846, 141689, 'FR:78217:ZDE:50010057:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:49:03.472911', '2017-03-23 13:27:37.291655', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (94851, 141692, 'FR:78217:ZDE:50094817:STIF', 1, 'Gare d''Epône Mézières', NULL, 'zdep', NULL, NULL, NULL, 1.8083199035563100, 48.9630722105784000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:81" version="743658" created="2015-03-30T02:03:38.0Z" changed="2016-01-05T09:01:45.0Z" id="FR:78217:ZDE:50094817:STIF">
+INSERT INTO stop_areas VALUES (94851, 141692, 'FR::Quay:50094817:FR1', 1, 'Gare d''Epône Mézières', NULL, 'zdep', NULL, NULL, NULL, 1.8083199035563100, 48.9630722105784000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:81" version="743658" created="2015-03-30T02:03:38.0Z" changed="2016-01-05T09:01:45.0Z" id="FR::Quay:50094817:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1580,7 +1580,7 @@ INSERT INTO stop_areas VALUES (94851, 141692, 'FR:78217:ZDE:50094817:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:18305:STIF</Value>
+         <Value>FR::Quay:18305:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1609,7 +1609,7 @@ INSERT INTO stop_areas VALUES (94851, 141692, 'FR:78217:ZDE:50094817:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:49:03.724617', '2017-03-23 13:27:37.36882', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (94852, 141693, 'FR:78217:ZDE:50097974:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714158" created="2015-06-15T09:06:29.0Z" changed="2015-06-26T09:06:39.0Z" id="FR:78217:ZDE:50097974:STIF">
+INSERT INTO stop_areas VALUES (94852, 141693, 'FR::Quay:50097974:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714158" created="2015-06-15T09:06:29.0Z" changed="2015-06-26T09:06:39.0Z" id="FR::Quay:50097974:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1617,7 +1617,7 @@ INSERT INTO stop_areas VALUES (94852, 141693, 'FR:78217:ZDE:50097974:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:418584:STIF</Value>
+         <Value>FR::Quay:418584:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1750,7 +1750,7 @@ INSERT INTO stop_areas VALUES (62494, NULL, 'FR:78402:LDA:65272:STIF', 1, 'Place
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 10:02:43.615513', '2017-03-23 10:02:43.615513', NULL);
-INSERT INTO stop_areas VALUES (96984, 142461, 'FR:78402:ZDE:50000917:STIF', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8007124759776900, 48.9596232459550000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824622" created="2015-01-31T09:01:33.0Z" changed="2017-02-10T09:02:40.0Z" id="FR:78402:ZDE:50000917:STIF">
+INSERT INTO stop_areas VALUES (96984, 142461, 'FR::Quay:50000917:FR1', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8007124759776900, 48.9596232459550000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824622" created="2015-01-31T09:01:33.0Z" changed="2017-02-10T09:02:40.0Z" id="FR::Quay:50000917:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1758,7 +1758,7 @@ INSERT INTO stop_areas VALUES (96984, 142461, 'FR:78402:ZDE:50000917:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:13657:STIF</Value>
+         <Value>FR::Quay:13657:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1779,7 +1779,7 @@ INSERT INTO stop_areas VALUES (96984, 142461, 'FR:78402:ZDE:50000917:STIF', 1, '
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:50:48.852392', '2017-03-23 13:28:33.828163', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (96989, 142463, 'FR:78402:ZDE:50010290:STIF', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8014149803144700, 48.9589973240387000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805572" created="2015-03-26T09:03:10.0Z" changed="2016-10-11T09:10:07.0Z" id="FR:78402:ZDE:50010290:STIF">
+INSERT INTO stop_areas VALUES (96989, 142463, 'FR::Quay:50010290:FR1', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8014149803144700, 48.9589973240387000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805572" created="2015-03-26T09:03:10.0Z" changed="2016-10-11T09:10:07.0Z" id="FR::Quay:50010290:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1787,7 +1787,7 @@ INSERT INTO stop_areas VALUES (96989, 142463, 'FR:78402:ZDE:50010290:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:35371:STIF</Value>
+         <Value>FR::Quay:35371:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -1808,7 +1808,7 @@ INSERT INTO stop_areas VALUES (96989, 142463, 'FR:78402:ZDE:50010290:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:50:49.059844', '2017-03-23 13:28:33.901527', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (66732, 66731, 'FR:78402:ZDL:54101:STIF', 1, 'Fontaine', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54101" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:54101:STIF">
+INSERT INTO stop_areas VALUES (66732, 66731, 'FR::Quay:54101:FR1', 1, 'Fontaine', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54101" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54101:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1816,7 +1816,7 @@ INSERT INTO stop_areas VALUES (66732, 66731, 'FR:78402:ZDL:54101:STIF', 1, 'Font
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50008792:STIF</Value>
+         <Value>FR::Quay:50008792:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Fontaine</Name>
@@ -1832,7 +1832,7 @@ INSERT INTO stop_areas VALUES (66732, 66731, 'FR:78402:ZDL:54101:STIF', 1, 'Font
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32793:STIF" version="32793"/>
+        <QuayRef ref="FR::Quay:32793:FR1" version="32793"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.521038', 'REFERENCE_OBJECT');
 INSERT INTO stop_areas VALUES (66731, NULL, 'FR:78402:LDA:65275:STIF', 1, 'Fontaine', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="65275" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:LDA:65275:STIF">
@@ -1863,7 +1863,7 @@ INSERT INTO stop_areas VALUES (66828, NULL, 'FR:78217:LDA:65326:STIF', 1, 'Épô
        </AccessibilityAssessment>
        <StopPlaceType>railStation</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 10:04:41.295779', '2017-03-23 10:04:41.295779', NULL);
-INSERT INTO stop_areas VALUES (66829, 66828, 'FR:78217:ZDL:47882:STIF', 1, 'Épône Mézières', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace xmlns:gml="http://www.opengis.net/gml/3.2" version="47882" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:47882:STIF">
+INSERT INTO stop_areas VALUES (66829, 66828, 'FR::Quay:47882:FR1', 1, 'Épône Mézières', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace xmlns:gml="http://www.opengis.net/gml/3.2" version="47882" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:47882:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -1871,23 +1871,23 @@ INSERT INTO stop_areas VALUES (66829, 66828, 'FR:78217:ZDL:47882:STIF', 1, 'Ép�
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50009674:STIF</Value>
+         <Value>FR::Quay:50009674:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008591:STIF</Value>
+         <Value>FR::Quay:50008591:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78029:ZDL:50008577:STIF</Value>
+         <Value>FR::Quay:50008577:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50094383:STIF</Value>
+         <Value>FR::Quay:50094383:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50097107:STIF</Value>
+         <Value>FR::Quay:50097107:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Épône Mézières</Name>
@@ -2003,12 +2003,12 @@ INSERT INTO stop_areas VALUES (66829, 66828, 'FR:78217:ZDL:47882:STIF', 1, 'Ép�
        </entrances>
        <StopPlaceType>railStation</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:35752:STIF" version="806125"/>
-        <QuayRef ref="FR:78217:ZDE:41202:STIF" version="41202"/>
-        <QuayRef ref="FR:78217:ZDE:32503:STIF" version="32503"/>
-        <QuayRef ref="FR:78217:ZDE:18304:STIF" version="18304"/>
-        <QuayRef ref="FR:78217:ZDE:18305:STIF" version="18305"/>
-        <QuayRef ref="FR:78217:ZDE:418584:STIF" version="709210"/>
+        <QuayRef ref="FR::Quay:35752:FR1" version="806125"/>
+        <QuayRef ref="FR::Quay:41202:FR1" version="41202"/>
+        <QuayRef ref="FR::Quay:32503:FR1" version="32503"/>
+        <QuayRef ref="FR::Quay:18304:FR1" version="18304"/>
+        <QuayRef ref="FR::Quay:18305:FR1" version="18305"/>
+        <QuayRef ref="FR::Quay:418584:FR1" version="709210"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 12:36:02.732716', 'REFERENCE_OBJECT');
 INSERT INTO stop_areas VALUES (66974, NULL, 'FR:78217:LDA:65403:STIF', 1, 'Avenue d''Epone', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65403" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65403:STIF">
@@ -2025,7 +2025,7 @@ INSERT INTO stop_areas VALUES (66974, NULL, 'FR:78217:LDA:65403:STIF', 1, 'Avenu
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 10:04:45.34518', '2017-03-23 10:04:45.34518', NULL);
-INSERT INTO stop_areas VALUES (66975, 66974, 'FR:78217:ZDL:53980:STIF', 1, 'Avenue d''Epone', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53980" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53980:STIF">
+INSERT INTO stop_areas VALUES (66975, 66974, 'FR::Quay:53980:FR1', 1, 'Avenue d''Epone', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53980" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53980:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2033,7 +2033,7 @@ INSERT INTO stop_areas VALUES (66975, 66974, 'FR:78217:ZDL:53980:STIF', 1, 'Aven
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008572:STIF</Value>
+         <Value>FR::Quay:50008572:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Avenue d''Epone</Name>
@@ -2049,7 +2049,7 @@ INSERT INTO stop_areas VALUES (66975, 66974, 'FR:78217:ZDL:53980:STIF', 1, 'Aven
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32504:STIF" version="32504"/>
+        <QuayRef ref="FR::Quay:32504:FR1" version="32504"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:14:33.825688', 'REFERENCE_OBJECT');
 INSERT INTO stop_areas VALUES (66968, NULL, 'FR:78217:LDA:65400:STIF', 1, 'Bout du Monde', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65400" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65400:STIF">
@@ -2108,7 +2108,7 @@ INSERT INTO stop_areas VALUES (67081, NULL, 'FR:78217:LDA:65463:STIF', 1, 'Place
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 10:04:48.256811', '2017-03-23 10:04:48.256811', NULL);
-INSERT INTO stop_areas VALUES (67135, 67134, 'FR:78217:ZDL:53988:STIF', 1, 'Mairie - Ecole', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53988" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53988:STIF">
+INSERT INTO stop_areas VALUES (67135, 67134, 'FR::Quay:53988:FR1', 1, 'Mairie - Ecole', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53988" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53988:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2116,7 +2116,7 @@ INSERT INTO stop_areas VALUES (67135, 67134, 'FR:78217:ZDL:53988:STIF', 1, 'Mair
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008581:STIF</Value>
+         <Value>FR::Quay:50008581:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie - Ecole</Name>
@@ -2132,7 +2132,7 @@ INSERT INTO stop_areas VALUES (67135, 67134, 'FR:78217:ZDL:53988:STIF', 1, 'Mair
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32511:STIF" version="32511"/>
+        <QuayRef ref="FR::Quay:32511:FR1" version="32511"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.434043', 'REFERENCE_OBJECT');
 INSERT INTO stop_areas VALUES (67134, NULL, 'FR:78217:LDA:65493:STIF', 1, 'Mairie - Ecole', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="65493" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:LDA:65493:STIF">
@@ -2177,7 +2177,7 @@ INSERT INTO stop_areas VALUES (71574, NULL, 'FR:78217:LDA:420192:STIF', 1, 'Emil
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, '2017-03-23 10:20:12.580087', '2017-03-23 10:20:12.580087', NULL);
-INSERT INTO stop_areas VALUES (42130, 42129, 'FR:78402:ZDL:54102:STIF', 1, 'La Villeneuve', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54102" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:54102:STIF">
+INSERT INTO stop_areas VALUES (42130, 42129, 'FR::Quay:54102:FR1', 1, 'La Villeneuve', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54102" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54102:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2185,7 +2185,7 @@ INSERT INTO stop_areas VALUES (42130, 42129, 'FR:78402:ZDL:54102:STIF', 1, 'La V
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50008793:STIF</Value>
+         <Value>FR::Quay:50008793:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>La Villeneuve</Name>
@@ -2201,11 +2201,11 @@ INSERT INTO stop_areas VALUES (42130, 42129, 'FR:78402:ZDL:54102:STIF', 1, 'La V
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32794:STIF" version="32794"/>
-        <QuayRef ref="FR:78402:ZDE:32795:STIF" version="32795"/>
+        <QuayRef ref="FR::Quay:32794:FR1" version="32794"/>
+        <QuayRef ref="FR::Quay:32795:FR1" version="32795"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.565407', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (19555, 56621, 'FR:78217:ZDE:32784:STIF', 1, 'BROUILLARD', NULL, 'zder', NULL, NULL, NULL, 1.7875870622303600, 48.9263228997569000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32784" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32784:STIF">
+INSERT INTO stop_areas VALUES (19555, 56621, 'FR::Quay:32784:FR1', 1, 'BROUILLARD', NULL, 'zder', NULL, NULL, NULL, 1.7875870622303600, 48.9263228997569000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32784" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32784:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2213,7 +2213,7 @@ INSERT INTO stop_areas VALUES (19555, 56621, 'FR:78217:ZDE:32784:STIF', 1, 'BROU
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009384:STIF</Value>
+         <Value>FR::Quay:50009384:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2234,7 +2234,7 @@ INSERT INTO stop_areas VALUES (19555, 56621, 'FR:78217:ZDE:32784:STIF', 1, 'BROU
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.369123', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (19556, 56621, 'FR:78217:ZDE:32785:STIF', 1, 'BROUILLARD', NULL, 'zder', NULL, NULL, NULL, 1.7870004023971600, 48.9261295695634000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32785" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32785:STIF">
+INSERT INTO stop_areas VALUES (19556, 56621, 'FR::Quay:32785:FR1', 1, 'BROUILLARD', NULL, 'zder', NULL, NULL, NULL, 1.7870004023971600, 48.9261295695634000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32785" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32785:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2242,7 +2242,7 @@ INSERT INTO stop_areas VALUES (19556, 56621, 'FR:78217:ZDE:32785:STIF', 1, 'BROU
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009385:STIF</Value>
+         <Value>FR::Quay:50009385:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2263,7 +2263,7 @@ INSERT INTO stop_areas VALUES (19556, 56621, 'FR:78217:ZDE:32785:STIF', 1, 'BROU
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.41497', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (56621, 56620, 'FR:78217:ZDL:54096:STIF', 1, 'Brouillard', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="54096" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:54096:STIF">
+INSERT INTO stop_areas VALUES (56621, 56620, 'FR::Quay:54096:FR1', 1, 'Brouillard', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="54096" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54096:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2271,7 +2271,7 @@ INSERT INTO stop_areas VALUES (56621, 56620, 'FR:78217:ZDL:54096:STIF', 1, 'Brou
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008787:STIF</Value>
+         <Value>FR::Quay:50008787:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Brouillard</Name>
@@ -2287,11 +2287,11 @@ INSERT INTO stop_areas VALUES (56621, 56620, 'FR:78217:ZDL:54096:STIF', 1, 'Brou
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32784:STIF" version="32784"/>
-        <QuayRef ref="FR:78217:ZDE:32785:STIF" version="32785"/>
+        <QuayRef ref="FR::Quay:32784:FR1" version="32784"/>
+        <QuayRef ref="FR::Quay:32785:FR1" version="32785"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.331637', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (57001, 57000, 'FR:78217:ZDL:54095:STIF', 1, 'Bois de l''Aulnz', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="54095" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:54095:STIF">
+INSERT INTO stop_areas VALUES (57001, 57000, 'FR::Quay:54095:FR1', 1, 'Bois de l''Aulnz', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="54095" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54095:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2299,7 +2299,7 @@ INSERT INTO stop_areas VALUES (57001, 57000, 'FR:78217:ZDL:54095:STIF', 1, 'Bois
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008786:STIF</Value>
+         <Value>FR::Quay:50008786:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Bois de l''Aulnz</Name>
@@ -2315,11 +2315,11 @@ INSERT INTO stop_areas VALUES (57001, 57000, 'FR:78217:ZDL:54095:STIF', 1, 'Bois
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32782:STIF" version="32782"/>
-        <QuayRef ref="FR:78217:ZDE:32783:STIF" version="32783"/>
+        <QuayRef ref="FR::Quay:32782:FR1" version="32782"/>
+        <QuayRef ref="FR::Quay:32783:FR1" version="32783"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.2878', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (66969, 66968, 'FR:78217:ZDL:53985:STIF', 1, 'Bout du Monde', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53985" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53985:STIF">
+INSERT INTO stop_areas VALUES (66969, 66968, 'FR::Quay:53985:FR1', 1, 'Bout du Monde', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53985" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53985:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2327,7 +2327,7 @@ INSERT INTO stop_areas VALUES (66969, 66968, 'FR:78217:ZDL:53985:STIF', 1, 'Bout
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008578:STIF</Value>
+         <Value>FR::Quay:50008578:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Bout du Monde</Name>
@@ -2343,10 +2343,10 @@ INSERT INTO stop_areas VALUES (66969, 66968, 'FR:78217:ZDL:53985:STIF', 1, 'Bout
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32509:STIF" version="32509"/>
+        <QuayRef ref="FR::Quay:32509:FR1" version="32509"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.253281', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31738, 67014, 'FR:78217:ZDE:32507:STIF', 1, 'BOULEVARD DE LA PAIX', NULL, 'zder', NULL, NULL, NULL, 1.8359592073884300, 48.9698496280250000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32507" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32507:STIF">
+INSERT INTO stop_areas VALUES (31738, 67014, 'FR::Quay:32507:FR1', 1, 'BOULEVARD DE LA PAIX', NULL, 'zder', NULL, NULL, NULL, 1.8359592073884300, 48.9698496280250000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32507" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32507:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2354,7 +2354,7 @@ INSERT INTO stop_areas VALUES (31738, 67014, 'FR:78217:ZDE:32507:STIF', 1, 'BOUL
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009037:STIF</Value>
+         <Value>FR::Quay:50009037:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2375,7 +2375,7 @@ INSERT INTO stop_areas VALUES (31738, 67014, 'FR:78217:ZDE:32507:STIF', 1, 'BOUL
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:55.852444', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (67082, 67081, 'FR:78217:ZDL:53986:STIF', 1, 'Place Maréchal Juin', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53986" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53986:STIF">
+INSERT INTO stop_areas VALUES (67082, 67081, 'FR::Quay:53986:FR1', 1, 'Place Maréchal Juin', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53986" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53986:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2383,11 +2383,11 @@ INSERT INTO stop_areas VALUES (67082, 67081, 'FR:78217:ZDL:53986:STIF', 1, 'Plac
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008579:STIF</Value>
+         <Value>FR::Quay:50008579:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50098328:STIF</Value>
+         <Value>FR::Quay:50098328:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Place Maréchal Juin</Name>
@@ -2403,11 +2403,11 @@ INSERT INTO stop_areas VALUES (67082, 67081, 'FR:78217:ZDL:53986:STIF', 1, 'Plac
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32514:STIF" version="32514"/>
-        <QuayRef ref="FR:78217:ZDE:416465:STIF" version="666350"/>
+        <QuayRef ref="FR::Quay:32514:FR1" version="32514"/>
+        <QuayRef ref="FR::Quay:416465:FR1" version="666350"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.300159', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (116524, 150090, 'FR:78217:ZDE:50000882:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.8115991914771900, 48.9573350926121000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824656" created="2015-01-31T09:01:45.0Z" changed="2017-02-10T09:02:49.0Z" id="FR:78217:ZDE:50000882:STIF">
+INSERT INTO stop_areas VALUES (116524, 150090, 'FR::Quay:50000882:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.8115991914771900, 48.9573350926121000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824656" created="2015-01-31T09:01:45.0Z" changed="2017-02-10T09:02:49.0Z" id="FR::Quay:50000882:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2415,7 +2415,7 @@ INSERT INTO stop_areas VALUES (116524, 150090, 'FR:78217:ZDE:50000882:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:13660:STIF</Value>
+         <Value>FR::Quay:13660:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2436,7 +2436,7 @@ INSERT INTO stop_areas VALUES (116524, 150090, 'FR:78217:ZDE:50000882:STIF', 1, 
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:10:16.547515', '2017-03-23 13:37:55.043103', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (116527, 150090, 'FR:78217:ZDE:50000881:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.8115859069711800, 48.9572990862766000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824657" created="2015-01-31T09:01:46.0Z" changed="2017-02-10T09:02:49.0Z" id="FR:78217:ZDE:50000881:STIF">
+INSERT INTO stop_areas VALUES (116527, 150090, 'FR::Quay:50000881:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.8115859069711800, 48.9572990862766000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824657" created="2015-01-31T09:01:46.0Z" changed="2017-02-10T09:02:49.0Z" id="FR::Quay:50000881:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2444,7 +2444,7 @@ INSERT INTO stop_areas VALUES (116527, 150090, 'FR:78217:ZDE:50000881:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32530:STIF</Value>
+         <Value>FR::Quay:32530:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2465,7 +2465,7 @@ INSERT INTO stop_areas VALUES (116527, 150090, 'FR:78217:ZDE:50000881:STIF', 1, 
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:10:16.634084', '2017-03-23 13:37:55.068138', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (116526, 150091, 'FR:78217:ZDE:50009061:STIF', 1, 'MAIRIE', NULL, 'zdep', NULL, NULL, NULL, 1.8115373421136000, 48.9572979483809000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443331" created="2015-02-03T06:02:41.0Z" changed="2015-02-03T06:02:41.0Z" id="FR:78217:ZDE:50009061:STIF">
+INSERT INTO stop_areas VALUES (116526, 150091, 'FR::Quay:50009061:FR1', 1, 'MAIRIE', NULL, 'zdep', NULL, NULL, NULL, 1.8115373421136000, 48.9572979483809000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443331" created="2015-02-03T06:02:41.0Z" changed="2015-02-03T06:02:41.0Z" id="FR::Quay:50009061:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2473,7 +2473,7 @@ INSERT INTO stop_areas VALUES (116526, 150091, 'FR:78217:ZDE:50009061:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32530:STIF</Value>
+         <Value>FR::Quay:32530:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2494,7 +2494,7 @@ INSERT INTO stop_areas VALUES (116526, 150091, 'FR:78217:ZDE:50009061:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:10:16.60913', '2017-03-23 13:37:55.091879', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (116525, 150091, 'FR:78217:ZDE:50009060:STIF', 1, 'MAIRIE', NULL, 'zdep', NULL, NULL, NULL, 1.8114323433300500, 48.9574929456276000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443333" created="2015-02-03T06:02:41.0Z" changed="2015-02-03T06:02:41.0Z" id="FR:78217:ZDE:50009060:STIF">
+INSERT INTO stop_areas VALUES (116525, 150091, 'FR::Quay:50009060:FR1', 1, 'MAIRIE', NULL, 'zdep', NULL, NULL, NULL, 1.8114323433300500, 48.9574929456276000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443333" created="2015-02-03T06:02:41.0Z" changed="2015-02-03T06:02:41.0Z" id="FR::Quay:50009060:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2502,7 +2502,7 @@ INSERT INTO stop_areas VALUES (116525, 150091, 'FR:78217:ZDE:50009060:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:13660:STIF</Value>
+         <Value>FR::Quay:13660:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2523,7 +2523,7 @@ INSERT INTO stop_areas VALUES (116525, 150091, 'FR:78217:ZDE:50009060:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:10:16.565713', '2017-03-23 13:37:55.112686', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (2705, 42130, 'FR:78402:ZDE:32794:STIF', 1, 'LA VILLENEUVE', NULL, 'zder', NULL, NULL, NULL, 1.7938288733818300, 48.9474412752481000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32794" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32794:STIF">
+INSERT INTO stop_areas VALUES (2705, 42130, 'FR::Quay:32794:FR1', 1, 'LA VILLENEUVE', NULL, 'zder', NULL, NULL, NULL, 1.7938288733818300, 48.9474412752481000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32794" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32794:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2531,7 +2531,7 @@ INSERT INTO stop_areas VALUES (2705, 42130, 'FR:78402:ZDE:32794:STIF', 1, 'LA VI
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009394:STIF</Value>
+         <Value>FR::Quay:50009394:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2552,7 +2552,7 @@ INSERT INTO stop_areas VALUES (2705, 42130, 'FR:78402:ZDE:32794:STIF', 1, 'LA VI
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.728191', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (2774, 42187, 'FR:78402:ZDE:32792:STIF', 1, 'CHEMIN DE L''EPINE', NULL, 'zder', NULL, NULL, NULL, 1.7937005478790100, 48.9498796059636000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32792" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32792:STIF">
+INSERT INTO stop_areas VALUES (2774, 42187, 'FR::Quay:32792:FR1', 1, 'CHEMIN DE L''EPINE', NULL, 'zder', NULL, NULL, NULL, 1.7937005478790100, 48.9498796059636000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32792" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32792:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2560,7 +2560,7 @@ INSERT INTO stop_areas VALUES (2774, 42187, 'FR:78402:ZDE:32792:STIF', 1, 'CHEMI
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009392:STIF</Value>
+         <Value>FR::Quay:50009392:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2581,7 +2581,7 @@ INSERT INTO stop_areas VALUES (2774, 42187, 'FR:78402:ZDE:32792:STIF', 1, 'CHEMI
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.639743', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (2826, 42239, 'FR:78402:ZDE:32799:STIF', 1, 'LISERETTES', NULL, 'zder', NULL, NULL, NULL, 1.7955739011500000, 48.9522762814456000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32799" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32799:STIF">
+INSERT INTO stop_areas VALUES (2826, 42239, 'FR::Quay:32799:FR1', 1, 'LISERETTES', NULL, 'zder', NULL, NULL, NULL, 1.7955739011500000, 48.9522762814456000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32799" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32799:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2589,7 +2589,7 @@ INSERT INTO stop_areas VALUES (2826, 42239, 'FR:78402:ZDE:32799:STIF', 1, 'LISER
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009397:STIF</Value>
+         <Value>FR::Quay:50009397:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2610,7 +2610,7 @@ INSERT INTO stop_areas VALUES (2826, 42239, 'FR:78402:ZDE:32799:STIF', 1, 'LISER
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.873063', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (2854, 42268, 'FR:78217:ZDE:32521:STIF', 1, 'LE CHATEAU', NULL, 'zder', NULL, NULL, NULL, 1.8133756580597400, 48.9533662680704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32521" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32521:STIF">
+INSERT INTO stop_areas VALUES (2854, 42268, 'FR::Quay:32521:FR1', 1, 'LE CHATEAU', NULL, 'zder', NULL, NULL, NULL, 1.8133756580597400, 48.9533662680704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32521" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32521:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2618,7 +2618,7 @@ INSERT INTO stop_areas VALUES (2854, 42268, 'FR:78217:ZDE:32521:STIF', 1, 'LE CH
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009052:STIF</Value>
+         <Value>FR::Quay:50009052:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2639,7 +2639,7 @@ INSERT INTO stop_areas VALUES (2854, 42268, 'FR:78217:ZDE:32521:STIF', 1, 'LE CH
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.722058', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (19658, 56713, 'FR:78217:ZDE:32786:STIF', 1, 'CANADA', NULL, 'zder', NULL, NULL, NULL, 1.7903770996057600, 48.9298595765723000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32786" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32786:STIF">
+INSERT INTO stop_areas VALUES (19658, 56713, 'FR::Quay:32786:FR1', 1, 'CANADA', NULL, 'zder', NULL, NULL, NULL, 1.7903770996057600, 48.9298595765723000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32786" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32786:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2647,7 +2647,7 @@ INSERT INTO stop_areas VALUES (19658, 56713, 'FR:78217:ZDE:32786:STIF', 1, 'CANA
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009386:STIF</Value>
+         <Value>FR::Quay:50009386:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2668,7 +2668,7 @@ INSERT INTO stop_areas VALUES (19658, 56713, 'FR:78217:ZDE:32786:STIF', 1, 'CANA
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:20:55.413049', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (2827, 42241, 'FR:78217:ZDE:32523:STIF', 1, 'CHEMIN NEUF', NULL, 'zder', NULL, NULL, NULL, 1.8162940080552900, 48.9524979333468000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32523" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32523:STIF">
+INSERT INTO stop_areas VALUES (2827, 42241, 'FR::Quay:32523:FR1', 1, 'CHEMIN NEUF', NULL, 'zder', NULL, NULL, NULL, 1.8162940080552900, 48.9524979333468000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32523" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32523:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2676,7 +2676,7 @@ INSERT INTO stop_areas VALUES (2827, 42241, 'FR:78217:ZDE:32523:STIF', 1, 'CHEMI
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009054:STIF</Value>
+         <Value>FR::Quay:50009054:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2697,7 +2697,7 @@ INSERT INTO stop_areas VALUES (2827, 42241, 'FR:78217:ZDE:32523:STIF', 1, 'CHEMI
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.833235', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26245, 62366, 'FR:78217:ZDE:32533:STIF', 1, 'POTEAU', NULL, 'zder', NULL, NULL, NULL, 1.8300191012754500, 48.9566545958770000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32533" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32533:STIF">
+INSERT INTO stop_areas VALUES (26245, 62366, 'FR::Quay:32533:FR1', 1, 'POTEAU', NULL, 'zder', NULL, NULL, NULL, 1.8300191012754500, 48.9566545958770000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32533" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32533:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2705,7 +2705,7 @@ INSERT INTO stop_areas VALUES (26245, 62366, 'FR:78217:ZDE:32533:STIF', 1, 'POTE
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009065:STIF</Value>
+         <Value>FR::Quay:50009065:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2726,7 +2726,7 @@ INSERT INTO stop_areas VALUES (26245, 62366, 'FR:78217:ZDE:32533:STIF', 1, 'POTE
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:57.190086', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26173, 62288, 'FR:78217:ZDE:32520:STIF', 1, 'CARREFOUR ST MARTIN', NULL, 'zder', NULL, NULL, NULL, 1.8193123651273500, 48.9536762647935000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32520" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32520:STIF">
+INSERT INTO stop_areas VALUES (26173, 62288, 'FR::Quay:32520:FR1', 1, 'CARREFOUR ST MARTIN', NULL, 'zder', NULL, NULL, NULL, 1.8193123651273500, 48.9536762647935000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32520" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32520:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2734,7 +2734,7 @@ INSERT INTO stop_areas VALUES (26173, 62288, 'FR:78217:ZDE:32520:STIF', 1, 'CARR
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009051:STIF</Value>
+         <Value>FR::Quay:50009051:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2755,7 +2755,7 @@ INSERT INTO stop_areas VALUES (26173, 62288, 'FR:78217:ZDE:32520:STIF', 1, 'CARR
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.665713', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26193, 62311, 'FR:78402:ZDE:32789:STIF', 1, 'CHAUFFOUR', NULL, 'zder', NULL, NULL, NULL, 1.7981472685123400, 48.9541279492270000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32789" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32789:STIF">
+INSERT INTO stop_areas VALUES (26193, 62311, 'FR::Quay:32789:FR1', 1, 'CHAUFFOUR', NULL, 'zder', NULL, NULL, NULL, 1.7981472685123400, 48.9541279492270000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32789" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32789:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2763,7 +2763,7 @@ INSERT INTO stop_areas VALUES (26193, 62311, 'FR:78402:ZDE:32789:STIF', 1, 'CHAU
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009389:STIF</Value>
+         <Value>FR::Quay:50009389:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2798,7 +2798,7 @@ INSERT INTO stop_areas VALUES (42240, NULL, 'FR:78217:LDA:65144:STIF', 1, 'Chemi
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, NULL, '2017-03-23 09:51:53.500172', NULL);
-INSERT INTO stop_areas VALUES (26240, 62360, 'FR:78217:ZDE:32527:STIF', 1, 'LA FALAISE', NULL, 'zder', NULL, NULL, NULL, 1.8215623902590100, 48.9563379380118000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32527" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32527:STIF">
+INSERT INTO stop_areas VALUES (26240, 62360, 'FR::Quay:32527:FR1', 1, 'LA FALAISE', NULL, 'zder', NULL, NULL, NULL, 1.8215623902590100, 48.9563379380118000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32527" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32527:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2806,7 +2806,7 @@ INSERT INTO stop_areas VALUES (26240, 62360, 'FR:78217:ZDE:32527:STIF', 1, 'LA F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009057:STIF</Value>
+         <Value>FR::Quay:50009057:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2827,7 +2827,7 @@ INSERT INTO stop_areas VALUES (26240, 62360, 'FR:78217:ZDE:32527:STIF', 1, 'LA F
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.92403', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26262, 62386, 'FR:78217:ZDE:13660:STIF', 1, 'Mairie', NULL, 'zder', NULL, NULL, NULL, 1.8115371679130100, 48.9573485884751000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819300" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:21.0Z" id="FR:78217:ZDE:13660:STIF">
+INSERT INTO stop_areas VALUES (26262, 62386, 'FR::Quay:13660:FR1', 1, 'Mairie', NULL, 'zder', NULL, NULL, NULL, 1.8115371679130100, 48.9573485884751000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="819300" created="2014-12-29T03:12:51.0Z" changed="2016-11-07T04:11:21.0Z" id="FR::Quay:13660:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2835,11 +2835,11 @@ INSERT INTO stop_areas VALUES (26262, 62386, 'FR:78217:ZDE:13660:STIF', 1, 'Mair
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50000882:STIF</Value>
+         <Value>FR::Quay:50000882:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009060:STIF</Value>
+         <Value>FR::Quay:50009060:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2864,7 +2864,7 @@ INSERT INTO stop_areas VALUES (26262, 62386, 'FR:78217:ZDE:13660:STIF', 1, 'Mair
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:10:16.515181', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26352, 62468, 'FR:78402:ZDE:13658:STIF', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8008231196433900, 48.9597645596152000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="812704" created="2014-12-29T03:12:51.0Z" changed="2016-10-25T05:10:13.0Z" id="FR:78402:ZDE:13658:STIF">
+INSERT INTO stop_areas VALUES (26352, 62468, 'FR::Quay:13658:FR1', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8008231196433900, 48.9597645596152000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="812704" created="2014-12-29T03:12:51.0Z" changed="2016-10-25T05:10:13.0Z" id="FR::Quay:13658:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2872,11 +2872,11 @@ INSERT INTO stop_areas VALUES (26352, 62468, 'FR:78402:ZDE:13658:STIF', 1, 'Lib�
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50000918:STIF</Value>
+         <Value>FR::Quay:50000918:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009230:STIF</Value>
+         <Value>FR::Quay:50009230:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2901,7 +2901,7 @@ INSERT INTO stop_areas VALUES (26352, 62468, 'FR:78402:ZDE:13658:STIF', 1, 'Lib�
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:50:48.887048', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26353, 62468, 'FR:78402:ZDE:35370:STIF', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8015371568591400, 48.9590607796269000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="35370" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:35370:STIF">
+INSERT INTO stop_areas VALUES (26353, 62468, 'FR::Quay:35370:FR1', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8015371568591400, 48.9590607796269000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="35370" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:35370:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2909,7 +2909,7 @@ INSERT INTO stop_areas VALUES (26353, 62468, 'FR:78402:ZDE:35370:STIF', 1, 'Lib�
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50010289:STIF</Value>
+         <Value>FR::Quay:50010289:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2930,7 +2930,7 @@ INSERT INTO stop_areas VALUES (26353, 62468, 'FR:78402:ZDE:35370:STIF', 1, 'Lib�
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:50:48.966313', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31817, 67082, 'FR:78217:ZDE:416465:STIF', 1, 'Elisab. Pl du Maréchal Juin', NULL, 'zder', NULL, NULL, NULL, 1.8368735974221300, 48.9714362201824000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="666350" created="2015-05-12T09:05:28.0Z" changed="2015-05-12T09:05:28.0Z" id="FR:78217:ZDE:416465:STIF">
+INSERT INTO stop_areas VALUES (31817, 67082, 'FR::Quay:416465:FR1', 1, 'Elisab. Pl du Maréchal Juin', NULL, 'zder', NULL, NULL, NULL, 1.8368735974221300, 48.9714362201824000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="666350" created="2015-05-12T09:05:28.0Z" changed="2015-05-12T09:05:28.0Z" id="FR::Quay:416465:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2938,7 +2938,7 @@ INSERT INTO stop_areas VALUES (31817, 67082, 'FR:78217:ZDE:416465:STIF', 1, 'Eli
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50098303:STIF</Value>
+         <Value>FR::Quay:50098303:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Elisab. Pl du Maréchal Juin</Name>
@@ -2955,7 +2955,7 @@ INSERT INTO stop_areas VALUES (31817, 67082, 'FR:78217:ZDE:416465:STIF', 1, 'Eli
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.062969', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31532, 66829, 'FR:78217:ZDE:18305:STIF', 1, 'Gare d''Epône Mézières', NULL, 'zder', NULL, NULL, NULL, 1.8083195437807300, 48.9630724138501000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18305" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:18305:STIF">
+INSERT INTO stop_areas VALUES (31532, 66829, 'FR::Quay:18305:FR1', 1, 'Gare d''Epône Mézières', NULL, 'zder', NULL, NULL, NULL, 1.8083195437807300, 48.9630724138501000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18305" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:18305:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -2963,7 +2963,7 @@ INSERT INTO stop_areas VALUES (31532, 66829, 'FR:78217:ZDE:18305:STIF', 1, 'Gare
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50094817:STIF</Value>
+         <Value>FR::Quay:50094817:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -2992,7 +2992,7 @@ INSERT INTO stop_areas VALUES (31532, 66829, 'FR:78217:ZDE:18305:STIF', 1, 'Gare
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:49:03.682688', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31699, 66975, 'FR:78217:ZDE:32504:STIF', 1, 'AVENUE D''EPONE', NULL, 'zder', NULL, NULL, NULL, 1.8337208598697700, 48.9686746309032000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32504" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32504:STIF">
+INSERT INTO stop_areas VALUES (31699, 66975, 'FR::Quay:32504:FR1', 1, 'AVENUE D''EPONE', NULL, 'zder', NULL, NULL, NULL, 1.8337208598697700, 48.9686746309032000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32504" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32504:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3000,7 +3000,7 @@ INSERT INTO stop_areas VALUES (31699, 66975, 'FR:78217:ZDE:32504:STIF', 1, 'AVEN
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009034:STIF</Value>
+         <Value>FR::Quay:50009034:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3021,7 +3021,7 @@ INSERT INTO stop_areas VALUES (31699, 66975, 'FR:78217:ZDE:32504:STIF', 1, 'AVEN
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:17:26.2704', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31816, 67082, 'FR:78217:ZDE:32514:STIF', 1, 'PLACE MARECHAL JUIN', NULL, 'zder', NULL, NULL, NULL, 1.8369392346693400, 48.9715229669525000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32514" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32514:STIF">
+INSERT INTO stop_areas VALUES (31816, 67082, 'FR::Quay:32514:FR1', 1, 'PLACE MARECHAL JUIN', NULL, 'zder', NULL, NULL, NULL, 1.8369392346693400, 48.9715229669525000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32514" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32514:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3029,7 +3029,7 @@ INSERT INTO stop_areas VALUES (31816, 67082, 'FR:78217:ZDE:32514:STIF', 1, 'PLAC
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009041:STIF</Value>
+         <Value>FR::Quay:50009041:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3050,7 +3050,7 @@ INSERT INTO stop_areas VALUES (31816, 67082, 'FR:78217:ZDE:32514:STIF', 1, 'PLAC
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.019656', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31885, 67135, 'FR:78217:ZDE:32511:STIF', 1, 'MAIRIE / ECOLE', NULL, 'zder', NULL, NULL, NULL, 1.8369025767705700, 48.9732296340157000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32511" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32511:STIF">
+INSERT INTO stop_areas VALUES (31885, 67135, 'FR::Quay:32511:FR1', 1, 'MAIRIE / ECOLE', NULL, 'zder', NULL, NULL, NULL, 1.8369025767705700, 48.9732296340157000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32511" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32511:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3058,7 +3058,7 @@ INSERT INTO stop_areas VALUES (31885, 67135, 'FR:78217:ZDE:32511:STIF', 1, 'MAIR
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009043:STIF</Value>
+         <Value>FR::Quay:50009043:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3079,7 +3079,7 @@ INSERT INTO stop_areas VALUES (31885, 67135, 'FR:78217:ZDE:32511:STIF', 1, 'MAIR
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.166768', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (37772, 71575, 'FR:78217:ZDE:32524:STIF', 1, 'EMILE SERGENT', NULL, 'zder', NULL, NULL, NULL, 1.8169827330564200, 48.9566739779480000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="729344" created="2014-12-29T12:12:00.0Z" changed="2015-10-07T04:10:33.0Z" id="FR:78217:ZDE:32524:STIF">
+INSERT INTO stop_areas VALUES (37772, 71575, 'FR::Quay:32524:FR1', 1, 'EMILE SERGENT', NULL, 'zder', NULL, NULL, NULL, 1.8169827330564200, 48.9566739779480000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="729344" created="2014-12-29T12:12:00.0Z" changed="2015-10-07T04:10:33.0Z" id="FR::Quay:32524:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3087,7 +3087,7 @@ INSERT INTO stop_areas VALUES (37772, 71575, 'FR:78217:ZDE:32524:STIF', 1, 'EMIL
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009063:STIF</Value>
+         <Value>FR::Quay:50009063:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3136,7 +3136,7 @@ INSERT INTO stop_areas VALUES (42129, NULL, 'FR:78402:LDA:65082:STIF', 1, 'La Vi
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, NULL, '2017-03-23 09:51:50.83226', NULL);
-INSERT INTO stop_areas VALUES (42187, 42186, 'FR:78402:ZDL:54100:STIF', 1, 'Chemin de l''Epine', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54100" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:54100:STIF">
+INSERT INTO stop_areas VALUES (42187, 42186, 'FR::Quay:54100:FR1', 1, 'Chemin de l''Epine', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54100" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54100:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3144,7 +3144,7 @@ INSERT INTO stop_areas VALUES (42187, 42186, 'FR:78402:ZDL:54100:STIF', 1, 'Chem
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50008791:STIF</Value>
+         <Value>FR::Quay:50008791:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Chemin de l''Epine</Name>
@@ -3160,8 +3160,8 @@ INSERT INTO stop_areas VALUES (42187, 42186, 'FR:78402:ZDL:54100:STIF', 1, 'Chem
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32791:STIF" version="32791"/>
-        <QuayRef ref="FR:78402:ZDE:32792:STIF" version="32792"/>
+        <QuayRef ref="FR::Quay:32791:FR1" version="32791"/>
+        <QuayRef ref="FR::Quay:32792:FR1" version="32792"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.477306', 'REFERENCE_OBJECT');
 INSERT INTO stop_areas VALUES (42186, NULL, 'FR:78402:LDA:65112:STIF', 1, 'Chemin de l''Epine', NULL, 'lda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="65112" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:LDA:65112:STIF">
@@ -3206,7 +3206,7 @@ INSERT INTO stop_areas VALUES (42266, NULL, 'FR:78217:LDA:65159:STIF', 1, 'Le Ch
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
       </StopPlace>', NULL, NULL, '2017-03-23 09:51:54.300039', NULL);
-INSERT INTO stop_areas VALUES (31529, 66829, 'FR:78217:ZDE:41202:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zder', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="41202" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:41202:STIF">
+INSERT INTO stop_areas VALUES (31529, 66829, 'FR::Quay:41202:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zder', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="41202" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:41202:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3214,7 +3214,7 @@ INSERT INTO stop_areas VALUES (31529, 66829, 'FR:78217:ZDE:41202:STIF', 1, 'GARE
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50024700:STIF</Value>
+         <Value>FR::Quay:50024700:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3244,7 +3244,7 @@ INSERT INTO stop_areas VALUES (31529, 66829, 'FR:78217:ZDE:41202:STIF', 1, 'GARE
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:49:03.485897', 'REFERENCE_OBJECT');
 -- maybe useless
-INSERT INTO stop_areas VALUES (94847, NULL, 'FR:78217:ZDE:50024700:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:1" version="412181" created="2015-01-26T03:01:48.0Z" changed="2015-01-26T03:01:48.0Z" id="FR:78217:ZDE:50024700:STIF">
+INSERT INTO stop_areas VALUES (94847, NULL, 'FR::Quay:50024700:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:1" version="412181" created="2015-01-26T03:01:48.0Z" changed="2015-01-26T03:01:48.0Z" id="FR::Quay:50024700:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3252,7 +3252,7 @@ INSERT INTO stop_areas VALUES (94847, NULL, 'FR:78217:ZDE:50024700:STIF', 1, 'GA
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:41202:STIF</Value>
+         <Value>FR::Quay:41202:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3281,7 +3281,7 @@ INSERT INTO stop_areas VALUES (94847, NULL, 'FR:78217:ZDE:50024700:STIF', 1, 'GA
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:49:03.517741', '2017-03-23 11:49:03.517741', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (31530, 66829, 'FR:78217:ZDE:32503:STIF', 1, 'Annexe Mairie (Gare SNCF)', NULL, 'zder', NULL, NULL, NULL, 1.8085190228973600, 48.9626212928230000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32503" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32503:STIF">
+INSERT INTO stop_areas VALUES (31530, 66829, 'FR::Quay:32503:FR1', 1, 'Annexe Mairie (Gare SNCF)', NULL, 'zder', NULL, NULL, NULL, 1.8085190228973600, 48.9626212928230000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32503" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32503:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3289,11 +3289,11 @@ INSERT INTO stop_areas VALUES (31530, 66829, 'FR:78217:ZDE:32503:STIF', 1, 'Anne
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009056:STIF</Value>
+         <Value>FR::Quay:50009056:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78029:ZDE:50009039:STIF</Value>
+         <Value>FR::Quay:50009039:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3318,7 +3318,7 @@ INSERT INTO stop_areas VALUES (31530, 66829, 'FR:78217:ZDE:32503:STIF', 1, 'Anne
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:49:03.538268', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (94848, 141690, 'FR:78217:ZDE:50009056:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8085190226913000, 48.9626213018143000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443357" created="2015-02-03T06:02:47.0Z" changed="2015-02-03T06:02:47.0Z" id="FR:78217:ZDE:50009056:STIF">
+INSERT INTO stop_areas VALUES (94848, 141690, 'FR::Quay:50009056:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8085190226913000, 48.9626213018143000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443357" created="2015-02-03T06:02:47.0Z" changed="2015-02-03T06:02:47.0Z" id="FR::Quay:50009056:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3326,7 +3326,7 @@ INSERT INTO stop_areas VALUES (94848, 141690, 'FR:78217:ZDE:50009056:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32503:STIF</Value>
+         <Value>FR::Quay:32503:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3347,7 +3347,7 @@ INSERT INTO stop_areas VALUES (94848, 141690, 'FR:78217:ZDE:50009056:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:49:03.578169', '2017-03-23 13:27:37.312739', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (31531, 66829, 'FR:78217:ZDE:18304:STIF', 1, 'Gare d''Epône Mézières', NULL, 'zder', NULL, NULL, NULL, 1.8083189204177400, 48.9631353611361000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18304" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:18304:STIF">
+INSERT INTO stop_areas VALUES (31531, 66829, 'FR::Quay:18304:FR1', 1, 'Gare d''Epône Mézières', NULL, 'zder', NULL, NULL, NULL, 1.8083189204177400, 48.9631353611361000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="18304" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:18304:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3355,7 +3355,7 @@ INSERT INTO stop_areas VALUES (31531, 66829, 'FR:78217:ZDE:18304:STIF', 1, 'Gare
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50094816:STIF</Value>
+         <Value>FR::Quay:50094816:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3384,7 +3384,7 @@ INSERT INTO stop_areas VALUES (31531, 66829, 'FR:78217:ZDE:18304:STIF', 1, 'Gare
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:49:03.627176', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (94850, 141692, 'FR:78217:ZDE:50094816:STIF', 1, 'Gare d''Epône Mézières', NULL, 'zdep', NULL, NULL, NULL, 1.8083192537077100, 48.9631351216278000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:81" version="743659" created="2015-03-30T02:03:39.0Z" changed="2016-01-05T09:01:47.0Z" id="FR:78217:ZDE:50094816:STIF">
+INSERT INTO stop_areas VALUES (94850, 141692, 'FR::Quay:50094816:FR1', 1, 'Gare d''Epône Mézières', NULL, 'zdep', NULL, NULL, NULL, 1.8083192537077100, 48.9631351216278000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:81" version="743659" created="2015-03-30T02:03:39.0Z" changed="2016-01-05T09:01:47.0Z" id="FR::Quay:50094816:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3392,7 +3392,7 @@ INSERT INTO stop_areas VALUES (94850, 141692, 'FR:78217:ZDE:50094816:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:18304:STIF</Value>
+         <Value>FR::Quay:18304:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3421,7 +3421,7 @@ INSERT INTO stop_areas VALUES (94850, 141692, 'FR:78217:ZDE:50094816:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:49:03.663073', '2017-03-23 13:27:37.389289', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (31533, 66829, 'FR:78217:ZDE:418584:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zder', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="709210" created="2015-06-15T09:06:29.0Z" changed="2015-06-15T09:06:29.0Z" id="FR:78217:ZDE:418584:STIF">
+INSERT INTO stop_areas VALUES (31533, 66829, 'FR::Quay:418584:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zder', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="709210" created="2015-06-15T09:06:29.0Z" changed="2015-06-15T09:06:29.0Z" id="FR::Quay:418584:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3429,11 +3429,11 @@ INSERT INTO stop_areas VALUES (31533, 66829, 'FR:78217:ZDE:418584:STIF', 1, 'GAR
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50097974:STIF</Value>
+         <Value>FR::Quay:50097974:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50097449:STIF</Value>
+         <Value>FR::Quay:50097449:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3458,7 +3458,7 @@ INSERT INTO stop_areas VALUES (31533, 66829, 'FR:78217:ZDE:418584:STIF', 1, 'GAR
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:49:03.749121', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (94853, 141693, 'FR:78217:ZDE:50097449:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714159" created="2015-06-15T09:06:36.0Z" changed="2015-06-26T09:06:40.0Z" id="FR:78217:ZDE:50097449:STIF">
+INSERT INTO stop_areas VALUES (94853, 141693, 'FR::Quay:50097449:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdep', NULL, NULL, NULL, 1.8086450611031900, 48.9633073081647000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714159" created="2015-06-15T09:06:36.0Z" changed="2015-06-26T09:06:40.0Z" id="FR::Quay:50097449:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3466,7 +3466,7 @@ INSERT INTO stop_areas VALUES (94853, 141693, 'FR:78217:ZDE:50097449:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:418584:STIF</Value>
+         <Value>FR::Quay:418584:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3487,7 +3487,7 @@ INSERT INTO stop_areas VALUES (94853, 141693, 'FR:78217:ZDE:50097449:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:49:03.81267', '2017-03-23 13:27:37.444464', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (96986, 142461, 'FR:78402:ZDE:50000918:STIF', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8008754114950900, 48.9597048628052000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824621" created="2015-01-31T09:01:32.0Z" changed="2017-02-10T09:02:39.0Z" id="FR:78402:ZDE:50000918:STIF">
+INSERT INTO stop_areas VALUES (96986, 142461, 'FR::Quay:50000918:FR1', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8008754114950900, 48.9597048628052000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:58" version="824621" created="2015-01-31T09:01:32.0Z" changed="2017-02-10T09:02:39.0Z" id="FR::Quay:50000918:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3495,7 +3495,7 @@ INSERT INTO stop_areas VALUES (96986, 142461, 'FR:78402:ZDE:50000918:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:13658:STIF</Value>
+         <Value>FR::Quay:13658:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3516,7 +3516,7 @@ INSERT INTO stop_areas VALUES (96986, 142461, 'FR:78402:ZDE:50000918:STIF', 1, '
         <MobilityImpairedAccess>false</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:50:48.922238', '2017-03-23 13:28:33.806378', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (96985, 142462, 'FR:78402:ZDE:50009229:STIF', 1, 'LIBERATION', NULL, 'zdep', NULL, NULL, NULL, 1.8007139685441900, 48.9596213003233000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443459" created="2015-02-03T06:02:13.0Z" changed="2015-02-03T06:02:13.0Z" id="FR:78402:ZDE:50009229:STIF">
+INSERT INTO stop_areas VALUES (96985, 142462, 'FR::Quay:50009229:FR1', 1, 'LIBERATION', NULL, 'zdep', NULL, NULL, NULL, 1.8007139685441900, 48.9596213003233000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443459" created="2015-02-03T06:02:13.0Z" changed="2015-02-03T06:02:13.0Z" id="FR::Quay:50009229:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3524,7 +3524,7 @@ INSERT INTO stop_areas VALUES (96985, 142462, 'FR:78402:ZDE:50009229:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:13657:STIF</Value>
+         <Value>FR::Quay:13657:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3545,7 +3545,7 @@ INSERT INTO stop_areas VALUES (96985, 142462, 'FR:78402:ZDE:50009229:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:50:48.874593', '2017-03-23 13:28:33.850197', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (96987, 142462, 'FR:78402:ZDE:50009230:STIF', 1, 'LIBERATION', NULL, 'zdep', NULL, NULL, NULL, 1.8007889762727600, 48.9597479670721000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443461" created="2015-02-03T06:02:13.0Z" changed="2015-02-03T06:02:13.0Z" id="FR:78402:ZDE:50009230:STIF">
+INSERT INTO stop_areas VALUES (96987, 142462, 'FR::Quay:50009230:FR1', 1, 'LIBERATION', NULL, 'zdep', NULL, NULL, NULL, 1.8007889762727600, 48.9597479670721000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443461" created="2015-02-03T06:02:13.0Z" changed="2015-02-03T06:02:13.0Z" id="FR::Quay:50009230:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3553,7 +3553,7 @@ INSERT INTO stop_areas VALUES (96987, 142462, 'FR:78402:ZDE:50009230:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:13658:STIF</Value>
+         <Value>FR::Quay:13658:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3574,7 +3574,7 @@ INSERT INTO stop_areas VALUES (96987, 142462, 'FR:78402:ZDE:50009230:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:50:48.952717', '2017-03-23 13:28:33.872662', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (26354, 62468, 'FR:78402:ZDE:35371:STIF', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8014149803144700, 48.9589973240387000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="35371" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:35371:STIF">
+INSERT INTO stop_areas VALUES (26354, 62468, 'FR::Quay:35371:FR1', 1, 'Libération', NULL, 'zder', NULL, NULL, NULL, 1.8014149803144700, 48.9589973240387000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="35371" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:35371:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3582,7 +3582,7 @@ INSERT INTO stop_areas VALUES (26354, 62468, 'FR:78402:ZDE:35371:STIF', 1, 'Lib�
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50010290:STIF</Value>
+         <Value>FR::Quay:50010290:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3603,7 +3603,7 @@ INSERT INTO stop_areas VALUES (26354, 62468, 'FR:78402:ZDE:35371:STIF', 1, 'Lib�
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 11:50:49.023652', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (96988, 142463, 'FR:78402:ZDE:50010289:STIF', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8015371568591400, 48.9590607796269000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805573" created="2015-03-26T09:03:11.0Z" changed="2016-10-11T09:10:09.0Z" id="FR:78402:ZDE:50010289:STIF">
+INSERT INTO stop_areas VALUES (96988, 142463, 'FR::Quay:50010289:FR1', 1, 'Libération', NULL, 'zdep', NULL, NULL, NULL, 1.8015371568591400, 48.9590607796269000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805573" created="2015-03-26T09:03:11.0Z" changed="2016-10-11T09:10:09.0Z" id="FR::Quay:50010289:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3611,7 +3611,7 @@ INSERT INTO stop_areas VALUES (96988, 142463, 'FR:78402:ZDE:50010289:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:35370:STIF</Value>
+         <Value>FR::Quay:35370:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3632,7 +3632,7 @@ INSERT INTO stop_areas VALUES (96988, 142463, 'FR:78402:ZDE:50010289:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:50:48.999382', '2017-03-23 13:28:33.91767', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (31916, 67161, 'FR:78217:ZDE:32508:STIF', 1, 'LA BERGERIE', NULL, 'zder', NULL, NULL, NULL, 1.8388059189735000, 48.9739196359739000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32508" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32508:STIF">
+INSERT INTO stop_areas VALUES (31916, 67161, 'FR::Quay:32508:FR1', 1, 'LA BERGERIE', NULL, 'zder', NULL, NULL, NULL, 1.8388059189735000, 48.9739196359739000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32508" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32508:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3640,7 +3640,7 @@ INSERT INTO stop_areas VALUES (31916, 67161, 'FR:78217:ZDE:32508:STIF', 1, 'LA B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78029:ZDE:50009038:STIF</Value>
+         <Value>FR::Quay:50009038:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3661,7 +3661,7 @@ INSERT INTO stop_areas VALUES (31916, 67161, 'FR:78217:ZDE:32508:STIF', 1, 'LA B
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:55.908461', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31746, 67024, 'FR:78217:ZDE:32510:STIF', 1, 'LES DOLMENS', NULL, 'zder', NULL, NULL, NULL, 1.8328141968442100, 48.9702879693091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32510" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32510:STIF">
+INSERT INTO stop_areas VALUES (31746, 67024, 'FR::Quay:32510:FR1', 1, 'LES DOLMENS', NULL, 'zder', NULL, NULL, NULL, 1.8328141968442100, 48.9702879693091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32510" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32510:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3669,7 +3669,7 @@ INSERT INTO stop_areas VALUES (31746, 67024, 'FR:78217:ZDE:32510:STIF', 1, 'LES 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009042:STIF</Value>
+         <Value>FR::Quay:50009042:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3690,7 +3690,7 @@ INSERT INTO stop_areas VALUES (31746, 67024, 'FR:78217:ZDE:32510:STIF', 1, 'LES 
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.106211', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111192, 147681, 'FR:78217:ZDE:50009040:STIF', 1, 'BOUT DU MONDE', NULL, 'zdep', NULL, NULL, NULL, 1.8298075098006400, 48.9683646341499000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443418" created="2015-02-03T06:02:02.0Z" changed="2015-02-03T06:02:02.0Z" id="FR:78217:ZDE:50009040:STIF">
+INSERT INTO stop_areas VALUES (111192, 147681, 'FR::Quay:50009040:FR1', 1, 'BOUT DU MONDE', NULL, 'zdep', NULL, NULL, NULL, 1.8298075098006400, 48.9683646341499000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443418" created="2015-02-03T06:02:02.0Z" changed="2015-02-03T06:02:02.0Z" id="FR::Quay:50009040:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3698,7 +3698,7 @@ INSERT INTO stop_areas VALUES (111192, 147681, 'FR:78217:ZDE:50009040:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32509:STIF</Value>
+         <Value>FR::Quay:32509:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3719,7 +3719,7 @@ INSERT INTO stop_areas VALUES (111192, 147681, 'FR:78217:ZDE:50009040:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.006059', '2017-03-23 13:35:35.384263', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111194, 147683, 'FR:78217:ZDE:50098303:STIF', 1, 'Elisab. Pl du Maréchal Juin', NULL, 'zdep', NULL, NULL, NULL, 1.8368735974221300, 48.9714362201824000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:79" version="666349" created="2015-05-12T09:05:28.0Z" changed="2015-05-12T09:05:28.0Z" id="FR:78217:ZDE:50098303:STIF">
+INSERT INTO stop_areas VALUES (111194, 147683, 'FR::Quay:50098303:FR1', 1, 'Elisab. Pl du Maréchal Juin', NULL, 'zdep', NULL, NULL, NULL, 1.8368735974221300, 48.9714362201824000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:79" version="666349" created="2015-05-12T09:05:28.0Z" changed="2015-05-12T09:05:28.0Z" id="FR::Quay:50098303:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3727,7 +3727,7 @@ INSERT INTO stop_areas VALUES (111194, 147683, 'FR:78217:ZDE:50098303:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:416465:STIF</Value>
+         <Value>FR::Quay:416465:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Elisab. Pl du Maréchal Juin</Name>
@@ -3744,7 +3744,7 @@ INSERT INTO stop_areas VALUES (111194, 147683, 'FR:78217:ZDE:50098303:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.097518', '2017-03-23 13:35:35.424511', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111196, 147685, 'FR:78217:ZDE:50009043:STIF', 1, 'MAIRIE / ECOLE', NULL, 'zdep', NULL, NULL, NULL, 1.8369025765693800, 48.9732296430070000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443393" created="2015-02-03T06:02:56.0Z" changed="2015-02-03T06:02:56.0Z" id="FR:78217:ZDE:50009043:STIF">
+INSERT INTO stop_areas VALUES (111196, 147685, 'FR::Quay:50009043:FR1', 1, 'MAIRIE / ECOLE', NULL, 'zdep', NULL, NULL, NULL, 1.8369025765693800, 48.9732296430070000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443393" created="2015-02-03T06:02:56.0Z" changed="2015-02-03T06:02:56.0Z" id="FR::Quay:50009043:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3752,7 +3752,7 @@ INSERT INTO stop_areas VALUES (111196, 147685, 'FR:78217:ZDE:50009043:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32511:STIF</Value>
+         <Value>FR::Quay:32511:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3773,7 +3773,7 @@ INSERT INTO stop_areas VALUES (111196, 147685, 'FR:78217:ZDE:50009043:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.208646', '2017-03-23 13:35:35.486601', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (26276, 62400, 'FR:78402:ZDE:32517:STIF', 1, 'AVENUE DE LA GARE', NULL, 'zder', NULL, NULL, NULL, 1.8076656653974800, 48.9580496150535000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32517" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32517:STIF">
+INSERT INTO stop_areas VALUES (26276, 62400, 'FR::Quay:32517:FR1', 1, 'AVENUE DE LA GARE', NULL, 'zder', NULL, NULL, NULL, 1.8076656653974800, 48.9580496150535000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32517" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32517:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3781,7 +3781,7 @@ INSERT INTO stop_areas VALUES (26276, 62400, 'FR:78402:ZDE:32517:STIF', 1, 'AVEN
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009048:STIF</Value>
+         <Value>FR::Quay:50009048:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3802,7 +3802,7 @@ INSERT INTO stop_areas VALUES (26276, 62400, 'FR:78402:ZDE:32517:STIF', 1, 'AVEN
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.521265', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26277, 62400, 'FR:78402:ZDE:32518:STIF', 1, 'AVENUE DE LA GARE', NULL, 'zder', NULL, NULL, NULL, 1.8076239920404600, 48.9580212851215000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32518" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32518:STIF">
+INSERT INTO stop_areas VALUES (26277, 62400, 'FR::Quay:32518:FR1', 1, 'AVENUE DE LA GARE', NULL, 'zder', NULL, NULL, NULL, 1.8076239920404600, 48.9580212851215000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32518" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32518:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3810,7 +3810,7 @@ INSERT INTO stop_areas VALUES (26277, 62400, 'FR:78402:ZDE:32518:STIF', 1, 'AVEN
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009049:STIF</Value>
+         <Value>FR::Quay:50009049:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3831,7 +3831,7 @@ INSERT INTO stop_areas VALUES (26277, 62400, 'FR:78402:ZDE:32518:STIF', 1, 'AVEN
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.565485', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111203, 147691, 'FR:78217:ZDE:50009048:STIF', 1, 'AVENUE DE LA GARE', NULL, 'zdep', NULL, NULL, NULL, 1.8076656517435900, 48.9580496149177000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443372" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR:78217:ZDE:50009048:STIF">
+INSERT INTO stop_areas VALUES (111203, 147691, 'FR::Quay:50009048:FR1', 1, 'AVENUE DE LA GARE', NULL, 'zdep', NULL, NULL, NULL, 1.8076656517435900, 48.9580496149177000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443372" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR::Quay:50009048:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3839,7 +3839,7 @@ INSERT INTO stop_areas VALUES (111203, 147691, 'FR:78217:ZDE:50009048:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32517:STIF</Value>
+         <Value>FR::Quay:32517:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3860,7 +3860,7 @@ INSERT INTO stop_areas VALUES (111203, 147691, 'FR:78217:ZDE:50009048:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.553918', '2017-03-23 13:35:35.677727', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (26172, 62288, 'FR:78217:ZDE:32519:STIF', 1, 'CARREFOUR ST MARTIN', NULL, 'zder', NULL, NULL, NULL, 1.8195940225965100, 48.9537812663945000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32519" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32519:STIF">
+INSERT INTO stop_areas VALUES (26172, 62288, 'FR::Quay:32519:FR1', 1, 'CARREFOUR ST MARTIN', NULL, 'zder', NULL, NULL, NULL, 1.8195940225965100, 48.9537812663945000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32519" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32519:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3868,7 +3868,7 @@ INSERT INTO stop_areas VALUES (26172, 62288, 'FR:78217:ZDE:32519:STIF', 1, 'CARR
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009050:STIF</Value>
+         <Value>FR::Quay:50009050:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3889,7 +3889,7 @@ INSERT INTO stop_areas VALUES (26172, 62288, 'FR:78217:ZDE:32519:STIF', 1, 'CARR
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:56.622666', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111206, 147692, 'FR:78217:ZDE:50009051:STIF', 1, 'CARREFOUR ST MARTIN', NULL, 'zdep', NULL, NULL, NULL, 1.8193123651273500, 48.9536762647935000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443382" created="2015-02-03T06:02:53.0Z" changed="2015-02-03T06:02:53.0Z" id="FR:78217:ZDE:50009051:STIF">
+INSERT INTO stop_areas VALUES (111206, 147692, 'FR::Quay:50009051:FR1', 1, 'CARREFOUR ST MARTIN', NULL, 'zdep', NULL, NULL, NULL, 1.8193123651273500, 48.9536762647935000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443382" created="2015-02-03T06:02:53.0Z" changed="2015-02-03T06:02:53.0Z" id="FR::Quay:50009051:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3897,7 +3897,7 @@ INSERT INTO stop_areas VALUES (111206, 147692, 'FR:78217:ZDE:50009051:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32520:STIF</Value>
+         <Value>FR::Quay:32520:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3918,7 +3918,7 @@ INSERT INTO stop_areas VALUES (111206, 147692, 'FR:78217:ZDE:50009051:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.700142', '2017-03-23 13:35:35.781135', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111208, 147693, 'FR:78217:ZDE:50009053:STIF', 1, 'LE CHATEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8126173237632900, 48.9533412766717000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443341" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR:78217:ZDE:50009053:STIF">
+INSERT INTO stop_areas VALUES (111208, 147693, 'FR::Quay:50009053:FR1', 1, 'LE CHATEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8126173237632900, 48.9533412766717000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443341" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR::Quay:50009053:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3926,7 +3926,7 @@ INSERT INTO stop_areas VALUES (111208, 147693, 'FR:78217:ZDE:50009053:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32522:STIF</Value>
+         <Value>FR::Quay:32522:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3947,7 +3947,7 @@ INSERT INTO stop_areas VALUES (111208, 147693, 'FR:78217:ZDE:50009053:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.810321', '2017-03-23 13:35:35.835552', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (2853, 42267, 'FR:78217:ZDE:32529:STIF', 1, 'LES BICHES', NULL, 'zder', NULL, NULL, NULL, 1.8118139867675400, 48.9526329360882000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32529" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32529:STIF">
+INSERT INTO stop_areas VALUES (2853, 42267, 'FR::Quay:32529:FR1', 1, 'LES BICHES', NULL, 'zder', NULL, NULL, NULL, 1.8118139867675400, 48.9526329360882000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32529" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32529:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3955,7 +3955,7 @@ INSERT INTO stop_areas VALUES (2853, 42267, 'FR:78217:ZDE:32529:STIF', 1, 'LES B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009059:STIF</Value>
+         <Value>FR::Quay:50009059:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -3976,7 +3976,7 @@ INSERT INTO stop_areas VALUES (2853, 42267, 'FR:78217:ZDE:32529:STIF', 1, 'LES B
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:57.021688', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111210, 147695, 'FR:78217:ZDE:50009055:STIF', 1, 'LE FOURNEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8090855831237100, 48.9424962444185000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443352" created="2015-02-03T06:02:46.0Z" changed="2015-02-03T06:02:46.0Z" id="FR:78217:ZDE:50009055:STIF">
+INSERT INTO stop_areas VALUES (111210, 147695, 'FR::Quay:50009055:FR1', 1, 'LE FOURNEAU', NULL, 'zdep', NULL, NULL, NULL, 1.8090855831237100, 48.9424962444185000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443352" created="2015-02-03T06:02:46.0Z" changed="2015-02-03T06:02:46.0Z" id="FR::Quay:50009055:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -3984,7 +3984,7 @@ INSERT INTO stop_areas VALUES (111210, 147695, 'FR:78217:ZDE:50009055:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32526:STIF</Value>
+         <Value>FR::Quay:32526:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4005,7 +4005,7 @@ INSERT INTO stop_areas VALUES (111210, 147695, 'FR:78217:ZDE:50009055:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:56.905914', '2017-03-23 13:35:35.897663', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111212, 147696, 'FR:78217:ZDE:50009058:STIF', 1, 'LA FALAISE', NULL, 'zdep', NULL, NULL, NULL, 1.8215273784607000, 48.9563896026471000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443320" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR:78217:ZDE:50009058:STIF">
+INSERT INTO stop_areas VALUES (111212, 147696, 'FR::Quay:50009058:FR1', 1, 'LA FALAISE', NULL, 'zdep', NULL, NULL, NULL, 1.8215273784607000, 48.9563896026471000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443320" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR::Quay:50009058:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4013,7 +4013,7 @@ INSERT INTO stop_areas VALUES (111212, 147696, 'FR:78217:ZDE:50009058:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32528:STIF</Value>
+         <Value>FR::Quay:32528:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4034,7 +4034,7 @@ INSERT INTO stop_areas VALUES (111212, 147696, 'FR:78217:ZDE:50009058:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:57.008691', '2017-03-23 13:35:35.935952', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (2592, 42061, 'FR:78217:ZDE:32531:STIF', 1, 'MOULIN A VENT', NULL, 'zder', NULL, NULL, NULL, 1.8099622622031800, 48.9454845919617000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32531" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32531:STIF">
+INSERT INTO stop_areas VALUES (2592, 42061, 'FR::Quay:32531:FR1', 1, 'MOULIN A VENT', NULL, 'zder', NULL, NULL, NULL, 1.8099622622031800, 48.9454845919617000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32531" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32531:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4042,7 +4042,7 @@ INSERT INTO stop_areas VALUES (2592, 42061, 'FR:78217:ZDE:32531:STIF', 1, 'MOULI
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009062:STIF</Value>
+         <Value>FR::Quay:50009062:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4063,7 +4063,7 @@ INSERT INTO stop_areas VALUES (2592, 42061, 'FR:78217:ZDE:32531:STIF', 1, 'MOULI
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:57.068362', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (26244, 62366, 'FR:78217:ZDE:32532:STIF', 1, 'POTEAU', NULL, 'zder', NULL, NULL, NULL, 1.8301257677224300, 48.9567112696982000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32532" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32532:STIF">
+INSERT INTO stop_areas VALUES (26244, 62366, 'FR::Quay:32532:FR1', 1, 'POTEAU', NULL, 'zder', NULL, NULL, NULL, 1.8301257677224300, 48.9567112696982000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32532" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32532:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4071,7 +4071,7 @@ INSERT INTO stop_areas VALUES (26244, 62366, 'FR:78217:ZDE:32532:STIF', 1, 'POTE
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009066:STIF</Value>
+         <Value>FR::Quay:50009066:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4092,7 +4092,7 @@ INSERT INTO stop_areas VALUES (26244, 62366, 'FR:78217:ZDE:32532:STIF', 1, 'POTE
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:05:57.134609', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111214, 147698, 'FR:78217:ZDE:50009062:STIF', 1, 'MOULIN A VENT', NULL, 'zdep', NULL, NULL, NULL, 1.8099622622031800, 48.9454845919617000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443326" created="2015-02-03T06:02:40.0Z" changed="2015-02-03T06:02:40.0Z" id="FR:78217:ZDE:50009062:STIF">
+INSERT INTO stop_areas VALUES (111214, 147698, 'FR::Quay:50009062:FR1', 1, 'MOULIN A VENT', NULL, 'zdep', NULL, NULL, NULL, 1.8099622622031800, 48.9454845919617000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443326" created="2015-02-03T06:02:40.0Z" changed="2015-02-03T06:02:40.0Z" id="FR::Quay:50009062:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4100,7 +4100,7 @@ INSERT INTO stop_areas VALUES (111214, 147698, 'FR:78217:ZDE:50009062:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32531:STIF</Value>
+         <Value>FR::Quay:32531:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4121,7 +4121,7 @@ INSERT INTO stop_areas VALUES (111214, 147698, 'FR:78217:ZDE:50009062:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:05:57.110603', '2017-03-23 13:35:35.997324', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (20018, 57001, 'FR:78402:ZDE:32782:STIF', 1, 'BOIS DE L''AULNE', NULL, 'zder', NULL, NULL, NULL, 1.7941171745678400, 48.9425629280426000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32782" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32782:STIF">
+INSERT INTO stop_areas VALUES (20018, 57001, 'FR::Quay:32782:FR1', 1, 'BOIS DE L''AULNE', NULL, 'zder', NULL, NULL, NULL, 1.7941171745678400, 48.9425629280426000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32782" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32782:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4129,7 +4129,7 @@ INSERT INTO stop_areas VALUES (20018, 57001, 'FR:78402:ZDE:32782:STIF', 1, 'BOIS
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009383:STIF</Value>
+         <Value>FR::Quay:50009383:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4150,7 +4150,7 @@ INSERT INTO stop_areas VALUES (20018, 57001, 'FR:78402:ZDE:32782:STIF', 1, 'BOIS
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.2599', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111383, 147800, 'FR:78217:ZDE:50009382:STIF', 1, 'BOIS DE L''AULNE', NULL, 'zdep', NULL, NULL, NULL, 1.7942321823644500, 48.9427262657198000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444526" created="2015-02-03T06:02:26.0Z" changed="2015-02-03T06:02:26.0Z" id="FR:78217:ZDE:50009382:STIF">
+INSERT INTO stop_areas VALUES (111383, 147800, 'FR::Quay:50009382:FR1', 1, 'BOIS DE L''AULNE', NULL, 'zdep', NULL, NULL, NULL, 1.7942321823644500, 48.9427262657198000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444526" created="2015-02-03T06:02:26.0Z" changed="2015-02-03T06:02:26.0Z" id="FR::Quay:50009382:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4158,7 +4158,7 @@ INSERT INTO stop_areas VALUES (111383, 147800, 'FR:78217:ZDE:50009382:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32783:STIF</Value>
+         <Value>FR::Quay:32783:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4179,7 +4179,7 @@ INSERT INTO stop_areas VALUES (111383, 147800, 'FR:78217:ZDE:50009382:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.352658', '2017-03-23 13:35:40.45913', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (26382, 62495, 'FR:78402:ZDE:32788:STIF', 1, 'PLACE CDT GRIMBLOT', NULL, 'zder', NULL, NULL, NULL, 1.7949872944624100, 48.9607562930931000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32788" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32788:STIF">
+INSERT INTO stop_areas VALUES (26382, 62495, 'FR::Quay:32788:FR1', 1, 'PLACE CDT GRIMBLOT', NULL, 'zder', NULL, NULL, NULL, 1.7949872944624100, 48.9607562930931000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32788" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32788:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4187,7 +4187,7 @@ INSERT INTO stop_areas VALUES (26382, 62495, 'FR:78402:ZDE:32788:STIF', 1, 'PLAC
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009388:STIF</Value>
+         <Value>FR::Quay:50009388:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4208,7 +4208,7 @@ INSERT INTO stop_areas VALUES (26382, 62495, 'FR:78402:ZDE:32788:STIF', 1, 'PLAC
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.461722', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111385, 147801, 'FR:78217:ZDE:50009385:STIF', 1, 'BROUILLARD', NULL, 'zdep', NULL, NULL, NULL, 1.7870004023971600, 48.9261295695634000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444536" created="2015-02-03T06:02:30.0Z" changed="2015-02-03T06:02:30.0Z" id="FR:78217:ZDE:50009385:STIF">
+INSERT INTO stop_areas VALUES (111385, 147801, 'FR::Quay:50009385:FR1', 1, 'BROUILLARD', NULL, 'zdep', NULL, NULL, NULL, 1.7870004023971600, 48.9261295695634000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444536" created="2015-02-03T06:02:30.0Z" changed="2015-02-03T06:02:30.0Z" id="FR::Quay:50009385:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4216,7 +4216,7 @@ INSERT INTO stop_areas VALUES (111385, 147801, 'FR:78217:ZDE:50009385:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32785:STIF</Value>
+         <Value>FR::Quay:32785:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4237,7 +4237,7 @@ INSERT INTO stop_areas VALUES (111385, 147801, 'FR:78217:ZDE:50009385:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.448573', '2017-03-23 13:35:40.563591', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111387, 147803, 'FR:78402:ZDE:50009389:STIF', 1, 'CHAUFFOUR', NULL, 'zdep', NULL, NULL, NULL, 1.7981472685123400, 48.9541279492270000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444555" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR:78402:ZDE:50009389:STIF">
+INSERT INTO stop_areas VALUES (111387, 147803, 'FR::Quay:50009389:FR1', 1, 'CHAUFFOUR', NULL, 'zdep', NULL, NULL, NULL, 1.7981472685123400, 48.9541279492270000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444555" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR::Quay:50009389:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4245,7 +4245,7 @@ INSERT INTO stop_areas VALUES (111387, 147803, 'FR:78402:ZDE:50009389:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32789:STIF</Value>
+         <Value>FR::Quay:32789:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4266,7 +4266,7 @@ INSERT INTO stop_areas VALUES (111387, 147803, 'FR:78402:ZDE:50009389:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.535656', '2017-03-23 13:35:40.643597', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (2773, 42187, 'FR:78402:ZDE:32791:STIF', 1, 'CHEMIN DE L''EPINE', NULL, 'zder', NULL, NULL, NULL, 1.7941822176487300, 48.9501596076067000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32791" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32791:STIF">
+INSERT INTO stop_areas VALUES (2773, 42187, 'FR::Quay:32791:FR1', 1, 'CHEMIN DE L''EPINE', NULL, 'zder', NULL, NULL, NULL, 1.7941822176487300, 48.9501596076067000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32791" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32791:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4274,7 +4274,7 @@ INSERT INTO stop_areas VALUES (2773, 42187, 'FR:78402:ZDE:32791:STIF', 1, 'CHEMI
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009391:STIF</Value>
+         <Value>FR::Quay:50009391:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4295,7 +4295,7 @@ INSERT INTO stop_areas VALUES (2773, 42187, 'FR:78402:ZDE:32791:STIF', 1, 'CHEMI
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.593626', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (31421, 66732, 'FR:78402:ZDE:32793:STIF', 1, 'FONTAINE', NULL, 'zder', NULL, NULL, NULL, 1.7892689374423600, 48.9609196304168000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32793" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32793:STIF">
+INSERT INTO stop_areas VALUES (31421, 66732, 'FR::Quay:32793:FR1', 1, 'FONTAINE', NULL, 'zder', NULL, NULL, NULL, 1.7892689374423600, 48.9609196304168000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32793" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32793:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4303,7 +4303,7 @@ INSERT INTO stop_areas VALUES (31421, 66732, 'FR:78402:ZDE:32793:STIF', 1, 'FONT
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009393:STIF</Value>
+         <Value>FR::Quay:50009393:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4324,7 +4324,7 @@ INSERT INTO stop_areas VALUES (31421, 66732, 'FR:78402:ZDE:32793:STIF', 1, 'FONT
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.684842', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111389, 147804, 'FR:78402:ZDE:50009391:STIF', 1, 'CHEMIN DE L''EPINE', NULL, 'zdep', NULL, NULL, NULL, 1.7941822176487300, 48.9501596076067000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444563" created="2015-02-03T06:02:42.0Z" changed="2015-02-03T06:02:42.0Z" id="FR:78402:ZDE:50009391:STIF">
+INSERT INTO stop_areas VALUES (111389, 147804, 'FR::Quay:50009391:FR1', 1, 'CHEMIN DE L''EPINE', NULL, 'zdep', NULL, NULL, NULL, 1.7941822176487300, 48.9501596076067000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444563" created="2015-02-03T06:02:42.0Z" changed="2015-02-03T06:02:42.0Z" id="FR::Quay:50009391:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4332,7 +4332,7 @@ INSERT INTO stop_areas VALUES (111389, 147804, 'FR:78402:ZDE:50009391:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32791:STIF</Value>
+         <Value>FR::Quay:32791:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4353,7 +4353,7 @@ INSERT INTO stop_areas VALUES (111389, 147804, 'FR:78402:ZDE:50009391:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.627244', '2017-03-23 13:35:40.718223', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (2706, 42130, 'FR:78402:ZDE:32795:STIF', 1, 'LA VILLENEUVE', NULL, 'zder', NULL, NULL, NULL, 1.7936538795271800, 48.9478062696551000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32795" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDE:32795:STIF">
+INSERT INTO stop_areas VALUES (2706, 42130, 'FR::Quay:32795:FR1', 1, 'LA VILLENEUVE', NULL, 'zder', NULL, NULL, NULL, 1.7936538795271800, 48.9478062696551000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32795" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32795:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4361,7 +4361,7 @@ INSERT INTO stop_areas VALUES (2706, 42130, 'FR:78402:ZDE:32795:STIF', 1, 'LA VI
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:50009395:STIF</Value>
+         <Value>FR::Quay:50009395:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4382,7 +4382,7 @@ INSERT INTO stop_areas VALUES (2706, 42130, 'FR:78402:ZDE:32795:STIF', 1, 'LA VI
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:06:05.773559', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (111393, 147806, 'FR:78402:ZDE:50009395:STIF', 1, 'LA VILLENEUVE', NULL, 'zdep', NULL, NULL, NULL, 1.7936538656674500, 48.9478062785091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444576" created="2015-02-03T06:02:47.0Z" changed="2015-02-03T06:02:47.0Z" id="FR:78402:ZDE:50009395:STIF">
+INSERT INTO stop_areas VALUES (111393, 147806, 'FR::Quay:50009395:FR1', 1, 'LA VILLENEUVE', NULL, 'zdep', NULL, NULL, NULL, 1.7936538656674500, 48.9478062785091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444576" created="2015-02-03T06:02:47.0Z" changed="2015-02-03T06:02:47.0Z" id="FR::Quay:50009395:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4390,7 +4390,7 @@ INSERT INTO stop_areas VALUES (111393, 147806, 'FR:78402:ZDE:50009395:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32795:STIF</Value>
+         <Value>FR::Quay:32795:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4411,7 +4411,7 @@ INSERT INTO stop_areas VALUES (111393, 147806, 'FR:78402:ZDE:50009395:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.806392', '2017-03-23 13:35:40.82817', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (111394, 147807, 'FR:78402:ZDE:50009396:STIF', 1, 'LISERETTES', NULL, 'zdep', NULL, NULL, NULL, 1.7955805720521800, 48.9523196070409000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444586" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR:78402:ZDE:50009396:STIF">
+INSERT INTO stop_areas VALUES (111394, 147807, 'FR::Quay:50009396:FR1', 1, 'LISERETTES', NULL, 'zdep', NULL, NULL, NULL, 1.7955805720521800, 48.9523196070409000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444586" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR::Quay:50009396:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4419,7 +4419,7 @@ INSERT INTO stop_areas VALUES (111394, 147807, 'FR:78402:ZDE:50009396:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDE:32798:STIF</Value>
+         <Value>FR::Quay:32798:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4440,7 +4440,7 @@ INSERT INTO stop_areas VALUES (111394, 147807, 'FR:78402:ZDE:50009396:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:06:05.858089', '2017-03-23 13:35:40.93123', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (125584, 153497, 'FR:78217:ZDE:50009034:STIF', 1, 'AVENUE D''EPONE', NULL, 'zdep', NULL, NULL, NULL, 1.8337208462130300, 48.9686746307704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="445775" created="2015-02-03T07:02:44.0Z" changed="2015-02-03T07:02:44.0Z" id="FR:78217:ZDE:50009034:STIF">
+INSERT INTO stop_areas VALUES (125584, 153497, 'FR::Quay:50009034:FR1', 1, 'AVENUE D''EPONE', NULL, 'zdep', NULL, NULL, NULL, 1.8337208462130300, 48.9686746307704000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="445775" created="2015-02-03T07:02:44.0Z" changed="2015-02-03T07:02:44.0Z" id="FR::Quay:50009034:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4448,7 +4448,7 @@ INSERT INTO stop_areas VALUES (125584, 153497, 'FR:78217:ZDE:50009034:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32504:STIF</Value>
+         <Value>FR::Quay:32504:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4469,7 +4469,7 @@ INSERT INTO stop_areas VALUES (125584, 153497, 'FR:78217:ZDE:50009034:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:17:26.298622', '2017-03-23 12:17:26.298622', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (129289, NULL, 'FR:78217:ZDE:50009386:STIF', 1, 'CANADA', NULL, 'zdep', NULL, NULL, NULL, 1.7903770996057600, 48.9298595765723000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444542" created="2015-02-03T06:02:33.0Z" changed="2015-02-03T06:02:33.0Z" id="FR:78217:ZDE:50009386:STIF">
+INSERT INTO stop_areas VALUES (129289, NULL, 'FR::Quay:50009386:FR1', 1, 'CANADA', NULL, 'zdep', NULL, NULL, NULL, 1.7903770996057600, 48.9298595765723000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444542" created="2015-02-03T06:02:33.0Z" changed="2015-02-03T06:02:33.0Z" id="FR::Quay:50009386:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4477,7 +4477,7 @@ INSERT INTO stop_areas VALUES (129289, NULL, 'FR:78217:ZDE:50009386:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32786:STIF</Value>
+         <Value>FR::Quay:32786:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4498,7 +4498,7 @@ INSERT INTO stop_areas VALUES (129289, NULL, 'FR:78217:ZDE:50009386:STIF', 1, 'C
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:20:55.457246', '2017-03-23 12:20:55.457246', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (19659, 56713, 'FR:78217:ZDE:32787:STIF', 1, 'CANADA', NULL, 'zder', NULL, NULL, NULL, 1.7902854280654100, 48.9289362426669000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32787" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32787:STIF">
+INSERT INTO stop_areas VALUES (19659, 56713, 'FR::Quay:32787:FR1', 1, 'CANADA', NULL, 'zder', NULL, NULL, NULL, 1.7902854280654100, 48.9289362426669000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32787" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32787:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4506,7 +4506,7 @@ INSERT INTO stop_areas VALUES (19659, 56713, 'FR:78217:ZDE:32787:STIF', 1, 'CANA
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009387:STIF</Value>
+         <Value>FR::Quay:50009387:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4527,7 +4527,7 @@ INSERT INTO stop_areas VALUES (19659, 56713, 'FR:78217:ZDE:32787:STIF', 1, 'CANA
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:20:55.494089', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (129290, 155111, 'FR:78217:ZDE:50009387:STIF', 1, 'CANADA', NULL, 'zdep', NULL, NULL, NULL, 1.7902854146282800, 48.9289362335376000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444544" created="2015-02-03T06:02:34.0Z" changed="2015-02-03T06:02:34.0Z" id="FR:78217:ZDE:50009387:STIF">
+INSERT INTO stop_areas VALUES (129290, 155111, 'FR::Quay:50009387:FR1', 1, 'CANADA', NULL, 'zdep', NULL, NULL, NULL, 1.7902854146282800, 48.9289362335376000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="444544" created="2015-02-03T06:02:34.0Z" changed="2015-02-03T06:02:34.0Z" id="FR::Quay:50009387:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4535,7 +4535,7 @@ INSERT INTO stop_areas VALUES (129290, 155111, 'FR:78217:ZDE:50009387:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32787:STIF</Value>
+         <Value>FR::Quay:32787:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4556,7 +4556,7 @@ INSERT INTO stop_areas VALUES (129290, 155111, 'FR:78217:ZDE:50009387:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:20:55.544443', '2017-03-23 12:20:55.544443', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (37771, 71575, 'FR:78217:ZDE:32525:STIF', 1, 'EMILE SERGENT', NULL, 'zder', NULL, NULL, NULL, 1.8170356954507600, 48.9568029441520000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32525" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDE:32525:STIF">
+INSERT INTO stop_areas VALUES (37771, 71575, 'FR::Quay:32525:FR1', 1, 'EMILE SERGENT', NULL, 'zder', NULL, NULL, NULL, 1.8170356954507600, 48.9568029441520000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" version="32525" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:32525:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4564,7 +4564,7 @@ INSERT INTO stop_areas VALUES (37771, 71575, 'FR:78217:ZDE:32525:STIF', 1, 'EMIL
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:50009064:STIF</Value>
+         <Value>FR::Quay:50009064:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4585,7 +4585,7 @@ INSERT INTO stop_areas VALUES (37771, 71575, 'FR:78217:ZDE:32525:STIF', 1, 'EMIL
         <MobilityImpairedAccess>partial</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, NULL, '2017-03-23 12:21:28.046604', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (129791, 155354, 'FR:78217:ZDE:50009064:STIF', 1, 'EMILE SERGENT', NULL, 'zdep', NULL, NULL, NULL, 1.8170356954507600, 48.9568029441520000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443297" created="2015-02-03T06:02:33.0Z" changed="2015-02-03T06:02:33.0Z" id="FR:78217:ZDE:50009064:STIF">
+INSERT INTO stop_areas VALUES (129791, 155354, 'FR::Quay:50009064:FR1', 1, 'EMILE SERGENT', NULL, 'zdep', NULL, NULL, NULL, 1.8170356954507600, 48.9568029441520000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="443297" created="2015-02-03T06:02:33.0Z" changed="2015-02-03T06:02:33.0Z" id="FR::Quay:50009064:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4593,7 +4593,7 @@ INSERT INTO stop_areas VALUES (129791, 155354, 'FR:78217:ZDE:50009064:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32525:STIF</Value>
+         <Value>FR::Quay:32525:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4614,7 +4614,7 @@ INSERT INTO stop_areas VALUES (129791, 155354, 'FR:78217:ZDE:50009064:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:21:28.07862', '2017-03-23 12:21:28.07862', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (129792, 155354, 'FR:78217:ZDE:50009063:STIF', 1, 'EMILE SERGENT', NULL, 'zdep', NULL, NULL, NULL, 1.8169827219037900, 48.9566756685959000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="717630" created="2015-02-03T06:02:33.0Z" changed="2015-07-17T09:07:43.0Z" id="FR:78217:ZDE:50009063:STIF">
+INSERT INTO stop_areas VALUES (129792, 155354, 'FR::Quay:50009063:FR1', 1, 'EMILE SERGENT', NULL, 'zdep', NULL, NULL, NULL, 1.8169827219037900, 48.9566756685959000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:21" version="717630" created="2015-02-03T06:02:33.0Z" changed="2015-07-17T09:07:43.0Z" id="FR::Quay:50009063:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4622,7 +4622,7 @@ INSERT INTO stop_areas VALUES (129792, 155354, 'FR:78217:ZDE:50009063:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDE:32524:STIF</Value>
+         <Value>FR::Quay:32524:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -4643,7 +4643,7 @@ INSERT INTO stop_areas VALUES (129792, 155354, 'FR:78217:ZDE:50009063:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:21:28.157954', '2017-03-23 12:21:28.157954', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (67024, 67023, 'FR:78217:ZDL:53987:STIF', 1, 'Les Dolmens', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53987" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53987:STIF">
+INSERT INTO stop_areas VALUES (67024, 67023, 'FR::Quay:53987:FR1', 1, 'Les Dolmens', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53987" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53987:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4651,7 +4651,7 @@ INSERT INTO stop_areas VALUES (67024, 67023, 'FR:78217:ZDL:53987:STIF', 1, 'Les 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008580:STIF</Value>
+         <Value>FR::Quay:50008580:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Les Dolmens</Name>
@@ -4667,10 +4667,10 @@ INSERT INTO stop_areas VALUES (67024, 67023, 'FR:78217:ZDL:53987:STIF', 1, 'Les 
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32510:STIF" version="32510"/>
+        <QuayRef ref="FR::Quay:32510:FR1" version="32510"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.378825', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (141689, NULL, 'FR:78217:ZDL:50009674:STIF', 1, 'EPONE Gare SNCF', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="805430" created="2015-03-26T09:03:28.0Z" changed="2016-10-11T09:10:04.0Z" id="FR:78217:ZDL:50009674:STIF">
+INSERT INTO stop_areas VALUES (141689, NULL, 'FR::Quay:50009674:FR1', 1, 'EPONE Gare SNCF', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="805430" created="2015-03-26T09:03:28.0Z" changed="2016-10-11T09:10:04.0Z" id="FR::Quay:50009674:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4678,7 +4678,7 @@ INSERT INTO stop_areas VALUES (141689, NULL, 'FR:78217:ZDL:50009674:STIF', 1, 'E
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:47882:STIF</Value>
+         <Value>FR::Quay:47882:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>EPONE Gare SNCF</Name>
@@ -4694,10 +4694,10 @@ INSERT INTO stop_areas VALUES (141689, NULL, 'FR:78217:ZDL:50009674:STIF', 1, 'E
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50010057:STIF" version="805429"/>
+        <QuayRef ref="FR::Quay:50010057:FR1" version="805429"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:36:02.854669', '2017-03-23 12:36:02.854669', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (141690, NULL, 'FR:78217:ZDL:50008591:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443359" created="2015-02-03T06:02:48.0Z" changed="2015-02-03T06:02:48.0Z" id="FR:78217:ZDL:50008591:STIF">
+INSERT INTO stop_areas VALUES (141690, NULL, 'FR::Quay:50008591:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443359" created="2015-02-03T06:02:48.0Z" changed="2015-02-03T06:02:48.0Z" id="FR::Quay:50008591:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4705,7 +4705,7 @@ INSERT INTO stop_areas VALUES (141690, NULL, 'FR:78217:ZDL:50008591:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:47882:STIF</Value>
+         <Value>FR::Quay:47882:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>GARE D''EPONE MEZIERES</Name>
@@ -4721,10 +4721,10 @@ INSERT INTO stop_areas VALUES (141690, NULL, 'FR:78217:ZDL:50008591:STIF', 1, 'G
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009056:STIF" version="443357"/>
+        <QuayRef ref="FR::Quay:50009056:FR1" version="443357"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:36:02.883358', '2017-03-23 12:36:02.883358', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (141692, NULL, 'FR:78217:ZDL:50094383:STIF', 1, 'EPONE Gare', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:81" version="637617" created="2015-03-30T02:03:39.0Z" changed="2015-03-30T02:03:39.0Z" id="FR:78217:ZDL:50094383:STIF">
+INSERT INTO stop_areas VALUES (141692, NULL, 'FR::Quay:50094383:FR1', 1, 'EPONE Gare', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:81" version="637617" created="2015-03-30T02:03:39.0Z" changed="2015-03-30T02:03:39.0Z" id="FR::Quay:50094383:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4732,7 +4732,7 @@ INSERT INTO stop_areas VALUES (141692, NULL, 'FR:78217:ZDL:50094383:STIF', 1, 'E
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:47882:STIF</Value>
+         <Value>FR::Quay:47882:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>EPONE Gare</Name>
@@ -4748,11 +4748,11 @@ INSERT INTO stop_areas VALUES (141692, NULL, 'FR:78217:ZDL:50094383:STIF', 1, 'E
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50094817:STIF" version="743658"/>
-        <QuayRef ref="FR:78217:ZDE:50094816:STIF" version="743659"/>
+        <QuayRef ref="FR::Quay:50094817:FR1" version="743658"/>
+        <QuayRef ref="FR::Quay:50094816:FR1" version="743659"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:36:02.979184', '2017-03-23 12:36:02.979184', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (141693, NULL, 'FR:78217:ZDL:50097107:STIF', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:76" version="709215" created="2015-06-15T09:06:37.0Z" changed="2015-06-15T09:06:37.0Z" id="FR:78217:ZDL:50097107:STIF">
+INSERT INTO stop_areas VALUES (141693, NULL, 'FR::Quay:50097107:FR1', 1, 'GARE D''EPONE MEZIERES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:76" version="709215" created="2015-06-15T09:06:37.0Z" changed="2015-06-15T09:06:37.0Z" id="FR::Quay:50097107:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4760,7 +4760,7 @@ INSERT INTO stop_areas VALUES (141693, NULL, 'FR:78217:ZDL:50097107:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:47882:STIF</Value>
+         <Value>FR::Quay:47882:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>GARE D''EPONE MEZIERES</Name>
@@ -4776,11 +4776,11 @@ INSERT INTO stop_areas VALUES (141693, NULL, 'FR:78217:ZDL:50097107:STIF', 1, 'G
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50097974:STIF" version="714158"/>
-        <QuayRef ref="FR:78217:ZDE:50097449:STIF" version="714159"/>
+        <QuayRef ref="FR::Quay:50097974:FR1" version="714158"/>
+        <QuayRef ref="FR::Quay:50097449:FR1" version="714159"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:36:03.047183', '2017-03-23 12:36:03.047183', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (62468, 62467, 'FR:78402:ZDL:43807:STIF', 1, 'Libération', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="43807" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:43807:STIF">
+INSERT INTO stop_areas VALUES (62468, 62467, 'FR::Quay:43807:FR1', 1, 'Libération', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="43807" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:43807:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4788,15 +4788,15 @@ INSERT INTO stop_areas VALUES (62468, 62467, 'FR:78402:ZDL:43807:STIF', 1, 'Lib�
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50000654:STIF</Value>
+         <Value>FR::Quay:50000654:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50008702:STIF</Value>
+         <Value>FR::Quay:50008702:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50009813:STIF</Value>
+         <Value>FR::Quay:50009813:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Libération</Name>
@@ -4812,13 +4812,13 @@ INSERT INTO stop_areas VALUES (62468, 62467, 'FR:78402:ZDL:43807:STIF', 1, 'Lib�
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:13657:STIF" version="795044"/>
-        <QuayRef ref="FR:78402:ZDE:13658:STIF" version="812704"/>
-        <QuayRef ref="FR:78402:ZDE:35370:STIF" version="35370"/>
-        <QuayRef ref="FR:78402:ZDE:35371:STIF" version="35371"/>
+        <QuayRef ref="FR::Quay:13657:FR1" version="795044"/>
+        <QuayRef ref="FR::Quay:13658:FR1" version="812704"/>
+        <QuayRef ref="FR::Quay:35370:FR1" version="35370"/>
+        <QuayRef ref="FR::Quay:35371:FR1" version="35371"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 12:37:06.725921', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (142461, NULL, 'FR:78402:ZDL:50000654:STIF', 1, 'Libération', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:58" version="428397" created="2015-01-31T09:01:34.0Z" changed="2015-01-31T09:01:34.0Z" id="FR:78402:ZDL:50000654:STIF">
+INSERT INTO stop_areas VALUES (142461, NULL, 'FR::Quay:50000654:FR1', 1, 'Libération', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:58" version="428397" created="2015-01-31T09:01:34.0Z" changed="2015-01-31T09:01:34.0Z" id="FR::Quay:50000654:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4826,7 +4826,7 @@ INSERT INTO stop_areas VALUES (142461, NULL, 'FR:78402:ZDL:50000654:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:43807:STIF</Value>
+         <Value>FR::Quay:43807:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Libération</Name>
@@ -4842,11 +4842,11 @@ INSERT INTO stop_areas VALUES (142461, NULL, 'FR:78402:ZDL:50000654:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50000918:STIF" version="824621"/>
-        <QuayRef ref="FR:78402:ZDE:50000917:STIF" version="824622"/>
+        <QuayRef ref="FR::Quay:50000918:FR1" version="824621"/>
+        <QuayRef ref="FR::Quay:50000917:FR1" version="824622"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:37:06.767804', '2017-03-23 12:37:06.767804', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (142462, NULL, 'FR:78402:ZDL:50008702:STIF', 1, 'LIBERATION', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443463" created="2015-02-03T06:02:13.0Z" changed="2015-02-03T06:02:13.0Z" id="FR:78402:ZDL:50008702:STIF">
+INSERT INTO stop_areas VALUES (142462, NULL, 'FR::Quay:50008702:FR1', 1, 'LIBERATION', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443463" created="2015-02-03T06:02:13.0Z" changed="2015-02-03T06:02:13.0Z" id="FR::Quay:50008702:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4854,7 +4854,7 @@ INSERT INTO stop_areas VALUES (142462, NULL, 'FR:78402:ZDL:50008702:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:43807:STIF</Value>
+         <Value>FR::Quay:43807:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LIBERATION</Name>
@@ -4870,11 +4870,11 @@ INSERT INTO stop_areas VALUES (142462, NULL, 'FR:78402:ZDL:50008702:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50009229:STIF" version="443459"/>
-        <QuayRef ref="FR:78402:ZDE:50009230:STIF" version="443461"/>
+        <QuayRef ref="FR::Quay:50009229:FR1" version="443459"/>
+        <QuayRef ref="FR::Quay:50009230:FR1" version="443461"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:37:06.790155', '2017-03-23 12:37:06.790155', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (142463, NULL, 'FR:78402:ZDL:50009813:STIF', 1, 'MEZIERES SUR SEINE Libération', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="632447" created="2015-03-26T09:03:11.0Z" changed="2015-03-26T09:03:11.0Z" id="FR:78402:ZDL:50009813:STIF">
+INSERT INTO stop_areas VALUES (142463, NULL, 'FR::Quay:50009813:FR1', 1, 'MEZIERES SUR SEINE Libération', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="632447" created="2015-03-26T09:03:11.0Z" changed="2015-03-26T09:03:11.0Z" id="FR::Quay:50009813:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4882,7 +4882,7 @@ INSERT INTO stop_areas VALUES (142463, NULL, 'FR:78402:ZDL:50009813:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:43807:STIF</Value>
+         <Value>FR::Quay:43807:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>MEZIERES SUR SEINE Libération</Name>
@@ -4898,11 +4898,11 @@ INSERT INTO stop_areas VALUES (142463, NULL, 'FR:78402:ZDL:50009813:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50010290:STIF" version="805572"/>
-        <QuayRef ref="FR:78402:ZDE:50010289:STIF" version="805573"/>
+        <QuayRef ref="FR::Quay:50010290:FR1" version="805572"/>
+        <QuayRef ref="FR::Quay:50010289:FR1" version="805573"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:37:06.856562', '2017-03-23 12:37:06.856562', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (67161, 67160, 'FR:78217:ZDL:53984:STIF', 1, 'La Bergerie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53984" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53984:STIF">
+INSERT INTO stop_areas VALUES (67161, 67160, 'FR::Quay:53984:FR1', 1, 'La Bergerie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53984" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53984:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4910,7 +4910,7 @@ INSERT INTO stop_areas VALUES (67161, 67160, 'FR:78217:ZDL:53984:STIF', 1, 'La B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78029:ZDL:50008576:STIF</Value>
+         <Value>FR::Quay:50008576:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>La Bergerie</Name>
@@ -4926,10 +4926,10 @@ INSERT INTO stop_areas VALUES (67161, 67160, 'FR:78217:ZDL:53984:STIF', 1, 'La B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32508:STIF" version="32508"/>
+        <QuayRef ref="FR::Quay:32508:FR1" version="32508"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.210172', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (147694, NULL, 'FR:78217:ZDL:50008589:STIF', 1, 'CHEMIN NEUF', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443349" created="2015-02-03T06:02:45.0Z" changed="2015-02-03T06:02:45.0Z" id="FR:78217:ZDL:50008589:STIF">
+INSERT INTO stop_areas VALUES (147694, NULL, 'FR::Quay:50008589:FR1', 1, 'CHEMIN NEUF', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443349" created="2015-02-03T06:02:45.0Z" changed="2015-02-03T06:02:45.0Z" id="FR::Quay:50008589:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4937,7 +4937,7 @@ INSERT INTO stop_areas VALUES (147694, NULL, 'FR:78217:ZDL:50008589:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53995:STIF</Value>
+         <Value>FR::Quay:53995:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>CHEMIN NEUF</Name>
@@ -4953,10 +4953,10 @@ INSERT INTO stop_areas VALUES (147694, NULL, 'FR:78217:ZDL:50008589:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009054:STIF" version="443347"/>
+        <QuayRef ref="FR::Quay:50009054:FR1" version="443347"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.862072', '2017-03-23 13:09:23.862072', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147695, NULL, 'FR:78217:ZDL:50008590:STIF', 1, 'LE FOURNEAU', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443354" created="2015-02-03T06:02:46.0Z" changed="2015-02-03T06:02:46.0Z" id="FR:78217:ZDL:50008590:STIF">
+INSERT INTO stop_areas VALUES (147695, NULL, 'FR::Quay:50008590:FR1', 1, 'LE FOURNEAU', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443354" created="2015-02-03T06:02:46.0Z" changed="2015-02-03T06:02:46.0Z" id="FR::Quay:50008590:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4964,7 +4964,7 @@ INSERT INTO stop_areas VALUES (147695, NULL, 'FR:78217:ZDL:50008590:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53996:STIF</Value>
+         <Value>FR::Quay:53996:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LE FOURNEAU</Name>
@@ -4980,10 +4980,10 @@ INSERT INTO stop_areas VALUES (147695, NULL, 'FR:78217:ZDL:50008590:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009055:STIF" version="443352"/>
+        <QuayRef ref="FR::Quay:50009055:FR1" version="443352"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.92171', '2017-03-23 13:09:23.92171', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147681, NULL, 'FR:78217:ZDL:50008578:STIF', 1, 'BOUT DU MONDE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443420" created="2015-02-03T06:02:02.0Z" changed="2015-02-03T06:02:02.0Z" id="FR:78217:ZDL:50008578:STIF">
+INSERT INTO stop_areas VALUES (147681, NULL, 'FR::Quay:50008578:FR1', 1, 'BOUT DU MONDE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443420" created="2015-02-03T06:02:02.0Z" changed="2015-02-03T06:02:02.0Z" id="FR::Quay:50008578:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -4991,7 +4991,7 @@ INSERT INTO stop_areas VALUES (147681, NULL, 'FR:78217:ZDL:50008578:STIF', 1, 'B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53985:STIF</Value>
+         <Value>FR::Quay:53985:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>BOUT DU MONDE</Name>
@@ -5007,10 +5007,10 @@ INSERT INTO stop_areas VALUES (147681, NULL, 'FR:78217:ZDL:50008578:STIF', 1, 'B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009040:STIF" version="443418"/>
+        <QuayRef ref="FR::Quay:50009040:FR1" version="443418"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.284977', '2017-03-23 13:09:23.284977', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147677, NULL, 'FR:78217:ZDL:50008573:STIF', 1, 'BOULEVARD DE BRUXELLES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="445782" created="2015-02-03T07:02:49.0Z" changed="2015-02-03T07:02:49.0Z" id="FR:78217:ZDL:50008573:STIF">
+INSERT INTO stop_areas VALUES (147677, NULL, 'FR::Quay:50008573:FR1', 1, 'BOULEVARD DE BRUXELLES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="445782" created="2015-02-03T07:02:49.0Z" changed="2015-02-03T07:02:49.0Z" id="FR::Quay:50008573:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5018,7 +5018,7 @@ INSERT INTO stop_areas VALUES (147677, NULL, 'FR:78217:ZDL:50008573:STIF', 1, 'B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78029:ZDL:53981:STIF</Value>
+         <Value>FR::Quay:53981:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>BOULEVARD DE BRUXELLES</Name>
@@ -5034,10 +5034,10 @@ INSERT INTO stop_areas VALUES (147677, NULL, 'FR:78217:ZDL:50008573:STIF', 1, 'B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009035:STIF" version="445780"/>
+        <QuayRef ref="FR::Quay:50009035:FR1" version="445780"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.097245', '2017-03-23 13:09:23.097245', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (67014, 67013, 'FR:78217:ZDL:53983:STIF', 1, 'Boulevard de la Paix', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53983" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53983:STIF">
+INSERT INTO stop_areas VALUES (67014, 67013, 'FR::Quay:53983:FR1', 1, 'Boulevard de la Paix', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53983" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53983:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5045,7 +5045,7 @@ INSERT INTO stop_areas VALUES (67014, 67013, 'FR:78217:ZDL:53983:STIF', 1, 'Boul
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008575:STIF</Value>
+         <Value>FR::Quay:50008575:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Boulevard de la Paix</Name>
@@ -5061,10 +5061,10 @@ INSERT INTO stop_areas VALUES (67014, 67013, 'FR:78217:ZDL:53983:STIF', 1, 'Boul
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32507:STIF" version="32507"/>
+        <QuayRef ref="FR::Quay:32507:FR1" version="32507"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.153891', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (147679, NULL, 'FR:78217:ZDL:50008575:STIF', 1, 'BOULEVARD DE LA PAIX', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="445797" created="2015-02-03T07:02:58.0Z" changed="2015-02-03T07:02:58.0Z" id="FR:78217:ZDL:50008575:STIF">
+INSERT INTO stop_areas VALUES (147679, NULL, 'FR::Quay:50008575:FR1', 1, 'BOULEVARD DE LA PAIX', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="445797" created="2015-02-03T07:02:58.0Z" changed="2015-02-03T07:02:58.0Z" id="FR::Quay:50008575:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5072,7 +5072,7 @@ INSERT INTO stop_areas VALUES (147679, NULL, 'FR:78217:ZDL:50008575:STIF', 1, 'B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53983:STIF</Value>
+         <Value>FR::Quay:53983:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>BOULEVARD DE LA PAIX</Name>
@@ -5088,10 +5088,10 @@ INSERT INTO stop_areas VALUES (147679, NULL, 'FR:78217:ZDL:50008575:STIF', 1, 'B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009037:STIF" version="445795"/>
+        <QuayRef ref="FR::Quay:50009037:FR1" version="445795"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.192973', '2017-03-23 13:09:23.192973', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147682, NULL, 'FR:78217:ZDL:50008579:STIF', 1, 'PLACE MARECHAL JUIN', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443425" created="2015-02-03T06:02:04.0Z" changed="2015-02-03T06:02:04.0Z" id="FR:78217:ZDL:50008579:STIF">
+INSERT INTO stop_areas VALUES (147682, NULL, 'FR::Quay:50008579:FR1', 1, 'PLACE MARECHAL JUIN', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443425" created="2015-02-03T06:02:04.0Z" changed="2015-02-03T06:02:04.0Z" id="FR::Quay:50008579:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5099,7 +5099,7 @@ INSERT INTO stop_areas VALUES (147682, NULL, 'FR:78217:ZDL:50008579:STIF', 1, 'P
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53986:STIF</Value>
+         <Value>FR::Quay:53986:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>PLACE MARECHAL JUIN</Name>
@@ -5115,10 +5115,10 @@ INSERT INTO stop_areas VALUES (147682, NULL, 'FR:78217:ZDL:50008579:STIF', 1, 'P
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009041:STIF" version="443423"/>
+        <QuayRef ref="FR::Quay:50009041:FR1" version="443423"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.33706', '2017-03-23 13:09:23.33706', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147683, NULL, 'FR:78217:ZDL:50098328:STIF', 1, 'Elisab. Pl du Maréchal Juin', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:79" version="666353" created="2015-05-12T09:05:29.0Z" changed="2015-05-12T09:05:29.0Z" id="FR:78217:ZDL:50098328:STIF">
+INSERT INTO stop_areas VALUES (147683, NULL, 'FR::Quay:50098328:FR1', 1, 'Elisab. Pl du Maréchal Juin', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:79" version="666353" created="2015-05-12T09:05:29.0Z" changed="2015-05-12T09:05:29.0Z" id="FR::Quay:50098328:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5126,7 +5126,7 @@ INSERT INTO stop_areas VALUES (147683, NULL, 'FR:78217:ZDL:50098328:STIF', 1, 'E
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53986:STIF</Value>
+         <Value>FR::Quay:53986:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Elisab. Pl du Maréchal Juin</Name>
@@ -5142,10 +5142,10 @@ INSERT INTO stop_areas VALUES (147683, NULL, 'FR:78217:ZDL:50098328:STIF', 1, 'E
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50098303:STIF" version="666349"/>
+        <QuayRef ref="FR::Quay:50098303:FR1" version="666349"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.360074', '2017-03-23 13:09:23.360074', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147684, NULL, 'FR:78217:ZDL:50008580:STIF', 1, 'LES DOLMENS', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443390" created="2015-02-03T06:02:55.0Z" changed="2015-02-03T06:02:55.0Z" id="FR:78217:ZDL:50008580:STIF">
+INSERT INTO stop_areas VALUES (147684, NULL, 'FR::Quay:50008580:FR1', 1, 'LES DOLMENS', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443390" created="2015-02-03T06:02:55.0Z" changed="2015-02-03T06:02:55.0Z" id="FR::Quay:50008580:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5153,7 +5153,7 @@ INSERT INTO stop_areas VALUES (147684, NULL, 'FR:78217:ZDL:50008580:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53987:STIF</Value>
+         <Value>FR::Quay:53987:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LES DOLMENS</Name>
@@ -5169,10 +5169,10 @@ INSERT INTO stop_areas VALUES (147684, NULL, 'FR:78217:ZDL:50008580:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009042:STIF" version="443388"/>
+        <QuayRef ref="FR::Quay:50009042:FR1" version="443388"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.419063', '2017-03-23 13:09:23.419063', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147685, NULL, 'FR:78217:ZDL:50008581:STIF', 1, 'MAIRIE / ECOLE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443395" created="2015-02-03T06:02:56.0Z" changed="2015-02-03T06:02:56.0Z" id="FR:78217:ZDL:50008581:STIF">
+INSERT INTO stop_areas VALUES (147685, NULL, 'FR::Quay:50008581:FR1', 1, 'MAIRIE / ECOLE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443395" created="2015-02-03T06:02:56.0Z" changed="2015-02-03T06:02:56.0Z" id="FR::Quay:50008581:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5180,7 +5180,7 @@ INSERT INTO stop_areas VALUES (147685, NULL, 'FR:78217:ZDL:50008581:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53988:STIF</Value>
+         <Value>FR::Quay:53988:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>MAIRIE / ECOLE</Name>
@@ -5196,10 +5196,10 @@ INSERT INTO stop_areas VALUES (147685, NULL, 'FR:78217:ZDL:50008581:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009043:STIF" version="443393"/>
+        <QuayRef ref="FR::Quay:50009043:FR1" version="443393"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.462771', '2017-03-23 13:09:23.462771', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147690, NULL, 'FR:78217:ZDL:50008585:STIF', 1, 'ALLEE DE PINCELOUP', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443369" created="2015-02-03T06:02:50.0Z" changed="2015-02-03T06:02:50.0Z" id="FR:78217:ZDL:50008585:STIF">
+INSERT INTO stop_areas VALUES (147690, NULL, 'FR::Quay:50008585:FR1', 1, 'ALLEE DE PINCELOUP', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443369" created="2015-02-03T06:02:50.0Z" changed="2015-02-03T06:02:50.0Z" id="FR::Quay:50008585:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5207,7 +5207,7 @@ INSERT INTO stop_areas VALUES (147690, NULL, 'FR:78217:ZDL:50008585:STIF', 1, 'A
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53991:STIF</Value>
+         <Value>FR::Quay:53991:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>ALLEE DE PINCELOUP</Name>
@@ -5223,10 +5223,10 @@ INSERT INTO stop_areas VALUES (147690, NULL, 'FR:78217:ZDL:50008585:STIF', 1, 'A
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009047:STIF" version="443367"/>
+        <QuayRef ref="FR::Quay:50009047:FR1" version="443367"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.662263', '2017-03-23 13:09:23.662263', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (62400, 62399, 'FR:78402:ZDL:53992:STIF', 1, 'Avenue de la Gare', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="53992" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:53992:STIF">
+INSERT INTO stop_areas VALUES (62400, 62399, 'FR::Quay:53992:FR1', 1, 'Avenue de la Gare', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="53992" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53992:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5234,7 +5234,7 @@ INSERT INTO stop_areas VALUES (62400, 62399, 'FR:78402:ZDL:53992:STIF', 1, 'Aven
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008586:STIF</Value>
+         <Value>FR::Quay:50008586:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Avenue de la Gare</Name>
@@ -5250,11 +5250,11 @@ INSERT INTO stop_areas VALUES (62400, 62399, 'FR:78402:ZDL:53992:STIF', 1, 'Aven
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32517:STIF" version="32517"/>
-        <QuayRef ref="FR:78402:ZDE:32518:STIF" version="32518"/>
+        <QuayRef ref="FR::Quay:32517:FR1" version="32517"/>
+        <QuayRef ref="FR::Quay:32518:FR1" version="32518"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.677836', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (147691, NULL, 'FR:78217:ZDL:50008586:STIF', 1, 'AVENUE DE LA GARE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443376" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR:78217:ZDL:50008586:STIF">
+INSERT INTO stop_areas VALUES (147691, NULL, 'FR::Quay:50008586:FR1', 1, 'AVENUE DE LA GARE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443376" created="2015-02-03T06:02:51.0Z" changed="2015-02-03T06:02:51.0Z" id="FR::Quay:50008586:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5262,7 +5262,7 @@ INSERT INTO stop_areas VALUES (147691, NULL, 'FR:78217:ZDL:50008586:STIF', 1, 'A
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:53992:STIF</Value>
+         <Value>FR::Quay:53992:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>AVENUE DE LA GARE</Name>
@@ -5278,11 +5278,11 @@ INSERT INTO stop_areas VALUES (147691, NULL, 'FR:78217:ZDL:50008586:STIF', 1, 'A
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009048:STIF" version="443372"/>
-        <QuayRef ref="FR:78217:ZDE:50009049:STIF" version="443374"/>
+        <QuayRef ref="FR::Quay:50009048:FR1" version="443372"/>
+        <QuayRef ref="FR::Quay:50009049:FR1" version="443374"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.718946', '2017-03-23 13:09:23.718946', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147692, NULL, 'FR:78217:ZDL:50008587:STIF', 1, 'CARREFOUR ST MARTIN', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443384" created="2015-02-03T06:02:53.0Z" changed="2015-02-03T06:02:53.0Z" id="FR:78217:ZDL:50008587:STIF">
+INSERT INTO stop_areas VALUES (147692, NULL, 'FR::Quay:50008587:FR1', 1, 'CARREFOUR ST MARTIN', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443384" created="2015-02-03T06:02:53.0Z" changed="2015-02-03T06:02:53.0Z" id="FR::Quay:50008587:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5290,7 +5290,7 @@ INSERT INTO stop_areas VALUES (147692, NULL, 'FR:78217:ZDL:50008587:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53993:STIF</Value>
+         <Value>FR::Quay:53993:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>CARREFOUR ST MARTIN</Name>
@@ -5306,11 +5306,11 @@ INSERT INTO stop_areas VALUES (147692, NULL, 'FR:78217:ZDL:50008587:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009050:STIF" version="443380"/>
-        <QuayRef ref="FR:78217:ZDE:50009051:STIF" version="443382"/>
+        <QuayRef ref="FR::Quay:50009050:FR1" version="443380"/>
+        <QuayRef ref="FR::Quay:50009051:FR1" version="443382"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.762596', '2017-03-23 13:09:23.762596', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147693, NULL, 'FR:78217:ZDL:50008588:STIF', 1, 'LE CHATEAU', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443343" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR:78217:ZDL:50008588:STIF">
+INSERT INTO stop_areas VALUES (147693, NULL, 'FR::Quay:50008588:FR1', 1, 'LE CHATEAU', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443343" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR::Quay:50008588:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5318,7 +5318,7 @@ INSERT INTO stop_areas VALUES (147693, NULL, 'FR:78217:ZDL:50008588:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53994:STIF</Value>
+         <Value>FR::Quay:53994:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LE CHATEAU</Name>
@@ -5334,11 +5334,11 @@ INSERT INTO stop_areas VALUES (147693, NULL, 'FR:78217:ZDL:50008588:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009052:STIF" version="443339"/>
-        <QuayRef ref="FR:78217:ZDE:50009053:STIF" version="443341"/>
+        <QuayRef ref="FR::Quay:50009052:FR1" version="443339"/>
+        <QuayRef ref="FR::Quay:50009053:FR1" version="443341"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.81686', '2017-03-23 13:09:23.81686', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (42241, 42240, 'FR:78217:ZDL:53995:STIF', 1, 'Chemin Neuf', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53995" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53995:STIF">
+INSERT INTO stop_areas VALUES (42241, 42240, 'FR::Quay:53995:FR1', 1, 'Chemin Neuf', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53995" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53995:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5346,7 +5346,7 @@ INSERT INTO stop_areas VALUES (42241, 42240, 'FR:78217:ZDL:53995:STIF', 1, 'Chem
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008589:STIF</Value>
+         <Value>FR::Quay:50008589:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Chemin Neuf</Name>
@@ -5362,10 +5362,10 @@ INSERT INTO stop_areas VALUES (42241, 42240, 'FR:78217:ZDL:53995:STIF', 1, 'Chem
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32523:STIF" version="32523"/>
+        <QuayRef ref="FR::Quay:32523:FR1" version="32523"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.833318', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (62360, 62359, 'FR:78217:ZDL:53997:STIF', 1, 'La Falaise', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53997" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53997:STIF">
+INSERT INTO stop_areas VALUES (62360, 62359, 'FR::Quay:53997:FR1', 1, 'La Falaise', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53997" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53997:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5373,7 +5373,7 @@ INSERT INTO stop_areas VALUES (62360, 62359, 'FR:78217:ZDL:53997:STIF', 1, 'La F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008592:STIF</Value>
+         <Value>FR::Quay:50008592:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>La Falaise</Name>
@@ -5389,11 +5389,11 @@ INSERT INTO stop_areas VALUES (62360, 62359, 'FR:78217:ZDL:53997:STIF', 1, 'La F
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32527:STIF" version="32527"/>
-        <QuayRef ref="FR:78217:ZDE:32528:STIF" version="32528"/>
+        <QuayRef ref="FR::Quay:32527:FR1" version="32527"/>
+        <QuayRef ref="FR::Quay:32528:FR1" version="32528"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:23.931439', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (147696, NULL, 'FR:78217:ZDL:50008592:STIF', 1, 'LA FALAISE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443322" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR:78217:ZDL:50008592:STIF">
+INSERT INTO stop_areas VALUES (147696, NULL, 'FR::Quay:50008592:FR1', 1, 'LA FALAISE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443322" created="2015-02-03T06:02:38.0Z" changed="2015-02-03T06:02:38.0Z" id="FR::Quay:50008592:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5401,7 +5401,7 @@ INSERT INTO stop_areas VALUES (147696, NULL, 'FR:78217:ZDL:50008592:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53997:STIF</Value>
+         <Value>FR::Quay:53997:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LA FALAISE</Name>
@@ -5417,11 +5417,11 @@ INSERT INTO stop_areas VALUES (147696, NULL, 'FR:78217:ZDL:50008592:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009057:STIF" version="443318"/>
-        <QuayRef ref="FR:78217:ZDE:50009058:STIF" version="443320"/>
+        <QuayRef ref="FR::Quay:50009057:FR1" version="443318"/>
+        <QuayRef ref="FR::Quay:50009058:FR1" version="443320"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:23.971922', '2017-03-23 13:09:23.971922', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147697, NULL, 'FR:78217:ZDL:50008593:STIF', 1, 'LES BICHES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443315" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR:78217:ZDL:50008593:STIF">
+INSERT INTO stop_areas VALUES (147697, NULL, 'FR::Quay:50008593:FR1', 1, 'LES BICHES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443315" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR::Quay:50008593:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5429,7 +5429,7 @@ INSERT INTO stop_areas VALUES (147697, NULL, 'FR:78217:ZDL:50008593:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53998:STIF</Value>
+         <Value>FR::Quay:53998:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LES BICHES</Name>
@@ -5445,10 +5445,10 @@ INSERT INTO stop_areas VALUES (147697, NULL, 'FR:78217:ZDL:50008593:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009059:STIF" version="443313"/>
+        <QuayRef ref="FR::Quay:50009059:FR1" version="443313"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:24.02208', '2017-03-23 13:09:24.02208', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (42061, 42060, 'FR:78217:ZDL:53999:STIF', 1, 'Moulinà Vent', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53999" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78217:ZDL:53999:STIF">
+INSERT INTO stop_areas VALUES (42061, 42060, 'FR::Quay:53999:FR1', 1, 'Moulinà Vent', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="53999" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:53999:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5456,7 +5456,7 @@ INSERT INTO stop_areas VALUES (42061, 42060, 'FR:78217:ZDL:53999:STIF', 1, 'Moul
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008595:STIF</Value>
+         <Value>FR::Quay:50008595:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Moulin à Vent</Name>
@@ -5472,10 +5472,10 @@ INSERT INTO stop_areas VALUES (42061, 42060, 'FR:78217:ZDL:53999:STIF', 1, 'Moul
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32531:STIF" version="32531"/>
+        <QuayRef ref="FR::Quay:32531:FR1" version="32531"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:24.044', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (147698, NULL, 'FR:78217:ZDL:50008595:STIF', 1, 'MOULIN A VENT', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443328" created="2015-02-03T06:02:40.0Z" changed="2015-02-03T06:02:40.0Z" id="FR:78217:ZDL:50008595:STIF">
+INSERT INTO stop_areas VALUES (147698, NULL, 'FR::Quay:50008595:FR1', 1, 'MOULIN A VENT', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443328" created="2015-02-03T06:02:40.0Z" changed="2015-02-03T06:02:40.0Z" id="FR::Quay:50008595:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5483,7 +5483,7 @@ INSERT INTO stop_areas VALUES (147698, NULL, 'FR:78217:ZDL:50008595:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53999:STIF</Value>
+         <Value>FR::Quay:53999:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>MOULIN A VENT</Name>
@@ -5499,10 +5499,10 @@ INSERT INTO stop_areas VALUES (147698, NULL, 'FR:78217:ZDL:50008595:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009062:STIF" version="443326"/>
+        <QuayRef ref="FR::Quay:50009062:FR1" version="443326"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:24.085711', '2017-03-23 13:09:24.085711', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147699, NULL, 'FR:78217:ZDL:50008597:STIF', 1, 'POTEAU', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443291" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR:78217:ZDL:50008597:STIF">
+INSERT INTO stop_areas VALUES (147699, NULL, 'FR::Quay:50008597:FR1', 1, 'POTEAU', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443291" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR::Quay:50008597:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5510,7 +5510,7 @@ INSERT INTO stop_areas VALUES (147699, NULL, 'FR:78217:ZDL:50008597:STIF', 1, 'P
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:54000:STIF</Value>
+         <Value>FR::Quay:54000:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>POTEAU</Name>
@@ -5526,11 +5526,11 @@ INSERT INTO stop_areas VALUES (147699, NULL, 'FR:78217:ZDL:50008597:STIF', 1, 'P
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009065:STIF" version="443287"/>
-        <QuayRef ref="FR:78217:ZDE:50009066:STIF" version="443289"/>
+        <QuayRef ref="FR::Quay:50009065:FR1" version="443287"/>
+        <QuayRef ref="FR::Quay:50009066:FR1" version="443289"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:24.141993', '2017-03-23 13:09:24.141993', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147800, NULL, 'FR:78217:ZDL:50008786:STIF', 1, 'BOIS DE L''AULNE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444530" created="2015-02-03T06:02:28.0Z" changed="2015-02-03T06:02:28.0Z" id="FR:78217:ZDL:50008786:STIF">
+INSERT INTO stop_areas VALUES (147800, NULL, 'FR::Quay:50008786:FR1', 1, 'BOIS DE L''AULNE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444530" created="2015-02-03T06:02:28.0Z" changed="2015-02-03T06:02:28.0Z" id="FR::Quay:50008786:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5538,7 +5538,7 @@ INSERT INTO stop_areas VALUES (147800, NULL, 'FR:78217:ZDL:50008786:STIF', 1, 'B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:54095:STIF</Value>
+         <Value>FR::Quay:54095:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>BOIS DE L''AULNE</Name>
@@ -5554,11 +5554,11 @@ INSERT INTO stop_areas VALUES (147800, NULL, 'FR:78217:ZDL:50008786:STIF', 1, 'B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009382:STIF" version="444526"/>
-        <QuayRef ref="FR:78402:ZDE:50009383:STIF" version="444528"/>
+        <QuayRef ref="FR::Quay:50009382:FR1" version="444526"/>
+        <QuayRef ref="FR::Quay:50009383:FR1" version="444528"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.314353', '2017-03-23 13:09:29.314353', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147801, NULL, 'FR:78217:ZDL:50008787:STIF', 1, 'BROUILLARD', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444538" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR:78217:ZDL:50008787:STIF">
+INSERT INTO stop_areas VALUES (147801, NULL, 'FR::Quay:50008787:FR1', 1, 'BROUILLARD', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444538" created="2015-02-03T06:02:31.0Z" changed="2015-02-03T06:02:31.0Z" id="FR::Quay:50008787:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5566,7 +5566,7 @@ INSERT INTO stop_areas VALUES (147801, NULL, 'FR:78217:ZDL:50008787:STIF', 1, 'B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:54096:STIF</Value>
+         <Value>FR::Quay:54096:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>BROUILLARD</Name>
@@ -5582,11 +5582,11 @@ INSERT INTO stop_areas VALUES (147801, NULL, 'FR:78217:ZDL:50008787:STIF', 1, 'B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009384:STIF" version="444534"/>
-        <QuayRef ref="FR:78217:ZDE:50009385:STIF" version="444536"/>
+        <QuayRef ref="FR::Quay:50009384:FR1" version="444534"/>
+        <QuayRef ref="FR::Quay:50009385:FR1" version="444536"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.358291', '2017-03-23 13:09:29.358291', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147802, NULL, 'FR:78402:ZDL:50008789:STIF', 1, 'PLACE CDT GRIMBLOT', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444552" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR:78402:ZDL:50008789:STIF">
+INSERT INTO stop_areas VALUES (147802, NULL, 'FR::Quay:50008789:FR1', 1, 'PLACE CDT GRIMBLOT', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444552" created="2015-02-03T06:02:37.0Z" changed="2015-02-03T06:02:37.0Z" id="FR::Quay:50008789:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5594,7 +5594,7 @@ INSERT INTO stop_areas VALUES (147802, NULL, 'FR:78402:ZDL:50008789:STIF', 1, 'P
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:54098:STIF</Value>
+         <Value>FR::Quay:54098:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>PLACE CDT GRIMBLOT</Name>
@@ -5610,10 +5610,10 @@ INSERT INTO stop_areas VALUES (147802, NULL, 'FR:78402:ZDL:50008789:STIF', 1, 'P
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50009388:STIF" version="444550"/>
+        <QuayRef ref="FR::Quay:50009388:FR1" version="444550"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.404032', '2017-03-23 13:09:29.404032', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (62311, 62310, 'FR:78402:ZDL:54099:STIF', 1, 'Chauffour', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54099" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR:78402:ZDL:54099:STIF">
+INSERT INTO stop_areas VALUES (62311, 62310, 'FR::Quay:54099:FR1', 1, 'Chauffour', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace version="54099" created="2014-12-29T03:12:51.0Z" changed="2014-12-29T03:12:51.0Z" id="FR::Quay:54099:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5621,7 +5621,7 @@ INSERT INTO stop_areas VALUES (62311, 62310, 'FR:78402:ZDL:54099:STIF', 1, 'Chau
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:50008790:STIF</Value>
+         <Value>FR::Quay:50008790:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Chauffour</Name>
@@ -5637,11 +5637,11 @@ INSERT INTO stop_areas VALUES (62311, 62310, 'FR:78402:ZDL:54099:STIF', 1, 'Chau
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:32789:STIF" version="32789"/>
-        <QuayRef ref="FR:78402:ZDE:32790:STIF" version="32790"/>
+        <QuayRef ref="FR::Quay:32789:FR1" version="32789"/>
+        <QuayRef ref="FR::Quay:32790:FR1" version="32790"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:09:29.433616', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (147803, NULL, 'FR:78402:ZDL:50008790:STIF', 1, 'CHAUFFOUR', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444559" created="2015-02-03T06:02:40.0Z" changed="2015-02-03T06:02:40.0Z" id="FR:78402:ZDL:50008790:STIF">
+INSERT INTO stop_areas VALUES (147803, NULL, 'FR::Quay:50008790:FR1', 1, 'CHAUFFOUR', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444559" created="2015-02-03T06:02:40.0Z" changed="2015-02-03T06:02:40.0Z" id="FR::Quay:50008790:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5649,7 +5649,7 @@ INSERT INTO stop_areas VALUES (147803, NULL, 'FR:78402:ZDL:50008790:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:54099:STIF</Value>
+         <Value>FR::Quay:54099:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>CHAUFFOUR</Name>
@@ -5665,11 +5665,11 @@ INSERT INTO stop_areas VALUES (147803, NULL, 'FR:78402:ZDL:50008790:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50009389:STIF" version="444555"/>
-        <QuayRef ref="FR:78402:ZDE:50009390:STIF" version="444557"/>
+        <QuayRef ref="FR::Quay:50009389:FR1" version="444555"/>
+        <QuayRef ref="FR::Quay:50009390:FR1" version="444557"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.459523', '2017-03-23 13:09:29.459523', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147804, NULL, 'FR:78402:ZDL:50008791:STIF', 1, 'CHEMIN DE L''EPINE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444567" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR:78402:ZDL:50008791:STIF">
+INSERT INTO stop_areas VALUES (147804, NULL, 'FR::Quay:50008791:FR1', 1, 'CHEMIN DE L''EPINE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444567" created="2015-02-03T06:02:43.0Z" changed="2015-02-03T06:02:43.0Z" id="FR::Quay:50008791:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5677,7 +5677,7 @@ INSERT INTO stop_areas VALUES (147804, NULL, 'FR:78402:ZDL:50008791:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:54100:STIF</Value>
+         <Value>FR::Quay:54100:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>CHEMIN DE L''EPINE</Name>
@@ -5693,11 +5693,11 @@ INSERT INTO stop_areas VALUES (147804, NULL, 'FR:78402:ZDL:50008791:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50009391:STIF" version="444563"/>
-        <QuayRef ref="FR:78402:ZDE:50009392:STIF" version="444565"/>
+        <QuayRef ref="FR::Quay:50009391:FR1" version="444563"/>
+        <QuayRef ref="FR::Quay:50009392:FR1" version="444565"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.506149', '2017-03-23 13:09:29.506149', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147805, NULL, 'FR:78402:ZDL:50008792:STIF', 1, 'FONTAINE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444573" created="2015-02-03T06:02:46.0Z" changed="2015-02-03T06:02:46.0Z" id="FR:78402:ZDL:50008792:STIF">
+INSERT INTO stop_areas VALUES (147805, NULL, 'FR::Quay:50008792:FR1', 1, 'FONTAINE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444573" created="2015-02-03T06:02:46.0Z" changed="2015-02-03T06:02:46.0Z" id="FR::Quay:50008792:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5705,7 +5705,7 @@ INSERT INTO stop_areas VALUES (147805, NULL, 'FR:78402:ZDL:50008792:STIF', 1, 'F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:54101:STIF</Value>
+         <Value>FR::Quay:54101:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>FONTAINE</Name>
@@ -5721,10 +5721,10 @@ INSERT INTO stop_areas VALUES (147805, NULL, 'FR:78402:ZDL:50008792:STIF', 1, 'F
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50009393:STIF" version="444571"/>
+        <QuayRef ref="FR::Quay:50009393:FR1" version="444571"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.549049', '2017-03-23 13:09:29.549049', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147806, NULL, 'FR:78402:ZDL:50008793:STIF', 1, 'LA VILLENEUVE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444580" created="2015-02-03T06:02:49.0Z" changed="2015-02-03T06:02:49.0Z" id="FR:78402:ZDL:50008793:STIF">
+INSERT INTO stop_areas VALUES (147806, NULL, 'FR::Quay:50008793:FR1', 1, 'LA VILLENEUVE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444580" created="2015-02-03T06:02:49.0Z" changed="2015-02-03T06:02:49.0Z" id="FR::Quay:50008793:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5732,7 +5732,7 @@ INSERT INTO stop_areas VALUES (147806, NULL, 'FR:78402:ZDL:50008793:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:54102:STIF</Value>
+         <Value>FR::Quay:54102:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LA VILLENEUVE</Name>
@@ -5748,11 +5748,11 @@ INSERT INTO stop_areas VALUES (147806, NULL, 'FR:78402:ZDL:50008793:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50009395:STIF" version="444576"/>
-        <QuayRef ref="FR:78402:ZDE:50009394:STIF" version="444578"/>
+        <QuayRef ref="FR::Quay:50009395:FR1" version="444576"/>
+        <QuayRef ref="FR::Quay:50009394:FR1" version="444578"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.592797', '2017-03-23 13:09:29.592797', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (147807, NULL, 'FR:78402:ZDL:50008794:STIF', 1, 'LISERETTES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444588" created="2015-02-03T06:02:52.0Z" changed="2015-02-03T06:02:52.0Z" id="FR:78402:ZDL:50008794:STIF">
+INSERT INTO stop_areas VALUES (147807, NULL, 'FR::Quay:50008794:FR1', 1, 'LISERETTES', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78402', 'Mézières-sur-Seine', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444588" created="2015-02-03T06:02:52.0Z" changed="2015-02-03T06:02:52.0Z" id="FR::Quay:50008794:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5760,7 +5760,7 @@ INSERT INTO stop_areas VALUES (147807, NULL, 'FR:78402:ZDL:50008794:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78402:ZDL:54103:STIF</Value>
+         <Value>FR::Quay:54103:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>LISERETTES</Name>
@@ -5776,11 +5776,11 @@ INSERT INTO stop_areas VALUES (147807, NULL, 'FR:78402:ZDL:50008794:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78402:ZDE:50009397:STIF" version="444584"/>
-        <QuayRef ref="FR:78402:ZDE:50009396:STIF" version="444586"/>
+        <QuayRef ref="FR::Quay:50009397:FR1" version="444584"/>
+        <QuayRef ref="FR::Quay:50009396:FR1" version="444586"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:09:29.637441', '2017-03-23 13:09:29.637441', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (150090, NULL, 'FR:78217:ZDL:50000635:STIF', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:58" version="428560" created="2015-01-31T09:01:47.0Z" changed="2015-01-31T09:01:47.0Z" id="FR:78217:ZDL:50000635:STIF">
+INSERT INTO stop_areas VALUES (150090, NULL, 'FR::Quay:50000635:FR1', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:58" version="428560" created="2015-01-31T09:01:47.0Z" changed="2015-01-31T09:01:47.0Z" id="FR::Quay:50000635:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5788,7 +5788,7 @@ INSERT INTO stop_areas VALUES (150090, NULL, 'FR:78217:ZDL:50000635:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:43983:STIF</Value>
+         <Value>FR::Quay:43983:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -5804,11 +5804,11 @@ INSERT INTO stop_areas VALUES (150090, NULL, 'FR:78217:ZDL:50000635:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50000882:STIF" version="824656"/>
-        <QuayRef ref="FR:78217:ZDE:50000881:STIF" version="824657"/>
+        <QuayRef ref="FR::Quay:50000882:FR1" version="824656"/>
+        <QuayRef ref="FR::Quay:50000881:FR1" version="824657"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:11:32.39979', '2017-03-23 13:11:32.39979', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (150091, NULL, 'FR:78217:ZDL:50008594:STIF', 1, 'MAIRIE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443335" created="2015-02-03T06:02:41.0Z" changed="2015-02-03T06:02:41.0Z" id="FR:78217:ZDL:50008594:STIF">
+INSERT INTO stop_areas VALUES (150091, NULL, 'FR::Quay:50008594:FR1', 1, 'MAIRIE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443335" created="2015-02-03T06:02:41.0Z" changed="2015-02-03T06:02:41.0Z" id="FR::Quay:50008594:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5816,7 +5816,7 @@ INSERT INTO stop_areas VALUES (150091, NULL, 'FR:78217:ZDL:50008594:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:43983:STIF</Value>
+         <Value>FR::Quay:43983:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>MAIRIE</Name>
@@ -5832,11 +5832,11 @@ INSERT INTO stop_areas VALUES (150091, NULL, 'FR:78217:ZDL:50008594:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009061:STIF" version="443331"/>
-        <QuayRef ref="FR:78217:ZDE:50009060:STIF" version="443333"/>
+        <QuayRef ref="FR::Quay:50009061:FR1" version="443331"/>
+        <QuayRef ref="FR::Quay:50009060:FR1" version="443333"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:11:32.432633', '2017-03-23 13:11:32.432633', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (153497, NULL, 'FR:78217:ZDL:50008572:STIF', 1, 'AVENUE D''EPONE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="445777" created="2015-02-03T07:02:46.0Z" changed="2015-02-03T07:02:46.0Z" id="FR:78217:ZDL:50008572:STIF">
+INSERT INTO stop_areas VALUES (153497, NULL, 'FR::Quay:50008572:FR1', 1, 'AVENUE D''EPONE', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="445777" created="2015-02-03T07:02:46.0Z" changed="2015-02-03T07:02:46.0Z" id="FR::Quay:50008572:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5844,7 +5844,7 @@ INSERT INTO stop_areas VALUES (153497, NULL, 'FR:78217:ZDL:50008572:STIF', 1, 'A
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:53980:STIF</Value>
+         <Value>FR::Quay:53980:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>AVENUE D''EPONE</Name>
@@ -5860,10 +5860,10 @@ INSERT INTO stop_areas VALUES (153497, NULL, 'FR:78217:ZDL:50008572:STIF', 1, 'A
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009034:STIF" version="445775"/>
+        <QuayRef ref="FR::Quay:50009034:FR1" version="445775"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:14:33.868862', '2017-03-23 13:14:33.868862', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (56713, 56712, 'FR:78217:ZDL:54097:STIF', 1, 'Canada', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="661331" created="2014-12-29T12:12:00.0Z" changed="2015-04-30T05:04:18.0Z" id="FR:78217:ZDL:54097:STIF">
+INSERT INTO stop_areas VALUES (56713, 56712, 'FR::Quay:54097:FR1', 1, 'Canada', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace version="661331" created="2014-12-29T12:12:00.0Z" changed="2015-04-30T05:04:18.0Z" id="FR::Quay:54097:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5871,7 +5871,7 @@ INSERT INTO stop_areas VALUES (56713, 56712, 'FR:78217:ZDL:54097:STIF', 1, 'Cana
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LOCAL_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:50008788:STIF</Value>
+         <Value>FR::Quay:50008788:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Canada</Name>
@@ -5887,11 +5887,11 @@ INSERT INTO stop_areas VALUES (56713, 56712, 'FR:78217:ZDL:54097:STIF', 1, 'Cana
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:32786:STIF" version="32786"/>
-        <QuayRef ref="FR:78217:ZDE:32787:STIF" version="32787"/>
+        <QuayRef ref="FR::Quay:32786:FR1" version="32786"/>
+        <QuayRef ref="FR::Quay:32787:FR1" version="32787"/>
        </quays>
       </StopPlace>', NULL, NULL, '2017-03-23 13:16:08.780009', 'REFERENCE_OBJECT');
-INSERT INTO stop_areas VALUES (155111, NULL, 'FR:78217:ZDL:50008788:STIF', 1, 'CANADA', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444546" created="2015-02-03T06:02:35.0Z" changed="2015-02-03T06:02:35.0Z" id="FR:78217:ZDL:50008788:STIF">
+INSERT INTO stop_areas VALUES (155111, NULL, 'FR::Quay:50008788:FR1', 1, 'CANADA', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="444546" created="2015-02-03T06:02:35.0Z" changed="2015-02-03T06:02:35.0Z" id="FR::Quay:50008788:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5899,7 +5899,7 @@ INSERT INTO stop_areas VALUES (155111, NULL, 'FR:78217:ZDL:50008788:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:54097:STIF</Value>
+         <Value>FR::Quay:54097:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>CANADA</Name>
@@ -5915,11 +5915,11 @@ INSERT INTO stop_areas VALUES (155111, NULL, 'FR:78217:ZDL:50008788:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009386:STIF" version="444542"/>
-        <QuayRef ref="FR:78217:ZDE:50009387:STIF" version="444544"/>
+        <QuayRef ref="FR::Quay:50009386:FR1" version="444542"/>
+        <QuayRef ref="FR::Quay:50009387:FR1" version="444544"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:16:08.817373', '2017-03-23 13:16:08.817373', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (155354, NULL, 'FR:78217:ZDL:50008596:STIF', 1, 'EMILE SERGENT', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443299" created="2015-02-03T06:02:33.0Z" changed="2015-02-03T06:02:33.0Z" id="FR:78217:ZDL:50008596:STIF">
+INSERT INTO stop_areas VALUES (155354, NULL, 'FR::Quay:50008596:FR1', 1, 'EMILE SERGENT', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78217', 'Épône', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:21" version="443299" created="2015-02-03T06:02:33.0Z" changed="2015-02-03T06:02:33.0Z" id="FR::Quay:50008596:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5927,7 +5927,7 @@ INSERT INTO stop_areas VALUES (155354, NULL, 'FR:78217:ZDL:50008596:STIF', 1, 'E
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78217:ZDL:420191:STIF</Value>
+         <Value>FR::Quay:420191:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>EMILE SERGENT</Name>
@@ -5943,8 +5943,8 @@ INSERT INTO stop_areas VALUES (155354, NULL, 'FR:78217:ZDL:50008596:STIF', 1, 'E
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78217:ZDE:50009063:STIF" version="717630"/>
-        <QuayRef ref="FR:78217:ZDE:50009064:STIF" version="443297"/>
+        <QuayRef ref="FR::Quay:50009063:FR1" version="717630"/>
+        <QuayRef ref="FR::Quay:50009064:FR1" version="443297"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:16:23.084787', '2017-03-23 13:16:23.084787', 'LOCAL_OBJECT');
 
@@ -5952,7 +5952,7 @@ INSERT INTO stop_areas VALUES (155354, NULL, 'FR:78217:ZDL:50008596:STIF', 1, 'E
 -- Rambouillet
 
 -- 141019
-INSERT INTO stop_areas VALUES (141019, NULL, 'FR:78517:ZDL:50111661:STIF', 1, 'RAMBOUILLET Garr Prairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="805978" created="2016-10-11T09:10:20.0Z" changed="2016-10-11T09:10:20.0Z" id="FR:78517:ZDL:50111661:STIF">
+INSERT INTO stop_areas VALUES (141019, NULL, 'FR::Quay:50111661:FR1', 1, 'RAMBOUILLET Garr Prairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="805978" created="2016-10-11T09:10:20.0Z" changed="2016-10-11T09:10:20.0Z" id="FR::Quay:50111661:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5960,7 +5960,7 @@ INSERT INTO stop_areas VALUES (141019, NULL, 'FR:78517:ZDL:50111661:STIF', 1, 'R
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDL:43185:STIF</Value>
+         <Value>FR::Quay:43185:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>RAMBOUILLET Garr Prairie</Name>
@@ -5976,10 +5976,10 @@ INSERT INTO stop_areas VALUES (141019, NULL, 'FR:78517:ZDL:50111661:STIF', 1, 'R
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78517:ZDE:50111663:STIF" version="805974"/>
+        <QuayRef ref="FR::Quay:50111663:FR1" version="805974"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:35:11.810166', '2017-03-23 12:35:11.810166', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (93531, 141019, 'FR:78517:ZDE:50111663:STIF', 1, 'RAMBOUILLET Gare Prairie', NULL, 'zdep', NULL, NULL, NULL, 1.8321858921295100, 48.6433370482632000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805974" created="2016-10-11T09:10:04.0Z" changed="2016-10-11T09:10:04.0Z" id="FR:78517:ZDE:50111663:STIF">
+INSERT INTO stop_areas VALUES (93531, 141019, 'FR::Quay:50111663:FR1', 1, 'RAMBOUILLET Gare Prairie', NULL, 'zdep', NULL, NULL, NULL, 1.8321858921295100, 48.6433370482632000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805974" created="2016-10-11T09:10:04.0Z" changed="2016-10-11T09:10:04.0Z" id="FR::Quay:50111663:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -5987,7 +5987,7 @@ INSERT INTO stop_areas VALUES (93531, 141019, 'FR:78517:ZDE:50111663:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:424802:STIF</Value>
+         <Value>FR::Quay:424802:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6010,7 +6010,7 @@ INSERT INTO stop_areas VALUES (93531, 141019, 'FR:78517:ZDE:50111663:STIF', 1, '
       </Quay>', NULL, '2017-03-23 11:47:52.859668', '2017-03-23 13:26:57.652355', 'LOCAL_OBJECT');
 
 --       134332
-INSERT INTO stop_areas VALUES (134332, NULL, 'FR:78497:ZDL:50015326:STIF', 1, 'Feuillettes', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682396" created="2015-05-19T05:05:54.0Z" changed="2015-05-19T05:05:54.0Z" id="FR:78497:ZDL:50015326:STIF">
+INSERT INTO stop_areas VALUES (134332, NULL, 'FR::Quay:50015326:FR1', 1, 'Feuillettes', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682396" created="2015-05-19T05:05:54.0Z" changed="2015-05-19T05:05:54.0Z" id="FR::Quay:50015326:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6018,7 +6018,7 @@ INSERT INTO stop_areas VALUES (134332, NULL, 'FR:78497:ZDL:50015326:STIF', 1, 'F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDL:55012:STIF</Value>
+         <Value>FR::Quay:55012:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Feuillettes</Name>
@@ -6034,11 +6034,11 @@ INSERT INTO stop_areas VALUES (134332, NULL, 'FR:78497:ZDL:50015326:STIF', 1, 'F
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78497:ZDE:50016140:STIF" version="791825"/>
-        <QuayRef ref="FR:78497:ZDE:50016141:STIF" version="791826"/>
+        <QuayRef ref="FR::Quay:50016140:FR1" version="791825"/>
+        <QuayRef ref="FR::Quay:50016141:FR1" version="791826"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:46.124258', '2017-03-23 12:26:46.124258', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (77234, 134332, 'FR:78497:ZDE:50016141:STIF', 1, 'Feuillettes', NULL, 'zdep', NULL, NULL, NULL, 1.7628821864459000, 48.6842415074444000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791826" created="2015-05-19T05:05:53.0Z" changed="2016-08-23T10:08:43.0Z" id="FR:78497:ZDE:50016141:STIF">
+INSERT INTO stop_areas VALUES (77234, 134332, 'FR::Quay:50016141:FR1', 1, 'Feuillettes', NULL, 'zdep', NULL, NULL, NULL, 1.7628821864459000, 48.6842415074444000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791826" created="2015-05-19T05:05:53.0Z" changed="2016-08-23T10:08:43.0Z" id="FR::Quay:50016141:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6046,7 +6046,7 @@ INSERT INTO stop_areas VALUES (77234, 134332, 'FR:78497:ZDE:50016141:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31640:STIF</Value>
+         <Value>FR::Quay:31640:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6069,7 +6069,7 @@ INSERT INTO stop_areas VALUES (77234, 134332, 'FR:78497:ZDE:50016141:STIF', 1, '
       </Quay>', NULL, '2017-03-23 11:35:51.061527', '2017-03-23 13:19:32.88684', 'LOCAL_OBJECT');
 
 --      134330
-INSERT INTO stop_areas VALUES (134330, NULL, 'FR:78497:ZDL:50015324:STIF', 1, 'Cerisaie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682412" created="2015-05-19T05:05:02.0Z" changed="2015-05-19T05:05:02.0Z" id="FR:78497:ZDL:50015324:STIF">
+INSERT INTO stop_areas VALUES (134330, NULL, 'FR::Quay:50015324:FR1', 1, 'Cerisaie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682412" created="2015-05-19T05:05:02.0Z" changed="2015-05-19T05:05:02.0Z" id="FR::Quay:50015324:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6077,7 +6077,7 @@ INSERT INTO stop_areas VALUES (134330, NULL, 'FR:78497:ZDL:50015324:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDL:55010:STIF</Value>
+         <Value>FR::Quay:55010:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Cerisaie</Name>
@@ -6093,11 +6093,11 @@ INSERT INTO stop_areas VALUES (134330, NULL, 'FR:78497:ZDL:50015324:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78497:ZDE:50016136:STIF" version="791829"/>
-        <QuayRef ref="FR:78497:ZDE:50016137:STIF" version="791830"/>
+        <QuayRef ref="FR::Quay:50016136:FR1" version="791829"/>
+        <QuayRef ref="FR::Quay:50016137:FR1" version="791830"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:45.948218', '2017-03-23 12:26:45.948218', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (77230, 134330, 'FR:78497:ZDE:50016136:STIF', 1, 'Cerisaie', NULL, 'zdep', NULL, NULL, NULL, 1.7651876163368700, 48.6766869744947000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791829" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:47.0Z" id="FR:78497:ZDE:50016136:STIF">
+INSERT INTO stop_areas VALUES (77230, 134330, 'FR::Quay:50016136:FR1', 1, 'Cerisaie', NULL, 'zdep', NULL, NULL, NULL, 1.7651876163368700, 48.6766869744947000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791829" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:47.0Z" id="FR::Quay:50016136:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6105,7 +6105,7 @@ INSERT INTO stop_areas VALUES (77230, 134330, 'FR:78497:ZDE:50016136:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31636:STIF</Value>
+         <Value>FR::Quay:31636:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6128,7 +6128,7 @@ INSERT INTO stop_areas VALUES (77230, 134330, 'FR:78497:ZDE:50016136:STIF', 1, '
       </Quay>', NULL, '2017-03-23 11:35:50.86893', '2017-03-23 13:19:32.770089', 'LOCAL_OBJECT');
 
 -- 134331
-INSERT INTO stop_areas VALUES (134331, NULL, 'FR:78497:ZDL:50015325:STIF', 1, 'Cimetière', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682420" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR:78497:ZDL:50015325:STIF">
+INSERT INTO stop_areas VALUES (134331, NULL, 'FR::Quay:50015325:FR1', 1, 'Cimetière', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682420" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR::Quay:50015325:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6136,7 +6136,7 @@ INSERT INTO stop_areas VALUES (134331, NULL, 'FR:78497:ZDL:50015325:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDL:55011:STIF</Value>
+         <Value>FR::Quay:55011:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Cimetière</Name>
@@ -6152,11 +6152,11 @@ INSERT INTO stop_areas VALUES (134331, NULL, 'FR:78497:ZDL:50015325:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78497:ZDE:50016138:STIF" version="791831"/>
-        <QuayRef ref="FR:78497:ZDE:50016139:STIF" version="791832"/>
+        <QuayRef ref="FR::Quay:50016138:FR1" version="791831"/>
+        <QuayRef ref="FR::Quay:50016139:FR1" version="791832"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:46.046902', '2017-03-23 12:26:46.046902', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (77232, 134331, 'FR:78497:ZDE:50016139:STIF', 1, 'Cimetière', NULL, 'zdep', NULL, NULL, NULL, 1.7570581747502100, 48.6809266792408000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791832" created="2015-05-19T05:05:05.0Z" changed="2016-08-23T10:08:50.0Z" id="FR:78497:ZDE:50016139:STIF">
+INSERT INTO stop_areas VALUES (77232, 134331, 'FR::Quay:50016139:FR1', 1, 'Cimetière', NULL, 'zdep', NULL, NULL, NULL, 1.7570581747502100, 48.6809266792408000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791832" created="2015-05-19T05:05:05.0Z" changed="2016-08-23T10:08:50.0Z" id="FR::Quay:50016139:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6164,7 +6164,7 @@ INSERT INTO stop_areas VALUES (77232, 134331, 'FR:78497:ZDE:50016139:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31638:STIF</Value>
+         <Value>FR::Quay:31638:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6186,7 +6186,7 @@ INSERT INTO stop_areas VALUES (77232, 134331, 'FR:78497:ZDE:50016139:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.961463', '2017-03-23 13:19:32.842379', 'LOCAL_OBJECT');
 -- 134333
-INSERT INTO stop_areas VALUES (134333, NULL, 'FR:78497:ZDL:50015327:STIF', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682404" created="2015-05-19T05:05:58.0Z" changed="2015-05-19T05:05:58.0Z" id="FR:78497:ZDL:50015327:STIF">
+INSERT INTO stop_areas VALUES (134333, NULL, 'FR::Quay:50015327:FR1', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682404" created="2015-05-19T05:05:58.0Z" changed="2015-05-19T05:05:58.0Z" id="FR::Quay:50015327:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6194,7 +6194,7 @@ INSERT INTO stop_areas VALUES (134333, NULL, 'FR:78497:ZDL:50015327:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDL:55013:STIF</Value>
+         <Value>FR::Quay:55013:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -6210,11 +6210,11 @@ INSERT INTO stop_areas VALUES (134333, NULL, 'FR:78497:ZDL:50015327:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78497:ZDE:50016142:STIF" version="791827"/>
-        <QuayRef ref="FR:78497:ZDE:50016143:STIF" version="791828"/>
+        <QuayRef ref="FR::Quay:50016142:FR1" version="791827"/>
+        <QuayRef ref="FR::Quay:50016143:FR1" version="791828"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:46.184083', '2017-03-23 12:26:46.184083', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (77237, 134333, 'FR:78497:ZDE:50016142:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7537333180274800, 48.6761794180927000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791827" created="2015-05-19T05:05:56.0Z" changed="2016-08-23T10:08:45.0Z" id="FR:78497:ZDE:50016142:STIF">
+INSERT INTO stop_areas VALUES (77237, 134333, 'FR::Quay:50016142:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7537333180274800, 48.6761794180927000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791827" created="2015-05-19T05:05:56.0Z" changed="2016-08-23T10:08:45.0Z" id="FR::Quay:50016142:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6222,7 +6222,7 @@ INSERT INTO stop_areas VALUES (77237, 134333, 'FR:78497:ZDE:50016142:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31643:STIF</Value>
+         <Value>FR::Quay:31643:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6245,7 +6245,7 @@ INSERT INTO stop_areas VALUES (77237, 134333, 'FR:78497:ZDE:50016142:STIF', 1, '
       </Quay>', NULL, '2017-03-23 11:35:51.203986', '2017-03-23 13:19:32.918499', 'LOCAL_OBJECT');
 
 -- 134333
-INSERT INTO stop_areas VALUES (77236, 134333, 'FR:78497:ZDE:50016143:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7533033868738600, 48.6760375221217000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791828" created="2015-05-19T05:05:57.0Z" changed="2016-08-23T10:08:46.0Z" id="FR:78497:ZDE:50016143:STIF">
+INSERT INTO stop_areas VALUES (77236, 134333, 'FR::Quay:50016143:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7533033868738600, 48.6760375221217000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791828" created="2015-05-19T05:05:57.0Z" changed="2016-08-23T10:08:46.0Z" id="FR::Quay:50016143:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6253,7 +6253,7 @@ INSERT INTO stop_areas VALUES (77236, 134333, 'FR:78497:ZDE:50016143:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31642:STIF</Value>
+         <Value>FR::Quay:31642:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6276,7 +6276,7 @@ INSERT INTO stop_areas VALUES (77236, 134333, 'FR:78497:ZDE:50016143:STIF', 1, '
       </Quay>', NULL, '2017-03-23 11:35:51.157822', '2017-03-23 13:19:32.944519', 'LOCAL_OBJECT');
 
 --       134331
-INSERT INTO stop_areas VALUES (77233, 134331, 'FR:78497:ZDE:50016138:STIF', 1, 'Cimetière', NULL, 'zdep', NULL, NULL, NULL, 1.7573635964898200, 48.6810720307394000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791831" created="2015-05-19T05:05:04.0Z" changed="2016-08-23T10:08:49.0Z" id="FR:78497:ZDE:50016138:STIF">
+INSERT INTO stop_areas VALUES (77233, 134331, 'FR::Quay:50016138:FR1', 1, 'Cimetière', NULL, 'zdep', NULL, NULL, NULL, 1.7573635964898200, 48.6810720307394000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791831" created="2015-05-19T05:05:04.0Z" changed="2016-08-23T10:08:49.0Z" id="FR::Quay:50016138:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6284,7 +6284,7 @@ INSERT INTO stop_areas VALUES (77233, 134331, 'FR:78497:ZDE:50016138:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31639:STIF</Value>
+         <Value>FR::Quay:31639:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6307,7 +6307,7 @@ INSERT INTO stop_areas VALUES (77233, 134331, 'FR:78497:ZDE:50016138:STIF', 1, '
       </Quay>', NULL, '2017-03-23 11:35:51.013935', '2017-03-23 13:19:32.816748', 'LOCAL_OBJECT');
 
 -- 134330
-INSERT INTO stop_areas VALUES (77231, 134330, 'FR:78497:ZDE:50016137:STIF', 1, 'Cerisaie', NULL, 'zdep', NULL, NULL, NULL, 1.7654056052053900, 48.6766392697890000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791830" created="2015-05-19T05:05:01.0Z" changed="2016-08-23T10:08:48.0Z" id="FR:78497:ZDE:50016137:STIF">
+INSERT INTO stop_areas VALUES (77231, 134330, 'FR::Quay:50016137:FR1', 1, 'Cerisaie', NULL, 'zdep', NULL, NULL, NULL, 1.7654056052053900, 48.6766392697890000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791830" created="2015-05-19T05:05:01.0Z" changed="2016-08-23T10:08:48.0Z" id="FR::Quay:50016137:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6315,7 +6315,7 @@ INSERT INTO stop_areas VALUES (77231, 134330, 'FR:78497:ZDE:50016137:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31637:STIF</Value>
+         <Value>FR::Quay:31637:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6337,7 +6337,7 @@ INSERT INTO stop_areas VALUES (77231, 134330, 'FR:78497:ZDE:50016137:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.916728', '2017-03-23 13:19:32.785114', 'LOCAL_OBJECT');
 -- 134332
-INSERT INTO stop_areas VALUES (77235, 134332, 'FR:78497:ZDE:50016140:STIF', 1, 'Feuillettes', NULL, 'zdep', NULL, NULL, NULL, 1.7628209584199200, 48.6841242973463000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791825" created="2015-05-19T05:05:52.0Z" changed="2016-08-23T10:08:42.0Z" id="FR:78497:ZDE:50016140:STIF">
+INSERT INTO stop_areas VALUES (77235, 134332, 'FR::Quay:50016140:FR1', 1, 'Feuillettes', NULL, 'zdep', NULL, NULL, NULL, 1.7628209584199200, 48.6841242973463000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78497', 'Poigny-la-Forêt', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791825" created="2015-05-19T05:05:52.0Z" changed="2016-08-23T10:08:42.0Z" id="FR::Quay:50016140:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6345,7 +6345,7 @@ INSERT INTO stop_areas VALUES (77235, 134332, 'FR:78497:ZDE:50016140:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78497:ZDE:31641:STIF</Value>
+         <Value>FR::Quay:31641:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6367,7 +6367,7 @@ INSERT INTO stop_areas VALUES (77235, 134332, 'FR:78497:ZDE:50016140:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.112195', '2017-03-23 13:19:32.872507', 'LOCAL_OBJECT');
 -- 134368
-INSERT INTO stop_areas VALUES (134368, NULL, 'FR:78569:ZDL:50015467:STIF', 1, 'Ville Lebrun', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681176" created="2015-05-19T05:05:21.0Z" changed="2015-05-19T05:05:21.0Z" id="FR:78569:ZDL:50015467:STIF">
+INSERT INTO stop_areas VALUES (134368, NULL, 'FR::Quay:50015467:FR1', 1, 'Ville Lebrun', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681176" created="2015-05-19T05:05:21.0Z" changed="2015-05-19T05:05:21.0Z" id="FR::Quay:50015467:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6375,7 +6375,7 @@ INSERT INTO stop_areas VALUES (134368, NULL, 'FR:78569:ZDL:50015467:STIF', 1, 'V
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDL:55049:STIF</Value>
+         <Value>FR::Quay:55049:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Ville Lebrun</Name>
@@ -6391,11 +6391,11 @@ INSERT INTO stop_areas VALUES (134368, NULL, 'FR:78569:ZDL:50015467:STIF', 1, 'V
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78569:ZDE:50016385:STIF" version="791633"/>
-        <QuayRef ref="FR:78569:ZDE:50016384:STIF" version="791634"/>
+        <QuayRef ref="FR::Quay:50016385:FR1" version="791633"/>
+        <QuayRef ref="FR::Quay:50016384:FR1" version="791634"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:49.252944', '2017-03-23 12:26:49.252944', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (77306, 134368, 'FR:78569:ZDE:50016385:STIF', 1, 'Ville Lebrun', NULL, 'zdep', NULL, NULL, NULL, 1.9708101574504900, 48.5277924042932000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791633" created="2015-05-19T05:05:20.0Z" changed="2016-08-23T10:08:25.0Z" id="FR:78569:ZDE:50016385:STIF">
+INSERT INTO stop_areas VALUES (77306, 134368, 'FR::Quay:50016385:FR1', 1, 'Ville Lebrun', NULL, 'zdep', NULL, NULL, NULL, 1.9708101574504900, 48.5277924042932000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791633" created="2015-05-19T05:05:20.0Z" changed="2016-08-23T10:08:25.0Z" id="FR::Quay:50016385:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6403,7 +6403,7 @@ INSERT INTO stop_areas VALUES (77306, 134368, 'FR:78569:ZDE:50016385:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDE:31704:STIF</Value>
+         <Value>FR::Quay:31704:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Ville Lebrun</Name>
@@ -6421,7 +6421,7 @@ INSERT INTO stop_areas VALUES (77306, 134368, 'FR:78569:ZDE:50016385:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:55.07004', '2017-03-23 13:19:40.784733', 'LOCAL_OBJECT');
 -- 134365
-INSERT INTO stop_areas VALUES (134365, NULL, 'FR:78569:ZDL:50015465:STIF', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681168" created="2015-05-19T05:05:19.0Z" changed="2015-05-19T05:05:19.0Z" id="FR:78569:ZDL:50015465:STIF">
+INSERT INTO stop_areas VALUES (134365, NULL, 'FR::Quay:50015465:FR1', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681168" created="2015-05-19T05:05:19.0Z" changed="2015-05-19T05:05:19.0Z" id="FR::Quay:50015465:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6429,7 +6429,7 @@ INSERT INTO stop_areas VALUES (134365, NULL, 'FR:78569:ZDL:50015465:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDL:55046:STIF</Value>
+         <Value>FR::Quay:55046:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -6445,11 +6445,11 @@ INSERT INTO stop_areas VALUES (134365, NULL, 'FR:78569:ZDL:50015465:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78569:ZDE:50016381:STIF" version="791631"/>
-        <QuayRef ref="FR:78569:ZDE:50016380:STIF" version="791632"/>
+        <QuayRef ref="FR::Quay:50016381:FR1" version="791631"/>
+        <QuayRef ref="FR::Quay:50016380:FR1" version="791632"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:49.037056', '2017-03-23 12:26:49.037056', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (77300, 134365, 'FR:78569:ZDE:50016381:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9608314665536100, 48.5309856657776000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791631" created="2015-05-19T05:05:18.0Z" changed="2016-08-23T10:08:24.0Z" id="FR:78569:ZDE:50016381:STIF">
+INSERT INTO stop_areas VALUES (77300, 134365, 'FR::Quay:50016381:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9608314665536100, 48.5309856657776000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791631" created="2015-05-19T05:05:18.0Z" changed="2016-08-23T10:08:24.0Z" id="FR::Quay:50016381:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6457,7 +6457,7 @@ INSERT INTO stop_areas VALUES (77300, 134365, 'FR:78569:ZDE:50016381:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDE:31699:STIF</Value>
+         <Value>FR::Quay:31699:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -6475,7 +6475,7 @@ INSERT INTO stop_areas VALUES (77300, 134365, 'FR:78569:ZDE:50016381:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:54.791271', '2017-03-23 13:19:35.464111', 'LOCAL_OBJECT');
 -- 134367
-INSERT INTO stop_areas VALUES (134367, NULL, 'FR:78569:ZDL:50015464:STIF', 1, 'Denisy', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681160" created="2015-05-19T05:05:16.0Z" changed="2015-05-19T05:05:16.0Z" id="FR:78569:ZDL:50015464:STIF">
+INSERT INTO stop_areas VALUES (134367, NULL, 'FR::Quay:50015464:FR1', 1, 'Denisy', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681160" created="2015-05-19T05:05:16.0Z" changed="2015-05-19T05:05:16.0Z" id="FR::Quay:50015464:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6483,7 +6483,7 @@ INSERT INTO stop_areas VALUES (134367, NULL, 'FR:78569:ZDL:50015464:STIF', 1, 'D
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDL:55048:STIF</Value>
+         <Value>FR::Quay:55048:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Denisy</Name>
@@ -6499,11 +6499,11 @@ INSERT INTO stop_areas VALUES (134367, NULL, 'FR:78569:ZDL:50015464:STIF', 1, 'D
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78569:ZDE:50016379:STIF" version="681156"/>
-        <QuayRef ref="FR:78569:ZDE:50016378:STIF" version="681158"/>
+        <QuayRef ref="FR::Quay:50016379:FR1" version="681156"/>
+        <QuayRef ref="FR::Quay:50016378:FR1" version="681158"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:49.213412', '2017-03-23 12:26:49.213412', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (77304, 134367, 'FR:78569:ZDE:50016379:STIF', 1, 'Denisy', NULL, 'zdep', NULL, NULL, NULL, 1.9387758033472900, 48.5424593525560000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="681156" created="2015-05-19T05:05:16.0Z" changed="2015-05-19T05:05:16.0Z" id="FR:78569:ZDE:50016379:STIF">
+INSERT INTO stop_areas VALUES (77304, 134367, 'FR::Quay:50016379:FR1', 1, 'Denisy', NULL, 'zdep', NULL, NULL, NULL, 1.9387758033472900, 48.5424593525560000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="681156" created="2015-05-19T05:05:16.0Z" changed="2015-05-19T05:05:16.0Z" id="FR::Quay:50016379:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6511,7 +6511,7 @@ INSERT INTO stop_areas VALUES (77304, 134367, 'FR:78569:ZDE:50016379:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDE:31702:STIF</Value>
+         <Value>FR::Quay:31702:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6533,7 +6533,7 @@ INSERT INTO stop_areas VALUES (77304, 134367, 'FR:78569:ZDE:50016379:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:54.973043', '2017-03-23 13:19:40.41657', 'LOCAL_OBJECT');
 -- 134338
-INSERT INTO stop_areas VALUES (77246, 134338, 'FR:78499:ZDE:50016153:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9115843650549900, 48.5532602646953000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682012" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR:78499:ZDE:50016153:STIF">
+INSERT INTO stop_areas VALUES (77246, 134338, 'FR::Quay:50016153:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9115843650549900, 48.5532602646953000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682012" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR::Quay:50016153:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6541,7 +6541,7 @@ INSERT INTO stop_areas VALUES (77246, 134338, 'FR:78499:ZDE:50016153:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78499:ZDE:31652:STIF</Value>
+         <Value>FR::Quay:31652:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6567,7 +6567,7 @@ INSERT INTO stop_areas VALUES (77246, 134338, 'FR:78499:ZDE:50016153:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.614037', '2017-03-23 13:19:33.188444', 'LOCAL_OBJECT');
 -- 134339
-INSERT INTO stop_areas VALUES (77248, 134339, 'FR:78499:ZDE:50016155:STIF', 1, 'Vallée Brun', NULL, 'zdep', NULL, NULL, NULL, 1.9078534670371400, 48.5557728860806000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791760" created="2015-05-19T05:05:03.0Z" changed="2016-08-23T10:08:22.0Z" id="FR:78499:ZDE:50016155:STIF">
+INSERT INTO stop_areas VALUES (77248, 134339, 'FR::Quay:50016155:FR1', 1, 'Vallée Brun', NULL, 'zdep', NULL, NULL, NULL, 1.9078534670371400, 48.5557728860806000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791760" created="2015-05-19T05:05:03.0Z" changed="2016-08-23T10:08:22.0Z" id="FR::Quay:50016155:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6575,7 +6575,7 @@ INSERT INTO stop_areas VALUES (77248, 134339, 'FR:78499:ZDE:50016155:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78537:ZDE:31654:STIF</Value>
+         <Value>FR::Quay:31654:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6601,7 +6601,7 @@ INSERT INTO stop_areas VALUES (77248, 134339, 'FR:78499:ZDE:50016155:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.699663', '2017-03-23 13:19:33.236592', 'LOCAL_OBJECT');
 -- 134339
-INSERT INTO stop_areas VALUES (77249, 134339, 'FR:78499:ZDE:50016154:STIF', 1, 'Vallée Brun', NULL, 'zdep', NULL, NULL, NULL, 1.9078675294141900, 48.5557100135739000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682006" created="2015-05-19T05:05:04.0Z" changed="2015-05-19T05:05:04.0Z" id="FR:78499:ZDE:50016154:STIF">
+INSERT INTO stop_areas VALUES (77249, 134339, 'FR::Quay:50016154:FR1', 1, 'Vallée Brun', NULL, 'zdep', NULL, NULL, NULL, 1.9078675294141900, 48.5557100135739000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682006" created="2015-05-19T05:05:04.0Z" changed="2015-05-19T05:05:04.0Z" id="FR::Quay:50016154:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6609,7 +6609,7 @@ INSERT INTO stop_areas VALUES (77249, 134339, 'FR:78499:ZDE:50016154:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78499:ZDE:31655:STIF</Value>
+         <Value>FR::Quay:31655:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6635,7 +6635,7 @@ INSERT INTO stop_areas VALUES (77249, 134339, 'FR:78499:ZDE:50016154:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.745943', '2017-03-23 13:19:33.253128', 'LOCAL_OBJECT');
 -- 134338
-INSERT INTO stop_areas VALUES (77247, 134338, 'FR:78499:ZDE:50016152:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9113658961638300, 48.5531373716927000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791761" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:23.0Z" id="FR:78499:ZDE:50016152:STIF">
+INSERT INTO stop_areas VALUES (77247, 134338, 'FR::Quay:50016152:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9113658961638300, 48.5531373716927000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791761" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:23.0Z" id="FR::Quay:50016152:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6643,7 +6643,7 @@ INSERT INTO stop_areas VALUES (77247, 134338, 'FR:78499:ZDE:50016152:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78499:ZDE:31653:STIF</Value>
+         <Value>FR::Quay:31653:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6669,7 +6669,7 @@ INSERT INTO stop_areas VALUES (77247, 134338, 'FR:78499:ZDE:50016152:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:51.658661', '2017-03-23 13:19:33.207835', 'LOCAL_OBJECT');
 -- 134367
-INSERT INTO stop_areas VALUES (77303, 134367, 'FR:78569:ZDE:50016378:STIF', 1, 'Denisy', NULL, 'zdep', NULL, NULL, NULL, 1.9387220683448500, 48.5424052362841000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="681158" created="2015-05-19T05:05:16.0Z" changed="2015-05-19T05:05:16.0Z" id="FR:78569:ZDE:50016378:STIF">
+INSERT INTO stop_areas VALUES (77303, 134367, 'FR::Quay:50016378:FR1', 1, 'Denisy', NULL, 'zdep', NULL, NULL, NULL, 1.9387220683448500, 48.5424052362841000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="681158" created="2015-05-19T05:05:16.0Z" changed="2015-05-19T05:05:16.0Z" id="FR::Quay:50016378:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6677,7 +6677,7 @@ INSERT INTO stop_areas VALUES (77303, 134367, 'FR:78569:ZDE:50016378:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDE:31701:STIF</Value>
+         <Value>FR::Quay:31701:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6699,7 +6699,7 @@ INSERT INTO stop_areas VALUES (77303, 134367, 'FR:78569:ZDE:50016378:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:54.925468', '2017-03-23 13:19:40.540916', 'LOCAL_OBJECT');
 -- 134365
-INSERT INTO stop_areas VALUES (77299, 134365, 'FR:78569:ZDE:50016380:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9611994357089700, 48.5309742984147000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791632" created="2015-05-19T05:05:18.0Z" changed="2016-08-23T10:08:24.0Z" id="FR:78569:ZDE:50016380:STIF">
+INSERT INTO stop_areas VALUES (77299, 134365, 'FR::Quay:50016380:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.9611994357089700, 48.5309742984147000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791632" created="2015-05-19T05:05:18.0Z" changed="2016-08-23T10:08:24.0Z" id="FR::Quay:50016380:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6707,7 +6707,7 @@ INSERT INTO stop_areas VALUES (77299, 134365, 'FR:78569:ZDE:50016380:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDE:31698:STIF</Value>
+         <Value>FR::Quay:31698:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -6725,7 +6725,7 @@ INSERT INTO stop_areas VALUES (77299, 134365, 'FR:78569:ZDE:50016380:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:54.745791', '2017-03-23 13:19:35.961459', 'LOCAL_OBJECT');
       -- 134368
-INSERT INTO stop_areas VALUES (77305, 134368, 'FR:78569:ZDE:50016384:STIF', 1, 'Ville Lebrun', NULL, 'zdep', NULL, NULL, NULL, 1.9709721525557100, 48.5278696020652000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791634" created="2015-05-19T05:05:20.0Z" changed="2016-08-23T10:08:25.0Z" id="FR:78569:ZDE:50016384:STIF">
+INSERT INTO stop_areas VALUES (77305, 134368, 'FR::Quay:50016384:FR1', 1, 'Ville Lebrun', NULL, 'zdep', NULL, NULL, NULL, 1.9709721525557100, 48.5278696020652000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78569', 'Sainte-Mesme', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791634" created="2015-05-19T05:05:20.0Z" changed="2016-08-23T10:08:25.0Z" id="FR::Quay:50016384:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6733,7 +6733,7 @@ INSERT INTO stop_areas VALUES (77305, 134368, 'FR:78569:ZDE:50016384:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78569:ZDE:31703:STIF</Value>
+         <Value>FR::Quay:31703:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Ville Lebrun</Name>
@@ -6751,7 +6751,7 @@ INSERT INTO stop_areas VALUES (77305, 134368, 'FR:78569:ZDE:50016384:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:55.023014', '2017-03-23 13:19:40.846872', 'LOCAL_OBJECT');
       -- 143139
-INSERT INTO stop_areas VALUES (98795, 143139, 'FR:78517:ZDE:50076506:STIF', 1, 'Giroderie', NULL, 'zdep', NULL, NULL, NULL, 1.8484245917049600, 48.6446005841075000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="677652" created="2015-05-19T02:05:19.0Z" changed="2015-05-19T02:05:19.0Z" id="FR:78517:ZDE:50076506:STIF">
+INSERT INTO stop_areas VALUES (98795, 143139, 'FR::Quay:50076506:FR1', 1, 'Giroderie', NULL, 'zdep', NULL, NULL, NULL, 1.8484245917049600, 48.6446005841075000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="677652" created="2015-05-19T02:05:19.0Z" changed="2015-05-19T02:05:19.0Z" id="FR::Quay:50076506:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6759,7 +6759,7 @@ INSERT INTO stop_areas VALUES (98795, 143139, 'FR:78517:ZDE:50076506:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:4594:STIF</Value>
+         <Value>FR::Quay:4594:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6797,7 +6797,7 @@ INSERT INTO stop_areas VALUES (98795, 143139, 'FR:78517:ZDE:50076506:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:52:09.891719', '2017-03-23 13:29:39.697142', 'LOCAL_OBJECT');
       -- 134232
-INSERT INTO stop_areas VALUES (77033, 134232, 'FR:78164:ZDE:50015685:STIF', 1, 'Croix', NULL, 'zdep', NULL, NULL, NULL, 1.9046964337120800, 48.6196763102360000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683684" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR:78164:ZDE:50015685:STIF">
+INSERT INTO stop_areas VALUES (77033, 134232, 'FR::Quay:50015685:FR1', 1, 'Croix', NULL, 'zdep', NULL, NULL, NULL, 1.9046964337120800, 48.6196763102360000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683684" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR::Quay:50015685:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6805,7 +6805,7 @@ INSERT INTO stop_areas VALUES (77033, 134232, 'FR:78164:ZDE:50015685:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDE:31934:STIF</Value>
+         <Value>FR::Quay:31934:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6831,7 +6831,7 @@ INSERT INTO stop_areas VALUES (77033, 134232, 'FR:78164:ZDE:50015685:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:41.809841', '2017-03-23 13:19:27.216729', 'LOCAL_OBJECT');
       -- 149199
-INSERT INTO stop_areas VALUES (114340, 149199, 'FR:78164:ZDE:50015683:STIF', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.9086562541416600, 48.6127182088555000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792032" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:57.0Z" id="FR:78164:ZDE:50015683:STIF">
+INSERT INTO stop_areas VALUES (114340, 149199, 'FR::Quay:50015683:FR1', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.9086562541416600, 48.6127182088555000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792032" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:57.0Z" id="FR::Quay:50015683:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6839,7 +6839,7 @@ INSERT INTO stop_areas VALUES (114340, 149199, 'FR:78164:ZDE:50015683:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDE:31946:STIF</Value>
+         <Value>FR::Quay:31946:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6865,7 +6865,7 @@ INSERT INTO stop_areas VALUES (114340, 149199, 'FR:78164:ZDE:50015683:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:29.193565', '2017-03-23 13:36:59.734816', 'LOCAL_OBJECT');
       -- 134233
-INSERT INTO stop_areas VALUES (77034, 134233, 'FR:78164:ZDE:50015687:STIF', 1, 'Montjoie', NULL, 'zdep', NULL, NULL, NULL, 1.9151927599455300, 48.6177364944117000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683660" created="2015-05-19T05:05:49.0Z" changed="2015-05-19T05:05:49.0Z" id="FR:78164:ZDE:50015687:STIF">
+INSERT INTO stop_areas VALUES (77034, 134233, 'FR::Quay:50015687:FR1', 1, 'Montjoie', NULL, 'zdep', NULL, NULL, NULL, 1.9151927599455300, 48.6177364944117000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683660" created="2015-05-19T05:05:49.0Z" changed="2015-05-19T05:05:49.0Z" id="FR::Quay:50015687:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6873,7 +6873,7 @@ INSERT INTO stop_areas VALUES (77034, 134233, 'FR:78164:ZDE:50015687:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDE:31895:STIF</Value>
+         <Value>FR::Quay:31895:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6895,7 +6895,7 @@ INSERT INTO stop_areas VALUES (77034, 134233, 'FR:78164:ZDE:50015687:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:41.863431', '2017-03-23 13:19:27.271853', 'LOCAL_OBJECT');
       -- 149197
-INSERT INTO stop_areas VALUES (114336, 149197, 'FR:78125:ZDE:50015678:STIF', 1, 'Villeneuve', NULL, 'zdep', NULL, NULL, NULL, 1.9437545019195500, 48.6326668106157000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683764" created="2015-05-19T05:05:00.0Z" changed="2015-05-19T05:05:00.0Z" id="FR:78125:ZDE:50015678:STIF">
+INSERT INTO stop_areas VALUES (114336, 149197, 'FR::Quay:50015678:FR1', 1, 'Villeneuve', NULL, 'zdep', NULL, NULL, NULL, 1.9437545019195500, 48.6326668106157000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683764" created="2015-05-19T05:05:00.0Z" changed="2015-05-19T05:05:00.0Z" id="FR::Quay:50015678:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6903,7 +6903,7 @@ INSERT INTO stop_areas VALUES (114336, 149197, 'FR:78125:ZDE:50015678:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDE:31960:STIF</Value>
+         <Value>FR::Quay:31960:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6925,7 +6925,7 @@ INSERT INTO stop_areas VALUES (114336, 149197, 'FR:78125:ZDE:50015678:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:27.537169', '2017-03-23 13:36:59.612736', 'LOCAL_OBJECT');
       -- 149196
-INSERT INTO stop_areas VALUES (114334, 149196, 'FR:78125:ZDE:50015676:STIF', 1, 'Bois des Gaulles', NULL, 'zdep', NULL, NULL, NULL, 1.9570840825980200, 48.6402970484119000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683772" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR:78125:ZDE:50015676:STIF">
+INSERT INTO stop_areas VALUES (114334, 149196, 'FR::Quay:50015676:FR1', 1, 'Bois des Gaulles', NULL, 'zdep', NULL, NULL, NULL, 1.9570840825980200, 48.6402970484119000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683772" created="2015-05-19T05:05:06.0Z" changed="2015-05-19T05:05:06.0Z" id="FR::Quay:50015676:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6933,7 +6933,7 @@ INSERT INTO stop_areas VALUES (114334, 149196, 'FR:78125:ZDE:50015676:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDE:31961:STIF</Value>
+         <Value>FR::Quay:31961:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6955,7 +6955,7 @@ INSERT INTO stop_areas VALUES (114334, 149196, 'FR:78125:ZDE:50015676:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:27.441917', '2017-03-23 13:36:59.557159', 'LOCAL_OBJECT');
       -- 149194
-INSERT INTO stop_areas VALUES (114331, 149194, 'FR:78125:ZDE:50015672:STIF', 1, 'Château', NULL, 'zdep', NULL, NULL, NULL, 1.9664965769673000, 48.6428434929102000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792045" created="2015-05-19T05:05:33.0Z" changed="2016-08-23T10:08:16.0Z" id="FR:78125:ZDE:50015672:STIF">
+INSERT INTO stop_areas VALUES (114331, 149194, 'FR::Quay:50015672:FR1', 1, 'Château', NULL, 'zdep', NULL, NULL, NULL, 1.9664965769673000, 48.6428434929102000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792045" created="2015-05-19T05:05:33.0Z" changed="2016-08-23T10:08:16.0Z" id="FR::Quay:50015672:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6963,7 +6963,7 @@ INSERT INTO stop_areas VALUES (114331, 149194, 'FR:78125:ZDE:50015672:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDE:424188:STIF</Value>
+         <Value>FR::Quay:424188:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -6984,7 +6984,7 @@ INSERT INTO stop_areas VALUES (114331, 149194, 'FR:78125:ZDE:50015672:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:27.290267', '2017-03-23 13:36:59.445716', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (156195, NULL, 'FR:78120:ZDL:50015082:STIF', 1, 'Bullion Ronqueux', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683734" created="2015-05-19T05:05:40.0Z" changed="2015-05-19T05:05:40.0Z" id="FR:78120:ZDL:50015082:STIF">
+INSERT INTO stop_areas VALUES (156195, NULL, 'FR::Quay:50015082:FR1', 1, 'Bullion Ronqueux', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683734" created="2015-05-19T05:05:40.0Z" changed="2015-05-19T05:05:40.0Z" id="FR::Quay:50015082:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -6992,7 +6992,7 @@ INSERT INTO stop_areas VALUES (156195, NULL, 'FR:78120:ZDL:50015082:STIF', 1, 'B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78120:ZDL:57562:STIF</Value>
+         <Value>FR::Quay:57562:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Bullion Ronqueux</Name>
@@ -7008,11 +7008,11 @@ INSERT INTO stop_areas VALUES (156195, NULL, 'FR:78120:ZDL:50015082:STIF', 1, 'B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78120:ZDE:50015671:STIF" version="792046"/>
-        <QuayRef ref="FR:78120:ZDE:50015670:STIF" version="792047"/>
+        <QuayRef ref="FR::Quay:50015671:FR1" version="792046"/>
+        <QuayRef ref="FR::Quay:50015670:FR1" version="792047"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:17:11.33077', '2017-03-23 13:17:11.33077', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (131451, 156195, 'FR:78120:ZDE:50015671:STIF', 1, 'Ronqueux', NULL, 'zdep', NULL, NULL, NULL, 1.9867288563947600, 48.6410984444406000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792046" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:18.0Z" id="FR:78120:ZDE:50015671:STIF">
+INSERT INTO stop_areas VALUES (131451, 156195, 'FR::Quay:50015671:FR1', 1, 'Ronqueux', NULL, 'zdep', NULL, NULL, NULL, 1.9867288563947600, 48.6410984444406000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792046" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:18.0Z" id="FR::Quay:50015671:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7020,7 +7020,7 @@ INSERT INTO stop_areas VALUES (131451, 156195, 'FR:78120:ZDE:50015671:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78120:ZDE:31975:STIF</Value>
+         <Value>FR::Quay:31975:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7041,7 +7041,7 @@ INSERT INTO stop_areas VALUES (131451, 156195, 'FR:78120:ZDE:50015671:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:29.302182', '2017-03-23 12:23:29.302182', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (156193, NULL, 'FR:78120:ZDL:50015080:STIF', 1, 'Longchêne', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683750" created="2015-05-19T05:05:51.0Z" changed="2015-05-19T05:05:51.0Z" id="FR:78120:ZDL:50015080:STIF">
+INSERT INTO stop_areas VALUES (156193, NULL, 'FR::Quay:50015080:FR1', 1, 'Longchêne', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683750" created="2015-05-19T05:05:51.0Z" changed="2015-05-19T05:05:51.0Z" id="FR::Quay:50015080:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7049,7 +7049,7 @@ INSERT INTO stop_areas VALUES (156193, NULL, 'FR:78120:ZDL:50015080:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78120:ZDL:48655:STIF</Value>
+         <Value>FR::Quay:48655:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Longchêne</Name>
@@ -7065,11 +7065,11 @@ INSERT INTO stop_areas VALUES (156193, NULL, 'FR:78120:ZDL:50015080:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78120:ZDE:50015667:STIF" version="792049"/>
-        <QuayRef ref="FR:78120:ZDE:50015666:STIF" version="792050"/>
+        <QuayRef ref="FR::Quay:50015667:FR1" version="792049"/>
+        <QuayRef ref="FR::Quay:50015666:FR1" version="792050"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:17:11.218807', '2017-03-23 13:17:11.218807', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (131448, 156193, 'FR:78120:ZDE:50015667:STIF', 1, 'Longchêne Place', NULL, 'zdep', NULL, NULL, NULL, 2.0022086604000400, 48.6384554259711000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792049" created="2015-05-19T05:05:48.0Z" changed="2016-08-23T10:08:22.0Z" id="FR:78120:ZDE:50015667:STIF">
+INSERT INTO stop_areas VALUES (131448, 156193, 'FR::Quay:50015667:FR1', 1, 'Longchêne Place', NULL, 'zdep', NULL, NULL, NULL, 2.0022086604000400, 48.6384554259711000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792049" created="2015-05-19T05:05:48.0Z" changed="2016-08-23T10:08:22.0Z" id="FR::Quay:50015667:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7077,7 +7077,7 @@ INSERT INTO stop_areas VALUES (131448, 156193, 'FR:78120:ZDE:50015667:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78120:ZDE:31935:STIF</Value>
+         <Value>FR::Quay:31935:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7102,7 +7102,7 @@ INSERT INTO stop_areas VALUES (131448, 156193, 'FR:78120:ZDE:50015667:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:29.079222', '2017-03-23 12:23:29.079222', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (131446, 156193, 'FR:78120:ZDE:50015666:STIF', 1, 'Longchêne Place', NULL, 'zdep', NULL, NULL, NULL, 2.0021368943189800, 48.6383332579947000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792050" created="2015-05-19T05:05:49.0Z" changed="2016-08-23T10:08:23.0Z" id="FR:78120:ZDE:50015666:STIF">
+INSERT INTO stop_areas VALUES (131446, 156193, 'FR::Quay:50015666:FR1', 1, 'Longchêne Place', NULL, 'zdep', NULL, NULL, NULL, 2.0021368943189800, 48.6383332579947000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792050" created="2015-05-19T05:05:49.0Z" changed="2016-08-23T10:08:23.0Z" id="FR::Quay:50015666:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7110,7 +7110,7 @@ INSERT INTO stop_areas VALUES (131446, 156193, 'FR:78120:ZDE:50015666:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78120:ZDE:31924:STIF</Value>
+         <Value>FR::Quay:31924:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7135,7 +7135,7 @@ INSERT INTO stop_areas VALUES (131446, 156193, 'FR:78120:ZDE:50015666:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:28.959433', '2017-03-23 12:23:28.959433', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (131450, 156195, 'FR:78120:ZDE:50015670:STIF', 1, 'Ronqueux', NULL, 'zdep', NULL, NULL, NULL, 1.9868653924334700, 48.6409640054408000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792047" created="2015-05-19T05:05:38.0Z" changed="2016-08-23T10:08:19.0Z" id="FR:78120:ZDE:50015670:STIF">
+INSERT INTO stop_areas VALUES (131450, 156195, 'FR::Quay:50015670:FR1', 1, 'Ronqueux', NULL, 'zdep', NULL, NULL, NULL, 1.9868653924334700, 48.6409640054408000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78120', 'Bullion', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792047" created="2015-05-19T05:05:38.0Z" changed="2016-08-23T10:08:19.0Z" id="FR::Quay:50015670:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7143,7 +7143,7 @@ INSERT INTO stop_areas VALUES (131450, 156195, 'FR:78120:ZDE:50015670:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78120:ZDE:31974:STIF</Value>
+         <Value>FR::Quay:31974:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7165,7 +7165,7 @@ INSERT INTO stop_areas VALUES (131450, 156195, 'FR:78120:ZDE:50015670:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:29.246306', '2017-03-23 12:23:29.246306', 'LOCAL_OBJECT');
       -- 149194
-INSERT INTO stop_areas VALUES (114330, 149194, 'FR:78125:ZDE:50015673:STIF', 1, 'Château', NULL, 'zdep', NULL, NULL, NULL, 1.9663622945750800, 48.6426795158335000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792044" created="2015-05-19T05:05:32.0Z" changed="2016-08-23T10:08:15.0Z" id="FR:78125:ZDE:50015673:STIF">
+INSERT INTO stop_areas VALUES (114330, 149194, 'FR::Quay:50015673:FR1', 1, 'Château', NULL, 'zdep', NULL, NULL, NULL, 1.9663622945750800, 48.6426795158335000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792044" created="2015-05-19T05:05:32.0Z" changed="2016-08-23T10:08:15.0Z" id="FR::Quay:50015673:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7173,7 +7173,7 @@ INSERT INTO stop_areas VALUES (114330, 149194, 'FR:78125:ZDE:50015673:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDE:31314:STIF</Value>
+         <Value>FR::Quay:31314:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7195,7 +7195,7 @@ INSERT INTO stop_areas VALUES (114330, 149194, 'FR:78125:ZDE:50015673:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:27.238243', '2017-03-23 13:36:59.420194', 'LOCAL_OBJECT');
       -- 149196
-INSERT INTO stop_areas VALUES (114335, 149196, 'FR:78125:ZDE:50015677:STIF', 1, 'Bois des Gaulles', NULL, 'zdep', NULL, NULL, NULL, 1.9568776858763200, 48.6402818199532000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792053" created="2015-05-19T05:05:04.0Z" changed="2016-08-23T10:08:28.0Z" id="FR:78125:ZDE:50015677:STIF">
+INSERT INTO stop_areas VALUES (114335, 149196, 'FR::Quay:50015677:FR1', 1, 'Bois des Gaulles', NULL, 'zdep', NULL, NULL, NULL, 1.9568776858763200, 48.6402818199532000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792053" created="2015-05-19T05:05:04.0Z" changed="2016-08-23T10:08:28.0Z" id="FR::Quay:50015677:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7203,7 +7203,7 @@ INSERT INTO stop_areas VALUES (114335, 149196, 'FR:78125:ZDE:50015677:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDE:31317:STIF</Value>
+         <Value>FR::Quay:31317:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7225,7 +7225,7 @@ INSERT INTO stop_areas VALUES (114335, 149196, 'FR:78125:ZDE:50015677:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:27.493677', '2017-03-23 13:36:59.531455', 'LOCAL_OBJECT');
       -- 149197
-INSERT INTO stop_areas VALUES (114337, 149197, 'FR:78125:ZDE:50015679:STIF', 1, 'Villeneuve', NULL, 'zdep', NULL, NULL, NULL, 1.9436675596451700, 48.6327193395303000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792052" created="2015-05-19T05:05:59.0Z" changed="2016-08-23T10:08:26.0Z" id="FR:78125:ZDE:50015679:STIF">
+INSERT INTO stop_areas VALUES (114337, 149197, 'FR::Quay:50015679:FR1', 1, 'Villeneuve', NULL, 'zdep', NULL, NULL, NULL, 1.9436675596451700, 48.6327193395303000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792052" created="2015-05-19T05:05:59.0Z" changed="2016-08-23T10:08:26.0Z" id="FR::Quay:50015679:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7233,7 +7233,7 @@ INSERT INTO stop_areas VALUES (114337, 149197, 'FR:78125:ZDE:50015679:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDE:31318:STIF</Value>
+         <Value>FR::Quay:31318:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7255,7 +7255,7 @@ INSERT INTO stop_areas VALUES (114337, 149197, 'FR:78125:ZDE:50015679:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:27.578741', '2017-03-23 13:36:59.58858', 'LOCAL_OBJECT');
       -- 134233
-INSERT INTO stop_areas VALUES (77035, 134233, 'FR:78164:ZDE:50015686:STIF', 1, 'Montjoie', NULL, 'zdep', NULL, NULL, NULL, 1.9154950897015000, 48.6178362779646000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792030" created="2015-05-19T05:05:48.0Z" changed="2016-08-23T10:08:52.0Z" id="FR:78164:ZDE:50015686:STIF">
+INSERT INTO stop_areas VALUES (77035, 134233, 'FR::Quay:50015686:FR1', 1, 'Montjoie', NULL, 'zdep', NULL, NULL, NULL, 1.9154950897015000, 48.6178362779646000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792030" created="2015-05-19T05:05:48.0Z" changed="2016-08-23T10:08:52.0Z" id="FR::Quay:50015686:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7263,7 +7263,7 @@ INSERT INTO stop_areas VALUES (77035, 134233, 'FR:78164:ZDE:50015686:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDE:31901:STIF</Value>
+         <Value>FR::Quay:31901:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7285,7 +7285,7 @@ INSERT INTO stop_areas VALUES (77035, 134233, 'FR:78164:ZDE:50015686:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:41.900819', '2017-03-23 13:19:27.245978', 'LOCAL_OBJECT');
       -- 149199
-INSERT INTO stop_areas VALUES (114341, 149199, 'FR:78164:ZDE:50015682:STIF', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.9088500486871000, 48.6125179626097000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683674" created="2015-05-19T05:05:59.0Z" changed="2015-05-19T05:05:59.0Z" id="FR:78164:ZDE:50015682:STIF">
+INSERT INTO stop_areas VALUES (114341, 149199, 'FR::Quay:50015682:FR1', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.9088500486871000, 48.6125179626097000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683674" created="2015-05-19T05:05:59.0Z" changed="2015-05-19T05:05:59.0Z" id="FR::Quay:50015682:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7293,7 +7293,7 @@ INSERT INTO stop_areas VALUES (114341, 149199, 'FR:78164:ZDE:50015682:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDE:31321:STIF</Value>
+         <Value>FR::Quay:31321:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7319,7 +7319,7 @@ INSERT INTO stop_areas VALUES (114341, 149199, 'FR:78164:ZDE:50015682:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:29.24673', '2017-03-23 13:36:59.710879', 'LOCAL_OBJECT');
       -- 134232
-INSERT INTO stop_areas VALUES (77032, 134232, 'FR:78164:ZDE:50015684:STIF', 1, 'Croix', NULL, 'zdep', NULL, NULL, NULL, 1.9047861604737300, 48.6186698446081000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683682" created="2015-05-19T05:05:05.0Z" changed="2015-05-19T05:05:05.0Z" id="FR:78164:ZDE:50015684:STIF">
+INSERT INTO stop_areas VALUES (77032, 134232, 'FR::Quay:50015684:FR1', 1, 'Croix', NULL, 'zdep', NULL, NULL, NULL, 1.9047861604737300, 48.6186698446081000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="683682" created="2015-05-19T05:05:05.0Z" changed="2015-05-19T05:05:05.0Z" id="FR::Quay:50015684:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7327,7 +7327,7 @@ INSERT INTO stop_areas VALUES (77032, 134232, 'FR:78164:ZDE:50015684:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDE:31909:STIF</Value>
+         <Value>FR::Quay:31909:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7353,7 +7353,7 @@ INSERT INTO stop_areas VALUES (77032, 134232, 'FR:78164:ZDE:50015684:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:41.72119', '2017-03-23 13:19:27.190821', 'LOCAL_OBJECT');
       -- 143139
-INSERT INTO stop_areas VALUES (98794, 143139, 'FR:78517:ZDE:50076505:STIF', 1, 'Giroderie', NULL, 'zdep', NULL, NULL, NULL, 1.8484364624986800, 48.6447804082950000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="677650" created="2015-05-19T02:05:18.0Z" changed="2015-05-19T02:05:18.0Z" id="FR:78517:ZDE:50076505:STIF">
+INSERT INTO stop_areas VALUES (98794, 143139, 'FR::Quay:50076505:FR1', 1, 'Giroderie', NULL, 'zdep', NULL, NULL, NULL, 1.8484364624986800, 48.6447804082950000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="677650" created="2015-05-19T02:05:18.0Z" changed="2015-05-19T02:05:18.0Z" id="FR::Quay:50076505:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7361,7 +7361,7 @@ INSERT INTO stop_areas VALUES (98794, 143139, 'FR:78517:ZDE:50076505:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:4593:STIF</Value>
+         <Value>FR::Quay:4593:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7395,7 +7395,7 @@ INSERT INTO stop_areas VALUES (98794, 143139, 'FR:78517:ZDE:50076505:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:52:09.849393', '2017-03-23 13:29:39.642626', 'LOCAL_OBJECT');
       -- 134317
-INSERT INTO stop_areas VALUES (77205, 134317, 'FR:78464:ZDE:50016099:STIF', 1, 'Guillemets', NULL, 'zdep', NULL, NULL, NULL, 1.8052608800689500, 48.6074151542779000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682334" created="2015-05-19T05:05:25.0Z" changed="2015-05-19T05:05:25.0Z" id="FR:78464:ZDE:50016099:STIF">
+INSERT INTO stop_areas VALUES (77205, 134317, 'FR::Quay:50016099:FR1', 1, 'Guillemets', NULL, 'zdep', NULL, NULL, NULL, 1.8052608800689500, 48.6074151542779000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682334" created="2015-05-19T05:05:25.0Z" changed="2015-05-19T05:05:25.0Z" id="FR::Quay:50016099:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7403,7 +7403,7 @@ INSERT INTO stop_areas VALUES (77205, 134317, 'FR:78464:ZDE:50016099:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78464:ZDE:31612:STIF</Value>
+         <Value>FR::Quay:31612:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7425,7 +7425,7 @@ INSERT INTO stop_areas VALUES (77205, 134317, 'FR:78464:ZDE:50016099:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:49.736253', '2017-03-23 13:19:32.062381', 'LOCAL_OBJECT');
       -- 134315
-INSERT INTO stop_areas VALUES (77203, 134315, 'FR:78464:ZDE:50016096:STIF', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.8113757263957000, 48.5874560365627000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791797" created="2015-05-19T05:05:43.0Z" changed="2016-08-23T10:08:05.0Z" id="FR:78464:ZDE:50016096:STIF">
+INSERT INTO stop_areas VALUES (77203, 134315, 'FR::Quay:50016096:FR1', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.8113757263957000, 48.5874560365627000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791797" created="2015-05-19T05:05:43.0Z" changed="2016-08-23T10:08:05.0Z" id="FR::Quay:50016096:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7433,7 +7433,7 @@ INSERT INTO stop_areas VALUES (77203, 134315, 'FR:78464:ZDE:50016096:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78464:ZDE:31610:STIF</Value>
+         <Value>FR::Quay:31610:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7455,7 +7455,7 @@ INSERT INTO stop_areas VALUES (77203, 134315, 'FR:78464:ZDE:50016096:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:49.646019', '2017-03-23 13:19:31.998178', 'LOCAL_OBJECT');
 
-INSERT INTO stop_areas VALUES (156198, NULL, 'FR:78470:ZDL:50015308:STIF', 1, 'Les Coudraies', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682309" created="2015-05-19T05:05:14.0Z" changed="2015-05-19T05:05:14.0Z" id="FR:78470:ZDL:50015308:STIF">
+INSERT INTO stop_areas VALUES (156198, NULL, 'FR::Quay:50015308:FR1', 1, 'Les Coudraies', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682309" created="2015-05-19T05:05:14.0Z" changed="2015-05-19T05:05:14.0Z" id="FR::Quay:50015308:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7463,7 +7463,7 @@ INSERT INTO stop_areas VALUES (156198, NULL, 'FR:78470:ZDL:50015308:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78470:ZDL:54999:STIF</Value>
+         <Value>FR::Quay:54999:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Les Coudraies</Name>
@@ -7479,11 +7479,11 @@ INSERT INTO stop_areas VALUES (156198, NULL, 'FR:78470:ZDL:50015308:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78470:ZDE:50016107:STIF" version="791803"/>
-        <QuayRef ref="FR:78470:ZDE:50016108:STIF" version="791804"/>
+        <QuayRef ref="FR::Quay:50016107:FR1" version="791803"/>
+        <QuayRef ref="FR::Quay:50016108:FR1" version="791804"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:17:11.492129', '2017-03-23 13:17:11.492129', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (131456, 156198, 'FR:78470:ZDE:50016107:STIF', 1, 'Les Coudrayes', NULL, 'zdep', NULL, NULL, NULL, 1.7833544651190200, 48.5781439589585000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791803" created="2015-05-19T05:05:12.0Z" changed="2016-08-23T10:08:15.0Z" id="FR:78470:ZDE:50016107:STIF">
+INSERT INTO stop_areas VALUES (131456, 156198, 'FR::Quay:50016107:FR1', 1, 'Les Coudrayes', NULL, 'zdep', NULL, NULL, NULL, 1.7833544651190200, 48.5781439589585000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791803" created="2015-05-19T05:05:12.0Z" changed="2016-08-23T10:08:15.0Z" id="FR::Quay:50016107:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7491,7 +7491,7 @@ INSERT INTO stop_areas VALUES (131456, 156198, 'FR:78470:ZDE:50016107:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78470:ZDE:31618:STIF</Value>
+         <Value>FR::Quay:31618:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7513,7 +7513,7 @@ INSERT INTO stop_areas VALUES (131456, 156198, 'FR:78470:ZDE:50016107:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:29.787805', '2017-03-23 12:23:29.787805', 'LOCAL_OBJECT');
       -- 134322
-INSERT INTO stop_areas VALUES (77215, 134322, 'FR:78470:ZDE:50016111:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7792962365663400, 48.5781823017855000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791800" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:10.0Z" id="FR:78470:ZDE:50016111:STIF">
+INSERT INTO stop_areas VALUES (77215, 134322, 'FR::Quay:50016111:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7792962365663400, 48.5781823017855000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791800" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:10.0Z" id="FR::Quay:50016111:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7521,7 +7521,7 @@ INSERT INTO stop_areas VALUES (77215, 134322, 'FR:78470:ZDE:50016111:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78470:ZDE:31622:STIF</Value>
+         <Value>FR::Quay:31622:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7543,7 +7543,7 @@ INSERT INTO stop_areas VALUES (77215, 134322, 'FR:78470:ZDE:50016111:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.181802', '2017-03-23 13:19:32.349285', 'LOCAL_OBJECT');
       -- 134322
-INSERT INTO stop_areas VALUES (77216, 134322, 'FR:78470:ZDE:50016114:STIF', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7799520175159900, 48.5781599420635000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791799" created="2015-05-19T05:05:48.0Z" changed="2016-08-23T10:08:09.0Z" id="FR:78470:ZDE:50016114:STIF">
+INSERT INTO stop_areas VALUES (77216, 134322, 'FR::Quay:50016114:FR1', 1, 'Mairie', NULL, 'zdep', NULL, NULL, NULL, 1.7799520175159900, 48.5781599420635000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791799" created="2015-05-19T05:05:48.0Z" changed="2016-08-23T10:08:09.0Z" id="FR::Quay:50016114:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7551,7 +7551,7 @@ INSERT INTO stop_areas VALUES (77216, 134322, 'FR:78470:ZDE:50016114:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78470:ZDE:31850:STIF</Value>
+         <Value>FR::Quay:31850:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7573,7 +7573,7 @@ INSERT INTO stop_areas VALUES (77216, 134322, 'FR:78470:ZDE:50016114:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.226467', '2017-03-23 13:19:32.374384', 'LOCAL_OBJECT');
       --
-INSERT INTO stop_areas VALUES (131457, 156198, 'FR:78470:ZDE:50016108:STIF', 1, 'Les Coudrayes', NULL, 'zdep', NULL, NULL, NULL, 1.7848618101186100, 48.5778093828306000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791804" created="2015-05-19T05:05:13.0Z" changed="2016-08-23T10:08:16.0Z" id="FR:78470:ZDE:50016108:STIF">
+INSERT INTO stop_areas VALUES (131457, 156198, 'FR::Quay:50016108:FR1', 1, 'Les Coudrayes', NULL, 'zdep', NULL, NULL, NULL, 1.7848618101186100, 48.5778093828306000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791804" created="2015-05-19T05:05:13.0Z" changed="2016-08-23T10:08:16.0Z" id="FR::Quay:50016108:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7581,7 +7581,7 @@ INSERT INTO stop_areas VALUES (131457, 156198, 'FR:78470:ZDE:50016108:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78470:ZDE:31619:STIF</Value>
+         <Value>FR::Quay:31619:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7603,7 +7603,7 @@ INSERT INTO stop_areas VALUES (131457, 156198, 'FR:78470:ZDE:50016108:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:29.876632', '2017-03-23 12:23:29.876632', 'LOCAL_OBJECT');
       -- 134315
-INSERT INTO stop_areas VALUES (77202, 134315, 'FR:78464:ZDE:50016097:STIF', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.8110570671769500, 48.5878260382743000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682239" created="2015-05-19T05:05:43.0Z" changed="2015-05-19T05:05:43.0Z" id="FR:78464:ZDE:50016097:STIF">
+INSERT INTO stop_areas VALUES (77202, 134315, 'FR::Quay:50016097:FR1', 1, 'Centre', NULL, 'zdep', NULL, NULL, NULL, 1.8110570671769500, 48.5878260382743000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="682239" created="2015-05-19T05:05:43.0Z" changed="2015-05-19T05:05:43.0Z" id="FR::Quay:50016097:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7611,7 +7611,7 @@ INSERT INTO stop_areas VALUES (77202, 134315, 'FR:78464:ZDE:50016097:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78464:ZDE:31609:STIF</Value>
+         <Value>FR::Quay:31609:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7633,7 +7633,7 @@ INSERT INTO stop_areas VALUES (77202, 134315, 'FR:78464:ZDE:50016097:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:49.595935', '2017-03-23 13:19:31.972267', 'LOCAL_OBJECT');
       -- 134317
-INSERT INTO stop_areas VALUES (77206, 134317, 'FR:78464:ZDE:50016100:STIF', 1, 'Guillemets', NULL, 'zdep', NULL, NULL, NULL, 1.8055587127468900, 48.6074424592190000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791811" created="2015-05-19T05:05:26.0Z" changed="2016-08-23T10:08:25.0Z" id="FR:78464:ZDE:50016100:STIF">
+INSERT INTO stop_areas VALUES (77206, 134317, 'FR::Quay:50016100:FR1', 1, 'Guillemets', NULL, 'zdep', NULL, NULL, NULL, 1.8055587127468900, 48.6074424592190000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791811" created="2015-05-19T05:05:26.0Z" changed="2016-08-23T10:08:25.0Z" id="FR::Quay:50016100:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7641,7 +7641,7 @@ INSERT INTO stop_areas VALUES (77206, 134317, 'FR:78464:ZDE:50016100:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78464:ZDE:31613:STIF</Value>
+         <Value>FR::Quay:31613:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7662,7 +7662,7 @@ INSERT INTO stop_areas VALUES (77206, 134317, 'FR:78464:ZDE:50016100:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:49.781355', '2017-03-23 13:19:32.08903', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (156300, NULL, 'FR:78269:ZDL:50111660:STIF', 1, 'RAMBOUILLET Arbouville', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78269', 'Gazeran', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="805991" created="2016-10-11T09:10:53.0Z" changed="2016-10-11T09:10:53.0Z" id="FR:78269:ZDL:50111660:STIF">
+INSERT INTO stop_areas VALUES (156300, NULL, 'FR::Quay:50111660:FR1', 1, 'RAMBOUILLET Arbouville', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78269', 'Gazeran', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:22" version="805991" created="2016-10-11T09:10:53.0Z" changed="2016-10-11T09:10:53.0Z" id="FR::Quay:50111660:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7670,7 +7670,7 @@ INSERT INTO stop_areas VALUES (156300, NULL, 'FR:78269:ZDL:50111660:STIF', 1, 'R
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78269:ZDL:424804:STIF</Value>
+         <Value>FR::Quay:424804:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>RAMBOUILLET Arbouville</Name>
@@ -7686,11 +7686,11 @@ INSERT INTO stop_areas VALUES (156300, NULL, 'FR:78269:ZDL:50111660:STIF', 1, 'R
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78269:ZDE:50111664:STIF" version="805981"/>
-        <QuayRef ref="FR:78269:ZDE:50111665:STIF" version="805989"/>
+        <QuayRef ref="FR::Quay:50111664:FR1" version="805981"/>
+        <QuayRef ref="FR::Quay:50111665:FR1" version="805989"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:17:17.693483', '2017-03-23 13:17:17.693483', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (131672, 156300, 'FR:78269:ZDE:50111665:STIF', 1, 'Arbouville', NULL, 'zdep', NULL, NULL, NULL, 1.8181509735314600, 48.6360761753006000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78269', 'Gazeran', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805989" created="2016-10-11T09:10:47.0Z" changed="2016-10-11T09:10:47.0Z" id="FR:78269:ZDE:50111665:STIF">
+INSERT INTO stop_areas VALUES (131672, 156300, 'FR::Quay:50111665:FR1', 1, 'Arbouville', NULL, 'zdep', NULL, NULL, NULL, 1.8181509735314600, 48.6360761753006000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78269', 'Gazeran', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805989" created="2016-10-11T09:10:47.0Z" changed="2016-10-11T09:10:47.0Z" id="FR::Quay:50111665:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7698,7 +7698,7 @@ INSERT INTO stop_areas VALUES (131672, 156300, 'FR:78269:ZDE:50111665:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78269:ZDE:424803:STIF</Value>
+         <Value>FR::Quay:424803:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7720,7 +7720,7 @@ INSERT INTO stop_areas VALUES (131672, 156300, 'FR:78269:ZDE:50111665:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:49.131373', '2017-03-23 12:23:49.131373', 'LOCAL_OBJECT');
       -- 137572
-INSERT INTO stop_areas VALUES (85387, 137572, 'FR:78517:ZDE:50076501:STIF', 1, 'Collège Racinay', NULL, 'zdep', NULL, NULL, NULL, 1.8231950380281900, 48.6348396466707000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="732666" created="2015-05-19T02:05:12.0Z" changed="2015-10-27T09:10:40.0Z" id="FR:78517:ZDE:50076501:STIF">
+INSERT INTO stop_areas VALUES (85387, 137572, 'FR::Quay:50076501:FR1', 1, 'Collège Racinay', NULL, 'zdep', NULL, NULL, NULL, 1.8231950380281900, 48.6348396466707000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="732666" created="2015-05-19T02:05:12.0Z" changed="2015-10-27T09:10:40.0Z" id="FR::Quay:50076501:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7728,7 +7728,7 @@ INSERT INTO stop_areas VALUES (85387, 137572, 'FR:78517:ZDE:50076501:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:17580:STIF</Value>
+         <Value>FR::Quay:17580:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7753,7 +7753,7 @@ INSERT INTO stop_areas VALUES (85387, 137572, 'FR:78517:ZDE:50076501:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:41:41.295571', '2017-03-23 13:23:14.8419', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (156517, NULL, 'FR:78517:ZDL:50015444:STIF', 1, 'De Vivonne', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791685" created="2015-05-19T05:05:01.0Z" changed="2016-08-23T10:08:13.0Z" id="FR:78517:ZDL:50015444:STIF">
+INSERT INTO stop_areas VALUES (156517, NULL, 'FR::Quay:50015444:FR1', 1, 'De Vivonne', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791685" created="2015-05-19T05:05:01.0Z" changed="2016-08-23T10:08:13.0Z" id="FR::Quay:50015444:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7761,7 +7761,7 @@ INSERT INTO stop_areas VALUES (156517, NULL, 'FR:78517:ZDL:50015444:STIF', 1, 'D
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDL:42688:STIF</Value>
+         <Value>FR::Quay:42688:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>De Vivonne</Name>
@@ -7777,11 +7777,11 @@ INSERT INTO stop_areas VALUES (156517, NULL, 'FR:78517:ZDL:50015444:STIF', 1, 'D
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78517:ZDE:50016341:STIF" version="791684"/>
-        <QuayRef ref="FR:78517:ZDE:50112102:STIF" version="796818"/>
+        <QuayRef ref="FR::Quay:50016341:FR1" version="791684"/>
+        <QuayRef ref="FR::Quay:50112102:FR1" version="796818"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:17:29.71562', '2017-03-23 13:17:29.71562', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (132100, 156517, 'FR:78517:ZDE:50016341:STIF', 1, 'De Vivonne', NULL, 'zdep', NULL, NULL, NULL, 1.8486886950553000, 48.6481238695820000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791684" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:12.0Z" id="FR:78517:ZDE:50016341:STIF">
+INSERT INTO stop_areas VALUES (132100, 156517, 'FR::Quay:50016341:FR1', 1, 'De Vivonne', NULL, 'zdep', NULL, NULL, NULL, 1.8486886950553000, 48.6481238695820000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791684" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:12.0Z" id="FR::Quay:50016341:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7789,7 +7789,7 @@ INSERT INTO stop_areas VALUES (132100, 156517, 'FR:78517:ZDE:50016341:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:31292:STIF</Value>
+         <Value>FR::Quay:31292:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7819,7 +7819,7 @@ INSERT INTO stop_areas VALUES (132100, 156517, 'FR:78517:ZDE:50016341:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:24:21.769979', '2017-03-23 12:24:21.769979', 'LOCAL_OBJECT');
       -- 142981
-INSERT INTO stop_areas VALUES (98357, 142981, 'FR:78486:ZDE:50015940:STIF', 1, 'Gare du Perray en Yvelines', NULL, 'zdep', NULL, NULL, NULL, 1.8564583320880800, 48.6940943006237000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791903" created="2015-05-19T05:05:36.0Z" changed="2016-08-23T10:08:19.0Z" id="FR:78486:ZDE:50015940:STIF">
+INSERT INTO stop_areas VALUES (98357, 142981, 'FR::Quay:50015940:FR1', 1, 'Gare du Perray en Yvelines', NULL, 'zdep', NULL, NULL, NULL, 1.8564583320880800, 48.6940943006237000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791903" created="2015-05-19T05:05:36.0Z" changed="2016-08-23T10:08:19.0Z" id="FR::Quay:50015940:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7827,7 +7827,7 @@ INSERT INTO stop_areas VALUES (98357, 142981, 'FR:78486:ZDE:50015940:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDE:31791:STIF</Value>
+         <Value>FR::Quay:31791:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7861,7 +7861,7 @@ INSERT INTO stop_areas VALUES (98357, 142981, 'FR:78486:ZDE:50015940:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:51:51.23602', '2017-03-23 13:29:17.539805', 'LOCAL_OBJECT');
       -- 136607
-INSERT INTO stop_areas VALUES (82960, NULL, 'FR:78030:ZDE:50015569:STIF', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8681967809156600, 48.6933423252341000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792079" created="2015-05-19T05:05:59.0Z" changed="2016-08-23T10:08:14.0Z" id="FR:78030:ZDE:50015569:STIF">
+INSERT INTO stop_areas VALUES (82960, NULL, 'FR::Quay:50015569:FR1', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8681967809156600, 48.6933423252341000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792079" created="2015-05-19T05:05:59.0Z" changed="2016-08-23T10:08:14.0Z" id="FR::Quay:50015569:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7869,7 +7869,7 @@ INSERT INTO stop_areas VALUES (82960, NULL, 'FR:78030:ZDE:50015569:STIF', 1, 'Ca
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDE:31801:STIF</Value>
+         <Value>FR::Quay:31801:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7891,7 +7891,7 @@ INSERT INTO stop_areas VALUES (82960, NULL, 'FR:78030:ZDE:50015569:STIF', 1, 'Ca
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:39:56.808113', '2017-03-23 13:22:12.952721', 'LOCAL_OBJECT');
       -- 149176
-INSERT INTO stop_areas VALUES (114296, 149176, 'FR:78030:ZDE:50015577:STIF', 1, 'Route du Perray', NULL, 'zdep', NULL, NULL, NULL, 1.8833187287035400, 48.6975412000902000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792072" created="2015-05-19T05:05:36.0Z" changed="2016-08-23T10:08:03.0Z" id="FR:78030:ZDE:50015577:STIF">
+INSERT INTO stop_areas VALUES (114296, 149176, 'FR::Quay:50015577:FR1', 1, 'Route du Perray', NULL, 'zdep', NULL, NULL, NULL, 1.8833187287035400, 48.6975412000902000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792072" created="2015-05-19T05:05:36.0Z" changed="2016-08-23T10:08:03.0Z" id="FR::Quay:50015577:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7899,7 +7899,7 @@ INSERT INTO stop_areas VALUES (114296, 149176, 'FR:78030:ZDE:50015577:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78030:ZDE:31876:STIF</Value>
+         <Value>FR::Quay:31876:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7929,7 +7929,7 @@ INSERT INTO stop_areas VALUES (114296, 149176, 'FR:78030:ZDE:50015577:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:25.547183', '2017-03-23 13:36:58.510134', 'LOCAL_OBJECT');
       -- 134287
-INSERT INTO stop_areas VALUES (77146, 134287, 'FR:78486:ZDE:50015930:STIF', 1, 'Champ de Foire', NULL, 'zdep', NULL, NULL, NULL, 1.8563036835737800, 48.6969101834133000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791925" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:54.0Z" id="FR:78486:ZDE:50015930:STIF">
+INSERT INTO stop_areas VALUES (77146, 134287, 'FR::Quay:50015930:FR1', 1, 'Champ de Foire', NULL, 'zdep', NULL, NULL, NULL, 1.8563036835737800, 48.6969101834133000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791925" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:54.0Z" id="FR::Quay:50015930:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7937,7 +7937,7 @@ INSERT INTO stop_areas VALUES (77146, 134287, 'FR:78486:ZDE:50015930:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDE:31485:STIF</Value>
+         <Value>FR::Quay:31485:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -7975,7 +7975,7 @@ INSERT INTO stop_areas VALUES (77146, 134287, 'FR:78486:ZDE:50015930:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:46.934909', '2017-03-23 13:19:30.383858', 'LOCAL_OBJECT');
       -- 134289
-INSERT INTO stop_areas VALUES (77151, 134289, 'FR:78486:ZDE:50015937:STIF', 1, 'Fer Ouvré', NULL, 'zdep', NULL, NULL, NULL, 1.8597129957288300, 48.6997882306510000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791893" created="2015-05-19T05:05:11.0Z" changed="2016-08-23T10:08:06.0Z" id="FR:78486:ZDE:50015937:STIF">
+INSERT INTO stop_areas VALUES (77151, 134289, 'FR::Quay:50015937:FR1', 1, 'Fer Ouvré', NULL, 'zdep', NULL, NULL, NULL, 1.8597129957288300, 48.6997882306510000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791893" created="2015-05-19T05:05:11.0Z" changed="2016-08-23T10:08:06.0Z" id="FR::Quay:50015937:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -7983,7 +7983,7 @@ INSERT INTO stop_areas VALUES (77151, 134289, 'FR:78486:ZDE:50015937:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDE:31493:STIF</Value>
+         <Value>FR::Quay:31493:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8009,7 +8009,7 @@ INSERT INTO stop_areas VALUES (77151, 134289, 'FR:78486:ZDE:50015937:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:47.157865', '2017-03-23 13:19:30.494273', 'LOCAL_OBJECT');
       -- 142959
-INSERT INTO stop_areas VALUES (98290, 142959, 'FR:78220:ZDE:50076444:STIF', 1, 'Gare des Essarts le Roi', NULL, 'zdep', NULL, NULL, NULL, 1.8911278224161900, 48.7220006562091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78220', 'Les Essarts-le-Roi', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="677923" created="2015-05-19T02:05:26.0Z" changed="2015-05-19T02:05:26.0Z" id="FR:78220:ZDE:50076444:STIF">
+INSERT INTO stop_areas VALUES (98290, 142959, 'FR::Quay:50076444:FR1', 1, 'Gare des Essarts le Roi', NULL, 'zdep', NULL, NULL, NULL, 1.8911278224161900, 48.7220006562091000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78220', 'Les Essarts-le-Roi', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:24" version="677923" created="2015-05-19T02:05:26.0Z" changed="2015-05-19T02:05:26.0Z" id="FR::Quay:50076444:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8017,7 +8017,7 @@ INSERT INTO stop_areas VALUES (98290, 142959, 'FR:78220:ZDE:50076444:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78220:ZDE:4555:STIF</Value>
+         <Value>FR::Quay:4555:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8043,7 +8043,7 @@ INSERT INTO stop_areas VALUES (98290, 142959, 'FR:78220:ZDE:50076444:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:51:48.600083', '2017-03-23 13:29:16.127371', 'LOCAL_OBJECT');
       -- 134289
-INSERT INTO stop_areas VALUES (77150, 134289, 'FR:78486:ZDE:50015936:STIF', 1, 'Fer Ouvré', NULL, 'zdep', NULL, NULL, NULL, 1.8595850221503300, 48.6996158250589000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791892" created="2015-05-19T05:05:10.0Z" changed="2016-08-23T10:08:05.0Z" id="FR:78486:ZDE:50015936:STIF">
+INSERT INTO stop_areas VALUES (77150, 134289, 'FR::Quay:50015936:FR1', 1, 'Fer Ouvré', NULL, 'zdep', NULL, NULL, NULL, 1.8595850221503300, 48.6996158250589000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791892" created="2015-05-19T05:05:10.0Z" changed="2016-08-23T10:08:05.0Z" id="FR::Quay:50015936:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8051,7 +8051,7 @@ INSERT INTO stop_areas VALUES (77150, 134289, 'FR:78486:ZDE:50015936:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDE:31792:STIF</Value>
+         <Value>FR::Quay:31792:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8077,7 +8077,7 @@ INSERT INTO stop_areas VALUES (77150, 134289, 'FR:78486:ZDE:50015936:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:47.111911', '2017-03-23 13:19:30.47032', 'LOCAL_OBJECT');
       -- 134287
-INSERT INTO stop_areas VALUES (77147, 134287, 'FR:78486:ZDE:50015931:STIF', 1, 'Champ de Foire', NULL, 'zdep', NULL, NULL, NULL, 1.8564394899959600, 48.6971548203544000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791924" created="2015-05-19T05:05:06.0Z" changed="2016-08-23T10:08:53.0Z" id="FR:78486:ZDE:50015931:STIF">
+INSERT INTO stop_areas VALUES (77147, 134287, 'FR::Quay:50015931:FR1', 1, 'Champ de Foire', NULL, 'zdep', NULL, NULL, NULL, 1.8564394899959600, 48.6971548203544000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791924" created="2015-05-19T05:05:06.0Z" changed="2016-08-23T10:08:53.0Z" id="FR::Quay:50015931:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8085,7 +8085,7 @@ INSERT INTO stop_areas VALUES (77147, 134287, 'FR:78486:ZDE:50015931:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDE:31486:STIF</Value>
+         <Value>FR::Quay:31486:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8123,7 +8123,7 @@ INSERT INTO stop_areas VALUES (77147, 134287, 'FR:78486:ZDE:50015931:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:46.979448', '2017-03-23 13:19:30.367454', 'LOCAL_OBJECT');
       -- 149176
-INSERT INTO stop_areas VALUES (114297, 149176, 'FR:78030:ZDE:50015576:STIF', 1, 'Route du Perray', NULL, 'zdep', NULL, NULL, NULL, 1.8829420141483000, 48.6974201122419000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792071" created="2015-05-19T05:05:34.0Z" changed="2016-08-23T10:08:02.0Z" id="FR:78030:ZDE:50015576:STIF">
+INSERT INTO stop_areas VALUES (114297, 149176, 'FR::Quay:50015576:FR1', 1, 'Route du Perray', NULL, 'zdep', NULL, NULL, NULL, 1.8829420141483000, 48.6974201122419000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792071" created="2015-05-19T05:05:34.0Z" changed="2016-08-23T10:08:02.0Z" id="FR::Quay:50015576:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8131,7 +8131,7 @@ INSERT INTO stop_areas VALUES (114297, 149176, 'FR:78030:ZDE:50015576:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78030:ZDE:31898:STIF</Value>
+         <Value>FR::Quay:31898:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8161,7 +8161,7 @@ INSERT INTO stop_areas VALUES (114297, 149176, 'FR:78030:ZDE:50015576:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:25.602019', '2017-03-23 13:36:58.485207', 'LOCAL_OBJECT');
       -- 136607
-INSERT INTO stop_areas VALUES (82959, NULL, 'FR:78030:ZDE:50015568:STIF', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8680868765064500, 48.6933941123016000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792078" created="2015-05-19T05:05:57.0Z" changed="2016-08-23T10:08:13.0Z" id="FR:78030:ZDE:50015568:STIF">
+INSERT INTO stop_areas VALUES (82959, NULL, 'FR::Quay:50015568:FR1', 1, 'Carrières', NULL, 'zdep', NULL, NULL, NULL, 1.8680868765064500, 48.6933941123016000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792078" created="2015-05-19T05:05:57.0Z" changed="2016-08-23T10:08:13.0Z" id="FR::Quay:50015568:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8169,7 +8169,7 @@ INSERT INTO stop_areas VALUES (82959, NULL, 'FR:78030:ZDE:50015568:STIF', 1, 'Ca
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDE:31800:STIF</Value>
+         <Value>FR::Quay:31800:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8191,7 +8191,7 @@ INSERT INTO stop_areas VALUES (82959, NULL, 'FR:78030:ZDE:50015568:STIF', 1, 'Ca
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:39:56.749483', '2017-03-23 13:22:12.926767', 'LOCAL_OBJECT');
       --
-INSERT INTO stop_areas VALUES (156516, NULL, 'FR:78517:ZDL:50109943:STIF', 1, 'Collège De Vivonne', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791510" created="2016-08-23T10:08:13.0Z" changed="2016-08-23T10:08:13.0Z" id="FR:78517:ZDL:50109943:STIF">
+INSERT INTO stop_areas VALUES (156516, NULL, 'FR::Quay:50109943:FR1', 1, 'Collège De Vivonne', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791510" created="2016-08-23T10:08:13.0Z" changed="2016-08-23T10:08:13.0Z" id="FR::Quay:50109943:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8199,7 +8199,7 @@ INSERT INTO stop_areas VALUES (156516, NULL, 'FR:78517:ZDL:50109943:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDL:42688:STIF</Value>
+         <Value>FR::Quay:42688:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Collège De Vivonne</Name>
@@ -8215,10 +8215,10 @@ INSERT INTO stop_areas VALUES (156516, NULL, 'FR:78517:ZDL:50109943:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78517:ZDE:50016340:STIF" version="791509"/>
+        <QuayRef ref="FR::Quay:50016340:FR1" version="791509"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:17:29.692451', '2017-03-23 13:17:29.692451', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (132099, 156516, 'FR:78517:ZDE:50016340:STIF', 1, 'Collège de Vivonne', NULL, 'zdep', NULL, NULL, NULL, 1.8484137774675400, 48.6479340735053000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791509" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:13.0Z" id="FR:78517:ZDE:50016340:STIF">
+INSERT INTO stop_areas VALUES (132099, 156516, 'FR::Quay:50016340:FR1', 1, 'Collège de Vivonne', NULL, 'zdep', NULL, NULL, NULL, 1.8484137774675400, 48.6479340735053000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791509" created="2015-05-19T05:05:00.0Z" changed="2016-08-23T10:08:13.0Z" id="FR::Quay:50016340:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8226,7 +8226,7 @@ INSERT INTO stop_areas VALUES (132099, 156516, 'FR:78517:ZDE:50016340:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:31278:STIF</Value>
+         <Value>FR::Quay:31278:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8248,7 +8248,7 @@ INSERT INTO stop_areas VALUES (132099, 156516, 'FR:78517:ZDE:50016340:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:24:21.715039', '2017-03-23 12:24:21.715039', 'LOCAL_OBJECT');
       -- 137570
-INSERT INTO stop_areas VALUES (85385, 137570, 'FR:78517:ZDE:50016206:STIF', 1, 'Collège Racinay', NULL, 'zdep', NULL, NULL, NULL, 1.8237401132170700, 48.6349797711267000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791607" created="2015-05-19T04:05:37.0Z" changed="2016-08-23T10:08:07.0Z" id="FR:78517:ZDE:50016206:STIF">
+INSERT INTO stop_areas VALUES (85385, 137570, 'FR::Quay:50016206:FR1', 1, 'Collège Racinay', NULL, 'zdep', NULL, NULL, NULL, 1.8237401132170700, 48.6349797711267000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791607" created="2015-05-19T04:05:37.0Z" changed="2016-08-23T10:08:07.0Z" id="FR::Quay:50016206:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8256,7 +8256,7 @@ INSERT INTO stop_areas VALUES (85385, 137570, 'FR:78517:ZDE:50016206:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:31211:STIF</Value>
+         <Value>FR::Quay:31211:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8317,7 +8317,7 @@ INSERT INTO stop_areas VALUES (85385, 137570, 'FR:78517:ZDE:50016206:STIF', 1, '
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:41:41.20784', '2017-03-23 13:23:14.79373', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (131671, 156300, 'FR:78269:ZDE:50111664:STIF', 1, 'Arbouville', NULL, 'zdep', NULL, NULL, NULL, 1.8181645450568300, 48.6360762379725000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78269', 'Gazeran', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805981" created="2016-10-11T09:10:27.0Z" changed="2016-10-11T09:10:27.0Z" id="FR:78269:ZDE:50111664:STIF">
+INSERT INTO stop_areas VALUES (131671, 156300, 'FR::Quay:50111664:FR1', 1, 'Arbouville', NULL, 'zdep', NULL, NULL, NULL, 1.8181645450568300, 48.6360762379725000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78269', 'Gazeran', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:22" version="805981" created="2016-10-11T09:10:27.0Z" changed="2016-10-11T09:10:27.0Z" id="FR::Quay:50111664:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8325,7 +8325,7 @@ INSERT INTO stop_areas VALUES (131671, 156300, 'FR:78269:ZDE:50111664:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78269:ZDE:424803:STIF</Value>
+         <Value>FR::Quay:424803:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8346,7 +8346,7 @@ INSERT INTO stop_areas VALUES (131671, 156300, 'FR:78269:ZDE:50111664:STIF', 1, 
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:23:49.070195', '2017-03-23 12:23:49.070195', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (122614, NULL, 'FR:91200:ZDE:50097522:STIF', 1, 'GARE DE DOURDAN LA FORET', NULL, 'zdep', NULL, NULL, NULL, 1.9958981545942500, 48.5354819333277000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '91200', 'Dourdan', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714443" created="2015-06-15T10:06:08.0Z" changed="2015-06-26T09:06:35.0Z" id="FR:91200:ZDE:50097522:STIF">
+INSERT INTO stop_areas VALUES (122614, NULL, 'FR::Quay:50097522:FR1', 1, 'GARE DE DOURDAN LA FORET', NULL, 'zdep', NULL, NULL, NULL, 1.9958981545942500, 48.5354819333277000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '91200', 'Dourdan', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714443" created="2015-06-15T10:06:08.0Z" changed="2015-06-26T09:06:35.0Z" id="FR::Quay:50097522:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8354,7 +8354,7 @@ INSERT INTO stop_areas VALUES (122614, NULL, 'FR:91200:ZDE:50097522:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:91200:ZDE:418737:STIF</Value>
+         <Value>FR::Quay:418737:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8388,7 +8388,7 @@ INSERT INTO stop_areas VALUES (122614, NULL, 'FR:91200:ZDE:50097522:STIF', 1, 'G
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:14:44.654642', '2017-03-23 12:14:44.654642', 'LOCAL_OBJECT');
       -- 140813
-INSERT INTO stop_areas VALUES (92773, NULL, 'FR:91200:ZDE:50097554:STIF', 1, 'GARE DE DOURDAN', NULL, 'zdep', NULL, NULL, NULL, 2.0097168842685400, 48.5336151327653000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '91200', 'Dourdan', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714445" created="2015-06-15T10:06:26.0Z" changed="2015-06-26T09:06:37.0Z" id="FR:91200:ZDE:50097554:STIF">
+INSERT INTO stop_areas VALUES (92773, NULL, 'FR::Quay:50097554:FR1', 1, 'GARE DE DOURDAN', NULL, 'zdep', NULL, NULL, NULL, 2.0097168842685400, 48.5336151327653000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '91200', 'Dourdan', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:76" version="714445" created="2015-06-15T10:06:26.0Z" changed="2015-06-26T09:06:37.0Z" id="FR::Quay:50097554:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8396,7 +8396,7 @@ INSERT INTO stop_areas VALUES (92773, NULL, 'FR:91200:ZDE:50097554:STIF', 1, 'GA
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:91200:ZDE:418738:STIF</Value>
+         <Value>FR::Quay:418738:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8426,7 +8426,7 @@ INSERT INTO stop_areas VALUES (92773, NULL, 'FR:91200:ZDE:50097554:STIF', 1, 'GA
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:47:17.668565', '2017-03-23 13:26:41.286542', 'LOCAL_OBJECT');
 -- 141017 not found
-INSERT INTO stop_areas VALUES (93528, 141017, 'FR:78517:ZDE:50016296:STIF', 1, 'Gare de Rambouillet [Prairie]', NULL, 'zdep', NULL, NULL, NULL, 1.8322018603547400, 48.6432261599316000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791575" created="2015-05-19T04:05:02.0Z" changed="2016-08-23T10:08:47.0Z" id="FR:78517:ZDE:50016296:STIF">
+INSERT INTO stop_areas VALUES (93528, 141017, 'FR::Quay:50016296:FR1', 1, 'Gare de Rambouillet [Prairie]', NULL, 'zdep', NULL, NULL, NULL, 1.8322018603547400, 48.6432261599316000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791575" created="2015-05-19T04:05:02.0Z" changed="2016-08-23T10:08:47.0Z" id="FR::Quay:50016296:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8434,7 +8434,7 @@ INSERT INTO stop_areas VALUES (93528, 141017, 'FR:78517:ZDE:50016296:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDE:424216:STIF</Value>
+         <Value>FR::Quay:424216:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8508,7 +8508,7 @@ INSERT INTO stop_areas VALUES (93528, 141017, 'FR:78517:ZDE:50016296:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:47:52.702452', '2017-03-23 13:26:57.563139', 'LOCAL_OBJECT');
       -- 149165
-INSERT INTO stop_areas VALUES (114274, 149165, 'FR:78003:ZDE:50015543:STIF', 1, 'Pierre Trouvé', NULL, 'zdep', NULL, NULL, NULL, 1.8308304736604600, 48.5168881682201000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792094" created="2015-05-19T05:05:23.0Z" changed="2016-08-23T10:08:44.0Z" id="FR:78003:ZDE:50015543:STIF">
+INSERT INTO stop_areas VALUES (114274, 149165, 'FR::Quay:50015543:FR1', 1, 'Pierre Trouvé', NULL, 'zdep', NULL, NULL, NULL, 1.8308304736604600, 48.5168881682201000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792094" created="2015-05-19T05:05:23.0Z" changed="2016-08-23T10:08:44.0Z" id="FR::Quay:50015543:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8516,7 +8516,7 @@ INSERT INTO stop_areas VALUES (114274, 149165, 'FR:78003:ZDE:50015543:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDE:31922:STIF</Value>
+         <Value>FR::Quay:31922:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8542,7 +8542,7 @@ INSERT INTO stop_areas VALUES (114274, 149165, 'FR:78003:ZDE:50015543:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:24.458478', '2017-03-23 13:36:57.886307', 'LOCAL_OBJECT');
       -- 149163
-INSERT INTO stop_areas VALUES (114270, 149163, 'FR:78003:ZDE:50015539:STIF', 1, 'La Paix', NULL, 'zdep', NULL, NULL, NULL, 1.8329734756083700, 48.5187916705726000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792096" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:48.0Z" id="FR:78003:ZDE:50015539:STIF">
+INSERT INTO stop_areas VALUES (114270, 149163, 'FR::Quay:50015539:FR1', 1, 'La Paix', NULL, 'zdep', NULL, NULL, NULL, 1.8329734756083700, 48.5187916705726000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792096" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:48.0Z" id="FR::Quay:50015539:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8550,7 +8550,7 @@ INSERT INTO stop_areas VALUES (114270, 149163, 'FR:78003:ZDE:50015539:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDE:31945:STIF</Value>
+         <Value>FR::Quay:31945:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8576,7 +8576,7 @@ INSERT INTO stop_areas VALUES (114270, 149163, 'FR:78003:ZDE:50015539:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:24.29851', '2017-03-23 13:36:57.786397', 'LOCAL_OBJECT');
       -- 149159
-INSERT INTO stop_areas VALUES (114263, 149159, 'FR:78003:ZDE:50015524:STIF', 1, 'Champarts', NULL, 'zdep', NULL, NULL, NULL, 1.8383011150488100, 48.5188442153089000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792068" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:55.0Z" id="FR:78003:ZDE:50015524:STIF">
+INSERT INTO stop_areas VALUES (114263, 149159, 'FR::Quay:50015524:FR1', 1, 'Champarts', NULL, 'zdep', NULL, NULL, NULL, 1.8383011150488100, 48.5188442153089000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792068" created="2015-05-19T05:05:07.0Z" changed="2016-08-23T10:08:55.0Z" id="FR::Quay:50015524:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8584,7 +8584,7 @@ INSERT INTO stop_areas VALUES (114263, 149159, 'FR:78003:ZDE:50015524:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDE:31875:STIF</Value>
+         <Value>FR::Quay:31875:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8622,7 +8622,7 @@ INSERT INTO stop_areas VALUES (114263, 149159, 'FR:78003:ZDE:50015524:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:23.988055', '2017-03-23 13:36:57.58801', 'LOCAL_OBJECT');
       -- 134325
-INSERT INTO stop_areas VALUES (77221, 134325, 'FR:78472:ZDE:50016121:STIF', 1, 'Eglise', NULL, 'zdep', NULL, NULL, NULL, 1.8345281658981300, 48.4781883387925000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78472', 'Orsonville', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791816" created="2015-05-19T05:05:38.0Z" changed="2016-08-23T10:08:31.0Z" id="FR:78472:ZDE:50016121:STIF">
+INSERT INTO stop_areas VALUES (77221, 134325, 'FR::Quay:50016121:FR1', 1, 'Eglise', NULL, 'zdep', NULL, NULL, NULL, 1.8345281658981300, 48.4781883387925000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78472', 'Orsonville', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791816" created="2015-05-19T05:05:38.0Z" changed="2016-08-23T10:08:31.0Z" id="FR::Quay:50016121:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8630,7 +8630,7 @@ INSERT INTO stop_areas VALUES (77221, 134325, 'FR:78472:ZDE:50016121:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78472:ZDE:31628:STIF</Value>
+         <Value>FR::Quay:31628:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8664,7 +8664,7 @@ INSERT INTO stop_areas VALUES (77221, 134325, 'FR:78472:ZDE:50016121:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.449069', '2017-03-23 13:19:32.533045', 'LOCAL_OBJECT');
       -- 134325
-INSERT INTO stop_areas VALUES (77222, 134325, 'FR:78472:ZDE:50016122:STIF', 1, 'Eglise', NULL, 'zdep', NULL, NULL, NULL, 1.8348001130032000, 48.4782057265572000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78472', 'Orsonville', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791815" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:30.0Z" id="FR:78472:ZDE:50016122:STIF">
+INSERT INTO stop_areas VALUES (77222, 134325, 'FR::Quay:50016122:FR1', 1, 'Eglise', NULL, 'zdep', NULL, NULL, NULL, 1.8348001130032000, 48.4782057265572000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78472', 'Orsonville', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="791815" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:30.0Z" id="FR::Quay:50016122:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8672,7 +8672,7 @@ INSERT INTO stop_areas VALUES (77222, 134325, 'FR:78472:ZDE:50016122:STIF', 1, '
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78472:ZDE:31629:STIF</Value>
+         <Value>FR::Quay:31629:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8706,7 +8706,7 @@ INSERT INTO stop_areas VALUES (77222, 134325, 'FR:78472:ZDE:50016122:STIF', 1, '
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:35:50.494165', '2017-03-23 13:19:32.517134', 'LOCAL_OBJECT');
       -- 149159
-INSERT INTO stop_areas VALUES (114262, 149159, 'FR:78003:ZDE:50015523:STIF', 1, 'Champarts', NULL, 'zdep', NULL, NULL, NULL, 1.8381785933933500, 48.5187831712476000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792067" created="2015-05-19T05:05:06.0Z" changed="2016-08-23T10:08:54.0Z" id="FR:78003:ZDE:50015523:STIF">
+INSERT INTO stop_areas VALUES (114262, 149159, 'FR::Quay:50015523:FR1', 1, 'Champarts', NULL, 'zdep', NULL, NULL, NULL, 1.8381785933933500, 48.5187831712476000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792067" created="2015-05-19T05:05:06.0Z" changed="2016-08-23T10:08:54.0Z" id="FR::Quay:50015523:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8714,7 +8714,7 @@ INSERT INTO stop_areas VALUES (114262, 149159, 'FR:78003:ZDE:50015523:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDE:31871:STIF</Value>
+         <Value>FR::Quay:31871:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8752,7 +8752,7 @@ INSERT INTO stop_areas VALUES (114262, 149159, 'FR:78003:ZDE:50015523:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:23.929218', '2017-03-23 13:36:57.562606', 'LOCAL_OBJECT');
       -- 149163
-INSERT INTO stop_areas VALUES (114271, 149163, 'FR:78003:ZDE:50015538:STIF', 1, 'La Paix', NULL, 'zdep', NULL, NULL, NULL, 1.8330957536317000, 48.5187446935073000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792095" created="2015-05-19T05:05:35.0Z" changed="2016-08-23T10:08:46.0Z" id="FR:78003:ZDE:50015538:STIF">
+INSERT INTO stop_areas VALUES (114271, 149163, 'FR::Quay:50015538:FR1', 1, 'La Paix', NULL, 'zdep', NULL, NULL, NULL, 1.8330957536317000, 48.5187446935073000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792095" created="2015-05-19T05:05:35.0Z" changed="2016-08-23T10:08:46.0Z" id="FR::Quay:50015538:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8760,7 +8760,7 @@ INSERT INTO stop_areas VALUES (114271, 149163, 'FR:78003:ZDE:50015538:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDE:31208:STIF</Value>
+         <Value>FR::Quay:31208:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8798,7 +8798,7 @@ INSERT INTO stop_areas VALUES (114271, 149163, 'FR:78003:ZDE:50015538:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:24.33431', '2017-03-23 13:36:57.768545', 'LOCAL_OBJECT');
       -- 149165
-INSERT INTO stop_areas VALUES (114275, 149165, 'FR:78003:ZDE:50015542:STIF', 1, 'Pierre Trouvé', NULL, 'zdep', NULL, NULL, NULL, 1.8307784146431700, 48.5168281693426000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792093" created="2015-05-19T05:05:22.0Z" changed="2016-08-23T10:08:42.0Z" id="FR:78003:ZDE:50015542:STIF">
+INSERT INTO stop_areas VALUES (114275, 149165, 'FR::Quay:50015542:FR1', 1, 'Pierre Trouvé', NULL, 'zdep', NULL, NULL, NULL, 1.8307784146431700, 48.5168281693426000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792093" created="2015-05-19T05:05:22.0Z" changed="2016-08-23T10:08:42.0Z" id="FR::Quay:50015542:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8806,7 +8806,7 @@ INSERT INTO stop_areas VALUES (114275, 149165, 'FR:78003:ZDE:50015542:STIF', 1, 
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDE:31931:STIF</Value>
+         <Value>FR::Quay:31931:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8836,7 +8836,7 @@ INSERT INTO stop_areas VALUES (114275, 149165, 'FR:78003:ZDE:50015542:STIF', 1, 
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 12:08:24.49159', '2017-03-23 13:36:57.862738', 'LOCAL_OBJECT');
       -- 140550 not found
-INSERT INTO stop_areas VALUES (92299, NULL, 'FR:28015:ZDE:50015578:STIF', 1, 'Eglise', NULL, 'zdep', NULL, NULL, NULL, 1.7744413676204800, 48.4622308100999000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792073" created="2015-05-19T05:05:41.0Z" changed="2016-08-23T10:08:05.0Z" id="FR:28015:ZDE:50015578:STIF">
+INSERT INTO stop_areas VALUES (92299, NULL, 'FR::Quay:50015578:FR1', 1, 'Eglise', NULL, 'zdep', NULL, NULL, NULL, 1.7744413676204800, 48.4622308100999000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792073" created="2015-05-19T05:05:41.0Z" changed="2016-08-23T10:08:05.0Z" id="FR::Quay:50015578:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8844,7 +8844,7 @@ INSERT INTO stop_areas VALUES (92299, NULL, 'FR:28015:ZDE:50015578:STIF', 1, 'Eg
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:28015:ZDE:31822:STIF</Value>
+         <Value>FR::Quay:31822:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8866,7 +8866,7 @@ INSERT INTO stop_areas VALUES (92299, NULL, 'FR:28015:ZDE:50015578:STIF', 1, 'Eg
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:46:54.469232', '2017-03-23 13:26:29.474346', 'LOCAL_OBJECT');
       -- 140551 not found
-INSERT INTO stop_areas VALUES (92300, NULL, 'FR:28015:ZDE:50015581:STIF', 1, 'Marceau', NULL, 'zdep', NULL, NULL, NULL, 1.7733064592784600, 48.4624969242007000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792070" created="2015-05-19T05:05:31.0Z" changed="2016-08-23T10:08:00.0Z" id="FR:28015:ZDE:50015581:STIF">
+INSERT INTO stop_areas VALUES (92300, NULL, 'FR::Quay:50015581:FR1', 1, 'Marceau', NULL, 'zdep', NULL, NULL, NULL, 1.7733064592784600, 48.4624969242007000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792070" created="2015-05-19T05:05:31.0Z" changed="2016-08-23T10:08:00.0Z" id="FR::Quay:50015581:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8874,7 +8874,7 @@ INSERT INTO stop_areas VALUES (92300, NULL, 'FR:28015:ZDE:50015581:STIF', 1, 'Ma
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:28015:ZDE:31821:STIF</Value>
+         <Value>FR::Quay:31821:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8896,7 +8896,7 @@ INSERT INTO stop_areas VALUES (92300, NULL, 'FR:28015:ZDE:50015581:STIF', 1, 'Ma
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:46:54.519712', '2017-03-23 13:26:29.496194', 'LOCAL_OBJECT');
       -- 140548 not found
-INSERT INTO stop_areas VALUES (92295, NULL, 'FR:28015:ZDE:50015586:STIF', 1, 'Gare d''Auneau', NULL, 'zdep', NULL, NULL, NULL, 1.7797136489079900, 48.4471456370079000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="805105" created="2015-05-19T05:05:38.0Z" changed="2016-10-05T09:10:07.0Z" id="FR:28015:ZDE:50015586:STIF">
+INSERT INTO stop_areas VALUES (92295, NULL, 'FR::Quay:50015586:FR1', 1, 'Gare d''Auneau', NULL, 'zdep', NULL, NULL, NULL, 1.7797136489079900, 48.4471456370079000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="805105" created="2015-05-19T05:05:38.0Z" changed="2016-10-05T09:10:07.0Z" id="FR::Quay:50015586:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8904,7 +8904,7 @@ INSERT INTO stop_areas VALUES (92295, NULL, 'FR:28015:ZDE:50015586:STIF', 1, 'Ga
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:28015:ZDE:31908:STIF</Value>
+         <Value>FR::Quay:31908:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8926,7 +8926,7 @@ INSERT INTO stop_areas VALUES (92295, NULL, 'FR:28015:ZDE:50015586:STIF', 1, 'Ga
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:46:54.266589', '2017-03-23 13:26:29.410848', 'LOCAL_OBJECT');
       -- 140548 not found
-INSERT INTO stop_areas VALUES (92294, NULL, 'FR:28015:ZDE:50015587:STIF', 1, 'Gare d''Auneau', NULL, 'zdep', NULL, NULL, NULL, 1.7797234743253300, 48.4472967047516000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792010" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:17.0Z" id="FR:28015:ZDE:50015587:STIF">
+INSERT INTO stop_areas VALUES (92294, NULL, 'FR::Quay:50015587:FR1', 1, 'Gare d''Auneau', NULL, 'zdep', NULL, NULL, NULL, 1.7797234743253300, 48.4472967047516000, 'WGS84', NULL, NULL, NULL, NULL, NULL, NULL, '28015', 'Auneau', NULL, NULL, 1, NULL, '<Quay xmlns:gml="http://www.opengis.net/gml/3.2" dataSourceRef="STIF-REFLEX:Operator:25" version="792010" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:17.0Z" id="FR::Quay:50015587:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8934,7 +8934,7 @@ INSERT INTO stop_areas VALUES (92294, NULL, 'FR:28015:ZDE:50015587:STIF', 1, 'Ga
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:28015:ZDE:31848:STIF</Value>
+         <Value>FR::Quay:31848:FR1</Value>
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>LINE_ID</Key>
@@ -8955,7 +8955,7 @@ INSERT INTO stop_areas VALUES (92294, NULL, 'FR:28015:ZDE:50015587:STIF', 1, 'Ga
         <MobilityImpairedAccess>unknown</MobilityImpairedAccess>
        </AccessibilityAssessment>
       </Quay>', NULL, '2017-03-23 11:46:54.201882', '2017-03-23 13:26:29.392707', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (137570, NULL, 'FR:78517:ZDL:50015361:STIF', 1, 'Collège Racinay', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681012" created="2015-05-19T04:05:37.0Z" changed="2015-05-19T04:05:37.0Z" id="FR:78517:ZDL:50015361:STIF">
+INSERT INTO stop_areas VALUES (137570, NULL, 'FR::Quay:50015361:FR1', 1, 'Collège Racinay', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="681012" created="2015-05-19T04:05:37.0Z" changed="2015-05-19T04:05:37.0Z" id="FR::Quay:50015361:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8963,7 +8963,7 @@ INSERT INTO stop_areas VALUES (137570, NULL, 'FR:78517:ZDL:50015361:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDL:42722:STIF</Value>
+         <Value>FR::Quay:42722:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Collège Racinay</Name>
@@ -8979,10 +8979,10 @@ INSERT INTO stop_areas VALUES (137570, NULL, 'FR:78517:ZDL:50015361:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78517:ZDE:50016206:STIF" version="791607"/>
+        <QuayRef ref="FR::Quay:50016206:FR1" version="791607"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:31:03.337688', '2017-03-23 12:31:03.337688', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134338, NULL, 'FR:78499:ZDL:50015332:STIF', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682016" created="2015-05-19T05:05:08.0Z" changed="2015-05-19T05:05:08.0Z" id="FR:78499:ZDL:50015332:STIF">
+INSERT INTO stop_areas VALUES (134338, NULL, 'FR::Quay:50015332:FR1', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682016" created="2015-05-19T05:05:08.0Z" changed="2015-05-19T05:05:08.0Z" id="FR::Quay:50015332:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -8990,7 +8990,7 @@ INSERT INTO stop_areas VALUES (134338, NULL, 'FR:78499:ZDL:50015332:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78499:ZDL:55018:STIF</Value>
+         <Value>FR::Quay:55018:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -9006,11 +9006,11 @@ INSERT INTO stop_areas VALUES (134338, NULL, 'FR:78499:ZDL:50015332:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78499:ZDE:50016153:STIF" version="682012"/>
-        <QuayRef ref="FR:78499:ZDE:50016152:STIF" version="791761"/>
+        <QuayRef ref="FR::Quay:50016153:FR1" version="682012"/>
+        <QuayRef ref="FR::Quay:50016152:FR1" version="791761"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:46.591547', '2017-03-23 12:26:46.591547', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134339, NULL, 'FR:78499:ZDL:50015333:STIF', 1, 'Vallée Brun', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682008" created="2015-05-19T05:05:04.0Z" changed="2015-05-19T05:05:04.0Z" id="FR:78499:ZDL:50015333:STIF">
+INSERT INTO stop_areas VALUES (134339, NULL, 'FR::Quay:50015333:FR1', 1, 'Vallée Brun', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78499', 'Ponthévrard', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682008" created="2015-05-19T05:05:04.0Z" changed="2015-05-19T05:05:04.0Z" id="FR::Quay:50015333:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9018,7 +9018,7 @@ INSERT INTO stop_areas VALUES (134339, NULL, 'FR:78499:ZDL:50015333:STIF', 1, 'V
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78499:ZDL:55019:STIF</Value>
+         <Value>FR::Quay:55019:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Vallée Brun</Name>
@@ -9034,12 +9034,12 @@ INSERT INTO stop_areas VALUES (134339, NULL, 'FR:78499:ZDL:50015333:STIF', 1, 'V
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78499:ZDE:50016155:STIF" version="791760"/>
-        <QuayRef ref="FR:78499:ZDE:50016154:STIF" version="682006"/>
+        <QuayRef ref="FR::Quay:50016155:FR1" version="791760"/>
+        <QuayRef ref="FR::Quay:50016154:FR1" version="682006"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:46.692587', '2017-03-23 12:26:46.692587', 'LOCAL_OBJECT');
 
-INSERT INTO stop_areas VALUES (143139, NULL, 'FR:78517:ZDL:50075979:STIF', 1, 'Giroderie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:24" version="677654" created="2015-05-19T02:05:20.0Z" changed="2015-05-19T02:05:20.0Z" id="FR:78517:ZDL:50075979:STIF">
+INSERT INTO stop_areas VALUES (143139, NULL, 'FR::Quay:50075979:FR1', 1, 'Giroderie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:24" version="677654" created="2015-05-19T02:05:20.0Z" changed="2015-05-19T02:05:20.0Z" id="FR::Quay:50075979:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9047,7 +9047,7 @@ INSERT INTO stop_areas VALUES (143139, NULL, 'FR:78517:ZDL:50075979:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDL:43295:STIF</Value>
+         <Value>FR::Quay:43295:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Giroderie</Name>
@@ -9063,11 +9063,11 @@ INSERT INTO stop_areas VALUES (143139, NULL, 'FR:78517:ZDL:50075979:STIF', 1, 'G
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78517:ZDE:50076505:STIF" version="677650"/>
-        <QuayRef ref="FR:78517:ZDE:50076506:STIF" version="677652"/>
+        <QuayRef ref="FR::Quay:50076505:FR1" version="677650"/>
+        <QuayRef ref="FR::Quay:50076506:FR1" version="677652"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:38:01.011078', '2017-03-23 12:38:01.011078', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134232, NULL, 'FR:78164:ZDL:50015089:STIF', 1, 'Croix', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683686" created="2015-05-19T05:05:07.0Z" changed="2015-05-19T05:05:07.0Z" id="FR:78164:ZDL:50015089:STIF">
+INSERT INTO stop_areas VALUES (134232, NULL, 'FR::Quay:50015089:FR1', 1, 'Croix', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683686" created="2015-05-19T05:05:07.0Z" changed="2015-05-19T05:05:07.0Z" id="FR::Quay:50015089:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9075,7 +9075,7 @@ INSERT INTO stop_areas VALUES (134232, NULL, 'FR:78164:ZDL:50015089:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDL:54896:STIF</Value>
+         <Value>FR::Quay:54896:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Croix</Name>
@@ -9091,11 +9091,11 @@ INSERT INTO stop_areas VALUES (134232, NULL, 'FR:78164:ZDL:50015089:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78164:ZDE:50015684:STIF" version="683682"/>
-        <QuayRef ref="FR:78164:ZDE:50015685:STIF" version="683684"/>
+        <QuayRef ref="FR::Quay:50015684:FR1" version="683682"/>
+        <QuayRef ref="FR::Quay:50015685:FR1" version="683684"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:35.29419', '2017-03-23 12:26:35.29419', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149199, NULL, 'FR:78164:ZDL:50015088:STIF', 1, 'Centre', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683678" created="2015-05-19T05:05:02.0Z" changed="2015-05-19T05:05:02.0Z" id="FR:78164:ZDL:50015088:STIF">
+INSERT INTO stop_areas VALUES (149199, NULL, 'FR::Quay:50015088:FR1', 1, 'Centre', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683678" created="2015-05-19T05:05:02.0Z" changed="2015-05-19T05:05:02.0Z" id="FR::Quay:50015088:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9103,7 +9103,7 @@ INSERT INTO stop_areas VALUES (149199, NULL, 'FR:78164:ZDL:50015088:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDL:54895:STIF</Value>
+         <Value>FR::Quay:54895:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Centre</Name>
@@ -9119,12 +9119,12 @@ INSERT INTO stop_areas VALUES (149199, NULL, 'FR:78164:ZDL:50015088:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78164:ZDE:50015682:STIF" version="683674"/>
-        <QuayRef ref="FR:78164:ZDE:50015683:STIF" version="792032"/>
+        <QuayRef ref="FR::Quay:50015682:FR1" version="683674"/>
+        <QuayRef ref="FR::Quay:50015683:FR1" version="792032"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:41.938029', '2017-03-23 13:10:41.938029', 'LOCAL_OBJECT');
 -- -----------------------------------------------------------------------
-INSERT INTO stop_areas VALUES (134233, NULL, 'FR:78164:ZDL:50015090:STIF', 1, 'Montjoie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683662" created="2015-05-19T05:05:50.0Z" changed="2015-05-19T05:05:50.0Z" id="FR:78164:ZDL:50015090:STIF">
+INSERT INTO stop_areas VALUES (134233, NULL, 'FR::Quay:50015090:FR1', 1, 'Montjoie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78164', 'Clairefontaine-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683662" created="2015-05-19T05:05:50.0Z" changed="2015-05-19T05:05:50.0Z" id="FR::Quay:50015090:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9132,7 +9132,7 @@ INSERT INTO stop_areas VALUES (134233, NULL, 'FR:78164:ZDL:50015090:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78164:ZDL:54897:STIF</Value>
+         <Value>FR::Quay:54897:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Montjoie</Name>
@@ -9148,11 +9148,11 @@ INSERT INTO stop_areas VALUES (134233, NULL, 'FR:78164:ZDL:50015090:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78164:ZDE:50015686:STIF" version="792030"/>
-        <QuayRef ref="FR:78164:ZDE:50015687:STIF" version="683660"/>
+        <QuayRef ref="FR::Quay:50015686:FR1" version="792030"/>
+        <QuayRef ref="FR::Quay:50015687:FR1" version="683660"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:35.354613', '2017-03-23 12:26:35.354613', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134287, NULL, 'FR:78486:ZDL:50015215:STIF', 1, 'Champ de Foire', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682884" created="2015-05-19T05:05:08.0Z" changed="2015-05-19T05:05:08.0Z" id="FR:78486:ZDL:50015215:STIF">
+INSERT INTO stop_areas VALUES (134287, NULL, 'FR::Quay:50015215:FR1', 1, 'Champ de Foire', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682884" created="2015-05-19T05:05:08.0Z" changed="2015-05-19T05:05:08.0Z" id="FR::Quay:50015215:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9160,7 +9160,7 @@ INSERT INTO stop_areas VALUES (134287, NULL, 'FR:78486:ZDL:50015215:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDL:54955:STIF</Value>
+         <Value>FR::Quay:54955:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Champ de Foire</Name>
@@ -9176,11 +9176,11 @@ INSERT INTO stop_areas VALUES (134287, NULL, 'FR:78486:ZDL:50015215:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78486:ZDE:50015931:STIF" version="791924"/>
-        <QuayRef ref="FR:78486:ZDE:50015930:STIF" version="791925"/>
+        <QuayRef ref="FR::Quay:50015931:FR1" version="791924"/>
+        <QuayRef ref="FR::Quay:50015930:FR1" version="791925"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:39.194217', '2017-03-23 12:26:39.194217', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134289, NULL, 'FR:78486:ZDL:50015218:STIF', 1, 'Fer Ouvré', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682669" created="2015-05-19T05:05:12.0Z" changed="2015-05-19T05:05:12.0Z" id="FR:78486:ZDL:50015218:STIF">
+INSERT INTO stop_areas VALUES (134289, NULL, 'FR::Quay:50015218:FR1', 1, 'Fer Ouvré', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682669" created="2015-05-19T05:05:12.0Z" changed="2015-05-19T05:05:12.0Z" id="FR::Quay:50015218:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9188,7 +9188,7 @@ INSERT INTO stop_areas VALUES (134289, NULL, 'FR:78486:ZDL:50015218:STIF', 1, 'F
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDL:54957:STIF</Value>
+         <Value>FR::Quay:54957:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Fer Ouvré</Name>
@@ -9204,11 +9204,11 @@ INSERT INTO stop_areas VALUES (134289, NULL, 'FR:78486:ZDL:50015218:STIF', 1, 'F
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78486:ZDE:50015936:STIF" version="791892"/>
-        <QuayRef ref="FR:78486:ZDE:50015937:STIF" version="791893"/>
+        <QuayRef ref="FR::Quay:50015936:FR1" version="791892"/>
+        <QuayRef ref="FR::Quay:50015937:FR1" version="791893"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:39.361043', '2017-03-23 12:26:39.361043', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134315, NULL, 'FR:78464:ZDL:50015302:STIF', 1, 'Centre', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682243" created="2015-05-19T05:05:44.0Z" changed="2015-05-19T05:05:44.0Z" id="FR:78464:ZDL:50015302:STIF">
+INSERT INTO stop_areas VALUES (134315, NULL, 'FR::Quay:50015302:FR1', 1, 'Centre', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682243" created="2015-05-19T05:05:44.0Z" changed="2015-05-19T05:05:44.0Z" id="FR::Quay:50015302:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9216,7 +9216,7 @@ INSERT INTO stop_areas VALUES (134315, NULL, 'FR:78464:ZDL:50015302:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78464:ZDL:54993:STIF</Value>
+         <Value>FR::Quay:54993:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Centre</Name>
@@ -9232,11 +9232,11 @@ INSERT INTO stop_areas VALUES (134315, NULL, 'FR:78464:ZDL:50015302:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78464:ZDE:50016097:STIF" version="682239"/>
-        <QuayRef ref="FR:78464:ZDE:50016096:STIF" version="791797"/>
+        <QuayRef ref="FR::Quay:50016097:FR1" version="682239"/>
+        <QuayRef ref="FR::Quay:50016096:FR1" version="791797"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:44.603195', '2017-03-23 12:26:44.603195', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134317, NULL, 'FR:78464:ZDL:50015304:STIF', 1, 'Guillemets', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682338" created="2015-05-19T05:05:27.0Z" changed="2015-05-19T05:05:27.0Z" id="FR:78464:ZDL:50015304:STIF">
+INSERT INTO stop_areas VALUES (134317, NULL, 'FR::Quay:50015304:FR1', 1, 'Guillemets', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78464', 'Orcemont', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682338" created="2015-05-19T05:05:27.0Z" changed="2015-05-19T05:05:27.0Z" id="FR::Quay:50015304:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9244,7 +9244,7 @@ INSERT INTO stop_areas VALUES (134317, NULL, 'FR:78464:ZDL:50015304:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78464:ZDL:54995:STIF</Value>
+         <Value>FR::Quay:54995:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Guillemets</Name>
@@ -9260,11 +9260,11 @@ INSERT INTO stop_areas VALUES (134317, NULL, 'FR:78464:ZDL:50015304:STIF', 1, 'G
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78464:ZDE:50016099:STIF" version="682334"/>
-        <QuayRef ref="FR:78464:ZDE:50016100:STIF" version="791811"/>
+        <QuayRef ref="FR::Quay:50016099:FR1" version="682334"/>
+        <QuayRef ref="FR::Quay:50016100:FR1" version="791811"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:44.752089', '2017-03-23 12:26:44.752089', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134322, NULL, 'FR:78470:ZDL:50015310:STIF', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682294" created="2015-05-19T05:05:07.0Z" changed="2015-05-19T05:05:07.0Z" id="FR:78470:ZDL:50015310:STIF">
+INSERT INTO stop_areas VALUES (134322, NULL, 'FR::Quay:50015310:FR1', 1, 'Mairie', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78470', 'Orphin', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682294" created="2015-05-19T05:05:07.0Z" changed="2015-05-19T05:05:07.0Z" id="FR::Quay:50015310:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9272,7 +9272,7 @@ INSERT INTO stop_areas VALUES (134322, NULL, 'FR:78470:ZDL:50015310:STIF', 1, 'M
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78470:ZDL:55001:STIF</Value>
+         <Value>FR::Quay:55001:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Mairie</Name>
@@ -9288,11 +9288,11 @@ INSERT INTO stop_areas VALUES (134322, NULL, 'FR:78470:ZDL:50015310:STIF', 1, 'M
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78470:ZDE:50016111:STIF" version="791800"/>
-        <QuayRef ref="FR:78470:ZDE:50016114:STIF" version="791799"/>
+        <QuayRef ref="FR::Quay:50016111:FR1" version="791800"/>
+        <QuayRef ref="FR::Quay:50016114:FR1" version="791799"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:45.155592', '2017-03-23 12:26:45.155592', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134325, NULL, 'FR:78472:ZDL:50015316:STIF', 1, 'Eglise', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78472', 'Orsonville', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682362" created="2015-05-19T05:05:38.0Z" changed="2015-05-19T05:05:38.0Z" id="FR:78472:ZDL:50015316:STIF">
+INSERT INTO stop_areas VALUES (134325, NULL, 'FR::Quay:50015316:FR1', 1, 'Eglise', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78472', 'Orsonville', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="682362" created="2015-05-19T05:05:38.0Z" changed="2015-05-19T05:05:38.0Z" id="FR::Quay:50015316:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9300,7 +9300,7 @@ INSERT INTO stop_areas VALUES (134325, NULL, 'FR:78472:ZDL:50015316:STIF', 1, 'E
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78472:ZDL:55005:STIF</Value>
+         <Value>FR::Quay:55005:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Eglise</Name>
@@ -9316,11 +9316,11 @@ INSERT INTO stop_areas VALUES (134325, NULL, 'FR:78472:ZDL:50015316:STIF', 1, 'E
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78472:ZDE:50016122:STIF" version="791815"/>
-        <QuayRef ref="FR:78472:ZDE:50016121:STIF" version="791816"/>
+        <QuayRef ref="FR::Quay:50016122:FR1" version="791815"/>
+        <QuayRef ref="FR::Quay:50016121:FR1" version="791816"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:26:45.492294', '2017-03-23 12:26:45.492294', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (134572, NULL, 'FR:78466:ZDL:50001447:STIF', 1, '40 Sous', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78466', 'Orgeval', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:23" version="416729" created="2015-01-30T12:01:30.0Z" changed="2015-01-30T12:01:30.0Z" id="FR:78466:ZDL:50001447:STIF">
+INSERT INTO stop_areas VALUES (134572, NULL, 'FR::Quay:50001447:FR1', 1, '40 Sous', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78466', 'Orgeval', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:23" version="416729" created="2015-01-30T12:01:30.0Z" changed="2015-01-30T12:01:30.0Z" id="FR::Quay:50001447:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9328,7 +9328,7 @@ INSERT INTO stop_areas VALUES (134572, NULL, 'FR:78466:ZDL:50001447:STIF', 1, '4
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78466:ZDL:46774:STIF</Value>
+         <Value>FR::Quay:46774:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>40 Sous</Name>
@@ -9344,10 +9344,10 @@ INSERT INTO stop_areas VALUES (134572, NULL, 'FR:78466:ZDL:50001447:STIF', 1, '4
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78466:ZDE:50002019:STIF" version="824887"/>
+        <QuayRef ref="FR::Quay:50002019:FR1" version="824887"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:27:04.392023', '2017-03-23 12:27:04.392023', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (141017, NULL, 'FR:78517:ZDL:50015417:STIF', 1, 'Gare de Rambouillet [Prairie]', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791580" created="2015-05-19T04:05:03.0Z" changed="2016-08-23T10:08:49.0Z" id="FR:78517:ZDL:50015417:STIF">
+INSERT INTO stop_areas VALUES (141017, NULL, 'FR::Quay:50015417:FR1', 1, 'Gare de Rambouillet [Prairie]', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791580" created="2015-05-19T04:05:03.0Z" changed="2016-08-23T10:08:49.0Z" id="FR::Quay:50015417:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9355,7 +9355,7 @@ INSERT INTO stop_areas VALUES (141017, NULL, 'FR:78517:ZDL:50015417:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDL:43185:STIF</Value>
+         <Value>FR::Quay:43185:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Gare de Rambouillet [Prairie]</Name>
@@ -9371,11 +9371,11 @@ INSERT INTO stop_areas VALUES (141017, NULL, 'FR:78517:ZDL:50015417:STIF', 1, 'G
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78517:ZDE:50016296:STIF" version="791575"/>
-        <QuayRef ref="FR:78517:ZDE:50015659:STIF" version="805097"/>
+        <QuayRef ref="FR::Quay:50016296:FR1" version="791575"/>
+        <QuayRef ref="FR::Quay:50015659:FR1" version="805097"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:35:11.738978', '2017-03-23 12:35:11.738978', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (142959, NULL, 'FR:78220:ZDL:50075942:STIF', 1, 'Gare des Essarts le Roi', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78220', 'Les Essarts-le-Roi', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:24" version="677925" created="2015-05-19T02:05:27.0Z" changed="2015-05-19T02:05:27.0Z" id="FR:78220:ZDL:50075942:STIF">
+INSERT INTO stop_areas VALUES (142959, NULL, 'FR::Quay:50075942:FR1', 1, 'Gare des Essarts le Roi', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78220', 'Les Essarts-le-Roi', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:24" version="677925" created="2015-05-19T02:05:27.0Z" changed="2015-05-19T02:05:27.0Z" id="FR::Quay:50075942:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9383,7 +9383,7 @@ INSERT INTO stop_areas VALUES (142959, NULL, 'FR:78220:ZDL:50075942:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78220:ZDL:43229:STIF</Value>
+         <Value>FR::Quay:43229:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Gare des Essarts le Roi</Name>
@@ -9399,11 +9399,11 @@ INSERT INTO stop_areas VALUES (142959, NULL, 'FR:78220:ZDL:50075942:STIF', 1, 'G
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78220:ZDE:50076443:STIF" version="677921"/>
-        <QuayRef ref="FR:78220:ZDE:50076444:STIF" version="677923"/>
+        <QuayRef ref="FR::Quay:50076443:FR1" version="677921"/>
+        <QuayRef ref="FR::Quay:50076444:FR1" version="677923"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:37:46.540087', '2017-03-23 12:37:46.540087', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (142981, NULL, 'FR:78486:ZDL:50015220:STIF', 1, 'Gare Le Perray', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791904" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:20.0Z" id="FR:78486:ZDL:50015220:STIF">
+INSERT INTO stop_areas VALUES (142981, NULL, 'FR::Quay:50015220:FR1', 1, 'Gare Le Perray', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78486', 'Le Perray-en-Yvelines', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="791904" created="2015-05-19T05:05:37.0Z" changed="2016-08-23T10:08:20.0Z" id="FR::Quay:50015220:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9411,7 +9411,7 @@ INSERT INTO stop_areas VALUES (142981, NULL, 'FR:78486:ZDL:50015220:STIF', 1, 'G
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78486:ZDL:43235:STIF</Value>
+         <Value>FR::Quay:43235:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Gare Le Perray</Name>
@@ -9427,10 +9427,10 @@ INSERT INTO stop_areas VALUES (142981, NULL, 'FR:78486:ZDL:50015220:STIF', 1, 'G
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78486:ZDE:50015940:STIF" version="791903"/>
+        <QuayRef ref="FR::Quay:50015940:FR1" version="791903"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:37:48.545766', '2017-03-23 12:37:48.545766', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149159, NULL, 'FR:78003:ZDL:50015007:STIF', 1, 'Champarts', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683862" created="2015-05-19T05:05:09.0Z" changed="2015-05-19T05:05:09.0Z" id="FR:78003:ZDL:50015007:STIF">
+INSERT INTO stop_areas VALUES (149159, NULL, 'FR::Quay:50015007:FR1', 1, 'Champarts', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683862" created="2015-05-19T05:05:09.0Z" changed="2015-05-19T05:05:09.0Z" id="FR::Quay:50015007:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9438,7 +9438,7 @@ INSERT INTO stop_areas VALUES (149159, NULL, 'FR:78003:ZDL:50015007:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDL:54848:STIF</Value>
+         <Value>FR::Quay:54848:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Champarts</Name>
@@ -9454,11 +9454,11 @@ INSERT INTO stop_areas VALUES (149159, NULL, 'FR:78003:ZDL:50015007:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78003:ZDE:50015523:STIF" version="792067"/>
-        <QuayRef ref="FR:78003:ZDE:50015524:STIF" version="792068"/>
+        <QuayRef ref="FR::Quay:50015523:FR1" version="792067"/>
+        <QuayRef ref="FR::Quay:50015524:FR1" version="792068"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:39.71555', '2017-03-23 13:10:39.71555', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149163, NULL, 'FR:78003:ZDL:50015015:STIF', 1, 'La Paix', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="684048" created="2015-05-19T05:05:38.0Z" changed="2015-05-19T05:05:38.0Z" id="FR:78003:ZDL:50015015:STIF">
+INSERT INTO stop_areas VALUES (149163, NULL, 'FR::Quay:50015015:FR1', 1, 'La Paix', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="684048" created="2015-05-19T05:05:38.0Z" changed="2015-05-19T05:05:38.0Z" id="FR::Quay:50015015:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9466,7 +9466,7 @@ INSERT INTO stop_areas VALUES (149163, NULL, 'FR:78003:ZDL:50015015:STIF', 1, 'L
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDL:54853:STIF</Value>
+         <Value>FR::Quay:54853:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>La Paix</Name>
@@ -9482,11 +9482,11 @@ INSERT INTO stop_areas VALUES (149163, NULL, 'FR:78003:ZDL:50015015:STIF', 1, 'L
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78003:ZDE:50015538:STIF" version="792095"/>
-        <QuayRef ref="FR:78003:ZDE:50015539:STIF" version="792096"/>
+        <QuayRef ref="FR::Quay:50015538:FR1" version="792095"/>
+        <QuayRef ref="FR::Quay:50015539:FR1" version="792096"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:39.951302', '2017-03-23 13:10:39.951302', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149165, NULL, 'FR:78003:ZDL:50015017:STIF', 1, 'Pierre Trouvé', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="684032" created="2015-05-19T05:05:25.0Z" changed="2015-05-19T05:05:25.0Z" id="FR:78003:ZDL:50015017:STIF">
+INSERT INTO stop_areas VALUES (149165, NULL, 'FR::Quay:50015017:FR1', 1, 'Pierre Trouvé', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78003', 'Ablis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="684032" created="2015-05-19T05:05:25.0Z" changed="2015-05-19T05:05:25.0Z" id="FR::Quay:50015017:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9494,7 +9494,7 @@ INSERT INTO stop_areas VALUES (149165, NULL, 'FR:78003:ZDL:50015017:STIF', 1, 'P
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78003:ZDL:54855:STIF</Value>
+         <Value>FR::Quay:54855:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Pierre Trouvé</Name>
@@ -9510,11 +9510,11 @@ INSERT INTO stop_areas VALUES (149165, NULL, 'FR:78003:ZDL:50015017:STIF', 1, 'P
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78003:ZDE:50015542:STIF" version="792093"/>
-        <QuayRef ref="FR:78003:ZDE:50015543:STIF" version="792094"/>
+        <QuayRef ref="FR::Quay:50015542:FR1" version="792093"/>
+        <QuayRef ref="FR::Quay:50015543:FR1" version="792094"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:40.077448', '2017-03-23 13:10:40.077448', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149176, NULL, 'FR:78030:ZDL:50015034:STIF', 1, 'Route du Perray', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683899" created="2015-05-19T05:05:38.0Z" changed="2015-05-19T05:05:38.0Z" id="FR:78030:ZDL:50015034:STIF">
+INSERT INTO stop_areas VALUES (149176, NULL, 'FR::Quay:50015034:FR1', 1, 'Route du Perray', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78030', 'Auffargis', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683899" created="2015-05-19T05:05:38.0Z" changed="2015-05-19T05:05:38.0Z" id="FR::Quay:50015034:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9522,7 +9522,7 @@ INSERT INTO stop_areas VALUES (149176, NULL, 'FR:78030:ZDL:50015034:STIF', 1, 'R
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78030:ZDL:54867:STIF</Value>
+         <Value>FR::Quay:54867:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Route du Perray</Name>
@@ -9538,11 +9538,11 @@ INSERT INTO stop_areas VALUES (149176, NULL, 'FR:78030:ZDL:50015034:STIF', 1, 'R
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78030:ZDE:50015576:STIF" version="792071"/>
-        <QuayRef ref="FR:78030:ZDE:50015577:STIF" version="792072"/>
+        <QuayRef ref="FR::Quay:50015576:FR1" version="792071"/>
+        <QuayRef ref="FR::Quay:50015577:FR1" version="792072"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:40.666615', '2017-03-23 13:10:40.666615', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149194, NULL, 'FR:78125:ZDL:50015083:STIF', 1, 'Château', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683726" created="2015-05-19T05:05:34.0Z" changed="2015-05-19T05:05:34.0Z" id="FR:78125:ZDL:50015083:STIF">
+INSERT INTO stop_areas VALUES (149194, NULL, 'FR::Quay:50015083:FR1', 1, 'Château', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683726" created="2015-05-19T05:05:34.0Z" changed="2015-05-19T05:05:34.0Z" id="FR::Quay:50015083:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9550,7 +9550,7 @@ INSERT INTO stop_areas VALUES (149194, NULL, 'FR:78125:ZDL:50015083:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDL:54890:STIF</Value>
+         <Value>FR::Quay:54890:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Château</Name>
@@ -9566,11 +9566,11 @@ INSERT INTO stop_areas VALUES (149194, NULL, 'FR:78125:ZDL:50015083:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78125:ZDE:50015673:STIF" version="792044"/>
-        <QuayRef ref="FR:78125:ZDE:50015672:STIF" version="792045"/>
+        <QuayRef ref="FR::Quay:50015673:FR1" version="792044"/>
+        <QuayRef ref="FR::Quay:50015672:FR1" version="792045"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:41.658609', '2017-03-23 13:10:41.658609', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149196, NULL, 'FR:78125:ZDL:50015085:STIF', 1, 'Bois des Gaulles', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683774" created="2015-05-19T05:05:07.0Z" changed="2015-05-19T05:05:07.0Z" id="FR:78125:ZDL:50015085:STIF">
+INSERT INTO stop_areas VALUES (149196, NULL, 'FR::Quay:50015085:FR1', 1, 'Bois des Gaulles', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683774" created="2015-05-19T05:05:07.0Z" changed="2015-05-19T05:05:07.0Z" id="FR::Quay:50015085:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9578,7 +9578,7 @@ INSERT INTO stop_areas VALUES (149196, NULL, 'FR:78125:ZDL:50015085:STIF', 1, 'B
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDL:54892:STIF</Value>
+         <Value>FR::Quay:54892:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Bois des Gaulles</Name>
@@ -9594,11 +9594,11 @@ INSERT INTO stop_areas VALUES (149196, NULL, 'FR:78125:ZDL:50015085:STIF', 1, 'B
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78125:ZDE:50015677:STIF" version="792053"/>
-        <QuayRef ref="FR:78125:ZDE:50015676:STIF" version="683772"/>
+        <QuayRef ref="FR::Quay:50015677:FR1" version="792053"/>
+        <QuayRef ref="FR::Quay:50015676:FR1" version="683772"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:41.771118', '2017-03-23 13:10:41.771118', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (149197, NULL, 'FR:78125:ZDL:50015086:STIF', 1, 'Villeneuve', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683766" created="2015-05-19T05:05:02.0Z" changed="2015-05-19T05:05:02.0Z" id="FR:78125:ZDL:50015086:STIF">
+INSERT INTO stop_areas VALUES (149197, NULL, 'FR::Quay:50015086:FR1', 1, 'Villeneuve', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78125', 'La Celle-les-Bordes', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:25" version="683766" created="2015-05-19T05:05:02.0Z" changed="2015-05-19T05:05:02.0Z" id="FR::Quay:50015086:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9606,7 +9606,7 @@ INSERT INTO stop_areas VALUES (149197, NULL, 'FR:78125:ZDL:50015086:STIF', 1, 'V
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78125:ZDL:54893:STIF</Value>
+         <Value>FR::Quay:54893:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Villeneuve</Name>
@@ -9622,11 +9622,11 @@ INSERT INTO stop_areas VALUES (149197, NULL, 'FR:78125:ZDL:50015086:STIF', 1, 'V
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78125:ZDE:50015679:STIF" version="792052"/>
-        <QuayRef ref="FR:78125:ZDE:50015678:STIF" version="683764"/>
+        <QuayRef ref="FR::Quay:50015679:FR1" version="792052"/>
+        <QuayRef ref="FR::Quay:50015678:FR1" version="683764"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 13:10:41.826806', '2017-03-23 13:10:41.826806', 'LOCAL_OBJECT');
-INSERT INTO stop_areas VALUES (137572, NULL, 'FR:78517:ZDL:50075977:STIF', 1, 'Collège Racinay', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:24" version="677641" created="2015-05-19T02:05:14.0Z" changed="2015-05-19T02:05:14.0Z" id="FR:78517:ZDL:50075977:STIF">
+INSERT INTO stop_areas VALUES (137572, NULL, 'FR::Quay:50075977:FR1', 1, 'Collège Racinay', NULL, 'zdlp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78517', 'Rambouillet', NULL, NULL, 1, NULL, '<StopPlace dataSourceRef="STIF-REFLEX:Operator:24" version="677641" created="2015-05-19T02:05:14.0Z" changed="2015-05-19T02:05:14.0Z" id="FR::Quay:50075977:FR1">
        <keyList>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>OBJECT_STATUS</Key>
@@ -9634,7 +9634,7 @@ INSERT INTO stop_areas VALUES (137572, NULL, 'FR:78517:ZDL:50075977:STIF', 1, 'C
         </KeyValue>
         <KeyValue typeOfKey="OBJET_QUALIFIER">
          <Key>REFERENCE_OBJECT_ID</Key>
-         <Value>FR:78517:ZDL:42722:STIF</Value>
+         <Value>FR::Quay:42722:FR1</Value>
         </KeyValue>
        </keyList>
        <Name>Collège Racinay</Name>
@@ -9650,7 +9650,7 @@ INSERT INTO stop_areas VALUES (137572, NULL, 'FR:78517:ZDL:50075977:STIF', 1, 'C
        </AccessibilityAssessment>
        <StopPlaceType>onstreetBus</StopPlaceType>
        <quays>
-        <QuayRef ref="FR:78517:ZDE:50076501:STIF" version="732666"/>
+        <QuayRef ref="FR::Quay:50076501:FR1" version="732666"/>
        </quays>
       </StopPlace>', NULL, '2017-03-23 12:31:03.387835', '2017-03-23 12:31:03.387835', 'LOCAL_OBJECT');
 

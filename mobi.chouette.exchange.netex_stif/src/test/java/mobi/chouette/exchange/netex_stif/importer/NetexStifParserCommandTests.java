@@ -118,19 +118,19 @@ public class NetexStifParserCommandTests  {
 		referential.getSharedReadOnlyCompanies().put(company.getObjectId(), company);
 		StopAreaLite quay1 = new StopAreaLite();
 		quay1.setId(18304L);
-		quay1.setObjectId("FR:78217:ZDE:18304:STIF");
+		quay1.setObjectId("FR::Quay:18304:FR1");
 		referential.getSharedReadOnlyStopAreas().put(quay1.getObjectId(), quay1);
 		StopAreaLite quay2 = new StopAreaLite();
 		quay2.setId(32522L);
-		quay2.setObjectId("FR:78217:ZDE:32522:STIF");
+		quay2.setObjectId("FR::Quay:32522:FR1");
 		referential.getSharedReadOnlyStopAreas().put(quay2.getObjectId(), quay2);
 		StopAreaLite quay3 = new StopAreaLite();
 		quay3.setId(32521L);
-		quay3.setObjectId("FR:78217:ZDE:32521:STIF");
+		quay3.setObjectId("FR::Quay:32521:FR1");
 		referential.getSharedReadOnlyStopAreas().put(quay3.getObjectId(), quay3);
 		StopAreaLite quay4 = new StopAreaLite();
 		quay4.setId(18305L);
-		quay4.setObjectId("FR:78217:ZDE:18305:STIF");
+		quay4.setObjectId("FR::Quay:18305:FR1");
 		referential.getSharedReadOnlyStopAreas().put(quay4.getObjectId(), quay4);
 	}
 
@@ -196,8 +196,7 @@ public class NetexStifParserCommandTests  {
 
 	private void assertStopPoint(Referential referential, String id, String objectId, int position, Long quayRef, String routeId) {
 		StopPoint stopPoint = referential.getStopPoints().get(id);
-		if (stopPoint == null)
-		{
+		if (stopPoint == null){
 			log.info("stopPointIds = "+referential.getStopPoints().keySet());
 		}
 		Assert.assertNotNull(stopPoint, " stopPoint id = " + id);
