@@ -10,6 +10,7 @@ import mobi.chouette.exchange.netex_stif.exporter.ExportableData;
 import mobi.chouette.model.Company;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Network;
 
 @Log4j
@@ -25,6 +26,7 @@ public class NetexLignesWriter extends AbstractWriter {
 		writeNetworks(writer, data);
 		openServiceFrame(writer, "STIF:CODIFLIGNE:ServiceFrame:lineid");
 		writeLines(writer, data);
+		writeLineNotices(writer, data);
 		writeGroupsOfLines(writer, data);
 		closeServiceFrame(writer);
 		openResourceFrame(writer);
@@ -57,6 +59,14 @@ public class NetexLignesWriter extends AbstractWriter {
 			writeXml(writer, line.getImportXml(), 6);
 		}
 		write(writer, 5, "</lines>");
+	}
+
+	private static void writeLineNotices(Writer writer, ExportableData data) throws IOException {
+		write(writer, 5, "<notices>");
+		for (LineNotice lineNotice : data.getLineNotices()) {
+			writeXml(writer, lineNotice.getImportXml(), 6);
+		}
+		write(writer, 5, "</notices>");
 	}
 
 	private static void writeGroupsOfLines(Writer writer, ExportableData data) throws IOException {

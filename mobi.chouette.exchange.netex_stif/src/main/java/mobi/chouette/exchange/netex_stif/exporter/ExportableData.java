@@ -22,9 +22,9 @@ public class ExportableData extends mobi.chouette.exchange.exporter.ExportableDa
 	@Getter
 	@Setter
 	private Set<String> dataSourceRefs = new HashSet<>();
-	
+
 	@Getter
-	@Setter 
+	@Setter
 	private Map<String,Organisation> organisations = new HashMap<>();
 
 	@Getter
@@ -85,7 +85,7 @@ public class ExportableData extends mobi.chouette.exchange.exporter.ExportableDa
 		ldas.clear();
 		gdls.clear();
 	}
-	
+
 	@Override
 	public void clearLineReferential()
 	{

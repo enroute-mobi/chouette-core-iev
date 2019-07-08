@@ -159,13 +159,9 @@ public class LoadSharedDataTest extends Arquillian  {
 		}
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		Assert.assertEquals(referential.getSharedReadOnlyLines().size(), 2, "line size");
-		Assert.assertNotNull(referential.getSharedReadOnlyLines().get("STIF:CODIFLIGNE:Line:C00108"),
-				"objectid STIF:CODIFLIGNE:Line:C00108 should be found for lines");
+		Assert.assertNotNull(referential.getSharedReadOnlyLines().get("FR1:Line:C00108:"), "objectid FR1:Line:C00108: should be found for lines");
 		Assert.assertEquals(referential.getSharedReadOnlyCompanies().size(), 3, "company size");
-		Assert.assertNotNull(referential.getSharedReadOnlyCompanies().get("STIF:CODIFLIGNE:Operator:011"),
-				"objectid 011 should be found for companies");
+		Assert.assertNotNull(referential.getSharedReadOnlyCompanies().get("FR1:Operator:011:LOC"), "objectid 011 should be found for companies");
 		Assert.assertEquals(referential.getSharedReadOnlyStopAreas().size(), 240, "stops size");
-
 	}
-
 }

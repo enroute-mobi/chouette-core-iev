@@ -10,6 +10,7 @@ import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
@@ -217,6 +218,9 @@ public class DataLocation {
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof Company) {
 			Company object = (Company) chouetteObject;
+			return NamingUtil.getName(object);
+		} else if (chouetteObject instanceof LineNotice) {
+			LineNotice object = (LineNotice) chouetteObject;
 			return NamingUtil.getName(object);
 		} else if (chouetteObject instanceof GroupOfLine) {
 			GroupOfLine object = (GroupOfLine) chouetteObject;

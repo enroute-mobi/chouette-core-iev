@@ -31,7 +31,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 231 (class 1259 OID 533251)
--- Name: footnotes; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: footnotes; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE footnotes (
@@ -45,7 +45,6 @@ CREATE TABLE footnotes (
     updated_at timestamp without time zone,
     data_source_ref character varying
 );
-
 
 
 --
@@ -73,7 +72,7 @@ ALTER SEQUENCE footnotes_id_seq OWNED BY footnotes.id;
 
 --
 -- TOC entry 233 (class 1259 OID 533259)
--- Name: footnotes_vehicle_journeys; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: footnotes_vehicle_journeys; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE footnotes_vehicle_journeys (
@@ -81,11 +80,41 @@ CREATE TABLE footnotes_vehicle_journeys (
     footnote_id bigint
 );
 
+CREATE TABLE line_notices (
+    id bigint NOT NULL,
+    line_referential_id bigint,
+    title character varying,
+    content text,
+    objectid character varying NOT NULL,
+    import_xml text,
+    metadata jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    object_version integer
+);
+
+
+CREATE SEQUENCE line_notices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+ALTER SEQUENCE line_notices_id_seq OWNED BY line_notices.id;
+
+
+CREATE TABLE line_notices_lines (
+    line_notice_id bigint NOT NULL,
+    line_id bigint NOT NULL
+);
 
 
 --
 -- TOC entry 234 (class 1259 OID 533262)
--- Name: journey_frequencies; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: journey_frequencies; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE journey_frequencies (
@@ -128,7 +157,7 @@ ALTER SEQUENCE journey_frequencies_id_seq OWNED BY journey_frequencies.id;
 
 --
 -- TOC entry 238 (class 1259 OID 533273)
--- Name: journey_patterns; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: journey_patterns; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE journey_patterns (
@@ -178,7 +207,7 @@ ALTER SEQUENCE journey_patterns_id_seq OWNED BY journey_patterns.id;
 
 --
 -- TOC entry 240 (class 1259 OID 533282)
--- Name: journey_patterns_stop_points; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: journey_patterns_stop_points; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE journey_patterns_stop_points (
@@ -190,7 +219,7 @@ CREATE TABLE journey_patterns_stop_points (
 
 --
 -- TOC entry 241 (class 1259 OID 533285)
--- Name: routes; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: routes; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE routes (
@@ -240,7 +269,7 @@ ALTER SEQUENCE routes_id_seq OWNED BY routes.id;
 
 --
 -- TOC entry 243 (class 1259 OID 533293)
--- Name: routing_constraint_zones; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: routing_constraint_zones; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE routing_constraint_zones (
@@ -285,7 +314,7 @@ ALTER SEQUENCE routing_constraint_zones_id_seq OWNED BY routing_constraint_zones
 
 --
 -- TOC entry 245 (class 1259 OID 533301)
--- Name: stop_points; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: stop_points; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE stop_points (
@@ -329,7 +358,7 @@ ALTER SEQUENCE stop_points_id_seq OWNED BY stop_points.id;
 
 --
 -- TOC entry 247 (class 1259 OID 533309)
--- Name: time_table_dates; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_table_dates; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE time_table_dates (
@@ -369,7 +398,7 @@ ALTER SEQUENCE time_table_dates_id_seq OWNED BY time_table_dates.id;
 
 --
 -- TOC entry 249 (class 1259 OID 533317)
--- Name: time_table_periods; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_table_periods; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE time_table_periods (
@@ -409,7 +438,7 @@ ALTER SEQUENCE time_table_periods_id_seq OWNED BY time_table_periods.id;
 
 --
 -- TOC entry 251 (class 1259 OID 533325)
--- Name: time_tables; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_tables; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE time_tables (
@@ -457,7 +486,7 @@ ALTER SEQUENCE time_tables_id_seq OWNED BY time_tables.id;
 
 --
 -- TOC entry 253 (class 1259 OID 533335)
--- Name: time_tables_vehicle_journeys; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_tables_vehicle_journeys; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE time_tables_vehicle_journeys (
@@ -469,7 +498,7 @@ CREATE TABLE time_tables_vehicle_journeys (
 
 --
 -- TOC entry 254 (class 1259 OID 533338)
--- Name: timebands; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: timebands; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE timebands (
@@ -511,7 +540,7 @@ ALTER SEQUENCE timebands_id_seq OWNED BY timebands.id;
 
 --
 -- TOC entry 256 (class 1259 OID 533346)
--- Name: vehicle_journey_at_stops; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: vehicle_journey_at_stops; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE vehicle_journey_at_stops (
@@ -557,7 +586,7 @@ ALTER SEQUENCE vehicle_journey_at_stops_id_seq OWNED BY vehicle_journey_at_stops
 
 --
 -- TOC entry 258 (class 1259 OID 533356)
--- Name: vehicle_journeys; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: vehicle_journeys; Type: TABLE; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE TABLE vehicle_journeys (
@@ -583,7 +612,8 @@ CREATE TABLE vehicle_journeys (
     checksum_source text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    data_source_ref character varying
+    data_source_ref character varying,
+    line_notice_ids bigint[]
 );
 
 
@@ -1563,7 +1593,7 @@ SELECT pg_catalog.setval('vehicle_journeys_id_seq', 102, true);
 
 --
 -- TOC entry 3566 (class 2606 OID 533379)
--- Name: footnotes_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: footnotes_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY footnotes
@@ -1572,7 +1602,7 @@ ALTER TABLE ONLY footnotes
 
 --
 -- TOC entry 3570 (class 2606 OID 533381)
--- Name: journey_frequencies_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: journey_frequencies_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY journey_frequencies
@@ -1582,7 +1612,7 @@ ALTER TABLE ONLY journey_frequencies
 
 --
 -- TOC entry 3578 (class 2606 OID 533385)
--- Name: journey_patterns_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: journey_patterns_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY journey_patterns
@@ -1591,7 +1621,7 @@ ALTER TABLE ONLY journey_patterns
 
 --
 -- TOC entry 3582 (class 2606 OID 533387)
--- Name: routes_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: routes_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY routes
@@ -1600,7 +1630,7 @@ ALTER TABLE ONLY routes
 
 --
 -- TOC entry 3584 (class 2606 OID 533389)
--- Name: routing_constraint_zones_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: routing_constraint_zones_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY routing_constraint_zones
@@ -1609,7 +1639,7 @@ ALTER TABLE ONLY routing_constraint_zones
 
 --
 -- TOC entry 3587 (class 2606 OID 533391)
--- Name: stop_points_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: stop_points_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY stop_points
@@ -1618,7 +1648,7 @@ ALTER TABLE ONLY stop_points
 
 --
 -- TOC entry 3590 (class 2606 OID 533393)
--- Name: time_table_dates_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_table_dates_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY time_table_dates
@@ -1627,7 +1657,7 @@ ALTER TABLE ONLY time_table_dates
 
 --
 -- TOC entry 3593 (class 2606 OID 533395)
--- Name: time_table_periods_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_table_periods_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY time_table_periods
@@ -1636,7 +1666,7 @@ ALTER TABLE ONLY time_table_periods
 
 --
 -- TOC entry 3596 (class 2606 OID 533397)
--- Name: time_tables_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_tables_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY time_tables
@@ -1645,7 +1675,7 @@ ALTER TABLE ONLY time_tables
 
 --
 -- TOC entry 3600 (class 2606 OID 533399)
--- Name: timebands_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: timebands_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY timebands
@@ -1654,7 +1684,7 @@ ALTER TABLE ONLY timebands
 
 --
 -- TOC entry 3604 (class 2606 OID 533401)
--- Name: vehicle_journey_at_stops_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: vehicle_journey_at_stops_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY vehicle_journey_at_stops
@@ -1663,7 +1693,7 @@ ALTER TABLE ONLY vehicle_journey_at_stops
 
 --
 -- TOC entry 3608 (class 2606 OID 533403)
--- Name: vehicle_journeys_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: vehicle_journeys_pkey; Type: CONSTRAINT; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 ALTER TABLE ONLY vehicle_journeys
@@ -1672,7 +1702,7 @@ ALTER TABLE ONLY vehicle_journeys
 
 --
 -- TOC entry 3567 (class 1259 OID 533404)
--- Name: index_journey_frequencies_on_timeband_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_journey_frequencies_on_timeband_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_journey_frequencies_on_timeband_id ON journey_frequencies USING btree (timeband_id);
@@ -1680,7 +1710,7 @@ CREATE INDEX index_journey_frequencies_on_timeband_id ON journey_frequencies USI
 
 --
 -- TOC entry 3568 (class 1259 OID 533405)
--- Name: index_journey_frequencies_on_vehicle_journey_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_journey_frequencies_on_vehicle_journey_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequencies USING btree (vehicle_journey_id);
@@ -1688,7 +1718,7 @@ CREATE INDEX index_journey_frequencies_on_vehicle_journey_id ON journey_frequenc
 
 --
 -- TOC entry 3579 (class 1259 OID 533406)
--- Name: index_journey_pattern_id_on_journey_patterns_stop_points; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_journey_pattern_id_on_journey_patterns_stop_points; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey_patterns_stop_points USING btree (journey_pattern_id);
@@ -1696,7 +1726,7 @@ CREATE INDEX index_journey_pattern_id_on_journey_patterns_stop_points ON journey
 
 --
 -- TOC entry 3588 (class 1259 OID 533410)
--- Name: index_time_table_dates_on_time_table_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_time_table_dates_on_time_table_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_time_table_dates_on_time_table_id ON time_table_dates USING btree (time_table_id);
@@ -1704,7 +1734,7 @@ CREATE INDEX index_time_table_dates_on_time_table_id ON time_table_dates USING b
 
 --
 -- TOC entry 3591 (class 1259 OID 533411)
--- Name: index_time_table_periods_on_time_table_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_time_table_periods_on_time_table_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_time_table_periods_on_time_table_id ON time_table_periods USING btree (time_table_id);
@@ -1712,7 +1742,7 @@ CREATE INDEX index_time_table_periods_on_time_table_id ON time_table_periods USI
 
 --
 -- TOC entry 3597 (class 1259 OID 533412)
--- Name: index_time_tables_vehicle_journeys_on_time_table_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_time_tables_vehicle_journeys_on_time_table_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_time_tables_vehicle_journeys_on_time_table_id ON time_tables_vehicle_journeys USING btree (time_table_id);
@@ -1720,7 +1750,7 @@ CREATE INDEX index_time_tables_vehicle_journeys_on_time_table_id ON time_tables_
 
 --
 -- TOC entry 3598 (class 1259 OID 533413)
--- Name: index_time_tables_vehicle_journeys_on_vehicle_journey_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_time_tables_vehicle_journeys_on_vehicle_journey_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_time_tables_vehicle_journeys_on_vehicle_journey_id ON time_tables_vehicle_journeys USING btree (vehicle_journey_id);
@@ -1728,7 +1758,7 @@ CREATE INDEX index_time_tables_vehicle_journeys_on_vehicle_journey_id ON time_ta
 
 --
 -- TOC entry 3601 (class 1259 OID 533414)
--- Name: index_vehicle_journey_at_stops_on_stop_pointid; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_vehicle_journey_at_stops_on_stop_pointid; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_vehicle_journey_at_stops_on_stop_pointid ON vehicle_journey_at_stops USING btree (stop_point_id);
@@ -1736,7 +1766,7 @@ CREATE INDEX index_vehicle_journey_at_stops_on_stop_pointid ON vehicle_journey_a
 
 --
 -- TOC entry 3602 (class 1259 OID 533415)
--- Name: index_vehicle_journey_at_stops_on_vehicle_journey_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_vehicle_journey_at_stops_on_vehicle_journey_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_vehicle_journey_at_stops_on_vehicle_journey_id ON vehicle_journey_at_stops USING btree (vehicle_journey_id);
@@ -1744,7 +1774,7 @@ CREATE INDEX index_vehicle_journey_at_stops_on_vehicle_journey_id ON vehicle_jou
 
 --
 -- TOC entry 3605 (class 1259 OID 533416)
--- Name: index_vehicle_journeys_on_route_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: index_vehicle_journeys_on_route_id; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE INDEX index_vehicle_journeys_on_route_id ON vehicle_journeys USING btree (route_id);
@@ -1752,7 +1782,7 @@ CREATE INDEX index_vehicle_journeys_on_route_id ON vehicle_journeys USING btree 
 
 --
 -- TOC entry 3576 (class 1259 OID 533417)
--- Name: journey_patterns_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: journey_patterns_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE UNIQUE INDEX journey_patterns_objectid_key ON journey_patterns USING btree (objectid);
@@ -1760,7 +1790,7 @@ CREATE UNIQUE INDEX journey_patterns_objectid_key ON journey_patterns USING btre
 
 --
 -- TOC entry 3580 (class 1259 OID 533418)
--- Name: routes_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: routes_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE UNIQUE INDEX routes_objectid_key ON routes USING btree (objectid);
@@ -1768,7 +1798,7 @@ CREATE UNIQUE INDEX routes_objectid_key ON routes USING btree (objectid);
 
 --
 -- TOC entry 3585 (class 1259 OID 533419)
--- Name: stop_points_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: stop_points_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE UNIQUE INDEX stop_points_objectid_key ON stop_points USING btree (objectid);
@@ -1776,7 +1806,7 @@ CREATE UNIQUE INDEX stop_points_objectid_key ON stop_points USING btree (objecti
 
 --
 -- TOC entry 3594 (class 1259 OID 533420)
--- Name: time_tables_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: time_tables_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE UNIQUE INDEX time_tables_objectid_key ON time_tables USING btree (objectid);
@@ -1784,7 +1814,7 @@ CREATE UNIQUE INDEX time_tables_objectid_key ON time_tables USING btree (objecti
 
 --
 -- TOC entry 3606 (class 1259 OID 533421)
--- Name: vehicle_journeys_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace: 
+-- Name: vehicle_journeys_objectid_key; Type: INDEX; Schema: iev_export; Owner: chouette; Tablespace:
 --
 
 CREATE UNIQUE INDEX vehicle_journeys_objectid_key ON vehicle_journeys USING btree (objectid);
@@ -1952,4 +1982,3 @@ GRANT ALL ON SCHEMA iev_export TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-

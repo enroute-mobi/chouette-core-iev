@@ -26,6 +26,7 @@ import mobi.chouette.common.Constant;
 import mobi.chouette.common.Context;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.netex_stif.validator.NetexCheckPoints;
 import mobi.chouette.exchange.report.ActionReporter;
 import mobi.chouette.exchange.report.ActionReporter.ERROR_CODE;
@@ -95,7 +96,6 @@ public class NetexStifSAXParserCommand implements Command {
 		} finally {
 			log.info(Color.MAGENTA + monitor.stop() + Color.NORMAL);
 		}
-
 		return result;
 	}
 
@@ -103,10 +103,8 @@ public class NetexStifSAXParserCommand implements Command {
 		addLineEntry(context, reporter, fileName, e.getMessage());
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 		DataLocation location = new DataLocation(fileName, 1, 1);
-		validationReporter.updateCheckPointReportSeverity(context, NetexCheckPoints.L1_NetexStif_2,
-				CheckPointReport.SEVERITY.ERROR);
-		validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_2,NetexCheckPoints.L1_NetexStif_2, location,
-				e.getMessage());
+		validationReporter.updateCheckPointReportSeverity(context, NetexCheckPoints.L1_NetexStif_2, CheckPointReport.SEVERITY.ERROR);
+		validationReporter.addCheckPointReportError(context, null, NetexCheckPoints.L1_NetexStif_2,NetexCheckPoints.L1_NetexStif_2, location,	e.getMessage());
 		reporter.addFileErrorInReport(context, fileName, FILE_ERROR_CODE.INVALID_FORMAT, e.getMessage());
 	}
 
@@ -115,10 +113,8 @@ public class NetexStifSAXParserCommand implements Command {
 			// insert dummy line entry in report
 			String name = fileName.replace(".xml", "");
 			String[] tokens = name.split("_");
-			reporter.addObjectReport(context, "STIF:CODIFLIGNE:Line:" + tokens[1], OBJECT_TYPE.LINE, tokens[2],
-					OBJECT_STATE.OK, IO_TYPE.INPUT);
-			reporter.addErrorToObjectReport(context, "STIF:CODIFLIGNE:Line:" + tokens[1], OBJECT_TYPE.LINE,
-					ERROR_CODE.INVALID_FORMAT, description);
+			reporter.addObjectReport(context, NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", tokens[1]), OBJECT_TYPE.LINE, tokens[2], OBJECT_STATE.OK, IO_TYPE.INPUT);
+			reporter.addErrorToObjectReport(context, NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", tokens[1]), OBJECT_TYPE.LINE,	ERROR_CODE.INVALID_FORMAT, description);
 		}
 	}
 

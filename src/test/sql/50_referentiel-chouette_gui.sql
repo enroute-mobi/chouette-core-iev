@@ -5,7 +5,7 @@
 -- Dumped from database version 9.4.11
 -- Dumped by pg_dump version 9.5.7
 
-  
+
 DROP SCHEMA IF EXISTS chouette_gui CASCADE;
 
 CREATE SCHEMA chouette_gui ;
@@ -523,7 +523,8 @@ CREATE TABLE vehicle_journeys (
     checksum_source text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    data_source_ref character varying
+    data_source_ref character varying,
+    line_notice_ids bigint[]
 );
 
 
@@ -965,4 +966,3 @@ ALTER TABLE ONLY time_tables_vehicle_journeys
 --
 -- PostgreSQL database dump complete
 --
-

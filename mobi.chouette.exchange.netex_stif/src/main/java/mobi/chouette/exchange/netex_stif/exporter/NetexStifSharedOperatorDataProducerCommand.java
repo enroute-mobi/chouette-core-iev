@@ -47,6 +47,7 @@ public class NetexStifSharedOperatorDataProducerCommand implements Command {
 				ObjectReport sharedReport = (ObjectReport) context.get(NetexStifConstant.SHARED_REPORT);
 				sharedReport.addStatTypeToObject(OBJECT_TYPE.TIME_TABLE, collection.getTimetables().size());
 				sharedReport.addStatTypeToObject(OBJECT_TYPE.FOOTNOTE, collection.getNotices().size());
+				sharedReport.addStatTypeToObject(OBJECT_TYPE.LINE_NOTICE, collection.getLineNotices().size());
 			}
 
 			collection.clearCompany();

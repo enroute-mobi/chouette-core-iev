@@ -14,6 +14,7 @@ import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
 import mobi.chouette.model.LineLite;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Route;
@@ -36,6 +37,12 @@ public abstract class NamingUtil {
 	public static String getName(Company object) {
 		if (isFilled(object.getName()))
 			return object.getName();
+		return object.getObjectId();
+	}
+
+	public static String getName(LineNotice object) {
+		if (isFilled(object.getTitle()))
+			return object.getTitle();
 		return object.getObjectId();
 	}
 
@@ -130,7 +137,7 @@ public abstract class NamingUtil {
 			return object.getNumber().toString();
 		return object.getObjectId();
 	}
-	
+
 	public static String getName(Footnote object) {
 		String name ="("+object.getCode()+") ";
 		if (object.getLabel() != null)

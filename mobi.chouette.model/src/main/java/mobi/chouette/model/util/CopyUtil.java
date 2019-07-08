@@ -14,6 +14,7 @@ import mobi.chouette.model.Footnote;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
 import mobi.chouette.model.Line;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.Network;
 import mobi.chouette.model.Period;
 import mobi.chouette.model.Route;
@@ -31,6 +32,10 @@ public class CopyUtil {
 	}
 
 	public static Company copy(Company object) {
+		throw new NotYetImplementedException(MESSAGE);
+	}
+
+	public static LineNotice copy(LineNotice object) {
 		throw new NotYetImplementedException(MESSAGE);
 	}
 
@@ -105,6 +110,6 @@ public class CopyUtil {
 		ft.setDataSourceRef(object.getDataSourceRef());
 		return ft;
 	}
-	
+
 	private CopyUtil(){}
 }
