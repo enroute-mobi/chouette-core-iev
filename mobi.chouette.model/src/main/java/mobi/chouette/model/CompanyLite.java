@@ -39,9 +39,6 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 
 	private static final String OLD_FASHION_PREFIX = "STIF:CODIFLIGNE";
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6913288375372751999L;
 
 	@Getter
@@ -60,7 +57,7 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 	 * </li>
 	 * </ol>
 	 * This data must be unique in dataset
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -74,7 +71,7 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * object version
-	 * 
+	 *
 	 * @param objectVersion
 	 *            New value
 	 * @return The actual value
@@ -86,7 +83,7 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -95,7 +92,7 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * line referential reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -113,10 +110,7 @@ public class CompanyLite extends ChouetteIdentifiedObject {
 	public String objectIdSuffix() {
 		if (objectId.startsWith(OLD_FASHION_PREFIX)) {
 			String[] tokens = objectIdArray();
-			if (tokens.length > 3)
-				return tokens[3].trim();
-			else
-				return "";
+			return (tokens.length > 3)? tokens[3].trim():"";
 		}
 		return super.objectIdSuffix();
 	}

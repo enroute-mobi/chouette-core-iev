@@ -20,12 +20,13 @@ public abstract class AbstractValidator {
 
 	private static final String REGEX_ID_PREFIX = "^[\\w-]+:";
 	private static final String REGEX_ID_SUFFIX = ":[\\w-]+:LOC$";
-	// ATTENTION, regex: adapté aux 2 versions de CodifLigne
-	private static final String REGEX_CODIFLIGNE_PREFIX = "^(STIF:CODIFLIGNE|STIF-LIGNE):";
-	private static final String REGEX_CODIFLIGNE_SUFFIX = ":[\\w-]+(:STIF|)$";
 
-	private static final String REGEX_REFLEX_PREFIX = "^FR:[\\d]{5}:";
-	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:STIF$";
+	// The new CODIFLIGNE V2 prefix is only a reference to the company
+	private static final String REGEX_CODIFLIGNE_PREFIX = "^[\\w-]+:";
+	private static final String REGEX_CODIFLIGNE_SUFFIX = ":[\\w-]+(:LOC|:)$";
+
+	private static final String REGEX_REFLEX_PREFIX = "^[A-Z_]+::";
+	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:[\\w-]+$";
 
 	private static final Collection<String> CodifLigneTypes;
 	private static final Collection<String> ReflexTypes;
@@ -34,6 +35,9 @@ public abstract class AbstractValidator {
 		CodifLigneTypes = new ArrayList<>();
 		CodifLigneTypes.add("Line");
 		CodifLigneTypes.add("Operator");
+		CodifLigneTypes.add("Notice");
+		CodifLigneTypes.add("Network");
+
 		ReflexTypes = new ArrayList<>();
 		ReflexTypes.add("Quay");
 	}
@@ -47,7 +51,7 @@ public abstract class AbstractValidator {
 	}
 
 	public void init(Context context) {
-		
+
 		ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 
 		String fileName = (String) context.get(Constant.FILE_NAME);
@@ -95,7 +99,7 @@ public abstract class AbstractValidator {
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_2, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_RoutingConstraintZone_3, "E");
 
-			
+
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_1, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_2, "E");
 			validationReporter.addItemToValidationReport(context, NetexCheckPoints.L2_NeTExSTIF_ServiceJourney_3, "E");
@@ -124,7 +128,7 @@ public abstract class AbstractValidator {
 	/**
 	 * add location for local validation (level 1 and 2) and for general
 	 * validation (level 3 and more)
-	 * 
+	 *
 	 * @param context
 	 * @param localContext
 	 * @param objectId
@@ -198,7 +202,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param type
 	 * @param id
@@ -244,7 +248,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : warning
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param type
 	 * @param object
@@ -294,7 +298,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param type
 	 * @param object
@@ -347,7 +351,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param object
 	 * @param type
@@ -356,25 +360,23 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkNetexRef(Context context, ChouetteIdentifiedObject object, String typeRef, String ref,
-			int lineNumber, int columnNumber) {
+	public boolean checkNetexRef(Context context, ChouetteIdentifiedObject object, String typeRef, String ref, int lineNumber, int columnNumber) {
 
 		String type = typeRef;
-		if (type.endsWith("Ref"))
+		if (type.endsWith("Ref")) {
 			type = type.substring(0, type.length() - 3);
-		if (type.equals("JourneyPattern"))
+		}
+		if (type.equals("JourneyPattern")) {
 			type = "ServiceJourneyPattern";
+		}
 		String regex = REGEX_ID_PREFIX + type + REGEX_ID_SUFFIX;
 		if (CodifLigneTypes.contains(type)) {
 			regex = REGEX_CODIFLIGNE_PREFIX + type + REGEX_CODIFLIGNE_SUFFIX;
 		} else if (ReflexTypes.contains(type)) {
-			String code = "ZDE"; // todo manage when StopPlaceRef should be
-									// checked
-			regex = REGEX_REFLEX_PREFIX + code + REGEX_REFLEX_SUFFIX;
-
+			regex = REGEX_REFLEX_PREFIX + type + REGEX_REFLEX_SUFFIX;
 		}
-		boolean result = ref.matches(regex);
 
+		boolean result = ref.matches(regex);
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);
@@ -477,7 +479,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param object
 	 * @param type
@@ -535,7 +537,7 @@ public abstract class AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param object
 	 * @param type

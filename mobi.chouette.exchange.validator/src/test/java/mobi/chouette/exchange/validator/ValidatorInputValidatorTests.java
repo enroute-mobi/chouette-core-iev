@@ -56,7 +56,7 @@ public class ValidatorInputValidatorTests {
 		Locale.setDefault(Locale.ENGLISH);
 	}
 
-	
+
 	private ComplianceCheckTask createTask(Referential referential) {
 		ComplianceCheckTask task = new ComplianceCheckTask();
 
@@ -137,7 +137,7 @@ public class ValidatorInputValidatorTests {
 				}
 			}
 			check.setType(data[3]);
-			check.setBlock(block); 
+			check.setBlock(block);
 			check.setTask(task);
 			task.getComplianceChecks().add(check);
 		}
@@ -159,7 +159,16 @@ public class ValidatorInputValidatorTests {
 		referential.getOrganisation().setCode("code_orga");
 		Map<String,String> ssoAttributes = new HashMap<>();
 		referential.getOrganisation().setSsoAttributes(ssoAttributes);
-		ssoAttributes.put(Organisation.SSO_FUNCTIONAL_SCOPE,"[\"STIF:CODIFLIGNE:Line:C00109\",\"STIF:CODIFLIGNE:Line:C00108\",\"STIF:CODIFLIGNE:Line:C00163\",\"STIF:CODIFLIGNE:Line:C00164\",\"STIF:CODIFLIGNE:Line:C00165\",\"STIF:CODIFLIGNE:Line:C00166\",\"STIF:CODIFLIGNE:Line:C00168\",\"STIF:CODIFLIGNE:Line:C00171\"]");
+		ssoAttributes.put(Organisation.SSO_FUNCTIONAL_SCOPE,""
+				+ "[\"FR1:Line:C00109:\","
+				+ "\"FR1:Line:C00108:\","
+				+ "\"FR1:Line:C00163:\","
+				+ "\"FR1:Line:C00164:\","
+				+ "\"FR1:Line:C00165:\","
+				+ "\"FR1:Line:C00166:\","
+				+ "\"FR1:Line:C00168:\","
+				+ "\"FR1:Line:C00171:\"]"
+		);
 		ReferentialMetadata metadata = new ReferentialMetadata();
 		referential.getMetadatas().add(metadata);
 		metadata.setLineIds(new Long[] {1l,2L});
@@ -188,7 +197,7 @@ public class ValidatorInputValidatorTests {
     			CheckpointParameters parameter = entry.getValue().iterator().next();
         		switch (entry.getKey())
         		{
-        		case "3-VehicleJourney-1" : 
+        		case "3-VehicleJourney-1" :
         		{
         			Assert.assertNull(parameter.getMinimumValue());
         			Assert.assertEquals(parameter.getMaximumValue(), "5");
@@ -196,7 +205,7 @@ public class ValidatorInputValidatorTests {
         			Assert.assertFalse(parameter.isErrorType());
         		}
         			break;
-        		case "3-VehicleJourney-2" : 
+        		case "3-VehicleJourney-2" :
         		{
         			Assert.assertEquals(parameter.getMinimumValue(), "5");
         			Assert.assertEquals(parameter.getMaximumValue(), "50");
@@ -204,7 +213,7 @@ public class ValidatorInputValidatorTests {
         			Assert.assertTrue(parameter.isErrorType());
         		}
         			break;
-        		case "3-VehicleJourney-3" : 
+        		case "3-VehicleJourney-3" :
         		{
         			Assert.assertNull(parameter.getMinimumValue());
         			Assert.assertEquals(parameter.getMaximumValue(), "10");
@@ -212,7 +221,7 @@ public class ValidatorInputValidatorTests {
         			Assert.assertFalse(parameter.isErrorType());
         		}
         			break;
-        		case "3-Generic-1" : 
+        		case "3-Generic-1" :
         		{
         			GenericCheckpointParameters genParam = (GenericCheckpointParameters) parameter;
         			Assert.assertEquals(genParam.getClassName(), Route.class.getSimpleName());
@@ -223,7 +232,7 @@ public class ValidatorInputValidatorTests {
         			Assert.assertEquals(genParam.getAttributeName(),"name" );
         		}
         			break;
-        		case "3-Generic-2" : 
+        		case "3-Generic-2" :
         		{
         			GenericCheckpointParameters genParam = (GenericCheckpointParameters) parameter;
         			Assert.assertEquals(genParam.getClassName(), VehicleJourney.class.getSimpleName());
@@ -234,7 +243,7 @@ public class ValidatorInputValidatorTests {
         			Assert.assertEquals(genParam.getAttributeName(),"number" );
         		}
         			break;
-        		case "3-Generic-3" : 
+        		case "3-Generic-3" :
         		{
         			GenericCheckpointParameters genParam = (GenericCheckpointParameters) parameter;
         			Assert.assertEquals(genParam.getClassName(), VehicleJourney.class.getSimpleName());

@@ -86,13 +86,13 @@ public class DaoNetexStifSharedDataProducerCommand implements Command {
 		for (StopArea l : stops) {
 			if (l.getAreaType()!=null) {
 				switch (l.getAreaType()) {
-					case "zder": 
+					case "zder":
 						collection.getZders().add(l);
 						break;
 					case "zdep":
 						collection.getZdeps().add(l);
 						break;
-					case "zdlp": 
+					case "zdlp":
 						collection.getZdlps().add(l);
 						break;
 					case "zdlr":
@@ -119,6 +119,7 @@ public class DaoNetexStifSharedDataProducerCommand implements Command {
 		lines.forEach(l -> {
 			collection.getNetworks().add(l.getNetwork());
 			collection.getCompanies().add(l.getCompany());
+			collection.getLineNotices().addAll(l.getLineNotices());
 			collection.getGroupOfLines().addAll(l.getGroupOfLines());
 		});
 

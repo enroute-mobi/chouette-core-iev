@@ -15,7 +15,9 @@ import mobi.chouette.model.ChouetteIdentifiedObject;
 import mobi.chouette.model.ChouetteObject;
 import mobi.chouette.model.DataSourceRefObject;
 import mobi.chouette.model.type.DateRange;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class AbstractWriter {
 
 	public static final String EMPTY_STRING = "";
@@ -188,10 +190,8 @@ public class AbstractWriter {
 		return b.toString();
 	}
 
-	public static String buildChildSequenceId(ChouetteIdentifiedObject object, String type, String childType,
-			int rank) {
-		return object.getObjectId().replace(COLUMN + type + COLUMN, COLUMN + childType + COLUMN).replace(LOC,
-				rank + LOC);
+	public static String buildChildSequenceId(ChouetteIdentifiedObject object, String type, String childType, int rank) {
+		return object.getObjectId().replace(COLUMN + type + COLUMN, COLUMN + childType + COLUMN).replace(LOC, rank + LOC);
 	}
 
 	public static void writeXml(Writer writer, String xml, int indent) throws IOException {
@@ -221,6 +221,10 @@ public class AbstractWriter {
 		if (indent >= indentation.length)
 			indent = indentation.length - 1;
 		writer.write(indentation[indent] + text + "\n");
+	}
+
+	public static String writeVersion (Long version) {
+		return version!=null ? version.toString() : "any";
 	}
 
 }

@@ -12,6 +12,7 @@ import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.model.AccessLink;
 import mobi.chouette.model.AccessPoint;
 import mobi.chouette.model.Company;
+import mobi.chouette.model.LineNotice;
 import mobi.chouette.model.ConnectionLink;
 import mobi.chouette.model.GroupOfLine;
 import mobi.chouette.model.JourneyPattern;
@@ -31,6 +32,8 @@ public class ValidationData {
 	private Set<String> lineIds = new HashSet<>();
 	private Set<Company> companies = new HashSet<>();
 	private Set<String> companyIds = new HashSet<>();
+	private Set<LineNotice> lineNotices = new HashSet<>();
+	private Set<String> lineNoticeIds = new HashSet<>();
 	private Set<GroupOfLine> groupOfLines = new HashSet<>();
 	private Set<String> groupOfLineIds = new HashSet<>();
 	private Set<StopArea> stopAreas = new HashSet<>();
@@ -59,7 +62,7 @@ public class ValidationData {
 		stopPoints.clear();
 		currentLine = null;
 	}
-	
+
 	public void dispose()
 	{
 		clear();
@@ -69,6 +72,8 @@ public class ValidationData {
 		lineIds.clear();
 		companies.clear();
 		companyIds.clear();
+		lineNotices.clear();
+		lineNoticeIds.clear();
 		groupOfLines.clear();
 		groupOfLineIds.clear();
 		stopAreas.clear();

@@ -7,10 +7,16 @@
  */
 package mobi.chouette.model;
 
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Immutable;
@@ -61,7 +67,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 	 * </li>
 	 * </ol>
 	 * This data must be unique in dataset
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -75,7 +81,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * object version
-	 * 
+	 *
 	 * @param objectVersion
 	 *            New value
 	 * @return The actual value
@@ -87,7 +93,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -96,7 +102,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * number or short name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -105,7 +111,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * published name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -114,7 +120,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * Transport mode (default value = Bus)
-	 * 
+	 *
 	 * @param transportModeName
 	 *            New value
 	 * @return The actual value
@@ -125,7 +131,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * Transport mode (default value = Bus)
-	 * 
+	 *
 	 * @param transportModeName
 	 *            New value
 	 * @return The actual value
@@ -136,7 +142,7 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * line referential reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -145,32 +151,38 @@ public class LineLite extends ChouetteIdentifiedObject {
 
 	/**
 	 * network reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
 	@Column(name = "network_id")
 	protected Long networkId;
-	
+
 	/**
 	 * primary company reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
 	@Column(name = "company_id")
 	protected Long companyId;
-	
+
 
 	/**
 	 * secondary companies references
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
 	@Column(name = "secondary_company_ids", columnDefinition = "bigint[]")
 	@Type(type = "mobi.chouette.model.usertype.LongArrayUserType")
 	private Long[] secondaryCompanyIds = new Long[0];
+
+	@Getter
+	@ElementCollection
+	@CollectionTable(name="line_notices_lines", joinColumns=@JoinColumn(name="line_id"))
+	@Column(name="line_notice_id")
+	public Set<Long> lineNoticesIds;
 
 	@Override
 	public String objectIdPrefix() {
@@ -190,5 +202,4 @@ public class LineLite extends ChouetteIdentifiedObject {
 		}
 		return super.objectIdSuffix();
 	}
-
 }

@@ -29,6 +29,7 @@
 		<class>mobi.chouette.model.importer.ImportTask</class>
 		<class>mobi.chouette.model.Line</class>
 		<class>mobi.chouette.model.LineLite</class>
+		<class>mobi.chouette.model.LineNotice</class>
 		<class>mobi.chouette.model.Network</class>
 		<class>mobi.chouette.model.StopArea</class>
 		<class>mobi.chouette.model.StopAreaLite</class>

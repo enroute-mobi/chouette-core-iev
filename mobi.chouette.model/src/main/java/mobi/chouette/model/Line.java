@@ -67,7 +67,7 @@ public class Line extends ChouetteIdentifiedObject {
 	 * </li>
 	 * </ol>
 	 * This data must be unique in dataset
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -81,7 +81,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * object version
-	 * 
+	 *
 	 * @param objectVersion
 	 *            New value
 	 * @return The actual value
@@ -93,7 +93,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -103,7 +103,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set name <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -113,7 +113,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * comment
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -123,7 +123,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set comment <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -133,7 +133,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * number or short name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -143,7 +143,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set number <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -153,7 +153,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * published name
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -162,9 +162,9 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * stable id
-	 * 
+	 *
 	 * @return The actual value
-	 * 
+	 *
 	 * @since 3.1.0
 	 */
 	@Getter
@@ -174,7 +174,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set published name <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -184,7 +184,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * registration number
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -194,7 +194,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set registration number <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -205,7 +205,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * Transport mode (default value = Bus)
-	 * 
+	 *
 	 * @param transportModeName
 	 *            New value
 	 * @return The actual value
@@ -217,7 +217,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * Transport sub mode (default value = Bus)
-	 * 
+	 *
 	 * @param transportSubModeName
 	 *            New value
 	 * @return The actual value
@@ -228,13 +228,13 @@ public class Line extends ChouetteIdentifiedObject {
 	protected String transportSubModeName;
 	/**
 	 * mobility restriction indicator (such as wheel chairs) <br>
-	 * 
+	 *
 	 * <ul>
 	 * <li>null if information n is unknown for this line</li>
 	 * <li>true if wheel chairs can use this line</li>
 	 * <li>false if wheel chairs can't use this line</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param mobilityRestrictedSuitable
 	 *            New state for mobility restriction indicator
 	 * @return The actual mobility restriction indicator
@@ -246,7 +246,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * coded user needs as binary map<br>
-	 * 
+	 *
 	 * use following methods for easier access :
 	 * <ul>
 	 * <li>getUserNeeds</li>
@@ -255,7 +255,7 @@ public class Line extends ChouetteIdentifiedObject {
 	 * <li>addAllUserNeed</li>
 	 * <li>removeUserNeed</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param intUserNeeds
 	 *            New value
 	 * @return The actual value
@@ -288,13 +288,13 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * flexible service <br>
-	 * 
+	 *
 	 * <ul>
 	 * <li>null if unknown</li>
 	 * <li>true for flexible service</li>
 	 * <li>false for regular service</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param flexibleService
 	 *           New value
 	 * @return The actual value
@@ -306,7 +306,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * web site url
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -316,7 +316,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set web site url <br>
 	 * truncated to 255 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value
 	 */
@@ -327,7 +327,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * line drawing color <br>
 	 * should be used also on label background
-	 * 
+	 *
 	 * @return The actual value in RRGGBB hexadecimal format
 	 */
 	@Getter
@@ -337,7 +337,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set line drawing color <br>
 	 * truncated to 6 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value in RRGGBB hexadecimal format
 	 */
@@ -347,7 +347,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * line text color
-	 * 
+	 *
 	 * @return The actual value in RRGGBB hexadecimal format
 	 */
 	@Getter
@@ -357,7 +357,7 @@ public class Line extends ChouetteIdentifiedObject {
 	/**
 	 * set line text color <br>
 	 * truncated to 6 characters if too long
-	 * 
+	 *
 	 * @param value
 	 *            New value in RRGGBB hexadecimal format
 	 */
@@ -367,7 +367,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * network reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -377,7 +377,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * set network
-	 * 
+	 *
 	 * @param network New value
 	 */
 	public void setNetwork(Network network) {
@@ -403,11 +403,11 @@ public class Line extends ChouetteIdentifiedObject {
 	@Setter
 	@Column(name="import_xml",columnDefinition = "text")
 	private String importXml;
-	
-	
+
+
 	/**
 	 * line referential reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -417,7 +417,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * company reference
-	 * 
+	 *
 	 * @return The actual value
 	 */
 	@Getter
@@ -427,7 +427,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * set company
-	 * 
+	 *
 	 * @param company New value
 	 */
 	public void setCompany(Company company) {
@@ -442,7 +442,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * list of routes
-	 * 
+	 *
 	 * @param routes
 	 *            New value
 	 * @return The actual value
@@ -455,11 +455,11 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * list of footnotes
-	 * 
+	 *
 	 * @param footnotes
 	 *            New value
 	 * @return The actual value
-	 * 
+	 *
 	 * @since 2.5.3
 	 */
 	@Getter
@@ -470,7 +470,7 @@ public class Line extends ChouetteIdentifiedObject {
 
 	/**
 	 * groups of lines reverse reference
-	 * 
+	 *
 	 * @param groupOfLines
 	 *            New value
 	 * @return The actual value
@@ -481,6 +481,10 @@ public class Line extends ChouetteIdentifiedObject {
 	@JoinTable(name = "group_of_lines_lines", joinColumns = { @JoinColumn(name = "line_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "group_of_line_id", nullable = false, updatable = false) })
 	private List<GroupOfLine> groupOfLines = new ArrayList<GroupOfLine>(0);
 
-
+	@Getter
+	@Setter
+	@ManyToMany(cascade = { CascadeType.PERSIST })
+	@JoinTable(name = "line_notices_lines", joinColumns = { @JoinColumn(name = "line_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "line_notice_id", nullable = false, updatable = false) })
+	private List<LineNotice> lineNotices = new ArrayList<LineNotice>(0);
 
 }

@@ -38,6 +38,7 @@ import mobi.chouette.common.JobData.ACTION;
 import mobi.chouette.common.chain.Command;
 import mobi.chouette.common.chain.CommandFactory;
 import mobi.chouette.exchange.LoadSharedDataCommand;
+import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.report.ActionReport;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_STATE;
 import mobi.chouette.exchange.report.ActionReporter.OBJECT_TYPE;
@@ -148,11 +149,17 @@ public abstract class AbstractTestValidation extends Arquillian {
 		configuration.setLineReferentialId(1L);
 		configuration.setStopAreaReferentialId(1L);
 		configuration.getIds().addAll(Arrays.asList(new Long[] { 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L }));
-		configuration.getLinesScope().addAll(Arrays.asList(new String[] {"STIF:CODIFLIGNE:Line:C00109",
-				"STIF:CODIFLIGNE:Line:C00108","STIF:CODIFLIGNE:Line:C00163","STIF:CODIFLIGNE:Line:C00164",
-				"STIF:CODIFLIGNE:Line:C00165","STIF:CODIFLIGNE:Line:C00166","STIF:CODIFLIGNE:Line:C00168",
-				"STIF:CODIFLIGNE:Line:C00171"}));
-		
+		configuration.getLinesScope().addAll(Arrays.asList(new String[] {
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00109"),
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00108"),
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00163"),
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00164"),
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00165"),
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00166"),
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00168"),
+			NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", "C00171")})
+		);
+
 		JobDataImpl test = new JobDataImpl();
 		context.put(Constant.JOB_DATA, test);
 		test.setPathName("target/referential/test");
@@ -268,7 +275,7 @@ public abstract class AbstractTestValidation extends Arquillian {
 
 	/**
 	 * calculate distance on spheroid
-	 * 
+	 *
 	 * @param obj1
 	 * @param obj2
 	 * @return
@@ -299,7 +306,7 @@ public abstract class AbstractTestValidation extends Arquillian {
 
 	/**
 	 * check and return details for checkpoint
-	 * 
+	 *
 	 * @param report
 	 * @param key
 	 * @param detailSize
@@ -420,7 +427,7 @@ public abstract class AbstractTestValidation extends Arquillian {
 		Assert.assertEquals(lineReport.getCheckPointWarningCount(), 0, "no line warning reported");
 
 	}
-	
+
 	protected void checkReports(Context context, OBJECT_TYPE type, String checkPointCode, String messageCode, String value,
 			OBJECT_STATE state, int reportCount) {
 		ActionReport report = (ActionReport) context.get(Constant.REPORT);
