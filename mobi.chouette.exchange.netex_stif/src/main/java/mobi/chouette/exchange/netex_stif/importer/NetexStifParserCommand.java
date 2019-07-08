@@ -72,17 +72,13 @@ public class NetexStifParserCommand implements Command {
 			if (fileName.startsWith("offre_")) {
 				// create line report entry
 				String id = fileName.split("_")[1];
-				String lid = "STIF:CODIFLIGNE:Line:" + id;
+				String lid = NetexStifConstant.NETEX_LINE_ID_FORMAT.replace("{ref}", id);
 				LineLite line = referential.getSharedReadOnlyLines().get(lid);
-				if (line == null) {
-					lid = "STIF-LIGNE:Line:" + id + ":STIF";
-					line = referential.getSharedReadOnlyLines().get(lid);
-				}
 				referential.setCurrentLine(line); // for reporting
 				if (line != null) {
-					reporter.addObjectReport(context, lid, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK,	IO_TYPE.INPUT);
+					reporter.addObjectReport(context, lid, OBJECT_TYPE.LINE, NamingUtil.getName(line), OBJECT_STATE.OK, IO_TYPE.INPUT);
 					context.put(Constant.LINE, line);
-				} 
+				}
 			}
 
 			try (InputStream input = new BOMInputStream(url.openStream());

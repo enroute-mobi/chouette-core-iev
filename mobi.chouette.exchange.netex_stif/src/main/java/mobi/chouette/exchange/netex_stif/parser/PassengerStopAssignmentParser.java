@@ -40,64 +40,49 @@ public class PassengerStopAssignmentParser implements Parser {
 		validator.addModification(context, id, modification);
 
 		while (xpp.nextTag() == XmlPullParser.START_TAG) {
-			// log.info("PassengerStopAssignmentParser : " + xpp.getName());
 			if (xpp.getName().equals(NetexStifConstant.SCHEDULED_STOP_POINT_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
 				String attr_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check internal reference
-				boolean checked = validator.checkNetexRef(context, stopAssignment, NetexStifConstant.SCHEDULED_STOP_POINT_REF, ref, lineNumber,
-						columnNumber);
-				if (checked)
-					checked = validator.checkInternalRef(context, stopAssignment, NetexStifConstant.SCHEDULED_STOP_POINT_REF, ref,
-							attr_version, content, lineNumber, columnNumber);
+				boolean checked1 = validator.checkNetexRef(context, stopAssignment, NetexStifConstant.SCHEDULED_STOP_POINT_REF, ref, lineNumber, columnNumber)
+					&& validator.checkInternalRef(context, stopAssignment, NetexStifConstant.SCHEDULED_STOP_POINT_REF, ref, attr_version, content, lineNumber, columnNumber);
 				stopAssignment.setScheduledStopPointRef(ref);
 			} else if (xpp.getName().equals(NetexStifConstant.QUAY_REF)) {
 				String ref = xpp.getAttributeValue(null, NetexStifConstant.REF);
 				String attr_version = xpp.getAttributeValue(null, NetexStifConstant.VERSION);
 				String content = xpp.nextText();
 				// check external reference
-				boolean checked = validator.checkNetexRef(context, stopAssignment, NetexStifConstant.QUAY_REF, ref, lineNumber,
-						columnNumber);
-				if (checked)
-					checked = validator.checkExternalRef(context, stopAssignment, NetexStifConstant.QUAY_REF, ref,
-							attr_version, content, lineNumber, columnNumber);
-				if (checked) 
-					checked = validator.checkExistsRef(context, stopAssignment, NetexStifConstant.QUAY_REF, ref, attr_version, content, lineNumber, columnNumber);
+				boolean checked = validator.checkNetexRef(context, stopAssignment, NetexStifConstant.QUAY_REF, ref, lineNumber, columnNumber)
+					&& validator.checkExternalRef(context, stopAssignment, NetexStifConstant.QUAY_REF, ref, attr_version, content, lineNumber, columnNumber)
+					&& validator.checkExistsRef(context, stopAssignment, NetexStifConstant.QUAY_REF, ref, attr_version, content, lineNumber, columnNumber);
 				stopAssignment.setQuayRef(ref);
 			} else {
 				XPPUtil.skipSubTree(log, xpp);
 			}
 		}
-		
+
 		if (validator.validate(context, stopAssignment, lineNumber, columnNumber)) {
 			List<StopPoint> list = factory.getStopPoints(stopAssignment.getScheduledStopPointRef());
-			// log.info(Color.CYAN+"id :" + id + " list : " + list+Color.NORMAL);
 			if (list != null) {
 				StopAreaLite stopArea = referential.getSharedReadOnlyStopAreas().get(stopAssignment.getQuayRef());
 				if (stopArea != null) {
-					for (StopPoint stopPoint : list) {
-						stopPoint.setStopAreaId(stopArea.getId());
-					}
+					for (StopPoint stopPoint : list) { stopPoint.setStopAreaId(stopArea.getId()); 	}
 				}
-				else
-				{
+				else {
 					log.info(Color.RED+"quay " + stopAssignment.getQuayRef()+ " not found"+Color.NORMAL);
 				}
 			}
 		}
-
 	}
 
 	static {
 		ParserFactory.register(PassengerStopAssignmentParser.class.getName(), new ParserFactory() {
 			private PassengerStopAssignmentParser instance = new PassengerStopAssignmentParser();
-
 			@Override
 			protected Parser create() {
 				return instance;
 			}
 		});
 	}
-
 }

@@ -20,12 +20,13 @@ public abstract class AbstractValidator {
 
 	private static final String REGEX_ID_PREFIX = "^[\\w-]+:";
 	private static final String REGEX_ID_SUFFIX = ":[\\w-]+:LOC$";
-	// ATTENTION, regex: adapté aux 2 versions de CodifLigne
-	private static final String REGEX_CODIFLIGNE_PREFIX = "^(STIF:CODIFLIGNE|STIF-LIGNE):";
-	private static final String REGEX_CODIFLIGNE_SUFFIX = ":[\\w-]+(:STIF|)$";
 
-	private static final String REGEX_REFLEX_PREFIX = "^FR:[\\d]{5}:";
-	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:STIF$";
+	// The new CODIFLIGNE V2 prefix is only a reference to the company
+	private static final String REGEX_CODIFLIGNE_PREFIX = "^[\\w-]+:";
+	private static final String REGEX_CODIFLIGNE_SUFFIX = ":[\\w-]+(:LOC|:)$";
+
+	private static final String REGEX_REFLEX_PREFIX = "^[A-Z_]+::";
+	private static final String REGEX_REFLEX_SUFFIX = ":[\\w-]+:[\\w-]+$";
 
 	private static final Collection<String> CodifLigneTypes;
 	private static final Collection<String> ReflexTypes;
@@ -34,6 +35,9 @@ public abstract class AbstractValidator {
 		CodifLigneTypes = new ArrayList<>();
 		CodifLigneTypes.add("Line");
 		CodifLigneTypes.add("Operator");
+		CodifLigneTypes.add("Notice");
+		CodifLigneTypes.add("Network");
+
 		ReflexTypes = new ArrayList<>();
 		ReflexTypes.add("Quay");
 	}
@@ -357,19 +361,22 @@ public abstract class AbstractValidator {
 	 * @return
 	 */
 	public boolean checkNetexRef(Context context, ChouetteIdentifiedObject object, String typeRef, String ref, int lineNumber, int columnNumber) {
-		String type = typeRef;
-		if (type.endsWith("Ref")) { type = type.substring(0, type.length() - 3); }
-		if (type.equals("JourneyPattern")) { type = "ServiceJourneyPattern";}
 
+		String type = typeRef;
+		if (type.endsWith("Ref")) {
+			type = type.substring(0, type.length() - 3);
+		}
+		if (type.equals("JourneyPattern")) {
+			type = "ServiceJourneyPattern";
+		}
 		String regex = REGEX_ID_PREFIX + type + REGEX_ID_SUFFIX;
 		if (CodifLigneTypes.contains(type)) {
 			regex = REGEX_CODIFLIGNE_PREFIX + type + REGEX_CODIFLIGNE_SUFFIX;
 		} else if (ReflexTypes.contains(type)) {
-			String code = "ZDE";
-			regex = REGEX_REFLEX_PREFIX + code + REGEX_REFLEX_SUFFIX;
+			regex = REGEX_REFLEX_PREFIX + type + REGEX_REFLEX_SUFFIX;
 		}
-		boolean result = ref.matches(regex);
 
+		boolean result = ref.matches(regex);
 		if (!result) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
 			String fileName = (String) context.get(Constant.FILE_NAME);

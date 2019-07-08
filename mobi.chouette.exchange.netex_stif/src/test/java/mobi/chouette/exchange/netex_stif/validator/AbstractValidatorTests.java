@@ -180,26 +180,17 @@ public class AbstractValidatorTests extends AbstractTest {
 	@Test(groups = { "Nominal" }, description = "ObjectId correct ", priority = 505)
 	public void verifyRef() throws Exception {
 		String type = NetexStifConstant.LINE_REF;
-		String ref = "STIF:CODIFLIGNE:Line:1234"; // old fashion line ref
-
+		String ref = "FR1:Line:1234:";
 		boolean result = validateRef(ref, type, true);
-		Assert.assertTrue(result, "old fashion line ref ok");
-
-		ref = "STIF-LIGNE:Line:1234:STIF"; // new fashion line ref
-		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "new fashion line ref ok");
 
 		type = NetexStifConstant.OPERATOR_REF;
-		ref = "STIF:CODIFLIGNE:Operator:1234"; // old fashion operator ref
-		result = validateRef(ref, type, true);
-		Assert.assertTrue(result, "old fashion operator ref ok");
-
-		ref = "STIF-LIGNE:Operator:1234:STIF"; // new fashion operator ref
+		ref = "FR1:Operator:1234:";
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "new fashion operator ref ok");
 
 		type = NetexStifConstant.QUAY_REF;
-		ref = "FR:14526:ZDE:1234:STIF"; // quay ref
+		ref = "FR::Quay:1234:FR1"; // quay ref
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "old fashion operator ref ok");
 
@@ -207,10 +198,8 @@ public class AbstractValidatorTests extends AbstractTest {
 		ref = "CITYWAY:Route:1245:LOC"; // quay ref
 		result = validateRef(ref, type, true);
 		Assert.assertTrue(result, "internal ref");
-		
-
 	}
-	
+
 	@Test(groups = { "Cas d'erreur de ref" }, description = "ObjectId incorrect ", priority = 506)
 	public void verifyBadRef() throws Exception {
 		String type = NetexStifConstant.LINE_REF;
@@ -218,10 +207,6 @@ public class AbstractValidatorTests extends AbstractTest {
 
 		boolean result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "old fashion line ref");
-
-		ref = "STIF-LIGNE:Line:1234:LOC"; // new fashion line ref
-		result = validateRef(ref, type, false);
-		Assert.assertFalse(result, "new fashion line ref");
 
 		type = NetexStifConstant.OPERATOR_REF;
 		ref = "STIF-CODIFLIGNE:Operator:1234"; // old fashion operator ref
@@ -233,7 +218,7 @@ public class AbstractValidatorTests extends AbstractTest {
 		Assert.assertFalse(result, "new fashion operator ref");
 
 		type = NetexStifConstant.QUAY_REF;
-		ref = "FR:14526:ZDEs:1234:STIF"; // quay ref
+		ref = "FR:Quay:1234:FR1"; // quay ref
 		result = validateRef(ref, type, false);
 		Assert.assertFalse(result, "stop ref");
 
@@ -243,17 +228,14 @@ public class AbstractValidatorTests extends AbstractTest {
 		Assert.assertFalse(result, "internal ref");
 
 	}
-	
-	
+
+
 
 	private boolean validateRef(String ref, String refType, boolean b) {
 		Context context = initImportContext();
 
 		context.put(Constant.FILE_NAME, FAKE_FILENAME);
 		AbstractValidator validator = ValidatorFactory.getValidator(context, RouteValidator.class); // --
-		// RouteValidator
-		// étend
-		// AbstractValidator
 		int lineNumber = 1;
 		int columnNumber = 2;
 		ActionReporter reporter = ActionReporter.Factory.getInstance();
@@ -262,9 +244,9 @@ public class AbstractValidatorTests extends AbstractTest {
 		object.setObjectId("CITYWAY:Route:1234:LOC");
 		object.setName("route de test");
 		boolean result = validator.checkNetexRef(context, object, refType, ref, lineNumber, columnNumber);
-        if (b) checkNoReports(context, FAKE_FILENAME);
-        else checkReports(context, FAKE_FILENAME, NetexCheckPoints.L2_NeTExSTIF_7, "2_netexstif_7", ref);
-        
+    if (b) checkNoReports(context, FAKE_FILENAME);
+    else checkReports(context, FAKE_FILENAME, NetexCheckPoints.L2_NeTExSTIF_7, "2_netexstif_7", ref);
+
 		return result;
 
 	}

@@ -91,12 +91,12 @@ public class NetexStifSAXParserCommandTests {
 
 	@Test(groups = { "XML" }, description = "bad xml file", priority = 401)
 	public void verifiyXMLSyntax() throws Exception{
-		
+
 		Context context = initImportContext();
 
 		NetexStifSAXParserCommand parser = (NetexStifSAXParserCommand) CommandFactory.create(initialContext,
 				NetexStifSAXParserCommand.class.getName());
-		
+
 		File f = new File(path, "badxmlfile.xml");
 		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
@@ -116,17 +116,17 @@ public class NetexStifSAXParserCommandTests {
 		Assert.assertTrue(error.getValue().contains("netex:ParticipantRef"),"value");
 		Assert.assertEquals(error.getSource().getFile().getFilename(),"badxmlfile.xml","source filename");
 		Assert.assertEquals(error.getSource().getFile().getLineNumber(),Integer.valueOf(190),"source line number");
-		Assert.assertEquals(error.getSource().getFile().getColumnNumber(),Integer.valueOf(3),"source column number");		
-		
+		Assert.assertEquals(error.getSource().getFile().getColumnNumber(),Integer.valueOf(3),"source column number");
+
 	}
 	@Test(groups = { "XML" }, description = "bad xsd file", priority = 402)
 	public void verifiyXSDSyntax() throws Exception{
-		
+
 		Context context = initImportContext();
 
 		NetexStifSAXParserCommand parser = (NetexStifSAXParserCommand) CommandFactory.create(initialContext,
 				NetexStifSAXParserCommand.class.getName());
-		
+
 		File f = new File(path, "badxsdfile.xml");
 		parser.setFileURL(f.toURI().toString());
 		parser.execute(context);
@@ -146,7 +146,7 @@ public class NetexStifSAXParserCommandTests {
 		Assert.assertTrue(error.getValue().startsWith("cvc-complex-type"),"value");
 		Assert.assertEquals(error.getSource().getFile().getFilename(),"badxsdfile.xml","source filename");
 		Assert.assertEquals(error.getSource().getFile().getLineNumber(),Integer.valueOf(21),"source line number");
-		Assert.assertEquals(error.getSource().getFile().getColumnNumber(),Integer.valueOf(62),"source column number");		
-		
+		Assert.assertEquals(error.getSource().getFile().getColumnNumber(),Integer.valueOf(51),"source column number");		
+
 	}
 }
