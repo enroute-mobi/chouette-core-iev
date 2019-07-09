@@ -554,7 +554,7 @@ public abstract class AbstractValidator {
 			result = referential.getSharedTimetableTemplates().containsKey(ref);
 			break;
 		case NetexStifConstant.NOTICE_REF:
-			result = referential.getSharedFootnotes().containsKey(ref) || referential.getSharedLineNotices().containsKey(ref);
+			result = referential.getSharedFootnotes().containsKey(ref) || referential.getSharedReadOnlyLineNotices().containsKey(ref);
 			break;
 		case NetexStifConstant.LINE_REF:
 			result = referential.getSharedReadOnlyLines().containsKey(ref);
