@@ -53,7 +53,9 @@ public class NetexCheckPoints {
 	public static final String L2_NeTExSTIF_ServiceJourney_2 = "2-NeTExSTIF-ServiceJourney-2"; // ServiceJourneyValidator
 	public static final String L2_NeTExSTIF_ServiceJourney_3 = "2-NeTExSTIF-ServiceJourney-3"; // ServiceJourneyValidator
 	public static final String L2_NeTExSTIF_ServiceJourney_4 = "2-NeTExSTIF-ServiceJourney-4"; // ServiceJourneyValidator
+	public static final String L2_NeTExSTIF_ServiceJourney_5 = "2-NeTExSTIF-ServiceJourney-5"; // ServiceJourneyValidator
 
+	
 	public static final String L2_NeTExSTIF_PassingTime_1 = "2-NeTExSTIF-PassingTime-1"; // PassingTimeValidator
 	public static final String L2_NeTExSTIF_PassingTime_2 = "2-NeTExSTIF-PassingTime-2"; // PassingTimeValidator
 

@@ -23,7 +23,7 @@ import lombok.ToString;
  * Neptune mapping : non (extension in comments <br>
  * Gtfs mapping : none <br>
  * Hub mapping :
- * 
+ *
  * @since 2.5.3
  */
 
@@ -33,9 +33,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class Footnote extends ChouetteIdentifiedObject implements SignedChouetteObject, DataSourceRefObject {
-	/**
-	* 
-	*/
+
 	private static final long serialVersionUID = -6223882293500225313L;
 
 	@Getter
@@ -78,25 +76,12 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	@Transient
 	private Long objectVersion;
 
-	/**
-	 * referenced line
-	 * 
-	 * @param line
-	 *            new line
-	 * @return The actual line
-	 */
+
 	@Getter
 	@Setter
 	@Transient
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "line_id")
 	private Line line;
 
-	/**
-	 * line reverse reference
-	 * 
-	 * @return The actual value
-	 */
 	@Getter
 	@Setter
 	@Transient
@@ -107,78 +92,32 @@ public class Footnote extends ChouetteIdentifiedObject implements SignedChouette
 	@Column(name = "line_id")
 	private Long lineId;
 
-	/**
-	 * label
-	 * 
-	 * @return The actual value
-	 */
 	@Getter
 	@Column(name = "label")
 	private String label;
 
-	/**
-	 * set label <br>
-	 * truncated to 255 characters if too long
-	 * 
-	 * @param value
-	 *            New value
-	 */
 	public void setLabel(String value) {
 		label = StringUtils.abbreviate(value, 255);
 	}
 
-	/**
-	 * code
-	 * 
-	 * @return The actual value
-	 */
 	@Getter
 	@Column(name = "code")
 	private String code;
 
-	/**
-	 * set code <br>
-	 * truncated to 255 characters if too long
-	 * 
-	 * @param value
-	 *            New value
-	 */
 	public void setCode(String value) {
 		code = StringUtils.abbreviate(value, 255);
 	}
 
-	/**
-	 * data source ref
-	 * 
-	 * @return The actual value
-	 */
 	@Getter
 	@Column(name = "data_source_ref")
 	private String dataSourceRef;
 
-	/**
-	 * set data source ref <br>
-	 * truncated to 255 characters if too long
-	 * 
-	 * @param value
-	 *            New value
-	 */
 	public void setDataSourceRef(String value) {
 		dataSourceRef = StringUtils.abbreviate(value, 255);
 	}
 
-	/**
-	 * relative key for import/export
-	 * 
-	 * should be unique for each line
-	 * 
-	 * @param key
-	 *            new key
-	 * @return The actual key
-	 */
 	@Getter
 	@Setter
 	@Transient
 	private String key;
-
 }
