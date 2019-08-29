@@ -15,7 +15,7 @@
 				<netex:FromDate>2017-03-01T00:00:00</netex:FromDate>
 				<netex:ToDate>2017-03-31T00:00:00</netex:ToDate>
 			</netex:ValidBetween>
-			<netex:TypeOfFrameRef ref="NETEX_CALENDRIER" />
+			<netex:TypeOfFrameRef ref="FR1:TypeOfFrame:NETEX_CALENDRIER:" />
 			<netex:members>
 				<netex:DayType id="CITYWAY:DayType:1:LOC" version="any">
 					<netex:Name>Semaine</netex:Name>

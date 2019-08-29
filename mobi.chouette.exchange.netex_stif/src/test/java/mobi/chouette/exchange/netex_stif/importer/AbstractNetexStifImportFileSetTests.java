@@ -198,14 +198,11 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian {
 
 	}
 
-	protected void doImport(String zipFile, String expectedActionReportResult, int zipCount, int fileCount, int lineCount, String... expectedData)
-			throws Exception {
-
+	protected void doImport(String zipFile, String expectedActionReportResult, int zipCount, int fileCount, int lineCount, String... expectedData) throws Exception {
 		log.info("########## Import " + zipFile + " ##########");
 		Context context = initImportContext();
 		context.put(Constant.REFERENTIAL, new Referential());
-		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext,
-				NetexStifImporterCommand.class.getName());
+		NetexStifImporterCommand command = (NetexStifImporterCommand) CommandFactory.create(initialContext, NetexStifImporterCommand.class.getName());
 		copyFile(zipFile);
 		JobDataImpl jobData = (JobDataImpl) context.get(Constant.JOB_DATA);
 		jobData.setInputFilename(zipFile);
@@ -257,11 +254,7 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian {
 
 			String message = YmlMessages.populateMessage(x.getMessageKey(), x.getMessageAttributs());
 			List<String> missingKeys = YmlMessages.missingKeys(x.getMessageKey(), x.getMessageAttributs());
-			Assert.assertEquals(0, missingKeys.size(), "Missing keys { "
-					+ missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
-
-//			log.info("POUR ANALYSE : " + zipFile + ";" + sb.toString() + ";MSG=" + message);
-
+			Assert.assertEquals(0, missingKeys.size(), "Missing keys { " + missingKeys.stream().collect(Collectors.joining(";")) + " } in message : " + message);
 			actualErrors.add(sb.toString());
 		});
 
@@ -276,32 +269,24 @@ public class AbstractNetexStifImportFileSetTests extends Arquillian {
 		Set<String> expectedErrors = new TreeSet<String>();
 		Arrays.asList(expectedData).stream().forEach(x -> expectedErrors.add(x.trim()));
 
-		List<String> expectedNotDetected = expectedErrors.stream().filter(x -> !actualErrors.contains(x))
-				.collect(Collectors.toList());
-		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x))
-				.collect(Collectors.toList());// );
+		List<String> expectedNotDetected = expectedErrors.stream().filter(x -> !actualErrors.contains(x)).collect(Collectors.toList());
+		List<String> notExpected = actualErrors.stream().filter(x -> !expectedErrors.contains(x)).collect(Collectors.toList());
 
-		log.info("ALL DETECTED ERRORS (" + actualErrors.size() + "):" + zipFile + ";" + actionReport.getResult() + ";"
-				+ actualErrors.stream().collect(Collectors.joining("; ")));
 		if (!notExpected.isEmpty()) {
-			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + actionReport.getResult() + ";"
-					+ notExpected.stream().collect(Collectors.joining("; ")));
+			log.error("NOT EXPECTED ERRORS:" + zipFile + ";" + actionReport.getResult() + ";" + notExpected.stream().collect(Collectors.joining("; ")));
 		}
+
 		if (!expectedNotDetected.isEmpty()) {
 			log.error("EXPECTED BUT NOT DETECTED:" + expectedNotDetected.stream().collect(Collectors.joining("; ")));
 		}
 
 		Assert.assertEquals(actionReport.getResult(), expectedActionReportResult);
-		if (actionReport.getResult().equals(ReportConstant.STATUS_ERROR))
-		{
+		if (actionReport.getResult().equals(ReportConstant.STATUS_ERROR)) {
 			log.info("ActionError = "+actionReport.getFailure());
 		}
 
-		Assert.assertTrue(expectedNotDetected.isEmpty(),
-				expectedNotDetected.size() + " Error(s) not detected (but expected) : "
-						+ expectedNotDetected.stream().collect(Collectors.joining("; ")));
-		Assert.assertTrue(notExpected.isEmpty(), notExpected.size() + " Error(s) not expected (but detected) : "
-				+ notExpected.stream().collect(Collectors.joining("; ")));
+		Assert.assertTrue(expectedNotDetected.isEmpty(), expectedNotDetected.size() + " Error(s) not detected (but expected) : "+ expectedNotDetected.stream().collect(Collectors.joining("; ")));
+		Assert.assertTrue(notExpected.isEmpty(), notExpected.size() + " Error(s) not expected (but detected) : "+ notExpected.stream().collect(Collectors.joining("; ")));
 
 		// clean database
 		messages.stream().forEach(m -> em.remove(m));

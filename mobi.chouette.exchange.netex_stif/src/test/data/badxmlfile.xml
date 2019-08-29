@@ -9,11 +9,11 @@
     <netex:dataObjects>
         <netex:CompositeFrame id="CITYWAY:CompositeFrame:NETEX_OFFRE_LIGNE-1:LOC" version="any">
             <netex:Name>Ligne 1</netex:Name>
-            <netex:TypeOfFrameRef ref="NETEX_OFFRE_LIGNE"/>
+            <netex:TypeOfFrameRef ref="FR1:TypeOfFrame:NETEX_OFFRE_LIGNE:"/>
             <netex:frames>
                 <netex:GeneralFrame id="CITYWAY:GeneralFrame:NETEX_STRUCTURE-20170214090012:LOC"
                     version="any">
-                    <netex:TypeOfFrameRef ref="NETEX_STRUCTURE"/>
+                    <netex:TypeOfFrameRef ref="FR1:TypeOfFrame:NETEX_STRUCTURE:"/>
                     <netex:members>
                         <netex:Route id="CITYWAY:Route:1:LOC" version="any">
                                 <netex:Name>route 1</netex:Name>
