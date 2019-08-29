@@ -7,7 +7,9 @@ import mobi.chouette.common.Context;
 import mobi.chouette.exchange.netex_stif.NetexStifConstant;
 import mobi.chouette.exchange.validation.report.DataLocation;
 import mobi.chouette.exchange.validation.report.ValidationReporter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class FrameValidator extends AbstractValidator {
 
 	/* (non-Javadoc)
@@ -112,15 +114,14 @@ public class FrameValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param frameNames
 	 * @param lineNumber
 	 * @param columnNumber
 	 * @return
 	 */
-	private boolean check2NeTExStif1_1(Context context, Collection<String> frameNames, int lineNumber,
-			int columnNumber) {
+	private boolean check2NeTExStif1_1(Context context, Collection<String> frameNames, int lineNumber, int columnNumber) {
 		boolean result = false;
 		for (String frameName : frameNames) {
 			if (frameName.equals(NetexStifConstant.NETEX_COMMUN)) {
@@ -254,7 +255,7 @@ public class FrameValidator extends AbstractValidator {
 	 * <p>
 	 * <b>Criticité</b> : error
 	 * <p>
-	 * 
+	 *
 	 * @param context
 	 * @param frameNames
 	 * @param lineNumber
@@ -320,7 +321,7 @@ public class FrameValidator extends AbstractValidator {
 			if (frameName.equals(NetexStifConstant.NETEX_HORAIRE)) {
 				horaire = true;
 			}
-			
+
 		}
 		if (!structure) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();

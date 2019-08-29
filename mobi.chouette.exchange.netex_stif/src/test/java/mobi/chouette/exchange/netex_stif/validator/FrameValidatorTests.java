@@ -34,10 +34,10 @@ import mobi.chouette.persistence.hibernate.ContextHolder;
 public class FrameValidatorTests extends AbstractTest {
 
 	private static final String FRAME_HORAIRE = "NETEX_HORAIRE";
-	private static final String FRAME_STRUCTURE = "NETEX_STRUCTURE";
-	private static final String FRAME_OFFRE_LIGNE = "NETEX_OFFRE_LIGNE";
-	private static final String FRAME_COMMUN = "NETEX_COMMUN";
-	private static final String FRAME_CALENDRIER = "NETEX_CALENDRIER";
+	private static final String FRAME_STRUCTURE = "FR1:TypeOfFrame:NETEX_STRUCTURE:";
+	private static final String FRAME_OFFRE_LIGNE = "FR1:TypeOfFrame:NETEX_OFFRE_LIGNE:";
+	private static final String FRAME_COMMUN = "FR1:TypeOfFrame:NETEX_COMMUN:";
+	private static final String FRAME_CALENDRIER = "FR1:TypeOfFrame:NETEX_CALENDRIER:";
 	private static final String OFFRE_FILE_NAME = "offre_test.xml";
 
 	protected static InitialContext initialContext;
@@ -169,9 +169,7 @@ public class FrameValidatorTests extends AbstractTest {
 		String frameWithIncorrectName = "NETEX_CALENDRER";
 		boolean result = validator.checkForbiddenGeneralFrames(context, frameWithIncorrectName, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, NetexStifConstant.CALENDRIER_FILE_NAME, NetexCheckPoints.L2_NeTExSTIF_2, "2_netexstif_2_2",
-				"NETEX_CALENDRER");
-
+		checkReports(context, NetexStifConstant.CALENDRIER_FILE_NAME, NetexCheckPoints.L2_NeTExSTIF_2, "2_netexstif_2_2", "NETEX_CALENDRER");
 	}
 
 	@Test(groups = { "Calendrier" }, description = "Good CompositeFrames list ", priority = 705)
@@ -198,8 +196,7 @@ public class FrameValidatorTests extends AbstractTest {
 		String frame = "NETEX_CALENDRER";
 		boolean result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
-		checkReports(context, NetexStifConstant.CALENDRIER_FILE_NAME, NetexCheckPoints.L2_NeTExSTIF_2, "2_netexstif_2_2",
-				"CompositeFrame");
+		checkReports(context, NetexStifConstant.CALENDRIER_FILE_NAME, NetexCheckPoints.L2_NeTExSTIF_2, "2_netexstif_2_2", "CompositeFrame");
 		frame = FRAME_OFFRE_LIGNE;
 		result = validator.checkForbiddenCompositeFrames(context, frame, 1, 2);
 		Assert.assertFalse(result, "validator result");
