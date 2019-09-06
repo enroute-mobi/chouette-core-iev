@@ -77,7 +77,6 @@ function setup() {
 
 	# add postgres driver and chouette database
 	sh bin/jboss-cli.sh -c <<EOS
-  /system-property=jboss.as.management.blocking.timeout:add(value=900)
 	/subsystem=datasources/jdbc-driver=postgresql:add(driver-name="postgresql",driver-module-name="org.postgres",driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
 	data-source add --jndi-name=java:jboss/datasources/chouette --name=chouette --connection-url=jdbc:postgresql_postGIS://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME} --driver-class=org.postgis.DriverWrapper --driver-name=postgresql --user-name=${POSTGRES_USER} --password=${POSTGRES_PASS} --max-pool-size=30
 	/subsystem=datasources/data-source=chouette/connection-properties=stringtype:add(value=unspecified)

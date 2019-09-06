@@ -8,7 +8,7 @@
     <netex:ParticipantRef>CITYWAY</netex:ParticipantRef>
     <netex:dataObjects>
         <netex:GeneralFrame id="CITYWAY:GeneralFrame:NETEX_COMMUN-1_20170214090012:LOC" version="any">
-            <netex:TypeOfFrameRef ref="NETEX_COMMUN"/>
+            <netex:TypeOfFrameRef ref="FR1:TypeOfFrame:NETEX_COMMUN:"/>
             <netex:members>
                     <netex:Notice id="CITYWAY:Notice:1:LOC" version="any">
                         <netex:Text>Notice 1</netex:Text>

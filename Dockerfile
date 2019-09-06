@@ -34,7 +34,7 @@ RUN mvn -T 2C --batch-mode com.offbytwo.maven.plugins:maven-dependency-plugin:3.
 COPY . /usr/src/mymaven
 RUN mvn -Dmaven.test.skip=true -DskipTests=true --batch-mode install
 
-FROM debian:stable-slim
+FROM debian:stretch-slim
 
 LABEL Description="Chouette IEV"
 
@@ -43,7 +43,7 @@ ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 RUN echo "deb http://http.debian.net/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list && \
     mkdir -p /usr/share/man/man1/ && \
     DEBIAN_FRONTEND=noninteractive && \
-    apt-get update && \
+    apt-get update && apt-get dist-upgrade -y && \
     apt-get install -y --no-install-recommends wget netcat-traditional locales && \
     localedef -i en_US -c -f UTF-8 en_US.UTF-8 && \
     apt-get install -y -t stretch-backports --no-install-recommends openjdk-8-jre-headless && rm -rf /var/lib/apt/lists/*

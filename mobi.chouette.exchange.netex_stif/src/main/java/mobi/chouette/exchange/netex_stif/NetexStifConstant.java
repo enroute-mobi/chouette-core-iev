@@ -47,11 +47,11 @@ public class NetexStifConstant {
 	public static final String MEMBERS = "members";
 	public static final String MODIFICATION = "modification";
 	public static final String NAME = "Name";
-	public static final String NETEX_CALENDRIER = "NETEX_CALENDRIER";
-	public static final String NETEX_COMMUN = "NETEX_COMMUN";
+	public static final String NETEX_CALENDRIER = "FR1:TypeOfFrame:NETEX_CALENDRIER:";
+	public static final String NETEX_COMMUN = "FR1:TypeOfFrame:NETEX_COMMUN:";
 	public static final String NETEX_HORAIRE = "NETEX_HORAIRE";
-	public static final String NETEX_OFFRE_LIGNE = "NETEX_OFFRE_LIGNE";
-	public static final String NETEX_STRUCTURE = "NETEX_STRUCTURE";
+	public static final String NETEX_OFFRE_LIGNE = "FR1:TypeOfFrame:NETEX_OFFRE_LIGNE:";
+	public static final String NETEX_STRUCTURE = "FR1:TypeOfFrame:NETEX_STRUCTURE:";
 	public static final String NETEX_ARRET_STIF = "NETEX_ARRET_STIF";
 	public static final String NOTICE = "Notice";
 	public static final String NOTICES = "notices";
