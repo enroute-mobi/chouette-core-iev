@@ -427,8 +427,7 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkInternalRef(Context context, ChouetteIdentifiedObject object, String type, String id,
-			String versionAttribute, String content, int lineNumber, int columnNumber) {
+	public boolean checkInternalRef(Context context, ChouetteIdentifiedObject object, String type, String id, String versionAttribute, String content, int lineNumber, int columnNumber) {
 
 		boolean result1 = versionAttribute != null && !versionAttribute.isEmpty();
 		boolean result2 = content == null || content.trim().isEmpty();
@@ -490,11 +489,10 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkExternalRef(Context context, ChouetteIdentifiedObject object, String type, String ref,
-			String versionAttribute, String content, int lineNumber, int columnNumber) {
+	public boolean checkExternalRef(Context context, ChouetteIdentifiedObject object, String type, String ref, String versionAttribute, String content, int lineNumber, int columnNumber) {
 
-		boolean result1 = versionAttribute == null || versionAttribute.isEmpty();
-		boolean result2 = content != null && content.trim().matches("^version=\".+\"$");
+		boolean result1 = (versionAttribute == null || versionAttribute.isEmpty());
+		boolean result2 = (content != null && content.trim().matches("^version=\".+\"$"));
 
 		if (!result1) {
 			ValidationReporter validationReporter = ValidationReporter.Factory.getInstance();
@@ -548,9 +546,7 @@ public abstract class AbstractValidator {
 	 * @param columnNumber
 	 * @return
 	 */
-	public boolean checkExistsRef(Context context, ChouetteIdentifiedObject object, String type, String ref,
-			String versionAttribute, String content, int lineNumber, int columnNumber) {
-
+	public boolean checkExistsRef(Context context, ChouetteIdentifiedObject object, String type, String ref, String versionAttribute, String content, int lineNumber, int columnNumber) {
 		Referential referential = (Referential) context.get(Constant.REFERENTIAL);
 		boolean result = false;
 		switch (type) {
@@ -558,7 +554,7 @@ public abstract class AbstractValidator {
 			result = referential.getSharedTimetableTemplates().containsKey(ref);
 			break;
 		case NetexStifConstant.NOTICE_REF:
-			result = referential.getSharedFootnotes().containsKey(ref);
+			result = referential.getSharedFootnotes().containsKey(ref) || referential.getSharedReadOnlyLineNotices().containsKey(ref);
 			break;
 		case NetexStifConstant.LINE_REF:
 			result = referential.getSharedReadOnlyLines().containsKey(ref);

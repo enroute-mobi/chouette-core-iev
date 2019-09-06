@@ -35,10 +35,6 @@ public class CopyUtil {
 		throw new NotYetImplementedException(MESSAGE);
 	}
 
-	public static LineNotice copy(LineNotice object) {
-		throw new NotYetImplementedException(MESSAGE);
-	}
-
 	public static GroupOfLine copy(GroupOfLine object) {
 		throw new NotYetImplementedException(MESSAGE);
 	}
@@ -109,6 +105,16 @@ public class CopyUtil {
 		ft.setLabel(object.getLabel());
 		ft.setDataSourceRef(object.getDataSourceRef());
 		return ft;
+	}
+	
+	public static LineNotice copy (LineNotice object) {
+		LineNotice lineNotice = new LineNotice();
+		lineNotice.setContent(object.getContent());
+		lineNotice.setTitle(object.getTitle());
+		lineNotice.setObjectId(object.getObjectId());
+		lineNotice.setLineReferentialId(object.getLineReferentialId());
+		lineNotice.setObjectVersion(object.getObjectVersion());
+		return lineNotice;
 	}
 
 	private CopyUtil(){}
